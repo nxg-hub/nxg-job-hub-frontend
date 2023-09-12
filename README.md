@@ -1,1 +1,2 @@
-# nxg-job-hub-frontend
+# nxg-job-hub-web-frontend
+
