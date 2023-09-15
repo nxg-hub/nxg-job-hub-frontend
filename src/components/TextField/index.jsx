@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./index.module.scss";
 const TextField = ({
   type,
@@ -12,6 +12,13 @@ const TextField = ({
   label,
   eye,
 }) => {
+  const [show, setShow] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+  const showPassword = () => {
+    setShow({ ...show, [eye]: !show[eye] });
+  };
   return (
     <div>
       {label && (
@@ -31,7 +38,11 @@ const TextField = ({
           name={name}
           type={type}
         />
-        {eye && <button>show</button>}
+        {eye && (
+          <button onClick={showPassword} type="button">
+            show
+          </button>
+        )}
       </span>
     </div>
   );
