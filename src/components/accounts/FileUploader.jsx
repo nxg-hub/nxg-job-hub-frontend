@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSuccess }) => {
   const fileInput = useRef(null);
@@ -32,9 +32,6 @@ const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSucc
     }
   };
 
-  useEffect(() => {
-    fileInput.current && fileInput.current.click();
-  }, []);
 
   return (
     <div className='file-uploader'>
@@ -44,7 +41,9 @@ const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSucc
             accept='.jpeg, .jpg, .png, .docx, .pdf'
             onChange={handleFileInput}
             ref={fileInput} // Reference to the file input element
+            style={{display:'none'}}
         />
+        <button onClick={() => fileInput.current && fileInput.current.click()}>{title}</button>
     </div>
   );
 };

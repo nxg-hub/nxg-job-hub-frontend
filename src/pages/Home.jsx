@@ -1,11 +1,18 @@
 import React from 'react'
-import { TechTalent } from './TechTalent'
+import { NavLink } from 'react-router-dom'
+
 
 const Home = () => {
   return (
-    <main>
-      <TechTalent />
-    </main>
+    <div>Home
+
+      <hr />
+      <h3>Available routes:</h3>
+      <NavLink to={"/register"}>
+        Create Account
+      </NavLink>
+      
+    </div>
   )
 }
 
