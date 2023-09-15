@@ -1,0 +1,98 @@
+.tech-main-container {
+    background: #ffffff;
+    h1 {
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 1.9rem;
+      line-height: 2.25rem;
+      font-weight: bolder;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      
+    }
+  }
+  
+  .left {
+    display: block;
+    padding: 1rem;
+  }
+  
+  .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader {
+    label {
+        display: flex;
+        font-size: .8rem;
+        font-weight: 600;
+    }
+    input, select {
+        display: block;
+        margin: 0.75rem 0;
+        padding: 0.8rem 0.5rem;
+        border: none;
+        border-radius: 0.37rem;
+        font-size: .9rem;
+        opacity: .6;
+        min-width: 20rem;
+        background-color: #fbfbfb;
+    }
+    input ::placeholder {
+      color: #dfdfdf;
+    }
+  }
+  .phone, .dob, .gender, .experience {
+    label {
+        display: flex;
+        font-size: .8rem;
+        font-weight: 600;
+    }
+  }
+  
+  .react-international-phone-input-container .react-international-phone-country-selector-button {
+    background-color: #fbfbfb !important;
+    border: none;
+    min-width: 3rem;
+    margin: 0.75rem 0;
+    padding: 0.8rem 0.5rem;
+    border-radius: 0.37rem 0 !important;
+  }
+  
+  .date {
+    background-color: #fbfbfb !important;
+    border: none;
+    font-size: .9rem;
+    opacity: .5;
+    min-width: 20rem;
+    margin: 0.75rem 0;
+    padding: 0.8rem 0.5rem;
+    border-radius: 0.37rem !important;
+  }
+  
+  .input-radio {
+    margin: .5rem 0;
+  }
+  
+  .password-input {
+    position: relative;
+  }
+  
+  .pass-toggle {
+    position: absolute;
+    top: 70%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #bdb8b8;
+    cursor: pointer;
+  }
+  
+  
+  @media only screen and (min-width:1300px) {
+    .tech-main-container {
+      form {
+        flex-direction: row;
+      }
+    }
+    
+  }

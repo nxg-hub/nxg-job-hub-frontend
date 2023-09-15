@@ -1,8 +1,11 @@
 import React from 'react'
+import { TechTalent } from './TechTalent'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <main>
+      <TechTalent />
+    </main>
   )
 }
 
