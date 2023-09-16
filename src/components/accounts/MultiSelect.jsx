@@ -1,23 +1,13 @@
 import React, {useState} from 'react';
 import Select from 'react-select';
-import { jobTypes, jobs, workModes } from '../../utils/data';
+import { jobs, workModes } from '../../utils/data';
 import FileUploader from './FileUploader';
 
 const MultiSelect = () => {
-    const [selectedJobTypes, setSelectedJobTypes] = useState([]);
     const [selectedJobs, setSelectedJobs] = useState([]);
     const [selectedWorkMode, setSelectedWorkMode] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
+    // const [selectedFile, setSelectedFile] = useState(null);
 
-
-    const handleMultiSelectJobType = (selectedOptions) => {
-        setSelectedJobTypes(selectedOptions);
-    }
-
-    const jobTypeOptions = jobTypes.map((jobType) => ({
-        value: jobType, 
-        label: jobType, 
-    }));
 
     const handleMultiSelectJobs = (selectedOptions) => {
         setSelectedJobs(selectedOptions);
@@ -40,16 +30,7 @@ const MultiSelect = () => {
 
   return (
     <div>
-        <div className="job-types">
-            <label>Choose your prefered job types</label>
-            <Select 
-            options={jobTypeOptions}
-            isMulti
-            onChange={handleMultiSelectJobType}
-            value={selectedJobTypes}
-        />
-        </div>
-        <div className="jobs" style={{margin: '.7rem 0'}}>
+        <div className="jobs" style={{marginBottom: '.7rem'}}>
             <label>Choose your job interests</label>
             <Select 
             options={jobOptions}
@@ -70,12 +51,23 @@ const MultiSelect = () => {
         <div className="photo-upload"style={{margin: '.7rem 0'}}>
             <FileUploader 
                 title='Upload your passport'
-                onFileSelectSuccess={(file) => setSelectedFile(file)} // Pass the success callback function
+                onFileSelectSuccess={(file) => (file)} // Pass the success callback function
                 onFileSelectError={({error}) => alert(error)} 
             />
-            {selectedFile && 
-                <span>Uploaded {selectedFile.name}</span>
-            }
+        </div>
+        <div className="resume">
+            <FileUploader
+                title='Upload your Resume / CV'
+                onFileSelectSuccess={(file) => (file)} 
+                onFileSelectError={({error}) => alert(error)} 
+            />
+        </div>
+        <div className="cover-letter">
+            <FileUploader
+                title='Upload your Cover Letter'
+                onFileSelectSuccess={(file) => (file)} 
+                onFileSelectError={({error}) => alert(error)} 
+            />
         </div>
     </div>
   )

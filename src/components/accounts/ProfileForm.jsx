@@ -18,9 +18,7 @@ function ProfileForm() {
     const [birthDate, setBirthDate] = useState(new Date());
     const [selectedOption, setSelectedOption] = useState('');
     const [country, setCountry] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [city, setCity] = useState('');
-    const [address, setAddress] = useState('');
+    
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -144,27 +142,7 @@ function ProfileForm() {
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Enter your nationality"
             />
-            <Inputs 
-                type='text'
-                title='Zip Code'
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
-                placeholder="Enter zip code"
-            />
-            <Inputs 
-                type='text'
-                title='City'
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                placeholder="Enter your City"
-            />
-            <Inputs 
-                type='text'
-                title='Address'
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter your residential address"
-            />
+            
         </div>
     </main>
   )

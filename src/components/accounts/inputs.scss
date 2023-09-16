@@ -1,4 +1,5 @@
 .tech-main-container {
+  text-align: center;
     background: #ffffff;
     h1 {
       text-align: center;
@@ -7,7 +8,7 @@
       line-height: 2.25rem;
       font-weight: bolder;
     }
-    form {
+    .forms {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -21,13 +22,13 @@
     padding: 1rem;
   }
   
-  .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader {
+  .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader, .letter, .portfolio {
     label {
         display: flex;
         font-size: .8rem;
         font-weight: 600;
     }
-    input, select {
+    input, select, textarea {
         display: block;
         margin: 0.75rem 0;
         padding: 0.8rem 0.5rem;
@@ -90,7 +91,7 @@
   
   @media only screen and (min-width:1300px) {
     .tech-main-container {
-      form {
+      .forms {
         flex-direction: row;
       }
     }

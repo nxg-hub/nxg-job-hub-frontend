@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { certifications, levels, qualifications } from '../../utils/data';
-import MultiSelect from './MultiSelect';
+import Inputs from './Inputs';
+import { certifications, levels, qualifications, jobTypes } from '../../utils/data';
+import Select from 'react-select';
 
 const JobForm = () => {
+    const [zipCode, setZipCode] = useState('');
+    const [city, setCity] = useState('');
+    const [address, setAddress] = useState('');
     const [selectedQualification, setSelectedQualification] = useState(qualifications[0]);
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedCertification, setSelectedCertification] = useState('');
     const [selectedLevel, setSelectedLevel] = useState('');
+    const [selectedJobTypes, setSelectedJobTypes] = useState([]);
+    // const [portfolioLink, setPortfolioLink] = useState('');
+    
 
     const handleQualification = (e) => {
         setSelectedQualification(e.target.value)
@@ -22,9 +29,39 @@ const JobForm = () => {
         setSelectedLevel(e.target.value);
     }
 
+    const handleMultiSelectJobType = (selectedOptions) => {
+        setSelectedJobTypes(selectedOptions);
+    }
+
+    const jobTypeOptions = jobTypes.map((jobType) => ({
+        value: jobType, 
+        label: jobType, 
+    }));
+
   return (
     <main>
         <div className="left">
+         <Inputs 
+                type='text'
+                title='Zip Code'
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                placeholder="Enter zip code"
+            />
+            <Inputs 
+                type='text'
+                title='City'
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Enter your City"
+            />
+            <Inputs 
+                type='text'
+                title='Address'
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter your residential address"
+            />
             <div className='qualification'>
                 <label>Select Highest Qualification</label>
                 <select value={selectedQualification} onChange={handleQualification}>
@@ -104,7 +141,24 @@ const JobForm = () => {
                     ))}
                 </select>
             </div>
-            <MultiSelect />
+            <div className="job-types">
+                <label>Choose your prefered job types</label>
+                <Select 
+                    options={jobTypeOptions}
+                    isMulti
+                    onChange={handleMultiSelectJobType}
+                    value={selectedJobTypes}
+                />
+            </div>
+            {/* <div className="portfolio">
+                <label>Insert Portfolio/Linkedin Link</label>
+                <input 
+                    type="url" 
+                    value={portfolioLink}
+                    onChange={(e) => setPortfolioLink(e.target.value)}
+                    placeholder='Insert link'
+                />
+            </div> */}
         </div>
         
     </main>

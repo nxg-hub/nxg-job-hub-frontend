@@ -1,49 +1,33 @@
-import React, { useRef } from 'react';
+import React, {useRef } from 'react';
 
-const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSuccess }) => {
+const FileUploader = ({ title, onFileSelectError, onFileSelectSuccess }) => {
   const fileInput = useRef(null);
 
-  const allowedFileTypes = [
-    'image/jpeg',
-    'image/png',
-    'image/jpg',
-    'application/pdf',
-    'application/docx',
-  ];
-
   const handleFileInput = (e) => {
-    const file = e.target.files[0];
-    if (!file) {
+    const selectedFile = e.target.files[0];
+
+    if (!selectedFile) {
+      alert("Select a file")
       return; // No file selected, do nothing
     }
 
-    if (!allowedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "Invalid file type" });
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      onFileSelectError({ error: "File cannot exceed more than 5MB" });
       return;
     }
 
-    // Check file size
-    if (file.size > 5 * 1024 * 1024) {
-      // File size exceeds 5MB
-      onFileSelectError({ error: "File cannot exceed more than 5MB" });
-    } else {
-      // File size is within limit, trigger success callback
-      onFileSelectSuccess(file);
-    }
+    onFileSelectSuccess(selectedFile);
   };
-
 
   return (
     <div className='file-uploader'>
-        <label>{title}</label>
-        <input
-            type="file"
-            accept='.jpeg, .jpg, .png, .docx, .pdf'
-            onChange={handleFileInput}
-            ref={fileInput} // Reference to the file input element
-            style={{display:'none'}}
-        />
-        <button onClick={() => fileInput.current && fileInput.current.click()}>{title}</button>
+      <label>{title}</label>
+      <input
+        type="file"
+        accept='.jpeg, .jpg, .png, .docx, .pdf'
+        onChange={handleFileInput}
+        ref={fileInput}
+      />
     </div>
   );
 };
