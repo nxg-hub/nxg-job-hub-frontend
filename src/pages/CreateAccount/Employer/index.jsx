@@ -27,7 +27,7 @@ const Employer = () => {
     }
   };
   return (
-    <div className={s.Employer}>
+    <div className={"Employer"}>
       <h1>REGISTER AS AN EMPLOYER</h1>
       {/* Form Wrapper */}
       <div className={s.FormWrapper}>

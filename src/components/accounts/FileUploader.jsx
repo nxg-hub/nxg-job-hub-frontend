@@ -1,14 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 
-const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSuccess }) => {
+const FileUploader = ({
+  title,
+  onFileSelect,
+  onFileSelectError,
+  onFileSelectSuccess,
+}) => {
   const fileInput = useRef(null);
 
   const allowedFileTypes = [
-    'image/jpeg',
-    'image/png',
-    'image/jpg',
-    'application/pdf',
-    'application/docx',
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "application/pdf",
+    "application/docx",
   ];
 
   const handleFileInput = (e) => {
@@ -32,18 +37,19 @@ const FileUploader = ({ title, onFileSelect, onFileSelectError, onFileSelectSucc
     }
   };
 
-
   return (
-    <div className='file-uploader'>
-        <label>{title}</label>
-        <input
-            type="file"
-            accept='.jpeg, .jpg, .png, .docx, .pdf'
-            onChange={handleFileInput}
-            ref={fileInput} // Reference to the file input element
-            style={{display:'none'}}
-        />
-        <button onClick={() => fileInput.current && fileInput.current.click()}>{title}</button>
+    <div className="file-uploader">
+      <label>{title}</label>
+      <input
+        type="file"
+        accept=".jpeg, .jpg, .png, .docx, .pdf"
+        onChange={handleFileInput}
+        ref={fileInput} // Reference to the file input element
+        style={{ display: "none" }}
+      />
+      <button onClick={() => fileInput.current && fileInput.current.click()}>
+        {title}
+      </button>
     </div>
   );
 };
