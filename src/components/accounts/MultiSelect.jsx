@@ -7,8 +7,6 @@ const MultiSelect = () => {
   const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [selectedWorkMode, setSelectedWorkMode] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-
   const handleMultiSelectJobType = (selectedOptions) => {
     setSelectedJobTypes(selectedOptions);
   };

@@ -1,21 +1,8 @@
 import React, { useRef } from "react";
 
-const FileUploader = ({
-  title,
-  onFileSelect,
-  onFileSelectError,
-  onFileSelectSuccess,
-}) => {
+
 const FileUploader = ({ title, onFileSelectError, onFileSelectSuccess }) => {
   const fileInput = useRef(null);
-
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/png",
-    "image/jpg",
-    "application/pdf",
-    "application/docx",
-  ];
 
   const handleFileInput = (e) => {
     const selectedFile = e.target.files[0];
