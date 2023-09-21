@@ -14,4 +14,5 @@ const jobVacancy = [
   "Volunteer",
   "Freelance",
 ];
-export { recruiterPosition, jobVacancy };
+const genderOption = ["Male", "Female", "Other"];
+export { recruiterPosition, jobVacancy, genderOption };
