@@ -17,24 +17,33 @@ const TextField = ({
     password: false,
     confirmPassword: false,
   });
-  const showPassword = () => {
-    // setShow({ ...show, [eye]: !show[eye] });
+  const showPassword = (e) => {
+    const alias = e.currentTarget.getAttribute("data-name")
+
+    setVisibility({
+      ...visibility,
+      [alias]: !visibility[`${alias}`],
+    });
+    console.log(visibility);
   };
   const Eye = () => {
-    if (type === "password") {
-      return (
-        <button onClick={showPassword} type="button">
-          {visibility.password ? <BsEyeSlash /> : <BsEye />}
-        </button>
+    if (name === "password") {
+      return visibility.password ? (
+        <BsEyeSlash title="hide password" onClick={showPassword} data-name="password" />
+      ) : (
+        <BsEye title="show password" data-name="password" onClick={showPassword} />
       );
-    } else if (type === "password") {
-      return (
-        <button onClick={showPassword} type="button">
-          {visibility.password ? <BsEyeSlash /> : <BsEye />}
-        </button>
+    } else if (name === "confirmPassword") {
+      return visibility.confirmPassword ? (
+        <BsEyeSlash data-name="confirmPassword" onClick={showPassword} />
+      ) : (
+        <BsEye data-name="confirmPassword" onClick={showPassword} />
       );
+    } else {
+      return <></>;
     }
   };
+
   return (
     <div className={s.TextField}>
       {label && (
@@ -52,10 +61,10 @@ const TextField = ({
           value={value}
           id={id}
           name={name}
-          type={type}
-          required={required ? "true" : "false"}
+          type={type === "password" && visibility[`${name}`] ? "text" : type}
+          required={required ? true : false}
         />
-        {}
+        {Eye()}
       </span>
     </div>
   );
