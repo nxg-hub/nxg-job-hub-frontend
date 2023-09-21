@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React from 'react';
 import Inputs from '../../../components/accounts/Inputs';
 import '../../../components/accounts/inputs.scss';
 import { PhoneInput } from 'react-international-phone';
@@ -8,30 +8,19 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function ProfileForm() {
-    const [fullName, setFullName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [birthDate, setBirthDate] = useState(new Date());
-    const [selectedOption, setSelectedOption] = useState('');
-    const [country, setCountry] = useState('');
-    
-
+function ProfileForm ({formData, onUpdateFormData}) {
+    // const [country, setCountry] = useState('');
     const handleShowPassword = () => {
-        setShowPassword(!showPassword);
+        onUpdateFormData({ ...formData, showPassword: !formData.showPassword});
     }
 
     const handleShowConfirmPassword = () => {
-        setShowConfirmPassword(!showConfirmPassword);
+        onUpdateFormData({ ...formData, showConfirmPassword: !formData.showConfirmPassword});
     }
 
     const onValueChange = (e) => {
-        setSelectedOption(e.target.value);
-      }
+        onUpdateFormData({ ...formData, selectedOption: e.target.value});
+    }
 
   return (
     <main>
@@ -39,42 +28,51 @@ function ProfileForm() {
             <Inputs 
                 type='text'
                 title='Full Name'
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={formData.fullName}
+                onChange={(e) => onUpdateFormData({...formData, fullName: e.target.value})}
                 placeholder="Enter your full name"
+                errorMessage='Username should be a least of 8-16 characters and should not inculde special charaters!'
+                pattern="^[A-Za-z0-9]{8,16}$"
+                required
             />
             <Inputs 
                 type='email'
                 title='Email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={(e) => onUpdateFormData({...formData, email: e.target.value})}
                 placeholder="example@gmail.com"
+                errorMessage='Email must inculde special charaters like @ and .!'
+                required
             />
             <div className="phone ">
                 <label>Phone</label>
                 <PhoneInput
                     inputStyle={{backgroundColor: '#fbfbfb', border: 'none', margin: '0.75rem 0', 
-                    padding:'0.8rem 0.5rem', minWidth:'16.2rem', fontSize:'.9rem', opacity:'.5', 
+                    padding:'0.8rem 0.5rem', width:'18.2rem', fontSize:'.9rem', opacity:'.5', 
                     borderTopRightRadius:'0.37rem', borderBottomRightRadius:'0.37rem'}}
                     defaultCountry="ng"
-                    value={phone}
-                    onChange={setPhone}
+                    value={formData.phone}
+                    onChange={(value) => onUpdateFormData({...formData, phone: value})}
                     required 
                 />
             </div>
             <div className="password-input">
                 <Inputs 
-                    type={showPassword ? 'text' : 'password'}
+                    type={formData.showPassword ? 'text' : 'password'}
                     title='Password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={(e) => onUpdateFormData({...formData, password: e.target.value})}
                     placeholder="*******"
+                    autoComplete='new-password'
+                    errorMessage='Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!'
+                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"//Minimum eight characters, at least one letter, one number and one special character
+                    required
                 />
                 <span 
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={handleShowPassword}
                 className='pass-toggle'
                 >
-                {showPassword ? (
+                {formData.showPassword ? (
                     <BsEye onClick={handleShowPassword}/>
                     ) : (
                     <BsEyeSlash onClick={handleShowPassword}/>
@@ -84,17 +82,21 @@ function ProfileForm() {
             </div>
             <div className="password-input">
                 <Inputs 
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    type={formData.showConfirmPassword ? 'text' : 'password'}
                     title='Confirm Password'
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={formData.confirmPassword}
+                    onChange={(e) => onUpdateFormData({...formData, confirmPassword: e.target.value})}
                     placeholder="*******"
+                    autoComplete='new-password'
+                    errorMessage='Passwords did not match!'
+                    pattern={formData.password} //Set the pattern to match the password
+                    required
                 />
                 <span 
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                onClick={handleShowConfirmPassword}
                 className='pass-toggle'
                 >
-                {showConfirmPassword ? (
+                {formData.showConfirmPassword ? (
                     <BsEye onClick={handleShowConfirmPassword}/>
                     ) : (
                     <BsEyeSlash onClick={handleShowConfirmPassword}/>
@@ -106,8 +108,8 @@ function ProfileForm() {
                 <label>Date of Birth</label>
                 <DatePicker 
                     className='date'
-                    selected={birthDate}
-                    onChange={(date) => setBirthDate(date)}
+                    selected={formData.birthDate}
+                    onChange={(date) => onUpdateFormData({...formData, birthDate: date})}
                 />
             </div>
             <div className="gender">
@@ -117,7 +119,7 @@ function ProfileForm() {
                         type="radio"
                         title="Male"
                         value="Male"
-                        checked={selectedOption === 'Male'}
+                        checked={formData.selectedOption === 'Male'}
                         onChange={onValueChange}
                         style={{marginRight:'.5rem'}}
                     />
@@ -129,20 +131,20 @@ function ProfileForm() {
                         type="radio"
                         title="Female"
                         value="Female"
-                        checked={selectedOption === 'Female'}
+                        checked={formData.selectedOption === 'Female'}
                         onChange={onValueChange}
                         style={{marginRight:'.5rem'}}
                     />
                     Female
                 </label>
             </div>
-            <Inputs 
+            {/* <Inputs 
                 type='text'
                 title='Nationality'
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Enter your nationality"
-            />
+            /> */}
             
         </div>
     </main>

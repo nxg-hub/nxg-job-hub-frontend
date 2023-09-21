@@ -1,26 +1,26 @@
 .tech-main-container {
-  text-align: center;
     background: #ffffff;
     h1 {
       text-align: center;
       margin: 1rem 0;
-      font-size: 1.9rem;
+      font-size: 1.4rem;
       line-height: 2.25rem;
       font-weight: bolder;
+      color: #3636f9;
     }
     .forms {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      
     }
-  }
+}
   
-  .left {
-    display: block;
-    padding: 1rem;
-  }
+.left {
+  display: block;
+   padding: 1rem;
+   width: 20rem;
+}
   
   .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader, .letter, .portfolio {
     label {
@@ -36,13 +36,28 @@
         border-radius: 0.37rem;
         font-size: .9rem;
         opacity: .6;
-        min-width: 20rem;
+        width: 18rem;
         background-color: #fbfbfb;
     }
     input ::placeholder {
       color: #dfdfdf;
     }
+    p {
+      font-size: 0.7rem;
+      margin-bottom: 0.5rem;
+      line-height: .8rem;
+      color: red;
+      display: none;
+    }
+    input:invalid[focused="true"] {
+      border: 0.1rem solid red;
+    }
+
+    input:invalid[focused="true"] ~ p {
+      display: block;
+    }
   }
+
   .phone, .dob, .gender, .experience {
     label {
         display: flex;
@@ -54,7 +69,7 @@
   .react-international-phone-input-container .react-international-phone-country-selector-button {
     background-color: #fbfbfb !important;
     border: none;
-    min-width: 3rem;
+    width: 4rem;
     margin: 0.75rem 0;
     padding: 0.8rem 0.5rem;
     border-radius: 0.37rem 0 !important;
@@ -65,7 +80,7 @@
     border: none;
     font-size: .9rem;
     opacity: .5;
-    min-width: 20rem;
+    width: 18rem;
     margin: 0.75rem 0;
     padding: 0.8rem 0.5rem;
     border-radius: 0.37rem !important;
@@ -81,19 +96,61 @@
   
   .pass-toggle {
     position: absolute;
-    top: 70%;
-    right: 10px;
+    top: 50%;
+    left: 16rem;
     transform: translateY(-50%);
     color: #bdb8b8;
     cursor: pointer;
   }
+
+  .btn {
+    button {
+      color: #fafafa;
+      border: none;
+      padding: .6rem;
+      width: 80%;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: .37rem;
+      cursor: pointer;
+    }
+  }
   
+  @media only screen and (min-width:768px) {
+    .btn {
+      button {
+        width: 40%;
+      }
+    }
+  }
   
-  @media only screen and (min-width:1300px) {
+  @media only screen and (min-width:1440px) {
     .tech-main-container {
+      h1 {
+        font-size: 1.9rem;
+      }
       .forms {
         flex-direction: row;
       }
     }
-    
+    .left {
+      width: 30rem;
+    }
+    .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader, .letter, .portfolio {
+     input {
+      width: 22rem;
+     }
+    }
+    .date {
+      width: 22rem;
+    }
+    .pass-toggle {
+      top: 70%;
+      left: 20rem;
+    }
+    .btn {
+      button {
+        width: 30%;
+      }
+    }
   }
