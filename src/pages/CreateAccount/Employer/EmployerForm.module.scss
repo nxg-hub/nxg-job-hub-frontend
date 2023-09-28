@@ -3,31 +3,57 @@
   left: 50%;
   top: 50%;
   width: 80vw;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   max-width: 400px;
   background-color: white;
-  padding:16px 32px;
+  padding: 16px 32px;
   border-radius: 5px;
   overflow-y: scroll;
-  &::-webkit-scrollbar{
-    width :2px ;
-
-}
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
     background-color: #f8f8f8;
-
-}
-  &::-webkit-scrollbar-track{
+  }
+  &::-webkit-scrollbar-track {
     box-shadow: inset 0px 0px 10px #f2f2f2;
     border-radius: 50%;
-}
-.top{
-  h5{
-    font-weight: 500;
-    font-size: 13px;
   }
+  .top {
+    h5 {
+      font-weight: 500;
+      font-size: 13px;
+    }
+  }
+  .signinOptions {
+    
+.formDivider{
+display: flex;
+    width: 90%;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    gap: 10px;
+    
+    .line {
+      width: 45%;
+      height: 1px;
+      background: grey;
+    }
 }
-  .NameFields, .GenderFields{
+
+    
+    .optionButton{
+      width: 100%;
+      background: transparent;
+      padding: 4px 16px;
+      border: 1px solid #c2c0c0;
+      border-radius: 4px;
+      margin-block: 4px;
+    }
+  }
+  .NameFields,
+  .GenderFields {
     display: flex;
     gap: 15px;
   }
@@ -39,7 +65,7 @@
     padding-bottom: 3px;
   }
 
-  .GenderLabel{
+  .GenderLabel {
     margin-top: 10px;
   }
   .Bottom {

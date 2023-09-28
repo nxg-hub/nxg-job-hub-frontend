@@ -217,20 +217,6 @@ const EmployerRegistration = () => {
             />
             {errors.phone && <h5 className={s.inputErr}> {errors.phone}</h5>}
           </div>
-          {/* <div className={s.gender}>
-            <p className={s.TextLabel}>Gender</p>
-            <Select
-              styles={{ backgroundColor: "rgb(233, 233, 233)" }}
-              onChange={(e) =>
-                updateField(e.value, "gender", setFormdata, formData)
-              }
-              className={s.Select}
-              id="gender"
-              required
-              options={genderOptions}
-            />
-            {errors.gender && <h5> {errors.gender}</h5>}
-          </div> */}
             <p className={`${s.TextLabel} ${s.GenderLabel}`}>Gender</p>
           <div className={s.GenderFields}>
             <TextField
@@ -282,7 +268,7 @@ const EmployerRegistration = () => {
             type={"password"}
             name={"password"}
             placeholder={"Password"}
-            id="password"
+            id="password" 
             required
             err={errors.password}
             value={formData.password}
@@ -302,6 +288,24 @@ const EmployerRegistration = () => {
             id="confirmPassword"
           />
         </div>
+        
+          <div className={s.signinOptions}>
+          <div className={s.formDivider}>
+          <p className={s.line}></p>
+          <p>or</p>
+          <p className={s.line}></p>
+          </div>
+          <div>
+          <button type={"button"} className={s.optionButton}>
+          Sign in with Google
+          
+          </button>
+ <button type={"button"} className={s.optionButton}>
+          Sign in with Linkedin
+          </button>
+          </div>
+          </div>
+        
         <div className={s.Bottom}>
           <div className={s.privacy}>
             <TextField
