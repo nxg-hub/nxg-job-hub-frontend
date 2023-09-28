@@ -6,20 +6,29 @@ const TextField = ({
   value,
   name,
   onchange,
-  required,
   id,
-  autoFocus,
-  disabled,
-  placeholder,
   label,
   err,
+  onblur,
+  ...props
 }) => {
   const [visibility, setVisibility] = useState({
     password: false,
     confirmPassword: false,
   });
+  const focusParent = (e) => {
+    const parent = e.target.parentNode;
+    parent.style.borderColor = "#000000";
+    parent.style.borderWidth = "2px";
+  };
+  const blurParent = (e) => {
+    const parent = e.target.parentNode;
+    parent.style.borderColor = "rgb(194, 192, 192)";
+    parent.style.borderWidth = ".5px";
+  };
 
   return (
+    
     <div className={s.TextField}>
       {label && (
         <label className={s.TextLabel} htmlFor={id}>
@@ -28,20 +37,23 @@ const TextField = ({
       )}
       <span className={s.inputWrapper}>
         <input
+          onFocus={focusParent}
+          onBlur={(e) => {
+            blurParent(e);
+            onblur && onblur();
+          }}
           className={s.inputField}
-          placeholder={placeholder}
-          disabled={disabled}
-          autoFocus={autoFocus}
           onChange={onchange}
           value={value}
           id={id}
           name={name}
+          err={err && err.length > 0 ? "true" : "false"}
           type={type === "password" && visibility[`${name}`] ? "text" : type}
-          required={required ? true : false}
+          {...props}
         />
         {Eye(name, visibility, setVisibility)}
       </span>
-      {err && <h5>{err}</h5>}
+      {err && <h5 className={s.inputErr}>{err}</h5>}
     </div>
   );
 };

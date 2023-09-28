@@ -1,0 +1,67 @@
+.TextField {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 2px;
+  margin-block: 5px;
+  .TextLabel {
+    font-size: 12px;
+    color: darkslategrey;
+    font-weight: 500;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+  .inputWrapper {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgb(194, 192, 192);
+    border-radius: 3px;
+    background-color: rgb(233, 233, 233);
+    padding-inline: 10px;
+    &:has(input[type="checkbox"]){
+      padding: 0;
+      width:min-content ;
+      height: 1px;
+      border: none;
+      background-color: white;
+      accent-color:#2596BE;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+    .inputField {
+      height: 38px;
+      font-size: 16px;
+      color: #494848;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      &[type="password"] {
+        width: 95%;
+      }
+      &[type="checkbox"] {
+        width: max-content;
+        height: 10px;
+      }
+    }
+    & [err="true"] {
+      border-color:rgb(179, 33, 62);
+    }
+    svg {
+      cursor: pointer;
+      font-size: 28px;
+      color: #7b7b7b;
+      padding-left: 10px;
+      border-left: 0.5px solid rgba(128, 128, 128, 0.349);
+    }
+  }
+  .inputErr {
+    color: rgb(179, 33, 62);
+    font-size: 12px;
+  }
+}

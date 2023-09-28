@@ -1,0 +1,64 @@
+.formWrapper {
+  margin: auto;
+  width: 90%;
+  max-width: 500px;
+
+  .PhoneInput {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(194, 192, 192);
+    padding: 20px;
+    width: 100%;
+    color: red;
+
+    font-size: 0.9rem;
+  }
+
+  .TextLabel {
+    font-size: 12px;
+    color: darkslategrey;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    opacity: 0.8;
+  }
+  .Bottom {
+    
+    text-align: center;
+    margin-top: 5px;
+    p {
+      font-size: 13px;
+    }
+    .privacy{
+      a {
+        color: rgb(7, 113, 219);
+      }
+      display: flex;
+      flex-direction: row;
+      label{
+        font-size: 12px;
+      }
+    }
+    button {
+      
+      background-color: rgb(19, 104, 188);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      width: 90%;
+      margin-block: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      &[disabled]{
+        background-color: rgb(194, 192, 192)
+      }
+    }
+  }
+}
+.inputErr {
+  color: rgb(179, 33, 62);
+  font-size: 12px;
+}
