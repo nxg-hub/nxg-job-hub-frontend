@@ -8,8 +8,6 @@ const CreateAccount = () => {
       <hr />
       <h3>Available routes:</h3>
       <NavLink to={"employer"}>As Employer</NavLink>
-      <NavLink to={"techtalent"} style={{marginLeft: '.6rem'}}>As Tech-Talent</NavLink>
-
     </div>
   );
 };

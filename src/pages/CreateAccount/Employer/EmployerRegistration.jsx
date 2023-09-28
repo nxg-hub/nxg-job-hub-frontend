@@ -1,9 +1,8 @@
 import { useState } from "react";
-import Select from "react-select";
 import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 import s from "./EmployerForm.module.scss";
 import TextField from "../../../components/TextField";
-import { genderOption } from "../../../utils/data/employer";
 import { updateField } from "../../../utils/functions/updateForm";
 import { Link } from "react-router-dom";
 const EmployerRegistration = () => {
@@ -31,14 +30,8 @@ const EmployerRegistration = () => {
     dob: "",
     acceptedPrivacy: "",
   };
-  const genderOptions = genderOption.map((gender) => ({
-    value: gender,
-    label: gender,
-  }));
   const [formData, setFormdata] = useState(data);
   const [errors, setErrors] = useState(err);
-  // const [hasError, setHasError] = useState(false);
-
   const confirmPassword = (e) => {
     const { name, value } = e.target;
     if (
@@ -135,6 +128,10 @@ const EmployerRegistration = () => {
   };
   return (
     <div className={s.formWrapper}>
+      <div className={s.top}>
+        <h3>Let's get you started!</h3>
+        <h5>Get started and connect with different professionals.</h5>
+      </div>
       <form onSubmit={validateForm}>
         {/* User's personal information */}
         <div>
@@ -194,39 +191,33 @@ const EmployerRegistration = () => {
             err={errors.email}
             value={formData.email}
           />
-          <div className="phone ">
+          <div className={s.phone}>
             <p className={s.TextLabel}>Phone</p>
             <PhoneInput
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "3px",
                 padding: "0px",
-                maxHeight: "max-content",
+                maxHeight: "28px",
               }}
               inputProps={{
                 required: true,
                 "aria-required": true,
-                onBlur: validatePhone
+                onBlur: validatePhone,
               }}
               inputStyle={{
                 width: "100%",
                 border: "1px solid rgb(194, 192, 192)",
-                height: "38px",
-              }}
-              countrySelectorStyleProps={{
-                borderRadius: "50px",
-                height: "400px",
+                height: "30px",
               }}
               value={formData.phone}
               required
               id="phone"
-            
               onChange={(e) => updateField(e, "phone", setFormdata, formData)}
             />
             {errors.phone && <h5 className={s.inputErr}> {errors.phone}</h5>}
           </div>
-          <div className={s.gender}>
+          {/* <div className={s.gender}>
             <p className={s.TextLabel}>Gender</p>
             <Select
               styles={{ backgroundColor: "rgb(233, 233, 233)" }}
@@ -239,8 +230,33 @@ const EmployerRegistration = () => {
               options={genderOptions}
             />
             {errors.gender && <h5> {errors.gender}</h5>}
+          </div> */}
+            <p className={`${s.TextLabel} ${s.GenderLabel}`}>Gender</p>
+          <div className={s.GenderFields}>
+            <TextField
+              type="radio"
+              id={"male"}
+              label={"Male"}
+              value={"Male"}
+              name={"gender"}
+              err={errors.gender}
+              onchange={() =>
+                updateField("male", "gender", setFormdata, formData)
+              }
+            />
+            <TextField
+              id={"gender"}
+              label={"Female"}
+              value={"Female"}
+              name={"gender"}
+              err={errors.gender}
+              onchange={() =>{
+                updateField("female", "gender", setFormdata, formData)
+              console.log(formData)}
+              }
+              type="radio"
+            />
           </div>
-
           <TextField
             onchange={(e) =>
               updateField(e.target.value, e.target.name, setFormdata, formData)
@@ -249,6 +265,7 @@ const EmployerRegistration = () => {
             type={"date"}
             name="dob"
             required
+            placeholder={"dd/mm/yy"}
             id={"dob"}
             err={errors.dob}
             value={formData.dob}
@@ -303,19 +320,25 @@ const EmployerRegistration = () => {
               }
             />
             <label htmlFor="privacy">
-              By checking this box you accept the{" "}
+              I agree to the{" "}
               <Link to="./">Terms of service</Link> and{" "}
               <Link to="./">Privacy Policy</Link>
             </label>
           </div>
 
-          <button disabled={formData.acceptedPrivacy ? false: true} type="submit">Create account</button>
+          <button
+            disabled={formData.acceptedPrivacy ? false : true}
+            type="submit"
+          >
+            Create account
+          </button>
           <p>
             Already have an account? <Link to="./">Log in</Link>
           </p>
         </div>
       </form>
     </div>
+    
   );
 };
 

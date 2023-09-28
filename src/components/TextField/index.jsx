@@ -29,13 +29,13 @@ const TextField = ({
 
   return (
     
-    <div className={s.TextField}>
+    <div className={s.TextFieldWrapper}>
       {label && (
-        <label className={s.TextLabel} htmlFor={id}>
+        <label className={s.FieldLabel} htmlFor={id}>
           {label}
         </label>
       )}
-      <span className={s.inputWrapper}>
+      <span className={s.InputFieldWrapper}>
         <input
           onFocus={focusParent}
           onBlur={(e) => {

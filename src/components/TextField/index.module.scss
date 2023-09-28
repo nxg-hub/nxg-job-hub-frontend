@@ -1,40 +1,39 @@
-.TextField {
+@mixin hideWrapper() {
+  padding: 0;
+  width: min-content;
+  height: 2px;
+  border: none;
+  accent-color: #2596be;
+}
+.TextFieldWrapper {
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 2px;
   margin-block: 5px;
-  .TextLabel {
-    font-size: 12px;
-    color: darkslategrey;
+ 
+  .FieldLabel {
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
     font-weight: 500;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    opacity: 0.8;
-    text-transform: uppercase;
   }
-  .inputWrapper {
+  .InputFieldWrapper {
     width: 100%;
     max-width: 500px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 5px;
     border: 1px solid rgb(194, 192, 192);
     border-radius: 3px;
-    background-color: rgb(233, 233, 233);
     padding-inline: 10px;
-    &:has(input[type="checkbox"]){
-      padding: 0;
-      width:min-content ;
-      height: 1px;
-      border: none;
-      background-color: white;
-      accent-color:#2596BE;
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
+    &:has(input[type="checkbox"]),
+    &:has(input[type="radio"]) {
+      @include hideWrapper();
     }
+   
     .inputField {
-      height: 38px;
+      height: 28px;
       font-size: 16px;
       color: #494848;
       background-color: transparent;
@@ -48,9 +47,16 @@
         width: max-content;
         height: 10px;
       }
+      &[type="radio"] {
+        width: min-content;
+        height: 10px;
+        display: flex;
+        align-self:center;
+        margin-top: 3px;
+      }
     }
     & [err="true"] {
-      border-color:rgb(179, 33, 62);
+      border-color: rgb(179, 33, 62);
     }
     svg {
       cursor: pointer;
@@ -63,5 +69,11 @@
   .inputErr {
     color: rgb(179, 33, 62);
     font-size: 12px;
+  }
+  &:has(input[type="radio"]) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
   }
 }

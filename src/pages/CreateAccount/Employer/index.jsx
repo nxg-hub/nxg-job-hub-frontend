@@ -1,9 +1,9 @@
 import EmployerRegistration from "./EmployerRegistration";
 import s from "./index.module.scss"
-
+import logo from "../../../static/images/logo_colored.png"
 const Employer = () => {
   return <div className={s.page}>
-    <h2>Create Account as Employer</h2>
+    <img src={logo} alt="" className={s.logo} />
     <EmployerRegistration />
   </div>
 }

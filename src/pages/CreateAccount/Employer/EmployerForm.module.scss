@@ -1,46 +1,65 @@
 .formWrapper {
-  margin: auto;
-  width: 90%;
-  max-width: 500px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 80vw;
+  transform: translate(-50%,-50%);
+  max-width: 400px;
+  background-color: white;
+  padding:16px 32px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar{
+    width :2px ;
 
-  .PhoneInput {
+}
+  &::-webkit-scrollbar-thumb{
+    background-color: #f8f8f8;
+
+}
+  &::-webkit-scrollbar-track{
+    box-shadow: inset 0px 0px 10px #f2f2f2;
+    border-radius: 50%;
+}
+.top{
+  h5{
+    font-weight: 500;
+    font-size: 13px;
+  }
+}
+  .NameFields, .GenderFields{
     display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(194, 192, 192);
-    padding: 20px;
-    width: 100%;
-    color: red;
-
-    font-size: 0.9rem;
+    gap: 15px;
   }
 
   .TextLabel {
-    font-size: 12px;
-    color: darkslategrey;
-    text-transform: uppercase;
+    font-size: 14px;
     font-weight: 500;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    opacity: 0.8;
+    font-family: "Inter", sans-serif;
+    padding-bottom: 3px;
+  }
+
+  .GenderLabel{
+    margin-top: 10px;
   }
   .Bottom {
-    
     text-align: center;
     margin-top: 5px;
     p {
       font-size: 13px;
     }
-    .privacy{
+    .privacy {
+      text-align: left;
       a {
         color: rgb(7, 113, 219);
       }
       display: flex;
       flex-direction: row;
-      label{
+      label {
         font-size: 12px;
       }
     }
     button {
-      
       background-color: rgb(19, 104, 188);
       border: none;
       padding: 10px 16px;
@@ -52,12 +71,13 @@
       margin-block: 5px;
       cursor: pointer;
       text-transform: uppercase;
-      &[disabled]{
-        background-color: rgb(194, 192, 192)
+      &[disabled] {
+        background-color: rgb(194, 192, 192);
       }
     }
   }
 }
+
 .inputErr {
   color: rgb(179, 33, 62);
   font-size: 12px;
