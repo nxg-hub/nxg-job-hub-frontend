@@ -9,6 +9,9 @@ const Home = () => {
       <h3>Available routes:</h3>
       <NavLink to={"/register"}>
         Create Account
+      </NavLink> <br />
+      <NavLink to={"/login"}>
+        Sign In
       </NavLink>
     </div>
   )

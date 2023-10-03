@@ -1,6 +1,8 @@
 import { useState } from "react";
 import s from "./index.module.scss";
 import { Eye } from "../../utils/functions/PasswordEye";
+import focusParent from "../../utils/functions/focusParent";
+import blurParent from "../../utils/functions/blurParent";
 const TextField = ({
   type,
   value,
@@ -16,16 +18,7 @@ const TextField = ({
     password: false,
     confirmPassword: false,
   });
-  const focusParent = (e) => {
-    const parent = e.target.parentNode;
-    parent.style.borderColor = "#000000";
-    parent.style.borderWidth = "2px";
-  };
-  const blurParent = (e) => {
-    const parent = e.target.parentNode;
-    parent.style.borderColor = "rgb(194, 192, 192)";
-    parent.style.borderWidth = ".5px";
-  };
+
 
   return (
     

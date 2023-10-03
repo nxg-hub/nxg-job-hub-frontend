@@ -1,5 +1,10 @@
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-
+ /**
+ * @param {String} name The name of the text Field
+ * @param {FormData} state
+ * @param {SetStateAction} setState
+ * @return {React.JSX} 
+ */
 export const Eye = (name, state, setState) => {
   const showPassword = (e) => {
     const alias = e.currentTarget.getAttribute("data-name");
@@ -9,6 +14,7 @@ export const Eye = (name, state, setState) => {
     });
   };
   
+
   if (name === "password") {
     return state.password ? (
       <BsEyeSlash
@@ -19,8 +25,8 @@ export const Eye = (name, state, setState) => {
     ) : (
       <BsEye
         title="show password"
-        data-name="password"
         onClick={showPassword}
+        data-name="password"
       />
     );
   } else if (name === "confirmPassword") {

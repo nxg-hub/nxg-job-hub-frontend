@@ -5,10 +5,11 @@ import s from "./EmployerForm.module.scss";
 import TextField from "../../../components/TextField";
 import { updateField } from "../../../utils/functions/updateForm";
 import { Link } from "react-router-dom";
+import AuthOptions from "../../../components/AuthOptions";
+
 const EmployerRegistration = () => {
   const data = {
-    firstname: "",
-    lastname: "",
+    name: "",
     email: "",
     phone: "",
     address: "",
@@ -19,8 +20,7 @@ const EmployerRegistration = () => {
     acceptedPrivacy: false,
   };
   const err = {
-    firstname: "",
-    lastname: "",
+    name: "",
     email: "",
     phone: "",
     gender: "",
@@ -56,39 +56,21 @@ const EmployerRegistration = () => {
       });
     }
   };
-  const validateFirstName = () => {
-    if (formData.firstname.length < 3) {
+  const validateFullName = () => {
+    if (formData.name.length < 3) {
       setErrors({
         ...errors,
-        firstname: "Name cannot be less than 3 characters",
+        name: "Name cannot be less than 3 characters",
       });
-    } else if (/\d/.test(formData.firstname)) {
+    } else if (/\d/.test(formData.name)) {
       setErrors({
         ...errors,
-        firstname: "Name cannot contain a number",
-      });
-    } else {
-      setErrors({
-        ...errors,
-        firstname: "",
-      });
-    }
-  };
-  const validateLastName = () => {
-    if (formData.lastname.length < 3) {
-      setErrors({
-        ...errors,
-        lastname: "Name cannot be less than 3 characters",
-      });
-    } else if (/\d/.test(formData.lastname)) {
-      setErrors({
-        ...errors,
-        lastname: "Name cannot contain a number",
+        name: "Name cannot contain a number",
       });
     } else {
       setErrors({
         ...errors,
-        lastname: "",
+        name: "",
       });
     }
   };
@@ -147,34 +129,15 @@ const EmployerRegistration = () => {
                 );
                 // validateFirstName();
               }}
-              onblur={validateFirstName}
-              label={"First name"}
+              onblur={validateFullName}
+              label={"Full name"}
               type={"text"}
-              name={"firstname"}
-              placeholder={"eg John"}
-              id="firstname"
+              name={"name"}
+              placeholder={"e.g John Doe"}
+              id="name"
               required
-              err={errors.firstname}
-              value={formData.firstname}
-            />
-            <TextField
-              onchange={(e) =>
-                updateField(
-                  e.target.value,
-                  e.target.name,
-                  setFormdata,
-                  formData
-                )
-              }
-              label={"Last name"}
-              type={"text"}
-              onblur={validateLastName}
-              name={"lastname"}
-              placeholder={"eg Doe"}
-              id="lastname"
-              required
-              err={errors.lastname}
-              value={formData.lastname}
+              err={errors.name}
+              value={formData.name}
             />
           </div>
           <TextField
@@ -217,10 +180,10 @@ const EmployerRegistration = () => {
             />
             {errors.phone && <h5 className={s.inputErr}> {errors.phone}</h5>}
           </div>
-            <p className={`${s.TextLabel} ${s.GenderLabel}`}>Gender</p>
+          <p className={`${s.TextLabel} ${s.GenderLabel}`}>Gender</p>
           <div className={s.GenderFields}>
             <TextField
-              type="radio"
+              type={"radio"}
               id={"male"}
               label={"Male"}
               value={"Male"}
@@ -236,10 +199,10 @@ const EmployerRegistration = () => {
               value={"Female"}
               name={"gender"}
               err={errors.gender}
-              onchange={() =>{
-                updateField("female", "gender", setFormdata, formData)
-              console.log(formData)}
-              }
+              onchange={() => {
+                updateField("female", "gender", setFormdata, formData);
+                console.log(formData);
+              }}
               type="radio"
             />
           </div>
@@ -258,7 +221,6 @@ const EmployerRegistration = () => {
           />
 
           <TextField
-            eye={"password"}
             onchange={(e) => {
               updateField(e.target.value, e.target.name, setFormdata, formData);
               confirmPassword(e);
@@ -268,13 +230,12 @@ const EmployerRegistration = () => {
             type={"password"}
             name={"password"}
             placeholder={"Password"}
-            id="password" 
+            id="password"
             required
             err={errors.password}
             value={formData.password}
           />
           <TextField
-            eye={"confirmPassword"}
             onchange={(e) => {
               updateField(e.target.value, e.target.name, setFormdata, formData);
               confirmPassword(e);
@@ -288,24 +249,7 @@ const EmployerRegistration = () => {
             id="confirmPassword"
           />
         </div>
-        
-          <div className={s.signinOptions}>
-          <div className={s.formDivider}>
-          <p className={s.line}></p>
-          <p>or</p>
-          <p className={s.line}></p>
-          </div>
-          <div>
-          <button type={"button"} className={s.optionButton}>
-          Sign in with Google
-          
-          </button>
- <button type={"button"} className={s.optionButton}>
-          Sign in with Linkedin
-          </button>
-          </div>
-          </div>
-        
+
         <div className={s.Bottom}>
           <div className={s.privacy}>
             <TextField
@@ -324,25 +268,22 @@ const EmployerRegistration = () => {
               }
             />
             <label htmlFor="privacy">
-              I agree to the{" "}
-              <Link to="./">Terms of service</Link> and{" "}
+              I agree to the <Link to="./">Terms of service</Link> and{" "}
               <Link to="./">Privacy Policy</Link>
             </label>
           </div>
 
-          <button
-            disabled={formData.acceptedPrivacy ? false : true}
-            type="submit"
-          >
-            Create account
-          </button>
+       
+
+          <AuthOptions register />
+
           <p>
             Already have an account? <Link to="./">Log in</Link>
           </p>
         </div>
       </form>
+      <p className={s.backButton}>&larr;back</p>
     </div>
-    
   );
 };
 

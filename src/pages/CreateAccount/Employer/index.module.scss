@@ -4,5 +4,13 @@
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  padding: 20px 40px;
+  padding: 10px 20px;
+  .logo {
+    height: 7vw;
+    max-height: 70px;
+    width: auto;
+    position: relative;
+    z-index: 3;
+  }
+
 }

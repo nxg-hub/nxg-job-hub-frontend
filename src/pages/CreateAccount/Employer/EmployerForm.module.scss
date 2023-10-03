@@ -3,6 +3,8 @@
   left: 50%;
   top: 50%;
   width: 80vw;
+  scale: 0.95;
+  max-height: 98vh;
   transform: translate(-50%, -50%);
   max-width: 400px;
   background-color: white;
@@ -19,40 +21,21 @@
     box-shadow: inset 0px 0px 10px #f2f2f2;
     border-radius: 50%;
   }
+
   .top {
     h5 {
       font-weight: 500;
       font-size: 13px;
     }
   }
-  .signinOptions {
-    
-.formDivider{
-display: flex;
-    width: 90%;
-    align-items: center;
-    text-align: center;
-    margin: auto;
-    gap: 10px;
-    
-    .line {
-      width: 45%;
-      height: 1px;
-      background: grey;
-    }
-}
-
-    
-    .optionButton{
-      width: 100%;
-      background: transparent;
-      padding: 4px 16px;
-      border: 1px solid #c2c0c0;
-      border-radius: 4px;
-      margin-block: 4px;
+  .phone {
+    .inputErr {
+      margin-top: 5px;
+      color: rgb(179, 33, 62);
+      font-size: 12px;
     }
   }
-  .NameFields,
+  
   .GenderFields {
     display: flex;
     gap: 15px;
@@ -66,7 +49,7 @@ display: flex;
   }
 
   .GenderLabel {
-    margin-top: 10px;
+    margin-top: 5px;
   }
   .Bottom {
     text-align: center;
@@ -76,25 +59,26 @@ display: flex;
     }
     .privacy {
       text-align: left;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       a {
         color: rgb(7, 113, 219);
       }
-      display: flex;
-      flex-direction: row;
       label {
         font-size: 12px;
       }
     }
-    button {
+    >button {
       background-color: rgb(19, 104, 188);
       border: none;
-      padding: 10px 16px;
+      padding: 6px 12px;
       border-radius: 4px;
       color: white;
       font-size: 12px;
       font-weight: 500;
-      width: 90%;
-      margin-block: 5px;
+      width: 100%;
+      margin-block: 10px;
       cursor: pointer;
       text-transform: uppercase;
       &[disabled] {
@@ -103,8 +87,7 @@ display: flex;
     }
   }
 }
-
-.inputErr {
-  color: rgb(179, 33, 62);
-  font-size: 12px;
+.backButton {
+  font-size: 14px;
+  font-stretch: extra-expanded;
 }

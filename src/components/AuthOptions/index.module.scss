@@ -1,0 +1,35 @@
+.AuthOptions {
+  margin-bottom: 15px;
+  .formDivider {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    gap: 10px;
+
+    .line {
+      width: 50%;
+      height: 1px;
+      background: grey;
+    }
+  }
+
+  .optionButton {
+    width: 100%;
+    background: transparent;
+    box-shadow: 0px 4px 6px 0px rgba(84, 84, 84, 0.25);
+    border: none;
+    border-radius: 4px;
+    margin-block: 8px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    svg {
+      height: 20px;
+    }
+  }
+}

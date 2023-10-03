@@ -1,9 +1,13 @@
-import React from 'react'
+
+import EmployerLoginForm from "./EmployerLoginForm"
+import s from "./index.module.scss"
+
 
 const EmployerLogin = () => {
   return (
-    <div >
-      EmployerLogin
+    <div className={s.EmployerLogin} >
+      <div className={s.banner}></div>
+      <EmployerLoginForm />
     </div>
   )
 }

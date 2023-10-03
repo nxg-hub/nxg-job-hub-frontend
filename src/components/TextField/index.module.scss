@@ -10,7 +10,7 @@
   flex-direction: column;
   gap: 5px;
   padding: 2px;
-  margin-block: 5px;
+  margin-block: 2px;
  
   .FieldLabel {
     font-size: 14px;
@@ -23,7 +23,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
     border: 1px solid rgb(194, 192, 192);
     border-radius: 3px;
     padding-inline: 10px;
@@ -33,7 +33,7 @@
     }
    
     .inputField {
-      height: 28px;
+      height: 26px;
       font-size: 16px;
       color: #494848;
       background-color: transparent;
@@ -45,7 +45,7 @@
       }
       &[type="checkbox"] {
         width: max-content;
-        height: 10px;
+        height: 12px;
       }
       &[type="radio"] {
         width: min-content;
