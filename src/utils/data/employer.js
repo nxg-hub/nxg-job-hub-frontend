@@ -7,3 +7,5 @@ const recruiterPosition = [
   "Middle Management",
   "Junior Level",
 ];
+
+export {recruiterPosition}
