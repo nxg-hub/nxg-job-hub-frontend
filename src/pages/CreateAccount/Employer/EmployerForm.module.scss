@@ -35,7 +35,7 @@
       font-size: 12px;
     }
   }
-  
+
   .GenderFields {
     display: flex;
     gap: 15px;
@@ -63,31 +63,19 @@
       flex-direction: row;
       align-items: center;
       a {
-        color: rgb(7, 113, 219);
+        color: #2596be;
       }
       label {
         font-size: 12px;
-      }
-    }
-    >button {
-      background-color: rgb(19, 104, 188);
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      color: white;
-      font-size: 12px;
-      font-weight: 500;
-      width: 100%;
-      margin-block: 10px;
-      cursor: pointer;
-      text-transform: uppercase;
-      &[disabled] {
-        background-color: rgb(194, 192, 192);
       }
     }
   }
 }
 .backButton {
   font-size: 14px;
-  font-stretch: extra-expanded;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  text-transform: capitalize;
+  color: black;
 }

@@ -6,6 +6,10 @@ import TextField from "../../../components/TextField";
 import { updateField } from "../../../utils/functions/updateForm";
 import { Link } from "react-router-dom";
 import AuthOptions from "../../../components/AuthOptions";
+import FormSubmitBtn from "../../../components/FormSubmitBtn";
+import Checkbox from "../../../components/Checkbox";
+import RadioButton from "../../../components/RadioButton";
+import { BsArrowLeft } from "react-icons/bs";
 
 const EmployerRegistration = () => {
   const data = {
@@ -182,18 +186,19 @@ const EmployerRegistration = () => {
           </div>
           <p className={`${s.TextLabel} ${s.GenderLabel}`}>Gender</p>
           <div className={s.GenderFields}>
-            <TextField
-              type={"radio"}
+            <RadioButton
               id={"male"}
               label={"Male"}
               value={"Male"}
               name={"gender"}
+              required
               err={errors.gender}
               onchange={() =>
                 updateField("male", "gender", setFormdata, formData)
               }
             />
-            <TextField
+            <RadioButton
+              required
               id={"gender"}
               label={"Female"}
               value={"Female"}
@@ -252,8 +257,7 @@ const EmployerRegistration = () => {
 
         <div className={s.Bottom}>
           <div className={s.privacy}>
-            <TextField
-              type={"checkbox"}
+            <Checkbox
               id={"acceptedPrivacy"}
               name={"acceptedPrivacy"}
               required
@@ -273,16 +277,22 @@ const EmployerRegistration = () => {
             </label>
           </div>
 
-       
-
+          <FormSubmitBtn
+            formData={formData}
+            fieldDependency={"acceptedPrivacy"}
+            register
+            value="Create your employer account"
+          />
           <AuthOptions register />
 
           <p>
-            Already have an account? <Link to="./">Log in</Link>
+            Already have an account? <Link to="/login/employer">Log in</Link>
           </p>
         </div>
       </form>
-      <p className={s.backButton}>&larr;back</p>
+      <Link to={"/register"} className={s.backButton}>
+        <BsArrowLeft /> back
+      </Link>
     </div>
   );
 };

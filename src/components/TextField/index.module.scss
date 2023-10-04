@@ -1,17 +1,10 @@
-@mixin hideWrapper() {
-  padding: 0;
-  width: min-content;
-  height: 2px;
-  border: none;
-  accent-color: #2596be;
-}
 .TextFieldWrapper {
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 2px;
   margin-block: 2px;
- 
+
   .FieldLabel {
     font-size: 14px;
     font-family: "Inter", sans-serif;
@@ -27,11 +20,7 @@
     border: 1px solid rgb(194, 192, 192);
     border-radius: 3px;
     padding-inline: 10px;
-    &:has(input[type="checkbox"]),
-    &:has(input[type="radio"]) {
-      @include hideWrapper();
-    }
-   
+
     .inputField {
       height: 26px;
       font-size: 16px;
@@ -42,17 +31,6 @@
       width: 100%;
       &[type="password"] {
         width: 95%;
-      }
-      &[type="checkbox"] {
-        width: max-content;
-        height: 12px;
-      }
-      &[type="radio"] {
-        width: min-content;
-        height: 10px;
-        display: flex;
-        align-self:center;
-        margin-top: 3px;
       }
     }
     & [err="true"] {
@@ -69,11 +47,5 @@
   .inputErr {
     color: rgb(179, 33, 62);
     font-size: 12px;
-  }
-  &:has(input[type="radio"]) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0;
   }
 }

@@ -6,6 +6,7 @@ import s from "./index.module.scss";
  * @param {Props} props
  * @return {HTMLButtonElement|JSX}
  */
+
 const FormSubmitBtn = ({
   value,
   formData,
@@ -16,33 +17,35 @@ const FormSubmitBtn = ({
 }) => {
   return (
     <>
-      register &&{" "}
-      <button
-        className={s.FormSubmitBtn}
-        title={
-          formData[`${fieldDependency}`]
-            ? `Click to create your employer account`
-            : `Please check the box to proceed`
-        }
-        disabled={formData[`${fieldDependency}`] ? false : true}
-        type="submit"
-      >
-        Register
-      </button>
+      {register && (
+        <button
+          className={s.FormSubmitBtn}
+          title={
+            formData[`${fieldDependency}`]
+              ? `Click to create your employer account`
+              : `Please check the box to proceed`
+          }
+          disabled={formData[`${fieldDependency}`] ? false : true}
+          type="submit"
+        >
+          {value}
+        </button>
+      )}
       {/* For login forms */}
-      login &&{" "}
-      <button
-        className={s.FormSubmitBtn}
-        title={
-          formData[`${fieldDependency}`]
-            ? `Click to create your employer account`
-            : `Please check the box to proceed`
-        }
-        disabled={formData.acceptedPrivacy ? false : true}
-        type="submit"
-      >
-        Register
-      </button>
+      {login && (
+        <button
+          className={s.FormSubmitBtn}
+          title={
+            formData[`${fieldDependency}`]
+              ? `Click to login to your employer account`
+              : `Please fill in all details to proceed`
+          }
+          disabled={formData[`${fieldDependency}`] ? false : true}
+          type="submit"
+        >
+          {value}
+        </button>
+      )}
     </>
   );
 };

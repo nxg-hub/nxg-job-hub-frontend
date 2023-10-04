@@ -42,8 +42,9 @@ const EmployerLoginForm = () => {
         id={"password"}
         required
       />
-      <FormSubmitBtn value={"Sign In"} />
+      <FormSubmitBtn formData={formData} fieldDependency={"password"} login={true} value={"Sign In"} />
       <AuthOptions login />
+      {console.log(formData.password)}
     </form>
   );
 };
