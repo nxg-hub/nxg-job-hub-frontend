@@ -32,16 +32,18 @@
         .land-btns {
             font-size: .7rem;
             margin: 1.6rem 0;
-
+            width: 100%;
+            
             a{
+                display: block;
                 color: #fff;
                 font-weight: 600;
+                padding: .5rem 2rem;
+                background: #2596be;
+                width: 100%;
                 border: .07rem solid #2596be;
                 border-radius: 0.4rem;
-                padding: .5rem 2rem;
-            }
-            .join-btn {
-                background: #2596be;
+                text-align: center;
             }
         }
     }
