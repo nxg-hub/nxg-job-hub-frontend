@@ -1,0 +1,20 @@
+
+  .Form {
+    width: 100%;
+    padding: 20px;
+    max-width: 500px;
+    h2{
+      margin-bottom: 10px;
+    }
+    p{
+      margin-bottom: 40px;
+      font-size: 13px;
+    }
+    > div {
+      margin-top: 25px;
+    }
+    form{
+      margin-block: 20px;
+    }
+  
+}

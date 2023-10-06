@@ -10,42 +10,50 @@ const EmployerLoginForm = () => {
     password: "",
     remember_me: "",
   };
-  const errors = {
-    email: "",
-    password: "",
-  };
+  // const errors = {
+  //   email: "",
+  //   password: "",
+  // };
   const [formData, setFormData] = useState(data);
-  const [formErrors, setFormErrors] = useState(data);
+  // const [formErrors, setFormErrors] = useState(data);
   return (
-    <form className={s.FormWrapper}>
-      <TextField
-        onchange={(e) =>
-          updateField(e.target.value, "email", setFormData, formData)
-        }
-        label={"Email"}
-        placeholder={"Enter your email"}
-        type={"email"}
-        value={formData.email}
-        id={"email"}
-        name={"email"}
-        required
-      />
-      <TextField
-        onchange={(e) =>
-          updateField(e.target.value, "password", setFormData, formData)
-        }
-        label={"Password"}
-        placeholder={"Enter your password"}
-        type={"password"}
-        value={formData.password}
-        name={"password"}
-        id={"password"}
-        required
-      />
-      <FormSubmitBtn formData={formData} fieldDependency={"password"} login={true} value={"Sign In"} />
+    <>
+      <form className={s.Form} action="">
+      <h2>Sign in to your account</h2>
+      <p>Login to your account</p>
+        <TextField
+          onchange={(e) =>
+            updateField(e.target.value, "email", setFormData, formData)
+          }
+          label={"Email"}
+          placeholder={"Enter your email"}
+          type={"email"}
+          value={formData.email}
+          id={"email"}
+          name={"email"}
+          required
+        />
+        <TextField
+          onchange={(e) =>
+            updateField(e.target.value, "password", setFormData, formData)
+          }
+          label={"Password"}
+          placeholder={"Enter your password"}
+          type={"password"}
+          value={formData.password}
+          name={"password"}
+          id={"password"}
+          required
+        />
+        <FormSubmitBtn
+          formData={formData}
+          fieldDependency={"password"}
+          login={true}
+          value={"Sign In"}
+        />
       <AuthOptions login />
-      {console.log(formData.password)}
-    </form>
+      </form>
+    </>
   );
 };
 
