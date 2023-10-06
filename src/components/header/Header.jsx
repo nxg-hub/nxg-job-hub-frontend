@@ -19,8 +19,8 @@ const Header = () => {
                 <ul style={{display:"flex",justifyContent:"space-between"}}>
                     <Navbar />
                     <div className="nav-btns">
-                        <NavLink to="/logtalent" className="login-btn">Log In</NavLink>
-                        <NavLink to="/techtalent" className="signup-btn">Sign Up</NavLink>
+                        <NavLink to="/acctchoice" className="login-btn">Log In</NavLink>
+                        <NavLink to="/acctchoice" className="signup-btn">Sign Up</NavLink>
                     </div>
                 </ul>
             </nav>

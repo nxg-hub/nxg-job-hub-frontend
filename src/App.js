@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import ResetPassword from "./pages/LoginAccount/ResetPassword";
 import EmailVeri from "./pages/CreateAccount/TechTalent/EmailVeri";
 import Explore from "./components/hero/Explore";
+import AccountChoiceModular from "./components/AccountChoiceModular";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/acctchoice" element={<AccountChoiceModular />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/register/employer" element={<Employer />} />

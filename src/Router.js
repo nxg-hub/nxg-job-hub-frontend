@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 
 const Home = lazy(()=>import("./pages/Home.jsx"));
+const AccountChoiceModular = lazy(()=>import("./components/AccountChoiceModular/index.jsx"));
 const Services = lazy(()=>import("./pages/Services.jsx"));
 const About = lazy(()=>import("./pages/About.jsx"));
 const Contact = lazy(()=>import("./pages/Contact.jsx"));
@@ -19,6 +20,10 @@ const AppRoutes = [
     {
         path:"/",
         element: <Home/>
+    },
+    {
+        path:"/acctchoice",
+        element: <AccountChoiceModular/>
     },
     {
         path:"/services",

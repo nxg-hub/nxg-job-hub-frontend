@@ -23,7 +23,7 @@ const Home = () => {
           just a few clicks.
         </p>
         <div className="land-btns">
-          <Link to={"/techtalent"} className="join-btn">
+          <Link to={"/acctchoice"} className="join-btn">
             Join Us
           </Link>
         </div>

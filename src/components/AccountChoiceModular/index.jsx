@@ -1,16 +1,23 @@
 import s from "./index.module.scss";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RadioButton from "../RadioButton";
 import { AiOutlineClose } from "react-icons/ai";
 
 const AccountChoiceModular = () => {
   const [accountChoice, setAccountChoice] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { value } = e.target;
     setAccountChoice(value);
   };
+
+  const handleAccounts = () => {
+    if(accountChoice) {
+      navigate(`/${accountChoice}`);
+    }
+  }
 
   return (
     <>
@@ -53,7 +60,7 @@ const AccountChoiceModular = () => {
             pointerEvents: accountChoice ? "all" : "none",
           }}
           aria-disabled={accountChoice ? false : true}
-          to={`./${accountChoice}`}
+          onClick={handleAccounts}
         >
           Continue
         </Link>
