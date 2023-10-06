@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../assests/nxg-logo.png';
+import Logo from '../static/images/logo_colored.png';
 import Navbar from '../components/header/Navbar';
 import '../components/header/header.scss';
 
