@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Inputs = ({ title, type, value, onChange, placeholder }) => {
+const Inputs = ({ title, type, value, onChange, errormessage, pattern, placeholder }) => {
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = (e) => {
+    setFocused(true);
+  }
+
   return (
     <div className="inputs">
       <label>{title}</label>
@@ -9,8 +15,11 @@ const Inputs = ({ title, type, value, onChange, placeholder }) => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        required
+        pattern={pattern}
+        onBlur={handleFocus}
+        focused={focused.toString()}
       />
+      <p>{errormessage}</p>
     </div>
   );
 };

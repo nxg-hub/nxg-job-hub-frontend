@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import s from "./index.module.scss";
 const TextField = ({
   type,
@@ -13,28 +11,7 @@ const TextField = ({
   placeholder,
   label,
 }) => {
-  const [visibility, setVisibility] = useState({
-    password: false,
-    confirmPassword: false,
-  });
-  const showPassword = () => {
-    // setShow({ ...show, [eye]: !show[eye] });
-  };
-  const Eye = () => {
-    if (type === "password") {
-      return (
-        <button onClick={showPassword} type="button">
-          {visibility.password ? <BsEyeSlash /> : <BsEye />}
-        </button>
-      );
-    } else if (type === "password") {
-      return (
-        <button onClick={showPassword} type="button">
-          {visibility.password ? <BsEyeSlash /> : <BsEye />}
-        </button>
-      );
-    }
-  };
+  
   return (
     <div className={s.TextField}>
       {label && (

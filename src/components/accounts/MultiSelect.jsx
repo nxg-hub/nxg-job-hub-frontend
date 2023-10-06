@@ -38,7 +38,8 @@ const MultiSelect = () => {
     <div>
       <div className="job-types">
         <label>Choose your prefered job types</label>
-        <Select
+        <Select 
+          style={{textAlign:'left'}}
           options={jobTypeOptions}
           isMulti
           onChange={handleMultiSelectJobType}

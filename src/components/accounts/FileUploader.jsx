@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 
-
 const FileUploader = ({ title, onFileSelectError, onFileSelectSuccess }) => {
   const fileInput = useRef(null);
 
@@ -28,11 +27,7 @@ const FileUploader = ({ title, onFileSelectError, onFileSelectSuccess }) => {
         accept=".jpeg, .jpg, .png, .docx, .pdf"
         onChange={handleFileInput}
         ref={fileInput} // Reference to the file input element
-        style={{ display: "none" }}
       />
-      <button onClick={() => fileInput.current && fileInput.current.click()}>
-        {title}
-      </button>
     </div>
   );
 };
