@@ -7,7 +7,7 @@ import Explore from "../components/hero/Explore";
 const Home = () => {
   const [Loaded, setLoaded] = useState(false);
   useEffect(() => {
-    setTimeout(() => setLoaded(true), 1500);
+    setTimeout(() => setLoaded(true), 2000);
   }, []);
   return !Loaded ? (
     <SplashScreen />
