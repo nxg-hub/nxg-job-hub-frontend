@@ -12,6 +12,10 @@ import Contact from "./pages/Contact";
 import ResetPassword from "./pages/LoginAccount/ResetPassword";
 import EmailVeri from "./pages/CreateAccount/TechTalent/EmailVeri";
 import Explore from "./components/hero/Explore";
+import CreateAccount from "./pages/CreateAccount";
+import Login from "./pages/Login";
+import EmployerRegistration from "./pages/CreateAccount/Employer/EmployerRegistration";
+import EmployerLogin from "./pages/Login/Employer";
 
 function App() {
   return (
@@ -30,6 +34,11 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword/>}/>
         <Route path="/resetpassword" element={<ResetPassword/>}/>
         <Route path="/otp" element={<Otp/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="register" element={<CreateAccount />}/>
+        <Route path="register/employer" element={<EmployerRegistration />} />
+        <Route path="login" element={<Login />}/>
+        <Route path="login/employer" element={<EmployerLogin />} />
       </Routes>
       
     </>
