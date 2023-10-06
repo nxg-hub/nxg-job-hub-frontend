@@ -21,8 +21,8 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/employer" element={<Employer />} />
-        <Route path="/techtalent" element={<TechTalent />}/>
+        <Route path="/register/employer" element={<Employer />} />
+        <Route path="/register/techtalent" element={<TechTalent />}/>
         <Route path="/mailverification" element={<EmailVeri />}/>
         <Route path="/logtalent" element={<LogTalent/>}/>
         <Route path="/profilelanding" element={<ProfileLanding/>}/>
