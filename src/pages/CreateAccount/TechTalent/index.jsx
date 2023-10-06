@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Logo from "../../../assests/nxg-logo.png";
 import ProfileForm from "./ProfileForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaLinkedin } from 'react-icons/fa'
 import { Dialog } from "@headlessui/react";
+import EmailVeri from "./EmailVeri";
+import { Otp } from "../../LoginAccount/Otp";
 
 
 const TechTalent = () => {
@@ -22,7 +24,8 @@ const TechTalent = () => {
   });
 
   const [check, setCheck] = useState("");
-  const [submittedData, setSubmittedData] = useState(null);
+  const [verificationMode, setVerificationMode] = useState(""); //To track the various verification mode
+  const [isVerificationStarted, setIsVerificationStarted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const onUpdateFormData = (newFormData) => {
@@ -33,13 +36,38 @@ const TechTalent = () => {
     setCheck(!check);
   }
 
+  const navigate = useNavigate();
+
+  const handleEmailVerification = (e) => {
+    e.preventDefault();
+    if (!isVerificationStarted) {
+
+      setIsVerificationStarted(true);
+      navigate("/mailVerification");
+      console.log(formData);
+
+    } else {
+      alert("Invalid enrty")
+    }
+  }
+  const handleOtpVerification = (e) => {
+    e.preventDefault();
+    if (!isVerificationStarted) {
+      
+      setIsVerificationStarted(true);
+      navigate("/otp")
+      console.log(formData);
+
+    } else {
+      alert("Invalid enrty")
+    }
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
-
-    setSubmittedData(formData);
-    setIsOpen(true);
-    console.log(formData);
-
+    if (check) {
+      setIsOpen(true);
+    }
   }
 
   return (
@@ -48,7 +76,7 @@ const TechTalent = () => {
         <img src={Logo} alt="NXG-Logo" className="logo" />
       </div>
       <div className="container" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-        <form className="tech-form" onSubmit={(e) => onSubmit(e, submittedData)}>
+        <form className="tech-form" onSubmit={onSubmit}>
           <div className="title">
             <h1>Let's get you started!</h1>
             <p>Get started and connect with different professionals.</p>
@@ -68,7 +96,7 @@ const TechTalent = () => {
             <div className="btn" style={{textAlign:'center',  margin: "2rem 0"}}>
             <button
               style={{ background: check ? "#2596BE" : "gray",}}
-              disabled={!check}
+              disabled={!check || isVerificationStarted}
             >
                 Register
             </button>
@@ -111,12 +139,32 @@ const TechTalent = () => {
             <Dialog.Panel>
               <Dialog.Title style={{ marginBottom: '2rem', color: '#000000', textAlign: "center" }}>
                 <div>
-                  <h2 style={{ fontFamily: "Inter", fontSize: "1.6rem", fontWeight: "600", lineHeight: "2.5rem" }}>Email Verification</h2>
+                  <h2 style={{ fontFamily: "Inter", fontSize: "1.6rem", fontWeight: "600", lineHeight: "2.5rem" }}>Choose Your Mode Of Verification</h2>
                   <p style={{ fontFamily: "Inter", fontSize: ".8rem", fontWeight: "500" }}>Let's verify your account</p>
                 </div>
               </Dialog.Title>
-              
-              
+              {!isVerificationStarted ? (
+                  <div className="btn" style={{marginTop:"-1.4rem"}}>
+                    <button
+                        style={{ background: "#2596BE", margin:"1.2rem 0"}}
+                        onClick={handleEmailVerification}
+                      >
+                          Verify with E-mail
+                    </button>
+                    <button
+                          style={{ background: "#2596BE"}}
+                          onClick={handleOtpVerification}
+                      >
+                          Verify with Phone Number
+                      </button>
+                </div>
+                ) : (
+                    verificationMode === "email" ? (
+                      <EmailVeri setVerificationMode={setVerificationMode} />
+                    ) : (
+                      <Otp setVerificationMode={setVerificationMode} />
+                    )
+                )}
             </Dialog.Panel>
           </Dialog>
         )}

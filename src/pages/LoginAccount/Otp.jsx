@@ -23,7 +23,7 @@ export const Otp = () => {
     
     };
 
-    const sendOtp = () => {
+    const handleOtpVerification = () => {
         // Generate a random OTP
         const randomOtp = generateRandomOtp();
 
@@ -53,7 +53,7 @@ export const Otp = () => {
             );
         })}
         <div style={{fontFamily:" Inter", fontSize: ".9rem", fontWeight: "500", margin:"1.2rem 0"}}>
-            <button style={{background:"#2596BE", color:"#fff", padding:".6rem", width:"100%", border:"none", borderRadius:".4rem"}} onClick={sendOtp}>Submit</button>
+            <button style={{background:"#2596BE", color:"#fff", padding:".6rem", width:"100%", border:"none", borderRadius:".4rem"}} onClick={handleOtpVerification}>Submit</button>
             <button style={{marginRight:".5rem", color:"#8E8E8E", background:"transparent", border:"none", textDecoration:"underline", marginTop:".6rem", fontSize:".7rem"}}>Resend OTP</button>
         </div>
     </div>

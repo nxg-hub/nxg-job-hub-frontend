@@ -3,6 +3,10 @@ import Mail from "../../../assests/mail.png";
 import { Link } from "react-router-dom";
 
 const EmailVeri = () => {
+  // const handleEmailVerification = () => {
+
+  // }
+
   return (
     <div>
         <div className="verify-main" style={{width:"30%", padding:"1rem 2.4rem", border:"none", borderRadius:"0.8rem", boxShadow:".2rem 0.2rem 0.2rem #8e8e8e" }}>

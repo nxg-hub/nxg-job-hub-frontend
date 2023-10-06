@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ResetPassword from "./pages/LoginAccount/ResetPassword";
 import EmailVeri from "./pages/CreateAccount/TechTalent/EmailVeri";
+import Explore from "./components/hero/Explore";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/mailverification" element={<EmailVeri />}/>
         <Route path="/logtalent" element={<LogTalent/>}/>
         <Route path="/profilelanding" element={<ProfileLanding/>}/>
+        <Route path="/explore" element={<Explore/>}/>
         <Route path="/forgotpassword" element={<ForgotPassword/>}/>
         <Route path="/resetpassword" element={<ResetPassword/>}/>
         <Route path="/otp" element={<Otp/>}/>

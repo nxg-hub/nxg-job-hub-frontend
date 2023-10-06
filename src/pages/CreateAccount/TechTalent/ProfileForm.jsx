@@ -41,6 +41,7 @@ function ProfileForm ({formData, onUpdateFormData}) {
                 value={fullName}
                 onChange={(e) => onUpdateFormData({...formData, fullName: e.target.value})}
                 placeholder="Enter your full name"
+                autocomplete="off"
                 pattern="^[A-Za-z0-9\s]{8,20}$"
                 errormessage='Full name should be a minimum of 8 characters!'
                 required
@@ -51,7 +52,7 @@ function ProfileForm ({formData, onUpdateFormData}) {
                 value={email}
                 onChange={(e) => onUpdateFormData({...formData, email: e.target.value})}
                 placeholder="Enter your email address"
-                autocomplete="username"
+                autocomplete="off"
                 errormessage='Email must inculde special charaters like @ and .!'
                 required
             />

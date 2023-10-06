@@ -5,7 +5,7 @@ const SplashScreen = () => {
     <div className={s.Page}>
 
       <div className={s.ClipWrapper}>
-      <img src={logo} alt="" />
+      <img src={logo} alt="NXG-LOGO" />
       </div>
 
     </div>
