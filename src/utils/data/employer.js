@@ -7,5 +7,12 @@ const recruiterPosition = [
   "Middle Management",
   "Junior Level",
 ];
-
-export {recruiterPosition}
+const jobVacancy = [
+  "Full-time",
+  "Partime",
+  "Internship",
+  "Volunteer",
+  "Freelance",
+];
+const genderOption = ["Male", "Female", "Other"];
+export { recruiterPosition, jobVacancy, genderOption };

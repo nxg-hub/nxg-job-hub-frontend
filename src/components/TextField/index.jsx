@@ -1,39 +1,52 @@
+import { useState } from "react";
 import s from "./index.module.scss";
+import { Eye } from "../../utils/functions/PasswordEye";
+import focusParent from "../../utils/functions/focusParent";
+import blurParent from "../../utils/functions/blurParent";
 const TextField = ({
   type,
   value,
   name,
   onchange,
-  required,
   id,
-  autoFocus,
-  disabled,
-  placeholder,
   label,
+  err,
+  onblur,
+  ...props
 }) => {
-  
+  const [visibility, setVisibility] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
+
   return (
-    <div className={s.TextField}>
+    
+    <div className={s.TextFieldWrapper}>
       {label && (
-        <label className={s.TextLabel} htmlFor={id}>
-          {" "}
+        <label className={s.FieldLabel} htmlFor={id}>
           {label}
         </label>
       )}
-      <span>
+      <span className={s.InputFieldWrapper}>
         <input
-          placeholder={placeholder}
-          disabled={disabled}
-          autoFocus={autoFocus}
+          onFocus={focusParent}
+          onBlur={(e) => {
+            blurParent(e);
+            onblur && onblur();
+          }}
+          className={s.inputField}
           onChange={onchange}
           value={value}
           id={id}
           name={name}
-          type={type}
-          required={required ? "true" : "false"}
+          err={err && err.length > 0 ? "true" : "false"}
+          type={type === "password" && visibility[`${name}`] ? "text" : type}
+          {...props}
         />
-        {}
+        {Eye(name, visibility, setVisibility)}
       </span>
+      {err && <h5 className={s.inputErr}>{err}</h5>}
     </div>
   );
 };

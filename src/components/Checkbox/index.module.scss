@@ -1,0 +1,12 @@
+.CheckboxWrapper{
+  width: max-content;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  label{
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+  }
+}
