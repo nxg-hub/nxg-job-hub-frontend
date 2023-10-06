@@ -1,0 +1,16 @@
+.RadioButtonWrapper {
+  display: flex;
+  gap: 5px;
+  label{
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+  }
+  .RadioButton {
+    width: min-content;
+    height: 10px;
+    display: flex;
+    align-self: center;
+    margin-top: 3px;
+  }
+}

@@ -1,0 +1,21 @@
+.navBar {
+  display: flex;
+  width: 95%;
+  margin: 10px auto 0px auto;
+  background-color: #2596be;
+  padding: 10px 25px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  img {
+    height: 65px;
+    width: auto;
+  }
+}
+
+.main {
+  margin: 0px auto 0px;
+  width: 95%;
+  background-color: #f7f5f55a;
+  border: 1.5px solid #ffffff;
+  min-height: 80vh;
+}
