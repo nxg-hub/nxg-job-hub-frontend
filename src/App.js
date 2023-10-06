@@ -4,6 +4,7 @@ import CreateAccount from "./pages/CreateAccount";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Login from "./pages/Login";
 import {default as EmployerLogin}  from "./pages/Login/Employer";
+import SuccessModular from "./components/SuccessModular";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="register/employer" element={<EmployerRegistration />} />
         <Route path="login" element={<Login />}/>
         <Route path="login/employer" element={<EmployerLogin />} />
+        <Route path="test" element={<SuccessModular />} />
         
       </Routes>
       
