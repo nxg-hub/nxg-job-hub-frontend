@@ -16,6 +16,7 @@ import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
 
+
 function App() {
   return (
     <>
@@ -43,6 +44,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword/>}/>
         <Route path="/otp" element={<Otp/>}/>
         <Route path="test" element={<SuccessModular />} />
+
       </Routes>
       
     </>
