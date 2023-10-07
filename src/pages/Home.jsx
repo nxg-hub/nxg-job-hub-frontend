@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/header/Header";
 import SplashScreen from "../components/SplashScreen";
+import Explore from "../components/hero/Explore";
 
 const Home = () => {
   const [Loaded, setLoaded] = useState(false);
   useEffect(() => {
-    setTimeout(() => setLoaded(true), 4500);
+    setTimeout(() => setLoaded(true), 2000);
   }, []);
   return !Loaded ? (
     <SplashScreen />
@@ -27,6 +28,7 @@ const Home = () => {
           </Link>
         </div>
       </div>
+      <Explore />
     </div>
   );
 };

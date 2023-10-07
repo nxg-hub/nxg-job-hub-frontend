@@ -5,10 +5,11 @@ const Services = lazy(()=>import("./pages/Services.jsx"));
 const About = lazy(()=>import("./pages/About.jsx"));
 const Contact = lazy(()=>import("./pages/Contact.jsx"));
 const Employer = lazy(()=>import("./pages/CreateAccount/Employer"));
-const TechTalent = lazy(()=>import("./pages/CreateAccount/TechTalent"));
-const EmailVeri = lazy(()=>import("./pages/CreateAccount/TechTalent/EmailVeri.jsx"));
+const TechTalent = lazy(()=>import("./pages/CreateAccount/Agent/index.jsx"));
+const EmailVeri = lazy(()=>import("./pages/CreateAccount/Agent/EmailVeri.jsx"));
 const LogTalent = lazy(()=>import("./pages/LoginAccount/index.jsx"));
 const ProfileLanding = lazy(()=>import("./pages/ProfileLanding.jsx"));
+const Explore = lazy(()=>import("./components/hero/Explore.jsx"));
 const ForgotPassword = lazy(()=>import("./pages/LoginAccount/ForgotPassword.jsx"));
 const ResetPassword = lazy(()=>import("./pages/LoginAccount/ResetPassword.jsx"));
 const Otp = lazy(()=>import("./pages/LoginAccount/Otp.jsx"));
@@ -50,6 +51,10 @@ const AppRoutes = [
     {
         path:"/profilelanding",
         element: <ProfileLanding/>
+    },
+    {
+        path:"/explore",
+        element: <Explore/>
     },
     {
         path:"/forgotpassword",

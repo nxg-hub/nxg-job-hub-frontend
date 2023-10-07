@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../LoginAccount/logtech.scss';
 import '../../components/accounts/inputs.scss';
-import Logo from '../../assests/nxg-logo.png';
-import Logpics from '../../assests/login-pics.png';
+import Logo from '../../static/images/logo_colored.png';
+import Logpics from '../../static/images/login-pics.png';
 import Inputs from '../../components/accounts/Inputs';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
