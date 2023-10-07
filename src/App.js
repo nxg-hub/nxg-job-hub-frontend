@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Employer from "./pages/CreateAccount/Employer";
+import CreateAccount from "./pages/CreateAccount";
 import TechTalent from "./pages/CreateAccount/TechTalent";
 import  LogTalent  from "./pages/LoginAccount/index";
 import ForgotPassword from "./pages/LoginAccount/ForgotPassword";
@@ -12,33 +12,39 @@ import Contact from "./pages/Contact";
 import ResetPassword from "./pages/LoginAccount/ResetPassword";
 import EmailVeri from "./pages/CreateAccount/TechTalent/EmailVeri";
 import Explore from "./components/hero/Explore";
-import CreateAccount from "./pages/CreateAccount";
-import Login from "./pages/Login";
-import EmployerRegistration from "./pages/CreateAccount/Employer/EmployerRegistration";
-import EmployerLogin from "./pages/Login/Employer";
+import SuccessModular from "./components/SuccessModular";
+import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
+import Agent from "./pages/CreateAccount/Agent";
+
 
 function App() {
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
+        {/* Registration */}
+        <Route path="/register" element={<CreateAccount />} />
+        <Route path="/register/employer" element={<EmployerRegistration />} />
+        <Route path="/register/agent" element={<Agent />} />
+        <Route path="/register/techtalent" element={<TechTalent />} />
+        {/* Log in */}
+        <Route path="/login" element={<LogTalent/>}/>
+        {/* <Route path="/login/techtalent" element={<LogTalent/>}/> */}
+        {/* <Route path="/login/employer" element={<EmployerLogin />} /> */}
+        {/* Other pages */}
+        <Route path="/profilelanding" element={<ProfileLanding/>}/>
+        <Route path="/explore" element={<Explore/>}/>
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/register/employer" element={<Employer />} />
-        <Route path="/register/techtalent" element={<TechTalent />}/>
+
+        {/* Modals */}
         <Route path="/mailverification" element={<EmailVeri />}/>
-        <Route path="/logtalent" element={<LogTalent/>}/>
-        <Route path="/profilelanding" element={<ProfileLanding/>}/>
-        <Route path="/explore" element={<Explore/>}/>
         <Route path="/forgotpassword" element={<ForgotPassword/>}/>
         <Route path="/resetpassword" element={<ResetPassword/>}/>
         <Route path="/otp" element={<Otp/>}/>
-        <Route path="/" element={<Home />} />
-        <Route path="register" element={<CreateAccount />}/>
-        <Route path="register/employer" element={<EmployerRegistration />} />
-        <Route path="login" element={<Login />}/>
-        <Route path="login/employer" element={<EmployerLogin />} />
+        <Route path="test" element={<SuccessModular />} />
+
       </Routes>
       
     </>

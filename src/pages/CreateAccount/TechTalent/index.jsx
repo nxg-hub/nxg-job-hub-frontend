@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../../../assests/nxg-logo.png";
+import Logo from "../../../static/images/logo_colored.png";
 import ProfileForm from "./ProfileForm";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
