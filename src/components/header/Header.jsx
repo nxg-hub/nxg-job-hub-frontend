@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header>
         <div className='nav-container'>
-            <div className="h-logo" style={{width:"5.5rem", height:"3.2rem"}}>
+            <div className="h-logo" style={{width:"150px", height:"60px"}}>
                 <img src={Logo} alt="Nxg Company Logo" className='logo' />
             </div>
             <button id='nav-toggle'>

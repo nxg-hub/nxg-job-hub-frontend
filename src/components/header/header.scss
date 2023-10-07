@@ -6,16 +6,16 @@
     background-position: center;
 
     .landing-content {
-        max-width: 28rem;
-        margin: 11% 6%;
+        max-width: 45%;
+        margin: 6%;
         padding: 1rem;
         font-family: Inter;
         color: #fff;
 
         .land-title {
-            font-size: 2.5rem;
+            font-size: 60px;
             font-weight: 800;
-            line-height: 3rem;
+            line-height: 80px;
     
             span {
                 color: #2596be;
@@ -23,22 +23,22 @@
         }
 
         .land-text {
-            font-size: 0.95rem;
+            font-size: 30px;
             font-weight: 300;
-            line-height: 1.3rem;
+            line-height: 45px;
             margin: 1rem 0;
         }
 
         .land-btns {
-            font-size: .7rem;
+            font-size: 25px;
             margin: 1.6rem 0;
-            width: 100%;
+            width: 90%;
             
             a{
                 display: block;
                 color: #fff;
                 font-weight: 600;
-                padding: .5rem 2rem;
+                padding: 8px;
                 background: #2596be;
                 width: 100%;
                 border: .07rem solid #2596be;
@@ -66,8 +66,8 @@
     a {
         background: transparent;
         font-family: Inter;
-        font-size: .7rem;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 400;
         color: #fff;
         padding: .5rem 1rem;
     }
@@ -93,14 +93,14 @@ header {
 
         nav {
             // width: 100%;
-            margin: .7rem 0;
+            margin: .85rem 0;
 
             ul {
                 .nav-btns {
                     display: flex;
                     margin-left: .7rem;
                     a {
-                        font-size: .7rem;
+                        font-size: 14px;
                         font-weight: 500;
                         color: #fff;
                         padding: .4rem 1rem;
