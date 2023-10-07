@@ -43,7 +43,10 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword/>}/>
         <Route path="/resetpassword" element={<ResetPassword/>}/>
         <Route path="/otp" element={<Otp/>}/>
-        <Route path="test" element={<SuccessModular />} />
+        <Route path="test" element={<SuccessModular title="Verification Successful" description="Congratulations your account has been verified successfully" action={{
+          path: "/login",
+          text:" Login to your account"
+        }} />} />
 
       </Routes>
       
