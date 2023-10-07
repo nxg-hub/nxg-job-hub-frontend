@@ -1,27 +1,65 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import "./index.scss"
 const Agent = () => {
+  
+  useEffect(() => {
+    let currentTab = 0; // Current tab index
+    const tabs = document.querySelectorAll('.tab');
+  
+    // Function to hide all tabs
+    function hideTabs() {
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = 'none';
+        }
+    }
+  
+    // Function to show the next tab
+    function showNextTab() {
+        // Hide all tabs
+        hideTabs();
+  
+        // If we have reached the end of the tabs, submit the form
+        if (currentTab >= tabs.length - 1) {
+            document.querySelector('form').submit();
+            return;
+        }
+  
+        // Show the next tab with the "tab" class
+        currentTab++;
+        tabs[currentTab].style.display = 'block';
+  
+        // Hide the "Next" button if we are on the last tab
+        if (currentTab >= tabs.length - 1) {
+            document.querySelector('.next-button').style.display = 'none';
+        }
+    }
+
+    // Initially, hide all tabs except the first one
+   
+        hideTabs();
+        tabs[currentTab].style.display = 'block'; // Show the first tab
+  })
   return (
-    <div class="container">
-      <form class="centralized-form" enctype="multipart/form-data">
-        <div class="tab show">
+    <div className="container">
+      <form className="centralized-form" enctype="multipart/form-data">
+        <div className="tab show">
           <h2>Create an Agent Account (1/2)</h2>
-          <div class="form-row">
-            <div class="form-col">
-              <div class="  ">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="  ">
                 <label>First Name*</label>
                 <input type="text" placeholder="" name="" required />
               </div>
             </div>
-            <div class="form-col">
-              <div class="">
+            <div className="form-col">
+              <div className="">
                 <label>Last Name*</label>
                 <input type="text" placeholder="" name="" required />
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Email*</label>
             <input
               type="email"
@@ -30,58 +68,58 @@ const Agent = () => {
               required
             />
           </div>
-          <div class="form-group">
-            <div class="password-container">
+          <div className="form-group">
+            <div className="password-container">
               <label>Create Password*</label>
               <input type="password" id="password" placeholder="Password" />
-              <span style={{ marginTop: "8px" }} class="toggle-password">
+              <span style={{ marginTop: "8px" }} className="toggle-password">
                 &#128065;
               </span>
             </div>
           </div>
-          <div class="form-group">
-            <div class="password-container">
+          <div className="form-group">
+            <div className="password-container">
               <label>Re-enter Password*</label>
               <input type="password" id="password" placeholder="Password" />
-              <span style={{ marginTop: "8px" }} class="toggle-password">
+              <span style={{ marginTop: "8px" }} className="toggle-password">
                 &#128065;
               </span>
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-col">
-              <div class="  ">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="  ">
                 <label>Nationality*</label>
                 <input type="text" placeholder="" name="" required />
               </div>
             </div>
-            <div class="form-col">
-              <div class="">
+            <div className="form-col">
+              <div className="">
                 <label>State/District*</label>
                 <input type="text" placeholder="" name="" required />
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Residential Address</label>
             <input type="text" name="" placeholder="" />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Date of birth</label>
             <input type="date" placeholder="" name="" />
           </div>
 
-          <div class="form-row">
-            <div class="form-col">
-              <div class="">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="">
                 <label>Gender*</label>
                 <br />
                 <input type="radio" id="male" name="" value="Male" />
-                <label class="radio">Male</label>
+                <label className="radio">Male</label>
                 <br />
                 <input type="radio" id="female" name="" value="Female" />
-                <label class="radio">Female</label>
+                <label className="radio">Female</label>
                 <br />
                 <input
                   type="radio"
@@ -89,24 +127,24 @@ const Agent = () => {
                   name=""
                   value="prefer not to say"
                 />
-                <label class="radio">Prefer not to say</label>
+                <label className="radio">Prefer not to say</label>
                 <br />
               </div>
             </div>
           </div>
-          <div class="label-container"></div>
+          <div className="label-container"></div>
 
-          <div class="form-row">
-            <div class="form-col01">
-              <div class="  ">
+          <div className="form-row">
+            <div className="form-col01">
+              <div className="  ">
                 <span>Phone </span>
                 <select name="" id="" style={{ borderRadius: "5px 0 0 5px" }}>
                   <option value="">+234</option>
                 </select>
               </div>
             </div>
-            <div class="form-col02">
-              <div class="">
+            <div className="form-col02">
+              <div className="">
                 <span style={{ marginLeft: "-15px;" }}>number*</span>
                 <input
                   type="text"
@@ -116,8 +154,8 @@ const Agent = () => {
                 />
               </div>
             </div>
-            <div class="form-col03">
-              <div class="">
+            <div className="form-col03">
+              <div className="">
                 <span>Zip code</span>
                 <input type="text" placeholder="" name="" required />
               </div>
@@ -134,10 +172,10 @@ const Agent = () => {
             We will send an OTP code to this number for validation{" "}
           </p>
         </div>
-        <div class="tab">
+        <div className="tab">
           <h4>OTP VERIFICATION</h4>
           <h4>Please enter the one-time password to verify your account</h4>
-          <div class="input-row">
+          <div className="input-row">
             <input type="text" />
             <input type="text" />
             <input type="text" />
@@ -145,22 +183,22 @@ const Agent = () => {
             <input type="text" />
             <input type="text" />
           </div>
-          <button class="code-button" type="submit">
+          <button className="code-button" type="submit">
             Verify OTP Code
           </button>
           <h4>Resend One-Time Password</h4>
         </div>
-        <div class="tab">
+        <div className="tab">
           <h2>Create an Agent Account (2/2)</h2>
-          <div class="form-group">
+          <div className="form-group">
             <label>Current Job Function</label>
             <select name="" id="" style={{ color: "#ccc", fontSize: "12px;" }}>
               <option value="">Select new job interest</option>
             </select>
           </div>
-          <div class="form-row">
-            <div class="form-col">
-              <div class="">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="">
                 <label>Job Experience Level</label>
                 <br />
                 <input
@@ -169,7 +207,7 @@ const Agent = () => {
                   name=""
                   value="internship"
                 />
-                <label class="radio">Internship</label>
+                <label className="radio">Internship</label>
                 <br />
                 <input
                   type="radio"
@@ -177,10 +215,10 @@ const Agent = () => {
                   name=""
                   value="entry_level"
                 />
-                <label class="radio">Entry Level</label>
+                <label className="radio">Entry Level</label>
                 <br />
                 <input type="radio" id="mid_level" name="" value="mid_level" />
-                <label class="radio">Mid Level</label>
+                <label className="radio">Mid Level</label>
                 <br />
                 <input
                   type="radio"
@@ -188,40 +226,40 @@ const Agent = () => {
                   name=""
                   value="mid_senior_level"
                 />
-                <label class="radio">Mid Senior Level</label>
+                <label className="radio">Mid Senior Level</label>
                 <br />
                 <input type="radio" id="director" name="" value="director" />
-                <label class="radio">Director</label>
+                <label className="radio">Director</label>
                 <br />
                 <input type="radio" id="executive" name="" value="executive" />
-                <label class="radio">Executive</label>
+                <label className="radio">Executive</label>
                 <br />
               </div>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-col">
-              <div class="">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="">
                 <label>Type of Tech Job</label>
                 <br />
                 <input type="radio" id="part-time" name="" value="part-time" />
-                <label class="radio">Part-time</label>
+                <label className="radio">Part-time</label>
                 <br />
                 <input type="radio" id="contract" name="" value="contract" />
-                <label class="radio">Contract</label>
+                <label className="radio">Contract</label>
                 <br />
                 <input type="radio" id="full-time" name="" value="full-time" />
-                <label class="radio">Full-time</label>
+                <label className="radio">Full-time</label>
                 <br />
                 <input type="radio" id="volunteer" name="" value="volunteer" />
-                <label class="radio">Volunteer</label>
+                <label className="radio">Volunteer</label>
                 <br />
               </div>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-col">
-              <div class="">
+          <div className="form-row">
+            <div className="form-col">
+              <div className="">
                 <label>Preferred Work Mode</label>
                 <br />
                 <input
@@ -230,47 +268,47 @@ const Agent = () => {
                   name=""
                   value="fully-remote"
                 />
-                <label class="radio">Fully-Remote</label>
+                <label className="radio">Fully-Remote</label>
                 <br />
                 <input type="radio" id="hybrid" name="" value="hybrid" />
-                <label class="radio">Hybrid</label>
+                <label className="radio">Hybrid</label>
                 <br />
                 <input type="radio" id="on-site" name="" value="on-site" />
-                <label class="radio">On-site</label>
+                <label className="radio">On-site</label>
                 <br />
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Upload a Profile Picture</label>
-            <div class="container1">
-              <div class="drag-area">
-                <div class="icon">
-                  <i class="bx bxs-file-find"></i>
+            <div className="container1">
+              <div className="drag-area">
+                <div className="icon">
+                  <i className="bx bxs-file-find"></i>
                 </div>
                 <b>
-                  <span class="header">Browse Files</span>
+                  <span className="header">Browse Files</span>
                 </b>
                 <br />
-                <span class="header">Drag and drop file here</span>
+                <span className="header">Drag and drop file here</span>
               </div>
             </div>
           </div>
           <div
-            class="form-group"
+            className="form-group"
             style={{textAlign: "center", marginTop: "60px", marginLeft: "50px"}}
           >
             <input type="checkbox" />
             <label for="">
-              I agree to the <span class="change-color">Terms</span>
-              and <span class="change-color">Conditions</span>{" "}
+              I agree to the <span className="change-color">Terms</span>
+              and <span className="change-color">Conditions</span>{" "}
             </label>
           </div>
-          <button class="create-button" type="submit">
+          <button className="create-button" type="submit">
             Create Account
           </button>
           <div
-            class="form-group"
+            className="form-group"
             style={{textAlign: "center", marginTop: "10px", marginLeft: "10px"}}
           >
             <p>
@@ -279,7 +317,7 @@ const Agent = () => {
           </div>
         </div>
 
-        <button class="next-button" type="button" onclick="showNextTab()">
+        <button className="next-button" type="button" onclick="showNextTab()">
           Next
         </button>
       </form>

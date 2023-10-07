@@ -14,6 +14,7 @@ import EmailVeri from "./pages/CreateAccount/TechTalent/EmailVeri";
 import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
+import Agent from "./pages/CreateAccount/Agent";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         {/* Registration */}
         <Route path="/register" element={<CreateAccount />} />
         <Route path="/register/employer" element={<EmployerRegistration />} />
+        <Route path="/register/agent" element={<Agent />} />
         <Route path="/register/techtalent" element={<TechTalent />} />
         {/* Log in */}
         <Route path="/login" element={<LogTalent/>}/>
