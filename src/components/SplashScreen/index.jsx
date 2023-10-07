@@ -1,5 +1,5 @@
 import s from "./index.module.scss";
-import logo from "../../static/images/logo_colored.png";
+import logo from "../../static/images/nxg-logo.png";
 const SplashScreen = () => {
   return (
     <div className={s.Page}>
