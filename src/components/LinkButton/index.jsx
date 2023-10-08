@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ButtonRegular = ({ path, linkText, ...props }) => {
   return (
-    <Link to={path} {...props}>
+    <Link data-name="ButtonRegular" to={path} {...props}>
       {linkText}
     </Link>
   );
