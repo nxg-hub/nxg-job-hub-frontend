@@ -163,11 +163,18 @@ header {
     border-radius:  20px;
     border: 1px solid #2596BE;
     padding: 0 10px;
+    width: 25vw;
+    min-width: 350px;
     .searchInput{
         margin: 0;
         border: none;
+        width: 20vw;
+        color: white;
         &:focus{
             outline: 1px solid transparent;
+        }
+        &::placeholder{
+            color: white;
         }
     }
     svg{
