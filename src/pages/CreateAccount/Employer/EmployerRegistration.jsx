@@ -286,7 +286,7 @@ const EmployerRegistration = () => {
           <AuthOptions register />
 
           <p>
-            Already have an account? <Link to="/login/employer">Log in</Link>
+            Already have an account? <Link to="/login">Log in</Link>
           </p>
         </div>
       </form>

@@ -76,6 +76,7 @@
     }
 }
 
+
 header {
     text-align: center;
 
@@ -152,4 +153,24 @@ header {
         }
     }
     
+}
+// Search Bar styles
+
+.searchBar{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius:  20px;
+    border: 1px solid #2596BE;
+    padding: 0 10px;
+    .searchInput{
+        margin: 0;
+        border: none;
+        &:focus{
+            outline: 1px solid transparent;
+        }
+    }
+    svg{
+        cursor: pointer;
+    }
 }
