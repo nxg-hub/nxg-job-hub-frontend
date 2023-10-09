@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import Header from "../components/header/Header";
 import SplashScreen from "../components/SplashScreen";
 import Explore from "../components/hero/Explore";
+import JobCards from '../components/hero/JobCards';
+import Sponsors from "../components/hero/Sponsors";
+import Testimony from "../components/hero/Testimony";
+import Footer from "../components/footer/Footer";
 
 
 const titles = [
@@ -58,12 +62,21 @@ const Home = () => {
           just a few clicks.
         </p>
         <div className="land-btns">
-          <Link to={"/acctchoice"} className="join-btn">
+          <Link to={"/register"} className="join-btn">
             Join Us
           </Link>
         </div>
       </div>
       <Explore />
+      <div className="jobs-slider" style={{margin:"3rem 0"}}>
+          <JobCards />
+      </div>
+      <div className="alliances">
+        <h4 style={{fontSize:"25px", fontWeight:"700", margin:"1rem 0"}}>Our Alliances</h4>
+        <Sponsors />
+      </div>
+      <Testimony />
+      <Footer />
     </div>
   );
 };

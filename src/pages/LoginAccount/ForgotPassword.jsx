@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Logo from "../../assests/nxg-logo.png";
+import Logo from "../../static/images/logo_colored.png";
 import Inputs from '../../components/accounts/Inputs';
 import { Link } from 'react-router-dom';
 

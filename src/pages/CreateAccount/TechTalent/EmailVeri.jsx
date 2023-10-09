@@ -1,5 +1,5 @@
 import React from 'react';
-import Mail from "../../../assests/mail.png";
+import Mail from "../../../static/icons/mail.png";
 import { Link } from "react-router-dom";
 
 const EmailVeri = () => {

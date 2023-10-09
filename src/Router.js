@@ -1,13 +1,13 @@
 import React, { lazy } from "react";
 
 const Home = lazy(()=>import("./pages/Home.jsx"));
-const AccountChoiceModular = lazy(()=>import("./components/AccountChoiceModular/index.jsx"));
+// const AccountChoiceModular = lazy(()=>import("./components/AccountChoiceModular/index.jsx"));
 const Services = lazy(()=>import("./pages/Services.jsx"));
 const About = lazy(()=>import("./pages/About.jsx"));
 const Contact = lazy(()=>import("./pages/Contact.jsx"));
 const Employer = lazy(()=>import("./pages/CreateAccount/Employer"));
-const TechTalent = lazy(()=>import("./pages/CreateAccount/TechTalent"));
-const EmailVeri = lazy(()=>import("./pages/CreateAccount/TechTalent/EmailVeri.jsx"));
+const TechTalent = lazy(()=>import("./pages/CreateAccount/Agent/index.jsx"));
+const EmailVeri = lazy(()=>import("./pages/CreateAccount/Agent/EmailVeri.jsx"));
 const LogTalent = lazy(()=>import("./pages/LoginAccount/index.jsx"));
 const ProfileLanding = lazy(()=>import("./pages/ProfileLanding.jsx"));
 const Explore = lazy(()=>import("./components/hero/Explore.jsx"));
@@ -21,10 +21,10 @@ const AppRoutes = [
         path:"/",
         element: <Home/>
     },
-    {
-        path:"/acctchoice",
-        element: <AccountChoiceModular/>
-    },
+    // {
+    //     path:"/acctchoice",
+    //     element: <AccountChoiceModular/>
+    // },
     {
         path:"/services",
         element: <Services/>
