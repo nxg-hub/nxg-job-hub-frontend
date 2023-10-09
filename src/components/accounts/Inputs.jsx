@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Inputs = ({ title, type, value, onChange, errormessage, pattern, placeholder }) => {
+const Inputs = ({ title, type, value, onChange, errormessage, pattern, placeholder, ...props }) => {
   const [focused, setFocused] = useState(false);
 
   const handleFocus = (e) => {
@@ -18,6 +18,7 @@ const Inputs = ({ title, type, value, onChange, errormessage, pattern, placehold
         pattern={pattern}
         onBlur={handleFocus}
         focused={focused.toString()}
+        {...props}
       />
       <p>{errormessage}</p>
     </div>
