@@ -34,10 +34,12 @@
             width: 90%;
             
             a{
+                display: block;
                 color: #fff;
                 font-weight: 600;
                 background: #2596be;
                 width: 100%;
+                padding: 12px;
                 border: .07rem solid #2596be;
                 border-radius: 0.4rem;
                 text-align: center;
@@ -52,6 +54,16 @@
     background-size: cover;
     height: 100vh;
     background-position: center;
+
+    .land-title {
+        font-size: 50px;
+        font-weight: 800;
+        line-height: 80px;
+
+        span {
+            color: #2596be;
+        }
+    }
 }
 
 .navbar {
@@ -75,6 +87,7 @@
         color: #2596BE;
     }
 }
+
 
 header {
     text-align: center;
@@ -151,4 +164,32 @@ header {
         }
     }
     
+}
+// Search Bar styles
+
+.searchBar{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #9a9a99b9;
+    border-radius:  20px;
+    border: 1px solid #2596BE;
+    padding: 0 10px;
+    width: 25vw;
+    min-width: 350px;
+    .searchInput{
+        margin: 0;
+        border: none;
+        width: 20vw;
+        color: white;
+        &:focus{
+            outline: 1px solid transparent;
+        }
+        &::placeholder{
+            color: white;
+        }
+    }
+    svg{
+        cursor: pointer;
+    }
 }

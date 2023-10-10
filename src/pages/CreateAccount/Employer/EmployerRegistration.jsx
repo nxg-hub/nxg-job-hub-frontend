@@ -175,7 +175,7 @@ const EmployerRegistration = () => {
               inputStyle={{
                 width: "100%",
                 border: "1px solid rgb(194, 192, 192)",
-                height: "30px",
+                height: "36px",
               }}
               value={formData.phone}
               required
@@ -286,7 +286,7 @@ const EmployerRegistration = () => {
           <AuthOptions register />
 
           <p>
-            Already have an account? <Link to="/login/employer">Log in</Link>
+            Already have an account? <Link to="/login">Log in</Link>
           </p>
         </div>
       </form>
