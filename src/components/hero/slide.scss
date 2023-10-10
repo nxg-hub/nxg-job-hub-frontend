@@ -1,0 +1,115 @@
+.slider {
+   margin: 3rem 0;
+}
+.swiper-backface-hidden .swiper-slide {
+    height: 400px;
+}
+
+.jobspace-main {
+    padding: 4px 25px;
+    text-align: center;
+    .holder {
+        position: relative;
+        margin: 3rem 1.5rem;
+        .circle {
+            width: 60px;
+            height: 55px;
+            background-color: #2596BE;
+            border-radius: 50%;
+        }
+
+        .jobspace-content {
+            position: absolute;
+            width: 280px;
+            height: 250px;
+            top: 28px;
+            left: -10px;
+            padding: 0 30px;
+            background: #FAFAFA;
+            border: 2px solid rgba(37, 150, 190, 0.3);
+
+            .job-icon {
+                width:120px;
+                height: 120px;
+                border-radius: 50%;
+                padding: 22px;
+                margin: auto;
+                margin-top: 30px;
+                margin-bottom: 30px;
+                background: #FAFAFA;
+                border: 1.3px solid rgba(0, 0, 0, 0.3);
+
+                img {
+                    width: 70%;
+                    margin: auto;
+                    margin-top: 17%;
+                    object-fit: contain;
+                }
+            }
+
+            .space-details {
+                h3 {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: rgba(0, 0, 0, 0.4);
+                }
+
+                p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: rgba(37, 150, 190, 0.75);
+                    margin: 8px 0;
+                }
+            }
+        }
+    }
+}
+
+.first-rectangle, .second-rectangle {
+    width: 970px;
+    height: 643px;
+    margin: auto;
+    border:  0.8px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 21.32px;
+}
+
+.second-rectangle {
+    position: absolute;
+    top: 80px;
+    left:  55px;
+    transform: translateX(35%);
+    border:  1.7px dashed rgba(0, 0, 0, 0.1);
+    z-index: -10;
+}
+.postImg {
+    position: absolute;
+    width: 970px;
+    height: 643px;
+    top: 40px;
+    left:  55px;
+    transform: translateX(30%);
+    border: none;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.choose-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #2596BE;
+    padding: 6rem 7rem;
+}
+
+.help-details {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    background: #006A90;
+    margin: 2rem 0;
+    padding: 6rem 7rem;
+}

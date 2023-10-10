@@ -15,6 +15,7 @@ import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
+// import AccountChoiceModular from "./components/AccountChoiceModular";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/profilelanding" element={<ProfileLanding/>}/>
         <Route path="/explore" element={<Explore/>}/>
         <Route path="/services" element={<Services />} />
+        {/* <Route path="/acctchoice" element={<AccountChoiceModular />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 

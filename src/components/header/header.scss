@@ -6,16 +6,16 @@
     background-position: center;
 
     .landing-content {
-        max-width: 28rem;
-        margin: 11% 6%;
+        max-width: 45%;
+        margin: 6%;
         padding: 1rem;
         font-family: Inter;
         color: #fff;
 
         .land-title {
-            font-size: 2.5rem;
+            font-size: 60px;
             font-weight: 800;
-            line-height: 3rem;
+            line-height: 80px;
     
             span {
                 color: #2596be;
@@ -23,24 +23,23 @@
         }
 
         .land-text {
-            font-size: 0.95rem;
+            font-size: 30px;
             font-weight: 300;
-            line-height: 1.3rem;
+            line-height: 45px;
             margin: 1rem 0;
         }
 
         .land-btns {
-            font-size: .7rem;
             margin: 1.6rem 0;
-            width: 100%;
+            width: 90%;
             
             a{
                 display: block;
                 color: #fff;
                 font-weight: 600;
-                padding: .5rem 2rem;
                 background: #2596be;
                 width: 100%;
+                padding: 12px;
                 border: .07rem solid #2596be;
                 border-radius: 0.4rem;
                 text-align: center;
@@ -55,6 +54,16 @@
     background-size: cover;
     height: 100vh;
     background-position: center;
+
+    .land-title {
+        font-size: 50px;
+        font-weight: 800;
+        line-height: 80px;
+
+        span {
+            color: #2596be;
+        }
+    }
 }
 
 .navbar {
@@ -62,14 +71,17 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    // width: 100%;
+
     a {
         background: transparent;
         font-family: Inter;
-        font-size: .7rem;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 400;
         color: #fff;
-        padding: .5rem 1rem;
+        padding: 10px;
+        height: 40px;
+        border: none;
+        margin:0 6px;
     }
     a:active, a:hover {
         color: #2596BE;
@@ -93,7 +105,6 @@ header {
         }
 
         nav {
-            // width: 100%;
             margin: .7rem 0;
 
             ul {
@@ -101,16 +112,16 @@ header {
                     display: flex;
                     margin-left: .7rem;
                     a {
-                        font-size: .7rem;
+                        font-size: 14px;
                         font-weight: 500;
                         color: #fff;
-                        padding: .4rem 1rem;
+                        padding: 10px 20px;
+                        height: 40px;
                     }
                     .login-btn {
                         background: transparent;
                         border: .07rem solid #2596be;
                         border-radius: 0.4rem;
-                        color: #2596be;
                         margin-right: .7rem;
                     }
                     .signup-btn {
