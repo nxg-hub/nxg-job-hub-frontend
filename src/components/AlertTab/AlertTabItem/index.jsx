@@ -3,10 +3,12 @@ import s from "./index.module.scss";
 const AlertTabItem = ({ item, ...props }) => {
   return (
     <div className={s.AlertTabItem}>
-      <img src={item.image} alt="" />
+      <img src={item.image} alt="image" />
       <div>
-        <h3 className={s.name}>{item.name}</h3>
-        <p className={s.message}>{item.message}</p>
+        <span >
+          <h3 className={s.name}>{item.from}</h3>
+          <p className={s.message}>{item.message}</p>
+        </span>
         <small className={s.timestamp}>{item.timestamp}</small>
       </div>
     </div>

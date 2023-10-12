@@ -35,14 +35,14 @@ const ProfileLanding = () => {
   const [showAlertTab, setShowAlertTab] = useState(false);
   const [incoming, setIncoming] = useState([
     {
-      image: "",
+      image: "./../static/images/John.png",
       from: "Sandra Marthe",
       message:
         "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
       timestamp: `${Date.now()}`,
     },
     {
-       image: "",
+      image: "",
       from: "James leywin",
       message:
         "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
@@ -56,14 +56,14 @@ const ProfileLanding = () => {
       timestamp: `${Date.now()}`,
     },
     {
-       image: "",
+      image: "",
       from: "Fred Bailey",
       message:
         "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
       timestamp: `${Date.now()}`,
     },
     {
-       image: "",
+      image: "",
       from: "Joseph Mma",
       message:
         "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
@@ -131,7 +131,7 @@ const ProfileLanding = () => {
           <Profile />
         </Link>
 
-        {showAlertTab ? <AlertTab items={incoming} /> : <></>}
+        {showAlertTab ? <AlertTab controls={{showAlertTab, setShowAlertTab}} items={incoming} /> : <></>}
       </header>
       <div
         style={{
