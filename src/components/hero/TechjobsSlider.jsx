@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css/bundle';
 import './slide.scss';
@@ -7,12 +6,12 @@ import Analysis from '../../../src/static/icons/Data analysis.png';
 import Machine from '../../../src/static/icons/icon _Computer Process_.png';
 import Project from '../../../src/static/icons/icon-browser_.png';
 import UI from '../../../src/static/icons/ux design.png';
-import Cyber from '../../../src/static/icons/Data analysis.png';
-import Web from '../../../src/static/icons/Data analysis.png';
-import Digital from '../../../src/static/icons/Data analysis.png';
-import Design from '../../../src/static/icons/Data analysis.png';
-import DevOps from '../../../src/static/icons/Data analysis.png';
-import Cloud from '../../../src/static/icons/Data analysis.png';
+import Cyber from '../../../src/static/icons/Cybersecurity.svg';
+import Web from '../../../src/static/icons/web-development.svg';
+import Digital from '../../../src/static/icons/Digital.svg';
+import Design from '../../../src/static/icons/web-design.svg';
+import DevOps from '../../../src/static/icons/DevOps.svg';
+import Cloud from '../../../src/static/icons/cloud-computing.svg';
 
 const TechjobsSlider =() => {
     const Jobsspaces = [
@@ -80,10 +79,8 @@ const TechjobsSlider =() => {
   return (
         <div className='swipe-container'>
             <Swiper 
-                modules={[Navigation]}
                 spaceBetween={60}
                 slidesPerView={5}
-                navigation
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
