@@ -16,39 +16,39 @@ const AlertTabItem = ({ item, ...props }) => {
   const [timeElapsed, setTimeElapsed] = useState("");
 
   useEffect(() => {
-
-    const date = new Date(item.timestamp/1000);
-    const CurrentTime = (Date.now() / 1000) | 0;
-    const NotificationDate = date.getTime();
-    const timeDifference = CurrentTime - NotificationDate;
+    const date = new Date(item.timestamp);
+    const CurrentTime = Date.now(); //current milli seconds
+    const NotificationTime = date.getTime(); //millisec for message
+    const timeDifference = ((CurrentTime - NotificationTime) / 1000) | 0; //in seconds
+    console.log(timeDifference);
     setTimeElapsed(timeDifference);
-    if (timeElapsed < 60) {
+
+    if (timeDifference < 120) {
       setTime("now");
-    } else if (timeElapsed >= 172800) {
-      //if it is up to 24 hours
+    } else if (timeDifference >= 172800) {
+      //if it is up to 48 hours
 
       setTime(
         `${weekDays[date.getDay()][0]} ${date.getHours()}:${date.getMinutes()} `
       );
-    } else if (timeElapsed >= 86400) {
+    } else if (timeDifference >= 86400) {
       //if it is up to 24 hours
-
       setTime(`Yesterday at ${date.getHours()}:${date.getMinutes()} `);
-    } else if (timeElapsed >= 21000) {
+    } else if (timeDifference >= 21000) {
       //if it is up to 6 hours
       //I should make this more accurate
       setTime(`Today at ${date.getHours()}:${date.getMinutes()} `);
-    } else if (timeElapsed >= 3600) {
+    } else if (timeDifference >= 3600) {
       //if it is up to 1 our but less than 6 hours
       setTime(
-        timeElapsed / 3600 >= 2
-          ? `${(timeElapsed / 3600) | 0} hours ago`
+        timeDifference / 3600 >= 2
+          ? `${timeDifference / 3600} hours ago`
           : `an hour ago`
       );
-    } else if (timeElapsed >= 120) {
-      setTime(`${(timeElapsed / 60) | 0} mins ago`);
+    } else if (timeDifference >= 120) {
+      setTime(`${(timeDifference / 60) | 0} mins ago`);
     }
-  }, [item.timestamp, timeElapsed]);
+  }, [item.timestamp]);
 
   // Today 12:00pm ||
   // 3  mins ago  || an hour ago || 5 hours ago ||
