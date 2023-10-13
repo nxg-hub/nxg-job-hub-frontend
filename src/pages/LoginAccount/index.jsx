@@ -123,7 +123,7 @@ const LogTalent = () => {
         <p className='signup'>
           Don't have an account?{" "}
           <Link
-            to="/techtalent"
+            to="/register"
             style={{ color: "#2596BE", textDecoration:"underline"}}
           >
             Sign Up
