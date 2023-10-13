@@ -1,6 +1,7 @@
 import s from "./index.module.scss";
 
 const AlertTabItem = ({ item, ...props }) => {
+  console.log(item.image)
   return (
     <div className={s.AlertTabItem}>
       <img src={item.image} alt="image" />

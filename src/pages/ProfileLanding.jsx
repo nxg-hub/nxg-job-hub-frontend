@@ -106,6 +106,7 @@ const ProfileLanding = () => {
           margin: "auto",
         }}
       >
+   
         <div className="h-logo" style={{ width: "5.5rem", height: "3.2rem" }}>
           <img src={Logo} alt="Nxg Company Logo" className="logo" />
         </div>

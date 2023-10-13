@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Inputs from "../accounts/Inputs";
 import AlertTabItem from "./AlertTabItem";
 import s from "./index.module.scss";
 import { BsArrowLeft } from "react-icons/bs";
