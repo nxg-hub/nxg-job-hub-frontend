@@ -2,15 +2,15 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css/bundle';
 import './sponsor.scss';
-import Call from '../../static/icons/viber.png';
+import Call from '../../static/icons/call.png';
 import Watsapp from '../../static/icons/whatsapp.png';
 import ReactImg from '../../static/icons/science-symbol.png';
-import WindowImg from '../../static/icons/windows.png';
+import WindowImg from '../../static/icons/windows-Vector.png';
 import Tinder from '../../static/icons/tinder.png';
 import Slack from '../../static/icons/slack.png';
 import Instagram from '../../static/icons/Logo-Instagram.png';
 import Airbnb from '../../static/icons/airbnb-logo.png';
-import Twitter from '../../static/icons/twitter (1).png';
+import Twitter from '../../static/icons/twitter.png';
 import Music from '../../static/icons/music-logo.png';
 import Circle from '../../static/icons/circles.png';
 import Spotify from '../../static/icons/spotify-1.png';
@@ -30,7 +30,7 @@ const Sponsors = () => {
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
-                <div className="row-bg"></div>
+                {/* <div className="row-bg"></div> */}
                 <SwiperSlide>
                     <div className="rows">
                         <div className="img-row1">

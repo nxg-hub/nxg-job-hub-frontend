@@ -3,6 +3,7 @@ import './sponsor.scss'
 import John from '../../static/images/John.png'
 import Mary from '../../static/images/Mary.png'
 import Peter from '../../static/images/Peter.png'
+import { RiDoubleQuotesR } from 'react-icons/ri'
 
 const Testimony = () => {
     const Testimonies = [
@@ -26,8 +27,8 @@ const Testimony = () => {
         },
     ]
   return (
-    <div style={{margin:"4rem 0 6rem 0"}}>
-        <h4 style={{fontSize:"25px", fontWeight:"700", marginTop:"3rem", textAlign:"center", color:"#2596be"}}>What Job Seekers Say About Us</h4>
+    <div >
+        <h4 style={{fontSize:"34px", fontWeight:"700", marginTop:"3rem", textAlign:"center", color:"#2596be"}}>What Job Seekers Say About Us</h4>
         <div className="testimony-content">
             {Testimonies.map((testimony) => {
                 return (
@@ -36,7 +37,7 @@ const Testimony = () => {
                             <img src={testimony.img} alt={testimony.name} />
                         </div>
                         <div className="testimony-detail">
-                                <p className='test-quote'>{testimony.text}</p>
+                            <p className='test-quote'> <RiDoubleQuotesR style = {{transform: 'rotate(0deg)'}} />{testimony.text} <RiDoubleQuotesR/></p>
                         </div>
                     </div>
                 )
