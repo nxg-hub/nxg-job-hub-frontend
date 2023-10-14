@@ -8,9 +8,10 @@ import { ReactComponent as Search } from "../../src/static/icons/round-search.sv
 import { ReactComponent as Filter } from "../../src/static/icons/filter.svg";
 
 import { ReactComponent as Messages } from "../../src/static/icons/mail-unread.svg";
-import { ReactComponent as Notification } from "../../src/static/icons/notification-new.svg";
+import { ReactComponent as Notifications } from "../../src/static/icons/notification-new.svg";
 import { ReactComponent as Profile } from "../../src/static/icons/profile.svg";
 import AlertTab from "../components/AlertTab";
+import notification_data from "../utils/data/notifications";
 const titles = [
   {
     title1: "",
@@ -33,43 +34,7 @@ const ProfileLanding = () => {
   const [search, setSearch] = useState("");
   const [heroTitle, setHeroTitle] = useState(0);
   const [showAlertTab, setShowAlertTab] = useState(false);
-  const [incoming, setIncoming] = useState([
-    {
-      image: "./../static/images/John.png",
-      from: "Sandra Marthe",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: `${Date.now()}`,
-    },
-    {
-      image: "",
-      from: "James leywin",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: `${Date.now()}`,
-    },
-    {
-      image: "",
-      from: "Arthur King",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: `${Date.now()}`,
-    },
-    {
-      image: "",
-      from: "Fred Bailey",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: `${Date.now()}`,
-    },
-    {
-      image: "",
-      from: "Joseph Mma",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: `${Date.now()}`,
-    },
-  ]);
+  const [incoming, setIncoming] = useState(notification_data);
 
   const selectRandomTitle = useCallback(() => {
     const titleIndex = Math.floor(Math.random() * titles.length);
@@ -106,7 +71,6 @@ const ProfileLanding = () => {
           margin: "auto",
         }}
       >
-   
         <div className="h-logo" style={{ width: "5.5rem", height: "3.2rem" }}>
           <img src={Logo} alt="Nxg Company Logo" className="logo" />
         </div>
@@ -122,17 +86,26 @@ const ProfileLanding = () => {
           <Filter onClick={filterSearch} />
         </div>
         <Navbar />
-        <Link onClick={handleNotificationClick} to="./notifications">
-          <Notification />
-        </Link>
-        <Link onClick={handleMessageClick} to="./messages">
-          <Messages />
-        </Link>
-        <Link to="./profile">
-          <Profile />
-        </Link>
+        <div className="navIcons">
+          <Link onClick={handleNotificationClick} to="./notifications">
+            <Notifications />
+          </Link>
+          <Link onClick={handleMessageClick} to="./messages">
+            <Messages />
+          </Link>
+          <Link to="./profile">
+            <Profile />
+          </Link>
+        </div>
 
-        {showAlertTab ? <AlertTab controls={{showAlertTab, setShowAlertTab}} items={incoming} /> : <></>}
+        {showAlertTab ? (
+          <AlertTab
+            controls={{ showAlertTab, setShowAlertTab }}
+            items={incoming}
+          />
+        ) : (
+          <></>
+        )}
       </header>
       <div
         style={{
