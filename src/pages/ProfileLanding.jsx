@@ -11,6 +11,7 @@ import { ReactComponent as Messages } from "../../src/static/icons/mail-unread.s
 import { ReactComponent as Notifications } from "../../src/static/icons/notification-new.svg";
 import { ReactComponent as Profile } from "../../src/static/icons/profile.svg";
 import AlertTab from "../components/AlertTab";
+import notification_data from "../utils/data/notifications";
 const titles = [
   {
     title1: "",
@@ -33,50 +34,7 @@ const ProfileLanding = () => {
   const [search, setSearch] = useState("");
   const [heroTitle, setHeroTitle] = useState(0);
   const [showAlertTab, setShowAlertTab] = useState(false);
-  const [incoming, setIncoming] = useState([
-    {
-      image: "",
-      from: "Mika Sharma",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now(),
-    },
-    {
-      image: "",
-      from: "Sandra Marthe",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now() - 120000,
-    },
-    {
-      image: "",
-      from: "James leywin",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now() - 3600000,
-    },
-    {
-      image: "",
-      from: "Arthur King",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now() - 21600000,
-    },
-    {
-      image: "",
-      from: "Fred Bailey",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now() - 86400000,
-    },
-    {
-      image: "",
-      from: "Joseph Mma",
-      message:
-        "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
-      timestamp: Date.now() - 172800000,
-    },
-  ]);
+  const [incoming, setIncoming] = useState(notification_data);
 
   const selectRandomTitle = useCallback(() => {
     const titleIndex = Math.floor(Math.random() * titles.length);
