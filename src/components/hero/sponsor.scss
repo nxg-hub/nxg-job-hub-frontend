@@ -59,42 +59,14 @@
             border: 1.2px solid rgba(207, 207, 207, 0.3);
             z-index: -10;
             p{
-                margin-top: 3.5rem;
+                margin-top: 4rem;
                 font-size: 20px; // Adjust the font size as needed
                 font-weight: 400; // Adjust the font weight as needed
                 color: #000; // Set the text color to blue
-                line-height: 26px;
+                line-height: 28px;
                 font-family: Inter;
             }
-            // .test-quote {
-            //     font-size: 20px; // Adjust the font size as needed
-            //     font-weight: 400; // Adjust the font weight as needed
-            //     color: #000; // Set the text color to blue
-            //     line-height: 26px;
-            //     font-family: Inter;
-            //     // padding: 0 0.5rem;
-              
-            //     &:before,
-            //     &:after {
-            //       content: '“'; // Unicode character for opening double quotation mark
-            //       font-size: 50px; // Adjust the font size for the quotation marks
-            //       margin-right: 5px; // Adjust the spacing between the text and quotation marks
-            //       transform: rotate(180deg); // Rotate the opening quotation mark
-            //       display: inline-block;
-            //       color: #2596be;
-            //       font-family: Georgia, serif;
-            //     }
-              
-            //     &:after {
-            //       content: '”'; // Unicode character for closing double quotation mark
-            //       margin-left: -5px; // Adjust the spacing between the text and quotation marks
-            //       transform: rotate(180deg); // Rotate the closing quotation mark
-            //       color: #2596be;
-            //       font-family: Georgia, serif;
-            //     }
-            //   }
-              
-            
+             
         }
     }
 }

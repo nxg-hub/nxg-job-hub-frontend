@@ -2,48 +2,66 @@
     background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../static/images/Team-working-together.png);
     background-repeat: no-repeat;
     background-size: cover;
-
-      .landing-content {
-        max-width: 45%;
-        margin: 6%;
-        padding: 1rem;
-        font-family: Inter;
-        color: #fff;
-
-        .land-title {
-          font-size: 60px;
-          font-weight: 800;
-          line-height: 80px;
-    
-          span {
-            color: #2596be;
-          }
-        }
-
-        .land-text {
-          font-size: 30px;
-          font-weight: 300;
-          line-height: 45px;
-          margin: 1rem 0;
-        }
-
-        .land-btns {
-          margin: 1.6rem 0;
-          width: 90%;
-    
-          a {
-            display: block;
+        .landing-content {
+            max-width: 45%;
+            margin: 6%;
+            padding: 1rem;
+            font-family: Inter;
             color: #fff;
-            font-weight: 600;
-            background: #2596be;
-            width: 100%;
-            padding: 12px;
-            border: 0.07rem solid #2596be;
-            border-radius: 0.4rem;
-            text-align: center;
-          }
+            .land-title {
+                font-size: 60px;
+                font-weight: 800;
+                line-height: 80px;
+        
+                span {
+                    color: #2596be;
+                }
+            }
+            .land-text {
+                font-size: 30px;
+                font-weight: 300;
+                line-height: 45px;
+                margin: 1rem 0;
+            }
+            .land-btns {
+                margin: 1.6rem 0;
+                width: 50%;
+                a{
+                    display: block;
+                    color: #fff;
+                    font-weight: 400;
+                    background: #2596be;
+                    width: 100%;
+                    padding: 12px;
+                    border: .07rem solid #2596be;
+                    border-radius: 0.4rem;
+                    text-align: center;
+                }
+            }
         }
-      }
+}
+
+.jobs-btns {
+    margin: 4% 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    a {
+        display: block;
+        color: #fff;
+        font-weight: 400;
+        width: 100%;
+        background: #2596be;
+        margin: 0 2rem;
+        padding: 12px;
+        border: .07rem solid #2596be;
+        border-radius: 0.7rem;
+        text-align: center;
+    }
+    .find-btn {
+        color: #2596be;
+        background: transparent;
+    }
 }
 
 .profile-landing {
@@ -66,26 +84,24 @@
 }
 
 .navbar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-
-  a {
-    background: transparent;
-    font-family: Inter;
-    font-size: 14px;
-    font-weight: 400;
-    color: #fff;
-    padding: 10px;
-    height: 40px;
-    border: none;
-    margin: 0 6px;
-  }
-  a:active,
-  a:hover {
-    color: #2596be;
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    a {
+        background: transparent;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        padding: 10px;
+        height: 40px;
+        border: none;
+        margin:0 6px;
+    }
+    a:active, a:hover {
+        color: #2596BE;
+    }
 }
 
 header {
@@ -103,39 +119,38 @@ header {
       display: block;
     }
 
-    nav {
-      margin: 0.7rem 0;
-
-      ul {
-        .nav-btns {
-          display: flex;
-          margin-left: 0.7rem;
-          a {
-            font-size: 14px;
-            font-weight: 500;
-            color: #fff;
-            padding: 10px 20px;
-            height: 40px;
-          }
-          .login-btn {
-            background: transparent;
-            border: 0.07rem solid #2596be;
-            border-radius: 0.4rem;
-            margin-right: 0.7rem;
-          }
-          .signup-btn {
-            background: #2596be;
-            border: none;
-            border-radius: 0.4rem;
-          }
-          .signup-btn:hover {
-            background: #fff;
-            color: #2596be;
-          }
+        nav {
+            margin: .7rem 0;
+            ul {
+                .nav-btns {
+                    display: flex;
+                    margin-left: .7rem;
+                    a {
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #fff;
+                        padding: 10px 20px;
+                        height: 40px;
+                    }
+                    .login-btn {
+                        background: transparent;
+                        border: .07rem solid #2596be;
+                        border-radius: 0.4rem;
+                        margin-right: .7rem;
+                    }
+                    .signup-btn {
+                        background: #2596be;
+                        border: none;
+                        border-radius: 0.4rem;
+                    }
+                    .signup-btn:hover{
+                        background: #fff;
+                        color: #2596be;
+                    }
+                }
+            }
         }
-      }
-    }
-  }
+    } 
 }
 
 @media only screen and (min-width: 1024px) {
