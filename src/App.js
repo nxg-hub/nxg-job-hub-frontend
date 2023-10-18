@@ -15,6 +15,7 @@ import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
+import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
 // import AccountChoiceModular from "./components/AccountChoiceModular";
 
 
@@ -39,6 +40,7 @@ function App() {
         {/* <Route path="/acctchoice" element={<AccountChoiceModular />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/employerprofile" element={<EmployerProfileForm />} />
 
         {/* Modals */}
         <Route path="/mailverification" element={<EmailVeri />}/>

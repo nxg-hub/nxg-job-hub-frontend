@@ -19,7 +19,6 @@ function ProfileForm ({formData, onUpdateFormData}) {
         phone,
     } = formData;
     
-    // const [country, setCountry] = useState('');
     const handleShowPassword = () => {
         onUpdateFormData({...formData, showPassword : !showPassword});
     }
@@ -160,16 +159,6 @@ function ProfileForm ({formData, onUpdateFormData}) {
                     onChange={(date) => onUpdateFormData({...formData, birthDate: date})}
                 />
             </div>
-            
-          
-            {/* <Inputs 
-                type='text'
-                title='Nationality'
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                placeholder="Enter your nationality"
-            /> */}
-            
         </div>
     </div>
   )

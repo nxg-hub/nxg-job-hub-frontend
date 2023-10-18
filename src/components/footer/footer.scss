@@ -35,18 +35,29 @@
         width: 100%;
         display: flex;
         margin: 1.2rem 1.5rem;
-        input[type="email"] {
-        padding: 1.1rem 0.8rem;
-        border: 1px solid #006a90;
-        font-size: 12px;
-        font-weight: 400;
-        font-family: Montserrat;
-        width: 80%;
-        background-color: transparent;
+        div {
+            input[type="email"] {
+                padding: 1.1rem 0.8rem;
+                font-size: 12px;
+                font-weight: 400;
+                font-family: Montserrat;
+                width: 100%;
+                }
+                input::placeholder{
+                    color: #006a90;
+                }
+                .sub-input {
+                    background-color: transparent;
+                    border: 1px solid #006a90;
+                }
+                .error-input {
+                    border: 1rem solid red;
+                    color: red; 
+                    background-color: #ffdddd;
+                }
+
         }
-        input::placeholder{
-            color: #006a90;
-        }
+        
         input[type="submit"]{
             width: 20%;
             padding: 1.1rem 0.8rem;
@@ -55,6 +66,7 @@
             background-color: #006a90;
             border: none;
             color: #ffffff;
+            cursor: pointer;
         }
     }
 }
