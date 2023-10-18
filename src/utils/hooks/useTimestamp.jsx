@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-const useTimestamp = (item) => {
+const useTimestamp = (timestamp) => {
   const [time, setTime] = useState(0);
   const weekDays = useMemo(
     () => ({
@@ -15,7 +15,7 @@ const useTimestamp = (item) => {
     []
   );
   useEffect(() => {
-    const date = new Date(item.timestamp);
+    const date = new Date(timestamp);
     const CurrentTime = Date.now(); //current milli seconds
     const NotificationTime = date.getTime(); //millisec for message
     const timeDifference = ((CurrentTime - NotificationTime) / 1000) | 0; //in seconds
@@ -44,7 +44,7 @@ const useTimestamp = (item) => {
     } else if (timeDifference >= 120) {
       setTime(`${(timeDifference / 60) | 0} mins ago`);
     }
-  }, [item.timestamp, weekDays]);
+  }, [timestamp, weekDays]);
   return time;
 };
 

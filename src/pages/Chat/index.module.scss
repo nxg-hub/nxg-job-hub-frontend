@@ -1,0 +1,17 @@
+.ChatPage{
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  min-height: 100vh;
+  .ChatScreen{
+    .ChatHeader{
+height: 50px;
+max-height: 100px;
+    }
+    .Chats{
+      padding: 10px;
+      background-color: rgba(205, 208, 207, 0.379);
+      min-height: calc(100% - 50px);
+    }
+  }
+}

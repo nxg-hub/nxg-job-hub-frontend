@@ -1,0 +1,44 @@
+@mixin bubbleAfterStyles($bubbleColor, $corner) {
+  background-color: $bubbleColor;
+  content: "";
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  bottom: -5px;
+  #{$corner}: -5px;
+  transform: rotate(45deg);
+  @if ($corner == left) {
+    transform: rotate(45deg);
+  }
+}
+@mixin bubbleStyles($bubbleColor, $corner) {
+  background-color: $bubbleColor;
+  padding: 10px 20px;
+  color: white;
+  position: relative;
+  border-radius: 4px;
+  &::after {
+    @include bubbleAfterStyles($bubbleColor, $corner);
+  }
+}
+.TextBubbleWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  max-width: 500px;
+  gap: 10px;
+  overflow-x: hidden;
+  &.SentMessage {
+    align-items: flex-end;
+
+    .TextBubble {
+      @include bubbleStyles(blue, right);
+    }
+  }
+  &.ReceivedMessage {
+    align-items: flex-start;
+    .TextBubble {
+      @include bubbleStyles(grey, left);
+    }
+  }
+}
