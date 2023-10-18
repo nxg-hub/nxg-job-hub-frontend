@@ -136,7 +136,7 @@ const ProfileLanding = () => {
         </p>
         <div style={{ fontSize: "0.7rem", margin: "1.6rem 0" }}>
           <Link
-            to={"/techtalent"}
+            to={"/employerprofile"}
             style={{
               color: "#fff",
               fontWeight: "600",
