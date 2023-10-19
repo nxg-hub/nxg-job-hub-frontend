@@ -1,6 +1,8 @@
 import React from 'react'
 import TechjobsSlider from './TechjobsSlider'
 import PostImg from '../../static/images/job-post-img.png'
+import LandSearchBar from './LandSearchBar'
+import { jobsDetails } from './Datas'
 
 const Explore = () => {
   return (
@@ -9,16 +11,10 @@ const Explore = () => {
           <div style={{ margin:"2rem 0"}}>
             <h2 style={{color:"#2596be", fontSize:"34px", fontWeight:"700"}}>Explore Tech Jobs</h2>
           </div>
-          <div className="land-search" style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"0 6%"}}>
+          <div className="land-search" style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"0 6%", position:'relative'}}>
             <h3 style={{fontSize:"28px", fontWeight:"600"}}>Popular Categories</h3>
             <div className="search">
-              <input 
-                style={{textAlign:"center", padding:"8px 0", border:"1px", background:"#f0f0f0", color:"#000000", fontSize:"18px", fontWeight:"400",  borderRadius:"1px solid #f0f0f0"}}
-                type="search" 
-                name="search" 
-                id="search" 
-                placeholder='Search' 
-              />
+              <LandSearchBar placeholder="Search" jobData={jobsDetails} />
             </div>
           </div>
           <div className="slider">
