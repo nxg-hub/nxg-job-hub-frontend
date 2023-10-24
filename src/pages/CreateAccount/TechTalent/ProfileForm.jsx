@@ -157,6 +157,10 @@ function ProfileForm ({formData, onUpdateFormData}) {
                     aria-label='date'
                     selected={formData.birthDate}
                     onChange={(date) => onUpdateFormData({...formData, birthDate: date})}
+                    showYearDropdown
+                    dateFormatCalendar="MMMM"
+                    yearDropdownItemNumber={25}
+                    scrollableYearDropdown
                 />
             </div>
         </div>

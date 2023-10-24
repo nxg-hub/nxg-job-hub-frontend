@@ -1,5 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { jobsDetails, chosen } from './Datas';
 import { MdLocationPin } from 'react-icons/md';
@@ -10,10 +11,34 @@ const JobCards = () => {
     <>
       <div className="job-card-slider">
         <Swiper
+          freeMode={true}
+          grabCursor={true}
+          modules={[FreeMode]}
+          className="mySwiper"
           spaceBetween={70}
           slidesPerView={3}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
+          breakpoints={{
+            0: {
+                slidesPerView:1,
+                spaceBetween: 200,
+            },
+            768: {
+                slidesPerView:1,
+                spaceBetween: 5,
+            },
+            1024: {
+                slidesPerView:2,
+                spaceBetween: 20,
+            },
+            1280: {
+                slidesPerView:2,
+                spaceBetween: 30,
+            },
+            1440: {
+                slidesPerView:3,
+                spaceBetween: 70,
+            },
+        }}
         >
           {jobsDetails.map((detail) => (
             <SwiperSlide key={detail.heading}>

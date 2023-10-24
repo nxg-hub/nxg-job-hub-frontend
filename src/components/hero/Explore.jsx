@@ -11,8 +11,8 @@ const Explore = () => {
           <div style={{ margin:"2rem 0"}}>
             <h2 style={{color:"#2596be", fontSize:"34px", fontWeight:"700"}}>Explore Tech Jobs</h2>
           </div>
-          <div className="land-search" style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"0 6%", position:'relative'}}>
-            <h3 style={{fontSize:"28px", fontWeight:"600"}}>Popular Categories</h3>
+          <div className="land-search">
+            <h3>Popular Categories</h3>
             <div className="search">
               <LandSearchBar placeholder="Search" jobData={jobsDetails} />
             </div>
@@ -21,7 +21,7 @@ const Explore = () => {
             <TechjobsSlider />
             </div>
       </div>
-      <section style={{textAlign:"center", margin:"2rem 0", width:"100%", height:"850px"}}>
+      <section className='job-posting-container'>
         <div className="job-posting" style={{margin:"2rem"}}>
           <h3 style={{fontSize:"36px", fontWeight:"700", margin:".5rem 0", color:"#2596be"}}>Recent Job Postings</h3>
           <p>View and search our vacancies. Attach your CV  and apply online</p>

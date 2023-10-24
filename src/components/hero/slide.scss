@@ -1,3 +1,19 @@
+.land-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:center;
+    margin:0 6%;
+    position: relative;
+
+    h3 {
+        font-size: 28px;
+        font-weight: 600;
+        display: none;
+    }
+}
+
+
 .slider {
    margin: 2rem 0;
 }
@@ -67,35 +83,46 @@
     }
 }
 
-.first-rectangle, .second-rectangle {
-    width: 970px;
-    height: 643px;
-    margin: auto;
-    border:  0.77px dashed #000000;
-    border-radius: 21.32px;
-}
+.job-posting-container {
+    text-align: center;
+    margin: 2rem 0; 
+    width: 100%;
+    height: 500px;
+    .posting-img {
+        .first-rectangle, .second-rectangle {
+            width: 100%;
+            max-width: 970px;
+            height: 443px;
+            margin: auto;
+            border:  0.77px dashed #000000;
+            border-radius: 21.32px;
+            display: none;
+        }
+        .second-rectangle {
+            position: absolute;
+            top: 40px;
+            left:  15px;
+            transform: translateX(25%);
+            border:  1.07px dashed #000000;
+            z-index: -10;
+        }
+        .postImg {
+            position: absolute;
+            width: 100%;
+            max-width: 970px;
+            height: 343px;
+            top: 10;
+            left:  0;
+            padding: 0 .5rem;
+            transform: translateX(0%);
+            border: none;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
 
-.second-rectangle {
-    position: absolute;
-    top: 80px;
-    left:  55px;
-    transform: translateX(35%);
-    border:  1.07px dashed #000000;
-    z-index: -10;
-}
-.postImg {
-    position: absolute;
-    width: 970px;
-    height: 643px;
-    top: 40px;
-    left:  55px;
-    transform: translateX(30%);
-    border: none;
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
     }
 }
 
@@ -259,4 +286,37 @@
     .circle2 {
         margin-top: 15px;
     }
+}
+
+
+@media only screen and (min-width:1024px) {
+    .land-search {
+        flex-direction: row;
+        h3 {
+            display: block;
+        }
+    }
+    .job-posting-container {
+        height: 850px;
+        .posting-img {
+            .first-rectangle, .second-rectangle {
+                height: 643px;
+                display: block;
+            }
+            .second-rectangle {
+                top: 80px;
+                left:  55px;
+                transform: translateX(35%);
+            }
+            .postImg {
+                height: 643px;
+                top: 40px;
+                left:  55px;
+                padding: 0;
+                transform: translateX(30%);
+            }
+
+        }
+    }
+   
 }
