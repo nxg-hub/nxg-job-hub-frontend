@@ -8,12 +8,12 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        margin: 2.5rem 0;
+        margin: 1.5rem 0;
         .row-icon {
-            width: 300px;
-            height: 300px;
-            margin: auto 1.5rem;
-            padding: 2.5rem;
+            width: 100px;
+            height: 100px;
+            margin: auto ;
+            padding: 1.5rem;
             border: 1px solid #2596be;
             background-color: #ffffff;
             img {
@@ -135,3 +135,20 @@
     display: none;
 }
 
+@media only screen and (min-width:1024px) {
+    .main-row {
+       .rows {
+        .img-row1, .img-row2 {
+            margin: 2.5rem 0;
+            .row-icon {
+                width: 200px;
+                height: 200px;
+                margin: auto 1.5rem;
+                padding: 2.5rem;
+            
+            }
+        }
+       }
+    }
+    
+}

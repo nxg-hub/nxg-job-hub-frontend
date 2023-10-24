@@ -96,6 +96,21 @@
     padding: 0.6rem 0.7rem;
     border-radius: 0.4rem 0 0 0.4rem!important;
   }
+
+  .react-datepicker__year-dropdown .react-datepicker__year-option:first-child::before {
+    content: "\25B2";
+    position: absolute;
+    top: 5%;
+    left: 45%;
+    margin: auto;
+  }
+  
+  .react-datepicker__year-dropdown::after {
+    content: "\25BC";
+    display: block;
+    position: relative;
+    bottom: 15%;
+  }
   
   .date {
     background-color: #ffffff !important;

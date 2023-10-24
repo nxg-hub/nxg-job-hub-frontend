@@ -19,6 +19,7 @@ function FormStepper({ data, onStepChange }) {
     ) {
       alert('All fields must be filled');
     } else {
+        alert('Profile Information completed successfully.')
       console.log(data);
     }
   };

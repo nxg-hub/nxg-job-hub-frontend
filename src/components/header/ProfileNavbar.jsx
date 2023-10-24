@@ -1,20 +1,13 @@
-import React from "react";
+import React from 'react';
 import { NavLink } from "react-router-dom";
 import "../header/header.scss";
 
-
-
-
-const Navbar = () => {
-  
-  const NavLinks = [
-    { title: "Home", href: "/" },
-    { title: "Services", href: "/services" },
-    { title: "About", href: "/about" },
-    { title: "Contact Us", href: "/contact" },
-  ];
-
-  
+function ProfileNavbar() {
+    const NavLinks = [
+        { title: "Home", href: "/" },
+        { title: "Services", href: "/services" },
+        { title: "About", href: "/about" }
+    ];
   return (
     <div className="navbar">
       {NavLinks.map((link) => {
@@ -31,7 +24,7 @@ const Navbar = () => {
         );
       })}
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default ProfileNavbar

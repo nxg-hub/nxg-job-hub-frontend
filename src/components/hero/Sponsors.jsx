@@ -1,5 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
 import 'swiper/css/bundle';
 import './sponsor.scss';
 import Call from '../../static/icons/call.png';
@@ -16,7 +17,7 @@ import Circle from '../../static/icons/circles.png';
 import Spotify from '../../static/icons/spotify-1.png';
 import Apple from '../../static/icons/apple-black.png';
 import Facebook from '../../static/icons/facebook-2.png';
-import AdobeXd from '../../static/icons/xd-logo.jpg';
+import AdobeXd from '../../static/icons/xd-logo.png';
 import Linkedin from '../../static/icons/linkedin.svg';
 
 const Sponsors = () => {
@@ -25,12 +26,25 @@ const Sponsors = () => {
     <div >
         <div className="main-row">
             <Swiper 
-                spaceBetween={2}
-                slidesPerView={2}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
+                freeMode={true}
+                grabCursor={true}
+                modules={[FreeMode]}
+                className="mySwiper"
+                breakpoints={{
+                    480: {
+                        slidesPerView:1,
+                        spaceBetween: 5,
+                    },
+                    768: {
+                        slidesPerView:2,
+                        spaceBetween: 10,
+                    },
+                    1024: {
+                        slidesPerView:3,
+                        spaceBetween: 5,
+                    },
+                }}
             >
-                {/* <div className="row-bg"></div> */}
                 <SwiperSlide>
                     <div className="rows">
                         <div className="img-row1">
