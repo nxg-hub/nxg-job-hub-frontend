@@ -4,13 +4,13 @@ const useTimestamp = (timestamp) => {
   const [time, setTime] = useState(0);
   const weekDays = useMemo(
     () => ({
-      0: ["sunday", "sun"],
-      1: ["monday", "mon"],
-      2: ["tuesday", "tue"],
-      3: ["wednesday", "wed"],
-      4: ["thursday", "thurs"],
-      5: ["friday", "fri"],
-      6: ["saturday", "sat"],
+      0: ["Sunday", "Sun"],
+      1: ["Monday", "Mon"],
+      2: ["Tuesday", "Tue"],
+      3: ["Wednesday", "Wed"],
+      4: ["Thursday", "Thurs"],
+      5: ["Friday", "Fri"],
+      6: ["Saturday", "Sat"],
     }),
     []
   );

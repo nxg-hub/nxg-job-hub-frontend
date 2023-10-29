@@ -8,7 +8,7 @@ import profilepic from "../../static/images/Peter.png";
 import { ReactComponent as VideoCall } from "../../static/icons/video_call.svg";
 import { ReactComponent as AudioCall } from "../../static/icons/audio_call.svg";
 import { CiMenuKebab } from "react-icons/ci";
-import { PiMicrophoneDuotone, PiCameraLight, PiSmileyLight, PiPaperclipLight } from "react-icons/pi";
+import { PiCameraLight, PiSmileyLight, PiPaperclipLight, PiMicrophoneLight } from "react-icons/pi";
 import { useState } from "react";
 
 const Chat = () => {
@@ -72,7 +72,7 @@ const Chat = () => {
             <span className={s.features}>
               <PiPaperclipLight title="Document" />
               <PiCameraLight title="Camera" />
-              <PiMicrophoneDuotone title="Microphone" />
+              <PiMicrophoneLight title="Microphone" />
             </span>
           </div>
         </div>

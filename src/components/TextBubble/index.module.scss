@@ -1,15 +1,17 @@
 @mixin bubbleAfterStyles($bubbleColor, $corner) {
   background-color: $bubbleColor;
   content: "";
-  height: 10px;
-  width: 10px;
+  height: 15px;
+  width: 15px;
   position: absolute;
-  bottom: -5px;
-  #{$corner}: -5px;
-  transform: rotate(45deg);
-  @if ($corner == left) {
-    transform: rotate(45deg);
-  }
+  bottom:-10px ;
+  bottom:-7.5px ;
+  #{$corner}: -7.5px;
+  // left: 50%;
+  transform: rotate(45deg) 
+  // translateX(-50%);
+  
+  // border-radius: 40%;
 }
 @mixin bubbleStyles($bubbleColor, $corner) {
   background-color: $bubbleColor;

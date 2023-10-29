@@ -17,6 +17,7 @@ import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
 import TextBubble from "./components/TextBubble";
 import Chat from "./pages/Chat";
+import Dashboard from "./pages/Dashboard";
 // import AccountChoiceModular from "./components/AccountChoiceModular";
 
 
@@ -51,13 +52,9 @@ function App() {
           path: "/login",
           text:" Login to your account"
         }} />} />
-        <Route path="/test3" element={
-          <div>
-            < TextBubble type={"sent"} />
-            <TextBubble type={"received"} />
-            </div>
-          } />
+   
         <Route path="/chat" element={<Chat />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
       </Routes>
       

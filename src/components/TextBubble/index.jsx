@@ -7,7 +7,7 @@ const TextBubble = ({ type, content, timestamp, sender, ...props }) => {
   const time = useTimestamp(timestamp)
   return type && type === "sent" ? (
     <div {...props} className={`${s.TextBubbleWrapper} ${s.SentMessage}`}>
-      {sender}
+      {/* {sender} */}
       <div className={s.TextBubble}>{content}</div>
       <small>{time}</small>
     </div>
