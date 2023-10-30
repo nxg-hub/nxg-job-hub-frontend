@@ -15,7 +15,6 @@ import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
-import TextBubble from "./components/TextBubble";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 // import AccountChoiceModular from "./components/AccountChoiceModular";

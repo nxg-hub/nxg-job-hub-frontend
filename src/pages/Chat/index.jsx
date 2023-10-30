@@ -7,11 +7,29 @@ import { useNavigate } from "react-router-dom";
 import profilepic from "../../static/images/Peter.png";
 import { ReactComponent as VideoCall } from "../../static/icons/video_call.svg";
 import { ReactComponent as AudioCall } from "../../static/icons/audio_call.svg";
+import { ReactComponent as Send } from "../../static/icons/carbon_send.svg";
 import { CiMenuKebab } from "react-icons/ci";
-import { PiCameraLight, PiSmileyLight, PiPaperclipLight, PiMicrophoneLight } from "react-icons/pi";
-import { useState } from "react";
+import {
+  PiCameraLight,
+  PiSmileyLight,
+  PiPaperclipLight,
+  PiMicrophoneLight,
+} from "react-icons/pi";
+import { useEffect, useRef, useState } from "react";
 
 const Chat = () => {
+  const chatscreen = useRef();
+  useEffect(() => {
+    chatscreen.current.lastElementChild.scrollIntoView();
+  });
+  class Message {
+    constructor(from, message, media) {
+      this.from = "";
+      this.message = message;
+      this.media = media;
+      this.timestamp = Date.now();
+    }
+  }
   const { chat_name, chats } = chat_data;
   const redirect = useNavigate();
   const Back = (e) => {
@@ -21,9 +39,17 @@ const Chat = () => {
     }
   };
   const [message, SetMessage] = useState("");
+  const [newChats, SetChats] = useState([...chats]);
+
   const handleTyping = (e) => {
     const { value } = e.target;
-    SetMessage(value)
+    SetMessage(value);
+  };
+  const SendMessage = () => {
+    if (message !== "" || message.trim() !== "") {
+      SetChats([...newChats, new Message("", message, "")]);
+      SetMessage("");
+    }
   };
   return (
     <div className={s.ChatPage}>
@@ -47,8 +73,8 @@ const Chat = () => {
             <CiMenuKebab title="More" />
           </div>
         </div>
-        <div className={s.Chats}>
-          {chats.map((chat, id) => (
+        <div className={s.Chats} ref={chatscreen}>
+          {newChats.map((chat, id) => (
             <TextBubble
               key={id}
               type={chat.from ? "received" : "sent"}
@@ -67,7 +93,7 @@ const Chat = () => {
               value={message}
               onChange={handleTyping}
               rows={1}
-              rowspan={30}
+              rowSpan={30}
             />
             <span className={s.features}>
               <PiPaperclipLight title="Document" />
@@ -75,6 +101,7 @@ const Chat = () => {
               <PiMicrophoneLight title="Microphone" />
             </span>
           </div>
+          <Send onClick={SendMessage} />
         </div>
       </div>
     </div>
