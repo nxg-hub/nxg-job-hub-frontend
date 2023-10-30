@@ -14,9 +14,9 @@ import notification_data from "../utils/data/notifications";
 import ProfileNavbar from "../components/header/ProfileNavbar";
 const titles = [
   {
-    title1: "",
-    span: "Connect",
-    title: "with Employers, Tech Talents and Agents",
+    title1: "Get Started with KYC",
+    span: "",
+    title: "Documentation",
   },
   {
     title1: "Enjoy",
@@ -116,7 +116,7 @@ const ProfileLanding = () => {
           {heroTitle.title}
         </h1>
         <p>
-          Get started by completing your profile.
+          Get access and connect with Professionals, Tech talents, and agents in just a few clicks.
         </p>
         <div className="land-btns">
           <Link
