@@ -20,6 +20,7 @@
   position: relative;
   border-radius: 4px;
   max-width: 75%;
+  white-space: pre-wrap;
   &::after {
     @include bubbleAfterStyles($bubbleColor, $corner);
   }

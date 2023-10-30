@@ -43,7 +43,7 @@ const Chat = () => {
 
   const handleTyping = (e) => {
     const { value } = e.target;
-    SetMessage(value);
+    e.keyCode === 9 ? SendMessage() : SetMessage(value);
   };
   const SendMessage = () => {
     if (message !== "" || message.trim() !== "") {
@@ -92,6 +92,7 @@ const Chat = () => {
               placeholder="Type message"
               value={message}
               onChange={handleTyping}
+              onKeyDown={handleTyping}
               rows={1}
               rowSpan={30}
             />
@@ -101,7 +102,7 @@ const Chat = () => {
               <PiMicrophoneLight title="Microphone" />
             </span>
           </div>
-          <Send onClick={SendMessage} />
+          <Send title="Click or TAB to send" className={s.Send} onClick={SendMessage} />
         </div>
       </div>
     </div>
