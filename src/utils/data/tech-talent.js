@@ -56,5 +56,11 @@ const jobs = [
     "Data Storage"
 ];
 
-
-export  {qualifications, jobTypes, workModes, jobs, levels, certifications};
+const relevance = [
+    "Relevance",
+    "Popularity",
+    "Recent",
+    "Oldest",
+    "Director"
+]
+export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance};

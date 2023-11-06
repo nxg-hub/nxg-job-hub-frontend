@@ -40,7 +40,9 @@ const ProfileLanding = () => {
     const titleIndex = Math.floor(Math.random() * titles.length);
     setHeroTitle(titles[titleIndex]);
   }, []);
-
+  const hideAlertTab = (e) => {
+    if (e.target === e.currentTarget) setShowAlertTab(!showAlertTab);
+  };
   useEffect(() => {
     const intervalTitle = setInterval(selectRandomTitle, 2500);
     return () => {
@@ -100,7 +102,7 @@ const ProfileLanding = () => {
 
         {showAlertTab ? (
           <AlertTab
-            controls={{ showAlertTab, setShowAlertTab }}
+            controls={hideAlertTab}
             items={incoming}
           />
         ) : (
