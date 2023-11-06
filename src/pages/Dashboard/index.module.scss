@@ -1,0 +1,26 @@
+.Dashboard{
+  display: grid;
+  // grid-template-columns: 1.5fr 5fr;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  .Sidebad{
+    grid-column: 1 ;
+    background-color: grey;
+  }
+  // Dashboard Main Side Styling
+  .Sidemain {
+    grid-column: 1;
+    background-color: rgba(37, 150, 190, 0.1);
+    padding: 20px 50px 0 15px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .Dashboard {
+    .Sidebad {
+      grid-column: 1 / 4;
+    }
+    .Sidemain {
+      grid-column: 4/ 9;
+    }
+  }
+}

@@ -15,6 +15,8 @@ import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
+import Chat from "./pages/Chat";
+import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
 
 
@@ -47,6 +49,9 @@ function App() {
           path: "/login",
           text:" Login to your account"
         }} />} />
+   
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
       </Routes>
       

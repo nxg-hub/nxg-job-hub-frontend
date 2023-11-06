@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 
-const useTimestamp = (item) => {
+const useTimestamp = (timestamp) => {
   const [time, setTime] = useState(0);
   const weekDays = useMemo(
     () => ({
-      0: ["sunday", "sun"],
-      1: ["monday", "mon"],
-      2: ["tuesday", "tue"],
-      3: ["wednesday", "wed"],
-      4: ["thursday", "thurs"],
-      5: ["friday", "fri"],
-      6: ["saturday", "sat"],
+      0: ["Sunday", "Sun"],
+      1: ["Monday", "Mon"],
+      2: ["Tuesday", "Tue"],
+      3: ["Wednesday", "Wed"],
+      4: ["Thursday", "Thurs"],
+      5: ["Friday", "Fri"],
+      6: ["Saturday", "Sat"],
     }),
     []
   );
   useEffect(() => {
-    const date = new Date(item.timestamp);
+    const date = new Date(timestamp);
     const CurrentTime = Date.now(); //current milli seconds
     const NotificationTime = date.getTime(); //millisec for message
     const timeDifference = ((CurrentTime - NotificationTime) / 1000) | 0; //in seconds
@@ -44,7 +44,7 @@ const useTimestamp = (item) => {
     } else if (timeDifference >= 120) {
       setTime(`${(timeDifference / 60) | 0} mins ago`);
     }
-  }, [item.timestamp, weekDays]);
+  }, [timestamp, weekDays]);
   return time;
 };
 

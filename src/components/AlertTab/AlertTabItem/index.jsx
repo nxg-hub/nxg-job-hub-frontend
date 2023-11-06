@@ -1,8 +1,9 @@
 import s from "./index.module.scss";
 import img from "../../../static/images/John.png";
 import useTimestamp from "../../../utils/hooks/useTimestamp";
+
 const AlertTabItem = ({ item, ...props }) => {
-  const time = useTimestamp(item);
+  const time = useTimestamp(item.timestamp);
   return (
     <div {...props} className={s.AlertTabItem}>
       <img src={img} alt="PROFILEPICTURE" />
