@@ -69,6 +69,14 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className="jobs-btns">
+        <Link to={"/jobpost"} className="post-btn">
+              Post Jobs
+        </Link>
+        <Link to={"/findjob"} className="find-btn">
+              Find Jobs
+        </Link>
+      </div>
       <Explore />
       <div className="jobs-slider" style={{margin:"3rem 0", padding:".6rem 2rem"}}>
           <JobCards />

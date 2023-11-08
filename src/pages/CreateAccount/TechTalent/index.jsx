@@ -120,7 +120,7 @@ const TechTalent = () => {
           <p style={{ textAlign: "center", fontSize: ".8rem", fontWeight: "500", marginBottom: ".3rem" }}>
             Already have an account?{" "}
             <Link
-              to="/logtalent"
+              to="/login"
               style={{ color: "#2596BE", textDecoration: "underline" }}
             >
               Log In

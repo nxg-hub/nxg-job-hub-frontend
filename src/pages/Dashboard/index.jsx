@@ -1,3 +1,4 @@
+import DashboardMainSide from "./DashboardMainSide"
 import s from "./index.module.scss"
 const Dashboard = () => {
   return (
@@ -7,10 +8,10 @@ const Dashboard = () => {
         {/* Sidebar goes here */}
         sidebar
       </div>
-
-      <div>
-        {/* Mainpage or <Outlet/> */}
-        main
+      
+      {/* Mainpage or <Outlet/> */}
+      <div className={s.Sidemain}>
+        <DashboardMainSide />
       </div>
     </div>
   )

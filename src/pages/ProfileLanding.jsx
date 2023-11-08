@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../static/images/logo_colored.png";
-import Navbar from "../components/header/Navbar";
 import "../components/header/header.scss";
 import Inputs from "../../src/components/accounts/Inputs";
 import { ReactComponent as Search } from "../../src/static/icons/round-search.svg";
@@ -12,11 +11,12 @@ import { ReactComponent as Notifications } from "../../src/static/icons/notifica
 import { ReactComponent as Profile } from "../../src/static/icons/profile.svg";
 import AlertTab from "../components/AlertTab";
 import notification_data from "../utils/data/notifications";
+import ProfileNavbar from "../components/header/ProfileNavbar";
 const titles = [
   {
-    title1: "",
-    span: "Connect",
-    title: "with Employers, Tech Talents and Agents",
+    title1: "Get Started with KYC",
+    span: "",
+    title: "Documentation",
   },
   {
     title1: "Enjoy",
@@ -87,7 +87,7 @@ const ProfileLanding = () => {
           <Search onClick={handleSearch} />
           <Filter onClick={filterSearch} />
         </div>
-        <Navbar />
+        <ProfileNavbar />
         <div className="navIcons">
           <Link onClick={handleNotificationClick} to="./notifications">
             <Notifications />
@@ -110,43 +110,19 @@ const ProfileLanding = () => {
         )}
       </header>
       <div
-        style={{
-          maxWidth: "35rem",
-          margin: "11% 6%",
-          padding: "1rem",
-          fontFamily: "Inter",
-          color: "#fff",
-        }}
+        className="profileLanding-contents"
       >
-        {/* <h1 style={{fontSize: "2.5rem", fontWeight: "800", lineHeight: "3rem"}}>
-          <span style={{color: "#2596be"}}>Connect</span> with Employers, Tech Talents and Agents
-        </h1> */}
         <h1 className="land-title">
           {heroTitle.title1} {""}
           <span>{heroTitle.span}</span> {""}
           {heroTitle.title}
         </h1>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            fontWeight: "300",
-            lineHeight: "1.3rem",
-            margin: "1rem 0",
-          }}
-        >
-          Get started by completing your profile.
+        <p>
+          Get access and connect with Professionals, Tech talents, and agents in just a few clicks.
         </p>
-        <div style={{ fontSize: "0.7rem", margin: "1.6rem 0" }}>
+        <div className="land-btns">
           <Link
-            to={"/techtalent"}
-            style={{
-              color: "#fff",
-              fontWeight: "600",
-              border: ".07rem solid #2596be",
-              borderRadius: "0.4rem",
-              padding: ".5rem 2rem",
-              background: "#2596be",
-            }}
+            to={"/employerprofile"}
           >
             Complete your profile
           </Link>

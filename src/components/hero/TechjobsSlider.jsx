@@ -1,5 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
 import 'swiper/css/bundle';
 import './slide.scss';
 import Analysis from '../../../src/static/icons/Data analysis.png';
@@ -79,10 +80,33 @@ const TechjobsSlider =() => {
   return (
         <div className='swipe-container'>
             <Swiper 
-                spaceBetween={60}
-                slidesPerView={5}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
+                freeMode={true}
+                grabCursor={true}
+                modules={[FreeMode]}
+                className="mySwiper"
+                breakpoints={{
+                    480: {
+                        slidesPerView:1,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView:2,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView:3,
+                        spaceBetween: 30,
+                    },
+                    1280: {
+                        slidesPerView:4,
+                        spaceBetween: 60,
+                    },
+                    1440: {
+                        slidesPerView:5,
+                        spaceBetween: 60,
+                    },
+                }}
+                
             >
                 {Jobsspaces.map((job) => {
                      return (

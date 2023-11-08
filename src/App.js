@@ -17,7 +17,8 @@ import {default as EmployerRegistration} from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
-// import AccountChoiceModular from "./components/AccountChoiceModular";
+import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
+
 
 
 function App() {
@@ -32,15 +33,12 @@ function App() {
         <Route path="/register/techtalent" element={<TechTalent />} />
         {/* Log in */}
         <Route path="/login" element={<LogTalent/>}/>
-        {/* <Route path="/login/techtalent" element={<LogTalent/>}/> */}
-        {/* <Route path="/login/employer" element={<EmployerLogin />} /> */}
-        {/* Other pages */}
         <Route path="/profilelanding" element={<ProfileLanding/>}/>
         <Route path="/explore" element={<Explore/>}/>
         <Route path="/services" element={<Services />} />
-        {/* <Route path="/acctchoice" element={<AccountChoiceModular />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/employerprofile" element={<EmployerProfileForm />} />
 
         {/* Modals */}
         <Route path="/mailverification" element={<EmailVeri />}/>

@@ -37,7 +37,11 @@ const Testimony = () => {
                             <img src={testimony.img} alt={testimony.name} />
                         </div>
                         <div className="testimony-detail">
-                            <p className='test-quote'> <RiDoubleQuotesR style = {{transform: 'rotate(0deg)'}} />{testimony.text} <RiDoubleQuotesR/></p>
+                            <p>
+                                <RiDoubleQuotesR style = {{transform: 'scaleX(-1)', width:"1.5rem", height:"1.5rem", color:"#2596be",marginBottom:"-0.3rem"}} />
+                                 {testimony.text} 
+                                <RiDoubleQuotesR style={{width:"1.5rem", height:"1.5rem", color:"#2596be", marginLeft:".5rem", marginBottom:"-0.3rem"}}/>
+                            </p>
                         </div>
                     </div>
                 )
@@ -49,3 +53,4 @@ const Testimony = () => {
 }
 
 export default Testimony
+

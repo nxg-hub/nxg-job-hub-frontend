@@ -61,7 +61,7 @@
         width: 100%;
         background-color: transparent;
     }
-    input ::placeholder {
+    input::placeholder {
       color: #c9c9c9;
     }
     p {
@@ -95,6 +95,21 @@
     margin: 0.55rem 0;
     padding: 0.6rem 0.7rem;
     border-radius: 0.4rem 0 0 0.4rem!important;
+  }
+
+  .react-datepicker__year-dropdown .react-datepicker__year-option:first-child::before {
+    content: "\25B2";
+    position: absolute;
+    top: 5%;
+    left: 45%;
+    margin: auto;
+  }
+  
+  .react-datepicker__year-dropdown::after {
+    content: "\25BC";
+    display: block;
+    position: relative;
+    bottom: 15%;
   }
   
   .date {
@@ -176,6 +191,56 @@
       }
     }
   }
+
+  // Contact Page Styling
+  .contact-main {
+    position: absolute;
+    top: 23%;
+    left: 30%;
+    transform: translate(-50% -50%);
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 40rem;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    font-family: Manrope;
+    h2 {
+      font-size: 26px;
+      font-weight: 600;
+      color: #2596BE;
+      line-height: 40px;
+    }
+    form {
+      text-align: center;
+      input, textarea {
+        display: block;
+        margin: 1rem 0;
+        padding: 0.8rem 1.4rem;
+        border: 0.06rem solid #006A90;
+        border-radius: 0.4rem;
+        font-size: .7rem;
+        font-weight: 400;
+        font-family: Manrope;
+        width: 100%;
+        background-color: transparent;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #006A90;
+      opacity: 0.3;
+    }
+    .send-btn {
+      background: #006A90;
+      color: #ffffff;
+      border: none;
+      padding: .6rem;
+      width: 60%;
+      font-size: 24px;
+      font-weight: 700;
+      border-radius: .4rem;
+      cursor: pointer;
+    }
+  }   
+}
 
   
   
