@@ -1,10 +1,10 @@
 .Dashboard{
   display: grid;
+  height: 100vh;
   // grid-template-columns: 1.5fr 5fr;
   grid-template-columns: repeat(auto-fit, 1fr);
   .Sidebad{
     grid-column: 1 ;
-    background-color: grey;
   }
   // Dashboard Main Side Styling
   .Sidemain {

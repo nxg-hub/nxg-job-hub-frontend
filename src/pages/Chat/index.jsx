@@ -47,6 +47,7 @@ const Chat = () => {
       return redirect(-1);
     }
   };
+  const textfield = useRef(null)
   const [message, SetMessage] = useState("");
   const [newChats, SetChats] = useState([...chats]);
   const [video, setVideo] = useState(null);
@@ -61,6 +62,7 @@ const Chat = () => {
       SetChats([...newChats, new Message("", message, "")]);
       SetMessage("");
     }
+    textfield.current.focus()
   };
 
   const attachFile = () => {};
@@ -119,7 +121,7 @@ const Chat = () => {
         <div className={s.SendMessage}>
           <div className={s.MessageBoxWrapper}>
             <PiSmileyLight onClick={() => addEmoji(SetMessage)} title="Emoji" />
-            <textarea
+            <textarea ref={textfield}
               className={s.MessageBox}
               type="text"
               placeholder="Type message"

@@ -1,0 +1,94 @@
+.Sidebar {
+  background: #006a90;
+  padding: 10px 20px;
+  color: white;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  > img {
+    height: 55px;
+    width: auto;
+    // display: block;
+    margin: 15px auto;
+  }
+  .Profile {
+    text-align: center;
+    > p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+
+      svg {
+        height: 25px;
+        width: auto;
+      }
+    }
+    strong {
+      display: block;
+    }
+    span {
+      position: relative;
+      img {
+        height: 100px;
+        border-radius: 50%;
+        width: auto;
+      }
+      svg {
+        position: absolute;
+        bottom: 5px;
+        right: -5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  ul.list {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: auto;
+  &::-webkit-scrollbar{
+    width: 1px;
+  }
+  scrollbar-width:3px ;
+    li.Selected{
+      color: #b2fff5;
+      border-radius: 3px;
+      background-color: #ffffff15;
+      pointer-events: none;
+      svg{
+  
+        filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg) brightness(107%) contrast(104%);
+        
+      }
+      &:hover {
+        transform: translateX(0px);
+        transition: none;
+        cursor: auto;
+      }
+    }
+  }
+  li.dashboardItem {
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 3px 6px;
+    svg {
+      height: 20px;
+      width: auto;
+    }
+    &:hover {
+      transform: translateX(4px);
+      transition: all 0.25s linear;
+      cursor: pointer;
+      border-radius: 3px;
+      background-color: #ffffff15;
+    }
+  }
+}
