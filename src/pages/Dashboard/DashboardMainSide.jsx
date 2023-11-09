@@ -6,10 +6,12 @@ import User from "../../static/images/Sarah.png";
 import HeroImg from "../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
+
 import { jobs as JobRecommendations } from "../../utils/data/job-recommendations";
 import RecommendationCard from "../../components/DashboardComponents/RecommendationCard";
 import figma from "../../static/icons/logos_figma.svg"
 function DashboardMainSide() {
+    
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">

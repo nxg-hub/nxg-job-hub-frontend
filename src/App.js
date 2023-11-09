@@ -18,6 +18,7 @@ import Agent from "./pages/CreateAccount/Agent";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
+import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx"
 import CompleteYourProfile from "./pages/CompleteYourProfile/Agent";
 import DashboardMainSide from "./pages/Dashboard/DashboardMainSide";
 
@@ -70,7 +71,8 @@ function App() {
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="settings" element={<h2>Settings </h2>} />
           <Route path="help" element={<h2>Help </h2>} />
-        </Route>
+        </Route>        <Route path="/dashprofile" element={<CompleteYourProfile />} />
+
       </Routes>
     </>
   );
