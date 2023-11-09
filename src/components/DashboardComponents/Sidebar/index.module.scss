@@ -51,10 +51,17 @@
     max-height: 50vh;
     overflow: hidden;
     overflow-y: auto;
-  &::-webkit-scrollbar{
-    width: 1px;
-  }
-  scrollbar-width:3px ;
+    scrollbar-width:none;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 2px;
+      background-color: #2596be;
+      border-radius: 3px;
+    }
     li.Selected{
       color: #b2fff5;
       border-radius: 3px;
@@ -90,5 +97,9 @@
       border-radius: 3px;
       background-color: #ffffff15;
     }
+  }
+  .Logout{
+    position: absolute;
+    bottom:5px;
   }
 }

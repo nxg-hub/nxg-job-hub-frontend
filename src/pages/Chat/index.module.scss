@@ -34,8 +34,10 @@
     }
     .Chats {
       height: calc(100% - 150px);
-      overflow-y: scroll;
+      overflow-y: auto;
       padding-inline: 15px;
+      scrollbar-width:none;
+
       &::-webkit-scrollbar {
         width: 3px;
       }
@@ -163,15 +165,14 @@
     background-color: #54535335;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0,0);
-    transition: transform .05s linear;
+    transform: translate(-50%, -50%) scale(0, 0);
+    transition: transform 0.05s linear;
     z-index: -1;
     resize: both;
-    
+
     .webcam {
       height: 100%;
-      width:100%
+      width: 100%;
     }
-    
   }
 }

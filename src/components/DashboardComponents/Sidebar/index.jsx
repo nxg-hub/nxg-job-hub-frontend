@@ -99,52 +99,10 @@ const Sidebar = ({ profilePic, ...props }) => {
           <Help />
           Help
         </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
-          <Help />
-          Help
-        </li>
       </ul>
         <li
           onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Logout")}`}
+          className={`${s.dashboardItem} ${s.Logout}  ${selection("Logout")}`}
         >
           <Logout />
           Logout
