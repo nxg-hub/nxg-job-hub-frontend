@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./index.scss"
-const Agent = () => {
+const CompleteYourProfile = () => {
   
   useEffect(() => {
     let currentTab = 0; // Current tab index
@@ -325,4 +325,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default CompleteYourProfile;
