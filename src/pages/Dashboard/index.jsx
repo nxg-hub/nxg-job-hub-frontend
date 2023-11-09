@@ -1,17 +1,18 @@
-import DashboardMainSide from "./DashboardMainSide"
+import Sidebar from "../../components/DashboardComponents/Sidebar"
 import s from "./index.module.scss"
+import pic from "../../static/images/Sarah.png"
+import { Outlet } from "react-router-dom"
 const Dashboard = () => {
   return (
     <div className={s.Dashboard}>
       
       <div className={s.Sidebad}>
-        {/* Sidebar goes here */}
-        sidebar
+        <Sidebar  profilePic={pic}/>
       </div>
       
       {/* Mainpage or <Outlet/> */}
       <div className={s.Sidemain}>
-        <DashboardMainSide />
+        <Outlet/>
       </div>
     </div>
   )
