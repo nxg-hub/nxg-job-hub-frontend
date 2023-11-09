@@ -18,6 +18,7 @@ import Agent from "./pages/CreateAccount/Agent";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
+import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx"
 
 
 
@@ -52,6 +53,7 @@ function App() {
    
         <Route path="/chat" element={<Chat />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashprofile" element={<CompleteYourProfile />} />
 
       </Routes>
       

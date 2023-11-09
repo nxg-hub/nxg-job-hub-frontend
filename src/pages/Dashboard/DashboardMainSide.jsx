@@ -7,7 +7,9 @@ import HeroImg from "../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from './ProfileSearch';
 import { TbMathGreater } from "react-icons/tb";
 
+
 function DashboardMainSide() {
+    
   return (
     <div className='dash-profile-main-side'>
         <div className="dash-profile-header">
