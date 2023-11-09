@@ -13,7 +13,8 @@ import {
   SavedJobs,
   Logout,
 } from "./SidebarIcons";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
+import { Link } from "react-router-dom";
 const Sidebar = ({ profilePic, ...props }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Dashboard");
   const selectMenuItem = (e) => {
@@ -44,69 +45,69 @@ const Sidebar = ({ profilePic, ...props }) => {
         </p>
       </div>
       <ul className={s.list}>
-        <li
+        <Link to="/dashboard"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Dashboard")}`}
         >
           <Dashboard />
           Dashboard
-        </li>
-        <li
+        </Link>
+        <Link to="messages"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Messages")}`}
         >
           <Messages />
           Messages
-        </li>
-        <li
+        </Link>
+        <Link to="profile"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("My Profile")}`}
         >
           <MyProfile />
           My Profile
-        </li>
-        <li
+        </Link>
+        <Link to="applications"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("My Applications")}`}
         >
           <Applications />
           My Applications
-        </li>
-        <li
+        </Link>
+        <Link to="saved"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Saved Jobs")}`}
         >
           <SavedJobs fill="white" /> Saved Jobs
-        </li>
-        <li
+        </Link>
+        <Link to="analytics"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Analytics")}`}
         >
           <Analytics />
           Analytics
-        </li>
-        <li
+        </Link>
+        <Link to="settings"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Settings")}`}
         >
           <Settings />
           Settings
-        </li>
-        <li
+        </Link>
+        <Link to="help"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Help")}`}
         >
           <Help />
           Help
-        </li>
+        </Link>
       </ul>
-        <li
+        <Link to="logout"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${s.Logout}  ${selection("Logout")}`}
         >
           <Logout />
           Logout
-        </li>
+        </Link>
     </div>
   );
 };

@@ -4,13 +4,28 @@
   // grid-template-columns: 1.5fr 5fr;
   grid-template-columns: repeat(auto-fit, 1fr);
   .Sidebad{
-    grid-column: 1 ;
+    grid-column: 1.8 ;
+    min-width: 20vw;
+    max-width: 300px;
   }
   // Dashboard Main Side Styling
   .Sidemain {
     grid-column: 1;
     background-color: rgba(37, 150, 190, 0.1);
-    padding: 20px 50px 0 15px;
+    padding: 20px 15px 0 15px;
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width:none;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 2px;
+      background-color: #2596be;
+      border-radius: 3px;
+    }
   }
 }
 

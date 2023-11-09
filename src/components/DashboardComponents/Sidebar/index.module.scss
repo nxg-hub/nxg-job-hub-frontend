@@ -42,13 +42,12 @@
       }
     }
   }
-
   ul.list {
     margin-top: 25px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 50vh;
+    max-height: 45vh;
     overflow: hidden;
     overflow-y: auto;
     scrollbar-width:none;
@@ -62,13 +61,13 @@
       background-color: #2596be;
       border-radius: 3px;
     }
-    li.Selected{
+    a.Selected{
       color: #b2fff5;
       border-radius: 3px;
       background-color: #ffffff15;
       pointer-events: none;
       svg{
-  
+        
         filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg) brightness(107%) contrast(104%);
         
       }
@@ -79,7 +78,8 @@
       }
     }
   }
-  li.dashboardItem {
+  a.dashboardItem {
+    color: white;
     display: flex;
     font-size: 14px;
     align-items: center;
@@ -98,8 +98,14 @@
       background-color: #ffffff15;
     }
   }
-  .Logout{
+  a.Logout{
+    display: block;
     position: absolute;
+    width: 100%;
+    background-color: #006a90;
     bottom:5px;
+    &:hover{
+      background-color: #006a90;
+    }
   }
 }

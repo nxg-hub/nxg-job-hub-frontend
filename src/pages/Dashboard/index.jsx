@@ -1,7 +1,7 @@
 import Sidebar from "../../components/DashboardComponents/Sidebar"
-import DashboardMainSide from "./DashboardMainSide"
 import s from "./index.module.scss"
 import pic from "../../static/images/Sarah.png"
+import { Outlet } from "react-router-dom"
 const Dashboard = () => {
   return (
     <div className={s.Dashboard}>
@@ -12,7 +12,7 @@ const Dashboard = () => {
       
       {/* Mainpage or <Outlet/> */}
       <div className={s.Sidemain}>
-        <DashboardMainSide />
+        <Outlet/>
       </div>
     </div>
   )
