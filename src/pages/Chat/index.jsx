@@ -31,6 +31,7 @@ class Message {
 
 const Chat = () => {
   const chatscreen = useRef();
+  const textfield = useRef();
   const Cam = useRef();
   const Mic = useRef();
   useEffect(() => {
@@ -47,7 +48,6 @@ const Chat = () => {
       return redirect(-1);
     }
   };
-  const textfield = useRef(null)
   const [message, SetMessage] = useState("");
   const [newChats, SetChats] = useState([...chats]);
   const [video, setVideo] = useState(null);
@@ -55,7 +55,12 @@ const Chat = () => {
 
   const handleTyping = (e) => {
     const { value } = e.target;
-    e.keyCode === 9 ? SendMessage() : SetMessage(value);
+    if (e.keyCode === 9) {
+      SendMessage();
+    } else {
+      SetMessage(value)
+    }
+   
   };
   const SendMessage = () => {
     if (message.trim() !== "") {
@@ -121,15 +126,15 @@ const Chat = () => {
         <div className={s.SendMessage}>
           <div className={s.MessageBoxWrapper}>
             <PiSmileyLight onClick={() => addEmoji(SetMessage)} title="Emoji" />
-            <textarea ref={textfield}
+            <textarea
+              tabIndex={0}
+              autoFocus={true}
+              ref={textfield}
               className={s.MessageBox}
-              type="text"
               placeholder="Type message"
               value={message}
               onChange={handleTyping}
               onKeyDown={handleTyping}
-              rows={1}
-              rowSpan={30}
             />
             <span className={s.features}>
               <PiPaperclipLight onClick={attachFile} title="Document" />
@@ -139,7 +144,10 @@ const Chat = () => {
                 <PiCameraLight onClick={openCam} title="Camera" />
               )}
               {audio ? (
-                <PiMicrophoneSlashLight title="recording..." onClick={closeMic} />
+                <PiMicrophoneSlashLight
+                  title="recording..."
+                  onClick={closeMic}
+                />
               ) : (
                 <PiMicrophoneLight onClick={openMic} title="Microphone" />
               )}
