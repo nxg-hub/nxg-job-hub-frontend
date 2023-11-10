@@ -1,10 +1,10 @@
-.Dashboard{
+.Dashboard {
   display: grid;
   height: 100vh;
   // grid-template-columns: 1.5fr 5fr;
   grid-template-columns: repeat(auto-fit, 1fr);
-  .Sidebad{
-    grid-column: 1.8 ;
+  .Sidebad {
+    grid-column: 1.8;
     min-width: 20vw;
     max-width: 300px;
   }
@@ -15,16 +15,14 @@
     padding: 20px 15px 0 15px;
     height: 100vh;
     overflow-y: auto;
-    scrollbar-width:none;
+    scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      width: 3px;
-    }
 
-    &::-webkit-scrollbar-thumb {
-      width: 2px;
-      background-color: #2596be;
-      border-radius: 3px;
+
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track,
+    ::-webkit-scrollbar {
+      display: none;
     }
   }
 }
