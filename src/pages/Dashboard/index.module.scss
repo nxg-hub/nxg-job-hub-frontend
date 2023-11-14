@@ -1,18 +1,19 @@
 .Dashboard{
   display: grid;
+  width: 100vw;
   height: 100vh;
   // grid-template-columns: 1.5fr 5fr;
-  grid-template-columns: repeat(auto-fit, 1fr);
+  // grid-template-columns: repeat(auto-fit, 1fr);
   .Sidebad{
-    grid-column: 1.8 ;
+    grid-column: 1 ;
     min-width: 20vw;
-    max-width: 300px;
+    // max-width: 300px;
   }
   // Dashboard Main Side Styling
   .Sidemain {
     grid-column: 1;
     background-color: rgba(37, 150, 190, 0.1);
-    padding: 20px 15px 0 15px;
+    padding: 20px 30px 0 15px;
     height: 100vh;
     overflow-y: auto;
     scrollbar-width:none;
@@ -32,10 +33,10 @@
 @media only screen and (min-width: 768px) {
   .Dashboard {
     .Sidebad {
-      grid-column: 1 / 4;
+      grid-column: 1 / 2;
     }
     .Sidemain {
-      grid-column: 4/ 9;
+      grid-column: 2/ 9;
     }
   }
 }

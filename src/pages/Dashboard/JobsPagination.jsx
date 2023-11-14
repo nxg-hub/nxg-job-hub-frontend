@@ -28,7 +28,7 @@ function JobsPagination({ page, setPage, hasNextPage}) {
             </div>        
         }
        {hasNextPage && 
-         <div className="pagination-next" onClick={() => adjustPage(+1)}>
+         <div className="pagination-next" onClick={() => adjustPage(1)}>
             <LiaGreaterThanSolid className='pagination-icons'/>
         </div>
        }

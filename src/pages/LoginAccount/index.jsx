@@ -31,7 +31,7 @@ const LogTalent = () => {
       alert("Please enter your details")
     } else {
       alert("Success");
-      navigate("/profilelanding");
+      navigate("/dashboard");
     }
   }
 
