@@ -50,7 +50,7 @@
     max-height: 45vh;
     overflow: hidden;
     overflow-y: auto;
-    scrollbar-width:none;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
       width: 3px;
@@ -61,15 +61,14 @@
       background-color: #2596be;
       border-radius: 3px;
     }
-    a.Selected{
+    a.Selected {
       color: #b2fff5;
       border-radius: 3px;
       background-color: #ffffff15;
       pointer-events: none;
-      svg{
-        
-        filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg) brightness(107%) contrast(104%);
-        
+      svg {
+        filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg)
+          brightness(107%) contrast(104%);
       }
       &:hover {
         transform: translateX(0px);
@@ -91,20 +90,25 @@
       width: auto;
     }
     &:hover {
-      transform: translateX(4px);
+      transform: translateX(15px);
       transition: all 0.25s linear;
       cursor: pointer;
       border-radius: 3px;
+      color: #b2fff5;
       background-color: #ffffff15;
+      svg {
+        filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg)
+          brightness(107%) contrast(104%);
+      }
     }
   }
-  a.Logout{
+  a.Logout {
     display: block;
     position: absolute;
     width: 100%;
     background-color: #006a90;
-    bottom:5px;
-    &:hover{
+    bottom: 5px;
+    &:hover {
       background-color: #006a90;
     }
   }

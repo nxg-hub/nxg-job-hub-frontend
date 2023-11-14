@@ -15,7 +15,7 @@ import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
 import { default as EmployerRegistration } from "./pages/CreateAccount/Employer";
 import Agent from "./pages/CreateAccount/Agent";
-import Chat from "./pages/Chat";
+import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
 import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx";
@@ -59,12 +59,10 @@ function App() {
             />
           }
         />
-
-        <Route path="/chat" element={<Chat />} />
         <Route path="/complete-profile" element={<CompleteYourProfile />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
-          <Route path="messages" element={<h2>My Messages </h2>} />
+          <Route path="messages" element={<Chat />} />
           <Route path="profile" element={<DashProfile/>} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
