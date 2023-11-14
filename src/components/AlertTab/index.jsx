@@ -10,31 +10,24 @@ const AlertTab = ({ items, controls, ...props }) => {
 
   const handleSearch = () => {};
   return (
-    <div
-      title="close"
-      onClick={controls}
-      className={s.AlertTabWrapper}
-      {...props}
-    >
-      <div title="" className={s.AlertTab}>
-        <span>
-          <BsArrowLeft onClick={controls} />
-          <div className={s.searchBar}>
-            <input
-              className={s.searchInput}
-              type="search"
-              placeholder={"Search"}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Search onClick={handleSearch} />
-          </div>
-          <CiMenuKebab />
-        </span>
-        {items.map((item, id) => (
-          <AlertTabItem item={item} key={id} />
-        ))}
-      </div>
+    <div onClick={controls} title="" className={s.AlertTab} {...props}>
+      <span>
+        <BsArrowLeft onClick={controls} />
+        <div className={s.searchBar}>
+          <input
+            className={s.searchInput}
+            type="search"
+            placeholder={"Search"}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Search onClick={handleSearch} />
+        </div>
+        <CiMenuKebab />
+      </span>
+      {items.map((item, id) => (
+        <AlertTabItem item={item} key={id} />
+      ))}
     </div>
   );
 };

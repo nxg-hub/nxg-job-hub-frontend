@@ -1,5 +1,3 @@
-const EventEmitter = require("events");
-
 /**
  *
  *
@@ -9,14 +7,8 @@ const EventEmitter = require("events");
  */
 
 export const openMedia = async (type, output) => {
-  const MyMedia = new EventEmitter();
   let result;
-  MyMedia.addListener("startedMedia", (status) => {
-    result = status;
-  });
-  MyMedia.addListener("mediaError", (status) => {
-    result = status;
-  });
+
   const mediaDevices = navigator.mediaDevices;
 
   let a = await mediaDevices
@@ -31,11 +23,9 @@ export const openMedia = async (type, output) => {
         z-index:1;
       `;
       // output.parentElement.style.zIndex = 1;
-      MyMedia.emit("startedMedia", "opened successfully");
       return { result, stream };
     })
     .catch((err) => {
-      MyMedia.emit("mediaError", "Failed to start media");
       return result;
     });
 

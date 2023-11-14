@@ -127,6 +127,19 @@
 
   }
 
+  .AlertTabWrapper {
+    position: fixed;  
+    top: 0px;
+    right: 0px;
+    background-color: #00000089;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+  
+  }
   
 }
 
@@ -274,6 +287,7 @@ header {
               margin:0 8px;
               &:hover {
                 color: #2596BE;
+                background: transparent;
               }
             }
           }

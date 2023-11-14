@@ -195,9 +195,8 @@
   // Contact Page Styling
   .contact-main {
     position: absolute;
-    top: 23%;
-    left: 30%;
-    transform: translate(-50% -50%);
+    top: 12%;
+    left: 0%;
     background-color: #ffffff;
     width: 100%;
     max-width: 40rem;
@@ -258,8 +257,39 @@
     .date {
       width: 28rem;
     }
+    .contact-main {
+      top: 15%;
+      left: 8%;
+    }
 }
   
+@media only screen and (min-width:1024px) {
+  .tech-main-container {
+    .tech-img {
+      top:3%; 
+      left:6%;
+    }
+
+    .tech-form {
+      width: 32rem;
+      margin: 4rem 0;
+    }
+  } 
+
+  .pass-toggle {
+    left: 24rem;
+  }
+
+  .date {
+    width: 26rem;
+  }
+
+  .contact-main {
+    top: 22%;
+    left: 18%;
+  }
+   
+}
 @media only screen and (min-width:1440px) {
   .tech-main-container {
     .tech-img {
@@ -279,6 +309,11 @@
 
   .date {
     width: 26rem;
+  }
+
+  .contact-main {
+    top: 22%;
+    left: 28%;
   }
    
 }
