@@ -101,10 +101,14 @@ const ProfileLanding = () => {
         </div>
 
         {showAlertTab ? (
-          <AlertTab
+        <div
+        title="close"
+        onClick={hideAlertTab}
+        className={"AlertTabWrapper"}
+      > <AlertTab
             controls={hideAlertTab}
             items={incoming}
-          />
+          /></div>
         ) : (
           <></>
         )}

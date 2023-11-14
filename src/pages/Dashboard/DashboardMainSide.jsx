@@ -8,7 +8,7 @@ import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
 import { jobs as JobRecommendations } from "../../utils/data/job-recommendations";
 import RecommendationCard from "../../components/DashboardComponents/RecommendationCard";
-import figma from "../../static/icons/logos_figma.svg"
+import figma from "../../static/icons/logos_figma.svg";
 function DashboardMainSide() {
   return (
     <div className="dash-profile-main-side">
@@ -56,11 +56,10 @@ function DashboardMainSide() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation) => {
-            jobRecommendation.company_logo = figma
-              return (
-            <RecommendationCard {...jobRecommendation} />
-          )})}
+          {JobRecommendations.map((jobRecommendation, i) => {
+            jobRecommendation.company_logo = figma;
+            return <RecommendationCard key={i} {...jobRecommendation} />;
+          })}
         </div>
         <div className="recommend-jobs-section">
           <div className="recommend-title">
@@ -74,11 +73,10 @@ function DashboardMainSide() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation) => {
-            jobRecommendation.company_logo = figma
-              return (
-            <RecommendationCard {...jobRecommendation} />
-          )})}
+          {JobRecommendations.map((jobRecommendation, i) => {
+            jobRecommendation.company_logo = figma;
+            return <RecommendationCard key={i * 5} {...jobRecommendation} />;
+          })}
         </div>
       </div>
     </div>
