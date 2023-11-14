@@ -23,16 +23,16 @@ const JobCards = () => {
                 spaceBetween: 200,
             },
             768: {
-                slidesPerView:1,
-                spaceBetween: 5,
+                slidesPerView:2,
+                spaceBetween: 250,
             },
             1024: {
                 slidesPerView:2,
                 spaceBetween: 20,
             },
             1280: {
-                slidesPerView:2,
-                spaceBetween: 30,
+                slidesPerView:3,
+                spaceBetween: 150,
             },
             1440: {
                 slidesPerView:3,
@@ -90,7 +90,7 @@ const JobCards = () => {
                   </div>
                   <p>{data.chosentext}</p>
                 </div>
-                <div className="choose-img" style={{ width: "620px", height: "300px" }}>
+                <div className="choose-img">
                   <img src={data.img} alt={data.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
               </div>
