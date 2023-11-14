@@ -19,8 +19,9 @@ import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
 import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx"
-import CompleteYourProfile from "./pages/CompleteYourProfile/Agent";
-import DashboardMainSide from "./pages/Dashboard/DashboardMainSide";
+import StepOne from "./pages/Dashboard/dashboardProfileForm/StepOne.jsx";
+import DashProfile from "./pages/Dashboard/myProfile/DashProfile.jsx";
+import DashboardMainSide from "./pages/Dashboard/DashboardMainSide.jsx";
 
 function App() {
   return (
@@ -65,14 +66,14 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
           <Route path="messages" element={<h2>My Messages </h2>} />
-          <Route path="profile" element={<h2>My Profile </h2>} />
+          <Route path="profile" element={<DashProfile/>} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="settings" element={<h2>Settings </h2>} />
           <Route path="help" element={<h2>Help </h2>} />
-        </Route>        <Route path="/dashprofile" element={<CompleteYourProfile />} />
-
+        </Route>        
+        <Route path="/step" element={<StepOne/>} />
       </Routes>
     </>
   );

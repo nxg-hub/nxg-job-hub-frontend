@@ -49,10 +49,9 @@
     margin: 1rem 0;
   }
   .profile-search-container {
-    width: 100%;
+    // width: 100%;
     .profile-search-wrapper {
-      width: 100%;
-      height: 50px;
+    //   width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, 1fr);
       gap: 5px;
@@ -69,26 +68,28 @@
       }
       #profile-search {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
-        gap: 2px;
+        grid-auto-columns: minmax(0, 1fr);
+        grid-auto-flow: row;
+        gap: 10px;
         align-items: center;
         .dash-search-section,
         .dash-location {
           width: 100%;
-          height: 24px;
-          display: grid;
-          grid-template-columns: 0.6fr 3fr;
+          display: flex;
           align-items: center;
           border-right: 1.4px solid #8e8e8e !important;
+          & :focus {
+            outline: none;
+          }
           .dash-search-icon,
           .dash-location-icon {
-            width: 1.3rem;
-            height: 1.3rem;
+            width: 1.2rem;
+            height: 1.2rem;
           }
           .dash-search-input,
           .dash-location-input {
             padding: 0 8px;
-            margin-left: -0.5rem;
+            margin-left: -0.3rem;
             border: none;
             font-size: 12px;
             font-weight: 500;
@@ -101,7 +102,6 @@
         }
         .dash-employ-type {
           width: 100%;
-          height: 24px;
           align-items: center;
           border-right: 1.4px solid #8e8e8e !important;
           .css-13cymwt-control {
@@ -120,7 +120,6 @@
         }
         .dash-level {
           width: 100%;
-          height: 24px;
           align-items: center;
           .css-13cymwt-control {
             min-height: 0px !important;
@@ -158,19 +157,17 @@
       }
       #relevance {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(3.5rem, 1fr));
+        grid-auto-columns: minmax(0, 1fr);
+        grid-auto-flow: column;
         align-items: center;
         .sort {
-          grid-column: 1 /3;
           color: #222020;
           font-size: 15px;
           font-weight: 500;
           font-family: Manrope;
         }
         .relevance-select {
-          grid-column: 3 / 9;
           width: 100%;
-          height: 24px;
           .css-13cymwt-control {
             min-height: 0px !important;
             padding: 0 8px;
@@ -196,8 +193,9 @@
      .job-card-body {
         background: #fff;
         .job-card-title {
+            display: flex;
             margin: 8px 0;
-            padding: 10px 30px;
+            padding: 10px 20px;
             border: 1px solid #006A90;
             border-radius: 5px;
         }
@@ -231,20 +229,20 @@
   // Dashboard Hero-section Styling
   .dash-profile-hero-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
     background: #ffffff;
+    gap: 10px;
     .dash-profile-hero-contents {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      padding: 0 0 0 20px;
+      padding: 20px 0 0 20px;
       .dash-profile-content {
         width: 100%;
-        max-width: 420px;
         h1 {
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 800;
-          line-height: 32.75px;
+          line-height: 32.78px;
           color: #006a90;
         }
         p {
@@ -276,55 +274,55 @@
   }
   //Recommended Jobs Styling
   .dash-profile-recommended {
-    margin: 1rem 0;
-    .recommend-jobs-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .recommend-title {
-        border-bottom: 2px solid #006a90;
-        width: 50vw;
-        strong {
-          font-size: 20px;
-          margin-bottom: 0.5rem;
+     margin: 1rem 0;
+        .recommend-jobs-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .recommend-title {
+                border-bottom: 2px solid #006a90;
+                width: 60vw;
+                strong {
+                font-size: 17px;
+                margin-bottom: 1rem;
+                }
+            }
+            .recommend-navigation {
+                .recommend-icon-bg {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: rgba(37, 150, 190, 0.1);
+                    box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.25);
+                    .recommend-icon {
+                        width: 0.9rem;
+                        height: 0.9rem;
+                        color: #444444;
+                    }
+                }
+            }
         }
-      }
-      .recommend-navigation {
-        .recommend-icon-bg {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          background: rgba(37, 150, 190, 0.1);
-          box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.25);
-          .recommend-icon {
-            width: 0.9rem;
-            height: 0.9rem;
-            color: #444444;
-          }
-        }
-      }
-    }
-    .JobRecommendations {
-      padding-block: 15px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-      &::-webkit-scrollbar {
-        width: 3px;
-      }
+        .JobRecommendations {
+            padding-block: 15px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                width: 3px;
+            }
 
-      &::-webkit-scrollbar-thumb {
-        width: 2px;
-        background-color: #2596be;
-        border-radius: 3px;
-      }
+            &::-webkit-scrollbar-thumb {
+                width: 2px;
+                background-color: #2596be;
+                border-radius: 3px;
+            }
+        }
     }
-  }
 }
 // Select components styling  scrollbar-width:none;
 
@@ -341,39 +339,67 @@
 }
 
 .check-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-flex;
   cursor: pointer !important;
   .dash-checkbox {
     appearance: none;
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1rem;
+    height: 1rem;
     border: 2px solid grey;
     border-radius: 4px;
     margin-right: 0.4rem;
     cursor: pointer !important;
   }
   .label-option {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
-    margin-top: -0.5rem;
+    // margin-top: -0.5rem;
     font-family: Manrope !important;
   }
 }
 // End ---- of Select components styling
 
 @media only screen and (min-width: 1024px) {
-  .dash-profile-main-side {
-    .profile-search-container {
-      .profile-search-wrapper {
-        .profile-search-section {
-          grid-column: 1 /8;
+    .dash-profile-main-side {
+        .profile-search-container {
+            .profile-search-wrapper {
+                .profile-search-section {
+                grid-column: 1 /8;
+                }
+                #profile-search {
+                    grid-auto-flow: column;
+                    gap: 2px;
+                }
+                .relevance-section {
+                grid-column: 8 /9;
+                }
+            }
         }
-        .relevance-section {
-          grid-column: 8 /9;
+        .dash-profile-hero-section {
+            .dash-profile-hero-contents {
+              padding: 0 0 0 20px;
+                .dash-profile-content {
+                    h1 {
+                        width: 400px;
+                        font-size: 28px;
+                    }
+                    p {
+                        width: 404px;
+                        font-size: 16px;
+                    }
+                }
+            }
         }
-      }
+        .dash-profile-recommended {
+            .recommend-jobs-section {
+                .recommend-title {
+                    width: 40vw;
+                    strong {
+                        font-size: 20px;
+                        margin-bottom: 0.5rem;
+                    }
+                }
+            }    
+        }
     }
-  }
 }

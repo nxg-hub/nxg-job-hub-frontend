@@ -32,8 +32,8 @@ const RecommendationCard = ({
         <p>{role}</p>
         <small>{description}</small>
         <span>
-          {type.map((item) => (
-            <p>{item}</p>
+          {type.map((item, index) => (
+            <p key={index}>{item}</p>
           ))}
         </span>
         <p>{salary_range}</p>

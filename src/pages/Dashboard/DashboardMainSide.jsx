@@ -14,75 +14,73 @@ function DashboardMainSide() {
     
   return (
     <div className="dash-profile-main-side">
-      <div className="dash-profile-header">
-        <div className="dash-profile-name">
-          <p>Sarah's Dashboard</p>
-        </div>
-        <div className="dash-profile-pics-section">
-          <div className="dash-profile-icons">
-            <FiMail className="dash-icons" />
-            <SlBell className="dash-icons" />
-          </div>
-          <div className="dash-profile-pics">
-            <img src={User} alt="User's Identity" />
-          </div>
-        </div>
-      </div>
-      <div className="dash-profile-search-section">
-        <ProfileSearch />
-      </div>
-      <div className="dash-profile-hero-section">
-        <div className="dash-profile-hero-contents">
-          <div className="dash-profile-content">
-            <h1>Get started by Completing your Profile</h1>
-            <p>
-              Stand a better chance of being hired by completing your profile
-            </p>
-            <button>Complete Profile</button>
-          </div>
-        </div>
-        <div className="dash-profile-hero-img">
-          <img src={HeroImg} alt="A working secetary illustration" />
-        </div>
-      </div>
-      <div className="dash-profile-recommended">
-        <div className="recommend-jobs-section">
-          <div className="recommend-title">
-            <strong>Recommended Jobs for you</strong>
-          </div>
-
-          <div className="recommend-navigation">
-            <div className="recommend-icon-bg">
-              <TbMathGreater className="recommend-icon" />
+        <div className="dash-profile-header">
+            <div className="dash-profile-name">
+                <p>Sarah's Dashboard</p>
             </div>
-          </div>
-        </div>
-        <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation) => {
-            jobRecommendation.company_logo = figma
-              return (
-            <RecommendationCard {...jobRecommendation} />
-          )})}
-        </div>
-        <div className="recommend-jobs-section">
-          <div className="recommend-title">
-            <strong>Jobs near you</strong>
-          </div>
-
-          <div className="recommend-navigation">
-            <div className="recommend-icon-bg">
-              <TbMathGreater className="recommend-icon" />
+            <div className="dash-profile-pics-section">
+                <div className="dash-profile-icons">
+                    <FiMail className="dash-icons" />
+                    <SlBell className="dash-icons" />
+                </div>
+                <div className="dash-profile-pics">
+                    <img src={User} alt="User's Identity" />
+                </div>
             </div>
-          </div>
         </div>
-        <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation) => {
-            jobRecommendation.company_logo = figma
-              return (
-            <RecommendationCard {...jobRecommendation} />
-          )})}
+        <div className="dash-profile-search-section">
+            <ProfileSearch />
         </div>
-      </div>
+        <div className="dash-profile-hero-section">
+            <div className="dash-profile-hero-contents">
+                <div className="dash-profile-content">
+                    <h1>Get started by Completing your Profile</h1>
+                    <p>
+                    Stand a better chance of being hired by completing your profile
+                    </p>
+                    <button>Complete Profile</button>
+                </div>
+            </div>
+            <div className="dash-profile-hero-img">
+                <img src={HeroImg} alt="A working secetary illustration" />
+            </div>
+        </div>
+        <div className="dash-profile-recommended">
+            <div className="recommend-jobs-section">
+                <div className="recommend-title">
+                    <strong>Recommended Jobs for you</strong>
+                </div>
+                <div className="recommend-navigation">
+                    <div className="recommend-icon-bg">
+                        <TbMathGreater className="recommend-icon" />
+                    </div>
+                </div>
+            </div>
+            <div className="JobRecommendations">
+                {JobRecommendations.map((jobRecommendation, index) => {
+                    jobRecommendation.company_logo = figma
+                    return (
+                    <RecommendationCard {...jobRecommendation} key={index} />
+                )})}
+            </div>
+            <div className="recommend-jobs-section">
+                <div className="recommend-title">
+                    <strong>Jobs near you</strong>
+                </div>
+                <div className="recommend-navigation">
+                    <div className="recommend-icon-bg">
+                        <TbMathGreater className="recommend-icon" />
+                    </div>
+                </div>
+            </div>
+            <div className="JobRecommendations">
+                {JobRecommendations.map((jobRecommendation, index) => {
+                    jobRecommendation.company_logo = figma
+                    return (
+                    <RecommendationCard {...jobRecommendation} key={index} />
+                )})}
+            </div>
+        </div>
     </div>
   );
 }
