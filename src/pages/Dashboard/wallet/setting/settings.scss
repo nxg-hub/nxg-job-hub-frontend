@@ -1,0 +1,119 @@
+//Password Settings Styling
+.pass-header {
+    border-bottom: 1px solid #000;
+    max-width: 60vw;
+    h2 {
+        color: #004259;
+        font-size: 24px;
+        font-weight: 800;
+        padding-bottom: .7rem;
+    }
+}
+.password-section {
+    margin-top: 3.5%;
+    .dash-password {
+        width: 100%;
+        max-width: 780px;
+        label {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 24.59px;
+            color: #000;
+        }
+        .password-input {
+            position: relative;
+            margin: 0.5rem 0 1rem 3rem;
+            input {
+                padding: 0.8rem 0.7rem;
+                border: 1px solid #c9c9c9;
+                border-radius: 5px;
+                width: 100%;
+                align-items: center;
+                &::placeholder {
+                    color: #000;
+                }
+            }
+            .pass-toggle {
+                top: 52%;
+                left: 92%;
+            }
+        }
+    }
+    .password-change {
+        margin: 2rem 0;
+        h3 {
+            font-size: 21px;
+            font-weight: 600;
+            color: #000;
+            margin: 1rem 0;
+        }
+        .pass-update {
+            margin: 1.5rem 0 0 0rem;
+            width: 100%;
+            max-width: 746px;
+            .current-pass {
+                margin: 1rem 0;
+                label {
+                    font-size: 19px; 
+                    font-weight: 400;
+                    color: #000;
+                }
+                input {
+                    padding: 0.8rem 0.7rem;
+                    border: 1px solid #c9c9c9;
+                    border-radius: 5px;
+                    background: #fff;
+                    font-size: 16px;
+                }
+            }
+            .pass-btn {
+                width: 100%;
+                max-width: 424px;
+                margin: 3rem 0 0 0%;
+                cursor: pointer;
+                button {
+                    color: #ffffff;
+                    border: none;
+                    padding: 8px;
+                    width: 100%;
+                    background: #006A90;
+                    font-size: 19px;
+                    font-weight: 500;
+                    border-radius: 8px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:768px) {
+    .password-section {
+        .password-change {
+            .pass-update {
+                .pass-btn {
+                    margin: 3rem 0 0 15%;
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:1024px) {
+    .password-section {
+        .dash-password {
+            .password-input {
+                .pass-toggle {
+                    top: 50%;
+                    left: 95%;
+                }
+            }
+        }
+        .password-change {
+            .pass-update {
+                margin: 1.5rem 0 0 2.5rem;
+                .pass-btn {
+                    margin: 3rem 0 0 43%;
+                }
+            }
+        }
+    }
+}
