@@ -1,5 +1,6 @@
 .dash-profile-main-container {
     font-family: Manrope;
+    padding: 10px;
     .my-profile-heading {
         h1 {
             font-size: 25px;
@@ -12,7 +13,7 @@
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
         gap: 20px;
         margin: auto;
-        margin: 45% 0;
+        // margin: 45% 0;
         .my-profile-form1, .my-profile-form2 {
             width: 100%;
             max-width: 536px;
@@ -88,6 +89,7 @@
                     form {
                         font-family: Manrope;
                         margin-top: 15%;
+                      
                         .my-profile-fullname {
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -102,7 +104,7 @@
                                     left: 5%;
                                     font-size: 16px;
                                     font-weight: 500;
-                                    padding: 0;
+                                  padding: 0;
                                     color: rgba(68, 68, 68, 0.91);
                                     background-color: #fff !important;
                                     z-index: 10;
@@ -195,6 +197,11 @@
                         border: 1px solid #555;
                     }
                 }
+            }
+        }
+        form{
+            label{
+                padding-inline: 5px !important;
             }
         }
     }

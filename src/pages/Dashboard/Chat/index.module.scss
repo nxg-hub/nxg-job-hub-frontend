@@ -54,9 +54,9 @@
     }
     >img{
       position: absolute;
-      transition :margin-bottom .5s linear;
+      bottom:55px;
+      display: none;
       padding: 10px;
-      margin-bottom: 100px;
       background-color: #2596be;
       border-top-right-radius: 5px;
       border-top-left-radius: 5px;
@@ -205,10 +205,10 @@ scrollbar-width: none;
   .canvas{
     display: none;
   }
-  // >img{
-  //   display: none;
-  // }
-  // .ImagePreview{
-  //   display: none;
-  // }
+  >img{
+    display: none;
+  }
+  .ImagePreview{
+    display: none;
+  }
 }

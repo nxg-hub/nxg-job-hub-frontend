@@ -12,7 +12,11 @@ import {
   Messages,
   SavedJobs,
   Logout,
+  Password,
+  Terms,
+  Privacy, AccountDetails
 } from "./SidebarIcons";
+import { PiCaretDown } from "react-icons/pi";
 import {  useState } from "react";
 import { Link } from "react-router-dom";
 const Sidebar = ({ profilePic, ...props }) => {
@@ -25,7 +29,8 @@ const Sidebar = ({ profilePic, ...props }) => {
     // selection()
   };
  
-    const selection = (optionName) => {
+  const selection = (optionName) => {
+      
       return selectedMenuItem === optionName ? s.Selected : "";
     };
 
@@ -86,13 +91,25 @@ const Sidebar = ({ profilePic, ...props }) => {
           <Analytics />
           Analytics
         </Link>
-        <Link to="settings"
+        <li
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Settings")}`}
         >
+          <div className={s.dropdownTitle}>
           <Settings />
-          Settings
-        </Link>
+          <span>Settings<PiCaretDown /></span>
+         </div>
+          <ul>
+          <Link to="profile-details"   onClick={selectMenuItem}
+          className={`${s.dashboardItem} ${selection("Profile Details")}`}> <AccountDetails/> Profile Details</Link>
+          <Link to="password-settings"   onClick={selectMenuItem}
+          className={`${s.dashboardItem} ${selection("Password Settings")}`}> <Password/> Password Settings</Link>
+          <Link to="privacy"   onClick={selectMenuItem}
+          className={`${s.dashboardItem} ${selection("Privacy")}`}> <Privacy/> Privacy</Link>
+          <Link to="terms-and-conditions"   onClick={selectMenuItem}
+          className={`${s.dashboardItem} ${selection("Terms and conditions")}`}> <Terms/> Terms and conditions</Link>
+          </ul>
+        </li>
         <Link to="help"
           onClick={selectMenuItem}
           className={`${s.dashboardItem} ${selection("Help")}`}
