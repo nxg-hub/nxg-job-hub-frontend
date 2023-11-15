@@ -130,9 +130,10 @@
             }
         }
         .footer-social-acct {
-            text-align: center;
+            margin: auto;
             margin-top:6% ;
             h6 {
+                text-align: center;
                 font-size: 18px;
                 font-weight: 500;
             }
@@ -157,7 +158,172 @@
     }
 }
 
+@media only screen and (min-width:768px) {
+    .news-letter {
+        top: 16%;
+        left: 0%;
+        height: 220px;
+        padding: 2rem 5rem;
+        .news-content {
+            margin-top: 1rem;
+            h5 {
+                font-size: 30px;
+            }
+        }
+        form {
+            flex-direction: row;
+            margin: 1.2rem 1.5rem;
+
+            input[type="submit"]{
+                width: 30%;
+                margin-top: 0;
+            }
+        }
+    }
+    .second-dash {
+        top: 20%;
+         left: 5%;
+    }
+    .footer-main-container {
+        top: 50%;
+        height: 650px;
+        .footer-contents {
+            .footer-nav-section {
+                flex-direction: row;
+                margin-top:25% ;
+                .company, .get-help, .quick-links {
+                    h6 {
+                        margin-top: 0rem;
+                    }
+                    .foot-links {
+                        margin-top: 10%;
+                        a {
+                            margin: .8rem 0;
+                        }
+                    }
+                }
+            }
+        }
+        .footer-social-acct {
+            .media-handles {
+                .facebk, .google, .linkedin, .twit, .insta {
+                    margin: auto 1.5rem;
+                }
+            }
+        }
+    }
+}
 @media only screen and (min-width:1024px) {
+    .news-letter {
+        top: 16%;
+        left: 1%;
+        height: 220px;
+        padding: 2rem 5rem;
+        .news-content {
+            margin-top: 1rem;
+            h5 {
+                font-size: 28px;
+            }
+        }
+        form {
+            flex-direction: row;
+            margin: 1.2rem 1.5rem;
+
+            input[type="submit"]{
+                width: 20%;
+                margin-top: 0;
+            }
+        }
+    }
+    .second-dash {
+        top: 20%;
+         left: 2%;
+    }
+    .footer-main-container {
+        top: 50%;
+        height: 700px;
+        .footer-contents {
+            .footer-nav-section {
+                flex-direction: row;
+                margin-top:18% ;
+                .company, .get-help, .quick-links {
+                    h6 {
+                        margin-top: 0rem;
+                    }
+                    .foot-links {
+                        margin-top: 10%;
+                        a {
+                            margin: .8rem 0;
+                        }
+                    }
+                }
+            }
+        }
+        .footer-social-acct {
+            .media-handles {
+                .facebk, .google, .linkedin, .twit, .insta {
+                    margin: auto 1.5rem;
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:1280px) {
+    .news-letter {
+        top: 16%;
+        left: 9%;
+        height: 220px;
+        padding: 2rem 5rem;
+        .news-content {
+            margin-top: 1rem;
+            h5 {
+                font-size: 28px;
+            }
+        }
+        form {
+            flex-direction: row;
+            margin: 1.2rem 1.5rem;
+
+            input[type="submit"]{
+                width: 20%;
+                margin-top: 0;
+            }
+        }
+    }
+    .second-dash {
+        top: 20%;
+         left: 7%;
+    }
+    .footer-main-container {
+        top: 50%;
+        height: 700px;
+        .footer-contents {
+            .footer-nav-section {
+                flex-direction: row;
+                margin-top:18% ;
+                .company, .get-help, .quick-links {
+                    h6 {
+                        margin-top: 0rem;
+                    }
+                    .foot-links {
+                        margin-top: 10%;
+                        a {
+                            margin: .8rem 0;
+                        }
+                    }
+                }
+            }
+        }
+        .footer-social-acct {
+            .media-handles {
+                .facebk, .google, .linkedin, .twit, .insta {
+                    margin: auto 1.5rem;
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:1440px) {
     .news-letter {
         top: 16%;
         left: 15%;

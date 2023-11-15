@@ -28,12 +28,13 @@
 
 .testimony-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
     margin: 2rem 0;
     .testimony-card {
         position: relative;
-        width: 480px;
+        width: 100%;
+        max-width: 480px;
         height: 400px;
 
         .testimony-img {
@@ -49,7 +50,8 @@
         }
         .testimony-detail {
             position: absolute;
-            width: 420px;
+            width: 100%;
+            max-width: 420px;
             height: 320px;
             top: 15%;
             left:  50%;
@@ -135,7 +137,7 @@
     display: none;
 }
 
-@media only screen and (min-width:1024px) {
+@media only screen and (min-width:768px) {
     .main-row {
        .rows {
         .img-row1, .img-row2 {
@@ -149,6 +151,174 @@
             }
         }
        }
+    }
+
+    .testimony-content {
+        // flex-direction: row;
+        align-items: center;
+        margin: 2rem 0;
+        .testimony-card {
+            position: relative;
+            width: 450px;
+            height: 400px;
+    
+            .testimony-img {
+                width: 150px;
+                height: 150px;
+                margin: auto;
+                border-radius: 50%;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+            .testimony-detail {
+                position: absolute;
+                width: 420px;
+                height: 320px;
+                top: 15%;
+                left:  50%;
+                transform: translateX(-50%);
+                background: #FBF3EA;
+                padding: 1.6rem 1.2rem;
+                border: 1.2px solid rgba(207, 207, 207, 0.3);
+                z-index: -10;
+                p{
+                    margin-top: 4rem;
+                    font-size: 18px; // Adjust the font size as needed
+                    font-weight: 400; // Adjust the font weight as needed
+                    color: #000; // Set the text color to blue
+                    line-height: 28px;
+                    font-family: Inter;
+                }
+                 
+            }
+        }
+    }
+    
+}
+@media only screen and (min-width:1280px) {
+    .main-row {
+       .rows {
+        .img-row1, .img-row2 {
+            margin: 2.5rem 0;
+            .row-icon {
+                width: 200px;
+                height: 200px;
+                margin: auto 1.5rem;
+                padding: 2.5rem;
+            
+            }
+        }
+       }
+    }
+
+    .testimony-content {
+        // display: flex;
+        flex-direction: row;
+        // justify-content: space-evenly;
+        margin: 2rem 0;
+        // .testimony-card {
+        //     position: relative;
+        //     width: 480px;
+        //     height: 400px;
+    
+        //     .testimony-img {
+        //         width: 150px;
+        //         height: 150px;
+        //         margin: auto;
+        //         border-radius: 50%;
+        //         img {
+        //             width: 100%;
+        //             height: 100%;
+        //             object-fit: contain;
+        //         }
+        //     }
+        //     // .testimony-detail {
+        //     //     position: absolute;
+        //     //     width: 420px;
+        //     //     height: 320px;
+        //     //     top: 15%;
+        //     //     left:  50%;
+        //     //     transform: translateX(-50%);
+        //     //     background: #FBF3EA;
+        //     //     padding: 1.6rem 1.2rem;
+        //     //     border: 1.2px solid rgba(207, 207, 207, 0.3);
+        //     //     z-index: -10;
+        //     //     // p{
+        //     //     //     margin-top: 4rem;
+        //     //     //     font-size: 20px; // Adjust the font size as needed
+        //     //     //     font-weight: 400; // Adjust the font weight as needed
+        //     //     //     color: #000; // Set the text color to blue
+        //     //     //     line-height: 28px;
+        //     //     //     font-family: Inter;
+        //     //     // }
+                 
+        //     // }
+        // }
+    }
+    
+}
+@media only screen and (min-width:1440px) {
+    .main-row {
+       .rows {
+        .img-row1, .img-row2 {
+            margin: 2.5rem 0;
+            .row-icon {
+                width: 200px;
+                height: 200px;
+                margin: auto 1.5rem;
+                padding: 2.5rem;
+            
+            }
+        }
+       }
+    }
+
+    .testimony-content {
+        // display: flex;
+        flex-direction: row;
+        // justify-content: space-evenly;
+        margin: 2rem 0;
+        // .testimony-card {
+        //     position: relative;
+        //     width: 480px;
+        //     height: 400px;
+    
+        //     .testimony-img {
+        //         width: 150px;
+        //         height: 150px;
+        //         margin: auto;
+        //         border-radius: 50%;
+        //         img {
+        //             width: 100%;
+        //             height: 100%;
+        //             object-fit: contain;
+        //         }
+        //     }
+        //     // .testimony-detail {
+        //     //     position: absolute;
+        //     //     width: 420px;
+        //     //     height: 320px;
+        //     //     top: 15%;
+        //     //     left:  50%;
+        //     //     transform: translateX(-50%);
+        //     //     background: #FBF3EA;
+        //     //     padding: 1.6rem 1.2rem;
+        //     //     border: 1.2px solid rgba(207, 207, 207, 0.3);
+        //     //     z-index: -10;
+        //     //     // p{
+        //     //     //     margin-top: 4rem;
+        //     //     //     font-size: 20px; // Adjust the font size as needed
+        //     //     //     font-weight: 400; // Adjust the font weight as needed
+        //     //     //     color: #000; // Set the text color to blue
+        //     //     //     line-height: 28px;
+        //     //     //     font-family: Inter;
+        //     //     // }
+                 
+        //     // }
+        // }
     }
     
 }
