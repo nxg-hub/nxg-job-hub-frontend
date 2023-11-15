@@ -22,6 +22,13 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        h1{
+          font-size: 24px;
+        }
+        div{
+          display: flex;
+          align-items: center;
+        }
         img {
           height: 70px;
           width: auto;
@@ -184,11 +191,6 @@ scrollbar-width: none;
 
     .webcam {
       height: 100%;
-      // object-fit: fill;
-      // transform: scaleX(2);
-      // -webkit-transform: scaleX(2); 
-      // -moz-transform: scaleX(2);
-      // -ms-transform: scaleX(2);
       width: 100%;
     }
     .CamFeatures{

@@ -1,6 +1,6 @@
 .Sidebar {
   background: #006a90;
-  padding: 10px 20px;
+  padding: 10px 0px;
   color: white;
   height: 100%;
   overflow: hidden;
@@ -9,7 +9,7 @@
     height: 55px;
     width: auto;
     // display: block;
-    margin: 15px auto;
+    margin: 15px 20px;
   }
   .Profile {
     text-align: center;
@@ -43,6 +43,7 @@
     }
   }
   ul.list {
+    padding-left: 20px;
     margin-top: 25px;
     display: flex;
     flex-direction: column;
@@ -62,9 +63,14 @@
       border-radius: 3px;
     }
     a.Selected {
-      color: #b2fff5;
-      border-radius: 3px;
-      background-color: #ffffff15;
+      // color: #b2fff5;
+      
+      transform: translateX(5px);
+      color: black;
+      border-radius: 20px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      background-color: #ffffff;
       pointer-events: none;
       svg {
         filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg)
@@ -81,21 +87,24 @@
     color: white;
     display: flex;
     font-size: 14px;
+    border-radius: 20px;
     align-items: center;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     justify-content: flex-start;
     gap: 5px;
-    padding: 3px 6px;
+    padding: 10px 20px;
     svg {
       height: 20px;
       width: auto;
     }
     &:hover {
-      transform: translateX(15px);
-      transition: all 0.25s linear;
+      transform: translateX(5px);
+      transition: transform 0.25s linear;
       cursor: pointer;
-      border-radius: 3px;
-      color: #b2fff5;
-      background-color: #ffffff15;
+      color: #00000095;
+      // color: #b2fff5;
+      background-color: #ffffff;
       svg {
         filter: invert(25%) sepia(14%) saturate(639%) hue-rotate(116deg)
           brightness(107%) contrast(104%);
@@ -106,6 +115,7 @@
     display: block;
     position: absolute;
     width: 100%;
+    margin-left: 20px;
     background-color: #006a90;
     bottom: 5px;
     &:hover {
