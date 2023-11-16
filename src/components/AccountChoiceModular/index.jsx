@@ -48,7 +48,7 @@ const AccountChoiceModular = () => {
           className={s.ContinueButton}
           style={{
             backgroundColor: accountChoice
-              ? "rgb(19, 104, 188)"
+              ? "#2596be"
               : "rgb(194, 192, 192)",
             pointerEvents: accountChoice ? "all" : "none",
           }}

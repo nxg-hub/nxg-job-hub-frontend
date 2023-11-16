@@ -1,0 +1,443 @@
+.dash-profile-main-container {
+    font-family: Manrope;
+    padding: 10px;
+    .my-profile-heading {
+        margin-left: 1rem;
+        h1 {
+            font-size: 25px;
+            font-weight: 800;
+            color: #004259;
+        }
+    }
+    .my-profile-forms-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 20px;
+        margin: auto;
+        // margin: 45% 0;
+        .my-profile-form1, .my-profile-form2 {
+            width: 100%;
+            max-width: 536px;
+            height: 770px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: -4px 4px 20px 0px rgba(0, 0, 0, 0.25);
+            .my-profile-form-img-section {
+                position: relative;
+                .my-profile-form-pics {
+                    position: absolute;
+                    top: -35%;
+                    left: 23%;
+                    .my-profile-form-pics-lg {
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 50%;
+                        border: 5px solid #4D9932;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                            border-radius: 50%;
+                        }
+                    }
+                    .my-profile-form-pics-sm {
+                        position: absolute;
+                        top: 65%;
+                        right: 5%;
+                        width: 59.073px;
+                        height: 59.073px;
+                        border-radius: 50%;
+                        background: #2596be;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .camera {
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            color: #fff;
+                        }
+                    }
+                }
+                .my-profile-form-one {
+                    margin-top: 25%;
+                    .my-profile-header {
+                        width: 175px;
+                        margin: auto;
+                        text-align: center;
+                        color: #263238;
+                        line-height: 25px;
+                        h3 {
+                            font-size: 19px;
+                            font-weight: 700;
+                        }
+                        .my-profile-ps {
+                            text-align: start;
+                            padding: 0 0.4rem;
+                            p {
+                                font-size: 16px;
+                                font-weight: 600;
+                                span {
+                                    font-weight: 500;
+                                }
+                            }
+                            .post {
+                                font-weight: 500;
+                            }
+                        }
+                        
+                    }
+                    form {
+                        font-family: Manrope;
+                        margin-top: 15%;
+                      
+                        .my-profile-fullname {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+                            gap: 30px;
+                            margin: 1.5rem 0;
+                            .my-profile-firstname, .my-profile-lastname {
+                                position: relative;
+                                label {
+                                    position: absolute;
+                                    display: inline;
+                                    top: -25%;
+                                    left: 5%;
+                                    font-size: 16px;
+                                    font-weight: 500;
+                                    padding: 0 4px;
+                                    color: rgba(68, 68, 68, 0.91);
+                                    background-color: #fff !important;
+                                    z-index: 10;
+                                }
+                                input {
+                                    width: 100%;
+                                    height: 48px;
+                                    padding: 0.6rem 0.7rem;
+                                    margin: 0;
+                                    border-radius: 5px;
+                                    border: 1px solid #555;
+                                }
+                            }
+                        }
+                        .my-profile-bio {
+                            position: relative;
+                            margin: 2rem 0;
+                            label {
+                                position: absolute;
+                                display: inline;
+                                top: -15%;
+                                left: 5%;
+                                font-size: 16px;
+                                font-weight: 500;
+                                padding: 0 4px;
+                                color: rgba(68, 68, 68, 0.91);
+                                background-color: #fff !important;
+                                z-index: 10;
+                            }
+                            textarea {
+                                width: 100%;
+                                height: 80px;
+                                margin: 0;
+                                padding: 0.6rem 0.5rem;
+                                border-radius: 5px;
+                                border: 1px solid #555;
+                            }
+                        }
+                        .my-profile-address, .my-profile-email {
+                            position: relative;
+                            margin: 2rem 0;
+                            label {
+                                position: absolute;
+                                display: inline;
+                                top: -25%;
+                                left: 5%;
+                                font-size: 16px;
+                                font-weight: 500;
+                                padding: 0 4px;
+                                color: rgba(68, 68, 68, 0.91);
+                                background-color: #fff !important;
+                                z-index: 10;
+                            }
+                            input {
+                                width: 100%;
+                                height: 48px;
+                                margin: 0;
+                                padding: 0.6rem 0.5rem;
+                                border-radius: 5px;
+                                border: 1px solid #555;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .my-profile-form2 {
+            form {
+                .my-profile-address {
+                    position: relative;
+                    margin: 2rem 0;
+                    label {
+                        position: absolute;
+                        display: inline;
+                        top: -25%;
+                        left: 5%;
+                        font-size: 16px;
+                        font-weight: 500;
+                        padding: 0 4px;
+                        color: rgba(68, 68, 68, 0.91);
+                        background-color: #fff !important;
+                        z-index: 10;
+                    }
+                    input {
+                        width: 100%;
+                        height: 48px;
+                        margin: 0;
+                        padding: 0.6rem 0.5rem;
+                        border-radius: 5px;
+                        border: 1px solid #555;
+                    }
+                }
+                .add-experience-btn {
+                    display: flex;
+                    align-items: center;
+                    width: 158px;
+                    border: 1px solid #2596BE;
+                    border-radius: 5px;
+                    padding: 4px 8px;
+                    color: #2596BE;
+                    margin-top: -1.5rem;
+                    .plus-icon {
+                        width: 1.2rem;
+                        height: 1.2rem;
+                    }
+                    span {
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+                }
+                .add-skill {
+                    width: 104px;
+                }
+                .my-profile-btn {
+                    width: 100%;
+                    max-width: 294px;
+                    margin: auto;
+                    margin-top: 90%;
+                    button {
+                        color: #EEF3F4;
+                        border: none;
+                        padding: 8px;
+                        width: 100%;
+                        background: #006A90;
+                        font-size: 19px;
+                        font-weight: 500;
+                        border-radius: 10px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:768px) {
+    .dash-profile-main-container {
+        
+        .my-profile-forms-container {
+            gap: 20px;
+            margin: auto;
+            margin: 35% 0;
+            .my-profile-form1, .my-profile-form2 {
+                .my-profile-form-img-section {
+                    position: relative;
+                    .my-profile-form-pics {
+                        position: absolute;
+                        top: -28%;
+                        left: 10%;
+                    }
+                    .my-profile-form-one {
+                        margin-top: 22%;
+                        form {
+                            font-family: Manrope;
+                            margin-top: 40%;
+                            .my-profile-fullname {
+                                gap: 30px;
+                                .my-profile-firstname, .my-profile-lastname {
+                                    label {
+                                        position: absolute;
+                                        display: inline;
+                                        top: -25%;
+                                        left: 5%;
+                                    }
+                                }
+                            }
+                            .my-profile-bio {
+                                position: relative;
+                                margin: 2rem 0;
+                                label {
+                                    position: absolute;
+                                    display: inline;
+                                    top: -15%;
+                                    left: 5%;
+                                }
+                            }
+                            .my-profile-address, .my-profile-email {
+                                label {
+                                    position: absolute;
+                                    display: inline;
+                                    top: -25%;
+                                    left: 5%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .my-profile-form2 {
+                form {
+                    .my-profile-address {
+                        label {
+                            position: absolute;
+                            display: inline;
+                            top: -25%;
+                            left: 5%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+@media only screen and (min-width:1028px) {
+    .dash-profile-main-container {
+        
+        .my-profile-forms-container {
+            gap: 20px;
+            margin: auto;
+            margin: 20% 0;
+            .my-profile-form1, .my-profile-form2 {
+                .my-profile-form-img-section {
+                    .my-profile-form-pics {
+                        position: absolute;
+                        top: -32%;
+                        left: 25%;
+                        .my-profile-form-pics-lg {
+                            width: 168.78px;
+                            height: 168.78px;
+                        }
+                    }
+                    .my-profile-form-one {
+                        margin-top: 15%;
+                        form {
+                            font-family: Manrope;
+                            margin-top: 15%;
+                            .my-profile-fullname {
+                                margin: 1.5rem 0;
+                                .my-profile-firstname, .my-profile-lastname {
+                                    label {
+                                        position: absolute;
+                                        display: inline;
+                                        top: -25%;
+                                        left: 5%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+@media only screen and (min-width:1280px) {
+    .dash-profile-main-container {
+        .my-profile-forms-container {
+            .my-profile-form1, .my-profile-form2 {
+                .my-profile-form-img-section {
+                    .my-profile-form-pics {
+                        left: 28.5%;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+@media only screen and (min-width:1440px) {
+    .dash-profile-main-container {
+        
+        .my-profile-forms-container {
+            gap: 10px;
+            margin: 15% 0;
+            padding: 0 0 0 1rem;
+            .my-profile-form1, .my-profile-form2 {
+                .my-profile-form-img-section {
+                    position: relative;
+                    .my-profile-form-pics {
+                        position: absolute;
+                        top: -40%;
+                        left: 32%;
+                        .my-profile-form-pics-lg {
+                            width: 168.78px;
+                            height: 168.78px;
+                        }
+                    }
+                    .my-profile-form-one {
+                        margin-top: 15%;
+                        form {
+                            font-family: Manrope;
+                            margin-top: 15%;
+                            .my-profile-fullname {
+                                gap: 15px;
+                                margin: 1.5rem 0;
+                                .my-profile-firstname, .my-profile-lastname {
+                                    position: relative;
+                                    label {
+                                        position: absolute;
+                                        display: inline;
+                                        top: -25%;
+                                        left: 5%;
+                                    }
+                                }
+                            }
+                            .my-profile-bio {
+                                position: relative;
+                                margin: 2rem 0;
+                                label {
+                                    position: absolute;
+                                    display: inline;
+                                    top: -15%;
+                                    left: 2%;
+                                }
+                            }
+                            .my-profile-address, .my-profile-email {
+                                label {
+                                    position: absolute;
+                                    display: inline;
+                                    top: -25%;
+                                    left: 2%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .my-profile-form2 {
+                form {
+                    .my-profile-address {
+                        label {
+                            position: absolute;
+                            display: inline;
+                            top: -25%;
+                            left: 2%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
