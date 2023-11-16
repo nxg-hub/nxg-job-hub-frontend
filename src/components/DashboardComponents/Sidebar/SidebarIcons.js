@@ -8,6 +8,10 @@ import { ReactComponent as Analytics } from "../../../static/icons/chart-analyti
 import { ReactComponent as Applications } from "../../../static/icons/carbon_send_white.svg";
 import { ReactComponent as Messages } from "../../../static/icons/ic_outline-email.svg";
 import { ReactComponent as Logout } from "../../../static/icons/exit.svg";
+import { ReactComponent as Privacy } from "../../../static/icons/privacy.svg";
+import { ReactComponent as AccountDetails } from "../../../static/icons/mdi_account-details-outline.svg";
+import { ReactComponent as Terms } from "../../../static/icons/terms.svg";
+import { ReactComponent as Password } from "../../../static/icons/lock_icon.svg";
 import {BiBookmark as SavedJobs} from "react-icons/bi"
 
-export { ChangeProfilePicture, EditProfile, MyProfile, Dashboard, Applications, Analytics, Help, Settings, Messages, SavedJobs, Logout};
+export { ChangeProfilePicture, EditProfile, MyProfile, Dashboard, Applications, Analytics, Help, Settings, Messages, SavedJobs, Logout, Privacy, AccountDetails, Terms, Password};
