@@ -161,9 +161,8 @@ const Chat = () => {
       <div className={s.ChatScreen}>
         <div className={s.ChatHeader}>
           <div>
-            {" "}
             <img src={profilepic} alt="" />
-            <h2>{chat_name}</h2>
+            <h1>{chat_name}</h1>
           </div>
           <div>
             <VideoCall  title="Video call" />

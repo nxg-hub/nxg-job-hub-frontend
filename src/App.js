@@ -68,7 +68,10 @@ function App() {
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
           <Route path="analytics" element={<h2>Analytics </h2>} />
-          <Route path="settings" element={<Passwordsettings/>} />
+          <Route path="profile-details" element={<h2>Profile Details</h2>} />
+          <Route path="password-settings" element={<Passwordsettings/>} />
+          <Route path="Privacy" element={<h2>Privacy</h2>} />
+          <Route path="terms-and-conditions" element={<h2>Terms and Conditions</h2>} />
           <Route path="help" element={<h2>Help </h2>} />
         </Route>        
       </Routes>

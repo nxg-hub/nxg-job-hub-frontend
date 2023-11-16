@@ -22,6 +22,13 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        h1{
+          font-size: 24px;
+        }
+        div{
+          display: flex;
+          align-items: center;
+        }
         img {
           height: 70px;
           width: auto;
@@ -47,9 +54,9 @@
     }
     >img{
       position: absolute;
-      transition :margin-bottom .5s linear;
+      bottom:55px;
+      display: none;
       padding: 10px;
-      margin-bottom: 100px;
       background-color: #2596be;
       border-top-right-radius: 5px;
       border-top-left-radius: 5px;
@@ -184,11 +191,6 @@ scrollbar-width: none;
 
     .webcam {
       height: 100%;
-      // object-fit: fill;
-      // transform: scaleX(2);
-      // -webkit-transform: scaleX(2); 
-      // -moz-transform: scaleX(2);
-      // -ms-transform: scaleX(2);
       width: 100%;
     }
     .CamFeatures{
@@ -203,10 +205,10 @@ scrollbar-width: none;
   .canvas{
     display: none;
   }
-  // >img{
-  //   display: none;
-  // }
-  // .ImagePreview{
-  //   display: none;
-  // }
+  >img{
+    display: none;
+  }
+  .ImagePreview{
+    display: none;
+  }
 }

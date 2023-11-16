@@ -70,7 +70,6 @@
                 width: 100%;
                 max-width: 424px;
                 margin: 3rem 0 0 0%;
-                cursor: pointer;
                 button {
                     color: #ffffff;
                     border: none;
@@ -80,8 +79,30 @@
                     font-size: 19px;
                     font-weight: 500;
                     border-radius: 8px;
+                    cursor: pointer;
                 }
             }
+        }
+        .change-successful {
+            margin-top: 1rem;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #5EAB2F;
+            border-radius: 10px;
+            background: rgba(77, 242, 19, 0.20);
+            p {
+                color: #0D6406;
+                font-size: 16px;
+                font-weight: 400;
+            }
+        }
+        .change-failed p {
+            margin-top: 1rem;
+            text-align: center;
+            padding: 8px;
+            color: red;
+            font-size: 16px;
+            font-weight: 400;
         }
     }
 }
