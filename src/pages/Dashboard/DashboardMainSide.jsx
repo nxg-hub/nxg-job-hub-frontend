@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { FiMail } from "react-icons/fi";
 import { SlBell } from "react-icons/sl";
@@ -11,6 +12,11 @@ import { jobs as JobRecommendations } from "../../utils/data/job-recommendations
 import RecommendationCard from "../../components/DashboardComponents/RecommendationCard";
 import figma from "../../static/icons/logos_figma.svg";
 function DashboardMainSide() {
+  const navigate = useNavigate();
+  const openForm = (e) => {
+    e.preventDefault();
+    navigate("/techprofileform");
+  }
     
   return (
     <div className="dash-profile-main-side">
@@ -38,7 +44,7 @@ function DashboardMainSide() {
             <p>
               Stand a better chance of being hired by completing your profile
             </p>
-            <button>Complete Profile</button>
+            <button onClick={openForm}>Complete Profile</button>
           </div>
         </div>
         <div className="dash-profile-hero-img">

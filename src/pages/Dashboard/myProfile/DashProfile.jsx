@@ -3,13 +3,15 @@ import "./myProfile.scss";
 import User from '../../../static/images/Sarah.png';
 import { PiCameraLight } from 'react-icons/pi';
 import Inputs from '../../../components/accounts/Inputs';
+import { GoPlus } from "react-icons/go";
 
 function DashProfile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [education, setEducation] = useState("");
+  const [experience, setExperience] = useState("");
+  const [skills, setSkills] = useState("");
   return (
     <div className="dash-profile-main-container">
         <div className="my-profile-heading">
@@ -84,66 +86,27 @@ function DashProfile() {
               <div className="my-profile-address">
                 <Inputs 
                   type="text"
-                  title="Education"
-                  value={education}
-                  onChange={(e) => setEducation(e.target.value)}
+                  title="Work Experience"
+                  value={experience}
+                  onChange={(e) => setExperience(e.target.value)}
                 />
+              </div>
+              <div className="add-experience-btn">
+                <GoPlus className='plus-icon' /> <span>Add Experience</span>
               </div>
               <div className="my-profile-address">
                 <Inputs 
                   type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  title="Skills"
+                  value={skills}
+                  onChange={(e) => setSkills(e.target.value)}
                 />
               </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+              <div className="add-experience-btn add-skill">
+                <GoPlus className='plus-icon' /> <span>Add Skill</span>
               </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-              <div className="my-profile-address">
-                <Inputs 
-                  type="text"
-                  title="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+              <div className="my-profile-btn">
+                <button >Update Profile</button>
               </div>
             </form>
           </div>

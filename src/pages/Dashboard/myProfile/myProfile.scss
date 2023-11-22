@@ -2,6 +2,7 @@
     font-family: Manrope;
     padding: 10px;
     .my-profile-heading {
+        margin-left: 1rem;
         h1 {
             font-size: 25px;
             font-weight: 800;
@@ -17,7 +18,7 @@
         .my-profile-form1, .my-profile-form2 {
             width: 100%;
             max-width: 536px;
-            height: 772px;
+            height: 770px;
             background: #fff;
             padding: 30px;
             border-radius: 10px;
@@ -104,7 +105,7 @@
                                     left: 5%;
                                     font-size: 16px;
                                     font-weight: 500;
-                                  padding: 0;
+                                    padding: 0 4px;
                                     color: rgba(68, 68, 68, 0.91);
                                     background-color: #fff !important;
                                     z-index: 10;
@@ -129,7 +130,7 @@
                                 left: 5%;
                                 font-size: 16px;
                                 font-weight: 500;
-                                padding: 0;
+                                padding: 0 4px;
                                 color: rgba(68, 68, 68, 0.91);
                                 background-color: #fff !important;
                                 z-index: 10;
@@ -153,7 +154,7 @@
                                 left: 5%;
                                 font-size: 16px;
                                 font-weight: 500;
-                                padding: 0;
+                                padding: 0 4px;
                                 color: rgba(68, 68, 68, 0.91);
                                 background-color: #fff !important;
                                 z-index: 10;
@@ -183,7 +184,7 @@
                         left: 5%;
                         font-size: 16px;
                         font-weight: 500;
-                        padding: 0;
+                        padding: 0 4px;
                         color: rgba(68, 68, 68, 0.91);
                         background-color: #fff !important;
                         z-index: 10;
@@ -197,11 +198,44 @@
                         border: 1px solid #555;
                     }
                 }
-            }
-        }
-        form{
-            label{
-                padding-inline: 5px !important;
+                .add-experience-btn {
+                    display: flex;
+                    align-items: center;
+                    width: 158px;
+                    border: 1px solid #2596BE;
+                    border-radius: 5px;
+                    padding: 4px 8px;
+                    color: #2596BE;
+                    margin-top: -1.5rem;
+                    .plus-icon {
+                        width: 1.2rem;
+                        height: 1.2rem;
+                    }
+                    span {
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+                }
+                .add-skill {
+                    width: 104px;
+                }
+                .my-profile-btn {
+                    width: 100%;
+                    max-width: 294px;
+                    margin: auto;
+                    margin-top: 90%;
+                    button {
+                        color: #EEF3F4;
+                        border: none;
+                        padding: 8px;
+                        width: 100%;
+                        background: #006A90;
+                        font-size: 19px;
+                        font-weight: 500;
+                        border-radius: 10px;
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }
@@ -336,9 +370,9 @@
     .dash-profile-main-container {
         
         .my-profile-forms-container {
-            gap: 20px;
-            margin: auto;
+            gap: 10px;
             margin: 15% 0;
+            padding: 0 0 0 1rem;
             .my-profile-form1, .my-profile-form2 {
                 .my-profile-form-img-section {
                     position: relative;

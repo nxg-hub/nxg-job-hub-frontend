@@ -22,6 +22,8 @@ import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx";
 import DashProfile from "./pages/Dashboard/myProfile/DashProfile.jsx";
 import DashboardMainSide from "./pages/Dashboard/DashboardMainSide.jsx";
 import Passwordsettings from "./pages/Dashboard/wallet/setting/Passwordsettings.jsx";
+import DashboardProfileForm from "./pages/Dashboard/DashboardProfileForm/index.jsx";
+
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
         <Route path="/login" element={<LogTalent />} />
         <Route path="/profilelanding" element={<ProfileLanding />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/techprofileform" element={<DashboardProfileForm />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
