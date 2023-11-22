@@ -9,9 +9,8 @@
   overflow: hidden;
   position: relative;
   > img {
-    height: 55px;
-    width: auto;
-    // display: block;
+    height: 50px;
+    width: 100px;
     margin: 15px 20px;
   }
   .Profile {
@@ -51,7 +50,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 48vh;
+    max-height: 50vh;
     overflow: hidden;
     overflow-y: auto;
     scrollbar-width: none;
@@ -61,7 +60,7 @@
     &::-webkit-scrollbar-thumb {
      display: none;
     }
-    a.Selected {
+    .dashboardItem[aria-current="page"] {
       color: #2596be;
       background-color: #ffffff;
       pointer-events: none;
@@ -75,8 +74,7 @@
     }
   }
   a.dashboardItem,
-  .dropdownTitle,
-  .dashboardItem > ul > a {
+  .dropdownTitle {
     display: flex;
     color: white;
     font-size: 18px;

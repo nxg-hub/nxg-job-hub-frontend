@@ -4,14 +4,17 @@ import "react-international-phone/style.css";
 import s from "./EmployerForm.module.scss";
 import TextField from "../../../components/TextField";
 import { updateField } from "../../../utils/functions/updateForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthOptions from "../../../components/AuthOptions";
 import FormSubmitBtn from "../../../components/FormSubmitBtn";
 import Checkbox from "../../../components/Checkbox";
 import RadioButton from "../../../components/RadioButton";
 import { BsArrowLeft } from "react-icons/bs";
+import axios from "axios";
+import User from "../../../utils/classes/User";
 
 const EmployerRegistration = () => {
+  const navigate = useNavigate();
   const data = {
     name: "",
     email: "",
@@ -105,13 +108,40 @@ const EmployerRegistration = () => {
         ...errors,
         phone: "",
       });
+      return true;
     }
   };
 
   const validateForm = (e) => {
     e.preventDefault();
-    validatePhone();
+    const valid = validatePhone();
+    const user = new User(formData);
+    console.log(user);
+    valid
+      ? axios
+          .post(
+            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/register/",
+            user
+          )
+          .then((res) => res.status)
+          .then((status) => {
+            console.log(status);
+            console.log("success");
+            navigate("/login");
+          })
+          .catch((err) => console.log("error", err))
+          .then(
+            axios
+              .post(
+                "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
+                { ...user, userType: "EMPLOYER" }
+              )
+              .then((res) => console.log("Second call", res))
+              .catch((err) => console.log("Second callErr", err))
+          )
+      : console.log("invalid data");
   };
+
   return (
     <div className={s.formWrapper}>
       <div className={s.top}>
@@ -237,6 +267,7 @@ const EmployerRegistration = () => {
             placeholder={"Password"}
             id="password"
             required
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
             err={errors.password}
             value={formData.password}
           />
@@ -251,6 +282,7 @@ const EmployerRegistration = () => {
             name={"confirmPassword"}
             err={errors.confirmPassword}
             placeholder={"Enter password"}
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
             id="confirmPassword"
           />
         </div>

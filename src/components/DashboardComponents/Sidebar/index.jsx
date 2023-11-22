@@ -2,7 +2,6 @@ import s from "./index.module.scss";
 import logo from "../../../static/images/nxg-logo.png";
 import {
   ChangeProfilePicture,
-  EditProfile,
   MyProfile,
   Dashboard,
   Applications,
@@ -14,26 +13,13 @@ import {
   Logout,
   Password,
   Terms,
-  Privacy, AccountDetails
+  Privacy,
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
-import {  useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useContext } from "react";
 const Sidebar = ({ profilePic, ...props }) => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState("Dashboard");
-  const selectMenuItem = (e) => {
-    const optionName = e.target.innerText;
-    console.log(e.target, optionName);
-    e.target.draggable = true
-    setSelectedMenuItem(optionName);
-    // selection()
-  };
- 
-  const selection = (optionName) => {
-      
-      return selectedMenuItem === optionName ? s.Selected : "";
-    };
-
+  // const user = useContext(UserContext)
   return (
     <div className={s.Sidebar}>
       <img src={logo} alt="nxg-logo" />
@@ -44,87 +30,75 @@ const Sidebar = ({ profilePic, ...props }) => {
         </span>
         <strong>Sarah</strong>
         <p>Product Designer</p>
-        <p>
-          <EditProfile />
-          Edit Profile
-        </p>
       </div>
       <ul className={s.list}>
-        <Link to="/dashboard"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Dashboard")}`}
-        >
+        <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
           <Dashboard />
           Dashboard
-        </Link>
-        <Link to="messages"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Messages")}`}
+        </NavLink>
+        <NavLink
+          end
+          to="messages"
+          className={`${s.dashboardItem} `}
         >
           <Messages />
           Messages
-        </Link>
-        <Link to="profile"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("My Profile")}`}
-        >
+        </NavLink>
+        <NavLink end to="profile" className={`${s.dashboardItem} `}>
           <MyProfile />
           My Profile
-        </Link>
-        <Link to="applications"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("My Applications")}`}
-        >
+        </NavLink>
+        <NavLink end to="applications" className={`${s.dashboardItem} `}>
           <Applications />
           My Applications
-        </Link>
-        <Link to="saved"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Saved Jobs")}`}
-        >
+        </NavLink>
+        <NavLink end to="saved" className={`${s.dashboardItem} `}>
           <SavedJobs fill="white" /> Saved Jobs
-        </Link>
-        <Link to="analytics"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Analytics")}`}
-        >
+        </NavLink>
+        <NavLink end to="analytics" className={`${s.dashboardItem} `}>
           <Analytics />
           Analytics
-        </Link>
-        <li
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Settings")}`}
-        >
+        </NavLink>
+        <li className={`${s.dashboardItem} `}>
           <div className={s.dropdownTitle}>
-          <Settings />
-          <span>Settings<PiCaretDown /></span>
-         </div>
+            <Settings />
+            <span>
+              Settings
+              <PiCaretDown />
+            </span>
+          </div>
           <ul>
-          <Link to="profile-details"   onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Profile Details")}`}> <AccountDetails/> Profile Details</Link>
-          <Link to="password-settings"   onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Password Settings")}`}> <Password/> Password Settings</Link>
-          <Link to="privacy"   onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Privacy")}`}> <Privacy/> Privacy</Link>
-          <Link to="terms-and-conditions"   onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Terms and conditions")}`}> <Terms/> Terms and conditions</Link>
+            <NavLink
+              end
+              to="password-settings"
+              className={`${s.dashboardItem} `}
+            >
+              {" "}
+              <Password /> Password Settings
+            </NavLink>
+            <NavLink end to="privacy" className={`${s.dashboardItem} `}>
+              {" "}
+              <Privacy /> Privacy
+            </NavLink>
+            <NavLink
+              end
+              to="terms-and-conditions"
+              className={`${s.dashboardItem} `}
+            >
+              {" "}
+              <Terms /> Terms and conditions
+            </NavLink>
           </ul>
         </li>
-        <Link to="help"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${selection("Help")}`}
-        >
+        <NavLink end to="help" className={`${s.dashboardItem} `}>
           <Help />
           Help
-        </Link>
+        </NavLink>
       </ul>
-        <Link to="logout"
-          onClick={selectMenuItem}
-          className={`${s.dashboardItem} ${s.Logout}  ${selection("Logout")}`}
-        >
-          <Logout />
-          Logout
-        </Link>
+      <NavLink end to="logout" className={`${s.dashboardItem} ${s.Logout}  `}>
+        <Logout />
+        Logout
+      </NavLink>
     </div>
   );
 };
