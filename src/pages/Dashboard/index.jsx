@@ -4,14 +4,19 @@ import pic from "../../static/images/Sarah.png";
 import { Outlet } from "react-router-dom";
 import { createContext } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+export const UserContext = createContext({});
 const Dashboard = () => {
-  const UserContext = createContext(null);
+  const [user, setUser] = useState({});
   const auth = window.localStorage.getItem("NXGJOBHUBLOGINKEYV1");
-  const user = axios
-    .get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
-      headers: { authorization: auth },
-    })
-    .then((res) => console.log(res));
+  useEffect(() => {
+    axios
+      .get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+        headers: { authorization: auth },
+      })
+      .then((res) => setUser(res.data));
+  }, [auth]);
   return (
     <UserContext.Provider value={user}>
       <div className={s.Dashboard}>

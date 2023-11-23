@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import s from "./index.module.scss";
 import logo from "../../../static/images/nxg-logo.png";
 import {
@@ -17,9 +18,9 @@ import {
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { UserContext } from "../../../pages/Dashboard";
 const Sidebar = ({ profilePic, ...props }) => {
-  // const user = useContext(UserContext)
+  const user = useContext(UserContext)
   return (
     <div className={s.Sidebar}>
       <img src={logo} alt="nxg-logo" />
@@ -28,7 +29,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           <img src={profilePic} alt="" />
           <ChangeProfilePicture title="Change profile picture" />
         </span>
-        <strong>Sarah</strong>
+        <strong>{user.firstName}</strong>
         <p>Product Designer</p>
       </div>
       <ul className={s.list}>

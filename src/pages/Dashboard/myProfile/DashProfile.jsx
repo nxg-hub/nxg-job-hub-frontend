@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import "./myProfile.scss";
 import User from '../../../static/images/Sarah.png';
 import { PiCameraLight } from 'react-icons/pi';
 import Inputs from '../../../components/accounts/Inputs';
 import { GoPlus } from "react-icons/go";
+import { UserContext } from '..';
 
 function DashProfile() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const user = useContext(UserContext)
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [email, setEmail] = useState(user.email);
   const [address, setAddress] = useState("");
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
+  // console.log(user)
+  const currentYear = new Date().getFullYear()
   return (
     <div className="dash-profile-main-container">
         <div className="my-profile-heading">
@@ -30,10 +34,10 @@ function DashProfile() {
               </div>
               <div className="my-profile-form-one">
                 <div className="my-profile-header">
-                  <h3>Sarah</h3>
+                  <h3>{user.firstName}</h3>
                   <div className="my-profile-ps">
                     <p className="post">Product Designer</p>
-                    <p className="post-id">Profile ID : <span>Sarah 23</span></p>
+                    <p className="post-id">Profile ID : <span>{user.firstName} {currentYear - user.dateOfBirth}</span></p>
                   </div>
                 </div>
                 <form>

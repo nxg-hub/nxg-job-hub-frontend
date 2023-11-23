@@ -1,4 +1,4 @@
-import React from "react";
+import {useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { FiMail } from "react-icons/fi";
@@ -11,7 +11,9 @@ import { TbMathGreater } from "react-icons/tb";
 import { jobs as JobRecommendations } from "../../utils/data/job-recommendations";
 import RecommendationCard from "../../components/DashboardComponents/RecommendationCard";
 import figma from "../../static/icons/logos_figma.svg";
+import { UserContext } from ".";
 function DashboardMainSide() {
+  const user = useContext(UserContext)
   const navigate = useNavigate();
   const openForm = (e) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ function DashboardMainSide() {
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">
         <div className="dash-profile-name">
-          <p>Sarah's Dashboard</p>
+          <p>{user.firstName}'s Dashboard</p>
         </div>
         <div className="dash-profile-pics-section">
           <div className="dash-profile-icons">
