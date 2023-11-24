@@ -18,9 +18,9 @@ import {
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../../../pages/Dashboard";
+import { UserContext } from "..";
 const Sidebar = ({ profilePic, ...props }) => {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext);
   return (
     <div className={s.Sidebar}>
       <img src={logo} alt="nxg-logo" />
@@ -37,11 +37,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           <Dashboard />
           Dashboard
         </NavLink>
-        <NavLink
-          end
-          to="messages"
-          className={`${s.dashboardItem} `}
-        >
+        <NavLink end to="messages" className={`${s.dashboardItem} `}>
           <Messages />
           Messages
         </NavLink>

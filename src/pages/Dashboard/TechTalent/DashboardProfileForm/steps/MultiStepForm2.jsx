@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import Inputs from '../../../../components/accounts/Inputs';
-import { certifications, levels, qualifications, jobTypes, experience } from '../../../../utils/data/tech-talent';
+import Inputs from '../../../../../components/accounts/Inputs';
+import { certifications, levels, qualifications, jobTypes, experience } from '../../../../../utils/data/tech-talent';
 import '../multiStep.scss';
 
 function MultiStepForm2({data = {}, index}) {

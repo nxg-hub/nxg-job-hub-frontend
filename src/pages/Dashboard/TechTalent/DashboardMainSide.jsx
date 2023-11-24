@@ -1,25 +1,25 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { FiMail } from "react-icons/fi";
 import { SlBell } from "react-icons/sl";
-import User from "../../static/images/Sarah.png";
-import HeroImg from "../../static/images/tech-talent-pro-img.png";
+import User from "../../../static/images/Sarah.png";
+import HeroImg from "../../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
 
-import { jobs as JobRecommendations } from "../../utils/data/job-recommendations";
-import RecommendationCard from "../../components/DashboardComponents/RecommendationCard";
-import figma from "../../static/icons/logos_figma.svg";
-import { UserContext } from ".";
+import { jobs as JobRecommendations } from "../../../utils/data/job-recommendations";
+import RecommendationCard from "./RecommendationCard";
+import figma from "../../../static/icons/logos_figma.svg";
+import { UserContext } from "..";
 function DashboardMainSide() {
-  const user = useContext(UserContext)
+  const user = useContext(UserContext);
   const navigate = useNavigate();
   const openForm = (e) => {
     e.preventDefault();
     navigate("/techprofileform");
-  }
-    
+  };
+
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">

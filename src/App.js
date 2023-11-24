@@ -19,11 +19,10 @@ import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
 import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx";
-import DashProfile from "./pages/Dashboard/myProfile/DashProfile.jsx";
-import DashboardMainSide from "./pages/Dashboard/DashboardMainSide.jsx";
-import Passwordsettings from "./pages/Dashboard/wallet/setting/Passwordsettings.jsx";
-import DashboardProfileForm from "./pages/Dashboard/DashboardProfileForm/index.jsx";
-
+import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
+import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
+import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
+import DashboardMainSide from "./pages/Dashboard/TechTalent/DashboardMainSide.jsx";
 
 function App() {
   return (
@@ -67,16 +66,19 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
           <Route path="messages" element={<Chat />} />
-          <Route path="profile" element={<DashProfile/>} />
+          <Route path="profile" element={<DashProfile />} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="profile-details" element={<h2>Profile Details</h2>} />
-          <Route path="password-settings" element={<Passwordsettings/>} />
+          <Route path="password-settings" element={<Passwordsettings />} />
           <Route path="Privacy" element={<h2>Privacy</h2>} />
-          <Route path="terms-and-conditions" element={<h2>Terms and Conditions</h2>} />
+          <Route
+            path="terms-and-conditions"
+            element={<h2>Terms and Conditions</h2>}
+          />
           <Route path="help" element={<h2>Help </h2>} />
-        </Route>        
+        </Route>
       </Routes>
     </>
   );

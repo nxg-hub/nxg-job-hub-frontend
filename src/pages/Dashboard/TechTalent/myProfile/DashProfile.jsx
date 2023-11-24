@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import "./myProfile.scss";
-import User from '../../../static/images/Sarah.png';
+import User from '../../../../static/images/Sarah.png';
 import { PiCameraLight } from 'react-icons/pi';
-import Inputs from '../../../components/accounts/Inputs';
+import Inputs from '../../../../components/accounts/Inputs';
 import { GoPlus } from "react-icons/go";
-import { UserContext } from '..';
+import { UserContext } from '../..';
 
 function DashProfile() {
   const user = useContext(UserContext)
@@ -15,7 +15,14 @@ function DashProfile() {
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
   // console.log(user)
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear() 
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.firstName)
+      setLastName(user.lastName)
+      setEmail(user.email)
+    }
+  }, [user])
   return (
     <div className="dash-profile-main-container">
         <div className="my-profile-heading">
