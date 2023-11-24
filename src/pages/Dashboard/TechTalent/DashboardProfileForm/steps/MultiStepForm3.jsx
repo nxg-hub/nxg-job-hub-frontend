@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
-import { workModes} from '../../../../utils/data/tech-talent';
+import { workModes} from '../../../../../utils/data/tech-talent';
 import '../multiStep.scss';
-import FileUploader from '../../../../components/accounts/FileUploader';
-import Inputs from '../../../../components/accounts/Inputs';
+import FileUploader from '../../../../../components/accounts/FileUploader';
+import Inputs from '../../../../../components/accounts/Inputs';
 
 function MultiStepForm3({data = {}, index}) {
 

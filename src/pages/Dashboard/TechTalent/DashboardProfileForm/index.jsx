@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import MultiStepProgressbar from './MultiStepProgressbar'
-import Logo from '../../../static/images/nxg-logo.png'
+import Logo from '../../../../static/images/nxg-logo.png'
 import { LiaLessThanSolid } from "react-icons/lia";
 import MultiStepForm1 from './steps/MultiStepForm1';
 import MultiStepForm2 from './steps/MultiStepForm2';

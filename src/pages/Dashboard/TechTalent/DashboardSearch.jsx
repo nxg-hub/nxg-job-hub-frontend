@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select, { components }  from 'react-select';
 import axios from 'axios';
 import { MdOutlineSearch, MdOutlineLocationOn } from 'react-icons/md';
-import { jobTypes, levels } from '../../utils/data/tech-talent';
+import { jobTypes, levels } from '../../../utils/data/tech-talent';
 
 
 function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {

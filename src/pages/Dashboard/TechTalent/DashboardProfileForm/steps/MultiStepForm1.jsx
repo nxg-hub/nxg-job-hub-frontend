@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Inputs from '../../../../components/accounts/Inputs';
+import Inputs from '../../../../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';

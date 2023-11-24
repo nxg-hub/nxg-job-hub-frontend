@@ -1,7 +1,7 @@
 import s from "./index.module.scss";
-import { ReactComponent as SaveJob } from "../../../static/icons/carbon_bookmark.svg";
-import { ReactComponent as Location } from "../../../static/icons/Location.svg";
-import { ReactComponent as Views } from "../../../static/icons/ph_eye-light.svg";
+import { ReactComponent as SaveJob } from "../../../../static/icons/carbon_bookmark.svg";
+import { ReactComponent as Location } from "../../../../static/icons/Location.svg";
+import { ReactComponent as Views } from "../../../../static/icons/ph_eye-light.svg";
 const RecommendationCard = ({
   company_name,
   company_logo,
@@ -40,7 +40,7 @@ const RecommendationCard = ({
       </div>
       <div className={s.jobAnalytics}>
         <small>
-          <Views /> { views } views
+          <Views /> {views} views
         </small>
         <small>{applicants} applicants</small>
         <a href="/">Apply Now</a>

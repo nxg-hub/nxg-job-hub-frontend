@@ -20,15 +20,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import addEmoji from "../../../utils/functions/addEmoji";
 import { openMedia, closeMedia } from "../../../utils/functions/controlMedia";
-class Message {
-  constructor(from, message, media, media_type) {
-    this.from = "";
-    this.message = message;
-    this.media = media;
-    this.media_type = media_type;
-    this.timestamp = Date.now();
-  }
-}
+import Message from "../../../utils/classes/Message";
+
 
 const Chat = () => {
   const chatscreen = useRef();
