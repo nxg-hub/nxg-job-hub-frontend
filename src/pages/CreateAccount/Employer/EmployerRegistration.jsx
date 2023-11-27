@@ -63,7 +63,25 @@ const EmployerRegistration = () => {
       });
     }
   };
-  const validateFullName = () => {
+  const validateFirstName = () => {
+    if (formData.name.length < 3) {
+      setErrors({
+        ...errors,
+        name: "Name cannot be less than 3 characters",
+      });
+    } else if (/\d/.test(formData.name)) {
+      setErrors({
+        ...errors,
+        name: "Name cannot contain a number",
+      });
+    } else {
+      setErrors({
+        ...errors,
+        name: "",
+      });
+    }
+  };
+  const validateLastName = () => {
     if (formData.name.length < 3) {
       setErrors({
         ...errors,
@@ -163,8 +181,28 @@ const EmployerRegistration = () => {
                 );
                 // validateFirstName();
               }}
-              onblur={validateFullName}
-              label={"Full name"}
+              onblur={validateFirstName}
+              label={"First Name"}
+              type={"text"}
+              name={"name"}
+              placeholder={"e.g John Doe"}
+              id="name"
+              required
+              err={errors.name}
+              value={formData.name}
+            />
+            <TextField
+              onchange={(e) => {
+                updateField(
+                  e.target.value,
+                  e.target.lastName,
+                  setFormdata,
+                  formData
+                );
+                // validateFirstName();
+              }}
+              onblur={validateLastName}
+              label={"Last Name"}
               type={"text"}
               name={"name"}
               placeholder={"e.g John Doe"}
