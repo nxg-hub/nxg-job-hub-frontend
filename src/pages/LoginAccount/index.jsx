@@ -114,7 +114,7 @@ const LogTalent = () => {
                 to="/forgotpassword"
                 style={{ color: "#A39E9E", textDecoration: "underline" }}
               >
-                Forgort Password?
+                Forgot Password?
               </Link>
             </div>
             <div className="remember">

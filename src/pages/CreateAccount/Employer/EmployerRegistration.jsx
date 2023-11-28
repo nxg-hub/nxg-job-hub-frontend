@@ -16,7 +16,8 @@ import User from "../../../utils/classes/User";
 const EmployerRegistration = () => {
   const navigate = useNavigate();
   const data = {
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     address: "",
@@ -27,7 +28,8 @@ const EmployerRegistration = () => {
     acceptedPrivacy: false,
   };
   const err = {
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     gender: "",
@@ -63,21 +65,21 @@ const EmployerRegistration = () => {
       });
     }
   };
-  const validateFullName = () => {
-    if (formData.name.length < 3) {
+  const validateName = (value, fieldname) => {
+    if (value.length < 3) {
       setErrors({
         ...errors,
-        name: "Name cannot be less than 3 characters",
+        [fieldname]: "Name cannot be less than 3 characters",
       });
-    } else if (/\d/.test(formData.name)) {
+    } else if (/\d/.test(value)) {
       setErrors({
         ...errors,
-        name: "Name cannot contain a number",
+        [fieldname]: "Name cannot contain a number",
       });
     } else {
       setErrors({
         ...errors,
-        name: "",
+        [fieldname]: "",
       });
     }
   };
@@ -154,30 +156,36 @@ const EmployerRegistration = () => {
           {/* Name */}
           <div className={s.NameFields}>
             <TextField
-              onchange={(e) => {
-                updateField(
-                  e.target.value,
-                  e.target.name,
-                  setFormdata,
-                  formData
-                );
-                // validateFirstName();
-              }}
-              onblur={validateFullName}
-              label={"Full name"}
+              onchange={(e) => updateField(e, setFormdata)}
+              label={"First Name"}
               type={"text"}
-              name={"name"}
-              placeholder={"e.g John Doe"}
-              id="name"
+              name={"firstName"}
+              placeholder={"First name"}
+              id="firstName"
+              value={formData.firstName}
               required
-              err={errors.name}
-              value={formData.name}
+              onblur={() => {
+                validateName(formData.firstName, "firstName");
+              }}
+              err={errors.firstName}
+            />
+            <TextField
+              onchange={(e) => updateField(e, setFormdata)}
+              value={formData.lastName}
+              required
+              onblur={() => {
+                validateName(formData.lastName, "lastName");
+              }}
+              label={"Last name"}
+              type={"text"}
+              name={"lastName"}
+              placeholder={"Last name"}
+              id="lastName"
+              err={errors.lastName}
             />
           </div>
           <TextField
-            onchange={(e) =>
-              updateField(e.target.value, e.target.name, setFormdata, formData)
-            }
+            onchange={(e) => updateField(e, setFormdata)}
             onblur={validateEmail}
             label={"Email Address"}
             type={"email"}
@@ -195,7 +203,7 @@ const EmployerRegistration = () => {
                 display: "flex",
                 alignItems: "center",
                 padding: "0px",
-                maxHeight: "28px",
+                maxHeight: "36px",
               }}
               inputProps={{
                 required: true,
@@ -206,11 +214,14 @@ const EmployerRegistration = () => {
                 width: "100%",
                 border: "1px solid rgb(194, 192, 192)",
                 height: "36px",
+                borderTopRightRadius: "6.4px",
+                 borderBottomRightRadius: "6.4px",
               }}
               value={formData.phone}
               required
               id="phone"
-              onChange={(e) => updateField(e, "phone", setFormdata, formData)}
+              defaultCountry="ng"
+              onChange={(e) => setFormdata(data => ({...data, "phone": e}))}
             />
             {errors.phone && <h5 className={s.inputErr}> {errors.phone}</h5>}
           </div>
@@ -223,9 +234,7 @@ const EmployerRegistration = () => {
               name={"gender"}
               required
               err={errors.gender}
-              onchange={() =>
-                updateField("male", "gender", setFormdata, formData)
-              }
+              onchange={(e) => updateField(e, setFormdata)}
             />
             <RadioButton
               required
@@ -234,17 +243,12 @@ const EmployerRegistration = () => {
               value={"Female"}
               name={"gender"}
               err={errors.gender}
-              onchange={() => {
-                updateField("female", "gender", setFormdata, formData);
-                console.log(formData);
-              }}
+              onchange={(e) => updateField(e, setFormdata)}
               type="radio"
             />
           </div>
           <TextField
-            onchange={(e) =>
-              updateField(e.target.value, e.target.name, setFormdata, formData)
-            }
+            onchange={(e) => updateField(e, setFormdata)}
             label={"Date of birth"}
             type={"date"}
             name="dob"
@@ -257,7 +261,7 @@ const EmployerRegistration = () => {
 
           <TextField
             onchange={(e) => {
-              updateField(e.target.value, e.target.name, setFormdata, formData);
+              updateField(e, setFormdata);
               confirmPassword(e);
               checkPasswordLength(e);
             }}
@@ -273,15 +277,15 @@ const EmployerRegistration = () => {
           />
           <TextField
             onchange={(e) => {
-              updateField(e.target.value, e.target.name, setFormdata, formData);
+              updateField(e, setFormdata);
               confirmPassword(e);
             }}
             required
-            label={"Retype password"}
+            label={"Confirm password"}
             type={"password"}
             name={"confirmPassword"}
             err={errors.confirmPassword}
-            placeholder={"Enter password"}
+            placeholder={"Re-enter password"}
             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
             id="confirmPassword"
           />
@@ -294,13 +298,11 @@ const EmployerRegistration = () => {
               name={"acceptedPrivacy"}
               required
               value={formData.acceptedPrivacy}
-              onchange={() =>
-                updateField(
-                  !formData.acceptedPrivacy,
-                  "acceptedPrivacy",
-                  setFormdata,
-                  formData
-                )
+              onchange={(e) =>
+                setFormdata((data) => ({
+                  ...data,
+                  acceptedPrivacy: !data.acceptedPrivacy,
+                }))
               }
             />
             <label htmlFor="privacy">

@@ -1,10 +1,9 @@
 .formWrapper {
   width: 80vw;
-  max-width:550px;
+  max-width:512px;
   background-color: white;
   padding: 52px;
   border-radius: 16px;
-  overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 2px;
   }
@@ -28,11 +27,19 @@
       color: rgb(179, 33, 62);
       font-size: 12px;
     }
+    .TextLabel {
+      font-size: 14px;
+      font-weight: 500;
+      font-family: "Inter", sans-serif;
+      padding-bottom: 3px;
+      text-transform: capitalize;
+      margin-bottom: 5px;
+    }
   }
 
   .GenderFields {
     display: flex;
-    gap: 15px;
+   gap: 20px;
   }
 .Text
   .TextLabel {
@@ -44,7 +51,12 @@
   }
 
   .GenderLabel {
-    margin-top: 5px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+    padding-bottom: 3px;
+    text-transform: capitalize;
   }
   .Bottom {
     text-align: center;

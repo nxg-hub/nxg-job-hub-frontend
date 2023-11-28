@@ -79,26 +79,7 @@ const Employer = () => {
           {/* User's personal nformation */}
           <div className={s.personal}>
             <h3>Personal Information</h3>
-            <TextField
-              onchange={updateForm}
-              label={"First Name"}
-              type={"text"}
-              name={"firstname"}
-              placeholder={"First name"}
-              id="firstname"
-              value={formData.firstname}
-              required
-            />
-            <TextField
-              onchange={updateForm}
-              label={"Last name"}
-              type={"text"}
-              name={"lastname"}
-              placeholder={"Last name"}
-              id="lastname"
-              value={formData.lastname}
-              required
-            />
+        
             <div className={s.gender}>
               <label htmlFor="vacancy">Gender</label>
               <Select
