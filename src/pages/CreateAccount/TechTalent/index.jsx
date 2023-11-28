@@ -12,7 +12,8 @@ import { Otp } from "../../LoginAccount/Otp";
 
 const TechTalent = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     password: "",

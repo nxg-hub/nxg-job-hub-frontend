@@ -16,6 +16,9 @@ const Header = () => {
       <div className="h-logo" style={{ width: "160px", height: "65px" }}>
         <img src={Logo} alt="Nxg Company Logo" className="logo" />
       </div>
+      <div className="h-logo-mobile" style={{ width: "120px", height: "45px" }}>
+        <img src={Logo} alt="Nxg Company Logo" className="logo" />
+      </div>
       <div className="nav-container">
         <nav className={menu ? null : 'nav-show'}>
           <ul>

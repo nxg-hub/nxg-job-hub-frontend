@@ -9,7 +9,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 function ProfileForm ({formData, onUpdateFormData}) {
     const {
-        fullName,
+        firstName,
+        lastName,
         email,
         password,
         confirmPassword,
@@ -34,17 +35,28 @@ function ProfileForm ({formData, onUpdateFormData}) {
   return (
     <div>
         <div className="left">
-            <Inputs 
-                type='text'
-                title='Full Name'
-                value={fullName}
-                onChange={(e) => onUpdateFormData({...formData, fullName: e.target.value})}
-                placeholder="Enter your full name"
-                autocomplete="off"
-                pattern="^[A-Za-z0-9\s]{8,20}$"
-                errormessage='Full name should be a minimum of 8 characters!'
-                required
-            />
+           <div className="fullnames">
+                <Inputs 
+                    type='text'
+                    title='First Name'
+                    value={firstName}
+                    onChange={(e) => onUpdateFormData({...formData, firstName: e.target.value})}
+                    placeholder="Enter your first name"
+                    autocomplete="off"
+                    errormessage='First name should be more than 4 characters!'
+                    required
+                />
+                <Inputs 
+                    type='text'
+                    title='Last Name'
+                    value={lastName}
+                    onChange={(e) => onUpdateFormData({...formData, lastName: e.target.value})}
+                    placeholder="Enter your last name"
+                    autocomplete="off"
+                    errormessage='Last name should be more than 4 characters!'
+                    required
+                />
+           </div>
             <Inputs 
                 type='email'
                 title='E-mail Address'

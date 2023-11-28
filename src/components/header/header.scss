@@ -146,6 +146,12 @@
 // Header & Navbar Styling
 
 header {
+  .h-logo-mobile {
+    display: block;
+  }
+  .h-logo {
+    display: none;
+  }
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -159,7 +165,7 @@ header {
     border: none;
     z-index: 1;
     .menu-icon {
-      width: 3rem;
+      width: 2.2rem;
       height: auto;
       color: #2596BE;
     }
@@ -241,6 +247,14 @@ header {
 }
 
 @media only screen and (min-width:768px) {
+  header {
+    .h-logo-mobile {
+      display: block;
+    }
+    .h-logo {
+      display: none;
+    }
+  }
   .landing-main {
     .landing-content {
       margin: 20% 4%;
@@ -259,6 +273,12 @@ header {
 
 @media only screen and (min-width: 1024px) {
   header {
+    .h-logo-mobile {
+      display: none;
+    }
+    .h-logo {
+      display: block;
+    }
     #nav-toggle {
       display: none;
     }

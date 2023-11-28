@@ -41,6 +41,11 @@
   
 .left {
   margin: 2rem 0 0 0;
+  .fullnames {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 5px;
+  }
 }
   
   .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .letter, .portfolio, .password {

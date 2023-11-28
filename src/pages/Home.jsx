@@ -4,7 +4,6 @@ import Header from "../components/header/Header";
 import SplashScreen from "../components/SplashScreen";
 import Explore from "../components/hero/Explore";
 import JobCards from '../components/hero/JobCards';
-import Sponsors from "../components/hero/Sponsors";
 import Testimony from "../components/hero/Testimony";
 import Footer from "../components/footer/Footer";
 
@@ -80,10 +79,6 @@ const Home = () => {
       <Explore />
       <div className="jobs-slider" style={{margin:"3rem 0", padding:".6rem 2rem"}}>
           <JobCards />
-      </div>
-      <div className="alliances"  style={{margin:"3rem 0"}}>
-        <h4 style={{fontSize:"34px", fontWeight:"700", margin:"2rem 0", color:"#2596be", textAlign:"center"}}>Our Alliances</h4>
-        <Sponsors />
       </div>
       <Testimony />
       <Footer />
