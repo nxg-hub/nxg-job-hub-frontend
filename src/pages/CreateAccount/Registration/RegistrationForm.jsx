@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import s from "./EmployerForm.module.scss";
+import s from "./RegistrationForm.module.scss";
 import TextField from "../../../components/TextField";
 import { updateField } from "../../../utils/functions/updateForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthOptions from "../../../components/AuthOptions";
 import FormSubmitBtn from "../../../components/FormSubmitBtn";
 import Checkbox from "../../../components/Checkbox";
@@ -12,9 +12,10 @@ import RadioButton from "../../../components/RadioButton";
 import { BsArrowLeft } from "react-icons/bs";
 import axios from "axios";
 import User from "../../../utils/classes/User";
+import Verification from "../Verification";
 
-const EmployerRegistration = () => {
-  const navigate = useNavigate();
+const RegistrationForm = ({ userType }) => {
+  // Variables
   const data = {
     firstName: "",
     lastName: "",
@@ -26,6 +27,7 @@ const EmployerRegistration = () => {
     confirmPassword: "",
     dob: "",
     acceptedPrivacy: false,
+    userType: userType,
   };
   const err = {
     firstName: "",
@@ -39,8 +41,35 @@ const EmployerRegistration = () => {
     dob: "",
     acceptedPrivacy: "",
   };
+  const endpoints = {
+    EMPLOYER:
+      "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
+    TECHTALENT:
+      "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
+    AGENT:
+      "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
+  };
+
+  // state
   const [formData, setFormdata] = useState(data);
   const [errors, setErrors] = useState(err);
+  const [showModal, setShowModal] = useState(true);
+
+  // functions
+  const getEndpoint = () => {
+    if (userType === "EMPLOYER") {
+      console.log("employer");
+      return endpoints.EMPLOYER;
+    } else if (userType === "TECHTALENT") {
+      console.log("techtalent");
+      return endpoints.TECHTALENT;
+    } else if (userType === "AGENT") {
+      console.log("agent");
+      return endpoints.AGENT;
+    } else {
+      console.log("Error Please try again");
+    }
+  };
   const confirmPassword = (e) => {
     const { name, value } = e.target;
     if (
@@ -118,7 +147,6 @@ const EmployerRegistration = () => {
     e.preventDefault();
     const valid = validatePhone();
     const user = new User(formData);
-    console.log(user);
     valid
       ? axios
           .post(
@@ -129,22 +157,23 @@ const EmployerRegistration = () => {
           .then((status) => {
             console.log(status);
             console.log("success");
-            navigate("/login");
           })
           .catch((err) => console.log("error", err))
           .then(
             axios
-              .post(
-                "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
-                { ...user, userType: "EMPLOYER" }
-              )
-              .then((res) => console.log("Second call", res))
+              .post(getEndpoint(), user)
+              .then((res) => {
+                console.log("Second call", res);
+                setShowModal(true);
+              })
               .catch((err) => console.log("Second callErr", err))
           )
       : console.log("invalid data");
   };
 
   return (
+    <>
+    
     <div className={s.formWrapper}>
       <div className={s.top}>
         <h3>Let's get you started!</h3>
@@ -187,10 +216,10 @@ const EmployerRegistration = () => {
           <TextField
             onchange={(e) => updateField(e, setFormdata)}
             onblur={validateEmail}
-            label={"Email Address"}
+            label={"Email"}
             type={"email"}
             name={"email"}
-            placeholder={"e.g JohnDoe@email.com"}
+            placeholder={"Enter your email"}
             required
             id="email"
             err={errors.email}
@@ -215,13 +244,13 @@ const EmployerRegistration = () => {
                 border: "1px solid rgb(194, 192, 192)",
                 height: "36px",
                 borderTopRightRadius: "6.4px",
-                 borderBottomRightRadius: "6.4px",
+                borderBottomRightRadius: "6.4px",
               }}
               value={formData.phone}
               required
               id="phone"
               defaultCountry="ng"
-              onChange={(e) => setFormdata(data => ({...data, "phone": e}))}
+              onChange={(e) => setFormdata((data) => ({ ...data, phone: e }))}
             />
             {errors.phone && <h5 className={s.inputErr}> {errors.phone}</h5>}
           </div>
@@ -315,7 +344,7 @@ const EmployerRegistration = () => {
             formData={formData}
             fieldDependency={"acceptedPrivacy"}
             register
-            value="Create your employer account"
+            value="Register"
           />
           <AuthOptions register />
 
@@ -328,7 +357,9 @@ const EmployerRegistration = () => {
         <BsArrowLeft /> back
       </Link>
     </div>
+    {showModal&& <Verification />}
+    </>
   );
 };
 
-export default EmployerRegistration;
+export default RegistrationForm;

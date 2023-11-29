@@ -2,10 +2,10 @@
 
 import React from 'react';
 import FormStepHeader from './FormStepHeader';
-import Inputs from '../../../../components/accounts/Inputs';
+import Inputs from '../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
 import './employerprofile.scss';
-import { jobVacancy, boards } from '../../../../utils/data/employer';
+import { jobVacancy, boards } from '../../utils/data/employer';
 
 function FormStepper({ data, onStepChange }) {
   const handleCompleteAccount = (e) => {
