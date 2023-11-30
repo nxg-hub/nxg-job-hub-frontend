@@ -3,7 +3,7 @@ import Logo from "../../static/images/logo_colored.png";
 import Inputs from '../../components/accounts/Inputs';
 import { Link } from 'react-router-dom';
 
-const ForgotPassword = () => {
+const PasswordRecovery = () => {
     const [email, setEmail] = useState("");
 
   return (
@@ -43,4 +43,4 @@ const ForgotPassword = () => {
   )
 }
 
-export default ForgotPassword
+export default PasswordRecovery

@@ -1,18 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import CreateAccount from "./pages/CreateAccount";
-import LogTalent from "./pages/LoginAccount/index";
-import ForgotPassword from "./pages/LoginAccount/ForgotPassword";
-import { Otp } from "./pages/LoginAccount/Otp";
 import ProfileLanding from "./pages/ProfileLanding";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import ResetPassword from "./pages/LoginAccount/ResetPassword";
-import Verification from "./pages/CreateAccount/Verification.jsx";
+
+
 import Explore from "./components/hero/Explore";
 import SuccessModular from "./components/SuccessModular";
-import Registration from "./pages/CreateAccount/Registration/index.jsx";
 import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/EmployerProfile/index.jsx";
@@ -21,6 +16,13 @@ import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx"
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 import DashboardMainSide from "./pages/Dashboard/TechTalent/DashboardMainSide.jsx";
+import Register from "./pages/Register/index.jsx";
+import Login from "./pages/Login/index.jsx";
+import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
+import ResetPassword from "./pages/Login/ResetPassword.jsx";
+import {Otp} from "./pages/Login/Otp.jsx";
+import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
+import SelectAccountType from "./components/SelectAccountType";
 
 function App() {
   return (
@@ -28,12 +30,10 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         {/* Registration */}
-        <Route path="/register" element={<CreateAccount />} />
-        <Route path="/register/employer" element={<Registration />} />
-        <Route path="/register/agent" element={<Registration />} />
-        <Route path="/register/techtalent" element={<Registration />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<SelectAccountType />} />
         {/* Log in */}
-        <Route path="/login" element={<LogTalent />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/profilelanding" element={<ProfileLanding />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -43,8 +43,8 @@ function App() {
         <Route path="/employerprofile" element={<EmployerProfileForm />} />
 
         {/* Modals */}
-        <Route path="/mailverification" element={<Verification />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/mailverification" element={<EmailVerificationNotice />} />
+        <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
         <Route

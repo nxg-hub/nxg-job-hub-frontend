@@ -2,23 +2,31 @@ import React from "react";
 import Mail from "../../static/icons/mail.png";
 import { Link } from "react-router-dom";
 
-const Verification = () => {
+const EmailVerificationNotice = () => {
   // const handleEmailVerification = () => {
 
   // }
 
   return (
-    <div style={{background:"#00000065", height: "100%", width:"100%", position:"fixed", inset: "0" }}>
+    <div
+      style={{
+        background: "#00000065",
+        height: "100%",
+        width: "100%",
+        position: "fixed",
+        inset: "0",
+      }}
+    >
       <div
         className="verify-main"
         style={{
           width: "30%",
-          minWidth:"250px",
+          minWidth: "250px",
           padding: "1rem",
           border: "none",
           borderRadius: "0.8rem",
           boxShadow: ".2rem 0.2rem 0.2rem #8e8e8e",
-          background:"#fff"
+          background: "#fff",
         }}
       >
         <div>
@@ -42,14 +50,17 @@ const Verification = () => {
             Let's verify your account
           </p>
         </div>
-        <div
-          style={{ width: "5rem", height: "3rem", margin: "2rem auto" }}
-        >
+        <div style={{ width: "5rem", height: "3rem", margin: "2rem auto" }}>
           <img
             className="mail-img"
             src={Mail}
             alt="Mail-icon"
-            style={{ width: "100%", height: "100%", objectFit: "contain", margin:"auto" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              margin: "auto",
+            }}
           />
         </div>
         <div style={{ textAlign: "center" }}>
@@ -61,7 +72,7 @@ const Verification = () => {
               fontWeight: "500",
             }}
           >
-            An email has been sent to your mailbox 
+            An email has been sent to your mailbox
             {"\n"}
             Click on the link to activate your account.
           </pre>
@@ -81,4 +92,4 @@ const Verification = () => {
   );
 };
 
-export default Verification;
+export default EmailVerificationNotice;

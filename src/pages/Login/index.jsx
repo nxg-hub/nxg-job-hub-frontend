@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "../LoginAccount/logtech.scss";
+import React, { useEffect, useState } from "react";
+import "./index.scss";
 import "../../components/accounts/inputs.scss";
 import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
@@ -10,7 +10,10 @@ import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 
-const LogTalent = () => {
+const Login = () => {
+  const { authKey } = JSON.parse(
+    window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
@@ -37,20 +40,45 @@ const LogTalent = () => {
           password: password,
         })
         .then((res) => {
-          navigate("/dashboard");
-          console.log(res)
           const authKey = res.headers.authorization;
           try {
-            window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
+            window.localStorage.setItem(
+              "NXGJOBHUBLOGINKEYV1",
+              JSON.stringify({ authKey, email })
+            );
           } catch (err) {
-            console.log("Could not save JWT",err)
+            console.log("Could not save JWT", err);
           }
+          return authKey;
+        })
+        .then((authKey) => {
+          axios
+            .get(
+              "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+              {
+                headers: {
+                  authorization: authKey,
+                },
+              }
+            )
+            .then((res) => {
+              !res.data.userType ? navigate("/create") : navigate("/dashboard");
+            });
         })
         .catch((err) => console.log("loginErr", err));
-      console.log(email);
     }
   };
-
+  useEffect(() => {
+    if (authKey)
+      axios
+        .get(
+          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+          { headers: { authorization: authKey } }
+        )
+        .then((res) => {
+          res.data.userType ? navigate("/dashboard") : navigate("/create");
+        });
+  }, [authKey, navigate]);
   return (
     <div className="login-main-container">
       <div className="form-col">
@@ -184,4 +212,4 @@ const LogTalent = () => {
   );
 };
 
-export default LogTalent;
+export default Login;
