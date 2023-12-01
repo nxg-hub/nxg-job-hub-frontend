@@ -2,13 +2,15 @@ import React from "react";
 import Mail from "../../static/icons/mail.png";
 import { Link } from "react-router-dom";
 
-const EmailVerificationNotice = () => {
+const EmailVerificationNotice = ({onClick}) => {
   // const handleEmailVerification = () => {
 
   // }
 
   return (
     <div
+      onClick={onClick}
+      title={"close"}
       style={{
         background: "#00000065",
         height: "100%",

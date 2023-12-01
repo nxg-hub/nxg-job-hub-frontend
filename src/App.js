@@ -23,6 +23,7 @@ import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import {Otp} from "./pages/Login/Otp.jsx";
 import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
 import SelectAccountType from "./components/SelectAccountType";
+import Notice from "./components/Notice/index.jsx";
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
-        <Route
+        {/* <Route
           path="test"
           element={
             <SuccessModular
@@ -59,7 +60,7 @@ function App() {
               }}
             />
           }
-        />
+        /> */}
         <Route path="/complete-profile" element={<CompleteYourProfile />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
@@ -77,6 +78,15 @@ function App() {
           />
           <Route path="help" element={<h2>Help </h2>} />
         </Route>
+        <Route path="/test" element={
+          <div>
+           <Notice type={"success"} message={"Success"} /> 
+           <Notice type={"danger"} message={"There was an error"} /> 
+           <Notice type={"warning"} message={"Warning"} /> 
+           
+</div>
+
+        }/> 
       </Routes>
     </>
   );

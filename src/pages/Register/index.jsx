@@ -1,6 +1,7 @@
 import RegistrationForm from "./RegistrationForm";
 import s from "./index.module.scss";
 import logo from "../../static/images/logo_colored.png";
+
 const Register = () => {
   return (
     <div className={s.page}>
@@ -8,6 +9,7 @@ const Register = () => {
       <div>
         <RegistrationForm />
       </div>
+      
     </div>
   );
 };

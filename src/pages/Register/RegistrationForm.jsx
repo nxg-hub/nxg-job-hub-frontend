@@ -13,6 +13,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import axios from "axios";
 import User from "../../utils/classes/User";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
+import Notice from "../../components/Notice";
 
 const RegistrationForm = ({ userType }) => {
   // Variables
@@ -47,9 +48,12 @@ const RegistrationForm = ({ userType }) => {
   const [errors, setErrors] = useState(err);
   const [showEmailVerificationNotice, setShowEmailVerificationNotice] =
     useState(false);
+  const [popup, showPopup] = useState(undefined);
 
   // functions
-
+  const closeModal = (e) =>{
+    if (e.target.currentTarget === e.target) setShowEmailVerificationNotice(false)
+  }
   const confirmPassword = (e) => {
     const { name, value } = e.target;
     if (
@@ -133,9 +137,18 @@ const RegistrationForm = ({ userType }) => {
             "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/register/",
             user
           )
-          .then((res) => res.status)
-          .then(setShowEmailVerificationNotice(true))
-          .catch((err) => console.log("error", err))
+          .then((res) => {
+            if (res.status === 200) setShowEmailVerificationNotice(true);
+          })
+          .catch((err) =>
+            {showPopup({
+              type: "danger",
+              message:
+                "Failed to register. Please check your internet connection and try again",
+            })
+          setTimeout(()=>showPopup(undefined), 5000)
+          }
+          )
       : console.log("invalid data");
   };
 
@@ -325,6 +338,7 @@ const RegistrationForm = ({ userType }) => {
         </Link>
       </div>
       {showEmailVerificationNotice && <EmailVerificationNotice />}
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </>
   );
 };

@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
-
+import Notice from "../.././components/Notice";
 const Login = () => {
   const { authKey } = JSON.parse(
     window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
@@ -18,7 +18,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
-
+  const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -47,7 +47,12 @@ const Login = () => {
               JSON.stringify({ authKey, email })
             );
           } catch (err) {
-            console.log("Could not save JWT", err);
+            showpopUp({
+              type: "warning",
+              message:
+                "An error occurred.",
+            });
+            setTimeout(()=> showpopUp(undefined), 5000);
           }
           return authKey;
         })
@@ -65,7 +70,14 @@ const Login = () => {
               !res.data.userType ? navigate("/create") : navigate("/dashboard");
             });
         })
-        .catch((err) => console.log("loginErr", err));
+        .catch((err) => {
+          showpopUp({
+            type: "danger",
+            message:
+              "Login failed. Please check your internet connection and try again.",
+          });
+          setTimeout(() => showpopUp(undefined), 5000);
+        });
     }
   };
   useEffect(() => {
@@ -77,6 +89,14 @@ const Login = () => {
         )
         .then((res) => {
           res.data.userType ? navigate("/dashboard") : navigate("/create");
+        })
+        .catch(() => {
+          showpopUp({
+            type: "danger",
+            message:
+              "Auto-login failed because of network error. Please check your internet connection.",
+          });
+          setTimeout(() => showpopUp(undefined), 5000);
         });
   }, [authKey, navigate]);
   return (
@@ -208,6 +228,7 @@ const Login = () => {
           </p>
         </form>
       </div>
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );
 };
