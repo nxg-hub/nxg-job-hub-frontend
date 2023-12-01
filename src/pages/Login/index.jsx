@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "../LoginAccount/logtech.scss";
+import React, { useEffect, useState } from "react";
+import "./index.scss";
 import "../../components/accounts/inputs.scss";
 import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
@@ -9,13 +9,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
-
-const LogTalent = () => {
+import Notice from "../.././components/Notice";
+const Login = () => {
+  const { authKey } = JSON.parse(
+    window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
-
+  const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -37,20 +40,65 @@ const LogTalent = () => {
           password: password,
         })
         .then((res) => {
-          navigate("/dashboard");
-          console.log(res)
           const authKey = res.headers.authorization;
           try {
-            window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
+            window.localStorage.setItem(
+              "NXGJOBHUBLOGINKEYV1",
+              JSON.stringify({ authKey, email })
+            );
           } catch (err) {
-            console.log("Could not save JWT",err)
+            showpopUp({
+              type: "warning",
+              message:
+                "An error occurred.",
+            });
+            setTimeout(()=> showpopUp(undefined), 5000);
           }
+          return authKey;
         })
-        .catch((err) => console.log("loginErr", err));
-      console.log(email);
+        .then((authKey) => {
+          axios
+            .get(
+              "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+              {
+                headers: {
+                  authorization: authKey,
+                },
+              }
+            )
+            .then((res) => {
+              !res.data.userType ? navigate("/create") : navigate("/dashboard");
+            });
+        })
+        .catch((err) => {
+          showpopUp({
+            type: "danger",
+            message:
+              "Login failed. Please check your internet connection and try again.",
+          });
+          setTimeout(() => showpopUp(undefined), 5000);
+        });
     }
   };
-
+  useEffect(() => {
+    if (authKey)
+      axios
+        .get(
+          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+          { headers: { authorization: authKey } }
+        )
+        .then((res) => {
+          res.data.userType ? navigate("/dashboard") : navigate("/create");
+        })
+        .catch(() => {
+          showpopUp({
+            type: "danger",
+            message:
+              "Auto-login failed because of network error. Please check your internet connection.",
+          });
+          setTimeout(() => showpopUp(undefined), 5000);
+        });
+  }, [authKey, navigate]);
   return (
     <div className="login-main-container">
       <div className="form-col">
@@ -114,7 +162,7 @@ const LogTalent = () => {
                 to="/forgotpassword"
                 style={{ color: "#A39E9E", textDecoration: "underline" }}
               >
-                Forgort Password?
+                Forgot Password?
               </Link>
             </div>
             <div className="remember">
@@ -180,8 +228,9 @@ const LogTalent = () => {
           </p>
         </form>
       </div>
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );
 };
 
-export default LogTalent;
+export default Login;

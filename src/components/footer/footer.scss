@@ -1,33 +1,18 @@
-.first-dash-bg {
-    width: 100%;
-    max-width: 1000px;
-    height: 220px;
-    margin: auto;
-    margin-top: 2rem;
-    border: 1px dashed #000;
-    border-radius: 12px;
-}
 .news-letter {
-    position: absolute;
     width: 100%;
-    max-width: 1000px;
-    height: 240px;
-    top: 10%;
-    left: 0%;
-    padding: 1.3rem 2rem;
-    background-color: #b5fff5;
-    border-radius: 12px;
-
     .news-content {
-        text-align: center;
+        width: 100%;
+        max-width: 671px;
+        text-align: start;
+        float: none;
         margin-top: 0rem;
         h5 {
-            color: #006a90;
+            color: #B5FFF5;
             font-size: 23px;
             font-weight: 700;
         }
         p {
-            color: #233862;
+            color: #ffffff;
             font-size: 16.5px;
             font-weight: 400;
             margin: .8rem 0;
@@ -37,17 +22,20 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        margin: .7rem .3rem;
+        margin: .7rem auto;
         div {
+            width: 100%;
+            max-width: 550px;
             input[type="email"] {
                 padding: 1.1rem 0.8rem;
-                font-size: 12px;
+                font-size: 20px;
                 font-weight: 400;
                 font-family: Montserrat;
                 width: 100%;
+                border: 1px solid #B5FFF5;
                 }
                 input::placeholder{
-                    color: #006a90;
+                    color: #B5FFF5;
                 }
                 .sub-input {
                     background-color: transparent;
@@ -65,46 +53,36 @@
             width: 100%;
             margin-top: .4rem;
             padding: 1.1rem 0.8rem;
-            font-size: 12px;
+            font-size: 20px;
             font-weight: 800;
-            background-color: #006a90;
+            background-color: #B5FFF5;
             border: none;
-            color: #ffffff;
+            color: #006a90;
             cursor: pointer;
         }
     }
 }
-.second-dash {
-    position: absolute;
-    top: 15%;
-    left: -3%;
-    z-index: -1;
-}
 
 .footer-main-container {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 850px;
+    height: 100%;
     font-family: Manrope;
     color: #ffffff;
     background-color: #006a90;
-    top: 70%;
-    z-index: -10;
 
     .footer-contents {
         width: 100%;
         height: 100%;
         margin: auto;
-        padding: 3rem 2rem;
+        padding: .5rem 1rem;
         .footer-nav-section {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-top:28% ;
-
+            margin-top:2% ;
             .company, .get-help, .quick-links {
                 h6 {
                     margin-top: .4rem;
@@ -118,31 +96,30 @@
                     flex-direction: column;
                     justify-content: space-evenly;
                     align-items: flex-start;
-                    margin-top: 5%;
+                    margin-top: 2%;
 
                     a {
                         font-size: 16px;
-                        font-weight: 200;
-                        margin: .8rem 0;
+                        font-weight: 400;
+                        margin: .6rem 0;
                         color: #ffffff;
                     }
                 }
             }
         }
         .footer-social-acct {
-            margin: auto;
-            margin-top:6% ;
+            margin: 2% auto;
             h6 {
                 text-align: center;
-                font-size: 18px;
-                font-weight: 500;
+                font-size: 20px;
+                font-weight: 800;
             }
             .media-handles {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                margin-top: 1.5rem;
+                margin-top: 1.3rem;
                 .facebk, .google, .linkedin, .twit, .insta {
                     width: 35px;
                     height: 35px;
@@ -160,37 +137,32 @@
 
 @media only screen and (min-width:768px) {
     .news-letter {
-        top: 16%;
-        left: 0%;
-        height: 220px;
-        padding: 2rem 5rem;
+        padding: 2rem 0rem;
         .news-content {
             margin-top: 1rem;
             h5 {
                 font-size: 30px;
             }
+            p {
+                font-size: 18px;
+            }
         }
         form {
             flex-direction: row;
-            margin: 1.2rem 1.5rem;
+            margin: 1.2rem auto;
 
             input[type="submit"]{
                 width: 30%;
                 margin-top: 0;
+                padding: 1rem 0.8rem;
             }
         }
     }
-    .second-dash {
-        top: 20%;
-         left: 5%;
-    }
     .footer-main-container {
-        top: 50%;
-        height: 650px;
         .footer-contents {
             .footer-nav-section {
                 flex-direction: row;
-                margin-top:25% ;
+                margin-top:6% ;
                 .company, .get-help, .quick-links {
                     h6 {
                         margin-top: 0rem;
@@ -205,7 +177,9 @@
             }
         }
         .footer-social-acct {
+            margin-top:6% ;
             .media-handles {
+                margin-top:2% ;
                 .facebk, .google, .linkedin, .twit, .insta {
                     margin: auto 1.5rem;
                 }
@@ -215,44 +189,43 @@
 }
 @media only screen and (min-width:1024px) {
     .news-letter {
-        top: 16%;
-        left: 1%;
-        height: 220px;
-        padding: 2rem 5rem;
+        padding: 2rem 1rem;
         .news-content {
             margin-top: 1rem;
+            float: right;
+            text-align: end;
             h5 {
                 font-size: 28px;
             }
         }
         form {
             flex-direction: row;
-            margin: 1.2rem 1.5rem;
-
+            margin: 1.2rem auto;
+            justify-content: end;
+            align-items: end;
             input[type="submit"]{
                 width: 20%;
                 margin-top: 0;
             }
+            input[type="email"]{
+                padding: 1rem 0.8rem;
+            }
         }
     }
-    .second-dash {
-        top: 20%;
-         left: 2%;
-    }
     .footer-main-container {
-        top: 50%;
-        height: 700px;
         .footer-contents {
             .footer-nav-section {
                 flex-direction: row;
-                margin-top:18% ;
+                margin-top:5% ;
                 .company, .get-help, .quick-links {
                     h6 {
+                        font-size: 24px;
                         margin-top: 0rem;
                     }
                     .foot-links {
                         margin-top: 10%;
                         a {
+                            font-size: 20px;
                             margin: .8rem 0;
                         }
                     }
@@ -270,43 +243,41 @@
 }
 @media only screen and (min-width:1280px) {
     .news-letter {
-        top: 16%;
-        left: 9%;
-        height: 220px;
-        padding: 2rem 5rem;
+        padding: 2rem 1rem;
         .news-content {
+            float: right;
+            text-align: end;
             margin-top: 1rem;
             h5 {
-                font-size: 28px;
+                font-size: 40px;
+            }
+            p {
+                font-size: 20px;
             }
         }
         form {
             flex-direction: row;
-            margin: 1.2rem 1.5rem;
-
+            margin: 1.2rem auto;
+            justify-content: end;
+            align-items: end;
             input[type="submit"]{
                 width: 20%;
                 margin-top: 0;
             }
         }
     }
-    .second-dash {
-        top: 20%;
-         left: 7%;
-    }
     .footer-main-container {
-        top: 50%;
-        height: 700px;
         .footer-contents {
             .footer-nav-section {
                 flex-direction: row;
-                margin-top:18% ;
+                margin-top:3% ;
                 .company, .get-help, .quick-links {
                     h6 {
                         margin-top: 0rem;
+                        text-underline-offset: 10px;
                     }
                     .foot-links {
-                        margin-top: 10%;
+                        margin-top: 8%;
                         a {
                             margin: .8rem 0;
                         }
@@ -325,37 +296,29 @@
 }
 @media only screen and (min-width:1440px) {
     .news-letter {
-        top: 16%;
-        left: 15%;
-        height: 220px;
-        padding: 2rem 5rem;
+        padding: 2rem 0rem;
+        
         .news-content {
+            float: right;
+            text-align: end;
             margin-top: 1rem;
             h5 {
                 font-size: 28px;
             }
         }
         form {
+            justify-content: end;
+            align-items: end;
             flex-direction: row;
-            margin: 1.2rem 1.5rem;
-
-            input[type="submit"]{
-                width: 20%;
-                margin-top: 0;
-            }
+            margin: 1.2rem auto;
         }
     }
-    .second-dash {
-        top: 20%;
-         left: 13%;
-    }
+  
     .footer-main-container {
-        top: 50%;
-        height: 800px;
         .footer-contents {
             .footer-nav-section {
                 flex-direction: row;
-                margin-top:18% ;
+                margin-top:5% ;
                 .company, .get-help, .quick-links {
                     h6 {
                         margin-top: 0rem;

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import s from "./index.module.scss";
-import logo from "../../../static/images/nxg-logo.png";
+import logo from "../../../../static/images/nxg-logo.png";
 import {
   ChangeProfilePicture,
   MyProfile,
@@ -18,7 +18,7 @@ import {
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "..";
+import { UserContext } from "../../";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   return (

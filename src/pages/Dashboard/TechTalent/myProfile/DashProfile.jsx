@@ -44,7 +44,7 @@ function DashProfile() {
                   <h3>{user.firstName}</h3>
                   <div className="my-profile-ps">
                     <p className="post">Product Designer</p>
-                    <p className="post-id">Profile ID : <span>{user.firstName} {currentYear - user.dateOfBirth}</span></p>
+                    <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)+4}</span></p>
                   </div>
                 </div>
                 <form>

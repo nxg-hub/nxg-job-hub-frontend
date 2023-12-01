@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "./TechTalent/Sidebar";
 import s from "./index.module.scss";
 import pic from "../../static/images/Sarah.png";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -21,20 +21,28 @@ const Dashboard = () => {
   });
 
   const [error, setErr] = useState("");
+  const { authKey } = JSON.parse(
+    window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+  );
 
-  const auth = window.localStorage.getItem("NXGJOBHUBLOGINKEYV1");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    auth ? axios
-      .get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
-        headers: { authorization: auth },
-      })
-      .then((res) => setUser(res.data))
-      .catch((err) => setErr(err.message))
-      : navigate("/login")
-  }, [auth, navigate]);
+    authKey
+      ? axios
+          .get(
+            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+            {
+              headers: { authorization: authKey },
+            }
+          )
+          .then((res) => {
+            setUser(res.data);
+          })
+          .catch((err) => setErr(err.message))
+      : navigate("/login");
+  }, [authKey, navigate]);
 
-  return (auth ?
+  return authKey ? (
     <>
       <UserContext.Provider value={user}>
         <div className={s.Dashboard}>
@@ -50,7 +58,7 @@ const Dashboard = () => {
       </UserContext.Provider>
       <div className={s.error}>{error}</div>
     </>
-  :null);
+  ) : null;
 };
 
 export default Dashboard;
