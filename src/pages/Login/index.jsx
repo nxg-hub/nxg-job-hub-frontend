@@ -96,6 +96,7 @@ const Login = () => {
             message:
               "Auto-login failed because of network error. Please check your internet connection.",
           });
+          window.localStorage.removeItem("NXGJOBHUBLOGINKEYV1")
           setTimeout(() => showpopUp(undefined), 5000);
         });
   }, [authKey, navigate]);
