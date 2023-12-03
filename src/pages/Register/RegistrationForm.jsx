@@ -160,7 +160,12 @@ const RegistrationForm = ({ userType }) => {
             
             setTimeout(() => showPopup(undefined), 5000);
           })
-      : console.log("invalid data");
+      :  showPopup({
+        type: "danger",
+        message: `Invalid data`,
+      });
+      
+      setTimeout(() => showPopup(undefined), 5000);
   };
 
   return (

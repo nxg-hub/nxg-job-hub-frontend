@@ -11,14 +11,12 @@ import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 import Notice from "../.././components/Notice";
 const Login = () => {
-  const { authKey } = JSON.parse(
-    window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
+  const [authenticationKey, setAuthkey] = useState(undefined);
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -49,10 +47,9 @@ const Login = () => {
           } catch (err) {
             showpopUp({
               type: "warning",
-              message:
-                "An error occurred.",
+              message: "An error occurred.",
             });
-            setTimeout(()=> showpopUp(undefined), 5000);
+            setTimeout(() => showpopUp(undefined), 5000);
           }
           return authKey;
         })
@@ -81,11 +78,16 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (authKey)
+    const { authKey } = JSON.parse(
+      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+    ) || { authKey: undefined };
+
+    authKey && setAuthkey(authKey);
+    if (authenticationKey)
       axios
         .get(
           "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
-          { headers: { authorization: authKey } }
+          { headers: { authorization: authenticationKey } }
         )
         .then((res) => {
           res.data.userType ? navigate("/dashboard") : navigate("/create");
@@ -96,10 +98,9 @@ const Login = () => {
             message:
               "Auto-login failed because of network error. Please check your internet connection.",
           });
-          window.localStorage.removeItem("NXGJOBHUBLOGINKEYV1")
           setTimeout(() => showpopUp(undefined), 5000);
         });
-  }, [authKey, navigate]);
+  }, [authenticationKey, navigate]);
   return (
     <div className="login-main-container">
       <div className="form-col">

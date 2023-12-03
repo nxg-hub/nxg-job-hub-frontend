@@ -1,27 +1,34 @@
-@media only screen and (min-width: 890px) {
-  .Dashboard {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    width: 100vw;
-    height: 100vh;
-    .Sidebad {
-      grid-column: 1;
-      width: 20vw;
-      max-width: 300px;
+.Dashboard {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  width: 100vw;
+  height: 100vh;
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr;
+  }
+  .Sidebad {
+    grid-column: 1;
+    width: 20vw;
+    max-width: 300px;
+    @media (max-width: 850px) {
+      display: none;
     }
-    // Dashboard Main Side Styling
-    .Sidemain {
-      // grid-column: 1;
-      grid-column: 2;
-      background-color: rgba(37, 150, 190, 0.1);
-      height: 100vh;
-      overflow-y: auto;
-      scrollbar-width: none;
-      &::-webkit-scrollbar-thumb,
-      &::-webkit-scrollbar-track,
-      ::-webkit-scrollbar {
-        display: none;
-      }
+    &.show {
+      display: block;
+    }
+  }
+  // Dashboard Main Side Styling
+  .Sidemain {
+    // grid-column: 1;
+    grid-column: 2;
+    background-color: rgba(37, 150, 190, 0.1);
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track,
+    ::-webkit-scrollbar {
+      display: none;
     }
   }
 }
