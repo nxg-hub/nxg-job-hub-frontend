@@ -1,23 +1,26 @@
 class User {
   constructor({
     email,
-    name,
+    firstName,
+    lastName,
     password,
     phone,
     gender,
     dob,
     roles,
     nationality,
+    userType
   }) {
     this.email = email;
-    this.firstName = name.split(" ")[0];
-    this.lastName = name.split(" ").slice(-1)[0];
+    this.firstName = firstName
+    this.lastName = lastName
     this.password = password;
     this.phoneNumber = phone;
     this.gender = gender.toUpperCase();
     this.dateOfBirth = dob;
     this.roles = roles || " "
     this.nationality = nationality || " "
+    this.userType = userType
   }
 }
 export default User;

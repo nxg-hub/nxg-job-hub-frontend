@@ -5,11 +5,12 @@ import { SlBell } from "react-icons/sl";
 import HeroImg from "../../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
-
 import { jobs as JobRecommendations } from "../../../utils/data/job-recommendations";
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { UserContext } from "..";
+
 function DashboardMainSide() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
@@ -17,12 +18,12 @@ function DashboardMainSide() {
     e.preventDefault();
     navigate("/tech-talent-profile-form");
   };
-
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">
         <div className="dash-profile-name">
-          <p>{user.firstName}'s Dashboard</p>
+        <RxHamburgerMenu />
+          <p>{user.firstName || "User"}'s Dashboard</p>
         </div>
         <div className="dash-profile-pics-section">
           <div className="dash-profile-icons">

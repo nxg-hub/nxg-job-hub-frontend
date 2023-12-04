@@ -1,13 +1,13 @@
- /**
+/**
  *
- *
- * @param {PointerEventValue} value
- * @param {FormDataKey} fieldName
  * @param {SetStateAction} setState
- * @param {FormData} data
+
  */
-export const updateField = (value, fieldName, setState, data) =>{
-  setState({
-    ...data, [fieldName]: value
-  })
-}
+export const updateField = (e, setState) => {
+  let value = e.target.value;
+  const field = e.target.name;
+  setState((data) => ({
+    ...data,
+    [field]: value,
+  }))
+};
