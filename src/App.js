@@ -18,11 +18,11 @@ import Agent from "./pages/CreateAccount/Agent";
 import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
 import EmployerProfileForm from "./pages/CreateAccount/Employer/EmployerProfile";
-import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx";
 import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 import DashboardMainSide from "./pages/Dashboard/TechTalent/DashboardMainSide.jsx";
+import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
 
 function App() {
   return (
@@ -62,7 +62,8 @@ function App() {
             />
           }
         />
-        <Route path="/complete-profile" element={<CompleteYourProfile />} />
+        <Route path="/tech-talent-profile-form" element={<DashboardProfileForm />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
           <Route path="messages" element={<Chat />} />
