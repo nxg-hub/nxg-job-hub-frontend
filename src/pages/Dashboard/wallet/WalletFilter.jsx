@@ -110,7 +110,7 @@ export default function WalletFilter() {
             {isOpen && (
                 <Dialog
                     open={isOpen} onClose={() => setIsOpen(false)}
-                    style={{ position: "absolute", left: "35%", top: "40%", transform: "translate(-50% -50%)", width: "100%", maxWidth:"698px", height: "662px",  background: '#ffffff' }}
+                    className='wallet-modal'
                 >
                     <Dialog.Panel>
                         <div className="filter-close">

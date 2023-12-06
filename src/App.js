@@ -63,13 +63,13 @@ function App() {
           }
         /> */}
         <Route path="/tech-talent-profile-form" element={<DashboardProfileForm />} />
-        <Route path="/wallet" element={<Wallet />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />
           <Route path="messages" element={<Chat />} />
           <Route path="profile" element={<DashProfile />} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
+          <Route path="wallet" element={<Wallet />} />
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="profile-details" element={<h2>Profile Details</h2>} />
           <Route path="password-settings" element={<Passwordsettings />} />

@@ -40,10 +40,10 @@ export default function BalanceChart() {
 
 
   return (
-    <div style={{background:'rgba(37, 150, 190, 1)', borderRadius:'15px', width:"429px", height:"250px", marginLeft:'.4rem'}}>
+    <div style={{background:'rgba(37, 150, 190, 1)', borderRadius:'15px', width:'100%', maxWidth:"440px", height:"221px"}}>
         <h3 style={{color:"#ffffff", fontSize:"24px", fontWeight:"600", fontFamily:"Manrope", margin:"0 0 0 1rem", padding:"1rem 0 0 0"}} >Available Balance $4270</h3>
         <ResponsiveContainer width="100%" height="80%">
-            <LineChart width={420} height={150} margin={{top:10, left: 5, right:5, bottom: 5}} data={data}>
+            <LineChart width={420} height={150} margin={{top:10, left: 0, right:0, bottom: 5}} data={data}>
                 <XAxis dataKey="name" stroke='#fff' axisLine={false} tickLine={false} tick={{dy: -10, dx: -12}}/>
                 <Line type="monotone" dataKey="pv" stroke="#fff" dot={false}/>
                 <ReferenceLine x="6M" stroke='none' >

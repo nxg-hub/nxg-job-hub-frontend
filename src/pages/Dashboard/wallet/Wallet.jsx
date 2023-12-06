@@ -1,15 +1,20 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useContext } from 'react';
 import './wallet.scss';
 import axios from 'axios';
 import User from '../../../static/images/Sarah.png';
 import { useTable } from 'react-table';
 import BalanceChart from './BalanceChart';
 import WalletFilter from './WalletFilter';
+import Arrow1Image from '../../../static/icons/Arrow 1.svg';
+import Arrow9Image from '../../../static/icons/Arrow 9.svg';
+import { UserContext } from '..';
+import PaymentCard from './walletCard/PaymentCard';
 
 function Wallet() {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]); // State to hold the transaction data
-  const baseUrl = 'http://localhost:3000/transactions';
+  const baseUrl = 'http://localhost:8000/transactions';
+  const user = useContext(UserContext);
 
   useEffect(() => {
     // Fetch transaction data when the component mounts
@@ -29,8 +34,13 @@ function Wallet() {
       accessor: "name",
       Cell: ({ row }) => (
         <div className='table-details'>
-          <h3 className='table-name'>{row.original.name}</h3>
-          <p className='table-description'>{row.original.description}</p>
+          <div className="amount-detail">
+            <div className="table-name-detail">
+              <h3 className='table-name'>{row.original.name}</h3>
+              <p className='table-description'>{row.original.description}</p>
+            </div>
+            <img src={row.original.img === "icons/Arrow 1.svg" ? Arrow1Image : Arrow9Image} alt="Arrow Icon" style={{width:'1.8rem', height:'auto', marginRight:'1rem'}} />
+          </div>
         </div>
       ),
     },
@@ -39,11 +49,8 @@ function Wallet() {
       accessor: "amount",
       Cell: ({ row }) => (
         <div className='table-details'>
-          <div style={{display:'flex', alignItems:'center', margin:'1.5rem 0 0 0'}}>
-            <img src={row.original.img} alt="Arrow Icon" style={{width:'1.6rem', height:'auto', marginRight:'1rem'}} />
-            <h3>{row.original.amount}</h3>
-          </div>
-          <span className={row.original.transactionType === 'Credit' ? 'credit' : 'debit' }>{row.original.transactionType}</span>
+          <h3 className='table-amount'>{row.original.amount}</h3>
+          <p className={row.original.transactionType === 'Credit' ? 'credit' : 'debit' }>{row.original.transactionType}</p>
         </div>
       ),
     },
@@ -74,13 +81,8 @@ function Wallet() {
   };
 
   return (
-    <div style={{background:'rgba(37, 150, 190, 0.13)', padding:'0 30px'}}>
+    <div style={{background:'rgba(37, 150, 190, 0.13)', padding:' 30px'}}>
       <div className="wallet-container">
-        <div className="menu-icons">
-            <div className="menu-icon1"></div>
-            <div className="menu-icon2"></div>
-            <div className="menu-icon3"></div>
-        </div>
             <div className="wallet-main">
               <div className="wallet-profile">
                 <h2>Wallet ID X123456789</h2>
@@ -88,7 +90,7 @@ function Wallet() {
                   <div className="wallet-profile-img">
                     <img src={User} alt="User's identity" />
                   </div>
-                  <h3>Sarah Robert</h3>
+                  <h3>{user.firstName} {user.lastName}</h3>
                 </div>
               </div>
               <section className="wallet-cards">
@@ -105,7 +107,7 @@ function Wallet() {
                   </div>
                 </div>
                 <div className="virtual-card">
-                  Master card
+                  <PaymentCard />
                 </div>
               </section>
               <section className="transact-search">
