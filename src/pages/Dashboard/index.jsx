@@ -39,7 +39,8 @@ const Dashboard = () => {
               headers: { authorization: localdata.authKey },
             }
           )
-          .then((res) => {
+        .then((res) => {
+            console.log(res.data)
             setUser(res.data);
           })
           .catch((err) => err)
