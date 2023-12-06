@@ -15,7 +15,8 @@ const SelectAccountType = () => {
     techtalent:
       "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/register/",
     agent: "https://job-hub-591ace1cfc95.herokuapp.com/api/agents/createAgent",
-    employer: "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+    employer:
+      "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
   };
   const handleChange = (e) => {
     const { value } = e.target;
@@ -34,7 +35,8 @@ const SelectAccountType = () => {
           },
         }
       )
-      .then(navigate("/dashboard")).catch(err => console.log(err));
+      .then((res) => { navigate("/dashboard"); console.log(res) })
+      .catch((err) => console.log(err));
   };
   return (
     <>
