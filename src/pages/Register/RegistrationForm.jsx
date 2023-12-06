@@ -51,9 +51,10 @@ const RegistrationForm = ({ userType }) => {
   const [popup, showPopup] = useState(undefined);
 
   // functions
-  const closeModal = (e) =>{
-    if (e.target.currentTarget === e.target) setShowEmailVerificationNotice(false)
-  }
+  const closeModal = (e) => {
+    if (e.target === e.currentTarget)
+      setShowEmailVerificationNotice(false);
+  };
   const confirmPassword = (e) => {
     const { name, value } = e.target;
     if (
@@ -138,18 +139,33 @@ const RegistrationForm = ({ userType }) => {
             user
           )
           .then((res) => {
-            if (res.status === 200) setShowEmailVerificationNotice(true);
+            if (res.status) {
+              setShowEmailVerificationNotice(true);
+              showPopup({
+                type: "success",
+                message: res.data
+              })
+              setTimeout(() => showPopup(undefined), 5000);
+            }
           })
-          .catch((err) =>
-            {showPopup({
+          .catch((err) => {
+            showPopup({
               type: "danger",
-              message:
-                "Failed to register. Please check your internet connection and try again",
-            })
-          setTimeout(()=>showPopup(undefined), 5000)
-          }
-          )
-      : console.log("invalid data");
+              message: `Failed to register. ${
+                err.response.data
+                  ? err.response.data
+                  : "Please check your internet connection and try again"
+              }`,
+            });
+            
+            setTimeout(() => showPopup(undefined), 5000);
+          })
+      :  showPopup({
+        type: "danger",
+        message: `Invalid data`,
+      });
+      
+      setTimeout(() => showPopup(undefined), 5000);
   };
 
   return (
@@ -337,7 +353,9 @@ const RegistrationForm = ({ userType }) => {
           <BsArrowLeft /> back
         </Link>
       </div>
-      {showEmailVerificationNotice && <EmailVerificationNotice />}
+      {showEmailVerificationNotice && (
+        <EmailVerificationNotice onClick={closeModal} />
+      )}
       {popup && <Notice type={popup.type} message={popup.message} />}
     </>
   );
