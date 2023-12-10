@@ -20,41 +20,26 @@ import {
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../";
-
-// Add a LogoutModal component for the confirmation modal
-const LogoutModal = ({ onLogout, onCancel }) => (
-  <div className={s.logoutModal}>
-    <p>Are you sure you want to logout?</p>
-    <div className={s.modalButtons}>
-      <button onClick={onLogout}>Yes</button>
-      <button onClick={onCancel}>No</button>
-    </div>
-  </div>
-);
+import { Dialog } from "@headlessui/react";
 
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
-
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const showLogoutConfirmation = () => {
-    setShowLogoutModal(true);
-  };
-
-  const hideLogoutConfirmation = () => {
-    setShowLogoutModal(false);
+  const moveToDashboard = () => {
+      navigate("/dashboard");
+      setIsOpen(false);
   };
 
   const handleLogout = () => {
-    // Clear user authentication information
-    localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-
-    // Navigate to the home page
-    navigate("/");
-    // After performing the logout, hide the modal
-    hideLogoutConfirmation();
+      // Clear user authentication information
+      localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+  
+      // Navigate to the login page
+      navigate("/login");
   };
+  
   
   return (
     <div className={s.Sidebar}>
@@ -130,13 +115,26 @@ const Sidebar = ({ profilePic, ...props }) => {
           Help
         </NavLink>
       </ul>
-      <NavLink end to="logout" className={`${s.dashboardItem} ${s.Logout}  `} onClick={showLogoutConfirmation}>
+      <NavLink className={`${s.dashboardItem} ${s.Logout}  `} onClick={() =>setIsOpen(!isOpen)}>
         <Logout />
         Logout
       </NavLink>
-      {/* Render the LogoutModal component if showLogoutModal is true */}
-      {showLogoutModal && (
-        <LogoutModal onLogout={handleLogout} onCancel={hideLogoutConfirmation} />
+        {/* Render the LogoutModal component if showLogoutModal is true */}
+      {isOpen && (
+        <Dialog
+          open={isOpen} onClose={() => setIsOpen(false)}
+          style={{ position: "absolute", left: "30%", top: "30%", transform: "translate(-50% -50%)", width: "100%", maxWidth: "800px", height: "584px", display: "flex", justifyContent: "center", alignItems: "center", background: '#ffffff', border: "none", borderRadius: '24px' }}
+        >
+          <Dialog.Panel>
+            <Dialog.Title style={{textAlign:"center"}}>
+              <p style={{fontSize:"40px", fontWeight:"600", textAlign:"center"}}>Are you sure you want to logout?</p>
+              <div style={{width: "100%", display:"block", justifyContent:"center", alignItems:"center", gap:"8px", margin:"3rem auto"}}>
+              <button onClick={moveToDashboard} style={{width:"100%", maxWidth:"580px",  padding:"8px", background:"#006A90", border:"none", borderRadius:"10px", color:"#fff", fontSize:"25px", fontWeight:"500", margin:"2.5rem 0"}}>Back To Dashboard</button>
+              <button onClick={handleLogout} style={{width:"100%", maxWidth:"580px",  padding:"8px", background:"#006A90", border:"none", borderRadius:"10px", color:"#fff", fontSize:"25px", fontWeight:"500"}}>Continue To Logout</button>
+            </div>
+            </Dialog.Title>
+          </Dialog.Panel>
+        </Dialog>
       )}
     </div>
   );

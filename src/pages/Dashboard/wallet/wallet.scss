@@ -39,12 +39,14 @@
             }
         }
         .wallet-cards {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+            gap: 10px;
             width: 98%;
             margin: auto;
             .wallet-btns-card-details {
+                text-align: center;
+                margin-top: 0%;
                 .wallet-btns {
                     margin-top: 1rem;
                     padding-left: .4rem;
@@ -76,7 +78,9 @@
                 }
             }
             .virtual-card {
-                margin-left: 0rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
         .transact-search {
@@ -123,6 +127,20 @@
                 }
             }
         }
+    }
+}
+
+.bal-chart {
+    background: rgba(37, 150, 190, 1);
+    border-radius: 15px; 
+    width: 100%; 
+    max-width: 450px;
+    height: 250px;
+    h3 {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 600; 
+        padding: .6rem 0 0 .6rem;
     }
 }
 
@@ -212,9 +230,6 @@
     margin: -0.5rem 0 0 1.2rem;
 }
 
-.recharts-legend-item-text {
-    fill: #000 !important;
-  }
   .wallet-modal {
     position: absolute;
     left: 0%; 
@@ -332,6 +347,18 @@
     }
 }
 
+@media only screen and (min-width:768px) {
+    .wallet-container {
+        .wallet-main {
+            .wallet-cards {
+                .wallet-btns-card-details {
+                    margin-top: 50%;
+                }
+            }
+        }
+    }
+}
+
 @media only screen and (min-width:1024px) {
     .wallet-container {
         .wallet-main {
@@ -340,8 +367,6 @@
                 margin: 1rem;
                 h2 {
                     font-size: 24px;
-                    font-weight: 600;
-                    line-height: 32.78px;
                 }
                 .wallet-profile-pics {
                     flex-direction: row;
@@ -351,80 +376,26 @@
                     }
                     h3 {
                         font-size: 24px;
-                        font-weight: 800;
-                        line-height: 36.96px;
-                        color: rgba(37, 150, 190, 1);
-                        margin-left: .5rem;
                     }
                 }
             }
             .wallet-cards {
-                flex-direction: row;
                 .wallet-btns-card-details {
+                    margin-top: 0%;
                     .wallet-btns {
                         margin-top: 0rem;
                         padding-left: 0rem;
-                        button {
-                            font-family: Manrope;
-                            font-size: 24px;
-                            font-weight: 600;
-                            color: #fff;
-                            padding: .5rem 1rem;
-                            border-radius: 20px;
-                            border: 1px solid #006A90;
-                            background: #006A90;
-                        }
                     }
                     .card-details {
-                        margin: 4rem 0 0 2rem;
+                        margin: 3rem 0 0 4rem;
                         padding-left: 0rem;
                     }
                 }
-                .virtual-card {
-                    margin-left: -6rem;
-                }
             }
             .transact-search {
-                width: 95%;
-                margin: 1.5rem auto;
                 .transact-history {
-                    display: flex;
                     flex-direction: row;
-                    align-items: center;
                     margin-bottom: .5rem;
-                    h4 {
-                        flex: 2;
-                        font-size: 24px;
-                        font-weight: 600;
-                        line-height: 32.78px;
-                    }
-                    .search {
-                        flex: 4;
-                        .wallet-search {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            border: 1px solid #fff;
-                            border-radius: 20px;
-                            width: 100%;
-                            max-width: 297px;
-                            padding: .7rem 1rem;
-                            cursor: pointer;
-                            input {
-                                width: 80%;
-                                border: none;
-                                font-size: 24px;
-                                font-weight: 600;
-                                background: transparent;
-                                color: #000;
-                                opacity: 0.3;
-                                cursor: pointer;
-                                &:focus {
-                                    outline: none;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -433,29 +404,16 @@
     .transaction-table {
         table {
             thead {
-                position: sticky;
-                top: 0px;
-                margin: 0;
-                background: #FEFBFB;
                 tr {
                     th {
-                        text-align: start;
-                        margin: 2rem;
                         padding: 20px 0 0 20px;
                         font-size: 24px;
-                        font-weight: 600;
-                        line-height: 32.78px;
                     }
                 }
             }
             .table-body {
-                width: 100%;
-                
                tr {
-                margin: 0 0 15px 0;
-                td {
-                    background: rgba(37, 150, 190, 0.1);
-                }
+                    margin: 0 0 15px 0;
                }
             }
         }
@@ -463,8 +421,6 @@
     
     .table-details {
         font-size: 24px;
-        font-weight: 500;
-        line-height: 36.96px;
         padding: 10px 20px;
         .amount-detail {
             img {
@@ -474,49 +430,18 @@
         .table-amount {
             margin: 2rem 0 0 0;
         }
-        .table-name {
-            margin: 1.5rem 0 0 0;
-        }
     }
     .debit {
-        font-size: 15px;
-        font-weight: 500;
-        color: #EC2146;
         margin: -0.5rem 0 0 1.3rem;
     }
     .credit {
-        font-size: 15px;
-        font-weight: 500;
-        color: #21EC5A;
         margin: -0.5rem 0 0 1.5rem;
     }
     .wallet-modal {
-        position: absolute;
         left: 35%; 
         top: 0%;
-      }
-    .filter-close {
-        width: 90%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 3rem auto;
-        h3 {
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 36.96px;
-        }
-        p {
-            font-size: 20px;
-            font-weight: 500;
-            color: #444;
-            opacity: 0.5;
-            cursor: pointer;
-        }
     }
     .customize-container {
-        width: 96%;
-        margin: 1.5rem auto;
         ul {
             flex-direction: row;
             .customize {
@@ -533,21 +458,6 @@
         #customize, #current, #previous {
             .customize-date {
                 margin: 3rem auto;
-                padding: .8rem;
-                input {
-                    width: 95%;
-                    border: none;
-                    font-size: 24px;
-                    font-weight: 400;
-                    padding: .8rem 1.5rem;
-                    background: transparent;
-                    color: #000;
-                    opacity: 0.3;
-                    cursor: pointer;
-                    &:focus {
-                        outline: none;
-                    }
-                }
             }
         }
     }

@@ -30,7 +30,7 @@ export default function BalanceChart() {
         },
         {
           name: '6M',
-          pv: 4000,
+          pv: 3500,
         },
         {
           name: '1Y',
@@ -40,28 +40,28 @@ export default function BalanceChart() {
 
 
   return (
-    <div style={{background:'rgba(37, 150, 190, 1)', borderRadius:'15px', width:'100%', maxWidth:"440px", height:"221px"}}>
-        <h3 style={{color:"#ffffff", fontSize:"24px", fontWeight:"600", fontFamily:"Manrope", margin:"0 0 0 1rem", padding:"1rem 0 0 0"}} >Available Balance $4270</h3>
-        <ResponsiveContainer width="100%" height="80%">
-            <LineChart width={420} height={150} margin={{top:10, left: 0, right:0, bottom: 5}} data={data}>
-                <XAxis dataKey="name" stroke='#fff' axisLine={false} tickLine={false} tick={{dy: -10, dx: -12}}/>
-                <Line type="monotone" dataKey="pv" stroke="#fff" dot={false}/>
-                <ReferenceLine x="6M" stroke='none' >
-                <Label
-                    offset={0}
-                    position="top"
-                    value="$6000"
-                    viewBox={{
-                        height: 50,
-                        width: 50,
-                        x: 50,
-                        y: 20
-                    }}
-                    fill='#000'
-                    fontSize={13.66}
-                />
-                </ReferenceLine>
-            </LineChart>
+    <div className='bal-chart'>
+        <h3>Available Balance $4270</h3>
+        <ResponsiveContainer width="100%" height="75%">
+          <LineChart data={data}>
+            <XAxis dataKey="name" stroke='#fff' axisLine={false} tickLine={false} tick={{dx:-5}}/>
+            <Line type="monotone" dataKey="pv" stroke='#fff' dot={ false }/>
+            <ReferenceLine x="6M" stroke='none'>
+              <Label 
+                offset={-5}
+                position="top"
+                value="$6000"
+                viewBox={{
+                    height: 50,
+                    width: 50,
+                    x: 50,
+                    y: 50
+                }}
+                fill='#000'
+                fontSize={13.66}
+              />
+            </ReferenceLine>
+          </LineChart>
         </ResponsiveContainer>
     </div>
   )

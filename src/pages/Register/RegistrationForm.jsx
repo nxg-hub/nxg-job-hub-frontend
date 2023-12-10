@@ -220,6 +220,7 @@ const RegistrationForm = ({ userType }) => {
               id="email"
               err={errors.email}
               value={formData.email}
+              autoComplete="username"
             />
             <div className={s.phone}>
               <p className={s.TextLabel}>Phone</p>
@@ -294,6 +295,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"password"}
               placeholder={"Password"}
+              autoComplete="new-password"
               id="password"
               required
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
@@ -313,6 +315,7 @@ const RegistrationForm = ({ userType }) => {
               placeholder={"Re-enter password"}
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
               id="confirmPassword"
+              autoComplete="confirm-password"
             />
           </div>
 
