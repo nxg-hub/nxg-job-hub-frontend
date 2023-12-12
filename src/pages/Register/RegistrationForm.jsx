@@ -69,7 +69,7 @@ const RegistrationForm = ({ userType }) => {
     if (e.target.value.length < 8) {
       setErrors({
         ...errors,
-        password: "Password must have at least 8 characters",
+        password: "Password must be up to 8 characters, include letters, numbers and special characters.",
       });
     } else {
       setErrors({
