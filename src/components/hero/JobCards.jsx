@@ -84,10 +84,6 @@ const JobCards = () => {
                 <div className="choose-text">
                   <h4>{data.title}</h4>
                   <div className="title-line"></div>
-                  <div className={data.group === "help" ? "circle-help" : "circles"}>
-                    <div className="circle1"></div>
-                    <div className="circle1 circle2"></div>
-                  </div>
                   <p>{data.chosentext}</p>
                 </div>
                 <div className="choose-img">
