@@ -3,7 +3,7 @@ import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import s from "./RegistrationForm.module.scss";
 import TextField from "../../components/TextField";
-import { updateField } from "../../utils/functions/updateForm";
+import { updateField } from "../../utils/functions/updateField";
 import { Link } from "react-router-dom";
 import AuthOptions from "../../components/AuthOptions";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
@@ -52,8 +52,7 @@ const RegistrationForm = ({ userType }) => {
 
   // functions
   const closeModal = (e) => {
-    if (e.target === e.currentTarget)
-      setShowEmailVerificationNotice(false);
+    if (e.target === e.currentTarget) setShowEmailVerificationNotice(false);
   };
   const confirmPassword = (e) => {
     const { name, value } = e.target;
@@ -70,7 +69,7 @@ const RegistrationForm = ({ userType }) => {
     if (e.target.value.length < 8) {
       setErrors({
         ...errors,
-        password: "Password must have at least 8 characters",
+        password: "Password must be up to 8 characters, include letters, numbers and special characters.",
       });
     } else {
       setErrors({
@@ -143,8 +142,8 @@ const RegistrationForm = ({ userType }) => {
               setShowEmailVerificationNotice(true);
               showPopup({
                 type: "success",
-                message: res.data
-              })
+                message: res.data,
+              });
               setTimeout(() => showPopup(undefined), 5000);
             }
           })
@@ -157,15 +156,15 @@ const RegistrationForm = ({ userType }) => {
                   : "Please check your internet connection and try again"
               }`,
             });
-            
+
             setTimeout(() => showPopup(undefined), 5000);
           })
-      :  showPopup({
-        type: "danger",
-        message: `Invalid data`,
-      });
-      
-      setTimeout(() => showPopup(undefined), 5000);
+      : showPopup({
+          type: "danger",
+          message: `Invalid data`,
+        });
+
+    setTimeout(() => showPopup(undefined), 5000);
   };
 
   return (
@@ -220,6 +219,7 @@ const RegistrationForm = ({ userType }) => {
               id="email"
               err={errors.email}
               value={formData.email}
+              autoComplete="username"
             />
             <div className={s.phone}>
               <p className={s.TextLabel}>Phone</p>
@@ -294,6 +294,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"password"}
               placeholder={"Password"}
+              autoComplete="new-password"
               id="password"
               required
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
@@ -313,6 +314,7 @@ const RegistrationForm = ({ userType }) => {
               placeholder={"Re-enter password"}
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
               id="confirmPassword"
+              autoComplete="confirm-password"
             />
           </div>
 

@@ -1,0 +1,37 @@
+.PostJobsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img{
+    height: 95px;
+    width: auto;
+  }
+  .Form {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    div {
+      border: none !important;
+      span,
+      textarea {
+        background-color: #e2f1f7 !important;
+        border: none;
+        max-width: none;
+      }
+      span > input {
+        height: 50px !important;
+      }
+    }
+    button {
+      width: 100%;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 20px;
+      margin-block: 20px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #006A90;
+    }
+  }
+}

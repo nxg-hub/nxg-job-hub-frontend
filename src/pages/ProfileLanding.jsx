@@ -85,7 +85,7 @@ const ProfileLanding = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Search onClick={handleSearch} />
-          <Filter onClick={filterSearch} />
+          <Filter onClick={filterSearch}/>
         </div>
         <ProfileNavbar />
         <div className="navIcons">

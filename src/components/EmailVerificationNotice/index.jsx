@@ -74,8 +74,10 @@ const EmailVerificationNotice = ({onClick}) => {
               fontWeight: "500",
             }}
           >
-            An email has been sent to your mailbox
-            {"\n"}
+            An activation link has been sent to your email.
+          <br />
+            This link will expire after 24 hours
+           <br /> 
             Click on the link to activate your account.
           </pre>
           <Link

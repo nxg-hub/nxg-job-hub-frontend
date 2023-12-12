@@ -1,17 +1,18 @@
-import Sidebar from "./TechTalent/Sidebar";
-import s from "./index.module.scss";
-import pic from "../../static/images/Sarah.png";
-import { Outlet, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { createContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import TechTalent from "./TechTalent";
+import Employer from "./Employer";
 
 export const UserContext = createContext({
   firstName: "",
   lastName: "",
   dateOfBirth: "",
   email: "",
+  userType:""
 });
 
 const Dashboard = () => {
@@ -22,7 +23,6 @@ const Dashboard = () => {
     email: "",
   });
 
-
   const [authKey, setAuth] = useState(undefined);
 
   const navigate = useNavigate();
@@ -30,7 +30,9 @@ const Dashboard = () => {
     const localdata = JSON.parse(
       window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     ) || { authKey: undefined };
+
     setAuth(localdata.authKey);
+
     localdata.authKey
       ? axios
           .get(
@@ -39,32 +41,31 @@ const Dashboard = () => {
               headers: { authorization: localdata.authKey },
             }
           )
-        .then((res) => {
-            console.log(res.data)
+          .then((res) => {
+            console.log(res.data);
             setUser(res.data);
           })
           .catch((err) => err)
       : navigate("/login");
   }, [navigate]);
 
-  return authKey ? (
-    <>
-
-        <UserContext.Provider value={user}>
-          <div className={s.Dashboard}>
-            <div className={`${s.Sidebad} ${ ""}`}>
-              <Sidebar className={s.leftSide} profilePic={pic} />
-            </div>
-            {/* Mainpage or <Outlet/> */}
-            <div className={s.Sidemain}>
-              <Outlet />
-            </div>
-          </div>
+  if (user.userType === "TECHTALENT") {
+    return (
+      <UserContext.Provider value={user}>
+     <TechTalent authKey={authKey}/>
+      </UserContext.Provider>
+   )
+  } else if (user.userType === "EMPLOYER") {
+    return (
+      <UserContext.Provider value={user}>
+        <Employer authKey={authKey} />
         </UserContext.Provider>
-        
-  
-    </>
-  ) : null;
+    )
+  } else {
+    return (
+      <div>Employer</div>
+    )
+ }
 };
 
 export default Dashboard;
