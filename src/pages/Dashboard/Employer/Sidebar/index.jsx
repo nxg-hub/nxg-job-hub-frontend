@@ -99,5 +99,4 @@ const Sidebar = ({ profilePic, ...props }) => {
     </div>
   );
 };
-
 export default Sidebar;
