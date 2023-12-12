@@ -24,6 +24,7 @@ import {Otp} from "./pages/Login/Otp.jsx";
 import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
 import SelectAccountType from "./components/SelectAccountType";
 import Notice from "./components/Notice/index.jsx";
+import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 
 function App() {
   return (
@@ -61,6 +62,12 @@ function App() {
             />
           }
         /> */}
+        <Route
+          path="test"
+          element={
+            <PostJobs />
+          }
+        />
         <Route path="/complete-profile" element={<CompleteYourProfile />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashboardMainSide />} />

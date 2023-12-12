@@ -1,4 +1,4 @@
-import Sidebar from "./TechTalent/Sidebar";
+import Sidebar from "./Employer/Sidebar";
 import s from "./index.module.scss";
 import pic from "../../static/images/Sarah.png";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -22,7 +22,6 @@ const Dashboard = () => {
     email: "",
   });
 
-
   const [authKey, setAuth] = useState(undefined);
 
   const navigate = useNavigate();
@@ -39,8 +38,8 @@ const Dashboard = () => {
               headers: { authorization: localdata.authKey },
             }
           )
-        .then((res) => {
-            console.log(res.data)
+          .then((res) => {
+            console.log(res.data);
             setUser(res.data);
           })
           .catch((err) => err)
@@ -49,20 +48,17 @@ const Dashboard = () => {
 
   return authKey ? (
     <>
-
-        <UserContext.Provider value={user}>
-          <div className={s.Dashboard}>
-            <div className={`${s.Sidebad} ${ ""}`}>
-              <Sidebar className={s.leftSide} profilePic={pic} />
-            </div>
-            {/* Mainpage or <Outlet/> */}
-            <div className={s.Sidemain}>
-              <Outlet />
-            </div>
+      <UserContext.Provider value={user}>
+        <div className={s.Dashboard}>
+          <div className={`${s.Sidebad} ${""}`}>
+            <Sidebar className={s.leftSide} profilePic={pic} />
           </div>
-        </UserContext.Provider>
-        
-  
+          {/* Mainpage or <Outlet/> */}
+          <div className={s.Sidemain}>
+            <Outlet />
+          </div>
+        </div>
+      </UserContext.Provider>
     </>
   ) : null;
 };

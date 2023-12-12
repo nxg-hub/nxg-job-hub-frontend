@@ -18,9 +18,8 @@ import {
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../../";
+import { UserContext } from "../..";
 const Sidebar = ({ profilePic, ...props }) => {
-  
   const user = useContext(UserContext);
   return (
     <div className={s.Sidebar}>
