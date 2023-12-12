@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
-import { FiMail } from "react-icons/fi";
 import { SlBell } from "react-icons/sl";
-import User from "../../../static/images/Sarah.png";
 import HeroImg from "../../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
@@ -18,7 +16,7 @@ function DashboardMainSide() {
   const navigate = useNavigate();
   const openForm = (e) => {
     e.preventDefault();
-    navigate("/techprofileform");
+    navigate("/tech-talent-profile-form");
   };
   return (
     <div className="dash-profile-main-side">
@@ -29,11 +27,7 @@ function DashboardMainSide() {
         </div>
         <div className="dash-profile-pics-section">
           <div className="dash-profile-icons">
-            <FiMail className="dash-icons" />
             <SlBell className="dash-icons" />
-          </div>
-          <div className="dash-profile-pics">
-            <img src={User} alt="User's Identity" />
           </div>
         </div>
       </div>

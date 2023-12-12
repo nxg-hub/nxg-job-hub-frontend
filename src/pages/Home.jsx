@@ -69,10 +69,10 @@ const Home = () => {
         </div>
       </div>
       <div className="jobs-btns">
-        <Link to={"/jobpost"} className="post-btn">
+        <Link to={"/register"} className="post-btn">
               Post Jobs
         </Link>
-        <Link to={"/findjob"} className="find-btn">
+        <Link to={"/register"} className="find-btn">
               Find Jobs
         </Link>
       </div>

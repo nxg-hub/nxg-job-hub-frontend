@@ -12,6 +12,7 @@ import { ReactComponent as Privacy } from "../../../../static/icons/privacy.svg"
 import { ReactComponent as AccountDetails } from "../../../../static/icons/mdi_account-details-outline.svg";
 import { ReactComponent as Terms } from "../../../../static/icons/terms.svg";
 import { ReactComponent as Password } from "../../../../static/icons/lock_icon.svg";
+import { ReactComponent as Wallet } from "../../../../static/icons/uil_wallet.svg";
 import { BiBookmark as SavedJobs } from "react-icons/bi";
 
 export {
@@ -25,6 +26,7 @@ export {
   Settings,
   Messages,
   SavedJobs,
+  Wallet,
   Logout,
   Privacy,
   AccountDetails,

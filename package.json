@@ -19,6 +19,9 @@
     "react-select": "^5.7.4",
     "react-select-country-list": "^2.2.3",
     "react-step-progress-bar": "^1.0.3",
+    "react-table": "^7.8.0",
+    "react-transition-group": "^4.4.5",
+    "recharts": "^2.10.2",
     "sass": "^1.67.0",
     "swiper": "^10.3.1",
     "web-vitals": "^2.1.4"
