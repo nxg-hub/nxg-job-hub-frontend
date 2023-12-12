@@ -41,9 +41,14 @@
   
 .left {
   margin: 2rem 0 0 0;
+  .fullnames {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 5px;
+  }
 }
   
-  .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .file-uploader, .letter, .portfolio, .password {
+  .inputs, .qualification, .certification, .level, .job-types, .jobs, .work-mode, .letter, .portfolio, .password {
     label {
         display: flex;
         font-size: .8rem;
@@ -77,6 +82,95 @@
 
     input:invalid[focused="true"] ~ p {
       display: block;
+    }
+  }
+
+  .file-wrapper {
+    font-family: Manrope;
+    font-weight: 400;
+    label {
+      display: flex;
+      font-size: 20px;
+    }
+    .file-uploader {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 109px;
+      // padding: 20px 24px;
+      margin: 0.52rem 0;
+      border: 1px solid #c9c9c9;
+      border-radius: 10px;
+      .drop-file-input-img-label {
+        text-align: center;
+        .upload-img {
+          width: 1.8rem;
+          height: 1.8rem;
+          color: #8e8e8e;
+        }
+        .drop-file-labels {
+          h6 {
+            font-size: 16px;
+            line-height: 24.64px;
+            color: #606060;
+          }
+          p {
+            font-size: 14px;
+            line-height: 19.24px;
+            color: #c9c9c9;
+          }
+        }
+      }
+      #drop-file-input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+    .file-uploader:hover, .file-uploader.dragover {
+      opacity: 0.6;
+    }
+    .drop-file-preview {
+      width: 100%;
+      margin-top: .8rem;
+      padding: 20px 24px;
+      .drop-file-preview-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img {
+          width: 2rem;
+          height: auto;
+        }
+        p {
+          font-size: 14px;
+          font-weight: 600;
+        }
+        .drop-file-preview-info {
+          p {
+            font-size: 16px;
+            font-weight: 500;
+          }
+        }
+        .drop-file-delete {
+          font-size: 16px;
+          font-weight: 500;
+          background: #2596BE;
+          color: #ffffff;
+          width: 1.5rem;
+          height: 1.5rem;
+          text-align: center;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
     }
   }
 

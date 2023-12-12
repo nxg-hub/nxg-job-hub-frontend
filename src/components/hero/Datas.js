@@ -5,7 +5,7 @@ import BeImg from '../../static/images/be-employed-img.png';
 const jobsDetails = [
     {
         id: 1,
-        price:"$15.7PH",
+        price:"$15.7/Hr",
         location:"Nigeria",
         title:"Data Entry Personnel",
         heading:"Data Entry Personnel - #DCA18B7",
@@ -16,7 +16,7 @@ const jobsDetails = [
     },
     {
         id: 2,
-        price:"$21.4PH",
+        price:"$21.4/Hr",
         location:"Nigeria",
         title:"UI Design",
         heading:"UI Design - #DCA23A1",
@@ -27,7 +27,7 @@ const jobsDetails = [
     },
     {
         id: 3,
-        price:"$20.7PH",
+        price:"$20.7/Hr",
         location:"Nigeria",
         title:"Data Analyst",
         heading:"Data Analyst - #DCA84B2",
@@ -38,7 +38,7 @@ const jobsDetails = [
     },
     {
         id: 4,
-        price:"$18.0PH",
+        price:"$18.0/Hr",
         location:"Nigeria",
         title:"Data Entry Assistant",
         heading:"Data Entry Assistant - #DCA18B3",
@@ -49,7 +49,7 @@ const jobsDetails = [
     },
     {
         id: 5,
-        price:"$22.5PH",
+        price:"$22.5/Hr",
         location:"Nigeria",
         title:"Frontend Developer",
         heading:"Frontend Developer - #DCA37B2",
@@ -60,7 +60,7 @@ const jobsDetails = [
     },
     {
         id: 6,
-        price:"$20.2PH",
+        price:"$20.2/Hr",
         location:"Nigeria",
         title:"Web Designer",
         heading:"Web Designer - #DCA33F9",
@@ -71,7 +71,7 @@ const jobsDetails = [
     },
     {
         id: 7,
-        price:"$193PH",
+        price:"$193/Hr",
         location:"Nigeria",
         title:"Project Manager",
         heading:"Project Manager - #DCA42E1",
