@@ -5,11 +5,15 @@ import RadioButton from "../RadioButton";
 import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
+
 const SelectAccountType = () => {
   const navigate = useNavigate();
+
+  // Destructure localStorage data with default values to avoid potential issues
   const { email, authKey } = JSON.parse(
     window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-  );
+  ) || {};
+
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
     techtalent:
@@ -22,22 +26,27 @@ const SelectAccountType = () => {
     const { value } = e.target;
     setAccountChoice(value);
   };
-  const setAccountType = () => {
-    axios
-      .post(
+  const setAccountType = async () => {
+    try {
+      const res = await axios.post(
         accountTypes[accountChoice],
-        {
-          email,
-        },
+        { email },
         {
           headers: {
             authorization: authKey,
+            "Content-Type": "application/json",
           },
         }
-      )
-      .then((res) => { navigate("/dashboard"); console.log(res) })
-      .catch((err) => console.log(err));
+      );
+      console.log(res);
+
+      // Updated the condition to navigate to the appropriate page based on the accountChoice
+      navigate(accountChoice === "employer" ? "/profilelanding" : "/dashboard");
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   return (
     <>
       <div className={s.page}>
@@ -84,8 +93,8 @@ const SelectAccountType = () => {
                   ? "#2596be"
                   : "rgb(194, 192, 192)",
               }}
-              aria-disabled={accountChoice ? false : true}
-              disabled={accountChoice ? false : true}
+              aria-disabled={!accountChoice}
+              disabled={!accountChoice}
               to={`./${accountChoice}`}
             >
               Continue

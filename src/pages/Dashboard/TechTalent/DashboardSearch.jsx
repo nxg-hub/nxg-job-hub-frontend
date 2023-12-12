@@ -10,7 +10,7 @@ function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-  const baseUrl = 'http://localhost:3000/posts';
+  const baseUrl = 'http://localhost:8000/posts';
 
     const fetchedJobs = (searchTerm) => {
       axios.get(baseUrl)

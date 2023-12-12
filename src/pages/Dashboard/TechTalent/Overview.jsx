@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
-import { FiMail } from "react-icons/fi";
 import { SlBell } from "react-icons/sl";
-import User from "../../../static/images/Sarah.png";
 import HeroImg from "../../../static/images/tech-talent-pro-img.png";
 import ProfileSearch from "./ProfileSearch";
 import { TbMathGreater } from "react-icons/tb";
@@ -13,27 +11,23 @@ import figma from "../../../static/icons/logos_figma.svg";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { UserContext } from "..";
 
-function DashboardMainSide() {
+function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const openForm = (e) => {
     e.preventDefault();
-    navigate("/techprofileform");
+    navigate("/tech-talent-profile-form");
   };
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">
         <div className="dash-profile-name">
-        <RxHamburgerMenu />
+          <RxHamburgerMenu />
           <p>{user.firstName || "User"}'s Dashboard</p>
         </div>
         <div className="dash-profile-pics-section">
           <div className="dash-profile-icons">
-            <FiMail className="dash-icons" />
             <SlBell className="dash-icons" />
-          </div>
-          <div className="dash-profile-pics">
-            <img src={User} alt="User's Identity" />
           </div>
         </div>
       </div>
@@ -94,4 +88,4 @@ function DashboardMainSide() {
   );
 }
 
-export default DashboardMainSide;
+export default TechTalentOverview;

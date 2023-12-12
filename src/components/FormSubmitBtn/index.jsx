@@ -27,6 +27,7 @@ const FormSubmitBtn = ({
           }
           disabled={formData[`${fieldDependency}`] ? false : true}
           type="submit"
+          {...props}
         >
           {value}
         </button>
@@ -42,6 +43,7 @@ const FormSubmitBtn = ({
           }
           disabled={formData[`${fieldDependency}`] ? false : true}
           type="submit"
+          {...props}
         >
           {value}
         </button>

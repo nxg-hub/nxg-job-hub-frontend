@@ -10,13 +10,14 @@ import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 import Notice from "../.././components/Notice";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
-  const [authenticationKey, setAuthkey] = useState(undefined);
+  const [authenticationKey, setAuthKey] = useState(undefined);
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -27,80 +28,61 @@ const Login = () => {
     setCheck(!check);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
-      alert("Please enter your details");
-    } else {
-      axios
-        .post("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login", {
-          email: email,
-          password: password,
-        })
-        .then((res) => {
-          const authKey = res.headers.authorization;
-          try {
-            window.localStorage.setItem(
-              "NXGJOBHUBLOGINKEYV1",
-              JSON.stringify({ authKey, email })
-            );
-          } catch (err) {
-            showpopUp({
-              type: "warning",
-              message: "An error occurred.",
-            });
-            setTimeout(() => showpopUp(undefined), 5000);
-          }
-          return authKey;
-        })
-        .then((authKey) => {
-          axios
-            .get(
-              "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
-              {
-                headers: {
-                  authorization: authKey,
-                },
-              }
-            )
-            .then((res) => {
-              !res.data.userType ? navigate("/create") : navigate("/dashboard");
-            });
-        })
-        .catch((err) => {
-          showpopUp({
-            type: "danger",
-            message:
-              "Login failed. Please check your internet connection and try again.",
-          });
-          setTimeout(() => showpopUp(undefined), 5000);
-        });
+    try {
+      const res = await axios.post(
+        "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login",
+        { email, password }
+      );
+
+      const authKey = res.headers.authorization;
+
+      if (check && authKey) {
+        // Save authentication key to local storage
+        window.localStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email })
+        );
+      }
+
+      setAuthKey(authKey);
+
+      const userRes = await axios.get(
+        "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: authKey,
+          },
+        }
+      );
+
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      showpopUp({
+        type: "danger",
+        message:
+          "Login failed. Please check your internet connection and try again.",
+      });
+      setTimeout(() => showpopUp(undefined), 5000);
     }
   };
-  useEffect(() => {
-    const { authKey } = JSON.parse(
-      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-    ) || { authKey: undefined };
 
-    authKey && setAuthkey(authKey);
-    if (authenticationKey)
-      axios
-        .get(
-          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
-          { headers: { authorization: authenticationKey } }
-        )
-        .then((res) => {
-          res.data.userType ? navigate("/dashboard") : navigate("/create");
-        })
-        .catch(() => {
-          showpopUp({
-            type: "danger",
-            message:
-              "Auto-login failed because of network error. Please check your internet connection.",
-          });
-          setTimeout(() => showpopUp(undefined), 5000);
-        });
-  }, [authenticationKey, navigate]);
+  useEffect(() => {
+    const storedData = JSON.parse(
+      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+    );
+
+    if (storedData && storedData.authKey) {
+      setAuthKey(storedData.authKey);
+    }
+  }, [authenticationKey]);
+
   return (
     <div className="login-main-container">
       <div className="form-col">
