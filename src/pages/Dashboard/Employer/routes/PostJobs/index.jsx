@@ -23,6 +23,7 @@ const PostJobs = () => {
   const submitForm = (e) => {
     e.preventDefault();
     let valid = validateForm();
+    console.log(formData)
   };
   return (
     <div className={s.PostJobsWrapper}>

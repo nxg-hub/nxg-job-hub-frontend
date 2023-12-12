@@ -3,7 +3,7 @@ import pic from "../../../static/images/Sarah.png";
 import s from "../index.module.scss";
 import { Outlet } from "react-router-dom";
 
-const Employer = () => {
+const TechTalent = () => {
   return (
     <div className={s.Dashboard}>
       <div className={`${s.Sidebad} ${""}`}>
@@ -11,12 +11,10 @@ const Employer = () => {
       </div>
       {/* Mainpage or <Outlet/> */}
       <div className={s.Sidemain}>
-        {/* Work on the various employer routes / pages in the routes folder  */}
         <Outlet />
       </div>
     </div>
   );
 };
 
-
-export default Employer
+export default TechTalent;
