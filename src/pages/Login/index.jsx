@@ -61,7 +61,7 @@ const Login = () => {
       if (!userRes.data.userType) {
         navigate("/create");
       } else {
-        navigate("/dashboard");
+        navigate(userRes.data.userType === "employer" ? "/profilelanding" : "/dashboard");
       }
     } catch (error) {
       showpopUp({
