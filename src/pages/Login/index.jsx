@@ -62,6 +62,10 @@ const Login = () => {
         navigate("/create");
       } else {
         navigate(userRes.data.userType === "employer" ? "/profilelanding" : "/dashboard");
+        console.log(userRes.data.id);
+        window.localStorage.setItem(
+          "user_info", JSON.stringify(userRes.data)
+        );
       }
     } catch (error) {
       showpopUp({

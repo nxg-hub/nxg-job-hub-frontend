@@ -107,8 +107,15 @@ function TechTalentProfileForm() {
             console.error('Authentication key not available.');
            return;
           }
+
+          const userInfo = JSON.parse(window.localStorage.getItem('user_info'));
+          if (!userInfo ) {
+            console.error('Authentication key not available.');
+           return;
+          }
   
-          const updateUrl = "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/update-{ID}";
+          const updateUrl = "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/update-{userInfo.id}";
+          
           
           // This code gets the user details
           const userRes = await axios.get(
@@ -125,13 +132,13 @@ function TechTalentProfileForm() {
           const authKey = userRes.headers.authorization;
   
           //Makes the update request
-          const updateRes = await axios.put(updateUrl, formData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: authKey,
-            },
-          }
+          const updateRes = await axios.put(updateUrl, formData
+          // {
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Authorization: authKey,
+          //   },
+          // }
           );
           navigate("/dashboard")
           console.log(updateRes.data.id, 'Data received');
@@ -149,8 +156,8 @@ function TechTalentProfileForm() {
     }, [formData]);
    
   return (
-    <div>
-        <div className="form-logo" style={{width:"120px", height:"69px", margin:"25px 0 0 96px"}}>
+    <div className='techForm-main'>
+        <div className="form-logo pro-logo" >
             <img src={Logo} alt="Nxg Company Logo" className="logo" />
         </div>
         <div className="tech-pro-heading">

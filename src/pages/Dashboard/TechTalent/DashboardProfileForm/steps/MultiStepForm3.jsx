@@ -74,7 +74,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
                 name="portfolioLink"
                 title='Profile link'
                 value={formData.portfolioLink}
-                onChange={handleValue}
+                onChange={(e) => handleValue(e, 'portfolioLink')}
                 placeholder="Insert link to your portfolio"
                 />
             </div>
@@ -84,7 +84,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
                 name="linkedInUrl"
                 title='LinkedIn link'
                 value={formData.linkedInUrl}
-                onChange={handleValue}
+                onChange={(e) => handleValue(e, 'linkedInUrl')}
                 placeholder="Insert LinkedIn profile link"
                 />
             </div>
