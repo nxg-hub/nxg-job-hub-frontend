@@ -11,7 +11,7 @@ import figma from "../../../static/icons/logos_figma.svg";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { UserContext } from "..";
 
-function DashboardMainSide() {
+function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const openForm = (e) => {
@@ -22,7 +22,7 @@ function DashboardMainSide() {
     <div className="dash-profile-main-side">
       <div className="dash-profile-header">
         <div className="dash-profile-name">
-        <RxHamburgerMenu />
+          <RxHamburgerMenu />
           <p>{user.firstName || "User"}'s Dashboard</p>
         </div>
         <div className="dash-profile-pics-section">
@@ -88,4 +88,4 @@ function DashboardMainSide() {
   );
 }
 
-export default DashboardMainSide;
+export default TechTalentOverview;

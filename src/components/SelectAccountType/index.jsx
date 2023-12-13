@@ -26,7 +26,6 @@ const SelectAccountType = () => {
     const { value } = e.target;
     setAccountChoice(value);
   };
-
   const setAccountType = async () => {
     try {
       const res = await axios.post(
