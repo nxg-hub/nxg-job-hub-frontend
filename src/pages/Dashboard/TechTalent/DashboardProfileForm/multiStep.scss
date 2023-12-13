@@ -1,5 +1,16 @@
+.techForm-main {
+    padding: 0 2rem;
+}
+
+.pro-logo {
+    width: 120px; 
+    height: 69px;
+    margin: 15px auto;
+}
+
 .profile-progress {
-    width: 494.9px;
+    width: 100%;
+    max-width: 494.9px;
     margin: 2rem  auto;
 }
 .tech-pro-heading {
@@ -30,7 +41,7 @@
     padding: 8px;
     background: transparent;
     text-align: center;
-    margin: 0 0 0 81px;
+    margin: 0 0 0 -14px;
     cursor: pointer;
 }
 .tech-pro-form {
@@ -218,4 +229,21 @@
 }
 .complete {
     background: #0084B3;
+}
+
+@media only screen and (min-width:1024px) {
+    .techForm-main {
+        padding: 0;
+    }
+    .pro-logo {
+        margin: 25px 0 0 96px;
+    }
+
+    .profile-progress {
+        margin: 2rem  auto;
+    }
+
+    .back-arrow {
+        margin: 0 0 0 81px;
+    }
 }

@@ -1,78 +1,99 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select';
 import Inputs from '../../../../../components/accounts/Inputs';
-import { certifications, levels, qualifications, jobTypes, experience } from '../../../../../utils/data/tech-talent';
+import { certifications, levels, qualifications, jobTypes, experience, jobs } from '../../../../../utils/data/tech-talent';
 import '../multiStep.scss';
 
-function MultiStepForm2({data = {}, index}) {
-    // const [qualification, setQualification] = useState("");
-    const [interest, setInterest] = useState("");
-    const [currentJob, setCurrentJob] = useState("");
+function MultiStepForm2({formData, setFormData, onComplete}) {
+    const handleChange = (selectedOption, name) => {
+        setFormData({
+            ...formData,
+            [name]: selectedOption.value,
+          });
+    };
 
-    // const handleSelect = (e) => {
-    //     setQualification(e.target.value);
-    // }
-
-    const handleChange = (selectedOption, fieldName) => {
-        data[fieldName] = selectedOption.value;
-    }
+    const handleValue = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+    };
 
     const jobTypeOptions = jobTypes.map((jobType) => ({
         value: jobType, 
         label: jobType, 
     }));
-    const qualificationOptions = qualifications.map((qualification) => ({
-        value: qualification, 
-        label: qualification, 
+    const qualificationOptions = qualifications.map((highestQualification) => ({
+        value: highestQualification, 
+        label: highestQualification, 
     }));
-    const certificationOptions = certifications.map((certification) => ({
-        value: certification, 
-        label: certification, 
+    const certificationOptions = certifications.map((professionalCert) => ({
+        value: professionalCert, 
+        label: professionalCert, 
     }));
-    const levelOptions = levels.map((level) => ({
-        value: level, 
-        label: level, 
+    const levelOptions = levels.map((yearsOfExperience) => ({
+        value: yearsOfExperience, 
+        label: yearsOfExperience, 
     }));
-    const experienceOptions = experience.map((levelExperience) => ({
-        value: levelExperience, 
-        label: levelExperience, 
+    const jobsOptions = jobs.map((job) => ({
+        value: job, 
+        label: job, 
     }));
+    const experienceOptions = experience.map((experienceLevel) => ({
+        value: experienceLevel, 
+        label: experienceLevel, 
+    }));
+
+    useEffect(() => {
+        const submitForm = () => {
+          // Make sure the form data is valid before calling onComplete
+          if (formData.highestQualification && formData.experience && formData.job && formData.level) {
+            onComplete(formData);
+          }
+        };
+    
+        submitForm(); // Call the submitForm function directly within useEffect
+    
+        // You can include other dependencies if needed
+    }, [formData, onComplete]); 
+
   return (
     <div>
             <form className='tech-pro-form'>
                 <div className="tech-pro-qualification">
                     <label>Highest Qualification*</label>
-                    <Select options={qualificationOptions} value={qualificationOptions.find(option => option.value === data.qualification)} onChange={(selectedOption) => handleChange(selectedOption,  'qualification')} />
+                    <Select options={qualificationOptions} value={formData.highestQualification ? { label: formData.highestQualification, value: formData.highestQualification } : null} onChange={(selectedOption) => handleChange(selectedOption, 'highestQualification')} />
                 </div>
                 <div className="tech-pro-qualification" id='tech-experience'>
                     <label>Years of work experience*</label>
-                    <Select options={experienceOptions} value={experienceOptions.find(option => option.value === data.levelExperience)} onChange={(selectedOption) => handleChange(selectedOption,  'levelExperience')} />
+                    <Select options={experienceOptions} value={formData.experienceLevel ? { label: formData.experienceLevel, value: formData.experienceLevel } : null} onChange={(selectedOption) => handleChange(selectedOption, 'experienceLevel')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Professional Certification</label>
-                    <Select options={certificationOptions} value={certificationOptions.find(option => option.value === data.certification)} onChange={(selectedOption) => handleChange(selectedOption,  'certification')}/>
+                    <Select options={certificationOptions} value={formData.professionalCert ? { label: formData.professionalCert, value: formData.professionalCert } : null} onChange={(selectedOption) => handleChange(selectedOption, 'professionalCert')}/>
                 </div>
                 <div className="tech-pro-job">
                     <Inputs
                         type='text'
-                        name="Current Job*"
+                        name="currentJob"
                         title='Current Job Function'
-                        value={currentJob}
-                        onChange={(e) => setCurrentJob(e.target.value) }
+                        value={formData.currentJob}
+                        onChange={handleValue}
                         placeholder="Enter current job"
                     />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Job Interest*</label>
-                    <Select options={data.selectedOption || []} value={interest} onChange={(e) => setInterest(e.target.value)} />
+                    <Select options={jobsOptions} value={formData.job ? { label: formData.job, value: formData.job } : null} onChange={(selectedOption) => handleChange(selectedOption, 'job')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Level of Experience in Job Interest*</label>
-                    <Select options={levelOptions} value={levelOptions.find(option => option.value === data.level)} onChange={(selectedOption) => handleChange(selectedOption,  'level')} />
+                    <Select options={levelOptions} value={formData.yearsOfExperience ? { label: formData.yearsOfExperience, value: formData.yearsOfExperience } : null} onChange={(selectedOption) => handleChange(selectedOption, 'yearsOfExperience')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Type of Job*</label>
-                    <Select options={jobTypeOptions} value={jobTypeOptions.find(option => option.value === data.jobType)} onChange={(selectedOption) => handleChange(selectedOption,  'jobType')} />
+                    <Select options={jobTypeOptions} value={formData.jobType ? { label: formData.jobType, value: formData.jobType } : null} onChange={(selectedOption) => handleChange(selectedOption, 'jobType')} />
                 </div>
             </form>
 

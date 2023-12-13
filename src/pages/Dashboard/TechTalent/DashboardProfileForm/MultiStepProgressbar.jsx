@@ -20,21 +20,21 @@ export default function MultiStepProgressbar (props) {
             <Step transition="scale">
             {({ accomplished, index }) => (
                 <div className={`step ${accomplished ? "complete" : ""}`}>
-                    1
+                    {index + 1}
                 </div>
             )}
             </Step>
             <Step transition="scale">
             {({ accomplished, index }) => (
                 <div className={`step ${accomplished ? "complete" : ""}`}>
-                    2
+                    {index + 1}
                 </div>
             )}
             </Step>
             <Step transition="scale">
             {({ accomplished, index }) => (
                 <div className={`step ${accomplished ? "complete" : ""}`}>
-                    3
+                    {index + 1}
                 </div>
             )}
             </Step>
