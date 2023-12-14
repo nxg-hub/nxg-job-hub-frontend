@@ -9,6 +9,7 @@ const PostJobs = () => {
     job_title: "",
     job_description: "",
     benefits: "",
+
     company_bio: "",
     responsibilities: "",
     requirements: "",

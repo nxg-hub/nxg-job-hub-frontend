@@ -5,14 +5,14 @@ import RadioButton from "../RadioButton";
 import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
+import Notice from "../Notice";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
-
+  const [popup, showPopup] = useState(undefined);
   // Destructure localStorage data with default values to avoid potential issues
-  const { email, authKey } = JSON.parse(
-    window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-  ) || {};
+  const { email, authKey } =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) || {};
 
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
@@ -28,6 +28,10 @@ const SelectAccountType = () => {
   };
   const setAccountType = async () => {
     try {
+      showPopup({
+        type: "info",
+        message: `Creating ${accountChoice} account...`,
+      });
       const res = await axios.post(
         accountTypes[accountChoice],
         { email },
@@ -38,12 +42,18 @@ const SelectAccountType = () => {
           },
         }
       );
-      console.log(res);
-
+      showPopup({
+        type: "success",
+        message: `Created ${accountChoice} account successfully`,
+      });
       // Updated the condition to navigate to the appropriate page based on the accountChoice
       navigate(accountChoice === "employer" ? "/profilelanding" : "/dashboard");
     } catch (err) {
-      console.error(err);
+      showPopup({
+        type: "danger",
+        message: `Account creation failed. Please try again.`,
+      });
+      setTimeout(() => showPopup(undefined), 5000);
     }
   };
 
@@ -105,6 +115,7 @@ const SelectAccountType = () => {
           </div>
         </div>
       </div>
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </>
   );
 };

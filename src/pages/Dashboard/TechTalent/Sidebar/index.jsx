@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import s from "./index.module.scss";
-import logo from "../../../../static/images/nxg-logo.png";
 import {
+  CiUser,
   ChangeProfilePicture,
   MyProfile,
   Dashboard,
@@ -23,7 +23,7 @@ const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   return (
     <div className={s.Sidebar}>
-      <img src={logo} alt="nxg-logo" />
+      <CiUser className={s.logo} />
       <div className={s.Profile}>
         <span>
           <img src={profilePic} alt="" />
