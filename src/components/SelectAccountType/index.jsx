@@ -12,7 +12,7 @@ const SelectAccountType = () => {
   const [popup, showPopup] = useState(undefined);
   // Destructure localStorage data with default values to avoid potential issues
   const { email, authKey } =
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) || {};
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) || JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
@@ -32,7 +32,7 @@ const SelectAccountType = () => {
         type: "info",
         message: `Creating ${accountChoice} account...`,
       });
-      const res = await axios.post(
+      await axios.post(
         accountTypes[accountChoice],
         { email },
         {

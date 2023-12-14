@@ -1,4 +1,3 @@
-import React from 'react';
 
 const FormStepHeader = () => {
     let step = 1;

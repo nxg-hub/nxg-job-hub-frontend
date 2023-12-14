@@ -8,38 +8,53 @@
   height: 100%;
   overflow: hidden;
   position: relative;
-  >.logo {
+  > img {
     height: 50px;
     width: 100px;
     margin: 15px 20px;
-    
   }
   .Profile {
     text-align: center;
-    > p {
+    // > p {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   gap: 5px;
+
+    //   svg {
+    //     height: 25px;
+    //     width: auto;
+    //   }
+    // }
+    strong {
+      display: block;
+    }
+
+    p{
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
-
-      svg {
-        height: 25px;
-        width: auto;
-      }
     }
-    strong {
-      display: block;
-    }
-    span {
+    >div {
       position: relative;
-      img {
-        height: 100px;
+      margin: auto;
+      width: max-content;
+      // background-color: beige;
+      > div {
         border-radius: 50%;
-        width: auto;
+        height: 70px;
+        width: 70px;
+        padding: 5px;
+        background-color: #8d9ca2;
+        svg {
+          height: 100%;
+          width: 100%;
+        }
       }
-      svg {
+      >svg {
         position: absolute;
-        bottom: 5px;
+        bottom: 0px;
         right: -5px;
         cursor: pointer;
       }
@@ -56,10 +71,9 @@
     overflow-y: auto;
     scrollbar-width: none;
 
-   
     &::-webkit-scrollbar,
     &::-webkit-scrollbar-thumb {
-     display: none;
+      display: none;
     }
     .dashboardItem[aria-current="page"] {
       color: #2596be;
@@ -112,14 +126,14 @@
   }
   li.dashboardItem {
     cursor: auto;
-   
+
     ul {
       height: 0;
       visibility: hidden;
       scale: 0;
       opacity: 0;
       transform: translateX(0px);
-      a{
+      a {
         font-size: 14px;
       }
       // &:has(.Selected){
@@ -152,4 +166,3 @@
     }
   }
 }
-

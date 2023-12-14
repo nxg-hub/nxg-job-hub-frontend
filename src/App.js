@@ -6,12 +6,10 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 
 import Explore from "./components/hero/Explore";
-// import SuccessModular from "./components/SuccessModular";
 import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
-import EmployerProfileForm from "./pages/EmployerProfile/index.jsx";
-// import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx";
 import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
+import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile";
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";

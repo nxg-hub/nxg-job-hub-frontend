@@ -15,10 +15,10 @@ import { ReactComponent as Password } from "../../../../static/icons/lock_icon.s
 import { ReactComponent as Wallet } from "../../../../static/icons/uil_wallet.svg";
 import { BiBookmark as SavedJobs } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
-import { FaUserCircle } from "react-icons/fa";
+import { MdOutlineEdit } from "react-icons/md";
 export {
   CiUser,
-  FaUserCircle,
+  MdOutlineEdit,
   ChangeProfilePicture,
   EditProfile,
   MyProfile,
