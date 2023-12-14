@@ -5,6 +5,7 @@ import Inputs from '../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
 import { recruiterPosition } from '../../utils/data/employer';
 import './employerprofile.scss';
+import axios from 'axios';
 
 function EmployerProfileForm() {
   const [step, setStep] = useState(0);
@@ -34,13 +35,14 @@ function EmployerProfileForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
+    setData((prevData) => ({
+      ...prevData,
       [name]: value
-    });
+    }));
   };
 
-  const handleStep = () => {
+  const handleStep = async (e) => {
+    e.preventDefault();
     // Check if all required fields are filled
     if (
       data.firstName === "" ||
@@ -52,8 +54,15 @@ function EmployerProfileForm() {
         alert('All fields must be filled');
       setErrors({ data: 'All fields must be filled' });
     } else {
-      console.log('Data received');
-      setStep(step + 1);
+      try {
+        const res = await axios.post("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer", data);
+        console.log(res.data, 'Data received');
+        setStep(step + 1);
+      } catch (error) {
+        alert("Error posting data:", error.response);
+        console.error('Error posting data:', error.response);
+        console.log('Error posting data:', error.response);
+      }
     }
   };
 
