@@ -1,8 +1,17 @@
 import React from 'react'
+import Statistics from './statistics/Statistics'
+import CompanyProfile, { CompanyServices } from './companyProfile/CompanyProfile'
 
 const EmployerOverview = () => {
   return (
-    <h2>Employer Overview</h2>
+    <div>
+      EmployerOverview
+      <div className="employer-stats">
+        <Statistics />
+        <CompanyProfile />
+        <CompanyServices />
+      </div>
+    </div>
   )
 }
 

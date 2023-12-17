@@ -1,6 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
+import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css/bundle';
 import './slide.scss';
 import Analysis from '../../../src/static/icons/Data analysis.png';
@@ -82,7 +82,8 @@ const TechjobsSlider =() => {
             <Swiper 
                 freeMode={true}
                 grabCursor={true}
-                modules={[FreeMode]}
+                modules={[FreeMode, Pagination]}
+                pagination={{ clickable: true }}
                 className="mySwiper"
                 breakpoints={{
                     480: {
@@ -103,7 +104,7 @@ const TechjobsSlider =() => {
                     },
                     1440: {
                         slidesPerView:5,
-                        spaceBetween: 60,
+                        spaceBetween: 70,
                     },
                 }}
                 

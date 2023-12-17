@@ -42,9 +42,11 @@
 }
 
 .jobs-btns {
-    margin: 4% 0;
+  width: 100%;
+  max-width: 87rem;
+    margin: 6% auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     a {
         display: block;
@@ -52,7 +54,7 @@
         font-weight: 400;
         width: 100%;
         background: #2596be;
-        margin: 0 2rem;
+        margin: 0 1rem;
         padding: 12px;
         border: .07rem solid #2596be;
         border-radius: 0.7rem;
@@ -146,12 +148,6 @@
 // Header & Navbar Styling
 
 header {
-  .h-logo-mobile {
-    display: block;
-  }
-  .h-logo {
-    display: none;
-  }
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -159,6 +155,12 @@ header {
   max-width: 84rem;
   padding: 0.6rem;
   margin: auto;
+  .h-logo-mobile {
+    display: block;
+  }
+  .h-logo {
+    display: none;
+  }
   #nav-toggle {
     display: block;
     background: transparent;

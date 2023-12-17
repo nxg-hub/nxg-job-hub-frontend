@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 
-const FileUploader = ({ title, onFileSelectError, onFileChange }) => {
+const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) => {
   const fileInput = useRef(null);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
 
   const onDragEnter = () => fileInput.current.classList.add('dragover');
   const onDragLeave = () => fileInput.current.classList.remove('dragover');
@@ -27,7 +27,7 @@ const FileUploader = ({ title, onFileSelectError, onFileChange }) => {
 
   const fileRemove = () => {
     // const updatedFile = files.filter (file => file !== fileToRemove);
-    setFile(null);
+    setFile("");
     onFileChange(null);
   }
 
@@ -51,7 +51,8 @@ const FileUploader = ({ title, onFileSelectError, onFileChange }) => {
           <input
             type="file"
             accept=".jpeg, .jpg, .png, .docx, .pdf"
-            value=""
+            name={name}
+            value={value}
             onChange={handleFileInput}
             id="drop-file-input"
           />
