@@ -1,8 +1,8 @@
 import s from "./index.module.scss";
-import chat_data from "../../../utils/data/chats";
-import TextBubble from "../../../components/TextBubble";
-import AlertTab from "../../../components/AlertTab";
-import notification_data from "../../../utils/data/notifications";
+import chat_data from "../../utils/data/chats";
+import TextBubble from "../../components/TextBubble";
+import AlertTab from "../../components/AlertTab";
+import notification_data from "../../utils/data/notifications";
 import { useNavigate } from "react-router-dom";
 import profilepic from "../../../static/images/Peter.png";
 import { ReactComponent as VideoCall } from "../../../static/icons/video_call.svg";
@@ -18,9 +18,9 @@ import {
   PiMicrophoneSlashLight,
 } from "react-icons/pi";
 import { useEffect, useRef, useState } from "react";
-import addEmoji from "../../../utils/functions/addEmoji";
-import { openMedia, closeMedia } from "../../../utils/functions/controlMedia";
-import Message from "../../../utils/classes/Message";
+import addEmoji from "../../utils/functions/addEmoji";
+import { openMedia, closeMedia } from "../../utils/functions/controlMedia";
+import Message from "../../utils/classes/Message";
 
 
 const Chat = () => {

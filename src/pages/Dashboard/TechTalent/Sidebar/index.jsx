@@ -10,7 +10,7 @@ import {
   Analytics,
   Help,
   Settings,
-  Messages,
+  Notification,
   SavedJobs,
   Logout,
   Password,
@@ -58,9 +58,9 @@ const Sidebar = ({ profilePic, ...props }) => {
           <Dashboard />
           Dashboard
         </NavLink>
-        <NavLink end to="messages" className={`${s.dashboardItem} `}>
-          <Messages />
-          Messages
+        <NavLink end to="notifications" className={`${s.dashboardItem} `}>
+          <Notification />
+          Notifications
         </NavLink>
         <NavLink end to="profile" className={`${s.dashboardItem} `}>
           <MyProfile />

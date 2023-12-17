@@ -6,7 +6,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 
 import Explore from "./components/hero/Explore";
-import Chat from "./pages/Dashboard/Chat";
 import Dashboard from "./pages/Dashboard";
 import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
 import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile";
@@ -22,6 +21,8 @@ import EmailVerificationNotice from "./components/EmailVerificationNotice/index.
 import SelectAccountType from "./components/SelectAccountType";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import Overview from "./pages/Dashboard/Overview.jsx";
+import AlertTab from "./components/AlertTab/index.jsx";
+import notification_data from "./utils/data/notifications.js";
 
 function App() {
   return (
@@ -66,7 +67,8 @@ function App() {
         />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={ <Overview/> } />
-          <Route path="messages" element={<Chat />} />
+          {/* <Route path="messages" element={<Chat />} /> */}
+          <Route path="notifications" element={<AlertTab items={notification_data}/>} />
           <Route path="profile" element={<DashProfile />} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />

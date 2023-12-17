@@ -340,7 +340,7 @@ const RegistrationForm = ({ userType }) => {
                   }))
                 }
               />
-              <label htmlFor="privacy">
+              <label htmlFor="acceptedPrivacy">
                 I agree to the <Link to="./">Terms of service</Link> and{" "}
                 <Link to="./">Privacy Policy</Link>
               </label>

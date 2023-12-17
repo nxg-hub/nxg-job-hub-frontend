@@ -9,9 +9,11 @@
   overflow: hidden;
   position: relative;
   > img {
-    height: 50px;
-    width: 100px;
-    margin: 15px 20px;
+    height: 85px;
+    width: 136.42857px;
+    margin: auto;
+    display: flex;
+    justify-self: center;
   }
   .Profile {
     text-align: center;
@@ -35,6 +37,7 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
+      cursor: pointer;
     }
     >div {
       position: relative;
@@ -60,6 +63,10 @@
       }
     }
   }
+  .Settings{
+    background-color: #badced30;
+    border-radius: 5px;
+  }
   ul.list {
     padding-left: 20px;
     margin-top: 25px;
@@ -75,6 +82,12 @@
     &::-webkit-scrollbar-thumb {
       display: none;
     }
+    h2{
+      font-size: 18px;
+      color: #c5e8f560;
+
+    }
+
     .dashboardItem[aria-current="page"] {
       color: #2596be;
       background-color: #ffffff;
@@ -126,7 +139,8 @@
   }
   li.dashboardItem {
     cursor: auto;
-
+  
+    
     ul {
       height: 0;
       visibility: hidden;
@@ -155,7 +169,7 @@
       }
     }
   }
-  a.Logout {
+  li.Logout {
     width: 100%;
     margin-left: 20px;
     margin-top: auto;

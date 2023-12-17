@@ -2,20 +2,24 @@ import { useContext, useState } from "react";
 import s from "./index.module.scss";
 import {
   CiUser,
-  MdOutlineEdit,
   ChangeProfilePicture,
   MyProfile,
   Dashboard,
-  Applications,
-  Analytics,
+  MdOutlineEdit,
   Help,
   Settings,
-  Messages,
-  SavedJobs,
   Logout,
   Password,
   Terms,
   Privacy,
+  Wallet,
+  Notification,
+  JobPosts,
+  PostJobs,
+  Services,
+  Contract,
+  Applicants,
+  Interviews,
 } from "./SidebarIcons";
 import { PiCaretDown } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -39,7 +43,9 @@ const Sidebar = ({ profilePic, ...props }) => {
     // Navigate to the login page
     navigate("/login");
   };
-
+  const editProfile = () => {
+    // update role and other fields
+  };
   return (
     <div className={s.Sidebar}>
       <img src={logo} alt="logo" />
@@ -51,75 +57,102 @@ const Sidebar = ({ profilePic, ...props }) => {
           <ChangeProfilePicture title="Change profile picture" />
         </div>
         <strong>{user.firstName}</strong>
-        <p>Add role <MdOutlineEdit /></p>
+        <p onClick={editProfile}>
+          Edit profile <MdOutlineEdit />
+        </p>
       </div>
       <ul className={s.list}>
-        <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-          <Dashboard />
-          Dashboard
-        </NavLink>
-        <NavLink end to="messages" className={`${s.dashboardItem} `}>
-          <Messages />
-          Messages
-        </NavLink>
-        <NavLink end to="profile" className={`${s.dashboardItem} `}>
-          <MyProfile />
-          My Profile
-        </NavLink>
-        <NavLink end to="applications" className={`${s.dashboardItem} `}>
-          <Applications />
-          My Applications
-        </NavLink>
-        <NavLink end to="saved" className={`${s.dashboardItem} `}>
-          <SavedJobs fill="white" /> Saved Jobs
-        </NavLink>
-        <NavLink end to="analytics" className={`${s.dashboardItem} `}>
-          <Analytics />
-          Analytics
-        </NavLink>
-        <li className={`${s.dashboardItem} `}>
-          <div className={s.dropdownTitle}>
-            <Settings />
-            <span>
-              Settings
-              <PiCaretDown />
-            </span>
-          </div>
-          <ul>
-            <NavLink
-              end
-              to="password-settings"
-              className={`${s.dashboardItem} `}
-            >
-              {" "}
-              <Password /> Password Settings
-            </NavLink>
-            <NavLink end to="privacy" className={`${s.dashboardItem} `}>
-              {" "}
-              <Privacy /> Privacy
-            </NavLink>
-            <NavLink
-              end
-              to="terms-and-conditions"
-              className={`${s.dashboardItem} `}
-            >
-              {" "}
-              <Terms /> Terms and conditions
-            </NavLink>
-          </ul>
-        </li>
-        <NavLink end to="help" className={`${s.dashboardItem} `}>
-          <Help />
-          Help
-        </NavLink>
+        <h2>Engagements</h2>
+        <div className={s.Engagements}>
+          <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
+            <Dashboard />
+            Dashboard
+          </NavLink>
+          <NavLink end to="notifications" className={`${s.dashboardItem} `}>
+            <Notification />
+            Notifications
+          </NavLink>
+          <NavLink end to="wallet" className={`${s.dashboardItem} `}>
+            <Wallet />
+            Wallet
+          </NavLink>
+        </div>
+        <h2>Manage Hiring</h2>
+        <div className={s.Engagements}>
+          <NavLink end to="posts/create" className={`${s.dashboardItem} `}>
+            <PostJobs />
+            Post Jobs
+          </NavLink>
+          <NavLink end to="posts" className={`${s.dashboardItem} `}>
+            <JobPosts />
+            Job Posts
+          </NavLink>
+          <NavLink end to="applicants" className={`${s.dashboardItem} `}>
+            <Applicants />
+            Job Applicants
+          </NavLink>
+          <NavLink end to="interviews" className={`${s.dashboardItem} `}>
+            <Interviews />
+            Interviews
+          </NavLink>
+          <NavLink end to="services" className={`${s.dashboardItem} `}>
+            <Services fill="white" /> My Company Services
+          </NavLink>
+        </div>
+        <h2>Settings</h2>
+        <div className={s.Settings}>
+          <NavLink end to="profile" className={`${s.dashboardItem} `}>
+            <MyProfile />
+            My Profile
+          </NavLink>
+          <NavLink end to="contract" className={`${s.dashboardItem} `}>
+            <Contract />
+            Contract
+          </NavLink>
+          <li className={`${s.dashboardItem} `}>
+            <div className={s.dropdownTitle}>
+              <Settings />
+              <span>
+                Settings
+                <PiCaretDown />
+              </span>
+            </div>
+            <ul>
+              <NavLink
+                end
+                to="password-settings"
+                className={`${s.dashboardItem} `}
+              >
+                {" "}
+                <Password /> Password Settings
+              </NavLink>
+              <NavLink end to="privacy" className={`${s.dashboardItem} `}>
+                {" "}
+                <Privacy /> Privacy
+              </NavLink>
+              <NavLink
+                end
+                to="terms-and-conditions"
+                className={`${s.dashboardItem} `}
+              >
+                {" "}
+                <Terms /> Terms and conditions
+              </NavLink>
+          <NavLink end to="help" className={`${s.dashboardItem} `}>
+            <Help />
+            Help
+          </NavLink>
+            </ul>
+          </li>
+        </div>
       </ul>
-      <NavLink
-        className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <Logout />
-        Logout
-      </NavLink>
+          <li
+            className={`${s.dashboardItem} ${s.Logout}  `}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <Logout />
+            Logout
+          </li>
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
