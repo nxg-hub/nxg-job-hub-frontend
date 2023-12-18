@@ -31,6 +31,10 @@
         color: #f2d118;
         font-size: 45px;
       }
+      &.Info {
+        color: #2596be;
+        font-size: 45px;
+      }
     }
   }
   &.success {
@@ -43,6 +47,10 @@
   }
   &.warning {
     border-left-color: #f2d118;
+    animation: display 0.5s forwards linear;
+  }
+  &.info {
+    border-left-color: #2596be;
     animation: display 0.5s forwards linear;
   }
 }

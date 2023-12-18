@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Logo from '../../static/images/nxg-logo.png';
+import Logo from '../../../../static/images/nxg-logo.png';
 import FormStepper from './FormStepper';
-import Inputs from '../../components/accounts/Inputs';
+import Inputs from '../../../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
-import { recruiterPosition } from '../../utils/data/employer';
+import { recruiterPosition } from '../../../../utils/data/employer';
 import './employerprofile.scss';
 import axios from 'axios';
 
