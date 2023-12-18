@@ -25,7 +25,7 @@ function EmployerProfileForm() {
     companyWebsite:"",
     companyPhone:"",
     companyZipCode:"",
-    industry:"",
+    industryType:"",
     companySize:"",
     selectedVacancyOption:"",
     selectedBoard:""

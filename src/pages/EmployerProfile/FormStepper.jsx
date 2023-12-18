@@ -17,7 +17,7 @@ function FormStepper({ data, onStepChange }) {
       data.companyAddress === "" ||
       data.companyWebsite === "" ||
       data.companyPhone === "" ||
-      data.industry === ""
+      data.industryType === ""
     ) {
       alert("All fields must be filled");
     } else {
@@ -120,9 +120,9 @@ function FormStepper({ data, onStepChange }) {
             <div className="nation-state" style={{ display: "flex" }}>
               <Inputs
                 type="text"
-                name="industry"
+                name="industryType"
                 title="Type of Industry*"
-                value={data.industry}
+                value={data.industryType}
                 onChange={handleChange}
                 required
               />
