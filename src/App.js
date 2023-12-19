@@ -23,6 +23,8 @@ import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import Overview from "./pages/Dashboard/Overview.jsx";
 import AlertTab from "./components/AlertTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
+import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
+import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
 
 function App() {
   return (
@@ -66,10 +68,15 @@ function App() {
           element={<DashboardProfileForm />}
         />
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="" element={ <Overview/> } />
+          <Route path="" element={<Overview />} />
           {/* <Route path="messages" element={<Chat />} /> */}
-          <Route path="notifications" element={<AlertTab items={notification_data}/>} />
+          <Route path="notifications" element={<AlertTab items={notification_data} />} />
           <Route path="profile" element={<DashProfile />} />
+          <Route path="posts">
+            <Route path="" element={<JobPosts />} />
+            <Route path="create" element={<PostJobs />} />
+          </Route>
+          <Route path="applicants" element={<JobApplicants />} />
           <Route path="applications" element={<h2>My Applications </h2>} />
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
           <Route path="wallet" element={<Wallet />} />
