@@ -49,7 +49,6 @@ const RegistrationForm = ({ userType }) => {
   const [showEmailVerificationNotice, setShowEmailVerificationNotice] =
     useState(false);
   const [popup, showPopup] = useState(undefined);
-  const [signingIn, showSigningIn] = useState(false);
 
   // functions
   const closeModal = (e) => {
@@ -305,7 +304,7 @@ const RegistrationForm = ({ userType }) => {
               autoComplete="new-password"
               id="password"
               required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
               err={errors.password}
               value={formData.password}
             />
@@ -319,8 +318,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"confirmPassword"}
               err={errors.confirmPassword}
-              placeholder={"Re-enter password"}
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
               id="confirmPassword"
               autoComplete="confirm-password"
             />
