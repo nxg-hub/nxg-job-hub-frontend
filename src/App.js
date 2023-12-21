@@ -25,6 +25,7 @@ import AlertTab from "./components/AlertTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
+import JobCard from "./components/JobCard/index.jsx";
 
 function App() {
   return (
@@ -49,19 +50,20 @@ function App() {
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
-        {/* <Route
+        <Route
           path="test"
           element={
-            <SuccessModular
-              title="Verification Successful"
-              description="Congratulations your account has been verified successfully"
-              action={{
-                path: "/login",
-                text: " Login to your account",
-              }}
-            />
+            <JobCard
+            title={"Frontend Developer"}
+            applicants={0}
+              deadline={"1-04-2024"}
+              created_at={"1-04-2023"}
+            description={
+              " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
+            }
+          />
           }
-        /> */}
+        />
         <Route path="test" element={<PostJobs />} />
         <Route
           path="/tech-talent-profile-form"
