@@ -1,36 +1,40 @@
-// FormStepper.js
-
 import React from "react";
 import FormStepHeader from "./FormStepHeader";
 import Inputs from "../../../../components/accounts/Inputs";
 import { PhoneInput } from "react-international-phone";
 import "./employerprofile.scss";
 import { jobVacancy, boards } from "../../../../utils/data/employer";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-function FormStepper({ data, onStepChange }) {
-  const navigate = useNavigate();
-  const handleCompleteAccount = (e) => {
-    e.preventDefault();
-    if (
-      data.companyName === "" ||
-      data.companyAddress === "" ||
-      data.companyWebsite === "" ||
-      data.companyPhone === "" ||
-      data.industryType === ""
-    ) {
-      alert("All fields must be filled");
-    } else {
-      alert("Profile Information completed successfully.");
-      navigate("/dashboard");
-      console.log(data);
-    }
-  };
+function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    data[name] = value;
-    onStepChange();
+    // Convert company name to uppercase if it is the "companyName" field
+  const updatedValue = name === "companyName" ? value.toUpperCase() : value;
+    onCompanyDataChange((prevData) => ({
+      ...prevData,
+      [name]: updatedValue,
+    }));
+  };
+
+  const handleCompleteProfile= (e) => {
+    e.preventDefault();
+    if (
+      companyData.companyName === "" ||
+      companyData.companyAddress === "" ||
+      companyData.companyWebsite === "" ||
+      companyData.companyPhone === "" ||
+      companyData.industryType === ""
+    ) {
+      alert("All fields must be filled");
+    } else {
+      onCompleteProfile();
+      // alert("Profile Information completed successfully.");
+      // navigate("/dashboard");
+      console.log(companyData);
+    }
   };
 
   return (
@@ -49,7 +53,7 @@ function FormStepper({ data, onStepChange }) {
                 type="text"
                 name="companyName"
                 title="Company Name*"
-                value={data.companyName}
+                value={companyData.companyName}
                 onChange={handleChange}
                 placeholder="Enter your company name"
                 errormessage="Company name must be filled!"
@@ -61,7 +65,7 @@ function FormStepper({ data, onStepChange }) {
                 type="text"
                 name="companyAddress"
                 title="Company Address*"
-                value={data.companyAddress}
+                value={companyData.companyAddress}
                 onChange={handleChange}
                 placeholder="Enter your company's address"
                 errormessage="Company address must be filled!"
@@ -73,7 +77,7 @@ function FormStepper({ data, onStepChange }) {
                 type="url"
                 name="companyWebsite"
                 title="Company Website*"
-                value={data.companyWebsite}
+                value={companyData.companyWebsite}
                 onChange={handleChange}
                 placeholder="Enter your company website link"
                 errormessage="Company website must be filled!"
@@ -101,7 +105,7 @@ function FormStepper({ data, onStepChange }) {
                   name="companyPhone"
                   aria-label="tel"
                   defaultCountry="ng"
-                  value={data.companyPhone}
+                  value={companyData.companyPhone}
                   onChange={(value) => {
                     const e = { target: { name: "companyPhone", value } };
                     handleChange(e);
@@ -113,7 +117,7 @@ function FormStepper({ data, onStepChange }) {
                 type="text"
                 name="companyZipCode"
                 title="Zip Code"
-                value={data.companyZipCode}
+                value={companyData.companyZipCode}
                 onChange={handleChange}
               />
             </div>
@@ -122,7 +126,7 @@ function FormStepper({ data, onStepChange }) {
                 type="text"
                 name="industryType"
                 title="Type of Industry*"
-                value={data.industryType}
+                value={companyData.industryType}
                 onChange={handleChange}
                 required
               />
@@ -130,7 +134,7 @@ function FormStepper({ data, onStepChange }) {
                 type="text"
                 name="companySize"
                 title="Company Size"
-                value={data.companySize}
+                value={companyData.companySize}
                 onChange={handleChange}
               />
             </div>
@@ -150,9 +154,9 @@ function FormStepper({ data, onStepChange }) {
                   <label key={vacancy.value} className="rep-label">
                     <input
                       type="radio"
-                      name="selectedVacancyOption"
+                      name="vacancy"
                       value={vacancy.value}
-                      checked={data.selectedVacancyOption === vacancy.value}
+                      checked={companyData.vacancy === vacancy.value}
                       onChange={handleChange}
                       className="rep-radio"
                     />
@@ -172,8 +176,8 @@ function FormStepper({ data, onStepChange }) {
                 Where did you hear about us?
               </label>
               <select
-                name="selectedBoard"
-                value={data.selectedBoard}
+                name="board"
+                value={companyData.board}
                 onChange={handleChange}
               >
                 {boards.map((board, index) => (
@@ -187,7 +191,7 @@ function FormStepper({ data, onStepChange }) {
         </div>
       </div>
       <div className="rep-btn">
-        <button onClick={handleCompleteAccount}>
+        <button onClick={handleCompleteProfile}>
           Complete Employer Account
         </button>
       </div>

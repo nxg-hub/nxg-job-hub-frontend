@@ -1,5 +1,5 @@
 const qualifications = [
-    "PhD",
+    "PHD",
     "MSC",
     "MBBS",
     "BSC",
@@ -33,8 +33,8 @@ const levels = [
 const jobTypes = [
     "Volunteer",
     "Contract",
-    "Part-time",
-    "Full-time"
+    "Part_time",
+    "Full_time"
 ];
 
 const workModes = [

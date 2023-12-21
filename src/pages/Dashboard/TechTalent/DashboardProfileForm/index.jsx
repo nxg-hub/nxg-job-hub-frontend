@@ -100,48 +100,29 @@ function TechTalentProfileForm() {
     const handleProfileCompletion = async () => {
       // console.log(formData, 'Profile Completed');
         try {
-          // Save the form data
-          // console.log("Form Data received:", formData);
-          const ID = JSON.parse(window.localStorage.getItem('NXGJOBHUBLOGINKEYV1'));
-          if (!ID || !ID.authKey) {
+          const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+          if (!loginKey) {
             console.error('Authentication key not available.');
-           return;
+            return;
+          }
+          const { id, authKey } = JSON.parse(loginKey);
+          if(!id) {
+            console.error('User ID  or Auth key not available.');
+            return;
           }
 
-          const userInfo = JSON.parse(window.localStorage.getItem('user_info'));
-          if (!userInfo ) {
-            console.error('Authentication key not available.');
-           return;
+          const res = await axios.put(`https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/update-${id}`, JSON.stringify(formData),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: authKey,
+            },
           }
-  
-          const updateUrl = "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/update-{userInfo.id}";
-          
-          
-          // This code gets the user details
-          const userRes = await axios.get(
-            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
-            {
-              headers: {
-                "Content-Type": "application/json",
-                authorization: ID.authKey,
-              },
-            }
           );
-          
-          // Extracts the authorization key from the response headers
-          const authKey = userRes.headers.authorization;
-  
-          //Makes the update request
-          const updateRes = await axios.put(updateUrl, formData
-          // {
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     Authorization: authKey,
-          //   },
-          // }
-          );
+          console.log('Response Data:', res.data);
+
           navigate("/dashboard")
-          console.log(updateRes.data.id, 'Data received');
+          
         } catch (error) {
           alert("Error posting data:", error.response);
           console.error('Error posting data:', error.response);
