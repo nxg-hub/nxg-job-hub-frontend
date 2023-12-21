@@ -27,7 +27,7 @@ const Dashboard = () => {
   const [authKey, setAuth] = useState(undefined);
   const [loading, setLoading] = useState({
     type: "info",
-    message:"Fetching resources..."
+    message: "Fetching resources...",
   });
   const navigate = useNavigate();
   const DashboardTypes = {
@@ -50,12 +50,12 @@ const Dashboard = () => {
   useEffect(() => {
     const localdata =
       JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+      {};
 
     setAuth(localdata.authKey);
 
     if (localdata.authKey) {
-   
       axios
         .get(
           "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
@@ -65,17 +65,25 @@ const Dashboard = () => {
         )
         .then((res) => {
           setUser(res.data);
-          setLoading(undefined)
+          setLoading(undefined);
         })
-        .catch((err) => setLoading({
-          type: "danger",
-          message: "Failed to fetch user resources. Please try logging in again."
-        }));
+        .catch((err) =>
+          setLoading({
+            type: "danger",
+            message:
+              "Failed to fetch user resources. Please try logging in again.",
+          })
+        );
+    } else {
+      navigate("/login");
     }
-    else{navigate("/login");}
   }, [navigate, authKey]);
 
-  return loading? <Notice type={loading.type} message={loading.message} /> : DashboardTypes[user.userType];
+  return loading ? (
+    <Notice type={loading.type} message={loading.message} />
+  ) : (
+    DashboardTypes[user.userType]
+  );
 };
 
 export default Dashboard;

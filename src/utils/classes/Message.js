@@ -1,5 +1,5 @@
 class Message {
-  constructor(from, message, media, media_type) {
+  constructor( message, media, media_type) {
     this.from = "";
     this.message = message;
     this.media = media;
