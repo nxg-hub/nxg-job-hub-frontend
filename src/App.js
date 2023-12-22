@@ -4,7 +4,6 @@ import ProfileLanding from "./pages/ProfileLanding";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-
 import Explore from "./components/hero/Explore";
 import Dashboard from "./pages/Dashboard";
 import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
@@ -25,7 +24,6 @@ import AlertTab from "./components/AlertTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
-import JobCard from "./components/JobCard/index.jsx";
 
 function App() {
   return (
@@ -50,7 +48,7 @@ function App() {
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
-        <Route
+        {/* <Route
           path="test"
           element={
             <JobCard
@@ -63,7 +61,7 @@ function App() {
             }
           />
           }
-        />
+        /> */}
         <Route path="test" element={<PostJobs />} />
         <Route
           path="/tech-talent-profile-form"

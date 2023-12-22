@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import EngagementCard from "../../EngagementCard";
 import { Applicants, JobPosts } from "../../Sidebar/SidebarIcons";
 import JobCard from "../../../../../components/JobCard";
+import { tasks } from "../../../../../utils/data/employerTasks";
+
 const EmployerOverview = () => {
   const user = useContext(UserContext);
   console.log(user);
@@ -41,34 +43,49 @@ const EmployerOverview = () => {
             value={0}
           />
         </div>
-        <div className={s.Tasks}></div>
+        <div className={s.Tasks}>
+          <header>
+            <p>New</p>
+            <p>Updated </p>
+            <p>Completed</p>
+          </header>
+       
+              {tasks.map((task, id) => (
+                <div className={s.task} key={id}>
+                  <p>{task.type}</p>
+                  <small>{task.date}</small>
+                </div>
+              ))}
+        </div>
         <div className={s.Interviews}></div>
       </div>
-      <h2>Recently Posted Jobs:</h2>
-      <JobCard
-        title={"Frontend Developer"}
-        applicants={0}
-        deadline={"1-04-2024"}
-        description={
-          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-        }
-      />{" "}
-      <JobCard
-        title={"Frontend Developer"}
-        applicants={0}
-        deadline={"1-04-2024"}
-        description={
-          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-        }
-      />{" "}
-      <JobCard
-        title={"Frontend Developer"}
-        applicants={0}
-        deadline={"1-04-2024"}
-        description={
-          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-        }
-      />
+      <div className={s.Recently}>
+        <h2>Recently Posted Jobs:</h2>
+        <JobCard
+          title={"Frontend Developer"}
+          applicants={0}
+          deadline={"1-04-2024"}
+          description={
+            " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
+          }
+        />{" "}
+        <JobCard
+          title={"Frontend Developer"}
+          applicants={0}
+          deadline={"1-04-2024"}
+          description={
+            " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
+          }
+        />{" "}
+        <JobCard
+          title={"Frontend Developer"}
+          applicants={0}
+          deadline={"1-04-2024"}
+          description={
+            " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
+          }
+        />
+      </div>
       <div className="employer-stats">
         <Statistics />
         <CompanyProfile />
