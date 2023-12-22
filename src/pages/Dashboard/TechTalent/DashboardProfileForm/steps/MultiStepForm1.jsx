@@ -1,11 +1,16 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import Inputs from '../../../../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import axios from 'axios';
 
 
 function MultiStepForm1({formData, setFormData, onComplete}) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
     const countryOptions = useMemo(() => {
         return countryList().getData().map((country) => ({
           label: country.label,
@@ -26,6 +31,39 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
             countryCode: selectedOption.value,
         })
     };
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+            if (!loginKey) {
+              console.error('Authentication key not available.');
+              return;
+            }
+            const { authKey} = JSON.parse(loginKey);
+            if (!authKey) {
+              console.error('Auth key not available.');
+              return;
+            }
+    
+            const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+              headers: {
+                authorization: authKey,
+              },
+            });
+            const userData = response.data;
+            // setUser(userData);
+            setFirstName(userData.firstName);
+            setLastName(userData.lastName);
+            setEmail(userData.email);
+            setPhoneNumber(userData.phoneNumber);
+           
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        };
+        fetchUserData(); // Invoke the fetchUserData function
+      }, []);
 
     useEffect(() => {
         const submitForm = () => {
@@ -50,21 +88,17 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
                 type='text'
                 name="firstName"
                 title='First Name*'
-                value={formData.firstName}
-                onChange={handleChange}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Enter your first name"
-                errormessage='First name must be filled!'
-                required
                 />
                 <Inputs
                 type='text'
                 name="lastName"
                 title='Last Name*'
-                value={formData.lastName}
-                onChange={handleChange}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 placeholder="Enter your last name"
-                errormessage='Last name must be filled!'
-                required
                 />
             </div>
             <div className="email">
@@ -72,11 +106,9 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
                 type='email'
                 name="email"
                 title='E-mail Address'
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                errormessage='Email must include special characters like @ and .!'
-                required
                 />
             </div>
             <div className="tech-pro-phone">
@@ -86,12 +118,8 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
                     name="phone"
                     aria-label="tel"
                     defaultCountry="ng"
-                    value={formData.phone}
-                    onChange={(value) => {
-                        const e = { target: { name: "phone", value } };
-                        handleChange(e);
-                    }}
-                    required
+                    value={phoneNumber}
+                    onChange={(value) => setPhoneNumber(value)}
                 />
             </div>
             <div className="tech-pro-countrycode">

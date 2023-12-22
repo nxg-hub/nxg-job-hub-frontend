@@ -18,5 +18,4 @@ const Employer = () => {
   );
 };
 
-
-export default Employer
+export default Employer;
