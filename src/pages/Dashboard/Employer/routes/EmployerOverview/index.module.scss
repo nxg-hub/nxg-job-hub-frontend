@@ -25,19 +25,31 @@
     display: grid;
     padding: 20px 0px;
     grid-template-columns: 1fr 2fr 2fr;
+    grid-auto-rows: 1fr;
     gap: 10px;
     > div {
-      box-shadow: 0px 0px 5px #d7d7d7;
-      // height: 150px;
-      // background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      h3{
+        // height: 20px;
+        display: inline;
+        margin-bottom: 15px;
+        color: #2596be;
+      }
+      span {
+        overflow-x: hidden;
+        box-shadow: 0px 0px 5px #d7d7d7;
+        height: 100%;
+      }
     }
     .Engagements {
-      // background-color: black;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .Tasks {
+    .Tasks,
+    .Interviews {
       background-color: white;
       overflow-x: hidden;
       padding: 5px;

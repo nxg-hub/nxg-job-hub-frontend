@@ -10,6 +10,7 @@ import EngagementCard from "../../EngagementCard";
 import { Applicants, JobPosts } from "../../Sidebar/SidebarIcons";
 import JobCard from "../../../../../components/JobCard";
 import { tasks } from "../../../../../utils/data/employerTasks";
+import Swiper, { Swiper2 } from "./Swiper";
 
 const EmployerOverview = () => {
   const user = useContext(UserContext);
@@ -21,7 +22,9 @@ const EmployerOverview = () => {
         <Link to="posts/create">Post Jobs</Link>
       </div>
       <div className={s.Summary}>
-        <div className={s.Engagements}>
+        <div>
+          <h3>Engagements</h3>
+        <span className={s.Engagements}>
           <EngagementCard
             logo={<JobPosts fill="#006A90" />}
             title={"Jobs Posted"}
@@ -42,22 +45,20 @@ const EmployerOverview = () => {
             title={"Shortlisted"}
             value={0}
           />
+        </span>
+     </div>
+        <div>
+          <h3>Tasks</h3>
+        <span className={s.Tasks}>
+          <Swiper />
+        </span>
+       </div>
+        <div>
+          <h3>Interviews</h3>
+        <span className={s.Interviews}>
+          <Swiper2 />
+        </span>
         </div>
-        <div className={s.Tasks}>
-          <header>
-            <p>New</p>
-            <p>Updated </p>
-            <p>Completed</p>
-          </header>
-       
-              {tasks.map((task, id) => (
-                <div className={s.task} key={id}>
-                  <p>{task.type}</p>
-                  <small>{task.date}</small>
-                </div>
-              ))}
-        </div>
-        <div className={s.Interviews}></div>
       </div>
       <div className={s.Recently}>
         <h2>Recently Posted Jobs:</h2>
