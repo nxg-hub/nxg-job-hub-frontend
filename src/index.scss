@@ -14,4 +14,25 @@
   height: 100%;
   object-fit: contain;
 }
+.swiper-pagination{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.swiper-pagination-bullet{
+  border-radius: 3px !important;
+  // padding:200px;
+  width: min-content !important;
+  height: min-content !important;
+  color: black !important;
+  background-color: transparent !important;
+  padding: 4px 8px;
+  z-index:2;
+  position: relative;
+  opacity: 0.6 !important
+};
+.swiper-pagination-bullet-active {
+  color: white !important;
+  background-color: #2596BE !important;
+  opacity: 1 !important
 
+};

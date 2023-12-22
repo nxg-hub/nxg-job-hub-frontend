@@ -9,9 +9,11 @@
   overflow: hidden;
   position: relative;
   > img {
-    height: 50px;
-    width: 100px;
-    margin: 15px 20px;
+    height: 85px;
+    width: 136.42857px;
+    margin: auto;
+    display: flex;
+    justify-self: center;
   }
   .Profile {
     text-align: center;
@@ -30,13 +32,13 @@
       display: block;
     }
 
-    p{
+    p {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
     }
-    >div {
+    > div {
       position: relative;
       margin: auto;
       width: max-content;
@@ -52,7 +54,7 @@
           width: 100%;
         }
       }
-      >svg {
+      > svg {
         position: absolute;
         bottom: 0px;
         right: -5px;
