@@ -4,18 +4,16 @@ import Inputs from "../../../../components/accounts/Inputs";
 import { PhoneInput } from "react-international-phone";
 import "./employerprofile.scss";
 import { jobVacancy, boards } from "../../../../utils/data/employer";
-// import { useNavigate } from "react-router-dom";
 
 function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
-  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     // Convert company name to uppercase if it is the "companyName" field
-  const updatedValue = name === "companyName" ? value.toUpperCase() : value;
+  // const updatedValue = name === "companyName" ? value.toUpperCase() : value;
     onCompanyDataChange((prevData) => ({
       ...prevData,
-      [name]: updatedValue,
+      [name]: value,
     }));
   };
 
@@ -31,9 +29,6 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
       alert("All fields must be filled");
     } else {
       onCompleteProfile();
-      // alert("Profile Information completed successfully.");
-      // navigate("/dashboard");
-      console.log(companyData);
     }
   };
 
@@ -176,8 +171,8 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
                 Where did you hear about us?
               </label>
               <select
-                name="board"
-                value={companyData.board}
+                name="jobBoard"
+                value={companyData.jobBoard}
                 onChange={handleChange}
               >
                 {boards.map((board, index) => (

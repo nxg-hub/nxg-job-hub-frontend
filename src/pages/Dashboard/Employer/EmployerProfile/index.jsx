@@ -9,7 +9,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function EmployerProfileForm() {
-  const [user, setUser] = useState(null); // Initialize user state as null
   const [loading, setLoading] = useState(true); // Add loading state
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,9 +26,9 @@ function EmployerProfileForm() {
           setLoading(false);
           return;
         }
-        const { id, authKey } = JSON.parse(loginKey);
-        if (!id || !authKey) {
-          console.error('User ID or Auth key not available.');
+        const { authKey, id } = JSON.parse(loginKey);
+        if (!authKey || !id) {
+          console.error('Auth key or user id not available.');
           setLoading(false);
           return;
         }
@@ -40,7 +39,6 @@ function EmployerProfileForm() {
           },
         });
         const userData = response.data;
-        setUser(userData);
         setFirstName(userData.firstName);
         setLastName(userData.lastName);
         setEmail(userData.email);
@@ -52,7 +50,7 @@ function EmployerProfileForm() {
       }
     };
     fetchUserData(); // Invoke the fetchUserData function
-  }, [user]);
+  }, []);
   
 
   // Initial state for the first form
@@ -61,11 +59,11 @@ function EmployerProfileForm() {
     // lastName: '',   
     // email: '',      
     // phoneNumber: '',
-    address: '',
+    // address: '',
     country: '',
-    nationality: '',
-    state: '',
-    zipCode: '',
+    // nationality: '',
+    // state: '',
+    // zipCode: '',
     position: '',
   });
 
@@ -74,12 +72,12 @@ function EmployerProfileForm() {
     companyName: '',
     companyAddress: '',
     companyWebsite: '',
-    // companyPhone: '',
+    companyPhone: '',
     // companyZipCode: '',
     industryType: '',
     companySize: '',
     // vacancy: '',
-    // board: '',
+    jobBoard: '',
   });
 
   const [errors, setErrors] = useState({ data: "" });
@@ -91,15 +89,11 @@ function EmployerProfileForm() {
   const handleStep = () => {
     if (step === 0) {
       // Handle validation or any additional logic for the first step
-      // if (
-      //   personalData.address === '' ||
-      //   personalData.country === '' ||
-      //   personalData.position === '' 
-      // ) {
-      //   alert('All fields must be filled');
-      //   setErrors({ data: 'All fields must be filled' });
-      //   return;
-      // }
+      if (!personalData.country || !personalData.position) {
+        alert('All fields must be filled');
+        setErrors({ data: 'All fields must be filled' });
+        return;
+      }
     }
     setStep(step + 1);
     console.log(personalData);
@@ -118,14 +112,21 @@ function EmployerProfileForm() {
         console.error('Authentication key not available.');
         return;
       }
-      const { id, authKey } = JSON.parse(loginKey);
-      if(!id || !authKey) {
-        console.error('User ID  or Auth key not available.');
+      const { authKey } = JSON.parse(loginKey);
+      if(!authKey) {
+        console.error('Auth key not available.');
         return;
       }
-      // console.log('Request Data:', combinedData);
 
-      const res = await axios.patch(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${id}`, combinedData,
+      const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer", {
+        headers: {
+          authorization: authKey,
+        }
+      });
+      const employerId = response.data.employerID;
+      console.log(employerId);
+
+      const res = await axios.patch(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, combinedData,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -140,8 +141,8 @@ function EmployerProfileForm() {
       navigate('/dashboard');
 
     } catch (error) {
-      console.error('Error posting data:', error.response);
-      console.log('Error posting data:', error.response);
+      console.log('Error posting data:', error.response.data.error || error);
+      setErrors({ data: 'Unable to update user data.' });
     }
   };
 
