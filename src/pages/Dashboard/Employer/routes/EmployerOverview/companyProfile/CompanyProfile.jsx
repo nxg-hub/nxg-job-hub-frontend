@@ -31,9 +31,9 @@ export const CompanyServices = () => {
         <h3>Services</h3>
         <div className='service-lists'>
            {services.map((service, index) => (
-            <div className='service-list'>
+            <div className='service-list' key={index}>
                 <FaSquareFull fontSize={14} style={{color:'#2596BE'}}/>
-                <p key={index}>
+                <p>
                     {service}
                 </p>
             </div>

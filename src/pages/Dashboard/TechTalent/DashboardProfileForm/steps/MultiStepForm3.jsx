@@ -13,9 +13,12 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
     }));
 
     const handleChange = (selectedOption, name) => {
+        const formattedValue = name === 'workMode' 
+        ? selectedOption.value.toUpperCase()
+        : selectedOption.value;
         setFormData({
             ...formData,
-            [name]: selectedOption.value,
+            [name]: formattedValue,
         });
     }
 

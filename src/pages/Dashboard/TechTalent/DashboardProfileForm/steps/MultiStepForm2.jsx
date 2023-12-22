@@ -1,14 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import Inputs from '../../../../../components/accounts/Inputs';
 import { certifications, levels, qualifications, jobTypes, experience, jobs } from '../../../../../utils/data/tech-talent';
 import '../multiStep.scss';
 
 function MultiStepForm2({formData, setFormData, onComplete}) {
+   
     const handleChange = (selectedOption, name) => {
+        let formattedValue = selectedOption.value;
+        if (name === 'highestQualification' || name === 'professionalCert' || name === 'jobType' || name === 'experienceLevel' || name === 'job') {
+            formattedValue = formattedValue.toUpperCase();
+        } else if (name === 'yearsOfExperience') {
+            // Convert yearsOfExperience to a number
+            // Extract the minimum value from the range (e.g., "0 - 3" becomes 0)
+            const rangeValues = formattedValue.split(' - ');
+            formattedValue = parseInt(rangeValues[0], 10);
+
+            // Update the value in experienceOptions
+            const updatedExperienceOptions = experienceOptions.map(option => {
+                if (option.value === selectedOption.value) {
+                return { ...option, value: formattedValue, label: formattedValue.toString() };
+                }
+                return option;
+            });
+        
+            // Set the updated options
+            setExperienceOptions(updatedExperienceOptions);
+        }
         setFormData({
             ...formData,
-            [name]: selectedOption.value,
+            [name]: formattedValue,
           });
     };
 
@@ -32,18 +53,18 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
         value: professionalCert, 
         label: professionalCert, 
     }));
-    const levelOptions = levels.map((yearsOfExperience) => ({
-        value: yearsOfExperience, 
-        label: yearsOfExperience, 
+    const levelOptions = levels.map((experienceLevel) => ({
+        value: experienceLevel, 
+        label: experienceLevel, 
     }));
     const jobsOptions = jobs.map((job) => ({
         value: job, 
         label: job, 
     }));
-    const experienceOptions = experience.map((experienceLevel) => ({
-        value: experienceLevel, 
-        label: experienceLevel, 
-    }));
+    const [experienceOptions, setExperienceOptions] = useState(experience.map((yearsOfExperience) => ({
+        value: yearsOfExperience, 
+        label: yearsOfExperience, 
+    })));
 
     useEffect(() => {
         const submitForm = () => {
@@ -67,7 +88,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
                 </div>
                 <div className="tech-pro-qualification" id='tech-experience'>
                     <label>Years of work experience*</label>
-                    <Select options={experienceOptions} value={formData.experienceLevel ? { label: formData.experienceLevel, value: formData.experienceLevel } : null} onChange={(selectedOption) => handleChange(selectedOption, 'experienceLevel')} />
+                    <Select options={experienceOptions} value={formData.yearsOfExperience ? { label: formData.yearsOfExperience, value: formData.yearsOfExperience } : null} onChange={(selectedOption) => handleChange(selectedOption, 'yearsOfExperience')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Professional Certification</label>
@@ -89,7 +110,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Level of Experience in Job Interest*</label>
-                    <Select options={levelOptions} value={formData.yearsOfExperience ? { label: formData.yearsOfExperience, value: formData.yearsOfExperience } : null} onChange={(selectedOption) => handleChange(selectedOption, 'yearsOfExperience')} />
+                    <Select options={levelOptions} value={formData.experienceLevel ? { label: formData.experienceLevel, value: formData.experienceLevel } : null} onChange={(selectedOption) => handleChange(selectedOption, 'experienceLevel')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Type of Job*</label>

@@ -7,7 +7,7 @@ export const CustomLegend = (props) =>{
   return (
     <div className='custom-legend'>
         {payload.map((entry, index) => (
-            <div style={{display:'flex', alignItems:'start', paddingLeft:'0.3rem'}}>
+            <div key={`item-${index}`} style={{display:'flex', alignItems:'start', paddingLeft:'0.3rem'}}>
                 <FaSquareFull fontSize={16} color={colors[index]} style={{marginTop:'0.25rem'}}/>
                 <p key={`item-${index}`} style={{color:'#000', fontSize:'14px', fontWeight:'400',lineHeight:'20px', marginLeft:'0.3rem'}}>
                     {entry.value}
@@ -25,7 +25,7 @@ export const CustomLegend1 = (props) =>{
     <div className='custom-legend1'>
         <span style={{color:'#000', fontSize:'17px', fontWeight:'400',lineHeight:'32px' }} >Key - </span>
         {payload.map((entry, index) => (
-            <div style={{display:'block', alignItems:'center', marginRight:'0.3rem', marginTop:'-0.2rem', width:'100%', maxWidth:'80px'}}>
+            <div key={`item-${index}`} style={{display:'block', alignItems:'center', marginRight:'0.3rem', marginTop:'-0.2rem', width:'100%', maxWidth:'80px'}}>
                 <FaSquareFull fontSize={16} color={colors[index]} />
                 <p key={`item-${index}`} style={{color:'#000', fontSize:'14px', fontWeight:'400',lineHeight:'20px', marginTop:'-0.3rem', width:'60%'}}>
                     {entry.value}

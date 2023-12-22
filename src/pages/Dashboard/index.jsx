@@ -12,6 +12,7 @@ export const UserContext = createContext({
   lastName: "",
   dateOfBirth: "",
   email: "",
+  phoneNumber:"",
   userType: "",
 });
 
@@ -21,6 +22,7 @@ const Dashboard = () => {
     lastName: "",
     dateOfBirth: "",
     email: "",
+    phoneNumber:""
   });
   const [authKey, setAuth] = useState(undefined);
   const [loading, setLoading] = useState({

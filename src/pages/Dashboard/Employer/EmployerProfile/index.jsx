@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../../../static/images/nxg-logo.png';
 import FormStepper from './FormStepper';
 import Inputs from '../../../../components/accounts/Inputs';
@@ -6,64 +6,156 @@ import { PhoneInput } from 'react-international-phone';
 import { recruiterPosition } from '../../../../utils/data/employer';
 import './employerprofile.scss';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function EmployerProfileForm() {
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    phone: "",
-    country: "",
-    nationality: "",
-    state: "",
-    zipCode: "",
-    selectedOption: "", 
-    companyName: "",
-    companyAddress: "",
-    companyWebsite:"",
-    companyPhone:"",
-    companyZipCode:"",
-    industry:"",
-    companySize:"",
-    selectedVacancyOption:"",
-    selectedBoard:""
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+        if (!loginKey) {
+          console.error('Authentication key not available.');
+          setLoading(false);
+          return;
+        }
+        const { authKey, id } = JSON.parse(loginKey);
+        if (!authKey || !id) {
+          console.error('Auth key or user id not available.');
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+          headers: {
+            authorization: authKey,
+          },
+        });
+        const userData = response.data;
+        setFirstName(userData.firstName);
+        setLastName(userData.lastName);
+        setEmail(userData.email);
+        setPhoneNumber(userData.phoneNumber);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setLoading(false);
+      }
+    };
+    fetchUserData(); // Invoke the fetchUserData function
+  }, []);
+  
+
+  // Initial state for the first form
+  const [personalData, setPersonalData] = useState({
+    // firstName: '',  
+    // lastName: '',   
+    // email: '',      
+    // phoneNumber: '',
+    // address: '',
+    country: '',
+    // nationality: '',
+    // state: '',
+    // zipCode: '',
+    position: '',
+  });
+
+  // Initial state for the second form
+  const [companyData, setCompanyData] = useState({
+    companyName: '',
+    companyAddress: '',
+    companyWebsite: '',
+    companyPhone: '',
+    // companyZipCode: '',
+    industryType: '',
+    companySize: '',
+    // vacancy: '',
+    jobBoard: '',
   });
 
   const [errors, setErrors] = useState({ data: "" });
 
-  const handleChange = (e) => {
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  const handleStep = () => {
+    if (step === 0) {
+      // Handle validation or any additional logic for the first step
+      if (!personalData.country || !personalData.position) {
+        alert('All fields must be filled');
+        setErrors({ data: 'All fields must be filled' });
+        return;
+      }
+    }
+    setStep(step + 1);
+    console.log(personalData);
+  };
+
+  const handleCompleteProfile = async () => {
+    try {
+      // Combine data from both forms
+      const combinedData = {
+        ...personalData,
+        ...companyData,
+      };
+
+      const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+      if (!loginKey) {
+        console.error('Authentication key not available.');
+        return;
+      }
+      const { authKey } = JSON.parse(loginKey);
+      if(!authKey) {
+        console.error('Auth key not available.');
+        return;
+      }
+
+      const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer", {
+        headers: {
+          authorization: authKey,
+        }
+      });
+      const employerId = response.data.employerID;
+      console.log(employerId);
+
+      const res = await axios.patch(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, combinedData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authKey,
+        },
+      }
+      );
+      console.log('Response Data:', res.data);
+
+      // Reset errors and navigate on successful submission
+      setErrors({ data: 'Unable to update user data.' });
+      navigate('/dashboard');
+
+    } catch (error) {
+      console.log('Error posting data:', error.response.data.error || error);
+      setErrors({ data: 'Unable to update user data.' });
+    }
+  };
+
+  const handlePersonalDataChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
+    setPersonalData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleStep = async (e) => {
-    e.preventDefault();
-    // Check if all required fields are filled
-    if (
-      data.firstName === "" ||
-      data.lastName === "" ||
-      data.email === "" ||
-      data.phone === "" ||
-      data.nationality === ""
-    ) {
-        alert('All fields must be filled');
-      setErrors({ data: 'All fields must be filled' });
-    } else {
-      try {
-        const res = await axios.post("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer", data);
-        console.log(res.data, 'Data received');
-        setStep(step + 1);
-      } catch (error) {
-        alert("Error posting data:", error.response);
-        console.error('Error posting data:', error.response);
-        console.log('Error posting data:', error.response);
-      }
-    }
+  const handleCompanyDataChange = (updatedCompanyData) => {
+    setCompanyData(updatedCompanyData);
   };
 
   return (
@@ -91,21 +183,17 @@ function EmployerProfileForm() {
                   type='text'
                   name="firstName"
                   title='First Name*'
-                  value={data.firstName}
-                  onChange={handleChange}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Enter your first name"
-                  errormessage='First name must be filled!'
-                  required
                 />
                 <Inputs
                   type='text'
                   name="lastName"
                   title='Last Name*'
-                  value={data.lastName}
-                  onChange={handleChange}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   placeholder="Enter your last name"
-                  errormessage='Last name must be filled!'
-                  required
                 />
               </div>
               <div className="email">
@@ -113,11 +201,9 @@ function EmployerProfileForm() {
                   type='email'
                   name="email"
                   title='E-mail Address'
-                  value={data.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  errormessage='Email must include special characters like @ and .!'
-                  required
                 />
               </div>
               <div className="phone-address" style={{ textAlign: "start" }}>
@@ -125,23 +211,19 @@ function EmployerProfileForm() {
                   <label>Phone Number*</label>
                   <PhoneInput
                     inputStyle={{ backgroundColor: '#ffffff', border: '0.06rem solid #c9c9c9', margin: '0.55rem 0', padding: '0.9rem 0.8rem', width: '25.1rem', height: '41px', fontSize: '.7rem', fontWeight: "400", fontFamily: "Montserrat", borderTopRightRadius: '0.4rem', borderBottomRightRadius: '0.4rem', color: "#c9c9c9" }}
-                    name="phone"
+                    name="phoneNumber"
                     aria-label="tel"
                     defaultCountry="ng"
-                    value={data.phone}
-                    onChange={(value) => {
-                      const e = { target: { name: "phone", value } };
-                      handleChange(e);
-                    }}
-                    required
+                    value={phoneNumber}
+                    onChange={(value) => setPhoneNumber(value)}
                   />
                 </div>
                 <Inputs
                   type='text'
                   name="address"
                   title='Home Address'
-                  value={data.address}
-                  onChange={handleChange}
+                  value={personalData.address}
+                  onChange={handlePersonalDataChange}
                   placeholder="Enter your home address"
                 />
               </div>
@@ -150,8 +232,8 @@ function EmployerProfileForm() {
                   type='text'
                   name="nationality"
                   title='Nationality*'
-                  value={data.nationality}
-                  onChange={handleChange}
+                  value={personalData.nationality}
+                  onChange={handlePersonalDataChange}
                   placeholder="Enter your nationality"
                   required
                 />
@@ -159,8 +241,8 @@ function EmployerProfileForm() {
                   type='text'
                   name="state"
                   title='State/District'
-                  value={data.state}
-                  onChange={handleChange}
+                  value={personalData.state}
+                  onChange={handlePersonalDataChange}
                   placeholder="Enter your State/District"
                 />
               </div>
@@ -169,16 +251,16 @@ function EmployerProfileForm() {
                   type='text'
                   name="country"
                   title='Country'
-                  value={data.country}
-                  onChange={handleChange}
+                  value={personalData.country}
+                  onChange={handlePersonalDataChange}
                   placeholder="Enter your country"
                 />
                 <Inputs
                   type='text'
                   name="zipCode"
                   title='Zip Code'
-                  value={data.zipCode}
-                  onChange={handleChange}
+                  value={personalData.zipCode}
+                  onChange={handlePersonalDataChange}
                   placeholder="Enter zip code"
                 />
               </div>
@@ -189,10 +271,10 @@ function EmployerProfileForm() {
                         <label key={position.value} className='rep-label'>
                         <input
                             type="radio"
-                            name="selectedOption"
+                            name="position"
                             value={position.value}
-                            checked={data.selectedOption === position.value}
-                            onChange={handleChange}
+                            checked={personalData.position === position.value}
+                            onChange={handlePersonalDataChange}
                             className='rep-radio'
                         />
                         <span>{position.label}</span>
@@ -207,7 +289,7 @@ function EmployerProfileForm() {
           </div>
         </div>
       )}
-      {step > 0 && <FormStepper data={data} onStepChange={handleStep} />}
+      {step > 0 && <FormStepper personalData={personalData} companyData={companyData} onPersonalDataChange={handlePersonalDataChange} onCompanyDataChange={handleCompanyDataChange} onCompleteProfile={handleCompleteProfile}/>}
     </div>
   )
 }
