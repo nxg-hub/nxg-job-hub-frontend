@@ -1,70 +1,104 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import Inputs from '../../../../../components/accounts/Inputs';
 import { PhoneInput } from 'react-international-phone';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import axios from 'axios';
 
-function MultiStepForm1() {
-    const [countryCode, setCountryCode] = useState("")
-    const options = useMemo(() => {
-        const countryOptions = countryList().getData();
-        // Modify options to include both label and value (country code)
-        const modifiedOptions = countryOptions.map((country) => ({
-          label: `${country.label}`,
-          value:` ${country.value}`,
+
+function MultiStepForm1({formData, setFormData, onComplete}) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+    const countryOptions = useMemo(() => {
+        return countryList().getData().map((country) => ({
+          label: country.label,
+          value: country.value,
         }));
-        return modifiedOptions;
-    }, []);
-
-    const [data, setData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        countryCode: "",
-        zipCode: "",
-        address: "",
-        qualification: "",
-        certification:"",
-        level:"",
-        levelExperience:"",
-        jobType:""
-
-    });
+      }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setData({
-          ...data,
+        setFormData({
+          ...formData,
           [name]: value
         });
     };
     const handleCode = (selectedOption) => {
-        setCountryCode(selectedOption.value);
+        setFormData({
+            ...formData,
+            countryCode: selectedOption.value,
+        })
     };
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+            if (!loginKey) {
+              console.error('Authentication key not available.');
+              return;
+            }
+            const { authKey} = JSON.parse(loginKey);
+            if (!authKey) {
+              console.error('Auth key not available.');
+              return;
+            }
+    
+            const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+              headers: {
+                authorization: authKey,
+              },
+            });
+            const userData = response.data;
+            // setUser(userData);
+            setFirstName(userData.firstName);
+            setLastName(userData.lastName);
+            setEmail(userData.email);
+            setPhoneNumber(userData.phoneNumber);
+           
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        };
+        fetchUserData(); // Invoke the fetchUserData function
+      }, []);
+
+    useEffect(() => {
+        const submitForm = () => {
+          // Make sure the form data is valid before calling onComplete
+          if (formData.firstName && formData.lastName && formData.email && formData.countryCode) {
+            onComplete(formData);
+          }
+        };
+    
+        submitForm(); // Call the submitForm function directly within useEffect
+    
+        // You can include other dependencies if needed
+      }, [formData, onComplete]);
+    
+
+
   return (
     <div>
-        <form className="tech-pro-form">
+        <form className="tech-pro-form" >
             <div className='rep-fullname'>
                 <Inputs
                 type='text'
                 name="firstName"
                 title='First Name*'
-                value={data.firstName}
-                onChange={handleChange}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Enter your first name"
-                errormessage='First name must be filled!'
-                required
                 />
                 <Inputs
                 type='text'
                 name="lastName"
                 title='Last Name*'
-                value={data.lastName}
-                onChange={handleChange}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 placeholder="Enter your last name"
-                errormessage='Last name must be filled!'
-                required
                 />
             </div>
             <div className="email">
@@ -72,11 +106,9 @@ function MultiStepForm1() {
                 type='email'
                 name="email"
                 title='E-mail Address'
-                value={data.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                errormessage='Email must include special characters like @ and .!'
-                required
                 />
             </div>
             <div className="tech-pro-phone">
@@ -86,34 +118,30 @@ function MultiStepForm1() {
                     name="phone"
                     aria-label="tel"
                     defaultCountry="ng"
-                    value={data.phone}
-                    onChange={(value) => {
-                        const e = { target: { name: "phone", value } };
-                        handleChange(e);
-                    }}
-                    required
+                    value={phoneNumber}
+                    onChange={(value) => setPhoneNumber(value)}
                 />
             </div>
             <div className="tech-pro-countrycode">
                 <label>Country Code*</label>
-                <Select options={options} placeholder="Select" value={countryCode ? { label: countryCode, value: countryCode } : null} onChange={handleCode}/>
+                <Select options={countryOptions} placeholder="Select" value={formData.countryCode ? { label: formData.countryCode, value: formData.countryCode } : null} onChange={handleCode}/>
             </div>
             <div className="tech-pro-location">
                 <Inputs
-                type='text'
-                name="Current Location*"
-                title='Current Location'
-                value={data.zipCode}
-                onChange={handleChange}
-                placeholder="Enter your zip code"
+                    type='text'
+                    name="zipCode"
+                    title='Current Location*'
+                    value={formData.zipCode}
+                    onChange={handleChange}
+                    placeholder="Enter your zip code"
                 />
             </div>
             <div className="tech-pro-address">
                 <Inputs
                 type='text'
-                name="address"
+                name="residentialAddress"
                 title='Residential Address'
-                value={data.address}
+                value={formData.residentialAddress}
                 onChange={handleChange}
                 placeholder="Enter your home address"
                 />

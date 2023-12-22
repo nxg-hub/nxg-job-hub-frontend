@@ -1,6 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
+import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { jobsDetails, chosen } from './Datas';
 import { MdLocationPin } from 'react-icons/md';
@@ -13,7 +13,8 @@ const JobCards = () => {
         <Swiper
           freeMode={true}
           grabCursor={true}
-          modules={[FreeMode]}
+          modules={[FreeMode, Pagination]}
+          pagination={{clickable: true}}
           className="mySwiper"
           spaceBetween={70}
           slidesPerView={3}
@@ -74,7 +75,7 @@ const JobCards = () => {
       </div>
 
       <div className="choose-us-section" style={{marginTop:"3rem"}}>
-        <h3 style={{ fontSize: "34px", fontWeight: "700", margin: ".5rem 0", color: "#2596BE", textAlign: "center" }}>
+        <h3 style={{ fontSize: "34px", fontWeight: "700", margin: "1rem 0", color: "#2596BE", textAlign: "center" }}>
           Why Choose Us ?
         </h3>
         <div className="choose-content">

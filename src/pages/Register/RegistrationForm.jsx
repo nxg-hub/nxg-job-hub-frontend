@@ -69,7 +69,8 @@ const RegistrationForm = ({ userType }) => {
     if (e.target.value.length < 8) {
       setErrors({
         ...errors,
-        password: "Password must be up to 8 characters, include letters, numbers and special characters.",
+        password:
+          "Password must be up to 8 characters, include letters, numbers and special characters.",
       });
     } else {
       setErrors({
@@ -131,38 +132,44 @@ const RegistrationForm = ({ userType }) => {
     e.preventDefault();
     const valid = validatePhone();
     const user = new User(formData);
-    valid
-      ? axios
-          .post(
-            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/register/",
-            user
-          )
-          .then((res) => {
-            if (res.status) {
-              setShowEmailVerificationNotice(true);
-              showPopup({
-                type: "success",
-                message: res.data,
-              });
-              setTimeout(() => showPopup(undefined), 5000);
-            }
-          })
-          .catch((err) => {
+    if (valid) {
+      showPopup({
+        type: "info",
+        message: `Signing up...`,
+      });
+      axios
+        .post(
+          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/register/",
+          user
+        )
+        .then((res) => {
+          if (res.status) {
+            setShowEmailVerificationNotice(true);
             showPopup({
-              type: "danger",
-              message: `Failed to register. ${
-                err.response.data
-                  ? err.response.data
-                  : "Please check your internet connection and try again"
-              }`,
+              type: "success",
+              message: res.data,
             });
-
             setTimeout(() => showPopup(undefined), 5000);
-          })
-      : showPopup({
-          type: "danger",
-          message: `Invalid data`,
+          }
+        })
+        .catch((err) => {
+          showPopup({
+            type: "danger",
+            message: `Failed to register. ${
+              err.response.data
+                ? err.response.data
+                : "Please check your internet connection and try again"
+            }`,
+          });
+
+          setTimeout(() => showPopup(undefined), 5000);
         });
+    } else {
+      showPopup({
+        type: "danger",
+        message: `Invalid data`,
+      });
+    }
 
     setTimeout(() => showPopup(undefined), 5000);
   };
@@ -297,7 +304,7 @@ const RegistrationForm = ({ userType }) => {
               autoComplete="new-password"
               id="password"
               required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
               err={errors.password}
               value={formData.password}
             />
@@ -311,8 +318,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"confirmPassword"}
               err={errors.confirmPassword}
-              placeholder={"Re-enter password"}
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
               id="confirmPassword"
               autoComplete="confirm-password"
             />
@@ -332,7 +338,7 @@ const RegistrationForm = ({ userType }) => {
                   }))
                 }
               />
-              <label htmlFor="privacy">
+              <label htmlFor="acceptedPrivacy">
                 I agree to the <Link to="./">Terms of service</Link> and{" "}
                 <Link to="./">Privacy Policy</Link>
               </label>

@@ -7,8 +7,8 @@
     gap: 10px;
     // background-color: #9bcbdd70;
     background-color: rgba(155, 203, 221, 0.7);
-
-    max-width: 40vw;
+    width: 100%;
+    // max-width: 40vw;
     min-height: 100vh;
     padding: 40px 25px;
 
@@ -27,6 +27,7 @@
         width: 65%;
         height: max-content;
              input.searchInput {
+              background-color: transparent;
           border: none;
           border-radius: 10px;
           height: 35px;

@@ -17,7 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
-  const [authenticationKey, setAuthKey] = useState(undefined);
+  
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -31,22 +31,31 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      showpopUp({
+        type: "info",
+        message: `Logging in...`,
+      });
       const res = await axios.post(
         "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login",
         { email, password }
       );
 
       const authKey = res.headers.authorization;
+      
 
-      if (check && authKey) {
-        // Save authentication key to local storage
-        window.localStorage.setItem(
-          "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify({ authKey, email })
-        );
-      }
-
-      setAuthKey(authKey);
+      // if (check && authKey) {
+      //   // if "remember me" is set, Save authentication key to local storage
+      //   window.localStorage.setItem(
+      //     "NXGJOBHUBLOGINKEYV1",
+      //     JSON.stringify({ authKey, email })
+      //   );
+      // } else if (!check && authKey) {
+      //   // if login without "remember me", start a session
+      //   window.sessionStorage.setItem(
+      //     "NXGJOBHUBLOGINKEYV1",
+      //     JSON.stringify({ authKey, email })
+      //   );
+      // }
 
       const userRes = await axios.get(
         "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
@@ -58,10 +67,31 @@ const Login = () => {
         }
       );
 
+      const id = userRes.data.id; // Assuming the user ID is returned in the response
+
+      if (check && authKey) {
+        // if "remember me" is set, Save authentication key to local storage
+        window.localStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email, id })
+        );
+      } else if (!check && authKey) {
+        // if login without "remember me", start a session
+        window.sessionStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email })
+        );
+      }
+
       if (!userRes.data.userType) {
         navigate("/create");
       } else {
-        navigate("/dashboard");
+        navigate(
+          userRes.data.userType === "employer"
+            ? "/profilelanding"
+            : "/dashboard"
+        );
+      
       }
     } catch (error) {
       showpopUp({
@@ -77,11 +107,8 @@ const Login = () => {
     const storedData = JSON.parse(
       window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
-
-    if (storedData && storedData.authKey) {
-      setAuthKey(storedData.authKey);
-    }
-  }, [authenticationKey]);
+    storedData && navigate("/dashboard");
+  }, [navigate]);
 
   return (
     <div className="login-main-container">
