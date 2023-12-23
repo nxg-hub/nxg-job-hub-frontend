@@ -14,7 +14,7 @@ import Notice from "../../../../../components/Notice";
 const PostJobs = () => {
   const user = useContext(UserContext);
   const data = {
-    userId: user.id,
+    employerID: user.accountTypeID,
     job_title: "",
     job_description: "",
     requirements: "",
@@ -33,14 +33,15 @@ const PostJobs = () => {
   const [formErrors, setFormErrors] = useState(data);
   const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
-  const validateForm = () => {
-    let a = 1;
-  };
+
   const submitForm = async (e) => {
     e.preventDefault();
-    let valid = validateForm();
     let post = new JobPost(formData);
-
+    if (formErrors.company_bio.length < 20)
+      setFormErrors({
+        ...formErrors,
+        company_bio: "Company bio must have at least 20 characters",
+      });
     try {
       showpopUp({
         type: "info",
@@ -50,7 +51,7 @@ const PostJobs = () => {
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
       const res = await axios.post(
-        "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/create",
+        "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/post",
         post,
         {
           headers: {
@@ -118,19 +119,7 @@ const PostJobs = () => {
           onchange={(e) => updateField(e, setFormData)}
           err={formErrors.job_description}
         />
-        <TextArea
-          textAreaProps={{
-            required: true,
-          }}
-          label={"Responsibilities:"}
-          id={"responsibilities"}
-          name={"responsibilities"}
-          rows={5}
-          placeholder={"What will recruits be expected to do"}
-          value={formData.responsibilities}
-          onchange={(e) => updateField(e, setFormData)}
-          err={formErrors.responsibilities}
-        />
+
         <TextArea
           textAreaProps={{
             required: true,
@@ -215,28 +204,7 @@ const PostJobs = () => {
             err={formErrors.region}
           />
         )}
-        <TextArea
-          label={"Benefits:"}
-          id={"benefits"}
-          name={"benefits"}
-          rows={5}
-          placeholder={"Any extra benefits to recruits?"}
-          value={formData.benefits}
-          onchange={(e) => updateField(e, setFormData)}
-          err={formErrors.benefits}
-        />
 
-        <TextField
-          required
-          label={"Employer Contact Details:"}
-          id={"contact_details"}
-          name={"contact_details"}
-          type={"text"}
-          placeholder={"How can applicants contact you?"}
-          value={formData.contact_details}
-          onchange={(e) => updateField(e, setFormData)}
-          err={formErrors.contact_details}
-        />
         <TextField
           label={"Tags:"}
           id={"tags"}

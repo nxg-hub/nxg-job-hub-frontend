@@ -47,36 +47,61 @@ const Dashboard = () => {
       </UserContext.Provider>
     ),
   };
+  
   useEffect(() => {
-    const localdata =
-      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-      {};
-
-    setAuth(localdata.authKey);
-
-    if (localdata.authKey) {
-      axios
-        .get(
-          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
-          {
-            headers: { authorization: localdata.authKey },
+    const getUser = async () => {
+      const getAccountTypeDetails = {
+        EMPLOYER:
+          "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer",
+        TECHTALENT:
+          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/get-user",
+        AGENT: "",
+      };
+      const localdata =
+        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+        {};
+  
+      if (localdata.authKey) {
+        setAuth(localdata.authKey);
+        try {
+          const { data } = await axios.get(
+            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+            {
+              headers: { authorization: localdata.authKey },
+            }
+          );
+          const accountTypeDetails = await axios.get(
+            getAccountTypeDetails[data.userType],
+            {
+              headers: { authorization: localdata.authKey },
+            }
+          );
+          let accountTypeID;
+          if (data.userType === "EMPLOYER") {
+            accountTypeID = accountTypeDetails.data.employerID;
+          } else if (data.userType === "TECHTALENT") {
+            accountTypeID = accountTypeDetails.data.techId;
+          } else if (data.userType === "AGENT") {
+            accountTypeID = accountTypeDetails.agentID;
+          } else {
+            return;
           }
-        )
-        .then((res) => {
-          setUser(res.data);
+          setUser({ ...data, accountTypeID });
+  
           setLoading(undefined);
-        })
-        .catch((err) =>
+        } catch (err) {
           setLoading({
             type: "danger",
             message:
               "Failed to fetch user resources. Please try logging in again.",
-          })
-        );
-    } else {
-      navigate("/login");
-    }
+          });
+        }
+      } else {
+        navigate("/login");
+      }
+    };
+    getUser();
   }, [navigate, authKey]);
 
   return loading ? (
@@ -85,5 +110,6 @@ const Dashboard = () => {
     DashboardTypes[user.userType]
   );
 };
+
 
 export default Dashboard;

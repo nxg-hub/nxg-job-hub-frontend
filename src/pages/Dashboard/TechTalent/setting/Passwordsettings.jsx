@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import Inputs from "../../../../components/accounts/Inputs";
 import "./settings.scss";
 
 function Passwordsettings() {
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  
+  // const [showPassword, setShowPassword] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const handleShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
@@ -31,10 +30,10 @@ function Passwordsettings() {
       return;
     }
     // Check if the current password matches the entered current password
-    if (currentPassword !== password) {
-      setPasswordError("Current password is incorrect!");
-      return;
-    }
+    // if (currentPassword !== password) {
+    //   setPasswordError("Current password is incorrect!");
+    //   return;
+    // }
     // Check if the new password matches the confirm password
     if (newPassword !== confirmPassword) {
       setPasswordError("New password and confirm password do not match!");
