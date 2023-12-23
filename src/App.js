@@ -69,7 +69,7 @@ function App() {
         />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<Overview />} />
-          {/* <Route path="messages" element={<Chat />} /> */}
+       
           <Route path="notifications" element={<AlertTab items={notification_data} />} />
           <Route path="profile" element={<DashProfile />} />
           <Route path="posts">

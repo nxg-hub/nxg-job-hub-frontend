@@ -34,7 +34,6 @@ const ProfileLanding = () => {
   const [search, setSearch] = useState("");
   const [heroTitle, setHeroTitle] = useState(0);
   const [showAlertTab, setShowAlertTab] = useState(false);
-  const [incoming, setIncoming] = useState(notification_data);
 
   const selectRandomTitle = useCallback(() => {
     const titleIndex = Math.floor(Math.random() * titles.length);
@@ -107,7 +106,7 @@ const ProfileLanding = () => {
         className={"AlertTabWrapper"}
       > <AlertTab
             controls={hideAlertTab}
-            items={incoming}
+            items={notification_data}
           /></div>
         ) : (
           <></>

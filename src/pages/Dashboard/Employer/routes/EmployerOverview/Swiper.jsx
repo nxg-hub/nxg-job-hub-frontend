@@ -5,8 +5,8 @@ register();
 
 const Swiper = () => {
   const swipe = useRef();
-  const labels = ["New", "Updated", "Completed"];
   useEffect(() => {
+    const labels = ["New", "Updated", "Completed"];
     const mySwiper = swipe.current;
     const params = {
       pagination: {
@@ -30,13 +30,13 @@ const Swiper = () => {
         margin: "0 0 10px 0",
         background: "#f2f2f2",
         borderRadius:"4px"
-      }} class="pagination-container pagination-container1">
-        <p class="swiper-pagination-bullet new">New</p>
-        <p class="swiper-pagination-bullet updated">Updated </p>
-        <p class="swiper-pagination-bullet completed">Completed</p>
+      }} className="pagination-container pagination-container1">
+        <p className="swiper-pagination-bullet new">New</p>
+        <p className="swiper-pagination-bullet updated">Updated </p>
+        <p className="swiper-pagination-bullet completed">Completed</p>
       </header>
-      <swiper-container class="container" init="false" ref={swipe}>
-        <swiper-slide class="blue-slide">
+      <swiper-container className="container" init="false" ref={swipe}>
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -47,7 +47,7 @@ const Swiper = () => {
                 textAlign:"center"
             }} key={id}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>
@@ -55,7 +55,7 @@ const Swiper = () => {
             </div>
           ))}{" "}
         </swiper-slide>
-        <swiper-slide class="blue-slide">
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -66,7 +66,7 @@ const Swiper = () => {
                 textAlign:"center"
             }} key={id}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>
@@ -74,7 +74,7 @@ const Swiper = () => {
             </div>
           ))}{" "}
         </swiper-slide>
-        <swiper-slide class="blue-slide">
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -85,7 +85,7 @@ const Swiper = () => {
                 textAlign:"center"
             }} key={id}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>
@@ -100,8 +100,8 @@ const Swiper = () => {
 };
 export const Swiper2 = () => {
   const swipe2 = useRef();
-  const labels2 = ["New", "Updated", "Completed"];
   useEffect(() => {
+    const labels2 = ["New", "Updated", "Completed"];
     const mySwiper2 = swipe2.current;
     const params2 = {
       pagination: {
@@ -125,13 +125,13 @@ export const Swiper2 = () => {
         margin: "0 0 10px 0",
         background: "#f2f2f2",
         borderRadius:"4px"
-      }} class="pagination-container2 pagination-container2">
-        <p class="swiper-pagination-bullet new">New</p>
-        <p class="swiper-pagination-bullet updated">Updated </p>
-        <p class="swiper-pagination-bullet completed">Completed</p>
+      }} className="pagination-container2 pagination-container2">
+        <p className="swiper-pagination-bullet new">New</p>
+        <p className="swiper-pagination-bullet updated">Updated </p>
+        <p className="swiper-pagination-bullet completed">Completed</p>
       </header>
-      <swiper-container class="container" init="false" ref={swipe2}>
-        <swiper-slide class="blue-slide">
+      <swiper-container className="container" init="false" ref={swipe2}>
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -142,7 +142,7 @@ export const Swiper2 = () => {
                 textAlign:"center"
             }} key={id+50}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>
@@ -150,7 +150,7 @@ export const Swiper2 = () => {
             </div>
           ))}{" "}
         </swiper-slide>
-        <swiper-slide class="blue-slide">
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -161,7 +161,7 @@ export const Swiper2 = () => {
                 textAlign:"center"
             }} key={id+50}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>
@@ -169,7 +169,7 @@ export const Swiper2 = () => {
             </div>
           ))}{" "}
         </swiper-slide>
-        <swiper-slide class="blue-slide">
+        <swiper-slide className="blue-slide">
           {tasks.map((task, id) => (
             <div 
             style={{
@@ -180,7 +180,7 @@ export const Swiper2 = () => {
                 textAlign:"center"
             }} key={id+50}>
               <p
-                class="task"
+                className="task"
               >
                 {task.type}
               </p>

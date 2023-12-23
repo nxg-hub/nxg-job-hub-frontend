@@ -33,14 +33,15 @@ const PostJobs = () => {
   const [formErrors, setFormErrors] = useState(data);
   const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
-  const validateForm = () => {
-    let a = 1;
-  };
+
   const submitForm = async (e) => {
     e.preventDefault();
-    let valid = validateForm();
     let post = new JobPost(formData);
-
+    if (formErrors.company_bio.length < 20)
+      setFormErrors({
+        ...formErrors,
+        company_bio: "Company bio must have at least 20 characters",
+      });
     try {
       showpopUp({
         type: "info",
@@ -118,7 +119,7 @@ const PostJobs = () => {
           onchange={(e) => updateField(e, setFormData)}
           err={formErrors.job_description}
         />
-       
+
         <TextArea
           textAreaProps={{
             required: true,
@@ -203,9 +204,7 @@ const PostJobs = () => {
             err={formErrors.region}
           />
         )}
-       
 
-     
         <TextField
           label={"Tags:"}
           id={"tags"}
