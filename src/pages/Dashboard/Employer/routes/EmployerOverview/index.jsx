@@ -48,13 +48,13 @@ const EmployerOverview = () => {
      </div>
         <div>
           <h3>Tasks</h3>
-        <span className={s.Tasks}>
+        <span className={`${s.Tasks} swiperr`}>
           <Swiper />
         </span>
        </div>
         <div>
           <h3>Interviews</h3>
-        <span className={s.Interviews}>
+        <span className={`${s.Interviews} swiperr`}>
           <Swiper2 />
         </span>
         </div>
