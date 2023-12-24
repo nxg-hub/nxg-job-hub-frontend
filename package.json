@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@joeattardi/emoji-button": "^4.6.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-datepicker": "^4.17.0",
     "react-dom": "^18.2.0",
@@ -15,7 +17,13 @@
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.4",
+    "react-select-country-list": "^2.2.3",
+    "react-step-progress-bar": "^1.0.3",
+    "react-table": "^7.8.0",
+    "react-transition-group": "^4.4.5",
+    "recharts": "^2.10.2",
     "sass": "^1.67.0",
+    "swiper": "^10.3.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

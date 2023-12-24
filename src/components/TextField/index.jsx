@@ -19,16 +19,14 @@ const TextField = ({
     confirmPassword: false,
   });
 
-
   return (
-    
     <div className={s.TextFieldWrapper}>
       {label && (
         <label className={s.FieldLabel} htmlFor={id}>
           {label}
         </label>
       )}
-      <span className={s.InputFieldWrapper}>
+      <span className={`${s.InputFieldWrapper} ${err && s.hasErr}`}>
         <input
           onFocus={focusParent}
           onBlur={(e) => {

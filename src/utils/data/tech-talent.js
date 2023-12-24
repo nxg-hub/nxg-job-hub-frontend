@@ -1,18 +1,22 @@
 const qualifications = [
-    "PhD",
+    "PHD",
     "MSC",
     "MBBS",
     "BSC",
+    "BENG",
     "HND",
     "Diploma",
+    "Advance Certificate",
     "Others"
 ];
 
 const certifications = [
     "PMP",
-    "PSM/CSM",
+    "PSM",
+    "CSM",
     "PSO",
     "PMI-ACP",
+    "Advance Certificate",
     "Others"
 ];
 
@@ -20,22 +24,28 @@ const levels = [
     "Internship",
     "Entry Level",
     "Mid Level",
-    "Mid-Senior Level",
+    "Senior Level",
     "Director",
-    "Executive"
+    "Executive",
+    "Others"
 ];
 
 const jobTypes = [
     "Volunteer",
     "Contract",
-    "Part-time",
-    "Full-time"
+    "Part_time",
+    "Full_time"
 ];
 
 const workModes = [
     "On-site",
     "Remote",
     "Hybrid"
+];
+const experience = [
+    "N/A",
+    "0-2",
+    "3-5"
 ];
 
 const jobs = [
@@ -56,5 +66,11 @@ const jobs = [
     "Data Storage"
 ];
 
-
-export  {qualifications, jobTypes, workModes, jobs, levels, certifications};
+const relevance = [
+    "Relevance",
+    "Popularity",
+    "Recent",
+    "Oldest",
+    "Director"
+]
+export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance, experience};

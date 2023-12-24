@@ -1,0 +1,43 @@
+.JobCard {
+  border-radius: 8px;
+  box-shadow: 0px 0px 4px #d7d7d7;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  min-width: 400px;
+  background-color: #fff;
+  .CardHeader {
+    padding: 0;
+    font-size: 18px;
+  }
+  main {
+    h2 {
+      font-size: 18px;
+    }
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    div {
+      font-size: 14px;
+      display: flex;
+      gap: 50px;
+      align-items: center;
+    }
+  }
+  button{
+    background-color: #2596BE;
+    color: white;
+    display: inline-block ;
+    padding: 10px 20px;
+    border: none;
+    width: 20%;
+    border-radius: 4px;
+    font-weight: 600;
+
+  }
+}

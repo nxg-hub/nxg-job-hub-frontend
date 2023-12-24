@@ -1,0 +1,23 @@
+.page {
+  background-image: url(../../static/images/sign_up_bg.svg);
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  background-position: center;
+  padding: 10px 20px;
+  .logo {
+    height: 70px;
+    width: auto;
+    @media (max-width: 600px){
+      height: 60px;
+    }
+  }
+>div{
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+}

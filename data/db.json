@@ -1,0 +1,163 @@
+{
+  "posts": [
+    {
+        "id": 1,
+        "price":"$15.7PH",
+        "location":"Nigeria",
+        "title":"Data Entry Personnel",
+        "heading":"Data Entry Personnel - #DCA18B7",
+        "schedule":"Data Entry - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 2,
+        "price":"$21.4PH",
+        "location":"Nigeria",
+        "title":"UI Design",
+        "heading":"UI Design - #DCA23A1",
+        "schedule":"Product Design - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 3,
+        "price":"$20.7PH",
+        "location":"Nigeria",
+        "title":"Data Analyst",
+        "heading":"Data Analyst - #DCA84B2",
+        "schedule":"Data Analysis - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 4,
+        "price":"$18.0PH",
+        "location":"Nigeria",
+        "title":"Data Entry Assistant",
+        "heading":"Data Entry Assistant - #DCA18B3",
+        "schedule":"Data Entry - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 5,
+        "price":"$22.5PH",
+        "location":"Nigeria",
+        "title":"Frontend Developer",
+        "heading":"Frontend Developer - #DCA37B2",
+        "schedule":"Web Development - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 6,
+        "price":"$20.2PH",
+        "location":"Nigeria",
+        "title":"Web Designer",
+        "heading":"Web Designer - #DCA33F9",
+        "schedule":"Web Design - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    },
+    {
+        "id": 7,
+        "price":"$193PH",
+        "location":"Nigeria",
+        "title":"Project Manager",
+        "heading":"Project Manager - #DCA42E1",
+        "schedule":"Project Management - 40hrs/week.",
+        "body":"This is a full time job that requires  most of your attention. You can choose to work from home but your camera must be on throughout the duration of time you are required to be working. You must also be present in all meetings as absenteeism is not an option, ......",
+        "description":"Details about the job post",
+        "herf":"Read more"
+    }
+  ],
+  "transactions": [
+    {
+        "id": 1,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "- $300",
+        "img": "icons/Arrow 1.svg",
+        "transactionType": "Debit",
+        "transactionDate": "4/10/23",
+        "transactionTime": "14:23"
+    },
+    {
+        "id": 2,
+        "name": "Joy Obi",
+        "description": "Mobile Transfer /  Money for drinks...",
+        "amount": "+ $400",
+        "img": "icons/Arrow 9.svg",
+        "transactionType": "Credit",
+        "transactionDate": "4/10/23",
+        "transactionTime": "13:23"
+    },
+    {
+        "id": 3,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "- $300",
+        "img": "icons/Arrow 1.svg",
+        "transactionType": "Debit",
+        "transactionDate": "3/10/23",
+        "transactionTime": "12:30"
+    },
+    {
+        "id": 4,
+        "name": "Uche John",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "+ $30",
+        "img": "icons/Arrow 9.svg",
+        "transactionType": "Credit",
+        "transactionDate": "5/09/23",
+        "transactionTime": "08:10"
+    },
+    {
+        "id": 5,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "- $300",
+        "img": "icons/Arrow 1.svg",
+        "transactionType": "Debit",
+        "transactionDate": "4/09/23",
+        "transactionTime": "14:23"
+    },
+    {
+        "id": 6,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "- $300",
+        "img": "icons/Arrow 1.svg",
+        "transactionType": "Debit",
+        "transactionDate": "1/09/23",
+        "transactionTime": "22:23"
+    },
+    {
+        "id": 7,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "+ $300",
+        "img": "icons/Arrow 9.svg",
+        "transactionType": "Credit",
+        "transactionDate": "23/08/23",
+        "transactionTime": "14:23"
+    },
+    {
+        "id": 8,
+        "name": "James Okafor",
+        "description": "Electronic Money Transfer POS services...",
+        "amount": "- $300",
+        "img": "icons/Arrow 1.svg",
+        "transactionType": "Debit",
+        "transactionDate": "13/08/23",
+        "transactionTime": "14:23"
+    }
+  ]
+}
