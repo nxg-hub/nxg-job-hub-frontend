@@ -8,21 +8,21 @@ const JobPosts = () => {
   const [popup, showpopUp] = useState(undefined);
   const posts_url =
     "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/all";
-  const data = {};
-  const fetchPosts = async () => {
-    try {
-      const res = await axios.get(posts_url, data);
-      const posts_array = res.data;
-      setPosts(posts_array);
-    } catch (err) {
-      showpopUp({
-        type: "danger",
-        message: "Failed to load resources. Please try again.",
-      });
-      setTimeout(() => showpopUp(undefined));
-    }
-  };
-  useEffect(() => {
+    useEffect(() => {
+    const data = {};
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get(posts_url, data);
+        const posts_array = res.data;
+        setPosts(posts_array);
+      } catch (err) {
+        showpopUp({
+          type: "danger",
+          message: "Failed to load resources. Please try again.",
+        });
+        setTimeout(() => showpopUp(undefined));
+      }
+    };
     fetchPosts();
   },[]);
   

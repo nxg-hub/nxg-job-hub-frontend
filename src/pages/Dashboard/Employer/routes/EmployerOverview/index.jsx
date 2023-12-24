@@ -9,12 +9,11 @@ import { Link } from "react-router-dom";
 import EngagementCard from "../../EngagementCard";
 import { Applicants, JobPosts } from "../../Sidebar/SidebarIcons";
 import JobCard from "../../../../../components/JobCard";
-import { tasks } from "../../../../../utils/data/employerTasks";
+
 import Swiper, { Swiper2 } from "./Swiper";
 
 const EmployerOverview = () => {
   const user = useContext(UserContext);
-  console.log(user);
   return (
     <div className={s.EmployerOverview}>
       <div className={s.Header}>

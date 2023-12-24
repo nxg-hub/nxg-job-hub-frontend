@@ -1,45 +1,44 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./index.scss"
+import "./index.scss";
 const CompleteYourProfile = () => {
-  
   useEffect(() => {
     let currentTab = 0; // Current tab index
-    const tabs = document.querySelectorAll('.tab');
-  
+    const tabs = document.querySelectorAll(".tab");
+
     // Function to hide all tabs
     function hideTabs() {
-        for (let i = 0; i < tabs.length; i++) {
-            tabs[i].style.display = 'none';
-        }
-    }
-  
-    // Function to show the next tab
-    function showNextTab() {
-        // Hide all tabs
-        hideTabs();
-  
-        // If we have reached the end of the tabs, submit the form
-        if (currentTab >= tabs.length - 1) {
-            document.querySelector('form').submit();
-            return;
-        }
-  
-        // Show the next tab with the "tab" class
-        currentTab++;
-        tabs[currentTab].style.display = 'block';
-  
-        // Hide the "Next" button if we are on the last tab
-        if (currentTab >= tabs.length - 1) {
-            document.querySelector('.next-button').style.display = 'none';
-        }
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = "none";
+      }
     }
 
+    // Function to show the next tab
+    // function showNextTab() {
+    //     // Hide all tabs
+    //     hideTabs();
+
+    //     // If we have reached the end of the tabs, submit the form
+    //     if (currentTab >= tabs.length - 1) {
+    //         document.querySelector('form').submit();
+    //         return;
+    //     }
+
+    //     // Show the next tab with the "tab" class
+    //     currentTab++;
+    //     tabs[currentTab].style.display = 'block';
+
+    //     // Hide the "Next" button if we are on the last tab
+    //     if (currentTab >= tabs.length - 1) {
+    //         document.querySelector('.next-button').style.display = 'none';
+    //     }
+    // }
+
     // Initially, hide all tabs except the first one
-   
-        hideTabs();
-        tabs[currentTab].style.display = 'block'; // Show the first tab
-  })
+
+    hideTabs();
+    tabs[currentTab].style.display = "block"; // Show the first tab
+  });
   return (
     <div className="container">
       <form className="centralized-form" enctype="multipart/form-data">
@@ -296,7 +295,11 @@ const CompleteYourProfile = () => {
           </div>
           <div
             className="form-group"
-            style={{textAlign: "center", marginTop: "60px", marginLeft: "50px"}}
+            style={{
+              textAlign: "center",
+              marginTop: "60px",
+              marginLeft: "50px",
+            }}
           >
             <input type="checkbox" />
             <label for="">
@@ -309,7 +312,11 @@ const CompleteYourProfile = () => {
           </button>
           <div
             className="form-group"
-            style={{textAlign: "center", marginTop: "10px", marginLeft: "10px"}}
+            style={{
+              textAlign: "center",
+              marginTop: "10px",
+              marginLeft: "10px",
+            }}
           >
             <p>
               Already have an account? <Link to="">Log In</Link>
