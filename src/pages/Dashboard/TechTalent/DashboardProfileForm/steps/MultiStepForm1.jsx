@@ -68,7 +68,7 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.firstName && formData.lastName && formData.email && formData.countryCode) {
+          if (formData.countryCode && formData.zipCode && formData.residentialAddres ) {
             onComplete(formData);
           }
         };

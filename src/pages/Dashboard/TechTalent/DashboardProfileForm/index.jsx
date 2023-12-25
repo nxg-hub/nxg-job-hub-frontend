@@ -11,10 +11,10 @@ import axios from 'axios';
 function TechTalentProfileForm() {
     const [index, setIndex] = useState(0);
     const [formData, setFormData] = useState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
+      // firstName: "",
+      // lastName: "",
+      // email: "",
+      // phone: "",
       countryCode: "",
       zipCode: "",
       residentialAddress: "",
@@ -61,7 +61,7 @@ function TechTalentProfileForm() {
 
     const handleFormCompletion = () => {
       const formErrors = {};
-      if (formData.firstName === "" || formData.lastName === "" || formData.email === "" || formData.countryCode === "") {
+      if (formData.countryCode === "" || formData.zipCode === "" ) {
         formErrors.formData = 'All fields must be filled';
         setErrors(formErrors);
         setIsCurrentFormCompleted(false);
@@ -74,7 +74,7 @@ function TechTalentProfileForm() {
     };
     
     const handleStep = () => {
-      if (!isCurrentFormCompleted) {
+      if (isCurrentFormCompleted === "") {
         alert('Complete the current form before moving to the next step');
         return;
       }
@@ -111,7 +111,7 @@ function TechTalentProfileForm() {
             return;
           }
 
-          const res = await axios.put(`https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/update-${id}`, JSON.stringify(formData),
+          const res = await axios.post("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/add-skills", formData,
           {
             headers: {
               'Content-Type': 'application/json',
