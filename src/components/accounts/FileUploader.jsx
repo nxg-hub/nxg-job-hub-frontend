@@ -4,7 +4,6 @@ import { IoMdCloudUpload } from "react-icons/io";
 
 const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) => {
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
   const fileInput = useRef(null);
 
@@ -27,40 +26,65 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
   const onDragLeave = () => fileInput.current.classList.remove('dragover');
   const onDrop = () => fileInput.current.classList.remove('dragover');
 
-  const uploadFile = async (base64) => {
-    // setLoading(true);
+  const uploadSingleFile = async (base64) => {
+    setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/uploadFile", { file: base64 })
-      setUrl(res.data);
+      const res = await axios.post("http://localhost:5000/uploadImage", { image: base64 });
+      const fileUrl = res.data;
+      setUrl(fileUrl);
+      onFileChange(fileUrl);
       alert("File uploaded successfully.");     
     } catch (error) {
-      setLoading(false);
+      console.error("Error uploading file:", error.message);
+      alert("File upload failed. Please try again.");
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
-  const handleFileInput = async (e) => {
-    const selectedFile = e.target.files[0];
+  // const uploadMultipleFiles = async (images) => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await axios.post("http://localhost:5000/uploadMultipleFiles", { images })
+  //     setUrl(res.data);
+  //     alert("File uploaded successfully.");     
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error.message);
+  //     alert("File upload failed. Please try again.");
+  //     console.log(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
-    if (!selectedFile) {
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    // console.log(files.length);
+
+    if (!files || files.length === 0) {
       alert("Select a file")
       return; // No file selected, do nothing
     }
-    if (selectedFile.size > 5 * 1024 * 1024) {
+    if (files[0].size > 5 * 1024 * 1024) {
       onFileSelectError({ error: "File cannot exceed more than 5MB" });
       return;
     }
-    if (selectedFile) {
-      const base64 = await convertBase64(selectedFile);
-      setFile(selectedFile);
-      onFileChange(selectedFile);
-      uploadFile(base64);
+    if (files.length === 1) {
+      const base64 = await convertBase64(files[0]);
+      uploadSingleFile(base64);
+      return;
     }
+
+    // const base64s = [];
+    // for (let i = 0; i < files.length; i++) {
+    //   let base = await convertBase64(files[i]);
+    //   base64s.push(base);
+    // }
+    // uploadMultipleFiles(base64s);
   };
 
   const fileRemove = () => {
-    // const updatedFile = files.filter (file => file !== fileToRemove);
-    setFile(null);
     setUrl("");
     onFileChange(null);
   }
@@ -70,7 +94,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
         <label>{title}</label>
         <div 
           ref={fileInput} // Reference to the file input element
-          className={`file-uploader ${loading ? "loading" : ""}`}
+          className="file-uploader "
           onDragEnter={onDragEnter}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
@@ -87,7 +111,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
             accept=".jpeg, .jpg, .png, .docx, .pdf"
             name={name}
             value={value}
-            onChange={handleFileInput}
+            onChange={uploadImage}
             id="drop-file-input"
           />
         </div>
@@ -95,27 +119,22 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
           url && (
             <div className="drop-file-preview">
               <div className="drop-file-preview-item">
-                {/* Adjust the following logic based on the file type */}
-                {file?.type.startsWith("image/") ? (
-                  <img src={URL.createObjectURL(file)} alt={file.name} />
-                  ) : (
-                  <p>
-                    {file.name}
-                  </p>
-                )}
                 <div className="drop-file-preview-info">
                   <p>
-                    {file.name}
+                    Access your file at{" "}
                     <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
                   </p>
                 </div>
-                <span className="drop-file-delete" onClick={() => fileRemove(file)}>
+                <span className="drop-file-delete" onClick={fileRemove}>
                   x
                 </span>
               </div>
             </div>
           )
         }
+        <div>
+          {loading && (<div>Loading...</div>)}
+        </div>
     </div>
   );
 };
