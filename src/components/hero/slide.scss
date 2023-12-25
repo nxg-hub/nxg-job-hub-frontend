@@ -21,6 +21,8 @@
    margin: 3rem auto;
 }
 .swipe-container {
+    width: 100%;
+    height: 400px;
     .swiper-backface-hidden .swiper-slide {
         height: 400px;
     }
