@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const express = require("express");
 const cors = require("cors");
-const uploadFile = require("./uploadFile.js");
+const uploadImage = require("./uploadImage.js");
 const app = express();
 const port = 5000;
 
@@ -12,17 +14,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/uploadFile", (req, res) => {
-    uploadFile(req.body.file)
-      .then((url) => res.send(url))
-      .catch((err) => res.status(500).send(err));
+app.post("/uploadImage", (req, res) => {
+  uploadImage.uploadImage(req.body.image)
+  .then((url) => res.send(url))
+  .catch((err) => res.status(500).send(err));  
 });
 
 app.post("/uploadMultipleFiles", (req, res) => {
-    uploadFile
-      .uploadMultipleFiles(req.body.files)
-      .then((urls) => res.send(urls))
-      .catch((err) => res.status(500).send(err));
+  uploadImage
+    .uploadMultipleImages(req.body.images)
+    .then((urls) => res.send(urls))
+    .catch((err) => res.status(500).send(err));
   });
 
 app.listen(port, () => {
