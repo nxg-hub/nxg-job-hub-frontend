@@ -41,21 +41,6 @@ const Login = () => {
       );
 
       const authKey = res.headers.authorization;
-      
-
-      // if (check && authKey) {
-      //   // if "remember me" is set, Save authentication key to local storage
-      //   window.localStorage.setItem(
-      //     "NXGJOBHUBLOGINKEYV1",
-      //     JSON.stringify({ authKey, email })
-      //   );
-      // } else if (!check && authKey) {
-      //   // if login without "remember me", start a session
-      //   window.sessionStorage.setItem(
-      //     "NXGJOBHUBLOGINKEYV1",
-      //     JSON.stringify({ authKey, email })
-      //   );
-      // }
 
       const userRes = await axios.get(
         "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",

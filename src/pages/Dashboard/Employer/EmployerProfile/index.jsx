@@ -20,7 +20,7 @@ function EmployerProfileForm() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
           console.error('Authentication key not available.');
           setLoading(false);
@@ -107,14 +107,23 @@ function EmployerProfileForm() {
         ...companyData,
       };
 
-      const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+      const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
       if (!loginKey) {
         console.error('Authentication key not available.');
         return;
       }
-      const { authKey } = JSON.parse(loginKey);
+      // const { authKey } = JSON.parse(loginKey);
+      let authKey;
+      try {
+        authKey = JSON.parse(loginKey).authKey;
+      } catch (error) {
+        console.error('Error parsing authentication key:', error);
+        setLoading(false);
+        return;
+      }
       if(!authKey) {
         console.error('Auth key not available.');
+        setLoading(false);
         return;
       }
 
