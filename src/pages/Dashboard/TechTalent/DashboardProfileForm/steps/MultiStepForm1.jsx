@@ -35,7 +35,7 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
     useEffect(() => {
         const fetchUserData = async () => {
           try {
-            const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+            const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
             if (!loginKey) {
               console.error('Authentication key not available.');
               return;
@@ -52,7 +52,6 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
               },
             });
             const userData = response.data;
-            // setUser(userData);
             setFirstName(userData.firstName);
             setLastName(userData.lastName);
             setEmail(userData.email);

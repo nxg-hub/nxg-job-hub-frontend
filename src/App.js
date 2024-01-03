@@ -24,6 +24,7 @@ import AlertTab from "./components/AlertTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
+import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           }
         /> */}
         <Route path="test" element={<PostJobs />} />
+        <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
         <Route
           path="/tech-talent-profile-form"
           element={<DashboardProfileForm />}

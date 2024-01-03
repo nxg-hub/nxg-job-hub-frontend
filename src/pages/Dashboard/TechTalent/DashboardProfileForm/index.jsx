@@ -100,7 +100,7 @@ function TechTalentProfileForm() {
     const handleProfileCompletion = async () => {
       // console.log(formData, 'Profile Completed');
         try {
-          const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1');
+          const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
           if (!loginKey) {
             console.error('Authentication key not available.');
             return;
