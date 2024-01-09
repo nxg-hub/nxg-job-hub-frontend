@@ -2,9 +2,54 @@ import React, {useState} from 'react';
 import Logo from "../../static/images/logo_colored.png";
 import Inputs from '../../components/accounts/Inputs';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const PasswordRecovery = () => {
     const [email, setEmail] = useState("");
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Check if the user exists
+            const userRes = await axios.get(
+                "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", { email },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (userRes.status === 200){
+                console.log(userRes);
+                const authKey = userRes.header.authorization;
+
+                const response = await axios.post(
+                    "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/reset-password-email",
+                    { email },
+                    {
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authKey,
+                      },
+                    }
+                );
+
+                const data = response.data;
+                if (response.status === 200) {
+                    setMessage(data.message);
+                    console.log(data);
+                } else {
+                    setMessage(data.error);
+                }
+            }
+            
+        } catch (error) {
+            console.error('Error sending password reset link:', error);
+            console.log(error);
+        }
+    }
 
   return (
     <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
@@ -19,7 +64,7 @@ const PasswordRecovery = () => {
                      to reset your password.
                 </p>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Inputs 
                 type='email'
                 value={email}
@@ -32,11 +77,16 @@ const PasswordRecovery = () => {
                 <div className="btn" id='forgot-btn'>
                     <button
                         style={{ background: "#2596BE"}}
+                        type='submit'
                     >
                         Submit
                     </button>
             </div>
             </form>
+            {/* Display the message from the server */}
+            <p style={{ textAlign: 'start', fontSize: '.8rem', fontWeight: '500', fontFamily: 'Montserrat', marginTop: '-2.5rem' }}>
+            {message}
+            </p>
             <p style={{textAlign:"start", fontSize:".8rem", fontWeight:"500", fontFamily:"Montserrat", marginTop:"-2.5rem"}}><Link to="/logtalent" style={{color:"#000000"}}>Back to Login</Link></p>
         </div>
     </div>
