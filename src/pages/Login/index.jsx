@@ -36,7 +36,7 @@ const Login = () => {
         message: `Logging in...`,
       });
       const res = await axios.post(
-        "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login",
+        `https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login`,
         { email, password }
       );
 
