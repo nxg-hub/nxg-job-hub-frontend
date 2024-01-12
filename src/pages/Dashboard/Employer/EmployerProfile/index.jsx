@@ -35,6 +35,7 @@ function EmployerProfileForm() {
 
         const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
           headers: {
+            'Content-Type' : 'application/json',
             authorization: authKey,
           },
         });
@@ -55,10 +56,6 @@ function EmployerProfileForm() {
 
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
-    // firstName: '',  
-    // lastName: '',   
-    // email: '',      
-    // phoneNumber: '',
     // address: '',
     country: '',
     // nationality: '',
@@ -101,18 +98,31 @@ function EmployerProfileForm() {
 
   const handleCompleteProfile = async () => {
     try {
-      // Combine data from both forms
       const combinedData = {
         ...personalData,
         ...companyData,
       };
+  
+      // Remove null, undefined, fields commentedout and empty string values from the combinedData object
+      const keysToExclude = ['address', 'nationality', 'state', 'zipCode', 'companyZipCode', 'vacancy'];
+      const filteredCombinedData = Object.fromEntries(
+        Object.entries(combinedData).reduce((acc, [key, value]) => {
+          if (!keysToExclude.includes(key) && value !== null && value !== undefined && value !== '') {
+            acc.push([key, value]);
+          }
+          return acc;
+        }, [])
+      );
 
-      const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+      const loginKey =
+        window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
+        window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+  
       if (!loginKey) {
         console.error('Authentication key not available.');
         return;
       }
-      // const { authKey } = JSON.parse(loginKey);
+  
       let authKey;
       try {
         authKey = JSON.parse(loginKey).authKey;
@@ -121,39 +131,43 @@ function EmployerProfileForm() {
         setLoading(false);
         return;
       }
-      if(!authKey) {
+  
+      if (!authKey) {
         console.error('Auth key not available.');
         setLoading(false);
         return;
       }
-
+  
       const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer", {
         headers: {
+          'Content-Type' : 'application/json',
           authorization: authKey,
         }
       });
+  
       const employerId = response.data.employerID;
-      console.log(employerId);
-
-      const res = await axios.patch(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, combinedData,
-      {
+      // console.log(employerId);
+      // console.log(filteredCombinedData);
+  
+      const res = await axios.post(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
         },
-      }
-      );
+        // body: JSON.stringify(filteredCombinedData)
+      });
+  
       console.log('Response Data:', res.data);
-
+  
       // Reset errors and navigate on successful submission
-      setErrors({ data: 'Unable to update user data.' });
+      setErrors({ data: '' });
       navigate('/dashboard');
-
     } catch (error) {
-      console.log('Error posting data:', error.response.data.error || error);
+      console.log('Error posting data:', error.response ? error.response.data : error);
       setErrors({ data: 'Unable to update user data.' });
     }
   };
+  
 
   const handlePersonalDataChange = (e) => {
     const { name, value } = e.target;

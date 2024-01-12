@@ -75,7 +75,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
                 <Inputs
                 type='url'
                 name="portfolioLink"
-                title='Profile link'
+                title='Portfolio link'
                 value={formData.portfolioLink}
                 onChange={(e) => handleValue(e, 'portfolioLink')}
                 placeholder="Insert link to your portfolio"
