@@ -64,7 +64,7 @@ const Login = () => {
         // if login without "remember me", start a session
         window.sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify({ authKey, email })
+          JSON.stringify({ authKey, email, id })
         );
       }
 
