@@ -6,10 +6,12 @@
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  min-width: 400px;
+  max-width:900px;
   background-color: #fff;
+  margin: auto;
   .CardHeader {
     padding: 0;
+    padding-block: 20;
     font-size: 18px;
   }
   main {
