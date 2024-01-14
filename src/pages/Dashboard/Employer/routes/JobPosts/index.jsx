@@ -1,59 +1,35 @@
-import { useEffect, useState } from "react";
 import s from "./index.module.scss";
-import axios from "axios";
 import Notice from "../../../../../components/Notice";
 import JobCard from "../../../../../components/JobCard";
+import { Link } from "react-router-dom";
+import useFetchJobs from "../../../../../utils/hooks/useFetchJobs";
 const JobPosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [popup, showpopUp] = useState(undefined);
-  const posts_url =
-    "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/all";
-    useEffect(() => {
-    const data = {};
-    const fetchPosts = async () => {
-      try {
-        const res = await axios.get(posts_url, data);
-        const posts_array = res.data;
-        setPosts(posts_array);
-      } catch (err) {
-        showpopUp({
-          type: "danger",
-          message: "Failed to load resources. Please try again.",
-        });
-        setTimeout(() => showpopUp(undefined));
-      }
-    };
-    fetchPosts();
-  },[]);
-  
+  const { posts, popup } = useFetchJobs();
   return (
     <div className={s.JobPosts}>
-      <h2>JobPosts</h2>
       <div>
-      <JobCard
-              title={"Frontend Developer"}
-              applicants={0}
-              deadline={"1-04-2024"}
-              description={
-                " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-              }
-            />
-        {posts.map((post) => {
-          // const description = JSON.parse(post.description.split("/").join()[0]);
-
-          return (
-            <JobCard
-              title={"Frontend Developer"}
-              applicants={0}
-              deadline={"1-04-2024"}
-              description={
-                " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-              }
-            />
-          );
-        })}
+        {posts ? (
+          posts.map((post, i) => {
+            // const description = JSON.parse(post.description.split("/").join()[0]);
+            return (
+              <JobCard
+                key={i}
+                title={post.job_title}
+                applicants={0}
+                deadline={post.deadline}
+                description={post.job_description}
+                created_at={post.created_at}
+              />
+            );
+          })
+        ) : (
+          <div>
+            <h2> You haven't created any job posts yet</h2>
+            <Link to="./create">Create a Job Post</Link>
+          </div>
+        )}
       </div>
-       {popup && <Notice type={popup.type} message={popup.message} />}
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );
 };

@@ -1,10 +1,11 @@
+import API_HOST_URL from "./utils/api/API_HOST"
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://job-hub-591ace1cfc95.herokuapp.com',
+      target: API_HOST_URL,
       changeOrigin: true,
     })
   );

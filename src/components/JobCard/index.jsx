@@ -19,10 +19,9 @@ const JobCard = ({ title, description, applicants, created_at, deadline }) => {
         <div>
           <p>Created At: <strong>{created_at}</strong></p>
           <p>Expires: <strong>{deadline}</strong></p>
-
         </div>
       </footer>
-      <button>Review Application</button>
+      <button>Review Applications</button>
     </div>
   );
 };

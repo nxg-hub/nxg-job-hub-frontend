@@ -6,21 +6,21 @@ import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
 import Notice from "../Notice";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
   // Destructure localStorage data with default values to avoid potential issues
   const { authKey } =
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) || JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
-    techtalent:
-      "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/register/",
-    agent: "https://job-hub-591ace1cfc95.herokuapp.com/api/agents/createAgent",
-    employer:
-      "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/createEmployer",
+    techtalent: `${API_HOST_URL}/api/v1/tech-talent/register/`,
+    agent: `${API_HOST_URL}/api/agents/createAgent`,
+    employer: `${API_HOST_URL}/api/employers/createEmployer`,
   };
   const handleChange = (e) => {
     const { value } = e.target;
