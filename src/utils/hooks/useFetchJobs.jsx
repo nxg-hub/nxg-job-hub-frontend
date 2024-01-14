@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { API_HOST_URL } from "../api/API_HOST";
 const posts_url =
-  "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/all";
+  `${API_HOST_URL}/api/job-postings/all`;
 
 const useFetchJobs = () => {
   const [posts, setPosts] = useState([]);
