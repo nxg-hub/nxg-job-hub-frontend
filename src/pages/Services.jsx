@@ -1,11 +1,11 @@
 import React from 'react'
-import EmployerDashProfile from './Dashboard/Employer/routes/EmployerDashProfile/EmployerDashProfile'
+import { MonthlySubscription } from './Dashboard/subscriptions/MonthlySubscription'
 
 const Services = () => {
   return (
     <div>
       Services
-      <EmployerDashProfile/>
+     <MonthlySubscription />
     </div>
   )
 }
