@@ -6,13 +6,14 @@ const uploadImage = require("./uploadImage.js");
 const app = express();
 const port = 5000;
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
 
 app.post("/uploadImage", (req, res) => {
   uploadImage.uploadImage(req.body.image)

@@ -6,7 +6,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Explore from "./components/hero/Explore";
 import Dashboard from "./pages/Dashboard";
-import DashProfile from "./pages/Dashboard/TechTalent/myProfile/DashProfile.jsx";
 import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile";
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
@@ -19,11 +18,13 @@ import { Otp } from "./pages/Login/Otp.jsx";
 import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
 import SelectAccountType from "./components/SelectAccountType";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
-import Overview from "./pages/Dashboard/Overview.jsx";
 import AlertTab from "./components/AlertTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
+import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
+import ProfileController from "./utils/routers/ProfileController.jsx";
+import Overview from "./utils/routers/Overview.jsx";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           }
         /> */}
         <Route path="test" element={<PostJobs />} />
+        <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
         <Route
           path="/tech-talent-profile-form"
           element={<DashboardProfileForm />}
@@ -71,7 +73,7 @@ function App() {
           <Route path="" element={<Overview />} />
        
           <Route path="notifications" element={<AlertTab items={notification_data} />} />
-          <Route path="profile" element={<DashProfile />} />
+          <Route path="profile" element={<ProfileController />} />
           <Route path="posts">
             <Route path="" element={<JobPosts />} />
             <Route path="create" element={<PostJobs />} />

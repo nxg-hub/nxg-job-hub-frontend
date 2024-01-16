@@ -43,9 +43,9 @@ const workModes = [
     "Hybrid"
 ];
 const experience = [
-    "N/A",
-    "0-2",
-    "3-5"
+    "1-3",
+    "3-6",
+    "6-10"
 ];
 
 const jobs = [

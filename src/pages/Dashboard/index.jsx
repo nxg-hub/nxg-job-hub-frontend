@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import TechTalent from "./TechTalent";
 import Employer from "./Employer";
 import Notice from "../../components/Notice";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 export const UserContext = createContext({
   firstName: "",
   lastName: "",
   dateOfBirth: "",
   email: "",
-  phoneNumber:"",
+  phoneNumber: "",
   userType: "",
 });
 
@@ -22,7 +23,7 @@ const Dashboard = () => {
     lastName: "",
     dateOfBirth: "",
     email: "",
-    phoneNumber:""
+    phoneNumber: "",
   });
   const [authKey, setAuth] = useState(undefined);
   const [loading, setLoading] = useState({
@@ -47,26 +48,24 @@ const Dashboard = () => {
       </UserContext.Provider>
     ),
   };
-  
+
   useEffect(() => {
     const getUser = async () => {
       const getAccountTypeDetails = {
-        EMPLOYER:
-          "https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer",
-        TECHTALENT:
-          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/get-user",
+        EMPLOYER: `${API_HOST_URL}/api/employers/get-employer`,
+        TECHTALENT: `${API_HOST_URL}/api/v1/tech-talent/get-user`,
         AGENT: "",
       };
       const localdata =
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         {};
-  
+
       if (localdata.authKey) {
         setAuth(localdata.authKey);
         try {
           const { data } = await axios.get(
-            "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+            `${API_HOST_URL}/api/v1/auth/get-user`,
             {
               headers: { authorization: localdata.authKey },
             }
@@ -88,7 +87,7 @@ const Dashboard = () => {
             return;
           }
           setUser({ ...data, accountTypeID });
-  
+
           setLoading(undefined);
         } catch (err) {
           setLoading({
@@ -110,6 +109,5 @@ const Dashboard = () => {
     DashboardTypes[user.userType]
   );
 };
-
 
 export default Dashboard;

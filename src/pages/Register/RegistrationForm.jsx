@@ -14,6 +14,7 @@ import axios from "axios";
 import User from "../../utils/classes/User";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
 import Notice from "../../components/Notice";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const RegistrationForm = ({ userType }) => {
   // Variables
@@ -127,7 +128,6 @@ const RegistrationForm = ({ userType }) => {
       return true;
     }
   };
-
   const validateForm = (e) => {
     e.preventDefault();
     const valid = validatePhone();
@@ -139,7 +139,7 @@ const RegistrationForm = ({ userType }) => {
       });
       axios
         .post(
-          "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/register/",
+          `${API_HOST_URL}/api/v1/auth/register/`,
           user
         )
         .then((res) => {

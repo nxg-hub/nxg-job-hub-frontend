@@ -10,6 +10,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 import Notice from "../.././components/Notice";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,29 +37,14 @@ const Login = () => {
         message: `Logging in...`,
       });
       const res = await axios.post(
-        "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/login",
+        `${API_HOST_URL}/api/v1/auth/login`,
         { email, password }
       );
 
       const authKey = res.headers.authorization;
-      
-
-      // if (check && authKey) {
-      //   // if "remember me" is set, Save authentication key to local storage
-      //   window.localStorage.setItem(
-      //     "NXGJOBHUBLOGINKEYV1",
-      //     JSON.stringify({ authKey, email })
-      //   );
-      // } else if (!check && authKey) {
-      //   // if login without "remember me", start a session
-      //   window.sessionStorage.setItem(
-      //     "NXGJOBHUBLOGINKEYV1",
-      //     JSON.stringify({ authKey, email })
-      //   );
-      // }
 
       const userRes = await axios.get(
-        "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user",
+        `${API_HOST_URL}/api/v1/auth/get-user`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -79,7 +65,7 @@ const Login = () => {
         // if login without "remember me", start a session
         window.sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify({ authKey, email })
+          JSON.stringify({ authKey, email, id })
         );
       }
 
