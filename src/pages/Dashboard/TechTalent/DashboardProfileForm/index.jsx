@@ -8,7 +8,7 @@ import MultiStepForm2 from './steps/MultiStepForm2';
 import MultiStepForm3 from './steps/MultiStepForm3';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
-import { API_HOST_URL } from '../../../../utils/api/API_HOST';
+
 
 function TechTalentProfileForm() {
     const [index, setIndex] = useState(0);

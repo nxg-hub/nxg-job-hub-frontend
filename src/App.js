@@ -1,6 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-// import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProfileLanding from "./pages/ProfileLanding";
 import Services from "./pages/Services";
@@ -31,7 +29,7 @@ import { MonthlySubscription } from "./pages/Dashboard/subscriptions/MonthlySubs
 
 function App() {
   return (
-    <Router>
+    <>
      <Routes>
         <Route exact path="/" element={<Home />} />
         {/* Registration */}
@@ -97,7 +95,7 @@ function App() {
           <Route path="help" element={<h2>Help </h2>} />
         </Route>
       </Routes>
-    </Router>
+    </>
   );
 }
 
