@@ -7,6 +7,7 @@ import MultiStepForm1 from './steps/MultiStepForm1';
 import MultiStepForm2 from './steps/MultiStepForm2';
 import MultiStepForm3 from './steps/MultiStepForm3';
 import axios from 'axios';
+import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 
 function TechTalentProfileForm() {
     const [index, setIndex] = useState(0);
@@ -111,7 +112,7 @@ function TechTalentProfileForm() {
             return;
           }
 
-          const res = await axios.post("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/tech-talent/add-skills", formData,
+          const res = await axios.post(`${API_HOST_URL}/api/v1/tech-talent/add-skills`, formData,
           {
             headers: {
               'Content-Type': 'application/json',

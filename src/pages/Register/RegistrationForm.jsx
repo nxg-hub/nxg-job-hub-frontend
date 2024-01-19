@@ -127,7 +127,7 @@ const RegistrationForm = ({ userType }) => {
       return true;
     }
   };
-  const validateForm = (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
     const valid = validatePhone();
     const user = new User(formData);
@@ -177,7 +177,7 @@ const RegistrationForm = ({ userType }) => {
           <h3>Let's get you started!</h3>
           <h5>Get started and connect with different professionals.</h5>
         </div>
-        <form onSubmit={validateForm}>
+        <form onSubmit={submitForm}>
           {/* User's personal information */}
           <div>
             {/* Name */}

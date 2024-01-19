@@ -7,6 +7,7 @@ import { recruiterPosition } from '../../../../utils/data/employer';
 import './employerprofile.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 
 function EmployerProfileForm() {
   const [loading, setLoading] = useState(true); // Add loading state
@@ -33,7 +34,7 @@ function EmployerProfileForm() {
           return;
         }
 
-        const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+        const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
           headers: {
             'Content-Type' : 'application/json',
             authorization: authKey,
@@ -138,7 +139,7 @@ function EmployerProfileForm() {
         return;
       }
   
-      const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer", {
+      const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
         headers: {
           'Content-Type' : 'application/json',
           authorization: authKey,
@@ -149,7 +150,7 @@ function EmployerProfileForm() {
       // console.log(employerId);
       // console.log(filteredCombinedData);
   
-      const res = await axios.post(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, filteredCombinedData, {
+      const res = await axios.post(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
