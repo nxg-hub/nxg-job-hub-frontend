@@ -70,8 +70,7 @@ const RegistrationForm = ({ userType }) => {
     if (e.target.value.length < 8) {
       setErrors({
         ...errors,
-        password:
-          "Password must be up to 8 characters, include letters, numbers and special characters.",
+        password: "Minimum 8 characters with letters and numbers.",
       });
     } else {
       setErrors({
@@ -138,10 +137,7 @@ const RegistrationForm = ({ userType }) => {
         message: `Signing up...`,
       });
       axios
-        .post(
-          `${API_HOST_URL}/api/v1/auth/register/`,
-          user
-        )
+        .post(`${API_HOST_URL}/api/v1/auth/register/`, user)
         .then((res) => {
           if (res.status) {
             setShowEmailVerificationNotice(true);
@@ -304,7 +300,7 @@ const RegistrationForm = ({ userType }) => {
               autoComplete="new-password"
               id="password"
               required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
               err={errors.password}
               value={formData.password}
             />
@@ -318,7 +314,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"confirmPassword"}
               err={errors.confirmPassword}
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&/]+$"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
               id="confirmPassword"
               autoComplete="confirm-password"
             />
