@@ -7,6 +7,7 @@ import { recruiterPosition } from '../../../../utils/data/employer';
 import './employerprofile.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 
 function EmployerProfileForm() {
   const [loading, setLoading] = useState(true); // Add loading state
@@ -33,7 +34,7 @@ function EmployerProfileForm() {
           return;
         }
 
-        const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+        const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
           headers: {
             'Content-Type' : 'application/json',
             authorization: authKey,
@@ -56,11 +57,11 @@ function EmployerProfileForm() {
 
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
-    // address: '',
+    address: '',
     country: '',
-    // nationality: '',
-    // state: '',
-    // zipCode: '',
+    nationality: '',
+    state: '',
+    zipCode: '',
     position: '',
   });
 
@@ -70,10 +71,10 @@ function EmployerProfileForm() {
     companyAddress: '',
     companyWebsite: '',
     companyPhone: '',
-    // companyZipCode: '',
+    companyZipCode: '',
     industryType: '',
     companySize: '',
-    // vacancy: '',
+    vacancy: '',
     jobBoard: '',
   });
 
@@ -103,7 +104,7 @@ function EmployerProfileForm() {
         ...companyData,
       };
   
-      // Remove null, undefined, fields commentedout and empty string values from the combinedData object
+      // Remove null, undefined, fields not required in the backend API end point(keysToExclude) and empty string values from the combinedData object
       const keysToExclude = ['address', 'nationality', 'state', 'zipCode', 'companyZipCode', 'vacancy'];
       const filteredCombinedData = Object.fromEntries(
         Object.entries(combinedData).reduce((acc, [key, value]) => {
@@ -138,7 +139,7 @@ function EmployerProfileForm() {
         return;
       }
   
-      const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/employers/get-employer", {
+      const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
         headers: {
           'Content-Type' : 'application/json',
           authorization: authKey,
@@ -149,7 +150,7 @@ function EmployerProfileForm() {
       // console.log(employerId);
       // console.log(filteredCombinedData);
   
-      const res = await axios.post(`https://job-hub-591ace1cfc95.herokuapp.com/api/employers/${employerId}`, filteredCombinedData, {
+      const res = await axios.post(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
