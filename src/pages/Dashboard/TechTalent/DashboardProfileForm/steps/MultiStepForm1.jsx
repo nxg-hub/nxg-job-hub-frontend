@@ -4,6 +4,7 @@ import { PhoneInput } from 'react-international-phone';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import axios from 'axios';
+import { API_HOST_URL } from '../../../../../utils/api/API_HOST';
 
 
 function MultiStepForm1({formData, setFormData, onComplete}) {
@@ -46,7 +47,7 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
               return;
             }
     
-            const response = await axios.get("https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", {
+            const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
               headers: {
                 authorization: authKey,
               },

@@ -300,7 +300,7 @@ const RegistrationForm = ({ userType }) => {
               autoComplete="new-password"
               id="password"
               required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+              // pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
               err={errors.password}
               value={formData.password}
             />
@@ -314,7 +314,7 @@ const RegistrationForm = ({ userType }) => {
               type={"password"}
               name={"confirmPassword"}
               err={errors.confirmPassword}
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+              // pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
               id="confirmPassword"
               autoComplete="confirm-password"
             />

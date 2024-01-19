@@ -118,7 +118,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(326px, 1fr));
         gap: 30px;
-        height: 520px;
+        height: 540px;
         .sub-cards-single {
             display: flex;
             flex-direction: column;
@@ -195,5 +195,19 @@
                 }
             }
         }
+    }
+    .sub-btn {
+        border: 1px solid #006A90;
+        border-radius: 20px;
+        background: #fff;
+        color: #006A90;
+        width: 100%;
+        max-width: 1132px;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 40.98px;
+        padding: .5rem 0;
+        margin: 1rem auto;
+        // cursor: not-allowed;
     }
 }

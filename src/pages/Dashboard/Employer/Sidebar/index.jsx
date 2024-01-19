@@ -21,7 +21,7 @@ import {
   Applicants,
   Interviews,
 } from "./SidebarIcons";
-import { PiCaretDown } from "react-icons/pi";
+import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
@@ -76,6 +76,10 @@ const Sidebar = ({ profilePic, ...props }) => {
             <Wallet />
             Wallet
           </NavLink>
+          <NavLink end to="subscription" className={`${s.dashboardItem} `}>
+          <PiSubtitlesBold />
+          Subscription
+        </NavLink>
         </div>
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>

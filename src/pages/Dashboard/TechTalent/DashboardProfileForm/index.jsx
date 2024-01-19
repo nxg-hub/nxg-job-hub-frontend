@@ -9,13 +9,10 @@ import MultiStepForm3 from './steps/MultiStepForm3';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 
+
 function TechTalentProfileForm() {
     const [index, setIndex] = useState(0);
     const [formData, setFormData] = useState({
-      // firstName: "",
-      // lastName: "",
-      // email: "",
-      // phone: "",
       countryCode: "",
       zipCode: "",
       residentialAddress: "",
@@ -25,13 +22,13 @@ function TechTalentProfileForm() {
       yearsOfExperience:"",
       jobType:"", 
       currentJob:"",
-      job:"",
+      // job:"",
       workMode:"",
-      passport:"",
+      // passport:"",
       resume:"",
       coverletter:"",
-      bio:"",
-      portfolioLink:"",
+      // bio:"",
+      // portfolioLink:"",
       linkedInUrl:""
     });
 
@@ -101,18 +98,38 @@ function TechTalentProfileForm() {
     const handleProfileCompletion = async () => {
       // console.log(formData, 'Profile Completed');
         try {
+          // Remove null, undefined, fields not required in the backend API end point(keysToExclude) and empty string values from the combinedData object
+        const keysToExclude = ['bio', 'passport', 'job', 'portfolioLink'];
+        const filteredFormData = Object.fromEntries(
+          Object.entries(formData).reduce((acc, [key, value]) => {
+            if (!keysToExclude.includes(key) && value !== null && value !== undefined && value !== '') {
+              acc.push([key, value]);
+            }
+            return acc;
+          }, [])
+        );
           const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
           if (!loginKey) {
             console.error('Authentication key not available.');
             return;
           }
           const { id, authKey } = JSON.parse(loginKey);
-          if(!id) {
+          if(!id || authKey) {
             console.error('User ID  or Auth key not available.');
             return;
-          }
+          };
 
-          const res = await axios.post(`${API_HOST_URL}/api/v1/tech-talent/add-skills`, formData,
+          const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
+            headers: {
+              'Content-Type' : 'application/json',
+              authorization: authKey,
+            }
+          });
+      
+          const techId = response.data.techID;
+          console.log(techId);
+
+          const res = await axios.post(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
           {
             headers: {
               'Content-Type': 'application/json',

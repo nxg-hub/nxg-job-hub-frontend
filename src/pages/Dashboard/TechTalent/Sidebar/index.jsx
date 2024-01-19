@@ -77,6 +77,10 @@ const Sidebar = ({ profilePic, ...props }) => {
           <Analytics />
           Analytics
         </NavLink>
+        <NavLink end to="subscription" className={`${s.dashboardItem} `}>
+          <Analytics />
+          Subscription
+        </NavLink>
         <li className={`${s.dashboardItem} `}>
           <div className={s.dropdownTitle}>
             <Settings />
