@@ -1,38 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import basic from '../../../static/icons/free-icon.svg';
 import silver from '../../../static/icons/silver-icon.svg';
 import gold from '../../../static/icons/gold-icon.svg';
 import platinum from '../../../static/icons/platinum-icon.svg';
 import './subscription.scss';
 import { BsCheck } from 'react-icons/bs';
-import SubSwitch from './SubSwitch'
-import { SubPayment } from './SubPayment';
-import { SubSuccess } from './SubSuccess';
 
 
-const SubCards = ({onStepChange}) => {
-    const [isYearly, setIsYearly] = useState(false);
-    const [currentStep, setCurrentStep] = useState(0);
+const SubCards = ({onSubscribe}) => {
     const monthlySubscriptions = [
         {
             subId: 1,
             subLogo: basic,
             subTitle: "Free",
-            subPrice: "0$/Month",
+            subPrice: "0$",
             subBenefit: [
-                "Access to all basic features",
-                "Use the website for one month only, completely free"
+                "As a way to welcome new users and allow them to explore our platform, the first month of usage is completely free. During this period, users will have access to all basic features .",
             ],
+            spanTitle: "Validity:",
+            span: "1 Month",
             subGroup : "Free"
         },
         {
             subId: 2,
             subLogo: silver,
             subTitle: "Sliver",
-            subPrice: "5$/Month",
+            subPrice: "25$/3months",
             subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
+                "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
                 "10 vetted job posting throughout the entire 3 months period."
             ],
             subGroup : "Sliver"
@@ -41,62 +36,10 @@ const SubCards = ({onStepChange}) => {
             subId: 3,
             subLogo: gold,
             subTitle: "Gold",
-            subPrice: "11$/Month",
+            subPrice: "70$/6months",
             subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
-                "Unlimited vetted job listing, posting and tech talent search."
-            ],
-            subGroup : "Most Popular"
-        },
-        {
-            subId: 4,
-            subLogo: platinum,
-            subTitle: "Platinum",
-            subPrice: "7$/Month",
-            subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
-                "Unlimited vetted job listing, posting and tech talent search.",
-                "Fast job application, tech talent profile matching mechanism and customer support."
-            ],
-            subGroup : "Recommended"
-        },
-    ];
-
-    const yearlySubscriptions = [
-        {
-            subId: 1,
-            subLogo: basic,
-            subTitle: "Free",
-            subPrice: "0$/Month",
-            subBenefit: [
-                "Access to all basic features",
-                "Use the website for one month only, completely free"
-            ],
-            subGroup : "Free"
-        },
-        {
-            subId: 2,
-            subLogo: silver,
-            subTitle: "Sliver",
-            subPrice: "100$/Yearly",
-            subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
-                "10 vetted job posting throughout the entire 3 months period."
-            ],
-            subGroup : "Sliver"
-        },
-        {
-            subId: 3,
-            subLogo: gold,
-            subTitle: "Gold",
-            subPrice: "140$/Yearly",
-            subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
-                "Unlimited vetted job listing, posting and tech talent search."
+                "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
+                "Unlimited vetted job listing, posting and Tech talent search support"
             ],
             subGroup : "Most Popular"
         },
@@ -106,84 +49,63 @@ const SubCards = ({onStepChange}) => {
             subTitle: "Platinum",
             subPrice: "90$/Yearly",
             subBenefit: [
-                "Access to all basic features",
-                "Solid foundation for limited job posting and searching.",
-                "Unlimited vetted job listing, posting and tech talent search.",
-                "Fast job application, tech talent profile matching mechanism and customer support."
+                "The Platinum plan caters to users seeking an even longer commitment with added features.",
+                "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support."
             ],
             subGroup : "Recommended"
         },
-    ]
-
-    const subscriptions = isYearly ? yearlySubscriptions : monthlySubscriptions;
-
-    const steps = [
-        "SubPayment", 
-        "SubSuccess"
     ];
 
-    useEffect(() => {
-        // You can perform any side effects here when the index changes
-        // For example, you can navigate to a new route or handle other logic.
-        // In this case, we're just logging to the console.
-        console.log('Index changed:', currentStep);
-      }, [currentStep]);
-
     const handlePayment = () => {
-        if (currentStep < steps.length - 1) {
-            setCurrentStep((prevIndex) => prevIndex + 1);
-            onStepChange(currentStep + 1); // Call the onStepChange function
-        }
+       onSubscribe(true);
     }
 
   return (
-    <>
-        {currentStep === 0 && (
-            <div>
-                <div className="sub-tabs">
-                <h2 className="sub-tabs-title">Choose Your Subscription Plan!!!</h2>
-                <SubSwitch isToggled={isYearly} onToggle={() => setIsYearly(!isYearly)}/>
-            </div>
-            <div className="sub-text">
-                <p>
-                    Choose the subscription plan that best suits you, start for free now and upgrade later ..
-                </p>
-            </div>
-            <div className='sub-cards-main'>
-                {subscriptions.map((subscription, index) => (
-                    <div className='sub-cards-single' key={subscription.subId}>
-                        <div className="sub-cards-title-container">
-                            {(index >= subscriptions.length - 2) && (
-                            <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.subGroup}</p>
-                            )}
-                            <div className="sub-cards-title">
-                                <img src={subscription.subLogo} alt=""  />
-                                <h3>{subscription.subTitle}</h3>
-                            </div>
-                            <p className='sub-price'>{subscription.subPrice}</p>
+    <> 
+        <div className="sub-tabs">
+            <h2 className="sub-tabs-title">Choose Your Subscription Plan!!!</h2>
+        </div>
+        <div className="sub-text">
+            <p>
+                Choose the subscription plan that best suits you, start for free now and upgrade later ..
+            </p>
+        </div>
+        <div className='sub-cards-main'>
+            {monthlySubscriptions.map((subscription, index) => (
+                <div className='sub-cards-single' key={subscription.subId}>
+                    <div className="sub-cards-title-container">
+                        {(index >= monthlySubscriptions.length - 2) && (
+                        <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.subGroup}</p>
+                        )}
+                        <div className="sub-cards-title">
+                            <img src={subscription.subLogo} alt=""  />
+                            <h3>{subscription.subTitle}</h3>
                         </div>
-                        <div className="sub-cards-lists">
-                            <ul>
-                                {subscription.subBenefit.map((benefit, index) => (
-                                    <li key={index}>
-                                        <div className="sub-check">
-                                            <BsCheck style={{color: "rgba(77, 242, 19, 1)"}} />
-                                        </div>
-                                        <p>{benefit}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="sub-cards-btns">
-                            <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
-                        </div>
+                        <p className='sub-price'>{subscription.subPrice}</p>
                     </div>
-                ))}
+                    <div className="sub-cards-lists">
+                        <ul>
+                            {subscription.subBenefit.map((benefit, index) => (
+                                <li key={index}>
+                                    <div className="sub-check">
+                                        <BsCheck style={{color: "rgba(77, 242, 19, 1)"}} />
+                                    </div>
+                                    <p>{benefit}</p>
+                                </li>
+                            ))}
+                            {subscription.subId === 1 && (
+                                <div className="sub-span">
+                                    <p><span>{subscription.spanTitle}</span> {subscription.span}</p>
+                            </div>
+                            )}
+                        </ul>
+                    </div>
+                    <div className="sub-cards-btns">
+                        <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
+                    </div>
                 </div>
-            </div>
-        )}
-        {currentStep === 1 && <SubPayment />}
-        {currentStep === 2 && <SubSuccess />}
+            ))}
+        </div>
     </>
   )
 }
