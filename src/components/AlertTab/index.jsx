@@ -5,12 +5,14 @@ import { BsArrowLeft } from "react-icons/bs";
 import { CiMenuKebab } from "react-icons/ci";
 import { ReactComponent as Search } from "../../../src/static/icons/round-search.svg";
 
-const AlertTab = ({ items, controls, ...props }) => {
+const NotificationTab = ({ items, controls, ...props }) => {
   const [search, setSearch] = useState("");
-
+  const showOptions = (e) => {
+  
+}
   const handleSearch = () => {};
   return (
-    <div onClick={controls} title="" className={s.AlertTab} {...props}>
+    <div title="" className={s.AlertTab} {...props}>
       <span>
         <BsArrowLeft onClick={controls} />
         <div className={s.searchBar}>
@@ -23,7 +25,7 @@ const AlertTab = ({ items, controls, ...props }) => {
           />
           <Search onClick={handleSearch} />
         </div>
-        <CiMenuKebab />
+        <CiMenuKebab title={"More"} onClick={showOptions} />
       </span>
       {items.map((item, id) => (
         <AlertTabItem item={item} key={id} />
@@ -32,4 +34,4 @@ const AlertTab = ({ items, controls, ...props }) => {
   );
 };
 
-export default AlertTab;
+export default NotificationTab;

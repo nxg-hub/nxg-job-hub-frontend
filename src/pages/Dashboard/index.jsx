@@ -51,19 +51,23 @@ const Dashboard = () => {
 
   useEffect(() => {
     const getUser = async () => {
+      // Endpoint for fetching acount type instance
       const getAccountTypeDetails = {
         EMPLOYER: `${API_HOST_URL}/api/employers/get-employer`,
         TECHTALENT: `${API_HOST_URL}/api/v1/tech-talent/get-user`,
         AGENT: "",
       };
+
+      // fecth JWT from store
       const localdata =
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         {};
-
-      if (localdata.authKey) {
-        setAuth(localdata.authKey);
-        try {
+// get authkey if null, redirect to login
+if (localdata.authKey) {
+  setAuth(localdata.authKey);
+  try {
+          // get usertype  redirect to appropriate dashboard
           const { data } = await axios.get(
             `${API_HOST_URL}/api/v1/auth/get-user`,
             {

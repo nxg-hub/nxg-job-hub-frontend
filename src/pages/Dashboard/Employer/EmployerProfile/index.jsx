@@ -53,7 +53,7 @@ function EmployerProfileForm() {
     };
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
-  
+
 
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
@@ -79,7 +79,6 @@ function EmployerProfileForm() {
   });
 
   const [errors, setErrors] = useState({ data: "" });
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -147,10 +146,10 @@ function EmployerProfileForm() {
       });
   
       const employerId = response.data.employerID;
-      // console.log(employerId);
+      console.log(employerId);
       // console.log(filteredCombinedData);
   
-      const res = await axios.post(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
+      const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
