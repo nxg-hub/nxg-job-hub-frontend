@@ -3,12 +3,15 @@ import Notice from "../../../../../components/Notice";
 import JobCard from "../../../../../components/JobCard";
 import { Link } from "react-router-dom";
 import useFetchJobs from "../../../../../utils/hooks/useFetchJobs";
+import {UserContext} from "../.././.."
+import { useContext } from "react";
 const JobPosts = () => {
-  const { posts, popup } = useFetchJobs();
+  const {accountTypeID} = useContext(UserContext)
+  const { posts, popup } = useFetchJobs(accountTypeID);
   return (
     <div className={s.JobPosts}>
       <div>
-        {posts ? (
+        {posts.length > 0 ? (
           posts.map((post, i) => {
             // const description = JSON.parse(post.description.split("/").join()[0]);
             return (

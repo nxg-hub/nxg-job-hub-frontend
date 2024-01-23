@@ -18,7 +18,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
-  
+
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -36,22 +36,19 @@ const Login = () => {
         type: "info",
         message: `Logging in...`,
       });
-      const res = await axios.post(
-        `${API_HOST_URL}/api/v1/auth/login`,
-        { email, password }
-      );
+      const res = await axios.post(`${API_HOST_URL}/api/v1/auth/login`, {
+        email,
+        password,
+      });
 
       const authKey = res.headers.authorization;
 
-      const userRes = await axios.get(
-        `${API_HOST_URL}/api/v1/auth/get-user`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: authKey,
-          },
-        }
-      );
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authKey,
+        },
+      });
 
       const id = userRes.data.id; // Assuming the user ID is returned in the response
 
@@ -77,7 +74,6 @@ const Login = () => {
             ? "/profilelanding"
             : "/dashboard"
         );
-      
       }
     } catch (error) {
       showpopUp({
@@ -88,13 +84,27 @@ const Login = () => {
       setTimeout(() => showpopUp(undefined), 5000);
     }
   };
-
-  useEffect(() => {
+  const AutoLoginUser = async () => {
     const storedData = JSON.parse(
       window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
-    storedData && navigate("/dashboard");
-  }, [navigate]);
+    if (storedData) {
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: storedData.authKey,
+        },
+      });
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  };
+  useEffect(() => {
+    AutoLoginUser()
+  }, []);
 
   return (
     <div className="login-main-container">
