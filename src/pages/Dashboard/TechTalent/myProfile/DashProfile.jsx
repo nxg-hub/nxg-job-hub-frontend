@@ -11,8 +11,8 @@ function DashProfile() {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [address, setAddress] = useState("");
-  const [experience, setExperience] = useState("");
+  const [address, setAddress] = useState(user.address);
+  const [experience, setExperience] = useState(user.experience);
   const [skills, setSkills] = useState("");
   // console.log(user)
   const currentYear = new Date().getFullYear() 
@@ -21,6 +21,8 @@ function DashProfile() {
       setFirstName(user.firstName)
       setLastName(user.lastName)
       setEmail(user.email)
+      setAddress(user.address)
+      setExperience(user.experience)
     }
   }, [user])
   return (

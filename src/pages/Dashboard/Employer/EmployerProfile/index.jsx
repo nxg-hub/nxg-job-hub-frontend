@@ -150,7 +150,7 @@ function EmployerProfileForm() {
       // console.log(employerId);
       // console.log(filteredCombinedData);
   
-      const res = await axios.post(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
+      const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
