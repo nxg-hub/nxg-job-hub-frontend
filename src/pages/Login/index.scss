@@ -20,7 +20,7 @@
     width: 100%;
     background: #fff;
     padding: 2rem;
-    margin-top: 15%;
+    margin-top: 20%;
 
     .title {
         margin-bottom: 3rem;
@@ -37,7 +37,10 @@
 }
 
 .tech-img {
-    top:2%; 
+    position: absolute;
+    width: 150px;
+    height: 65px;
+    top:4%; 
     left:6%;
 }
 
@@ -94,6 +97,13 @@
     .forgot-text {
         margin: 2rem 0;
     }
+    .forgot-login {
+        text-align: start; 
+        font-size: .8rem; 
+        font-weight: 500; 
+        font-family: Montserrat; 
+        margin-top: 3rem;
+    }
 }
 
 #forgot-btn {
@@ -115,10 +125,6 @@
 }
 
 @media only screen and (min-width:425px) {
-    .logintech {
-        margin-top: -110%;
-    }
-
     .log-pass {
         left: 20rem;
     }
@@ -145,6 +151,9 @@
 }
 
 @media only screen and (min-width:1440px) {
+    .tech-img {
+        left: 8%;
+    }
     .logintech {
         padding: 4rem;
     }

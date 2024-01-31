@@ -163,19 +163,20 @@ const Sidebar = ({ profilePic, ...props }) => {
           open={isOpen}
           onClose={() => setIsOpen(false)}
           style={{
-            position: "absolute",
-            left: "30%",
-            top: "30%",
-            transform: "translate(-50% -50%)",
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
             width: "100%",
             maxWidth: "800px",
-            height: "584px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             background: "#ffffff",
             border: "none",
             borderRadius: "24px",
+            padding:"2rem 1rem",
+            zIndex: "100"
           }}
         >
           <Dialog.Panel>

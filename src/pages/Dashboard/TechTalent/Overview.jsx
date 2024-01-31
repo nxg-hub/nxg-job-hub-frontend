@@ -8,7 +8,6 @@ import { TbMathGreater } from "react-icons/tb";
 import { jobs as JobRecommendations } from "../../../utils/data/job-recommendations";
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { UserContext } from "..";
 
 function TechTalentOverview() {
@@ -19,10 +18,9 @@ function TechTalentOverview() {
     navigate("/tech-talent-profile-form");
   };
   return (
-    <div className="dash-profile-main-side">
+    <main className="dash-profile-main-side">
       <div className="dash-profile-header">
         <div className="dash-profile-name">
-          <RxHamburgerMenu />
           <p>{user.firstName || "User"}'s Dashboard</p>
         </div>
         <div className="dash-profile-pics-section">
@@ -84,7 +82,7 @@ function TechTalentOverview() {
           })}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

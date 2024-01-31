@@ -1,7 +1,7 @@
 //Password Settings Styling
 .pass-header {
     border-bottom: 1px solid #000;
-    max-width: 60vw;
+    width: 100%;
     padding: 10px;
     h2 {
         color: #004259;
@@ -11,7 +11,7 @@
     }
 }
 .password-section {
-    max-width: 60vw;
+    width: 100%;
     padding: 10px;
     .password-change {
         margin: 2rem 0;
@@ -82,7 +82,11 @@
 }
 
 @media only screen and (min-width:768px) {
+    .pass-header {
+        width: 70%;
+    }
     .password-section {
+        width: 70%;
         .password-change {
             .pass-update {
                 .pass-btn {

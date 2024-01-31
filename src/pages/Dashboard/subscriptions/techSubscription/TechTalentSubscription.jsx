@@ -27,8 +27,8 @@ function TechTalentSubscription() {
           >
             Back To Dashboard
           </button>
-      </div>
-    )}
+        </div>
+      )}
     {isSubscribed && <SubPayment />}  
     </div>
   )
