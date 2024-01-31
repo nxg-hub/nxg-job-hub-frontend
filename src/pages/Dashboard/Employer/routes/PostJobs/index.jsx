@@ -11,6 +11,7 @@ import JobPost from "../../../../../utils/classes/JobPost";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Notice from "../../../../../components/Notice";
+import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
 const PostJobs = () => {
   const user = useContext(UserContext);
   const data = {
@@ -51,7 +52,7 @@ const PostJobs = () => {
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
       const res = await axios.post(
-        "https://job-hub-591ace1cfc95.herokuapp.com/api/job-postings/post",
+        `${API_HOST_URL}/api/job-postings/post`,
         post,
         {
           headers: {

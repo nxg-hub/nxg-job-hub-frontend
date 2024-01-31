@@ -11,6 +11,23 @@ const jobVacancy = [
   {value: 'volunteer', label:'Volunteer'},
   {value: 'freelance', label:'Freelance'}
 ];
+const industry = [
+  "Advertising",
+  "EdTech", 
+  "Cloud Computing",
+  "Data Storage and Management",
+  "Telecom",
+  "Robotics",
+  "Software",
+  "Telecom",
+  "Travel and Tourism"
+];
+const compSize = [
+  "10-30",
+  "31-60",
+  "61-100",
+  "101-300+",
+];
 const boards = [
   "Twitter",
   "Facebook",
@@ -22,4 +39,4 @@ const boards = [
   "Others"
 ]
 const genderOption = ["Male", "Female", "Other"];
-export { recruiterPosition, jobVacancy, boards, genderOption };
+export { recruiterPosition, jobVacancy, boards, genderOption, industry, compSize };

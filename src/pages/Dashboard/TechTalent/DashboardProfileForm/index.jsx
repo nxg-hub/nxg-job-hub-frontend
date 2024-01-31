@@ -114,7 +114,7 @@ function TechTalentProfileForm() {
             return;
           }
           const { id, authKey } = JSON.parse(loginKey);
-          if(!id || authKey) {
+          if(!id || !authKey) {
             console.error('User ID  or Auth key not available.');
             return;
           };
@@ -129,7 +129,7 @@ function TechTalentProfileForm() {
           const techId = response.data.techID;
           console.log(techId);
 
-          const res = await axios.post(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
+          const res = await axios.put(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
           {
             headers: {
               'Content-Type': 'application/json',

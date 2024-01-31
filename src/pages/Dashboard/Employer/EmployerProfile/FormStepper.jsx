@@ -2,8 +2,9 @@ import React from "react";
 import FormStepHeader from "./FormStepHeader";
 import Inputs from "../../../../components/accounts/Inputs";
 import { PhoneInput } from "react-international-phone";
+import Select from 'react-select';
 import "./employerprofile.scss";
-import { jobVacancy, boards } from "../../../../utils/data/employer";
+import { jobVacancy, boards, industry, compSize } from "../../../../utils/data/employer";
 
 function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
 
@@ -31,6 +32,15 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
       onCompleteProfile();
     }
   };
+
+  const industryOptions = industry.map((industryType) => ({
+    value: industryType, 
+    label: industryType, 
+  }));
+const compSizeOptions = compSize.map((companySize) => ({
+    value: companySize, 
+    label: companySize, 
+  }));
 
   return (
     <div style={{ margin: "3rem 0" }}>
@@ -79,7 +89,7 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
                 required
               />
             </div>
-            <div className="phone-address" style={{ textAlign: "start" }}>
+            <div className="phone-address">
               <div className="rep-phone">
                 <label>Phone Number*</label>
                 <PhoneInput
@@ -116,22 +126,15 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
                 onChange={handleChange}
               />
             </div>
-            <div className="nation-state" style={{ display: "flex" }}>
-              <Inputs
-                type="text"
-                name="industryType"
-                title="Type of Industry*"
-                value={companyData.industryType}
-                onChange={handleChange}
-                required
-              />
-              <Inputs
-                type="text"
-                name="companySize"
-                title="Company Size"
-                value={companyData.companySize}
-                onChange={handleChange}
-              />
+            <div className="nation-state">
+            <div className="tech-pro-qualification">
+                    <label>Type of Industry*</label>
+                    <Select options={industryOptions} value={companyData.industryType ? { label: companyData.industryType, value: companyData.industryType } : null} onChange={(selectedOption) => handleChange(selectedOption, 'industryType')} />
+                </div>
+                <div className="tech-pro-qualification">
+                    <label>Company Size</label>
+                    <Select options={compSizeOptions} value={companyData.companySize ? { label: companyData.companySize, value: companyData.companySize } : null} onChange={(selectedOption) => handleChange(selectedOption, 'companySize')} />
+                </div>
             </div>
             <div className="rep-recruiter">
               <label

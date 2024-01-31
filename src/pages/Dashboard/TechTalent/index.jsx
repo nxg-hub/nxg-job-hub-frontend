@@ -3,6 +3,7 @@ import pic from "../../../static/images/Sarah.png";
 import s from "../index.module.scss";
 import { Outlet } from "react-router-dom";
 
+
 const TechTalent = () => {
   return (
     <div className={s.Dashboard}>
@@ -10,7 +11,7 @@ const TechTalent = () => {
         <Sidebar className={s.leftSide} profilePic={pic} />
       </div>
       {/* Mainpage or <Outlet/> */}
-      <div className={s.Sidemain}>
+      <div className={s.Sidemain} >
         <Outlet />
       </div>
     </div>

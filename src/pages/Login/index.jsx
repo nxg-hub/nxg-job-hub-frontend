@@ -18,7 +18,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
-  
+
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -36,22 +36,19 @@ const Login = () => {
         type: "info",
         message: `Logging in...`,
       });
-      const res = await axios.post(
-        `${API_HOST_URL}/api/v1/auth/login`,
-        { email, password }
-      );
+      const res = await axios.post(`${API_HOST_URL}/api/v1/auth/login`, {
+        email,
+        password,
+      });
 
       const authKey = res.headers.authorization;
 
-      const userRes = await axios.get(
-        `${API_HOST_URL}/api/v1/auth/get-user`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: authKey,
-          },
-        }
-      );
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authKey,
+        },
+      });
 
       const id = userRes.data.id; // Assuming the user ID is returned in the response
 
@@ -77,36 +74,48 @@ const Login = () => {
             ? "/profilelanding"
             : "/dashboard"
         );
-      
       }
     } catch (error) {
+      let errorMessage = "Login failed.";
+
+      if (error.response && error.response.data ) {
+        errorMessage = error.response.data;
+        
+      }
       showpopUp({
         type: "danger",
-        message:
-          "Login failed. Please check your internet connection and try again.",
+        message: errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
   };
-
-  useEffect(() => {
+  const AutoLoginUser = async () => {
     const storedData = JSON.parse(
       window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
-    storedData && navigate("/dashboard");
-  }, [navigate]);
+    if (storedData) {
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: storedData.authKey,
+        },
+      });
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  };
+  useEffect(() => {
+    AutoLoginUser()
+  });
 
   return (
     <div className="login-main-container">
       <div className="form-col">
         <div className="log-bg">
           <div
-            style={{
-              width: "7rem",
-              height: "5rem",
-              position: "absolute",
-              margin: "8px 0 0 8px",
-            }}
             className="tech-img"
           >
             <img src={Logo} alt="NXG-Logo" className="logo" />
@@ -139,7 +148,6 @@ const Login = () => {
                   placeholder="*******"
                   autoComplete="current-password"
                   errormessage="Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!"
-                  // pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
                 />
                 <button
                   onClick={handleShowPassword}

@@ -7,27 +7,21 @@
   color: white;
   height: 100%;
   overflow: hidden;
-  position: relative;
-  > img {
-    height: 85px;
-    width: 136.42857px;
-    margin: auto;
+  // position: relative;
+  .menuIcon {
     display: flex;
-    justify-self: center;
+    align-items: center;
+    margin-bottom: .5rem;
+    img {
+      height: 85px;
+      width: 150px;
+      margin: auto;
+    }
   }
+   
   .Profile {
     text-align: center;
-    // > p {
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    //   gap: 5px;
-
-    //   svg {
-    //     height: 25px;
-    //     width: auto;
-    //   }
-    // }
+    padding: 0;
     strong {
       display: block;
     }
@@ -63,8 +57,8 @@
     }
   }
   ul.list {
-    padding-left: 20px;
-    margin-top: 25px;
+    padding: 0 0 0 20px;
+    margin: 25px 0 0 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -102,6 +96,17 @@
     justify-content: flex-start;
     gap: 5px;
     padding: 10px 20px;
+    div {
+      align-items: center;
+      svg {
+        height: 25px;
+        width: auto;
+        margin: 4px 0 0 0;
+      }
+    }
+    p {
+      display: block;
+    }
     svg {
       height: 20px;
       width: auto;
@@ -110,8 +115,10 @@
       width: 80%;
       display: flex;
       align-items: center;
-
       justify-content: space-between;
+      p {
+        display: block;
+      }
       svg {
         height: 14px;
       }
@@ -138,13 +145,6 @@
       a {
         font-size: 14px;
       }
-      // &:has(.Selected){
-      //   height: fit-content !important;
-      //   scale: 1 !important;
-      //   visibility: visible !important;
-      //   transform: translateX(20px);
-      //   opacity: 1;
-      // }
     }
     &:hover {
       ul {
@@ -165,6 +165,71 @@
     bottom: 5px;
     &:hover {
       background-color: #006a90;
+    }
+  }
+}
+@media only screen and (max-width: 800px) {
+  .Sidebar {
+    .menuIcon {
+      img {
+        height: 50px;
+        width: 54px;
+      }
+    }
+    .Profile {
+      padding: 2px;
+      strong {
+        display: none;
+      }
+      p {
+        display: none;
+      }
+      > div {
+        > div {
+          border-radius: 50%;
+          height: 50px;
+          width: 50px;
+          padding: 5px;
+        }
+        > svg {
+          right: -2px;
+        }
+      }
+    }
+    ul.list {
+      padding: 0 0 0 5px;
+    }
+    a.dashboardItem,
+    .dropdownTitle {
+      padding: 3px;
+      div {
+        align-items: center;
+      }
+      p {
+        display: none;
+      }
+      span {
+        width: 100%;
+        p {
+          display: none;
+        }
+        svg {
+          display: none;
+          height: 10px;
+        }
+      }
+    }
+    li.dashboardItem {
+      ul {
+        a {
+          margin-left: -12px;
+          font-size: 14px;
+        }
+      }
+     
+    }
+    a.Logout {
+      margin-left: 5px;
     }
   }
 }

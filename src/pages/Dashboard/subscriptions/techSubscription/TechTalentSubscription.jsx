@@ -12,7 +12,7 @@ function TechTalentSubscription() {
   };
 
   return (
-    <>
+    <div className='subscriptions-container'>
       {!isSubscribed && (
         <div className='subscription-main'>
           <div className="sub-logo">
@@ -27,10 +27,10 @@ function TechTalentSubscription() {
           >
             Back To Dashboard
           </button>
-      </div>
-    )}
+        </div>
+      )}
     {isSubscribed && <SubPayment />}  
-    </>
+    </div>
   )
 }
 

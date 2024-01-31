@@ -14,31 +14,33 @@
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
         gap: 20px;
         margin: auto;
-        // margin: 45% 0;
+        margin: 25% 0 2% 0;
         .my-profile-form1, .my-profile-form2 {
             width: 100%;
             max-width: 536px;
             height: 770px;
             background: #fff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: -4px 4px 20px 0px rgba(0, 0, 0, 0.25);
             .my-profile-form-img-section {
                 position: relative;
                 .my-profile-form-pics {
                     position: absolute;
-                    top: -35%;
-                    left: 23%;
+                    top: -15%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
                     .my-profile-form-pics-lg {
                         width: 150px;
                         height: 150px;
                         border-radius: 50%;
                         border: 5px solid #4D9932;
-                        img {
+                        background: #d8d8d8;
+                        .user {
                             width: 100%;
                             height: 100%;
                             object-fit: contain;
-                            border-radius: 50%;
+                            color: #fff;
                         }
                     }
                     .my-profile-form-pics-sm {
@@ -247,14 +249,16 @@
         .my-profile-forms-container {
             gap: 20px;
             margin: auto;
-            margin: 35% 0;
+            margin: 20% 0 5% 0;
             .my-profile-form1, .my-profile-form2 {
+                padding: 30px;
                 .my-profile-form-img-section {
                     position: relative;
                     .my-profile-form-pics {
                         position: absolute;
-                        top: -28%;
-                        left: 10%;
+                        top: -15%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
                     }
                     .my-profile-form-one {
                         margin-top: 22%;
@@ -320,9 +324,6 @@
             .my-profile-form1, .my-profile-form2 {
                 .my-profile-form-img-section {
                     .my-profile-form-pics {
-                        position: absolute;
-                        top: -32%;
-                        left: 25%;
                         .my-profile-form-pics-lg {
                             width: 168.78px;
                             height: 168.78px;
@@ -355,10 +356,12 @@
 @media only screen and (min-width:1280px) {
     .dash-profile-main-container {
         .my-profile-forms-container {
+            margin: 10% 0;
             .my-profile-form1, .my-profile-form2 {
                 .my-profile-form-img-section {
                     .my-profile-form-pics {
-                        left: 28.5%;
+                        left: 50%;
+                        top: -20%;
                     }
                 }
             }
@@ -378,8 +381,8 @@
                     position: relative;
                     .my-profile-form-pics {
                         position: absolute;
-                        top: -40%;
-                        left: 32%;
+                        top: -21%;
+                        left: 50%;
                         .my-profile-form-pics-lg {
                             width: 168.78px;
                             height: 168.78px;
