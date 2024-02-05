@@ -57,11 +57,11 @@ function EmployerProfileForm() {
 
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
-    // address: '',
+    address: '',
     country: '',
-    // nationality: '',
-    // state: '',
-    // zipCode: '',
+    nationality: '',
+    state: '',
+    zipCode: '',
     position: '',
   });
 
@@ -71,10 +71,10 @@ function EmployerProfileForm() {
     companyAddress: '',
     companyWebsite: '',
     companyPhone: '',
-    // companyZipCode: '',
+    companyZipCode: '',
     industryType: '',
     companySize: '',
-    // vacancy: '',
+    vacancy: '',
     jobBoard: '',
   });
 
@@ -103,7 +103,7 @@ function EmployerProfileForm() {
         ...companyData,
       };
   
-      // Remove null, undefined, fields commentedout and empty string values from the combinedData object
+      // Remove null, undefined, fields not required in the backend API end point(keysToExclude) and empty string values from the combinedData object
       const keysToExclude = ['address', 'nationality', 'state', 'zipCode', 'companyZipCode', 'vacancy'];
       const filteredCombinedData = Object.fromEntries(
         Object.entries(combinedData).reduce((acc, [key, value]) => {

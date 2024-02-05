@@ -25,11 +25,14 @@ import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index
 import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
 import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
+import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
+import Vetting from "./pages/Dashboard/AdminDashboard/routes/Vetting/Vetting.jsx";
+import Admin from "./pages/Dashboard/AdminDashboard/index.jsx";
 
 function App() {
   return (
     <>
-      <Routes>
+     <Routes>
         <Route exact path="/" element={<Home />} />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
@@ -82,6 +85,7 @@ function App() {
           <Route path="saved" element={<h2>Saved Jobs </h2>} />
           <Route path="wallet" element={<Wallet />} />
           <Route path="analytics" element={<h2>Analytics </h2>} />
+          <Route path="subscription" element={<SubscriptionController />} />
           <Route path="profile-details" element={<h2>Profile Details</h2>} />
           <Route path="password-settings" element={<Passwordsettings />} />
           <Route path="Privacy" element={<h2>Privacy</h2>} />
@@ -90,6 +94,10 @@ function App() {
             element={<h2>Terms and Conditions</h2>}
           />
           <Route path="help" element={<h2>Help </h2>} />
+        </Route>
+        <Route path="/admindashboard" element={<Admin/>}>
+          <Route path="" element={<Overview />} />
+          <Route path="vetting" element={<Vetting />}/>
         </Route>
       </Routes>
     </>

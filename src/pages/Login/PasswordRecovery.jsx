@@ -87,7 +87,7 @@ const PasswordRecovery = () => {
             <p style={{ textAlign: 'start', fontSize: '.8rem', fontWeight: '500', fontFamily: 'Montserrat', marginTop: '-2.5rem' }}>
             {message}
             </p>
-            <p style={{textAlign:"start", fontSize:".8rem", fontWeight:"500", fontFamily:"Montserrat", marginTop:"-2.5rem"}}><Link to="/logtalent" style={{color:"#000000"}}>Back to Login</Link></p>
+            <p className='forgot-login'><Link to="/login">Back to Login</Link></p>
         </div>
     </div>
   )

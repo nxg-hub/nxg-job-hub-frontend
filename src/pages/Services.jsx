@@ -1,11 +1,12 @@
 import React from 'react'
-import { MonthlySubscription } from './Dashboard/subscriptions/MonthlySubscription'
+// import Admin from './Dashboard/AdminDashboard'
 
 const Services = () => {
+  
   return (
     <div>
       Services
-     <MonthlySubscription />
+      {/* <Admin /> */}
     </div>
   )
 }

@@ -75,10 +75,15 @@ const Login = () => {
         );
       }
     } catch (error) {
+      let errorMessage = "Login failed.";
+
+      if (error.response && error.response.data ) {
+        errorMessage = error.response.data;
+        
+      }
       showpopUp({
         type: "danger",
-        message:
-          "Login failed. Please check your internet connection and try again.",
+        message: errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
@@ -110,12 +115,6 @@ const Login = () => {
       <div className="form-col">
         <div className="log-bg">
           <div
-            style={{
-              width: "7rem",
-              height: "5rem",
-              position: "absolute",
-              margin: "8px 0 0 8px",
-            }}
             className="tech-img"
           >
             <img src={Logo} alt="NXG-Logo" className="logo" />

@@ -17,7 +17,7 @@ import {
   Terms,
   Privacy,
 } from "./SidebarIcons";
-import { PiCaretDown } from "react-icons/pi";
+import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
@@ -26,6 +26,44 @@ const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const menuItem = [
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      icon: <Dashboard />
+    },
+    {
+      path: "notifications",
+      name: "Notifications",
+      icon: <Notification />
+    },
+    {
+      path: "profile",
+      name: " My Profile",
+      icon: <MyProfile />
+    },
+    {
+      path: "applications",
+      name: "Applications",
+      icon: <Applications />
+    },
+    {
+      path: "saved",
+      name: "Saved Jobs",
+      icon: <SavedJobs fill="white" />
+    },
+    {
+      path: "analytics",
+      name: "Analytics",
+      icon: <Analytics />
+    },
+    {
+      path: "subscription",
+      name: "Subscription",
+      icon: <PiSubtitlesBold />
+    },
+  ]
 
   const moveToDashboard = () => {
     navigate("/dashboard");
@@ -41,8 +79,11 @@ const Sidebar = ({ profilePic, ...props }) => {
   };
 
   return (
-    <div className={s.Sidebar}>
-      <img src={logo} alt="logo" />
+    <div  className={s.Sidebar}>
+      <div className={s.menuIcon}>
+        <img src={logo} alt="logo" />
+      </div>
+      
       <div className={s.Profile}>
         <div>
           <div className={s.displayPic}>
@@ -54,34 +95,17 @@ const Sidebar = ({ profilePic, ...props }) => {
         <p>Add role <MdOutlineEdit /></p>
       </div>
       <ul className={s.list}>
-        <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-          <Dashboard />
-          Dashboard
+        {menuItem.map((item, index) => (
+          <NavLink end to={item.path} key={index} className={`${s.dashboardItem} `}>
+            <div>{item.icon}</div>
+            <p>{item.name}</p>
         </NavLink>
-        <NavLink end to="notifications" className={`${s.dashboardItem} `}>
-          <Notification />
-          Notifications
-        </NavLink>
-        <NavLink end to="profile" className={`${s.dashboardItem} `}>
-          <MyProfile />
-          My Profile
-        </NavLink>
-        <NavLink end to="applications" className={`${s.dashboardItem} `}>
-          <Applications />
-          My Applications
-        </NavLink>
-        <NavLink end to="saved" className={`${s.dashboardItem} `}>
-          <SavedJobs fill="white" /> Saved Jobs
-        </NavLink>
-        <NavLink end to="analytics" className={`${s.dashboardItem} `}>
-          <Analytics />
-          Analytics
-        </NavLink>
+        ))}
         <li className={`${s.dashboardItem} `}>
           <div className={s.dropdownTitle}>
-            <Settings />
+            <div><Settings /></div>
             <span>
-              Settings
+             <p> Settings</p>
               <PiCaretDown />
             </span>
           </div>
@@ -92,11 +116,12 @@ const Sidebar = ({ profilePic, ...props }) => {
               className={`${s.dashboardItem} `}
             >
               {" "}
-              <Password /> Password Settings
+              <Password /> <p>Password Settings</p>
             </NavLink>
             <NavLink end to="privacy" className={`${s.dashboardItem} `}>
               {" "}
-              <Privacy /> Privacy
+              <Privacy /> <p>Privacy</p>
+
             </NavLink>
             <NavLink
               end
@@ -104,21 +129,21 @@ const Sidebar = ({ profilePic, ...props }) => {
               className={`${s.dashboardItem} `}
             >
               {" "}
-              <Terms /> Terms and conditions
+              <Terms /> <p>Terms and conditions</p>
             </NavLink>
           </ul>
         </li>
         <NavLink end to="help" className={`${s.dashboardItem} `}>
-          <Help />
-          Help
+          <div><Help /></div>
+         <p> Help </p>
         </NavLink>
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Logout />
-        Logout
+        <div><Logout /></div>
+        <p> Logout </p>
       </NavLink>
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
@@ -126,19 +151,20 @@ const Sidebar = ({ profilePic, ...props }) => {
           open={isOpen}
           onClose={() => setIsOpen(false)}
           style={{
-            position: "absolute",
-            left: "30%",
-            top: "30%",
-            transform: "translate(-50% -50%)",
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
             width: "100%",
             maxWidth: "800px",
-            height: "584px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             background: "#ffffff",
             border: "none",
             borderRadius: "24px",
+            padding:"2rem 1rem",
+            zIndex: "100"
           }}
         >
           <Dialog.Panel>

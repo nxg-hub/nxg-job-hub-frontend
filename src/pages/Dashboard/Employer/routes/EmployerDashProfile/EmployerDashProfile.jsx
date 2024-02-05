@@ -12,7 +12,7 @@ const EmployerDashProfile = () => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(user.address);
   const currentYear = new Date().getFullYear() ;
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const EmployerDashProfile = () => {
       setFirstName(user.firstName)
       setLastName(user.lastName)
       setEmail(user.email)
+      setAddress(user.address)
     }
   }, [user])
   

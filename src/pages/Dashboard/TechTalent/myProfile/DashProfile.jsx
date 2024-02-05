@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import "./myProfile.scss";
-import User from '../../../../static/images/Sarah.png';
+import { CiUser } from 'react-icons/ci';
 import { PiCameraLight } from 'react-icons/pi';
 import Inputs from '../../../../components/accounts/Inputs';
 import { GoPlus } from "react-icons/go";
@@ -11,8 +11,8 @@ function DashProfile() {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [address, setAddress] = useState("");
-  const [experience, setExperience] = useState("");
+  const [residentialAddress, setResidentialAddress] = useState(user.address);
+  const [experience, setExperience] = useState(user.experience);
   const [skills, setSkills] = useState("");
   // console.log(user)
   const currentYear = new Date().getFullYear() 
@@ -21,6 +21,8 @@ function DashProfile() {
       setFirstName(user.firstName)
       setLastName(user.lastName)
       setEmail(user.email)
+      setResidentialAddress(user.residentialAddress)
+      setExperience(user.experience)
     }
   }, [user])
   return (
@@ -33,7 +35,7 @@ function DashProfile() {
             <div className="my-profile-form-img-section">
               <div className="my-profile-form-pics">
                 <div className="my-profile-form-pics-lg">
-                  <img src={User} alt="User's Identity" />
+                  <CiUser className='user' />
                 </div>
                 <div className="my-profile-form-pics-sm">
                   <PiCameraLight className='camera'/>
@@ -84,8 +86,8 @@ function DashProfile() {
                     <Inputs 
                       type="text"
                       title="Address"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      value={residentialAddress}
+                      onChange={(e) => setResidentialAddress(e.target.value)}
                     />
                   </div>
                 </form>
