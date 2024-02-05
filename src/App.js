@@ -26,6 +26,8 @@ import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/Employer
 import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
+import Vetting from "./pages/Dashboard/AdminDashboard/routes/Vetting/Vetting.jsx";
+import Admin from "./pages/Dashboard/AdminDashboard/index.jsx";
 
 function App() {
   return (
@@ -93,6 +95,10 @@ function App() {
             element={<h2>Terms and Conditions</h2>}
           />
           <Route path="help" element={<h2>Help </h2>} />
+        </Route>
+        <Route path="/admindashboard" element={<Admin/>}>
+          <Route path="" element={<Overview />} />
+          <Route path="vetting" element={<Vetting />}/>
         </Route>
       </Routes>
     </>

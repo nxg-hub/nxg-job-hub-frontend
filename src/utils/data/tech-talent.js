@@ -72,5 +72,11 @@ const relevance = [
     "Recent",
     "Oldest",
     "Director"
+];
+const userrelevance = [
+    "Relevance",
+    "Tech Talent",
+    "Tech Employer",
+    "Tech Agent"
 ]
-export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance, experience};
+export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance, experience, userrelevance};

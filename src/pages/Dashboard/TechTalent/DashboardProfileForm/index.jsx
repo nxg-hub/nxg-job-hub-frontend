@@ -119,14 +119,14 @@ function TechTalentProfileForm() {
             return;
           };
 
-          const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
+          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
             headers: {
               'Content-Type' : 'application/json',
               authorization: authKey,
             }
           });
       
-          const techId = response.data.techID;
+          const techId = response.data.id;
           console.log(techId);
 
           const res = await axios.put(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
