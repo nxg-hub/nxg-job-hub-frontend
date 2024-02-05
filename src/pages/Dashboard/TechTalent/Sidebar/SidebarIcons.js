@@ -12,6 +12,8 @@ import { ReactComponent as Privacy } from "../../../../static/icons/privacy.svg"
 import { ReactComponent as AccountDetails } from "../../../../static/icons/mdi_account-details-outline.svg";
 import { ReactComponent as Terms } from "../../../../static/icons/terms.svg";
 import { ReactComponent as Password } from "../../../../static/icons/lock_icon.svg";
+import { ReactComponent as Job } from "../../../../static/icons/job-icon.svg";
+import { ReactComponent as Health } from "../../../../static/icons/icons_system.svg";
 import { ReactComponent as Wallet } from "../../../../static/icons/uil_wallet.svg";
 import { BiBookmark as SavedJobs } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
@@ -34,5 +36,7 @@ export {
   AccountDetails,
   Terms,
   Password,
-  Notification
+  Notification,
+  Job,
+  Health
 };
