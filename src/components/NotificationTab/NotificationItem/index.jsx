@@ -3,7 +3,7 @@ import img from "../../../static/images/John.png";
 import useTimestamp from "../../../utils/hooks/useTimestamp";
 import { CiMenuKebab } from "react-icons/ci";
 
-const AlertTabItem = ({ item, ...props }) => {
+const NotificationItem = ({ item, ...props }) => {
   const time = useTimestamp(item.timestamp);
   return (
     <div {...props} className={s.AlertTabItem}>
@@ -22,4 +22,4 @@ const AlertTabItem = ({ item, ...props }) => {
   );
 };
 
-export default AlertTabItem;
+export default NotificationItem;

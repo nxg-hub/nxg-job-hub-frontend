@@ -18,7 +18,7 @@ import { Otp } from "./pages/Login/Otp.jsx";
 import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
 import SelectAccountType from "./components/SelectAccountType";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
-import AlertTab from "./components/AlertTab/index.jsx";
+import NotificationTab from "./components/NotificationTab/index.jsx";
 import notification_data from "./utils/data/notifications.js";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
@@ -63,7 +63,6 @@ function App() {
           />
           }
         /> */}
-        <Route path="test" element={<PostJobs />} />
         <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
         <Route
           path="/tech-talent-profile-form"
@@ -71,8 +70,8 @@ function App() {
         />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<Overview />} />
-       
-          <Route path="notifications" element={<AlertTab items={notification_data} />} />
+
+          <Route path="notifications" element={<NotificationTab />} />
           <Route path="profile" element={<ProfileController />} />
           <Route path="posts">
             <Route path="" element={<JobPosts />} />
