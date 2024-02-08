@@ -1,9 +1,8 @@
 import s from "./index.module.scss";
-import TextField from "../../../components/TextField";
-import { updateField } from "../../../utils/functions/updateField";
+import TextField from "../../components/TextField";
+import { updateField } from "../../utils/functions/updateField";
 import { useState } from "react";
-import Checkbox from "../../../components/Checkbox";
-import logo from "../../../static/images/nxg-logo.png";
+import logo from "../../static/images/nxg-logo.png";
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
     email: "",

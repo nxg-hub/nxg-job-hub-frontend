@@ -1,7 +1,7 @@
 import React, { useState} from 'react'
-import Logo from '../../../../static/images/nxg-logo.png'
+import Logo from '../../../static/images/nxg-logo.png'
 import { PiUserCircle, PiShieldCheck, PiFileTextDuotone } from 'react-icons/pi'
-import { Health, Job, Logout } from '../../TechTalent/Sidebar/SidebarIcons'
+import { Health, Job, Logout } from '../../../pages/Dashboard/TechTalent/Sidebar/SidebarIcons'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Dialog } from '@headlessui/react'
 import '../adminstyle.scss'
@@ -13,7 +13,7 @@ function AdminSidebar() {
 
     const menuItem = [
         {
-          path: "/admindashboard",
+          path: "dashboard",
           name: "User Management",
           icon: <PiUserCircle />
         },

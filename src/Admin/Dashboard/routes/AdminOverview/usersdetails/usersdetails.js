@@ -1,6 +1,6 @@
-import Activate from '../../../../../../static/icons/restric-icon.svg';
-import Sarah from '../../../../../../static/images/admin-sarah.png';
-import Kristy from '../../../../../../static/images/Kristy.svg';
+import Activate from '../../../../../static/icons/restric-icon.svg';
+import Sarah from '../../../../../static/images/admin-sarah.png';
+import Kristy from '../../../../../static/images/Kristy.svg';
 import { FcGoogle } from 'react-icons/fc';
 
 const talentUsers = [
