@@ -3,7 +3,6 @@ import AlertTabItem from "./NotificationItem";
 import s from "./index.module.scss";
 import { CiMenuKebab } from "react-icons/ci";
 import { ReactComponent as Search } from "../../../src/static/icons/round-search.svg";
-import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { UserContext } from "../../pages/Dashboard";
 
@@ -15,12 +14,37 @@ const NotificationTab = () => {
 
   const fetchNotifications = async () => {
     const sse = new EventSource(url);
-    sse.addEventListener("notifications",(e) => {
-      console.log( e);
+    let notifStore = [];
+    sse.addEventListener("notifications", async (e) => {
+      const data = await e.data;
+      const receivedNotifications = JSON.parse(data);
+
+      if (
+        // receivedNotifications !== notifications &&
+        receivedNotifications.length > 0
+      ) {
+        // setNotifications((notifications) => [...notifications, ...receivedNotifications]);
+        setNotifications((notifications) => {
+          notifStore = [...notifications, ...receivedNotifications];
+
+          window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
+          return notifStore;
+        });
+      }
     });
   };
+  const getOldNotifs = () => {
+    const localNotifs = window.localStorage.getItem("NXGNOTIFS");
+    if (localNotifs) {
+      setNotifications(JSON.parse(localNotifs));
+    }
+    fetchNotifications()
+  };
+
   useEffect(() => {
-    fetchNotifications();
+    getOldNotifs();
+    // fetchNotifications();
+    
   }, []);
   const showOptions = (e) => {};
   const handleSearch = (e) => {};

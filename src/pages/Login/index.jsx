@@ -3,7 +3,6 @@ import "./index.scss";
 import "../../components/accounts/inputs.scss";
 import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
-import Inputs from "../../components/accounts/Inputs";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
@@ -75,15 +74,12 @@ const Login = () => {
         );
       }
     } catch (error) {
-      let errorMessage = "Login failed.";
+      let errorMessage = error.response.data || error.message;
+console.log(error)
 
-      if (error.response && error.response.data ) {
-        errorMessage = error.response.data;
-        
-      }
       showpopUp({
         type: "danger",
-        message: errorMessage,
+        message: "Login failed, "   + errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
@@ -114,9 +110,7 @@ const Login = () => {
     <div className="login-main-container">
       <div className="form-col">
         <div className="log-bg">
-          <div
-            className="tech-img"
-          >
+          <div className="tech-img">
             <img src={Logo} alt="NXG-Logo" className="logo" />
           </div>
           <img src={Logpics} alt="Loginpics" className="loginpics" />
@@ -133,6 +127,7 @@ const Login = () => {
               label={"Email"}
               placeholder="Enter your email address"
               onchange={(e) => setEmail(e.target.value)}
+              required
             />
             <TextField
               type="password"
@@ -140,6 +135,7 @@ const Login = () => {
               label={"Password"}
               placeholder="Enter your password"
               onchange={(e) => setPassword(e.target.value)}
+              required
             />
 
             <div className="forgot">

@@ -26,8 +26,7 @@ export default function Vetting() {
                     <ul key={user.id}>
                         <li>{user.userName}</li>
                         <div className="vet-btns">
-                            <button>Approved</button>
-                            <button>Reject</button>
+                            <button>Review</button>
                         </div>
                     </ul>
                 ))}

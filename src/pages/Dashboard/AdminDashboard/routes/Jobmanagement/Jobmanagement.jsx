@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import { MdOutlineSearch } from 'react-icons/md'
-import Select, { components } from "react-select";
-import { userrelevance } from '../../../../../utils/data/tech-talent';
-import UsersDetailsCard from './usersdetails/UsersDetailsCard';
-import EmployerDetailsCard from './usersdetails/EmployerDetailsCard';
-import { talentUsers } from './usersdetails/usersdetails';
+import Select, { components } from "react-select"
+import { userrelevance } from '../../../../../utils/data/tech-talent'
+import { PostedJobCard } from './PostedJobCard'
+import { jobsToBeVetted } from '../AdminOverview/usersdetails/usersdetails'
 
-const AdminOverview = () => {
+const Jobmanagement = () => {
   const [selectedRelevance, setSelectedRelevance] = useState([]);
-  const [activeTab, setActiveTab] = useState('talent');
+  const [activeTab, setActiveTab] = useState('employer');
   const handleActiveTabChange = (tab) => {
     setActiveTab(tab);
   };
@@ -38,9 +37,6 @@ const AdminOverview = () => {
     <>
         <section className="header-section">
           <div className="user-types">
-            <div className={activeTab === "talent" ? "user-active" : "user-talent"} onClick={() => handleActiveTabChange('talent')}>
-              <h3>Talent</h3>
-            </div>
             <div className={activeTab === "employer" ? "user-active" : "user-talent"}onClick={() => handleActiveTabChange('employer')}>
               <h3>Employer</h3>
             </div>
@@ -66,11 +62,12 @@ const AdminOverview = () => {
           </div>
         </section>
         <section className="users-details">
-         {activeTab === "talent" &&   <UsersDetailsCard talentUsers={talentUsers} />}
-         {activeTab === "employer" &&   <EmployerDetailsCard />}
+         {activeTab === "employer" &&   <PostedJobCard jobsToBeVetted={jobsToBeVetted} />}
+         {/* {activeTab === "agent" &&   <EmployerDetailsCard />} */}
         </section>
     </>
+ 
   )
 }
 
-export default AdminOverview
+export default Jobmanagement

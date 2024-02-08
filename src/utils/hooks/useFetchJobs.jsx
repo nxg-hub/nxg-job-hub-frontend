@@ -14,7 +14,6 @@ const useFetchJobs = (id) => {
         const res = await axios.get(posts_url);
         const posts_array = res.data;
         setPosts(posts_array);
-        console.log(posts_array);
       } catch (err) {
         showpopUp({
           type: "danger",
