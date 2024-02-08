@@ -29,7 +29,8 @@
                 margin: .5rem auto;
                 cursor: pointer;
                 div {
-                align-items: center;
+                    display: flex;
+                    align-items: center;
                     svg {
                         height: 24px;
                         width: auto;
@@ -54,6 +55,7 @@
                 color: #ffffff;
                 background-color: #215E7D;
                 border-left: 8px solid #B1E2F0;
+                padding: 8px 10px;
                 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
                 pointer-events: none;
                 &:hover {
@@ -71,7 +73,7 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            margin-top: 11rem;
+            margin-top: 90%;
             cursor: pointer;
             div {
                 align-items: center;
@@ -279,10 +281,176 @@
                 }
             }
         }
+        .user-details-container {
+            margin: 0 1rem 0 1rem;
+            .user-picsContent {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                .user-pics-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    .user-pics-section {
+                        position: relative;
+                        margin: 1rem auto;
+                        .user-pics {
+                            width: 165px;
+                            height: 165px;
+                            margin: auto;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                            }
+                        }
+                        .restrict {
+                            position: absolute;
+                            width: 191px;
+                            height: 191px;
+                            top: -8%;
+                            left: -8%;
+                        }
+                    }
+                    .user-pics-detail {
+                       font-size: 20px;
+                       font-weight: 600;
+                       p {
+                        margin: .4rem 0;
+                        line-height: 27.32px;
+                        span {
+                            font-size: 17px;
+                            font-weight: 400;
+                            line-height: 23.22px;
+                        }
+                       }
+                    }
+                }
+                .user-btn-section {
+                    button {
+                        width: 100%;
+                        border: 1px solid #CB3C3C;
+                        border-radius: 8px;
+                        background: #CB3C3C;
+                        padding: 10px 30px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 16.39px;
+                        color: #ffffff;
+                    }
+                    .reactivate-btn {
+                        border: 1px solid #3B862F;
+                        background: #3B862F;
+                    }
+                }
+            }
+        }
+        .application {
+            width: 97%;
+            height: 210px;
+            margin: 1.5rem auto;
+            display: flex;
+            flex-direction: row;
+            gap: 0px;
+            justify-content: space-between;
+            align-items: center;
+            overflow-y: auto;
+            .contracts {
+                width: 328px;
+                height: 95%;
+                background: #FFFFFF;
+                color: #000000;
+                text-align: center;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                border-radius: 12px;
+                h5 {
+                    font-weight: 700;
+                    font-size: 20px;
+                    line-height: 27px;
+                    margin: 2rem 0;
+                }
+                p {
+                    font-weight: 600;
+                    font-size: 48px;
+                    line-height: 66px;
+                }
+            }
+            .user-jobs {
+                background: #D6F0F7;
+                color:#215E7D;
+            }
+        }
+        .history {
+            width: 100%;
+            max-width: 1250px;
+            height: 198px;
+            background: #fff;
+            margin: auto;
+            margin-top: 1rem;
+            border: 1px solid #dbdbdb;
+            border-radius: 28px 28px 0 0;
+            
+            h4 {
+                font-size: 20px;
+                font-weight: 400;
+                line-height: 24.2px;
+                margin: 1rem 0 0 1.5rem;
+                padding: .5rem 0;
+            }
+            .employer-history {
+                width: 100%;
+                height: 72%;
+                overflow-y: auto;
+                background: #ffffff;
+                .active-employer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid #dbdbdb;
+                    margin: .5rem 0;
+                    .employer-section {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
+                        border-left: 6px solid rgba(37, 150, 190, 0.75);
+                        .employer-logo {
+                            width: 60px;
+                            height: 60px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 2rem;
+                            margin-left: .4rem;
+                        }
+                        h5 {
+                            font-size: 24px;
+                            font-weight: 400;
+                            line-height: 32.78px;
+                        }
+                    }
+                    p {
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 21.86px;
+                    }
+                    a {
+                        font-size: 13.65px;
+                        font-weight: 300;
+                        line-height: 18.65px;
+                        color: #0056F1;
+                        margin-right: .5rem;
+                        border-bottom: 1px dotted;
+                    }
+                }
+            }
+           
+        }
     }
 }
 
-@media screen and (max-width:1200px) {
+@media screen and (max-width:1280px) {
     .admin-container {
         .admin-main {
             .header-section {
@@ -292,17 +460,280 @@
                     grid-column: 2 / 3;
                 }
             }
+            .users-details {
+                .app-users {
+                    .user-card {
+                        .user-contents {
+                            .user-pics-section {
+                                .restrict {
+                                    left: 21%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .history {
+                width: 98%;
+                height: 240px;
+                .employer-history {
+                    height: 77%;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width:1200px) {
+    .admin-container {
+        .sidebar-main {
+            .Logout {
+                margin-top: 60%;
+            }
+        }
+        .admin-main {
+            .header-section {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                .admin-search {
+                    grid-column: 2 / 3;
+                }
+                .admin-relevance {
+                    .relevance-select {
+                        max-width: 200px;
+                    }
+                }
+            }
+            .users-details {
+                .app-users {
+                    .user-card {
+                        .user-contents {
+                            .user-pics-section {
+                                .restrict {
+                                    left: 18%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width:1024px) {
+    .admin-container {
+        .sidebar-main {
+            .Logout {
+                margin-top: 95%;
+            }
+        }
+        .admin-main {
+            .header-section {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                .admin-search {
+                    grid-column: 2 / 3;
+                }
+                .admin-relevance {
+                    .relevance-select {
+                        max-width: 180px;
+                    }
+                }
+            }
+            .users-details {
+                .app-users {
+                    .user-card {
+                        .user-contents {
+                            .user-pics-section {
+                                .restrict {
+                                    left: 25%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .user-details-container {
+                .user-picsContent {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+            .application {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                .contracts {
+                    width: 100%;
+                    h5 {
+                        margin: 1rem 0;
+                    }
+                }
+            }
+            .history {
+                height: 200px;
+            }
         }
     }
 }
 @media screen and (max-width:768px) {
     .admin-container {
+        .sidebar-main {
+            width: 55px;
+            .side-logo {
+                width: 52px;
+                height: 40px;
+            }
+            .menu-icons-container {
+                margin-top: 3.5rem;
+                .dashboardItem {
+                    p {
+                        display: none;
+                    }
+                }
+            }
+            .Logout {
+                // margin-top: 16%;
+                p {
+                    display: none;
+                }
+            }
+        }
         .admin-main {
             .header-section {
                 grid-template-columns:  1fr;
                 gap: 15px;
+                height: 150px;
                 .admin-search {
                     grid-column: 1;
+                }
+            }
+            .users-details {
+                height: calc(100vh - 150px);
+                .app-users {
+                    .user-card {
+                        .user-contents {
+                            .user-pics-section {
+                                .restrict {
+                                    left: 22%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .user-details-container {
+                .user-picsContent {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    .user-pics-container {
+                        .user-pics-section {
+                            .user-pics {
+                                width: 120px;
+                                height: 120px;
+                            }
+                            .restrict {
+                                width: 150px;
+                                height: 150px;
+                                top: -9%;
+                                left: -9%;
+                            }
+                        }
+                        .user-pics-detail {
+                            font-size: 17px;
+                            p {
+                             margin: .4rem 0;
+                             line-height: 20px;
+                             span {
+                                 font-size: 14px;
+                                 font-weight: 400;
+                                 line-height: 18px;
+                             }
+                            }
+                         }
+                    }
+                }
+            }
+            .application {
+                height: 160px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                .contracts {
+                    width: 100%;
+                    h5 {
+                        margin: .7rem 0;
+                        font-size: 18px;
+                        line-height: 20px;
+                    }
+                    p {
+                        font-size: 40px;
+                        line-height: 45px;
+                    }
+                }
+            }
+            .history {
+                height: 420px;
+                h4 {
+                    font-size: 17px;
+                    margin: .7rem 0 0 1rem;
+                }
+                .employer-history {
+                    .active-employer {
+                        .employer-section {
+                            .employer-logo {
+                                width: 40px;
+                                height: 40px;
+                                font-size: 1.5rem;
+                            }
+                            h5 {
+                                font-size: 18px;
+                            }
+                        }
+                        p {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width:376px) {
+    .admin-container {
+        .admin-main {
+            .users-details {
+                .app-users {
+                    .user-card {
+                        .user-contents {
+                            .user-pics-section {
+                                .restrict {
+                                    left: 18%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .history {
+                height: 130px;
+                .employer-history {
+                    .active-employer {
+                        .employer-section {
+                            flex-direction: column;
+                            gap: 0px;
+                            .employer-logo {
+                                width: 35px;
+                                height: 35px;
+                                font-size: 1.5rem;
+                            }
+                            h5 {
+                                font-size: 16px;
+                            }
+                        }
+                        p {
+                            font-size: 14px;
+                        }
+                    }
                 }
             }
         }

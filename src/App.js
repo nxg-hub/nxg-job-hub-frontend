@@ -28,6 +28,8 @@ import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import Vetting from "./pages/Dashboard/AdminDashboard/routes/Vetting/Vetting.jsx";
 import Admin from "./pages/Dashboard/AdminDashboard/index.jsx";
+import UserDetailedLink from "./pages/Dashboard/AdminDashboard/routes/AdminOverview/usersdetails/UserDetailedLink.jsx";
+import Jobmanagement from "./pages/Dashboard/AdminDashboard/routes/Jobmanagement/Jobmanagement.jsx";
 
 function App() {
   return (
@@ -98,7 +100,9 @@ function App() {
         </Route>
         <Route path="/admindashboard" element={<Admin/>}>
           <Route path="" element={<Overview />} />
+          <Route path="userdetail/:id" element={<UserDetailedLink />} />
           <Route path="vetting" element={<Vetting />}/>
+          <Route path="jobmanagement" element={<Jobmanagement />}/>
         </Route>
       </Routes>
     </>

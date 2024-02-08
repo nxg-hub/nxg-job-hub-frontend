@@ -1,6 +1,6 @@
 import React from 'react'
 import { employerUsers } from './usersdetails'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function EmployerDetailsCard() {
   return (
@@ -26,7 +26,7 @@ export default function EmployerDetailsCard() {
                         <h5>{user.userName}</h5>
                         <p>{user.userType}</p>
                        <div className="user-link">
-                        <NavLink end to={`/user-detail/${user.id}`}>{user.detailLink}</NavLink>
+                        <Link to={`userdetail/${user.id}`}>{user.detailLink}</Link>
                        </div>
                     </div>
                 </div>
