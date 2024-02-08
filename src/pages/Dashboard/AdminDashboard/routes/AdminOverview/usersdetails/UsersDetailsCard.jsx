@@ -1,8 +1,7 @@
 import React from 'react'
-import { talentUsers } from './usersdetails'
 import { NavLink } from 'react-router-dom'
 
-export default function UsersDetailsCard() {
+export default function UsersDetailsCard({talentUsers}) {
   return (
     <div className='app-users'>
         {talentUsers.map((user) => (
@@ -26,7 +25,7 @@ export default function UsersDetailsCard() {
                         <h5>{user.userName}</h5>
                         <p>{user.userType}</p>
                        <div className="user-link">
-                        <NavLink end to={`/user-detail/${user.id}`}>{user.detailLink}</NavLink>
+                        <NavLink end to={`userdetail/${user.id}`}>{user.detailLink}</NavLink>
                        </div>
                     </div>
                 </div>
