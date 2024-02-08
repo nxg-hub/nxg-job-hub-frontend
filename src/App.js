@@ -28,6 +28,7 @@ import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import Vetting from "./pages/Dashboard/AdminDashboard/routes/Vetting/Vetting.jsx";
 import Admin from "./pages/Dashboard/AdminDashboard/index.jsx";
+import Transactions from "./pages/Dashboard/AdminDashboard/routes/Transactions/index.jsx";
 
 function App() {
   return (
@@ -98,6 +99,7 @@ function App() {
         <Route path="/admindashboard" element={<Admin/>}>
           <Route path="" element={<Overview />} />
           <Route path="vetting" element={<Vetting />}/>
+          <Route path="payments" element={<Transactions />}/>
         </Route>
       </Routes>
     </>

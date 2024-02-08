@@ -149,11 +149,12 @@ const RegistrationForm = ({ userType }) => {
           }
         })
         .catch((err) => {
+          console.log("err", err);
           showPopup({
             type: "danger",
             message: `Failed to register. ${
-              err.response.data
-                ? err.response.data
+              err.message
+                ? err.message
                 : "Please check your internet connection and try again"
             }`,
           });

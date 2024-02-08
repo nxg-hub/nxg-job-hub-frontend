@@ -74,15 +74,12 @@ const Login = () => {
         );
       }
     } catch (error) {
-      let errorMessage = "Login failed.";
+      let errorMessage = error.response.data || error.message;
+console.log(error)
 
-      if (error.response && error.response.data ) {
-        errorMessage = error.response.data;
-        
-      }
       showpopUp({
         type: "danger",
-        message: errorMessage,
+        message: "Login failed, "   + errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
@@ -113,9 +110,7 @@ const Login = () => {
     <div className="login-main-container">
       <div className="form-col">
         <div className="log-bg">
-          <div
-            className="tech-img"
-          >
+          <div className="tech-img">
             <img src={Logo} alt="NXG-Logo" className="logo" />
           </div>
           <img src={Logpics} alt="Loginpics" className="loginpics" />

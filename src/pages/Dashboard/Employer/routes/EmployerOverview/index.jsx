@@ -13,8 +13,8 @@ import JobCard from "../../../../../components/JobCard";
 import Swiper, { Swiper2 } from "./Swiper";
 import useFetchJobs from "../../../../../utils/hooks/useFetchJobs";
 const EmployerOverview = () => {
-  const { posts } = useFetchJobs();
   const user = useContext(UserContext);
+  const { posts } = useFetchJobs(user.accountTypeID);
   return (
     <div className={s.EmployerOverview}>
       <div className={s.Header}>
@@ -63,7 +63,7 @@ const EmployerOverview = () => {
       <div className={s.Recently}>
         <h2>Recently Posted Jobs:</h2>
         {posts.length > 0 ? (
-          posts.map((post) => <JobCard {...post} />)
+          posts.map((post, o) => <JobCard key={o} {...post} />)
         ) : (
           <div className={s.NoPostsFallbackUI}>
             <h3>

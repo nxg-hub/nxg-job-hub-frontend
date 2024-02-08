@@ -28,7 +28,7 @@ function AdminSidebar() {
           icon: <PiShieldCheck />
         },
         {
-          path: "applications",
+          path: "payments",
           name: "Payment & Transactions",
           icon: <PiFileTextDuotone />
         },
@@ -50,7 +50,7 @@ function AdminSidebar() {
     
         // Navigate to the login page
         navigate("/login");
-    };
+    }
 
   return (
     <div className='sidebar-main'>
