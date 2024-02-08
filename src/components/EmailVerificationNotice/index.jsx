@@ -3,9 +3,9 @@ import Mail from "../../static/icons/mail.png";
 import { Link } from "react-router-dom";
 
 const EmailVerificationNotice = ({onClick}) => {
-  // const handleEmailVerification = () => {
-
-  // }
+  const handleResendEmail =()=> {
+    
+  }
 
   return (
     <div
@@ -81,6 +81,7 @@ const EmailVerificationNotice = ({onClick}) => {
             Click on the link to activate your account.
           </pre>
           <Link
+            onClick={handleResendEmail}
             style={{
               fontSize: ".7rem",
               fontWeight: "400",

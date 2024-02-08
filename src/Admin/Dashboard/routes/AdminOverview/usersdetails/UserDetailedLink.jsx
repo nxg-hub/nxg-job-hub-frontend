@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BsArrowLeft } from 'react-icons/bs'
 import { talentUsers, recuritter } from './usersdetails'
-import '../../../../AdminDashboard/adminstyle.scss'
+import '../../../adminstyle.scss'
 
 export default function UserDetailedLink() {
     const {id} = useParams();

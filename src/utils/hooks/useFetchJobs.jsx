@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_HOST_URL } from "../api/API_HOST";
-const posts_url =
-  `${API_HOST_URL}/api/job-postings/all`;
 
-const useFetchJobs = () => {
+const useFetchJobs = (id) => {
+  const posts_url =
+    `${API_HOST_URL}/api/employers/postings/${id}`;
   const [posts, setPosts] = useState([]);
   const [popup, showpopUp] = useState(undefined);
 
@@ -14,7 +14,6 @@ const useFetchJobs = () => {
         const res = await axios.get(posts_url);
         const posts_array = res.data;
         setPosts(posts_array);
-        console.log(posts_array);
       } catch (err) {
         showpopUp({
           type: "danger",
