@@ -9,7 +9,7 @@ import { ReactComponent as Filter } from "../../src/static/icons/filter.svg";
 import { ReactComponent as Messages } from "../../src/static/icons/mail-unread.svg";
 import { ReactComponent as Notifications } from "../../src/static/icons/notification-new.svg";
 import { ReactComponent as Profile } from "../../src/static/icons/profile.svg";
-import AlertTab from "../components/AlertTab";
+import AlertTab from "../components/NotificationTab";
 import notification_data from "../utils/data/notifications";
 import ProfileNavbar from "../components/header/ProfileNavbar";
 const titles = [
@@ -84,7 +84,7 @@ const ProfileLanding = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Search onClick={handleSearch} />
-          <Filter onClick={filterSearch}/>
+          <Filter onClick={filterSearch} />
         </div>
         <ProfileNavbar />
         <div className="navIcons">
@@ -100,35 +100,30 @@ const ProfileLanding = () => {
         </div>
 
         {showAlertTab ? (
-        <div
-        title="close"
-        onClick={hideAlertTab}
-        className={"AlertTabWrapper"}
-      > <AlertTab
-            controls={hideAlertTab}
-            items={notification_data}
-          /></div>
+          <div
+            title="close"
+            onClick={hideAlertTab}
+            className={"AlertTabWrapper"}
+          >
+            {" "}
+            <AlertTab controls={hideAlertTab} items={notification_data} />
+          </div>
         ) : (
           <></>
         )}
       </header>
-      <div
-        className="profileLanding-contents"
-      >
+      <div className="profileLanding-contents">
         <h1 className="land-title">
           {heroTitle.title1} {""}
           <span>{heroTitle.span}</span> {""}
           {heroTitle.title}
         </h1>
         <p>
-          Get access and connect with Professionals, Tech talents, and agents in just a few clicks.
+          Get access and connect with Professionals, Tech talents, and agents in
+          just a few clicks.
         </p>
         <div className="land-btns">
-          <Link
-            to={"/employerprofile"}
-          >
-            Complete your profile
-          </Link>
+          <Link to={"/employerprofile"}>Complete your profile</Link>
         </div>
       </div>
     </div>

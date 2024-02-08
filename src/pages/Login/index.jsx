@@ -3,15 +3,13 @@ import "./index.scss";
 import "../../components/accounts/inputs.scss";
 import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
-import Inputs from "../../components/accounts/Inputs";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 import Notice from "../.././components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
-
+import TextField from "../../components/TextField";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,15 +74,12 @@ const Login = () => {
         );
       }
     } catch (error) {
-      let errorMessage = "Login failed.";
+      let errorMessage = error.response.data || error.message;
+console.log(error)
 
-      if (error.response && error.response.data ) {
-        errorMessage = error.response.data;
-        
-      }
       showpopUp({
         type: "danger",
-        message: errorMessage,
+        message: "Login failed, "   + errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
@@ -108,16 +103,14 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    AutoLoginUser()
-  });
+    AutoLoginUser();
+  }, []);
 
   return (
     <div className="login-main-container">
       <div className="form-col">
         <div className="log-bg">
-          <div
-            className="tech-img"
-          >
+          <div className="tech-img">
             <img src={Logo} alt="NXG-Logo" className="logo" />
           </div>
           <img src={Logpics} alt="Loginpics" className="loginpics" />
@@ -128,39 +121,23 @@ const Login = () => {
             <p>Login to your account</p>
           </div>
           <div className="log-form">
-            <Inputs
-              type="email"
-              title="E-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+            <TextField
+              type="text"
+              name="email"
+              label={"Email"}
               placeholder="Enter your email address"
-              autoComplete="email"
-              errormessage="Email must inculde special charaters like @ and .!"
+              onchange={(e) => setEmail(e.target.value)}
               required
             />
-            <div className="password">
-              <label>Password</label>
-              <div className="password-input">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="*******"
-                  autoComplete="current-password"
-                  errormessage="Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!"
-                />
-                <button
-                  onClick={handleShowPassword}
-                  className="pass-toggle log-pass"
-                >
-                  {showPassword ? (
-                    <BsEye onClick={handleShowPassword} />
-                  ) : (
-                    <BsEyeSlash onClick={handleShowPassword} />
-                  )}
-                </button>
-              </div>
-            </div>
+            <TextField
+              type="password"
+              name="password"
+              label={"Password"}
+              placeholder="Enter your password"
+              onchange={(e) => setPassword(e.target.value)}
+              required
+            />
+
             <div className="forgot">
               <Link
                 to="/forgotpassword"
