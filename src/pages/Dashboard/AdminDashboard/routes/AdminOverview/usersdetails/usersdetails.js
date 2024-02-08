@@ -1,5 +1,7 @@
 import Activate from '../../../../../../static/icons/restric-icon.svg';
 import Sarah from '../../../../../../static/images/admin-sarah.png';
+import Kristy from '../../../../../../static/images/Kristy.svg';
+import { FcGoogle } from 'react-icons/fc';
 
 const talentUsers = [
     {
@@ -9,6 +11,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -19,6 +22,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -29,6 +33,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -39,6 +44,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -49,6 +55,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -59,6 +66,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -69,6 +77,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -79,6 +88,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -89,6 +99,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -99,6 +110,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -109,6 +121,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -119,6 +132,7 @@ const talentUsers = [
         restricIcon: Activate,
         userName: "Sarah Hue",
         userType: "Talent",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Reactivate"
     }
@@ -130,7 +144,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -140,7 +155,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -150,7 +166,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -160,7 +177,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -170,7 +188,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -180,7 +199,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -190,7 +210,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -200,7 +221,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -210,7 +232,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "2nd April 2022",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -220,7 +243,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "22nd February 2020",
         detailLink: "View details",
         subGroup: "Suspend"
     },
@@ -230,7 +254,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userType: "Employer",
+        userDate: "23rd January 2023",
         detailLink: "View details",
         subGroup: "Reactivate"
     },
@@ -240,7 +265,8 @@ const employerUsers = [
         userPics: Sarah,
         restricIcon: Activate,
         userName: "Sarah Hue",
-        userType: "Talent",
+        userDate: "22nd February 2020",
+        userType: "Employer",
         detailLink: "View details",
         subGroup: "Reactivate"
     }
@@ -285,5 +311,159 @@ const vettedUsers = [
         userName: "Stella Obi"
     }
 ];
+const recuritter = [
+    {
+        id: 1,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 2,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 3,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 4,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 5,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 6,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 7,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 8,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 9,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    },
+    {
+        id: 10,
+        companyLogo: <FcGoogle/>,
+        companyName: "Google Plc",
+        userType:"Tech Employer",
+        companyDetails: "See full details"
+    }
+];
+const jobsToBeVetted = [
+    {
+        id: 1,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 2,
+        employerPics:Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 3,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 4,
+        employerPics:Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 5,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 6,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 7,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+    {
+        id: 8,
+        employerPics: Kristy,
+        employerName:"Kristy Haag",
+        userType: "Employer",
+        jobCategory: "Web Development",
+        budget: "$ 500",
+        description: "Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus.",
+        detailLink: "See more"
+    },
+]
 
-export {talentUsers, employerUsers, usersToVet, vettedUsers}
+export {talentUsers, employerUsers, usersToVet, vettedUsers, recuritter, jobsToBeVetted}
