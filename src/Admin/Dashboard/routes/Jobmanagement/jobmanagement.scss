@@ -82,7 +82,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
+        width: 98%;
         height: auto;
         background: #FFFFFF;
         text-align: center;
@@ -92,7 +92,7 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
         .job-employer-container {
-            padding: 2px;
+            padding: 2px 1px;
             .job-poster {
                 width: 72px;
                 height: 72px;
@@ -106,6 +106,7 @@
             }
             .job-poster-detail {
                 width: 78px;
+                margin-top: .7rem;
                 h4 {
                     font-weight: 700;
                     font-size: 14px;
@@ -118,400 +119,112 @@
                 }
             }
         }
-        // .jobs-contents {
-        //     display: flex;
-        //     flex-direction: row;
-        //     justify-content: space-between;
-        //     align-items: center;
-        //     text-align: start;
-        //     gap: 30px;
-        //     border: 1px solid teal;
-        // }
-
-
-
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Ellipse 611 */
-
-// position: absolute;
-// width: 72px;
-// height: 72px;
-// left: 3px;
-// top: 0px;
-
-// background: #2596BE;
-
-
-// /* Ellipse 607 */
-
-// position: absolute;
-// width: 68px;
-// height: 68px;
-// left: 5px;
-// top: 2px;
-
-// background: url(.png);
-
-
-// /* Frame 10387 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// justify-content: center;
-// align-items: center;
-// padding: 0px;
-
-// width: 78px;
-// height: 35px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Kristy Haag */
-
-// width: 78px;
-// height: 19px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 14px;
-// line-height: 19px;
-
-// color: #000000;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Employer */
-
-// width: 53px;
-// height: 16px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 500;
-// font-size: 12px;
-// line-height: 16px;
-
-// color: #263238;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Frame 10396 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-// padding: 0px;
-// gap: 16px;
-
-// width: 950px;
-// height: 166px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Frame 10395 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// align-items: flex-start;
-// padding: 0px;
-// gap: 4px;
-
-// width: 934px;
-// height: 118px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Job Category: Web Development */
-
-// width: 198px;
-// height: 19px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 14px;
-// line-height: 19px;
-// text-align: justify;
-
-// color: #000000;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Budget: $500 */
-
-// width: 86px;
-// height: 19px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 14px;
-// line-height: 19px;
-// text-align: justify;
-
-// color: #000000;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Frame 10389 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// align-items: flex-end;
-// padding: 0px;
-// gap: 4px;
-
-// width: 934px;
-// height: 72px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 2;
-// flex-grow: 0;
-
-
-// /* Frame 10385 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// align-items: flex-start;
-// padding: 0px;
-// gap: 2px;
-
-// width: 934px;
-// height: 53px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// align-self: stretch;
-// flex-grow: 0;
-
-
-// /* Description: */
-
-// width: 85px;
-// height: 19px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 14px;
-// line-height: 19px;
-// text-align: justify;
-
-// color: #000000;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Repudiandae alias assumenda consectetur laborum. Ut dolorem vero quo atque. Unde est ut sed illo consequatur quam qui ut. Qui optio atque sed itaque cumque. Est est sit saepe beatae dolorum porro impedit minus. Molestias quia minima cumque eius quoic sint ut recusandae nesciunt temporibus. */
-
-// width: 934px;
-// height: 32px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 12px;
-// line-height: 16px;
-// text-align: justify;
-
-// color: #000000;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// align-self: stretch;
-// flex-grow: 0;
-
-
-// /* See More */
-
-// width: 55px;
-// height: 15px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 12px;
-// line-height: 15px;
-// /* identical to box height */
-// text-align: justify;
-// text-decoration-line: underline;
-
-// color: #233862;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Frame 10394 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: row;
-// align-items: flex-start;
-// padding: 0px;
-// gap: 16px;
-
-// width: 556px;
-// height: 32px;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Frame 10391 */
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: row;
-// justify-content: center;
-// align-items: center;
-// padding: 8px;
-// gap: 8px;
-
-// width: 270px;
-// height: 32px;
-
-// /* Green */
-// background: #3B862F;
-// border-radius: 8px;
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Accept */
-
-// width: 42px;
-// height: 16px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 12px;
-// line-height: 16px;
-// text-align: center;
-
-// color: #FFFFFF;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
-
-// /* Frame 10393 */
-
-// box-sizing: border-box;
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: row;
-// justify-content: center;
-// align-items: center;
-// padding: 8px;
-// gap: 8px;
-
-// width: 270px;
-// height: 32px;
-
-// /* Red */
-// border: 1px solid #CB3C3C;
-// border-radius: 8px;
-
-// /* Inside auto layout */
-// flex: none;
-// order: 1;
-// flex-grow: 0;
-
-
-// /* Decline */
-
-// width: 44px;
-// height: 16px;
-
-// font-family: 'Manrope';
-// font-style: normal;
-// font-weight: 700;
-// font-size: 12px;
-// line-height: 16px;
-// text-align: center;
-
-// /* Red */
-// color: #CB3C3C;
-
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// flex-grow: 0;
-
+        .jobs-contents {
+            margin: .5rem 0 0 0;
+            .posted-job-container {
+                text-align: start;
+                h5 {
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 16.39px;
+                    margin: .2rem 0;
+                    span {
+                        font-weight: 400;
+                    }
+                }
+                .job-description {
+                    p {
+                        font-size: 12px;
+                        line-height: 16.39px;
+                        font-weight: 400;
+                    }
+                }
+                a {
+                    float: right;
+                    font-size: 12px;
+                    font-weight: 500;
+                    line-height: 14.52px;
+                    margin: 0 1rem 1rem 0;
+                    border-bottom: 1px dotted;
+                    color: #233862;
+                }
+            }
+            .job-posted-btn {
+                width: 100%;
+                max-width: 556px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                margin: .8rem auto;
+                gap: 20px;
+                button {
+                    width: 100%;
+                    border: 1px solid #3B862F;
+                    border-radius: 8px;
+                    background: #3B862F;
+                    padding: 10px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 16.39px;
+                    color: #fff;
+                }
+                .decline-btn {
+                    background: transparent;
+                    color: #CB3C3C;
+                    border: 1px solid #CB3C3C;
+                }
+            }
+        }
+
+    }
+}
+
+@media only screen and (max-width:1280px) {
+    .job-header-section {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        .admin-search {
+            grid-column: 2 / 3;
+        }
+    }
+}
+@media only screen and (max-width:1190px) {
+    .job-header-section {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        .user-types {
+            gap: 30px;
+        }
+        .admin-search {
+            grid-column: 2 / 3;
+            margin-left: 0%;
+        }
+        .admin-relevance {
+            .relevance-select {
+                max-width: 180px;
+            }
+        }
+    }
+}
+@media only screen and (max-width:768px) {
+    .job-header-section {
+        grid-template-columns:  1fr;
+        gap: 15px;
+        height: 150px;
+        .admin-search {
+            grid-column: 1;
+            margin-left: 0%;
+        }
+    }
+}
+@media only screen and (max-width:425px) {
+    .job-posted {
+        .job-post-section {
+            .jobs-contents {
+                .job-posted-btn {
+                    flex-direction: column;
+                }
+            }
+        }
     }
 }
