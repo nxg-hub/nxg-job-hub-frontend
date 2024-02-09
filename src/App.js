@@ -32,6 +32,8 @@ import Vetting from "./Admin/Dashboard/routes/Vetting/Vetting.jsx";
 import Transactions from "./Admin/Dashboard/routes/Transactions/index.jsx";
 import UserDetailedLink from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UserDetailedLink.jsx";
 import Jobmanagement from "./Admin/Dashboard/routes/Jobmanagement/Jobmanagement.jsx";
+import ViewTalent from "./Admin/Dashboard/routes/ViewTalent/index.jsx";
+import BalanceChart from "./pages/Dashboard/wallet/BalanceChart.jsx";
 
 function App() {
   return (
@@ -106,9 +108,11 @@ function App() {
           <Route path="dashboard" element={<AdminOverview />} />
           <Route path="userdetail/:id" element={<UserDetailedLink />} />
           <Route path="vetting" element={<Vetting />} />
+          <Route path="view-talent" element={<ViewTalent />} />
           <Route path="payments" element={<Transactions />} />
           <Route path="jobmanagement" element={<Jobmanagement />} />
         </Route>
+      <Route path="t" element={<BalanceChart />} />
       </Routes>
     </>
   );
