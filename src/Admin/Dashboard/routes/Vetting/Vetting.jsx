@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsArrowLeft } from 'react-icons/bs'
 import { MdOutlineSearch } from 'react-icons/md'
 import { CiMenuKebab } from 'react-icons/ci'
@@ -7,7 +7,10 @@ import { usersToVet, vettedUsers } from '../AdminOverview/usersdetails/usersdeta
 import './vetting.scss'
 
 export default function Vetting() {
-
+    const navigate = useNavigate()
+    const handleReview = (id) => {
+        navigate(`../review-talent/${id}`)
+}
   return (
     <div className='vetting'>
         <section className="vetting-header-section">
@@ -26,7 +29,7 @@ export default function Vetting() {
                     <ul key={user.id}>
                         <li>{user.userName}</li>
                         <div className="vet-btns">
-                            <button>Review</button>
+                            <button onClick={()=>handleReview(user.id)}>Review</button>
                         </div>
                     </ul>
                 ))}

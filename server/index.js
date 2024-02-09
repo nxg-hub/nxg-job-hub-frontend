@@ -7,8 +7,8 @@ const app = express();
 const port = 5000;
 
 const corsOptions = {
-  // origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
-  origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
+  origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
+  // origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
   credentials: true,
 };
 
@@ -30,6 +30,6 @@ app.post("/uploadMultipleFiles", (req, res) => {
   });
 
 app.listen(port, () => {
-    console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
-    // console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
+    // console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
+    console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
 });
