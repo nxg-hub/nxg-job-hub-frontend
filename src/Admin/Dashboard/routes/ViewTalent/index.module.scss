@@ -2,6 +2,14 @@
   padding: 10px 20px;
   height: 100vh;
   background-color: #e4f2f7;
+  .ActivityChartWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    div{
+      width: 100%;
+    }
+  }
   .Stats {
     display: flex;
     align-items: center;

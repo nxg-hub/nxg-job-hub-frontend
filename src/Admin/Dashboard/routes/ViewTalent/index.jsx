@@ -7,7 +7,10 @@ const ViewTalent = () => {
   return (
     <div className={s.ViewTalent}>
       <div className={s.Stats}>
+        <div className={s.ActivityChartWrapper}>
+          <h3>Talent ID: 34526732</h3>
         <ActivityChart />
+        </div>
         <div className={s.profileOverfiew}>
           <img src={profile} alt="" />
           <h3>Jane DOe</h3>

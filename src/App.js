@@ -110,7 +110,7 @@ function App() {
           {/* <Route path="userdetail" element={<UsersDetailsCard />} /> */}
           <Route path="userdetail/:id" element={<UserDetailedLink />} />
           <Route path="vetting" element={<Vetting />} />
-          <Route path="view-talent" element={<ViewTalent />} />
+          <Route path="review-talent/:id" element={<ViewTalent />} />
           <Route path="payments" element={<Transactions />} />
           <Route path="jobmanagement" element={<Jobmanagement />} />
           <Route path="health" element={<Systemhealth />} />
