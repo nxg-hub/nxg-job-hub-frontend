@@ -35,7 +35,6 @@ import UserDetailedLink from "./Admin/Dashboard/routes/AdminOverview/usersdetail
 import { Systemhealth } from "./Admin/Dashboard/routes/Health/Systemhealth.jsx";
 // import UsersDetailsCard from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UsersDetailsCard.jsx";
 import ViewTalent from "./Admin/Dashboard/routes/ViewTalent/index.jsx";
-import BalanceChart from "./pages/Dashboard/wallet/BalanceChart.jsx";
 
 function App() {
   return (
