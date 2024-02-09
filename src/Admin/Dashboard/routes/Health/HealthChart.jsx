@@ -4,59 +4,59 @@ import { LineChart, Line, XAxis, YAxis, ResponsiveContainer} from 'recharts';
 const HealthChart = () => {
     const data = [
         {
-          name: '0',
-          pv: 600,
+          name: '0H',
+          pv: 50,
         },
         {
-          name: '10K',
-          pv: 800,
+          name: '1H',
+          pv: 200,
         },
         {
-          name: '50K',
-          pv: 1150,
+          name: '24H',
+          pv: 100,
         },
         {
-          name: '100K',
-          pv: 1100,
+          name: '1W',
+          pv: 300,
         },
         {
-          name: '200K',
-          pv: 2000,
+          name: '1M',
+          pv: 50,
         },
         {
-          name: '300K',
-          pv: 1000,
+          name: '3M',
+          pv: 400,
         },
         {
-          name: '400K',
-          pv: 3500,
+          name: '6M',
+          pv: 200,
         },
         {
-          name: '500K',
-          pv: 1490,
+          name: '1Y',
+          pv: 500,
         },
     ];
-
+    
   return (
-    <>
+    <div className='charts'>
         <ResponsiveContainer width="100%" height="100%">
             <LineChart
-            width={500}
+            width={450}
             height={300}
             data={data}
             margin={{
                 top: 5,
-                right: 30,
-                left: 20,
+                right: 20,
+                left: 10,
                 bottom: 5,
             }}
             >
-            <XAxis dataKey="none"  tickLine={false}/>
-            <YAxis tickLine={false} />
-            <Line type="monotone" dataKey="pv" stroke="#000"  />
+            <XAxis dataKey="none"  tickLine={false} padding={{ left: 20, right: 30 }} stroke="#215E7D" strokeWidth={2}/>
+            <YAxis tickLine={false} stroke="#215E7D" strokeWidth={2} color='#000' fontSize={14} fontWeight={400} unit="K"/>
+            <Line type="monotone" dataKey="pv" stroke="#000" strokeWidth={4} dot={false}  />
             </LineChart>
       </ResponsiveContainer>
-    </>
+    </div>
   )
 }
 

@@ -61,11 +61,11 @@ export const Systemhealth = () => {
                     <div className="health-card" key={health.id}>
                         <div className="health-card-title">
                             <h5>{health.healthTitle}</h5>
-                            <CiMenuKebab />
+                            <CiMenuKebab fontSize={10} />
                         </div>
                         <div className="health-data-container">
                             <p>{health.healthData}</p>
-                            <div className="ratio">
+                            <div className={health.healthGroup === "Descend" ? "descend" : "ratio"}>
                                 <p>{health.healthRatio}</p>
                                 <span>{health.healthIcon}</span>
                             </div>
