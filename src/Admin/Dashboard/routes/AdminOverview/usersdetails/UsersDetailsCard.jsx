@@ -25,7 +25,7 @@ export default function UsersDetailsCard({talentUsers}) {
                         <h5>{user.userName}</h5>
                         <p>{user.userType}</p>
                        <div className="user-link">
-                        <NavLink end to={`userdetail/${user.id}`}>{user.detailLink}</NavLink>
+                        <NavLink end to={`../userdetail/${user.id}`}>{user.detailLink}</NavLink>
                        </div>
                     </div>
                 </div>
