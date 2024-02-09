@@ -5,6 +5,7 @@ import { userrelevance } from '../../../../utils/data/tech-talent';
 import UsersDetailsCard from './usersdetails/UsersDetailsCard';
 import EmployerDetailsCard from './usersdetails/EmployerDetailsCard';
 import { talentUsers } from './usersdetails/usersdetails';
+import AgentDetailsCard from './usersdetails/AgentDetailsCard';
 
 const AdminOverview = () => {
   const [selectedRelevance, setSelectedRelevance] = useState([]);
@@ -68,6 +69,7 @@ const AdminOverview = () => {
         <section className="users-details">
          {activeTab === "talent" &&   <UsersDetailsCard talentUsers={talentUsers} />}
          {activeTab === "employer" &&   <EmployerDetailsCard />}
+         {activeTab === "agent" &&   <AgentDetailsCard />}
         </section>
     </>
   )

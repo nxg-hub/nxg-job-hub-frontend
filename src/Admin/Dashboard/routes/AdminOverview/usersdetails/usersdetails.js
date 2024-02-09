@@ -271,6 +271,140 @@ const employerUsers = [
         subGroup: "Reactivate"
     }
 ];
+const agentUsers = [
+    {
+        id: 1,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "22nd February 2020",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    },
+    {
+        id: 2,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "23rd January 2023",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 3,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "2nd April 2022",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 4,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "23rd January 2023",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    },
+    {
+        id: 5,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "22nd February 2020",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 6,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "2nd April 2022",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 7,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "23rd January 2023",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    },
+    {
+        id: 8,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "2nd April 2022",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 9,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "2nd April 2022",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    },
+    {
+        id: 10,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "22nd February 2020",
+        detailLink: "View details",
+        subGroup: "Suspend"
+    },
+    {
+        id: 11,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userType: "Agent",
+        userDate: "23rd January 2023",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    },
+    {
+        id: 12,
+        subPlan: "Silver Plan",
+        userPics: Sarah,
+        restricIcon: Activate,
+        userName: "Sarah Hue",
+        userDate: "22nd February 2020",
+        userType: "Agent",
+        detailLink: "View details",
+        subGroup: "Reactivate"
+    }
+];
 const usersToVet = [
     {
         id: 1,
@@ -466,4 +600,4 @@ const jobsToBeVetted = [
     },
 ]
 
-export {talentUsers, employerUsers, usersToVet, vettedUsers, recuritter, jobsToBeVetted}
+export {talentUsers, employerUsers, agentUsers, usersToVet, vettedUsers, recuritter, jobsToBeVetted}
