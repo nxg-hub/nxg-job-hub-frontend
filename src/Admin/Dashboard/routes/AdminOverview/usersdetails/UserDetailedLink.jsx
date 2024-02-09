@@ -5,18 +5,21 @@ import { talentUsers, recuritter } from './usersdetails'
 import '../../../adminstyle.scss'
 
 export default function UserDetailedLink() {
+    console.log('UserDetailedLink Component is rendered');
     const {id} = useParams();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const userId = parseInt(id, 10);
         const techUser = talentUsers.find((user) => user.id === userId);
-        setUser(techUser || {})
+        setUser(techUser)
     }, [id]);
+
+    console.log('User ID:', id);
 
   return (
     <div className='admin-main'>
-        <Link to={"/admindashboard"} style={{display:"flex", alignItems:"center", gap:"5px", fontSize:"12px", fontWeight:"400", color:"#000", margin:"0 0 1rem 1rem", paddingTop:".5rem"}}>
+        <Link to={"/admin/dashboard"} style={{display:"flex", alignItems:"center", gap:"5px", fontSize:"12px", fontWeight:"400", color:"#000", margin:"0 0 1rem 1rem", paddingTop:".5rem"}}>
             <BsArrowLeft style={{fontSize:"26px"}}/>
             <span>Back</span>
         </Link>

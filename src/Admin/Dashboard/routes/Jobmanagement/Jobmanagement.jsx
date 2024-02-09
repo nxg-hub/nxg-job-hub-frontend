@@ -4,6 +4,7 @@ import Select, { components } from "react-select"
 import { userrelevance } from '../../../../utils/data/tech-talent'
 import { PostedJobCard } from './PostedJobCard'
 import { jobsToBeVetted } from '../AdminOverview/usersdetails/usersdetails'
+import './jobmanagement.scss'
 
 const Jobmanagement = () => {
   const [selectedRelevance, setSelectedRelevance] = useState([]);
@@ -35,7 +36,7 @@ const Jobmanagement = () => {
 
   return (
     <>
-        <section className="header-section">
+        <section className="job-header-section">
           <div className="user-types">
             <div className={activeTab === "employer" ? "user-active" : "user-talent"}onClick={() => handleActiveTabChange('employer')}>
               <h3>Employer</h3>
