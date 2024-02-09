@@ -34,6 +34,7 @@ import Jobmanagement from "./Admin/Dashboard/routes/Jobmanagement/Jobmanagement.
 import UserDetailedLink from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UserDetailedLink.jsx";
 import { Systemhealth } from "./Admin/Dashboard/routes/Health/Systemhealth.jsx";
 // import UsersDetailsCard from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UsersDetailsCard.jsx";
+import ViewTalent from "./Admin/Dashboard/routes/ViewTalent/index.jsx";
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
           {/* <Route path="userdetail" element={<UsersDetailsCard />} /> */}
           <Route path="userdetail/:id" element={<UserDetailedLink />} />
           <Route path="vetting" element={<Vetting />} />
+          <Route path="review-talent/:id" element={<ViewTalent />} />
           <Route path="payments" element={<Transactions />} />
           <Route path="jobmanagement" element={<Jobmanagement />} />
           <Route path="health" element={<Systemhealth />} />
