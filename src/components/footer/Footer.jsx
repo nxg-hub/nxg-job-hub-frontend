@@ -36,7 +36,7 @@ const Footer = () => {
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
         setErrors({ email: 'Valid email is required' });
     } else {
-      console.log(`Form from ${email} submitted successfully.`);
+      // console.log(`Form from ${email} submitted successfully.`);
       setIsOpen(true);
     }
   }
@@ -97,7 +97,8 @@ const Footer = () => {
               <h5>Subscribe To Our Newsletter</h5>
               <p>Subscribe to get job notifications and other useful updates  in your inbox.</p>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form name='newsletter' method='POST' onSubmit={handleSubmit}>
+              <input type="hidden" name='form-name' value='newsletter' />
               <div style={{width:'100%'}}> 
                 {errors.email && <p style={{ color: 'red', marginTop:'-.95rem', fontSize:'.8rem' }}>{errors.email}</p>}
                 <input 
@@ -119,15 +120,15 @@ const Footer = () => {
             {isOpen && (
               <Dialog
                 open={isOpen} onClose={() => setIsOpen(false)}
-                style={{ position: "absolute", left: "30%", top: "40%", transform: "translate(-50% -50%)", width: "40rem", height: "25rem", display: "flex", justifyContent: "center", alignItems: "center", background: '#ffffff', border: "0.06rem solid #d9d9d9", borderRadius: '30px' }}
+                style={{ position: "fixed", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "100%", maxWidth: "40rem", height: "25rem", display: "flex", justifyContent: "center", alignItems: "center", background: '#ffffff', border: "0.06rem solid #d9d9d9", borderRadius: '30px', zIndex: '100' }}
               >
                 <Dialog.Panel>
                   <Dialog.Title style={{ fontFamily: "Manrope", marginBottom: '2rem', color: '#000000', textAlign: "center" }}>
                     <div>
                       <h2 style={{ fontSize: "2rem", fontWeight: "700", lineHeight: "2.5rem", color:"#2596BE", marginBottom:"1.5rem" }}>Thank You !</h2>
                       <p style={{ fontSize: "1rem", fontWeight: "400", lineHeight:'22px' }}>
-                        Thank  you  for subscribing to the newsletter.<br/>
-                        You should receive a confirmation email soon.
+                        `Thank  you {email} for subscribing to the newsletter.<br/>
+                        You should receive a confirmation email soon.`
                       </p>
                     </div>
                     <div style={{marginTop:"3rem"}}>
