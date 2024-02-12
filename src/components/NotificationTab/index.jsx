@@ -45,7 +45,7 @@ const NotificationTab = () => {
     getOldNotifs();
     // fetchNotifications();
     
-  }, []);
+  }, );
   const showOptions = (e) => {};
   const handleSearch = (e) => {};
   return (

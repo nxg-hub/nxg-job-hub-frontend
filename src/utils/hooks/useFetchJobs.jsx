@@ -23,7 +23,7 @@ const useFetchJobs = (id) => {
       }
     };
     fetchPosts();
-  }, []);
+  }, );
   return { posts, popup };
 };
 
