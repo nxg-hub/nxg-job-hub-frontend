@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const uploadImage = require("./uploadImage.js");
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
