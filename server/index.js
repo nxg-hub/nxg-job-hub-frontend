@@ -2,9 +2,9 @@ require('dotenv').config();
 
 const express = require("express");
 const cors = require("cors");
-const uploadImage = require("../uploadImage.js");
+const uploadImage = require("./uploadImage.js");
 const app = express();
-// const port = process.env.PORT;
+const port = process.env.PORT;
 // const port = process.env.PORT || 5000;
 
 const corsOptions = {
@@ -30,7 +30,7 @@ app.post("/uploadMultipleFiles", (req, res) => {
     .catch((err) => res.status(500).send(err));
   });
 
-// app.listen(port, () => {
-//     // console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
-//     console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
-// });
+app.listen(port, () => {
+    // console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
+    console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
+});
