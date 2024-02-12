@@ -1,5 +1,4 @@
 import s from "./index.module.scss";
-import img from "../../../static/images/John.png";
 import useTimestamp from "../../../utils/hooks/useTimestamp";
 import { CiMenuKebab } from "react-icons/ci";
 
