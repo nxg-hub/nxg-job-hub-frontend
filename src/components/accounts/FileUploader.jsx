@@ -29,9 +29,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
   const uploadSingleFile = async (base64) => {
     setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("image", base64);
-      const res = await axios.post("https://nxgjobhub.netlify.app/uploadImage", formData, { withCredentials: true });
+      const res = await axios.post("https://nxgjobhub.netlify.app/uploadImage", { image: base64 }, { withCredentials: true });
       // const res = await axios.post("http://localhost:5000/uploadImage", { image: base64 }, { withCredentials: true });
       const fileUrl = res.data;
       setUrl(fileUrl);
