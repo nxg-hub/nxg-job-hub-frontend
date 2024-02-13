@@ -8,10 +8,18 @@ import { jobVacancy, boards, industry, compSize } from "../../../../utils/data/e
 
 function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (selectedOption, name) => {
+    let updatedValue = selectedOption.value;
     // Convert company name to uppercase if it is the "companyName" field
   // const updatedValue = name === "companyName" ? value.toUpperCase() : value;
+    onCompanyDataChange((prevData) => ({
+      ...prevData,
+      [name]: updatedValue,
+    }));
+  };
+
+  const handleValue = (e) => {
+    const { name, value } = e.target;
     onCompanyDataChange((prevData) => ({
       ...prevData,
       [name]: value,
@@ -59,7 +67,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                 name="companyName"
                 title="Company Name*"
                 value={companyData.companyName}
-                onChange={handleChange}
+                onChange={handleValue}
                 placeholder="Enter your company name"
                 errormessage="Company name must be filled!"
                 required
@@ -71,7 +79,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                 name="companyAddress"
                 title="Company Address*"
                 value={companyData.companyAddress}
-                onChange={handleChange}
+                onChange={handleValue}
                 placeholder="Enter your company's address"
                 errormessage="Company address must be filled!"
                 required
@@ -83,7 +91,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                 name="companyWebsite"
                 title="Company Website*"
                 value={companyData.companyWebsite}
-                onChange={handleChange}
+                onChange={handleValue}
                 placeholder="Enter your company website link"
                 errormessage="Company website must be filled!"
                 required
@@ -113,7 +121,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                   value={companyData.companyPhone}
                   onChange={(value) => {
                     const e = { target: { name: "companyPhone", value } };
-                    handleChange(e);
+                    handleValue(e);
                   }}
                   required
                 />
@@ -123,7 +131,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                 name="companyZipCode"
                 title="Zip Code"
                 value={companyData.companyZipCode}
-                onChange={handleChange}
+                onChange={handleValue}
               />
             </div>
             <div className="nation-state">
@@ -155,7 +163,7 @@ const compSizeOptions = compSize.map((companySize) => ({
                       name="vacancy"
                       value={vacancy.value}
                       checked={companyData.vacancy === vacancy.value}
-                      onChange={handleChange}
+                      onChange={handleValue}
                       className="rep-radio"
                     />
                     <span>{vacancy.label}</span>
@@ -176,7 +184,7 @@ const compSizeOptions = compSize.map((companySize) => ({
               <select
                 name="jobBoard"
                 value={companyData.jobBoard}
-                onChange={handleChange}
+                onChange={handleValue}
               >
                 {boards.map((board, index) => (
                   <option key={index} value={board}>

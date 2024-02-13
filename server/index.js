@@ -31,6 +31,6 @@ app.post("/uploadMultipleFiles", (req, res) => {
   });
 
 // app.listen(port, () => {
-//     // console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
-//     console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
+//     console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
+//     // console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
 // });

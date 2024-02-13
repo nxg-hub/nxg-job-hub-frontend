@@ -74,7 +74,7 @@ function EmployerProfileForm() {
     companyZipCode: '',
     industryType: '',
     companySize: '',
-    vacancy: '',
+    // vacancy: '',
     jobBoard: '',
   });
 
@@ -147,7 +147,6 @@ function EmployerProfileForm() {
   
       const employerId = response.data.employerID;
       console.log(employerId);
-      // console.log(filteredCombinedData);
   
       const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
         headers: {
@@ -158,6 +157,7 @@ function EmployerProfileForm() {
       });
   
       console.log('Response Data:', res.data);
+      console.log(filteredCombinedData);
   
       // Reset errors and navigate on successful submission
       setErrors({ data: '' });
