@@ -5,11 +5,10 @@ const cors = require("cors");
 const uploadImage = require("./uploadImage.js");
 const app = express();
 // const port = process.env.PORT;
-// const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
-  // origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
+  origin: '*', // Allow requests from any origin
   credentials: true,
 };
 
@@ -30,7 +29,7 @@ app.post("/uploadMultipleFiles", (req, res) => {
     .catch((err) => res.status(500).send(err));
   });
 
-// app.listen(port, () => {
-//     console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
-//     // console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
-// });
+app.listen(port, () => {
+    // console.log(`nxgjobhubProject is listening at http://localhost:${port}`);
+    console.log(`nxgjobhubProject is listening at https://nxgjobhub.netlify.app:${port}`);
+});
