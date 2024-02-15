@@ -54,7 +54,6 @@ function EmployerProfileForm() {
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
 
-
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
     address: '',

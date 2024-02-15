@@ -5,25 +5,35 @@ import FileUploader from '../../../../../components/accounts/FileUploader';
 import { Dialog } from '@headlessui/react';
 import { ReactComponent as Confetti } from "../../../../../static/icons/ConfettiBall.svg";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { API_HOST_URL } from '../../../../../utils/api/API_HOST';
 
 const EmployerVerificationForm = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({
-        cacCert: "",
-        taxCert: "",
-        memoCert: "",
-        taxId:"",
-        directors:""
+        caccertificate: "",
+        taxClearanceCertificate: "",
+        companyMemorandum: "",
+        tin:"",
+        namesOfDirectors:[]
     });
+    const [loading, setLoading] = useState(false); // Add loading state
 
-    const [errors, setErrors] = useState({ errors: '' });
+    const [errors, setErrors] = useState({ formData: '' });
+    if (loading) {
+      return <p>Loading...</p>;
+    }
 
     const handleValue = (e, name) => {
         const {value } = e.target;
+        // If the field is 'namesOfDirectors', split the string into an array of names
+        // const updatedValue = name === 'namesOfDirectors' ? value.split('\n') : value;
+        const updatedValue = name === 'namesOfDirectors' ? value.split('\n').filter(name => name.trim() !== '') : value;
         setFormData({
           ...formData,
-          [name]: value
+          [name]: updatedValue
+          // [name]: updatedValue.length >= 5 ? updatedValue.slice(0, 5) : updatedValue, // Ensure only the first 5 names are stored
         });
     };
 
@@ -39,12 +49,65 @@ const EmployerVerificationForm = () => {
         console.log(files);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!formData) {
+        if(!formData.caccertificate || !formData.taxClearanceCertificate || !formData.companyMemorandum) {
           setErrors({ formData: 'Fill out the required field' });
         } else {
-          setIsOpen(true);
+          try {
+            const loginKey =
+              window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
+              window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+        
+              if (!loginKey) {
+                console.error('Authentication key not available.');
+                return;
+              }
+  
+              let authKey;
+              try {
+                authKey = JSON.parse(loginKey).authKey;
+              } catch (error) {
+                console.error('Error parsing authentication key:', error);
+                setLoading(false);
+                return;
+              }
+  
+              if (!authKey) {
+                console.error('Auth key not available.');
+                setLoading(false);
+                return;
+              }
+              const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
+                headers: {
+                  'Content-Type' : 'application/json',
+                  authorization: authKey,
+                }
+              });
+  
+              const employerId = response.data.employerID;
+              console.log(employerId);
+              console.log(formData);
+              // Remove null or empty values before sending the request
+              const cleanedFormData = Object.fromEntries(
+                Object.entries(formData).filter(([_, value]) => value !== null && value !== "")
+              );
+              const res = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, cleanedFormData, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  authorization: authKey,
+                },
+              });
+  
+              console.log('Response Data:', res.data);
+              console.log(cleanedFormData);
+              // Reset errors and navigate on successful submission
+              setErrors({ formData: '' });
+              setIsOpen(true);
+          } catch (error) {
+            console.log('Error posting data:', error.response ? error.response.data : error);
+            setErrors({ data: 'Unable to update user data.' });
+          }
         }
       }
 
@@ -58,21 +121,21 @@ const EmployerVerificationForm = () => {
             <form  className="verified-section" onSubmit={handleSubmit}>
             {errors.formData && <p style={{ color: 'red', marginTop:'-.95rem', fontSize:'.8rem' }}>{errors.formData}</p>}
                 <div className="tech-pro-form">
-                    <FileUploader title="Upload CAC Certificate*" onFileChange={(files) => onFileChange(files, 'cacCert')} />
+                    <FileUploader title="Upload CAC Certificate*" onFileChange={(files) => onFileChange(files, 'caccertificate')} />
                 </div>
                 <div className="tech-pro-form">
-                    <FileUploader title="Upload Tax Clearance Certificate*" onFileChange={(files) => onFileChange(files, 'taxCert')} />
+                    <FileUploader title="Upload Tax Clearance Certificate*" onFileChange={(files) => onFileChange(files, 'taxClearanceCertificate')} />
                 </div>
                 <div className="tech-pro-form">
-                    <FileUploader title="Upload Company Memorandum  Certificate*" onFileChange={(files) => onFileChange(files, 'memoCert')} />
+                    <FileUploader title="Upload Company Memorandum  Certificate*" onFileChange={(files) => onFileChange(files, 'companyMemorandum')} />
                 </div>
                 <div className="my-profile-bio">
                     <label>Company Tax Identification Number</label>
-                    <input type='text' value={formData.taxId} onChange={(e) => handleValue(e, 'taxId')}/>
+                    <input type='text' value={formData.tin} onChange={(e) => handleValue(e, 'tin')}/>
                 </div>
                 <div className="my-profile-bio">
                     <label>List The Names Of Your Company Directors</label>
-                    <textarea  cols="10" rows="10" value={formData.directors} onChange={(e) => handleValue(e, 'directors')}></textarea>
+                    <textarea  cols="10" rows="10" value={formData.namesOfDirectors.join('\n')} onChange={(e) => handleValue(e, 'namesOfDirectors')}></textarea>
                 </div>
                 <div className="verified-btn">
                     <button type='submit'>Verify Account</button>

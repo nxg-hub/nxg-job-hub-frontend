@@ -8,7 +8,7 @@ const app = express();
 // const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
+  // origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
   // origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
   credentials: true,
 };

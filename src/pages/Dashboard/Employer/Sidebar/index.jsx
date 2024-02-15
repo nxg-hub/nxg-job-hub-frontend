@@ -5,7 +5,6 @@ import {
   ChangeProfilePicture,
   MyProfile,
   Dashboard,
-  MdOutlineEdit,
   Help,
   Settings,
   Logout,
@@ -57,9 +56,12 @@ const Sidebar = ({ profilePic, ...props }) => {
           <ChangeProfilePicture title="Change profile picture" />
         </div>
         <strong>{user.firstName}</strong>
-        <p onClick={editProfile}>
-          Edit profile <MdOutlineEdit />
+        <p onClick={editProfile} style={{background:"#fff", border:"none", borderRadius:"8.33px", width:"100%", maxWidth:"128px", color:"#000", margin:"0.6rem auto"}}>
+          Edit Profile
         </p>
+        <div className={s.employerFirm}>
+          <h4>{user.companyName}</h4>
+        </div>
       </div>
       <ul className={s.list}>
         <h2>Engagements</h2>

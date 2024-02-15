@@ -126,6 +126,7 @@ console.log(error)
               name="email"
               label={"Email"}
               placeholder="Enter your email address"
+              autoComplete="username"
               onchange={(e) => setEmail(e.target.value)}
               required
             />
@@ -134,6 +135,7 @@ console.log(error)
               name="password"
               label={"Password"}
               placeholder="Enter your password"
+              autoComplete="current-password"
               onchange={(e) => setPassword(e.target.value)}
               required
             />
