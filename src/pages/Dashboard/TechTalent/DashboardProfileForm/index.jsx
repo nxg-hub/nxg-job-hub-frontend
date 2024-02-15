@@ -128,8 +128,9 @@ function TechTalentProfileForm() {
       
           const techId = response.data.id;
           console.log(techId);
+          console.log("Filtered data:", filteredFormData);
 
-          const res = await axios.put(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
+          const res = await axios.post(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -142,9 +143,9 @@ function TechTalentProfileForm() {
           navigate("/dashboard")
           
         } catch (error) {
-          alert("Error posting data:", error.response);
+          alert(error.response.data);
           console.error('Error posting data:', error.response);
-          console.log('Error posting data:', error.response);
+          console.log('Error posting data:', error.response.data);
         }
     };
 
