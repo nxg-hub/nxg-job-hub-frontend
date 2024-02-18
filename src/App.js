@@ -35,8 +35,15 @@ import UserDetailedLink from "./Admin/Dashboard/routes/AdminOverview/usersdetail
 import { Systemhealth } from "./Admin/Dashboard/routes/Health/Systemhealth.jsx";
 // import UsersDetailsCard from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UsersDetailsCard.jsx";
 import ViewTalent from "./Admin/Dashboard/routes/ViewTalent/index.jsx";
+import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
+// import { handleVerificationSuccess } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerDashProfile.jsx"
 
 function App() {
+
+  // const handleVerificationSuccess = () => {
+  //   isVerified(true);
+  // };
+
   return (
     <>
       <Routes>
@@ -73,12 +80,14 @@ function App() {
           />
           }
         /> */}
-        <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
+        
         <Route
           path="/tech-talent-profile-form"
           element={<DashboardProfileForm />}
         />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard" element={<VerificationProvider>
+          <Dashboard />
+        </VerificationProvider>}>
           <Route path="" element={<Overview />} />
 
           <Route path="notifications" element={<NotificationTab />} />
@@ -94,6 +103,7 @@ function App() {
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="subscription" element={<SubscriptionController />} />
           <Route path="profile-details" element={<h2>Profile Details</h2>} />
+          <Route path="verifiedForm" element={<EmployerVerificationForm />} />
           <Route path="password-settings" element={<Passwordsettings />} />
           <Route path="Privacy" element={<h2>Privacy</h2>} />
           <Route

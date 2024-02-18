@@ -20,10 +20,22 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
 
   const handleValue = (e) => {
     const { name, value } = e.target;
-    onCompanyDataChange((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    // onCompanyDataChange((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
+    // Ensure only one vacancy is selected
+    if (name === 'vacancies') {
+      onCompanyDataChange((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else {
+      onCompanyDataChange((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleCompleteProfile= (e) => {
@@ -33,7 +45,8 @@ function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
       companyData.companyAddress === "" ||
       companyData.companyWebsite === "" ||
       companyData.companyPhone === "" ||
-      companyData.industryType === ""
+      companyData.industryType === "" ||
+      companyData.vacancies.length === 0 // Ensure at least one vacancy is selected
     ) {
       alert("All fields must be filled");
     } else {
@@ -155,18 +168,18 @@ const compSizeOptions = compSize.map((companySize) => ({
               >
                 Type of Job Vacancy
               </label>
-              {jobVacancy.map((vacancy) => {
+              {jobVacancy.map((vacancies) => {
                 return (
-                  <label key={vacancy.value} className="rep-label">
+                  <label key={vacancies.value} className="rep-label">
                     <input
                       type="radio"
-                      name="vacancy"
-                      value={vacancy.value}
-                      checked={companyData.vacancy === vacancy.value}
+                      name="vacancies"
+                      value={vacancies.value}
+                      checked={companyData.vacancies.includes(vacancies.value)}
                       onChange={handleValue}
                       className="rep-radio"
                     />
-                    <span>{vacancy.label}</span>
+                    <span>{vacancies.label}</span>
                   </label>
                 );
               })}

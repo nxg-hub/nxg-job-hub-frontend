@@ -43,28 +43,35 @@
                             color: #fff;
                         }
                     }
-                    .my-profile-form-pics-sm {
+                    .my-profile-cam-section {
                         position: absolute;
                         top: 65%;
-                        right: 5%;
-                        width: 59.073px;
-                        height: 59.073px;
-                        border-radius: 50%;
-                        background: #2596be;
+                        right: -12%;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        .camera {
-                            width: 1.5rem;
-                            height: 1.5rem;
-                            color: #fff;
+                        .my-profile-form-pics-sm {
+                            width: 59.073px;
+                            height: 59.073px;
+                            border-radius: 50%;
+                            background: #2596be;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .camera {
+                                width: 1.5rem;
+                                height: 1.5rem;
+                                color: #fff;
+                            }
                         }
                     }
+                    
                 }
                 .my-profile-form-one {
                     margin-top: 25%;
                     .my-profile-header {
-                        width: 175px;
+                        width: 100%;
+                        max-width: 200px;
                         margin: auto;
                         text-align: center;
                         color: #263238;
@@ -74,8 +81,6 @@
                             font-weight: 700;
                         }
                         .my-profile-ps {
-                            text-align: start;
-                            padding: 0 0.4rem;
                             p {
                                 font-size: 16px;
                                 font-weight: 600;
@@ -87,7 +92,6 @@
                                 font-weight: 500;
                             }
                         }
-                        
                     }
                     form {
                         font-family: Manrope;
@@ -180,8 +184,9 @@
                     position: relative;
                     margin: 2rem 0;
                     label {
-                        position: absolute;
-                        display: inline;
+                        position: fixed;
+                        display: flex;
+                        align-items: center;
                         top: -25%;
                         left: 5%;
                         font-size: 16px;
@@ -191,13 +196,42 @@
                         background-color: #fff !important;
                         z-index: 10;
                     }
-                    input {
+                    input, .textarea {
                         width: 100%;
-                        height: 48px;
+                        min-height: 48px;
                         margin: 0;
                         padding: 0.6rem 0.5rem;
                         border-radius: 5px;
                         border: 1px solid #555;
+                        box-sizing: border-box;
+                    }
+                    .textarea {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 6px;
+                        .selected-skill {
+                            display: flex;
+                            align-items: center;
+                            .skill {
+                                display: flex;
+                                align-items: center;
+                                background: #C7F3D3;
+                                color: #12760F;
+                                gap: 6px;
+                                flex-wrap: wrap;
+                                border: none;
+                                border-radius: 30px;
+                                padding: 8px;
+                                cursor: pointer;
+                                span {
+                                    font-style: 16px;
+                                    font-weight: 500;
+                                    line-height:21.86px ;
+                                }
+                            }
+                            
+                        }
                     }
                 }
                 .add-experience-btn {
@@ -209,6 +243,7 @@
                     padding: 4px 8px;
                     color: #2596BE;
                     margin-top: -1.5rem;
+                    cursor: pointer;
                     .plus-icon {
                         width: 1.2rem;
                         height: 1.2rem;
@@ -220,6 +255,15 @@
                 }
                 .add-skill {
                     width: 104px;
+                }
+                .skills-lists  {
+                    .talent-dropdown {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        gap: 8px;
+                        cursor: pointer;
+                    }
                 }
                 .my-profile-btn {
                     width: 100%;

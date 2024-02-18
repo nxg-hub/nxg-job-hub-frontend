@@ -8,7 +8,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
    
     const handleChange = (selectedOption, name) => {
         let formattedValue = selectedOption.value;
-        if (name === 'highestQualification' || name === 'professionalCert' || name === 'jobType' || name === 'experienceLevel' || name === 'job') {
+        if (name === 'highestQualification' || name === 'professionalCert' || name === 'jobType' || name === 'experienceLevel' || name === 'jobInterest') {
             formattedValue = formattedValue.toUpperCase();
         } else if (name === 'yearsOfExperience') {
             // Convert yearsOfExperience to a number
@@ -57,9 +57,9 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
         value: experienceLevel, 
         label: experienceLevel, 
     }));
-    const jobsOptions = jobs.map((job) => ({
-        value: job, 
-        label: job, 
+    const jobsOptions = jobs.map((jobInterest) => ({
+        value: jobInterest, 
+        label: jobInterest, 
     }));
     const [experienceOptions, setExperienceOptions] = useState(experience.map((yearsOfExperience) => ({
         value: yearsOfExperience, 
@@ -69,7 +69,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.highestQualification && formData.experience && formData.job && formData.level) {
+          if (formData.highestQualification && formData.yearsOfExperience && formData.jobInterest && formData.experienceLevel) {
             onComplete(formData);
           }
         };
@@ -106,7 +106,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Job Interest*</label>
-                    <Select options={jobsOptions} value={formData.job ? { label: formData.job, value: formData.job } : null} onChange={(selectedOption) => handleChange(selectedOption, 'job')} />
+                    <Select options={jobsOptions} value={formData.jobInterest ? { label: formData.jobInterest, value: formData.jobInterest } : null} onChange={(selectedOption) => handleChange(selectedOption, 'jobInterest')} />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Level of Experience in Job Interest*</label>

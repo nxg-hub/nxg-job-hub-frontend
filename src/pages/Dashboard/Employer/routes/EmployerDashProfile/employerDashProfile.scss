@@ -1,3 +1,10 @@
+// .dash-profile-main-container {
+//     .verify-hide {
+//         display: none;
+//     }
+// }
+
+
 .employer-dash-header {
     width: 90%;
     border-bottom: 1px solid rgba(177, 226, 240, 0.5);
@@ -38,10 +45,15 @@
                 }
             }
            .online {
-            margin-left: 0.5rem;
-            // border: 1px solid black;
+            text-align: center;
+            align-self: flex-end;
+            margin: 0 0 1rem -1rem;
             .avaliability {
-                margin-top: 2rem;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
             }
            }
         }
@@ -66,6 +78,22 @@
                     font-size: 24px;
                     line-height: 153.99%;
                     color: #000000;
+                }
+            }
+            .acct-verify {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #3B862F;
+                border-radius: 5px;
+                width: 100px; 
+                margin: auto;
+                padding: .2rem;
+                cursor: pointer;
+                span {
+                    font-size: 10px;
+                    font-weight: 400;
+                    line-height: 12.1px;
                 }
             }
         }

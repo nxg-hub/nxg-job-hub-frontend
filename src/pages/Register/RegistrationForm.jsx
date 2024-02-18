@@ -353,7 +353,7 @@ const RegistrationForm = ({ userType }) => {
             </p>
           </div>
         </form>
-        <Link to={"/register"} className={s.backButton}>
+        <Link to={"/"} className={s.backButton}>
           <BsArrowLeft /> back
         </Link>
       </div>

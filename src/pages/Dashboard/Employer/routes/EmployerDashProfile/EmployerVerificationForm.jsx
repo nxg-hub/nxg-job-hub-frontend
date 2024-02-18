@@ -7,15 +7,18 @@ import { ReactComponent as Confetti } from "../../../../../static/icons/Confetti
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../../utils/api/API_HOST';
+// import { useVerification } from './VerificationContext';
 
-const EmployerVerificationForm = () => {
+const EmployerVerificationForm = ({ onVerificationSuccess }) => {
+  // const { setVerificationStatus } = useVerification();
+
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({
-        caccertificate: "",
+        CACCertificate: "",
         taxClearanceCertificate: "",
         companyMemorandum: "",
-        tin:"",
+        TIN:"",
         namesOfDirectors:[]
     });
     const [loading, setLoading] = useState(false); // Add loading state
@@ -23,17 +26,19 @@ const EmployerVerificationForm = () => {
     const [errors, setErrors] = useState({ formData: '' });
     if (loading) {
       return <p>Loading...</p>;
-    }
+    };
+
+    // Moved the function declaration to the top
+  // const handleVerificationSuccess = () => {
+  //   onVerificationSuccess();
+  //   };
 
     const handleValue = (e, name) => {
         const {value } = e.target;
-        // If the field is 'namesOfDirectors', split the string into an array of names
-        // const updatedValue = name === 'namesOfDirectors' ? value.split('\n') : value;
         const updatedValue = name === 'namesOfDirectors' ? value.split('\n').filter(name => name.trim() !== '') : value;
         setFormData({
           ...formData,
           [name]: updatedValue
-          // [name]: updatedValue.length >= 5 ? updatedValue.slice(0, 5) : updatedValue, // Ensure only the first 5 names are stored
         });
     };
 
@@ -51,7 +56,7 @@ const EmployerVerificationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!formData.caccertificate || !formData.taxClearanceCertificate || !formData.companyMemorandum) {
+        if(!formData.CACCertificate || !formData.taxClearanceCertificate || !formData.companyMemorandum) {
           setErrors({ formData: 'Fill out the required field' });
         } else {
           try {
@@ -88,11 +93,11 @@ const EmployerVerificationForm = () => {
               const employerId = response.data.employerID;
               console.log(employerId);
               console.log(formData);
-              // Remove null or empty values before sending the request
-              const cleanedFormData = Object.fromEntries(
-                Object.entries(formData).filter(([_, value]) => value !== null && value !== "")
-              );
-              const res = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, cleanedFormData, {
+              // // Remove null or empty values before sending the request
+              // const cleanedFormData = Object.fromEntries(
+              //   Object.entries(formData).filter(([_, value]) => value !== null && value !== "")
+              // );
+              const res = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, formData, {
                 headers: {
                   'Content-Type': 'application/json',
                   authorization: authKey,
@@ -100,9 +105,15 @@ const EmployerVerificationForm = () => {
               });
   
               console.log('Response Data:', res.data);
-              console.log(cleanedFormData);
+              console.log(formData);
               // Reset errors and navigate on successful submission
               setErrors({ formData: '' });
+              // setVerificationStatus(true);
+              onVerificationSuccess();
+              // Call onVerificationSuccess if it is a function
+              // if (typeof onVerificationSuccess === 'function') {
+              //   handleVerificationSuccess();
+              // }
               setIsOpen(true);
           } catch (error) {
             console.log('Error posting data:', error.response ? error.response.data : error);
@@ -121,7 +132,7 @@ const EmployerVerificationForm = () => {
             <form  className="verified-section" onSubmit={handleSubmit}>
             {errors.formData && <p style={{ color: 'red', marginTop:'-.95rem', fontSize:'.8rem' }}>{errors.formData}</p>}
                 <div className="tech-pro-form">
-                    <FileUploader title="Upload CAC Certificate*" onFileChange={(files) => onFileChange(files, 'caccertificate')} />
+                    <FileUploader title="Upload CAC Certificate*" onFileChange={(files) => onFileChange(files, 'CACCertificate')} />
                 </div>
                 <div className="tech-pro-form">
                     <FileUploader title="Upload Tax Clearance Certificate*" onFileChange={(files) => onFileChange(files, 'taxClearanceCertificate')} />
@@ -131,7 +142,7 @@ const EmployerVerificationForm = () => {
                 </div>
                 <div className="my-profile-bio">
                     <label>Company Tax Identification Number</label>
-                    <input type='text' value={formData.tin} onChange={(e) => handleValue(e, 'tin')}/>
+                    <input type='text' value={formData.TIN} onChange={(e) => handleValue(e, 'TIN')}/>
                 </div>
                 <div className="my-profile-bio">
                     <label>List The Names Of Your Company Directors</label>
@@ -155,7 +166,7 @@ const EmployerVerificationForm = () => {
                         <h2 >Verification Successful</h2>
                         <Confetti />
                         <p style={{ fontSize: "22px", fontWeight: "500", lineHeight:'30.05px', margin:'1rem 0', width:"100%", maxWidth:"500px"}}>
-                          Congratulations your accunt has been verified successfully.
+                          Congratulations your account has been verified successfully.
                         </p>
                       </div>
                       <div className='veri-modalBtn'>
