@@ -13,15 +13,10 @@ import TextField from "../../components/TextField";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
 
   const navigate = useNavigate();
-
-  // const handleShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   const onCheck = () => {
     setCheck(!check);

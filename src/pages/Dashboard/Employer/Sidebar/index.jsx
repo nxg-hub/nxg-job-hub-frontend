@@ -21,7 +21,7 @@ import {
   Interviews,
 } from "./SidebarIcons";
 import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
@@ -40,14 +40,16 @@ const Sidebar = ({ profilePic, ...props }) => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     // Navigate to the login page
-    navigate("/login");
+    navigate("/");
   };
   const editProfile = () => {
     // update role and other fields
   };
   return (
     <div className={s.Sidebar}>
-      <img src={logo} alt="logo" />
+      <Link to="/">
+        <img src={logo} alt="logo" />
+      </Link>
       <div className={s.Profile}>
         <div>
           <div className={s.displayPic}>
