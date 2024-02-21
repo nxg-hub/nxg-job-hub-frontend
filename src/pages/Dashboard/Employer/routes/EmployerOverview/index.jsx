@@ -28,9 +28,10 @@ const EmployerOverview = () => {
             <EngagementCard
               logo={<JobPosts fill="#006A90" />}
               title={"Jobs Posted"}
-              value={0}
+              value={posts.length}
             />
             <EngagementCard
+              
               logo={<Applicants fill="#006A90" />}
               title={"Applicants"}
               value={0}

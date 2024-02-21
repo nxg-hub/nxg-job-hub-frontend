@@ -3,6 +3,7 @@ import Logo from "../../static/images/logo_colored.png";
 import Inputs from '../../components/accounts/Inputs';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_HOST_URL } from '../../utils/api/API_HOST';
 
 const PasswordRecovery = () => {
     const [email, setEmail] = useState("");
@@ -12,21 +13,22 @@ const PasswordRecovery = () => {
         e.preventDefault();
         try {
             // Check if the user exists
-            const userRes = await axios.get(
-                "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/get-user", { email },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            // const userRes = await axios.get(
+            //     `${API_HOST_URL}/api/v1/auth/get-user`, { email },
+            //     {
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //         },
+            //     }
+            // );
 
-            if (userRes.status === 200){
-                console.log(userRes);
-                const authKey = userRes.header.authorization;
+            // if (userRes.status === 200){
+                // console.log(userRes);
+                const authKey = 
+                JSON.parse(sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")).authKey;
 
                 const response = await axios.post(
-                    "https://job-hub-591ace1cfc95.herokuapp.com/api/v1/auth/reset-password-email",
+                    `${API_HOST_URL}/api/v1/auth/reset-password-email`,
                     { email },
                     {
                       headers: {
@@ -43,7 +45,7 @@ const PasswordRecovery = () => {
                 } else {
                     setMessage(data.error);
                 }
-            }
+            // }
             
         } catch (error) {
             console.error('Error sending password reset link:', error);
@@ -71,7 +73,7 @@ const PasswordRecovery = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 autoComplete="email"
-                errormessage='Email must inculde special charaters like @ and .!'
+                errormessage='Email must include special charaters like @ and .!'
                 required
                 />
                 <div className="btn" id='forgot-btn'>
