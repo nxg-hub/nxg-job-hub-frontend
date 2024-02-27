@@ -41,7 +41,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.passport && formData.resume && formData.coverletter && formData.bio) {
+          if (formData.profilePicture && formData.resume && formData.coverletter && formData.bio) {
             onComplete(formData);
           }
         };
@@ -59,7 +59,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
                 <Select options={workModesOptions} value={formData.workMode ? { label: formData.workMode, value: formData.workMode } : null} onChange={(selectedOption) => handleChange(selectedOption, 'workMode')} />
             </div>
             <div className="tech-pro-form">
-                <FileUploader title="Upload Passport*" onFileChange={(files) => onFileChange(files, 'passport')} />
+                <FileUploader title="Upload Passport*" onFileChange={(files) => onFileChange(files, 'profilePicture')} />
             </div>
             <div className="tech-pro-form">
                 <FileUploader title="Upload Resume/CV*" onFileChange={(files) => onFileChange(files, 'resume')} />

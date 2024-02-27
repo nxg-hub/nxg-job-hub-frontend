@@ -78,5 +78,16 @@ const userrelevance = [
     "Tech Talent",
     "Tech Employer",
     "Tech Agent"
+];
+const talentSkills = [
+    "Team Work",
+    "Collaboration",
+    "Problem Solving",
+    "Detail Oriented",
+    "Goal Driven",
+    "Analytical",
+    "Patience",
+    "Motivating",
+    "Effective Communication"
 ]
-export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance, experience, userrelevance};
+export  {qualifications, jobTypes, workModes, jobs, levels, certifications, relevance, experience, userrelevance, talentSkills};

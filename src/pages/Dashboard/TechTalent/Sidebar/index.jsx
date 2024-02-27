@@ -11,6 +11,7 @@ import {
   Help,
   Settings,
   Notification,
+  Wallet,
   SavedJobs,
   Logout,
   Password,
@@ -18,7 +19,7 @@ import {
   Privacy,
 } from "./SidebarIcons";
 import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
@@ -37,6 +38,11 @@ const Sidebar = ({ profilePic, ...props }) => {
       path: "notifications",
       name: "Notifications",
       icon: <Notification />
+    },
+    {
+      path: "wallet",
+      name: "Wallet",
+      icon: <Wallet />
     },
     {
       path: "profile",
@@ -75,14 +81,14 @@ const Sidebar = ({ profilePic, ...props }) => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     // Navigate to the login page
-    navigate("/login");
+    navigate("/");
   };
 
   return (
     <div  className={s.Sidebar}>
-      <div className={s.menuIcon}>
+      <Link to="/" className={s.menuIcon}>
         <img src={logo} alt="logo" />
-      </div>
+      </Link>
       
       <div className={s.Profile}>
         <div>

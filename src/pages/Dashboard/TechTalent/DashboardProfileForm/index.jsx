@@ -9,7 +9,6 @@ import MultiStepForm3 from './steps/MultiStepForm3';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 
-
 function TechTalentProfileForm() {
     const [index, setIndex] = useState(0);
     const [formData, setFormData] = useState({
@@ -22,13 +21,13 @@ function TechTalentProfileForm() {
       yearsOfExperience:"",
       jobType:"", 
       currentJob:"",
-      // job:"",
+      jobInterest:"",
       workMode:"",
-      // passport:"",
+      profilePicture:"",
       resume:"",
       coverletter:"",
-      // bio:"",
-      // portfolioLink:"",
+      bio:"",
+      portfolioLink:"",
       linkedInUrl:""
     });
 
@@ -68,7 +67,6 @@ function TechTalentProfileForm() {
         // Save the form data
         // console.log("Form Data Saved:", formData);
       }
-
     };
     
     const handleStep = () => {
@@ -85,7 +83,6 @@ function TechTalentProfileForm() {
       }
     };
     
-
     const handleBack = () => {
         if (index > 0) {
           setIndex(index - 1);
@@ -98,16 +95,6 @@ function TechTalentProfileForm() {
     const handleProfileCompletion = async () => {
       // console.log(formData, 'Profile Completed');
         try {
-          // Remove null, undefined, fields not required in the backend API end point(keysToExclude) and empty string values from the combinedData object
-        const keysToExclude = ['bio', 'passport', 'job', 'portfolioLink'];
-        const filteredFormData = Object.fromEntries(
-          Object.entries(formData).reduce((acc, [key, value]) => {
-            if (!keysToExclude.includes(key) && value !== null && value !== undefined && value !== '') {
-              acc.push([key, value]);
-            }
-            return acc;
-          }, [])
-        );
           const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
           if (!loginKey) {
             console.error('Authentication key not available.');
@@ -127,9 +114,10 @@ function TechTalentProfileForm() {
           });
       
           const techId = response.data.id;
-          console.log(techId);
+          // console.log(techId);
+          // console.log("Filtered data:", formData);
 
-          const res = await axios.put(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, filteredFormData,
+          const res = await axios.patch(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, formData,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -142,9 +130,9 @@ function TechTalentProfileForm() {
           navigate("/dashboard")
           
         } catch (error) {
-          alert("Error posting data:", error.response);
+          alert(error.response.data);
           console.error('Error posting data:', error.response);
-          console.log('Error posting data:', error.response);
+          console.log('Error posting data:', error.response.data);
         }
     };
 

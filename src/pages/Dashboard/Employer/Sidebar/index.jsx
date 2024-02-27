@@ -5,7 +5,6 @@ import {
   ChangeProfilePicture,
   MyProfile,
   Dashboard,
-  MdOutlineEdit,
   Help,
   Settings,
   Logout,
@@ -22,7 +21,7 @@ import {
   Interviews,
 } from "./SidebarIcons";
 import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
@@ -61,14 +60,16 @@ const Sidebar = ({ profilePic, ...props }) => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     // Navigate to the login page
-    navigate("/login");
+    navigate("/");
   };
   const editProfile = () => {
     // update role and other fields
   };
   return (
     <div className={s.Sidebar}>
-      <img src={logo} alt="logo" />
+      <Link to="/">
+        <img src={logo} alt="logo" />
+      </Link>
       <div className={s.Profile}>
         <div>
           <div className={s.displayPic}>
@@ -77,9 +78,12 @@ const Sidebar = ({ profilePic, ...props }) => {
           <ChangeProfilePicture title="Change profile picture" />
         </div>
         <strong>{user.firstName}</strong>
-        <p onClick={editProfile}>
-          Edit profile <MdOutlineEdit />
+        <p onClick={editProfile} style={{background:"#fff", border:"none", borderRadius:"8.33px", width:"100%", maxWidth:"128px", color:"#000", margin:"0.6rem auto"}}>
+          Edit Profile
         </p>
+        <div className={s.employerFirm}>
+          <h4>{user.companyName}</h4>
+        </div>
       </div>
       <ul className={s.list}>
         <h2>Engagements</h2>

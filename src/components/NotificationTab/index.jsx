@@ -16,6 +16,8 @@ const NotificationTab = () => {
 
   useEffect(() => {
     getReceivedNotifs();
+    // fetchNotifications();
+    
   }, [localNotifs]);
   const showOptions = (e) => {};
   const handleSearch = (e) => {};

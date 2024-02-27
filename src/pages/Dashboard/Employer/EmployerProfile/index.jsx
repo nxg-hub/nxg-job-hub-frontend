@@ -54,7 +54,6 @@ function EmployerProfileForm() {
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
 
-
   // Initial state for the first form
   const [personalData, setPersonalData] = useState({
     address: '',
@@ -74,7 +73,7 @@ function EmployerProfileForm() {
     companyZipCode: '',
     industryType: '',
     companySize: '',
-    vacancy: '',
+    vacancies: [],
     jobBoard: '',
   });
 
@@ -93,7 +92,7 @@ function EmployerProfileForm() {
       }
     }
     setStep(step + 1);
-    console.log(personalData);
+    // console.log(personalData);
   };
 
   const handleCompleteProfile = async () => {
@@ -104,15 +103,15 @@ function EmployerProfileForm() {
       };
   
       // Remove null, undefined, fields not required in the backend API end point(keysToExclude) and empty string values from the combinedData object
-      const keysToExclude = ['address', 'nationality', 'state', 'zipCode', 'companyZipCode', 'vacancy'];
-      const filteredCombinedData = Object.fromEntries(
-        Object.entries(combinedData).reduce((acc, [key, value]) => {
-          if (!keysToExclude.includes(key) && value !== null && value !== undefined && value !== '') {
-            acc.push([key, value]);
-          }
-          return acc;
-        }, [])
-      );
+      // const keysToExclude = ['address', 'nationality', 'state', 'zipCode', 'companyZipCode', 'vacancy'];
+      // const filteredCombinedData = Object.fromEntries(
+      //   Object.entries(combinedData).reduce((acc, [key, value]) => {
+      //     if (!keysToExclude.includes(key) && value !== null && value !== undefined && value !== '') {
+      //       acc.push([key, value]);
+      //     }
+      //     return acc;
+      //   }, [])
+      // );
 
       const loginKey =
         window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
@@ -146,10 +145,10 @@ function EmployerProfileForm() {
       });
   
       const employerId = response.data.employerID;
-      console.log(employerId);
-      // console.log(filteredCombinedData);
+      // console.log(employerId);
+      // console.log(combinedData);
   
-      const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, filteredCombinedData, {
+      const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, combinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
@@ -158,6 +157,7 @@ function EmployerProfileForm() {
       });
   
       console.log('Response Data:', res.data);
+      // console.log(combinedData);
   
       // Reset errors and navigate on successful submission
       setErrors({ data: '' });
@@ -178,7 +178,11 @@ function EmployerProfileForm() {
   };
 
   const handleCompanyDataChange = (updatedCompanyData) => {
-    setCompanyData(updatedCompanyData);
+    setCompanyData({
+      ...companyData,
+      ...updatedCompanyData,
+      vacancies: Array.isArray(updatedCompanyData.vacancies) ? updatedCompanyData.vacancies : [updatedCompanyData.vacancies],
+    });
   };
 
   return (
@@ -207,16 +211,18 @@ function EmployerProfileForm() {
                   name="firstName"
                   title='First Name*'
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Enter your first name"
+                  // onChange={(e) => setFirstName(e.target.value)}
+                  // placeholder="Enter your first name"
+                  readOnly
                 />
                 <Inputs
                   type='text'
                   name="lastName"
                   title='Last Name*'
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Enter your last name"
+                  // onChange={(e) => setLastName(e.target.value)}
+                  // placeholder="Enter your last name"
+                  readOnly
                 />
               </div>
               <div className="email">
@@ -225,8 +231,9 @@ function EmployerProfileForm() {
                   name="email"
                   title='E-mail Address'
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
+                  // onChange={(e) => setEmail(e.target.value)}
+                  // placeholder="Enter your email address"
+                  readOnly
                 />
               </div>
               <div className="phone-address" style={{ textAlign: "start" }}>

@@ -13,15 +13,10 @@ import TextField from "../../components/TextField";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
   const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
 
   const navigate = useNavigate();
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const onCheck = () => {
     setCheck(!check);
@@ -104,7 +99,7 @@ console.log(error)
   };
   useEffect(() => {
     AutoLoginUser();
-  }, []);
+  }, );
 
   return (
     <div className="login-main-container">
@@ -126,6 +121,7 @@ console.log(error)
               name="email"
               label={"Email"}
               placeholder="Enter your email address"
+              autoComplete="username"
               onchange={(e) => setEmail(e.target.value)}
               required
             />
@@ -134,6 +130,7 @@ console.log(error)
               name="password"
               label={"Password"}
               placeholder="Enter your password"
+              autoComplete="current-password"
               onchange={(e) => setPassword(e.target.value)}
               required
             />

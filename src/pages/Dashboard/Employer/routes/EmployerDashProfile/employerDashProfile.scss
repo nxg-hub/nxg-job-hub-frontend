@@ -1,6 +1,13 @@
+// .dash-profile-main-container {
+//     .verify-hide {
+//         display: none;
+//     }
+// }
+
+
 .employer-dash-header {
     width: 90%;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid rgba(177, 226, 240, 0.5);
     h1 {
         font-size: 24px;
         font-weight: 800;
@@ -17,19 +24,77 @@
     margin: auto;
     .employer-dash {
         margin-top: 5%;
-        section {
+        padding: 1rem;
+        border: 1px solid rgba(177, 226, 240, 0.5);
+        .connect-pics {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .connect-img {
+                width: 200px;
+                height: 200px;
+                border: none;
+                border-radius: 50%;
+                background: #EBEBEB;
+                .user {
+                    width: 100%;
+                    height: 100%;
+                    padding: .5rem;
+                    object-fit: contain;
+                    color: #fff;
+                }
+            }
+           .online {
             text-align: center;
+            align-self: flex-end;
+            margin: 0 0 1rem -1rem;
+            .avaliability {
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+           }
+        }
+        .job-opens {
+            width: 100%;
+            max-width: 464px;
             margin: auto;
-            h2 {
-                font-size: 19px;
-                font-weight: 700;
-                line-height: 25.95px;
+            margin-top: 1rem;
+            padding: 0.5rem 0;
+            text-align: center;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            .post-id {
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 27px;
                 color: #263238;
             }
-            p {
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 21.86px;
+            .employer-name {
+                margin-top: 0.5rem;
+                p {
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 153.99%;
+                    color: #000000;
+                }
+            }
+            .acct-verify {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #3B862F;
+                border-radius: 5px;
+                width: 100px; 
+                margin: auto;
+                padding: .2rem;
+                cursor: pointer;
+                span {
+                    font-size: 10px;
+                    font-weight: 400;
+                    line-height: 12.1px;
+                }
             }
         }
         form {
@@ -115,137 +180,47 @@
                     color: #000;
                 }
             }
+            button {
+                width: 100px;
+                background: #E3EDFF;
+                border: 1px solid #000000;
+                font-weight: 400;
+                font-size: 24px;
+                line-height: 33px;
+                color: #000000;
+                padding: .5rem 0;
+                cursor: pointer;
+            }
         }
     }
     .employer-dash1 {
         margin-top: 10%;
-        .employer-connect-section {
-            width: 100%;
-            max-width: 537px;
-            height: 515px;
+        border: 1px solid rgba(177, 226, 240, 0.5);
+        width: 100%;
+        max-width: 514px;
+        height: 326px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        section {
+            width: 95%;
             margin: auto;
-            border-radius: 10px;
-            background: #FFF;
-            box-shadow: -4px 4px 20px 0px rgba(0, 0, 0, 0.25);
-            .connect {
-                width: 90%;
-                margin: auto;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                .connect-btn {
-                    text-align: center;
-                    button {
-                        border-radius: 16.304px;
-                        border: 1px solid #2596BE;
-                        background: rgba(0, 106, 144, 0.00);
-                        color: #2596BE;
-                        font-size: 24px;
-                        font-weight: 800;
-                        width: 150px;
-                        height: 50px;
-                        cursor: pointer;
-                    }
-                }
-                .messagebtn {
-                    button {
-                        background: #2596BE;
-                        color: #fff;
-                    }
-                }
-                .connect-pics {
-                    width: 150px;
-                    margin: auto;
-                    margin-top: -3rem;
-                    .connect-img {
-                        width: 100px;
-                        height: 100px;
-                        border: 2px solid #2596BE;
-                        border-radius: 50%;
-                        margin: auto;
-                        img {
-                            width: 100%;
-                            height: 100%;
-                            border-radius: 50%;
-                            object-fit: contain;
-                        }
-                    }
-                    .verified-user {
-                        float: right;
-                        margin-top: -2rem;
-                        margin-right: .6rem;
-                        color: #2596BE;
-
-                    }
-                    .online {
-                        float: right;
-                        text-align: center;
-                        margin-top: -1rem;
-                        margin-right: -.3rem;
-                        p {
-                            font-size: 15px;
-                            font-weight: 400;
-                            margin-top: -.4rem;
-                        }
-                    }
-                }
-                
-            }
-            .job-opens {
-                margin-top: 10%;
-                text-align: center;
-                .post-id {
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: #263238;
-                }
-                .connect-jobs {
-                    width: 90%;
-                    margin: auto;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    .jobs-connect {
-                        font-size: 24px;
-                        font-weight: 400;
-                        line-height: 36.957px;
-                        margin-top: 1rem;
-                    }
-                }
-            }
-            .recruit {
-                text-align: center;
-                h2 {
-                    font-size: 24px;
-                    font-weight: 400;
-                    line-height: 36.957px;
-                    margin-top: 3rem;
-                }
-                .employer-name {
-                    margin-top: 5%;
-                    p {
-                        font-size: 24px;
-                        font-weight: 400;
-                        line-height: 36.957px;
-                    }
-                }
-            }
         }
         .employ-dashBtns {
-            width: 80%;
             margin:.5rem  auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             a {
-                width: 160px;
+                width: 184px;
                 padding: .6rem 1rem;
                 text-align: center;
                 font-size: 24px;
                 font-weight: 400;
-                background: #2596BE;
-                color: #fff;
-                border-radius: 12px;
+                background: transparent;
+                color: #000;
+                border: 1px solid rgba(177, 226, 240, 0.5);
+                border-radius: 5px;
             }
             .verifiedForm-btn {
                 width: 220px;
@@ -254,20 +229,6 @@
                 border: 3px solid #2596BE;
             }
         }
-    }
-}
-.employ-dashBtn {
-    text-align: center;
-    margin: 3rem 0;
-    a {
-        width: 160px;
-        padding: .6rem 1rem;
-        text-align: center;
-        font-size: 24px;
-        font-weight: 400;
-        background: #2596BE;
-        color: #fff;
-        border-radius: 12px;
     }
 }
 
@@ -356,7 +317,7 @@
 @media only screen and (min-width:768px) {
     .employer-dash-section {
         .employer-dash {
-            margin-top: 15%;
+            margin-top: 10%;
             form {
                 .my-profile-fullname {
                     gap: 30px;
@@ -374,7 +335,7 @@
 @media only screen and (min-width:1028px) {
     .employer-dash-section {
         .employer-dash {
-            margin-top: 20%;
+            // margin-top: 20%;
             form {
                 .my-profile-fullname {
                     gap: 15px;
@@ -400,7 +361,7 @@
 @media only screen and (min-width:1440px) {
     .employer-dash-section {
         .employer-dash {
-            margin-top: 20%;
+            // margin-top: 20%;
             form {
                 .my-profile-fullname {
                     gap: 15px;

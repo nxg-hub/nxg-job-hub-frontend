@@ -2,13 +2,12 @@ require('dotenv').config();
 
 const express = require("express");
 const cors = require("cors");
-const uploadImage = require("./uploadImage.js");
+const uploadImage = require("uploadImage.js");
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: 'https://nxgjobhub.netlify.app', //Hosted link for production.
-  // origin: 'http://localhost:3000', // Replace with the actual hosted link of React app 
+  origin: '*', // Allow requests from any origin
   credentials: true,
 };
 

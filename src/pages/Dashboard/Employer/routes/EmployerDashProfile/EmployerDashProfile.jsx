@@ -1,41 +1,157 @@
 import React, { useContext, useState, useEffect} from 'react';
 import { UserContext } from '../../..';
 import Inputs from '../../../../../components/accounts/Inputs';
-import User from '../../../../../static/images/Sarah.png';
-import { MdOutlineVerifiedUser } from 'react-icons/md';
-import { BsCircleFill } from 'react-icons/bs';
+import Online from '../../../../../static/icons/online-icon.svg';
+import { CiUser } from 'react-icons/ci';
+import {MdOutlineVerifiedUser } from 'react-icons/md';
 import './employerDashProfile.scss';
 import { Link } from 'react-router-dom';
+import { useVerification } from './VerificationContext';
+import EmployerVerificationForm from './EmployerVerificationForm';
+import axios from 'axios';
+import { API_HOST_URL } from '../../../../../utils/api/API_HOST';
 
 const EmployerDashProfile = () => {
     const user = useContext(UserContext)
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [address, setAddress] = useState(user.address);
+  const [address, setAddress] = useState("");
+  const [companyDescription, setCompanyDescription] = useState("");
   const currentYear = new Date().getFullYear() ;
+  const {isVerified, setVerificationStatus} = useVerification(); 
+  const [isVerificationFormVisible] = useState(false);
 
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName)
       setLastName(user.lastName)
       setEmail(user.email)
-      setAddress(user.address)
+      fetchEmployerData();
     }
-  }, [user])
+  }, [user]);
+
+  const handleVerificationSuccess = () => {
+    setVerificationStatus(true);
+  };
+
+  const fetchEmployerData = async () => {
+    try {
+      const loginKey =
+        window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
+        window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+
+      if (!loginKey) {
+        console.error('Authentication key not available.');
+        return;
+      }
+
+      let authKey;
+      try {
+        authKey = JSON.parse(loginKey).authKey;
+      } catch (error) {
+        console.error('Error parsing authentication key:', error);
+        return;
+      }
+
+      const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authKey,
+        },
+      });
+
+      const employerData = response.data; // Assuming the response is an object with employer data
+
+      // Update state with fetched data
+      setAddress(employerData.address || "");
+      setCompanyDescription(employerData.companyDescription || "");
+
+    } catch (error) {
+      console.error('Error fetching employer data:', error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const loginKey =
+        window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
+        window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+
+      if (!loginKey) {
+        console.error('Authentication key not available.');
+        return;
+      }
+
+      let authKey;
+      try {
+        authKey = JSON.parse(loginKey).authKey;
+      } catch (error) {
+        console.error('Error parsing authentication key:', error);
+        return;
+      }
+
+      const employerId = user.employerId; // Assuming user object has employerId
+
+      const updateData = {
+        address,
+        companyDescription,
+        // Add other fields you want to update
+      };
+
+      const response = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, updateData, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authKey,
+        },
+      });
+
+      console.log('Update successful:', response.data);
+
+    } catch (error) {
+      console.error('Error updating data:', error.response ? error.response.data : error);
+    }
+  };
   
   return (
-    <div className='dash-profile-main-container'>
+    <div className='dash-profile-main-container' style={{background:"#fff"}}>
         <div className="employer-dash-header">
             <h1>My Profile</h1>
         </div>
         <div className="employer-dash-section">
             <div className="employer-dash">
-                <section>
-                    <h2>{user.firstName}</h2>
-                    <p>Talent Recruiter</p>
-                </section>
-                <form>
+                <div className="connect-pics">
+                    <div className="connect-img">
+                        <CiUser className='user' />
+                    </div>
+                    <div className="online">
+                        {isVerified ? (
+                            <div className="verified">
+                                <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
+                                <div className="verified avaliability">
+                                    <img src={Online} alt="Online-Icon" />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="verified avaliability">
+                                <img src={Online} alt="Online-Icon" />
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="job-opens">
+                    <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)}</span></p>
+                    <div className="employer-name">
+                        <p>Recruiter, {user.companyName}</p>
+                    </div>
+                    {!isVerified && (
+                        <Link to="../verifiedForm" className="acct-verify" >
+                            <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
+                            <span>Verify Account</span>
+                        </Link>
+                    )}
+                </div>
+                <form onSubmit={handleSave}>
                     <div className="my-profile-fullname">
                         <div className="my-profile-firstname">
                             <Inputs 
@@ -43,7 +159,7 @@ const EmployerDashProfile = () => {
                                 title="First Name"
                                 placeholder="Enter your first name"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                disabled
                             />
                         </div>
                         <div className="my-profile-lastname">
@@ -52,20 +168,20 @@ const EmployerDashProfile = () => {
                                 title="Last Name"
                                 placeholder="Enter your last name"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                disabled
                             />
                         </div>
                     </div>
                     <div className="my-profile-bio">
                         <label>About</label>
-                        <textarea  cols="5" rows="5"></textarea>
+                        <textarea  cols="5" rows="5" value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)}></textarea>
                     </div>
                     <div className="my-profile-email">
                         <Inputs 
                         type="email"
                         title="Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        disabled
                         />
                     </div>
                     <div className="my-profile-address">
@@ -76,66 +192,25 @@ const EmployerDashProfile = () => {
                         onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>
+                    <button type='submit'>Save</button>
                 </form>
             </div>
             <div className="employer-dash1">
-                <section className='employer-connect-section'>
-                    <div className="connect">
-                        <div className="connect-btn">
-                            <button>Connect</button>
-                        </div>
-                        <div className="connect-pics">
-                            <div className="connect-img">
-                                <img src={User} alt="User's Identity" />
-                            </div>
-                            <MdOutlineVerifiedUser className='verified-user' />
-                            <div className="online">
-                                <BsCircleFill fontSize="12px" color='#299019'/>
-                                <p>Online</p>
-                            </div>
-                        </div>
-                        <div className="connect-btn messagebtn">
-                            <button>Message</button>
-                        </div>
-                    </div>
-                    <div className="job-opens">
-                        <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)}</span></p>
-                        <div className="connect-jobs">
-                            <div className="jobs-connect">
-                                <span>15</span>
-                                <p>Connects</p>
-                            </div>
-                            <div className="jobs-connect">
-                                <span>30</span>
-                                <p>Job Uploads</p>
-                            </div>
-                            <div className="jobs-connect">
-                                <span>19</span>
-                                <p>Jobs Open</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="recruit">
-                        <h2>{user.firstName} {user.lastName}, 34</h2>
-                        <div className="employer-name">
-                            <p>Recruiter, {user.companyName}</p>
-                        </div>
-                    </div>
-                </section>
-                <section style={{margin:"1rem auto", width:"90%"}}>
-                    <div className="employ-dashBtns">
-                        <Link to="/employerprofile">Edit Profile</Link>
-                        <Link to="/verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
-                    </div>
+                <section >
                     <div className="employ-dashBtns">
                         <Link to="wallet">View Wallet</Link>
+                        <Link to="../verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
+                    </div>
+                    <div className="employ-dashBtns">
+                        <Link to="/employerprofile">Edit Profile</Link>
                     </div>
                 </section>
             </div>
         </div>
-        <div className="employ-dashBtn">
-            <Link to="dashboard">Back To Dashboard</Link>
-        </div>
+        {/* {!isVerified && <EmployerVerificationForm onVerificationSuccess={handleVerificationSuccess} hidden />} */}
+        {isVerificationFormVisible && (
+        <EmployerVerificationForm onVerificationSuccess={handleVerificationSuccess} hidden />
+      )}
     </div>
   )
 }
