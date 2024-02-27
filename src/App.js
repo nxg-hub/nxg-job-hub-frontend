@@ -25,6 +25,7 @@ import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/Employer
 import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
+import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 function App() {
 
   // const handleVerificationSuccess = () => {
@@ -86,7 +87,7 @@ function App() {
           <Route path="help" element={<h2>Help </h2>} />
         </Route>
 
-       
+
       </Routes>
     </>
   );
