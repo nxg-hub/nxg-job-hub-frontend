@@ -149,12 +149,14 @@ console.log(error)
                 style={{ display: "flex", alignItems: "center" }}
               >
                 <input
+                  id="checkbox"
                   type="checkbox"
                   aria-label="checkbox"
                   checked={check}
                   onChange={onCheck}
                 />
                 <label
+                  htmlFor="checkbox"
                   style={{
                     fontSize: ".7rem",
                     fontWeight: "500",

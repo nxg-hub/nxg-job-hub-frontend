@@ -3,49 +3,22 @@ import AlertTabItem from "./NotificationItem";
 import s from "./index.module.scss";
 import { CiMenuKebab } from "react-icons/ci";
 import { ReactComponent as Search } from "../../../src/static/icons/round-search.svg";
-import { API_HOST_URL } from "../../utils/api/API_HOST";
-import { UserContext } from "../../pages/Dashboard";
 
 const NotificationTab = () => {
   const [search, setSearch] = useState("");
-  const { id } = useContext(UserContext);
   const [notifications, setNotifications] = useState([]);
-  const url = `${API_HOST_URL}/api/v1/auth/notifications/stream/${id}`;
-
-  const fetchNotifications = async () => {
-    const sse = new EventSource(url);
-    let notifStore = [];
-    sse.addEventListener("notifications", async (e) => {
-      const data = await e.data;
-      const receivedNotifications = JSON.parse(data);
-
-      if (
-        // receivedNotifications !== notifications &&
-        receivedNotifications.length > 0
-      ) {
-        // setNotifications((notifications) => [...notifications, ...receivedNotifications]);
-        setNotifications((notifications) => {
-          notifStore = [...notifications, ...receivedNotifications];
-
-          window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
-          return notifStore;
-        });
-      }
-    });
-  };
-  const getOldNotifs = () => {
-    const localNotifs = window.localStorage.getItem("NXGNOTIFS");
+  const localNotifs = window.localStorage.getItem("NXGNOTIFS");
+  const getReceivedNotifs = () => {
     if (localNotifs) {
       setNotifications(JSON.parse(localNotifs));
     }
-    fetchNotifications()
   };
 
   useEffect(() => {
-    getOldNotifs();
+    getReceivedNotifs();
     // fetchNotifications();
     
-  }, );
+  }, [localNotifs]);
   const showOptions = (e) => {};
   const handleSearch = (e) => {};
   return (

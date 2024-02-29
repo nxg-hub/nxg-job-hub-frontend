@@ -25,19 +25,7 @@ import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/Employer
 import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
-import Admin from "./Admin/Dashboard";
-import AdminOverview from "./Admin/Dashboard/routes/AdminOverview/index.jsx";
-import AdminLogin from "./Admin/login/index.jsx";
-import Vetting from "./Admin/Dashboard/routes/Vetting/Vetting.jsx";
-import Transactions from "./Admin/Dashboard/routes/Transactions/index.jsx";
-import Jobmanagement from "./Admin/Dashboard/routes/Jobmanagement/Jobmanagement.jsx";
-import UserDetailedLink from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UserDetailedLink.jsx";
-import { Systemhealth } from "./Admin/Dashboard/routes/Health/Systemhealth.jsx";
-// import UsersDetailsCard from "./Admin/Dashboard/routes/AdminOverview/usersdetails/UsersDetailsCard.jsx";
-import ViewTalent from "./Admin/Dashboard/routes/ViewTalent/index.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
-// import { handleVerificationSuccess } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerDashProfile.jsx"
-
 function App() {
 
   // const handleVerificationSuccess = () => {
@@ -66,21 +54,7 @@ function App() {
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
-        {/* <Route
-          path="test"
-          element={
-            <JobCard
-            title={"Frontend Developer"}
-            applicants={0}
-              deadline={"1-04-2024"}
-              created_at={"1-04-2023"}
-            description={
-              " Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam nam molestias dolorem repellat odio nostrum ipsa ipsum laudantium libero illo! Iusto reprehenderit vero aut libero"
-            }
-          />
-          }
-        /> */}
-        
+        <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
         <Route
           path="/tech-talent-profile-form"
           element={<DashboardProfileForm />}
@@ -113,19 +87,7 @@ function App() {
           <Route path="help" element={<h2>Help </h2>} />
         </Route>
 
-        <Route e path="/admin" element={<Admin />}>
-          <Route path="" element={<Navigate to="dashboard" />} />
-          <Route path="login" element={<AdminLogin />} />
-          <Route path="dashboard" element={<AdminOverview />} />
-          {/* <Route path="userdetail" element={<UsersDetailsCard />} /> */}
-          <Route path="userdetail/:id" element={<UserDetailedLink />} />
-          <Route path="vetting" element={<Vetting />} />
-          <Route path="review-talent/:id" element={<ViewTalent />} />
-          <Route path="payments" element={<Transactions />} />
-          <Route path="jobmanagement" element={<Jobmanagement />} />
-          <Route path="health" element={<Systemhealth />} />
-        </Route>
-        {/* <Route path="admin/dashboard/userdetail/:id" element={<UserDetailedLink/>} /> */}
+
       </Routes>
     </>
   );

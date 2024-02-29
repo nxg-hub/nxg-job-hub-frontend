@@ -115,6 +115,7 @@
       svg {
         filter: invert(51%) sepia(42%) saturate(833%) hue-rotate(150deg)
           brightness(92%) contrast(85%);
+          
       }
       &:hover {
         cursor: auto;
@@ -133,9 +134,31 @@
     justify-content: flex-start;
     gap: 5px;
     padding: 10px 20px;
+    &.Bell{
+      position: relative;
+      &::before{
+        content: attr(data-count);
+        position: absolute;
+        top: 8px;
+        left: 30px;
+        background-color: red;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        z-index: 200;
+        border: 1px solid;
+        color: white;
+        font-weight: 800;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
     svg {
       height: 20px;
       width: auto;
+  
     }
     span {
       width: 80%;
@@ -169,6 +192,7 @@
       transform: translateX(0px);
       a {
         font-size: 14px;
+       
       }
       // &:has(.Selected){
       //   height: fit-content !important;
@@ -189,6 +213,7 @@
       }
     }
   }
+ 
   li.Logout {
     width: 100%;
     margin-left: 20px;
@@ -200,4 +225,5 @@
       background-color: #2596BE;
     }
   }
+
 }

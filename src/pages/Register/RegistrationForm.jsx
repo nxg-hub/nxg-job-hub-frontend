@@ -15,6 +15,7 @@ import User from "../../utils/classes/User";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
 import Notice from "../../components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
+import { useGoogleLogin } from '@react-oauth/google';
 
 const RegistrationForm = ({ userType }) => {
   // Variables
@@ -51,6 +52,9 @@ const RegistrationForm = ({ userType }) => {
     useState(false);
   const [popup, showPopup] = useState(undefined);
 
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+  });
   // functions
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setShowEmailVerificationNotice(false);

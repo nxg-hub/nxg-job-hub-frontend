@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_OAUTH_CLIENT_ID } from './utils/data/google_oauth_client_id';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-   <BrowserRouter>
-    <App />
-   </BrowserRouter>
-  </React.StrictMode>
+  <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  </GoogleOAuthProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

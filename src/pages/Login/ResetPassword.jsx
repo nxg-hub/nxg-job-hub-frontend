@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const ResetPassword = () => {
@@ -5,7 +6,7 @@ const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleReset = () => {
-
+// axios.post
     }
 
   return (

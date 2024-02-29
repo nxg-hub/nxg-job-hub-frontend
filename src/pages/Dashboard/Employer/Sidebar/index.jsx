@@ -25,16 +25,36 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
+import useFetchNotifications from "../../../../utils/hooks/useFetchNotifications";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
+  const notifications = useFetchNotifications();
+  
   const moveToDashboard = () => {
     navigate("/dashboard");
     setIsOpen(false);
   };
+  // const fetchNotifications = async () => {
+  //   const sse = new EventSource(url);
+  //   let notifStore = [];
+  //   sse.addEventListener("notifications", async (e) => {
+  //     const data = await e.data;
+  //     const receivedNotifications = JSON.parse(data);
 
+  //     if (
+  //       receivedNotifications.length > 0
+  //     ) {
+  //       setNotifications((notifications) => {
+  //         notifStore = [...notifications, ...receivedNotifications];
+
+  //         window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
+  //         return notifStore;
+  //       });
+  //     }
+  //   });
+  // };
   const handleLogout = () => {
     // Clear user authentication information
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
@@ -72,7 +92,16 @@ const Sidebar = ({ profilePic, ...props }) => {
             <Dashboard />
             Dashboard
           </NavLink>
-          <NavLink end to="notifications" className={`${s.dashboardItem} `}>
+          <NavLink
+            end
+            data-count={notifications.length}
+            to="notifications"
+            className={
+              notifications.length > 0
+                ? `${s.dashboardItem} ${s.Bell}`
+                : s.dashboardItem
+            }
+          >
             <Notification />
             Notifications
           </NavLink>
@@ -81,9 +110,9 @@ const Sidebar = ({ profilePic, ...props }) => {
             Wallet
           </NavLink>
           <NavLink end to="subscription" className={`${s.dashboardItem} `}>
-          <PiSubtitlesBold />
-          Subscription
-        </NavLink>
+            <PiSubtitlesBold />
+            Subscription
+          </NavLink>
         </div>
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>
@@ -146,21 +175,21 @@ const Sidebar = ({ profilePic, ...props }) => {
                 {" "}
                 <Terms /> Terms and conditions
               </NavLink>
-          <NavLink end to="help" className={`${s.dashboardItem} `}>
-            <Help />
-            Help
-          </NavLink>
+              <NavLink end to="help" className={`${s.dashboardItem} `}>
+                <Help />
+                Help
+              </NavLink>
             </ul>
           </li>
         </div>
       </ul>
-          <li
-            className={`${s.dashboardItem} ${s.Logout}  `}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <Logout />
-            Logout
-          </li>
+      <li
+        className={`${s.dashboardItem} ${s.Logout}  `}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <Logout />
+        Logout
+      </li>
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
@@ -179,8 +208,8 @@ const Sidebar = ({ profilePic, ...props }) => {
             background: "#ffffff",
             border: "none",
             borderRadius: "24px",
-            padding:"2rem 1rem",
-            zIndex: "100"
+            padding: "2rem 1rem",
+            zIndex: "100",
           }}
         >
           <Dialog.Panel>
