@@ -102,7 +102,7 @@ console.log(error)
     const queryParams = new URLSearchParams(window.location.search);
     const authKey = queryParams.get("authKey");
     if (authKey) {
-      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify({ authKey }));
+      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
     }
   }, []);
 
