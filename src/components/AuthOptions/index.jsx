@@ -1,18 +1,25 @@
 import s from "./index.module.scss";
 import { ReactComponent as GoogleIcon } from "../../static/icons/flat-color-icons_google.svg";
-import {  useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { ReactComponent as LinkedInIcon } from "../../static/icons/devicon_linkedin.svg";
+import { useNavigate } from "react-router-dom";
 
 const AuthOptions = ({ login, register }) => {
-  const responseMessage = (response) => {
-    console.log(response);
+
+  const navigate = useNavigate()
+  const handleSuccess = (tokenResponse) => {
+    if (tokenResponse.access_token) {
+      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", tokenResponse.access_token);
+      navigate("/create");
+    }
+    console.log(tokenResponse);
   };
-  const errorMessage = (error) => {
+  const handleError = (error) => {
     console.log(error);
   };
   const GoogleLogin = useGoogleLogin({
-    onSuccess: responseMessage,
-    onError: errorMessage,
+    onSuccess: handleSuccess ,
+    onError: handleError,
   });
   return (
     <div className={s.AuthOptions}>
@@ -22,12 +29,14 @@ const AuthOptions = ({ login, register }) => {
         <p className={s.line}></p>
       </div>
       <div>
-        <button type={"button"} onClick={()=> GoogleLogin()} className={s.optionButton}>
+        <button
+          type={"button"}
+          onClick={() => GoogleLogin()}
+          className={s.optionButton}
+        >
           <GoogleIcon />
-          {login && "Sign in"} 
-          {register && "Sign up"} 
-          {" "}
-           with Google
+          {login && "Sign in"}
+          {register && "Sign up"} with Google
         </button>
         <button type={"button"} className={s.optionButton}>
           <LinkedInIcon />
