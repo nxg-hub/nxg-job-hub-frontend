@@ -79,72 +79,27 @@ console.log(error)
       setTimeout(() => showpopUp(undefined), 5000);
     }
   };
-  // const AutoLoginUser = async () => {
-  //   const storedData = JSON.parse(
-  //     window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-  //   );
-  //   if (storedData) {
-  //     const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         authorization: storedData.authKey,
-  //       },
-  //     });
-  //     if (!userRes.data.userType) {
-  //       navigate("/create");
-  //     } else {
-  //       navigate("/dashboard");
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   AutoLoginUser();
-  // },);
-  useEffect(() => {
-    const AutoLoginUser = async () => {
-      const queryParams = new URLSearchParams(window.location.search);
-    const authKey = queryParams.get("authKey");
-    if (authKey) {
-      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
-      window.sessionStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey)
-      
-    }
-      const storedData = JSON.parse(
-        window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-      );
-      if (storedData && storedData.authKey) {
-        try {
-          const userRes = await axios.get(
-            `${API_HOST_URL}/api/v1/auth/get-user`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                authorization: storedData.authKey,
-              },
-            }
-          );
-          if (!userRes.data.userType) {
-            navigate("/create");
-          } else {
-            navigate("/dashboard");
-          }
-        } catch (error) {
-          console.error("Auto login failed:", error);
-        }
+  const AutoLoginUser = async () => {
+    const storedData = JSON.parse(
+      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+    );
+    if (storedData) {
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: storedData.authKey,
+        },
+      });
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        navigate("/dashboard");
       }
-    };
-    
-    const queryParams = new URLSearchParams(window.location.search);
-    const authKey = queryParams.get("authKey");
-    if (authKey) {
-      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
-      
     }
-  
-    AutoLoginUser(); 
-  
-  }, []);
-  
+  };
+  useEffect(() => {
+    AutoLoginUser();
+  }, );
 
   return (
     <div className="login-main-container">
