@@ -15,7 +15,6 @@ import User from "../../utils/classes/User";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
 import Notice from "../../components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
-import { useGoogleLogin } from '@react-oauth/google';
 
 const RegistrationForm = ({ userType }) => {
   // Variables

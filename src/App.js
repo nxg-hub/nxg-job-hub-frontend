@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProfileLanding from "./pages/ProfileLanding";
 import Services from "./pages/Services";
@@ -15,7 +15,6 @@ import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import { Otp } from "./pages/Login/Otp.jsx";
-import EmailVerificationNotice from "./components/EmailVerificationNotice/index.jsx";
 import SelectAccountType from "./components/SelectAccountType";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import NotificationTab from "./components/NotificationTab/index.jsx";
