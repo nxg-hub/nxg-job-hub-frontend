@@ -9,12 +9,11 @@ const AuthOptions = ({ login, register }) => {
   const handleSuccess = (tokenResponse) => {
     if (tokenResponse.access_token) {
       let store = {
-        ...tokenResponse, authKey: tokenResponse.access_token
-      }
-      window.localStorage.setItem(
-        "NXGJOBHUBLOGINKEYV1", store
-      );
-      navigate("/register/create");
+        ...tokenResponse,
+        authKey: tokenResponse.access_token,
+      };
+      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(store));
+      navigate("/create");
     }
     console.log(tokenResponse);
   };

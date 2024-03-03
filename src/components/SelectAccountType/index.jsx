@@ -49,6 +49,7 @@ const SelectAccountType = () => {
       // Updated the condition to navigate to the appropriate page based on the accountChoice
       navigate(accountChoice === "employer" ? "/profilelanding" : "/dashboard");
     } catch (err) {
+      console.log(err)
       showPopup({
         type: "danger",
         message: `Account creation failed. Please try again.`,
