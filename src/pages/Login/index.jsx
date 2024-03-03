@@ -133,6 +133,7 @@ console.log(error)
     const authKey = queryParams.get("authKey");
     if (authKey) {
       window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
+      
     }
   }, []);
   

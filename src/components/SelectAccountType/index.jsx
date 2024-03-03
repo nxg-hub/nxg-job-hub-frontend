@@ -12,9 +12,9 @@ const SelectAccountType = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
   // Destructure localStorage data with default values to avoid potential issues
-  const { authKey } =
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  // const { authKey } =
+  //   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+  //   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
