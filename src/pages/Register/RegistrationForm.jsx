@@ -52,9 +52,6 @@ const RegistrationForm = ({ userType }) => {
     useState(false);
   const [popup, showPopup] = useState(undefined);
 
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
-  });
   // functions
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setShowEmailVerificationNotice(false);
