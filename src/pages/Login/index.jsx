@@ -99,7 +99,12 @@ console.log(error)
   };
   useEffect(() => {
     AutoLoginUser();
-  }, );
+    const queryParams = new URLSearchParams(location.search);
+    const authKey = queryParams.get("authKey");
+    if (authKey) {
+      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify({ authKey }));
+    }
+  }, []);
 
   return (
     <div className="login-main-container">
