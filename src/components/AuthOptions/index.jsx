@@ -5,12 +5,16 @@ import { ReactComponent as LinkedInIcon } from "../../static/icons/devicon_linke
 import { useNavigate } from "react-router-dom";
 
 const AuthOptions = ({ login, register }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSuccess = (tokenResponse) => {
     if (tokenResponse.access_token) {
-      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", tokenResponse.access_token);
-      navigate("/create");
+      let store = {
+        ...tokenResponse, authKey: tokenResponse.access_token
+      }
+      window.localStorage.setItem(
+        "NXGJOBHUBLOGINKEYV1", store
+      );
+      navigate("/register/create");
     }
     console.log(tokenResponse);
   };
@@ -18,7 +22,7 @@ const AuthOptions = ({ login, register }) => {
     console.log(error);
   };
   const GoogleLogin = useGoogleLogin({
-    onSuccess: handleSuccess ,
+    onSuccess: handleSuccess,
     onError: handleError,
   });
   return (
