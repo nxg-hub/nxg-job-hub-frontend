@@ -102,6 +102,13 @@ console.log(error)
   // },);
   useEffect(() => {
     const AutoLoginUser = async () => {
+      const queryParams = new URLSearchParams(window.location.search);
+    const authKey = queryParams.get("authKey");
+    if (authKey) {
+      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey);
+      window.sessionStorage.setItem("NXGJOBHUBLOGINKEYV1", authKey)
+      
+    }
       const storedData = JSON.parse(
         window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
       );
