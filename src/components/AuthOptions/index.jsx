@@ -1,6 +1,6 @@
 import s from "./index.module.scss";
 import { ReactComponent as GoogleIcon } from "../../static/icons/flat-color-icons_google.svg";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import {  useGoogleLogin } from "@react-oauth/google";
 import { ReactComponent as LinkedInIcon } from "../../static/icons/devicon_linkedin.svg";
 
 const AuthOptions = ({ login, register }) => {

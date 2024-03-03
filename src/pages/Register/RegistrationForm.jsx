@@ -4,7 +4,7 @@ import "react-international-phone/style.css";
 import s from "./RegistrationForm.module.scss";
 import TextField from "../../components/TextField";
 import { updateField } from "../../utils/functions/updateField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthOptions from "../../components/AuthOptions";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import Checkbox from "../../components/Checkbox";
@@ -18,6 +18,7 @@ import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { useGoogleLogin } from '@react-oauth/google';
 
 const RegistrationForm = ({ userType }) => {
+ const navigate = useNavigate()
   // Variables
   const data = {
     firstName: "",
@@ -53,7 +54,14 @@ const RegistrationForm = ({ userType }) => {
   const [popup, showPopup] = useState(undefined);
 
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+    onSuccess: tokenResponse => {
+      tokenResponse.access_token ? navigate("/create") : Notice({
+        message: "There was an error signing you in",
+        type:"warning"
+      })
+      console.log(tokenResponse)
+    },
+    onError: error => console.log(error)
   });
   // functions
   const closeModal = (e) => {
