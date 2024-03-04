@@ -7,10 +7,10 @@ import { ReactComponent as Confetti } from "../../../../../static/icons/Confetti
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../../utils/api/API_HOST';
-// import { useVerification } from './VerificationContext';
+import { useVerification } from './VerificationContext';
 
 const EmployerVerificationForm = ({ onVerificationSuccess }) => {
-  // const { setVerificationStatus } = useVerification();
+  const { setVerificationStatus } = useVerification();
 
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -109,12 +109,13 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               // Reset errors and navigate on successful submission
               setErrors({ formData: '' });
               // setVerificationStatus(true);
-              onVerificationSuccess();
+              // onVerificationSuccess();
               // Call onVerificationSuccess if it is a function
-              // if (typeof onVerificationSuccess === 'function') {
-              //   handleVerificationSuccess();
-              // }
+              if (typeof onVerificationSuccess === 'function') {
+                onVerificationSuccess();
+              }
               setIsOpen(true);
+              setVerificationStatus(true);
           } catch (error) {
             console.log('Error posting data:', error.response ? error.response.data : error);
             setErrors({ data: 'Unable to update user data.' });

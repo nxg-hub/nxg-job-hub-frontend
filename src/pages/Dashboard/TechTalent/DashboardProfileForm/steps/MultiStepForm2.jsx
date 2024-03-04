@@ -5,7 +5,7 @@ import { certifications, levels, qualifications, jobTypes, experience, jobs } fr
 import '../multiStep.scss';
 
 function MultiStepForm2({formData, setFormData, onComplete}) {
-   
+    const [formDataCompleted, setFormDataCompleted] = useState(false);
     const handleChange = (selectedOption, name) => {
         let formattedValue = selectedOption.value;
         if (name === 'highestQualification' || name === 'professionalCert' || name === 'jobType' || name === 'experienceLevel' || name === 'jobInterest') {
@@ -69,7 +69,8 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.highestQualification && formData.yearsOfExperience && formData.jobInterest && formData.experienceLevel) {
+          if (formData.highestQualification && formData.yearsOfExperience && formData.jobInterest && formData.experienceLevel && !formDataCompleted) {
+            setFormDataCompleted(true);
             onComplete(formData);
           }
         };
@@ -77,7 +78,7 @@ function MultiStepForm2({formData, setFormData, onComplete}) {
         submitForm(); // Call the submitForm function directly within useEffect
     
         // You can include other dependencies if needed
-    }, [formData, onComplete]); 
+    }, [formData, onComplete, formDataCompleted]); 
 
   return (
     <div>

@@ -146,18 +146,15 @@ function EmployerProfileForm() {
   
       const employerId = response.data.employerID;
       // console.log(employerId);
-      // console.log(combinedData);
   
       const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, combinedData, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
         },
-        // body: JSON.stringify(filteredCombinedData)
       });
   
       console.log('Response Data:', res.data);
-      // console.log(combinedData);
   
       // Reset errors and navigate on successful submission
       setErrors({ data: '' });
@@ -176,15 +173,7 @@ function EmployerProfileForm() {
       [name]: value,
     }));
   };
-
-  const handleCompanyDataChange = (updatedCompanyData) => {
-    setCompanyData({
-      ...companyData,
-      ...updatedCompanyData,
-      vacancies: Array.isArray(updatedCompanyData.vacancies) ? updatedCompanyData.vacancies : [updatedCompanyData.vacancies],
-    });
-  };
-
+  
   return (
     <div style={{ textAlign: "center", fontFamily: "Manrope" }}>
       <div className="h-logo" style={{ width: "160px", height: "65px", marginTop: "1.3rem", margin: "auto" }}>
@@ -211,8 +200,6 @@ function EmployerProfileForm() {
                   name="firstName"
                   title='First Name*'
                   value={firstName}
-                  // onChange={(e) => setFirstName(e.target.value)}
-                  // placeholder="Enter your first name"
                   readOnly
                 />
                 <Inputs
@@ -220,8 +207,6 @@ function EmployerProfileForm() {
                   name="lastName"
                   title='Last Name*'
                   value={lastName}
-                  // onChange={(e) => setLastName(e.target.value)}
-                  // placeholder="Enter your last name"
                   readOnly
                 />
               </div>
@@ -231,8 +216,6 @@ function EmployerProfileForm() {
                   name="email"
                   title='E-mail Address'
                   value={email}
-                  // onChange={(e) => setEmail(e.target.value)}
-                  // placeholder="Enter your email address"
                   readOnly
                 />
               </div>
@@ -319,7 +302,7 @@ function EmployerProfileForm() {
           </div>
         </div>
       )}
-      {step > 0 && <FormStepper personalData={personalData} companyData={companyData} onPersonalDataChange={handlePersonalDataChange} onCompanyDataChange={handleCompanyDataChange} onCompleteProfile={handleCompleteProfile}/>}
+      {step > 0 && <FormStepper personalData={personalData} companyData={companyData} onPersonalDataChange={handlePersonalDataChange} setCompanyData={setCompanyData} onCompleteProfile={handleCompleteProfile}/>}
     </div>
   )
 }
