@@ -12,7 +12,8 @@ export const VerificationProvider = ({ children }) => {
   const setVerificationStatus = (status) => {
     setIsVerified(status);
     // Store the status in local storage
-    localStorage.setItem('verificationStatus', JSON.stringify(status));
+    window.localStorage.setItem('verificationStatus', JSON.stringify(status));
+    window.sessionStorage.setItem('verificationStatus', JSON.stringify(status));
   };
 
   return (

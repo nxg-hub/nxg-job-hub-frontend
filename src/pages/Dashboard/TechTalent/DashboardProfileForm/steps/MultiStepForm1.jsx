@@ -18,6 +18,8 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
           value: country.value,
         }));
       }, []);
+      const [formDataCompleted, setFormDataCompleted] = useState(false);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -68,7 +70,8 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.countryCode && formData.zipCode && formData.residentialAddres ) {
+          if (formData.countryCode && formData.zipCode && formData.residentialAddress && !formDataCompleted ) {
+            setFormDataCompleted(true);
             onComplete(formData);
           }
         };
@@ -76,7 +79,7 @@ function MultiStepForm1({formData, setFormData, onComplete}) {
         submitForm(); // Call the submitForm function directly within useEffect
     
         // You can include other dependencies if needed
-      }, [formData, onComplete]);
+      }, [formData, onComplete, formDataCompleted]);
     
 
 

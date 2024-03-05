@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { workModes} from '../../../../../utils/data/tech-talent';
 import '../multiStep.scss';
@@ -6,7 +6,7 @@ import FileUploader from '../../../../../components/accounts/FileUploader';
 import Inputs from '../../../../../components/accounts/Inputs';
 
 function MultiStepForm3({formData, setFormData, onComplete}) {
-
+    const [formDataCompleted, setFormDataCompleted] = useState(false);
     const workModesOptions = workModes.map((workMode) => ({
         value: workMode, 
         label: workMode, 
@@ -41,7 +41,8 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
     useEffect(() => {
         const submitForm = () => {
           // Make sure the form data is valid before calling onComplete
-          if (formData.profilePicture && formData.resume && formData.coverletter && formData.bio) {
+          if (formData.profilePicture && formData.resume && formData.coverletter && formData.bio && !formDataCompleted) {
+            setFormDataCompleted(true);
             onComplete(formData);
           }
         };
@@ -49,7 +50,7 @@ function MultiStepForm3({formData, setFormData, onComplete}) {
         submitForm(); // Call the submitForm function directly within useEffect
     
         // You can include other dependencies if needed
-    }, [formData, onComplete]); 
+    }, [formData, onComplete, formDataCompleted]); 
 
   return (
     <div>

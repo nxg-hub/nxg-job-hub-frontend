@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect, useCallback} from 'react';
 import { UserContext } from '../../..';
 import Inputs from '../../../../../components/accounts/Inputs';
 import Online from '../../../../../static/icons/online-icon.svg';
@@ -22,20 +22,7 @@ const EmployerDashProfile = () => {
   const {isVerified, setVerificationStatus} = useVerification(); 
   const [isVerificationFormVisible] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      setFirstName(user.firstName)
-      setLastName(user.lastName)
-      setEmail(user.email)
-      fetchEmployerData();
-    }
-  }, [user]);
-
-  const handleVerificationSuccess = () => {
-    setVerificationStatus(true);
-  };
-
-  const fetchEmployerData = async () => {
+  const fetchEmployerData = useCallback(async () => {
     try {
       const loginKey =
         window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
@@ -62,17 +49,34 @@ const EmployerDashProfile = () => {
       });
 
       const employerData = response.data; // Assuming the response is an object with employer data
+      // console.log(employerData);
 
       // Update state with fetched data
       setAddress(employerData.address || "");
       setCompanyDescription(employerData.companyDescription || "");
 
+      // Set verification status based on the fetched data
+      setVerificationStatus(employerData.isVerified || false);
+
     } catch (error) {
       console.error('Error fetching employer data:', error);
     }
+  }, [setVerificationStatus]);
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.firstName)
+      setLastName(user.lastName)
+      setEmail(user.email)
+      fetchEmployerData();
+    }
+  }, [user, fetchEmployerData]);
+
+  const handleVerificationSuccess = () => {
+    setVerificationStatus(true);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault()
     try {
       const loginKey =
         window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
@@ -91,25 +95,32 @@ const EmployerDashProfile = () => {
         return;
       }
 
-      const employerId = user.employerId; // Assuming user object has employerId
-
-      const updateData = {
-        address,
-        companyDescription,
-        // Add other fields you want to update
-      };
-
-      const response = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, updateData, {
+      const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
         headers: {
           'Content-Type': 'application/json',
           authorization: authKey,
         },
       });
 
-      console.log('Update successful:', response.data);
+      const employerId = response.data.employerID; // Assuming user object has employerId
+      // console.log(employerId);
+
+      const updateData = {
+        address,
+        companyDescription,
+      };
+
+      const updateResponse = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, updateData, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authKey,
+        },
+      });
+
+      console.log('Update successful:', updateResponse.data);
 
     } catch (error) {
-      console.error('Error updating data:', error.response ? error.response.data : error);
+      console.error('Error updating data:', error.updateResponse ? error.updateResponse.data : error);
     }
   };
   
@@ -145,7 +156,7 @@ const EmployerDashProfile = () => {
                         <p>Recruiter, {user.companyName}</p>
                     </div>
                     {!isVerified && (
-                        <Link to="../verifiedForm" className="acct-verify" >
+                        <Link to="/verifiedForm" className="acct-verify" >
                             <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
                             <span>Verify Account</span>
                         </Link>
@@ -199,7 +210,7 @@ const EmployerDashProfile = () => {
                 <section >
                     <div className="employ-dashBtns">
                         <Link to="wallet">View Wallet</Link>
-                        <Link to="../verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
+                        <Link to="/verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
                     </div>
                     <div className="employ-dashBtns">
                         <Link to="/employerprofile">Edit Profile</Link>
