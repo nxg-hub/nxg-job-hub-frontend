@@ -16,7 +16,7 @@ const SelectAccountType = () => {
   const authKey =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
-    searchParams.get("authKey");
+    "Bearer " + searchParams.get("authKey");
   // setSearchParams("")
 
   let localStore =
