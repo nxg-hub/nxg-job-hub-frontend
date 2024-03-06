@@ -4,9 +4,14 @@ const VerificationContext = createContext();
 
 export const VerificationProvider = ({ children }) => {
   const [isVerified, setIsVerified] = useState(() => {
-    // Check if there is a stored value in local storage
-    const storedStatus = window.localStorage.getItem('verificationStatus') || window.sessionStorage.getItem('verificationStatus');
-    return storedStatus ? JSON.parse(storedStatus) : false;
+    try {
+      // Check if there is a stored value in local storage
+      const storedStatus = window.localStorage.getItem('verificationStatus') ||  window.sessionStorage.getItem('verificationStatus');
+      return storedStatus ? JSON.parse(storedStatus) : false;
+    } catch (error) {
+      console.error('Error parsing verification status:', error);
+      return false; // Provide a default value in case of parsing errors
+    }
   });
 
   const setVerificationStatus = (status) => {

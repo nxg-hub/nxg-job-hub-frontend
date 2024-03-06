@@ -136,7 +136,7 @@ const EmployerDashProfile = () => {
                         <CiUser className='user' />
                     </div>
                     <div className="online">
-                        {isVerified ? (
+                        {isVerified ? 'Verified' (
                             <div className="verified">
                                 <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
                                 <div className="verified avaliability">
