@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../pages/Dashboard";
 import { API_HOST_URL } from "../api/API_HOST";
 
@@ -17,16 +17,16 @@ const useFetchNotifications = () => {
       if (receivedNotifications.length > 0) {
         setNotifications((notifications) => {
                   let notifStore = [...notifications, ...receivedNotifications];
-        
                   window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
                   return notifStore;
                 });
       }
     });
   };
+
   useEffect(() => {
     fetchNotifications();
-  }, [fetchNotifications]);
+  });
   return notifications.length > 0 && notifications;
 };
 

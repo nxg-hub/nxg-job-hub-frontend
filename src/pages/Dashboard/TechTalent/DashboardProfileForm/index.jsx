@@ -30,7 +30,7 @@ function TechTalentProfileForm() {
       portfolioLink:"",
       linkedInUrl:""
     });
-
+    
     const [errors, setErrors] = useState({ formData: "" });
     
     const navigate = useNavigate();
@@ -41,7 +41,11 @@ function TechTalentProfileForm() {
     ];
 
     const totalPagesCount = steps.length;
-    const [isCurrentFormCompleted, setIsCurrentFormCompleted] = useState(false);
+    const [isCurrentFormCompleted, setIsCurrentFormCompleted] = useState({
+      MultiStepForm1: false,
+      MultiStepForm2: false,
+      MultiStepForm3: false,
+    });
 
     const displayStep = (stepIndex) => {
         switch (steps[stepIndex]) {
@@ -56,26 +60,27 @@ function TechTalentProfileForm() {
         }
     };
 
-    const handleFormCompletion = () => {
+    const handleFormCompletion = (formName) => {
       const formErrors = {};
       if (formData.countryCode === "" || formData.zipCode === "" ) {
         formErrors.formData = 'All fields must be filled';
         setErrors(formErrors);
-        setIsCurrentFormCompleted(false);
+        setIsCurrentFormCompleted({...isCurrentFormCompleted, [formName]: false});
       } else {
-        setIsCurrentFormCompleted(true);
+        setIsCurrentFormCompleted({...isCurrentFormCompleted, [formName]: true});
         // Save the form data
         // console.log("Form Data Saved:", formData);
       }
     };
     
     const handleStep = () => {
-      if (isCurrentFormCompleted === "") {
+      const currentForm = steps[index];
+      if (!isCurrentFormCompleted[currentForm]) {
         alert('Complete the current form before moving to the next step');
         return;
       }
     
-      if (index < steps.length - 1) {
+     else if (index < steps.length - 1) {
         setIndex((prevIndex) => prevIndex + 1);
       } else {
         // If on the last step, navigate or perform completion action
@@ -93,7 +98,7 @@ function TechTalentProfileForm() {
     };
 
     const handleProfileCompletion = async () => {
-      // console.log(formData, 'Profile Completed');
+      console.log(formData, 'Profile Completed');
         try {
           const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
           if (!loginKey) {
@@ -106,15 +111,15 @@ function TechTalentProfileForm() {
             return;
           };
 
-          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+          const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
             headers: {
               'Content-Type' : 'application/json',
               authorization: authKey,
             }
           });
       
-          const techId = response.data.id;
-          // console.log(techId);
+          const techId = response.data.techId;
+          console.log(techId);
           // console.log("Filtered data:", formData);
 
           const res = await axios.patch(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, formData,

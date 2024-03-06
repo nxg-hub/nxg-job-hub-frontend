@@ -25,39 +25,33 @@ import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
+import isLoggedIn  from "./utils/hooks/isLoggedIn.jsx";
+import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 function App() {
-
-  // const handleVerificationSuccess = () => {
-  //   isVerified(true);
-  // };
-
+  
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
         {/* Log in */}
         <Route path="/login" element={<Login />} />
-        <Route path="/profilelanding" element={<ProfileLanding />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/techprofileform" element={<DashboardProfileForm />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/employerprofile" element={<EmployerProfileForm />} />
-
-        {/* Modals */}
-        <Route path="/forgotpassword" element={<PasswordRecovery />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/otp" element={<Otp />} />
+        <Route  element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
         <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
         <Route
           path="/tech-talent-profile-form"
           element={<DashboardProfileForm />}
         />
-        <Route path="/dashboard" element={<VerificationProvider>
+          <Route path="/profilelanding" element={<ProfileLanding />}/>
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/techprofileform" element={<DashboardProfileForm />} />
+          <Route path="/employerprofile" element={<EmployerProfileForm />} />
+          <Route path="/dashboard" element={<VerificationProvider>
           <Dashboard />
         </VerificationProvider>}>
           <Route path="" element={<Overview />} />
@@ -75,7 +69,6 @@ function App() {
           <Route path="analytics" element={<h2>Analytics </h2>} />
           <Route path="subscription" element={<SubscriptionController />} />
           <Route path="profile-details" element={<h2>Profile Details</h2>} />
-          <Route path="verifiedForm" element={<EmployerVerificationForm />} />
           <Route path="password-settings" element={<Passwordsettings />} />
           <Route path="Privacy" element={<h2>Privacy</h2>} />
           <Route
@@ -84,8 +77,13 @@ function App() {
           />
           <Route path="help" element={<h2>Help </h2>} />
         </Route>
-
-
+        </Route>
+    
+        {/* Modals */}
+        <Route path="/mailverification" element={<EmailVerificationNotice />} />
+        <Route path="/forgotpassword" element={<PasswordRecovery />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/otp" element={<Otp />} />
       </Routes>
     </>
   );

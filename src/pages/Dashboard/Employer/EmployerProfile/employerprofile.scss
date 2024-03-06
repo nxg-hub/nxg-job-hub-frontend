@@ -131,6 +131,32 @@
                 }
             }
         }
+        .board {
+            .css-b62m3t-container{
+                font-family: Manrope;
+                width: 100%;
+                max-width: 22rem;
+                margin: 0.55rem 0;
+                text-align: start;
+                .css-13cymwt-control {
+                    padding: 10px 20px;
+                    margin: 0;
+                    min-height: 0;
+                    font-size: 16px !important;
+                    font-weight: 400;
+                    color: #c9c9c9;
+                    border: 1px solid #c9c9c9;
+                    border-radius: 10px;
+                    .css-1fdsijx-ValueContainer {
+                        padding: 0;
+                        .css-qbdosj-Input {
+                            margin: 0;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 .rep-btn {

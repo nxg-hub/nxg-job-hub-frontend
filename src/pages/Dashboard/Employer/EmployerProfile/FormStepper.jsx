@@ -6,35 +6,33 @@ import Select from 'react-select';
 import "./employerprofile.scss";
 import { jobVacancy, boards, industry, compSize } from "../../../../utils/data/employer";
 
-function FormStepper({ companyData, onCompanyDataChange, onCompleteProfile }) {
+function FormStepper({ companyData,  setCompanyData, onCompleteProfile }) {
 
   const handleChange = (selectedOption, name) => {
-    let updatedValue = selectedOption.value;
+    let updatedValue = selectedOption ? selectedOption.value : ""; // Handle null or undefined case
     // Convert company name to uppercase if it is the "companyName" field
   // const updatedValue = name === "companyName" ? value.toUpperCase() : value;
-    onCompanyDataChange((prevData) => ({
-      ...prevData,
+    setCompanyData({
+      ...companyData,
       [name]: updatedValue,
-    }));
+    });
+    console.log("Selected Option:", companyData);
   };
 
   const handleValue = (e) => {
-    const { name, value } = e.target;
-    // onCompanyDataChange((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
+    const { name, value, type, checked } = e.target;
+    console.log("Input Change Event:", companyData);
     // Ensure only one vacancy is selected
-    if (name === 'vacancies') {
-      onCompanyDataChange((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+    if (type === 'radio' ) {
+      setCompanyData({
+        ...companyData,
+        vacancies: checked ? [value] : [],
+      });
     } else {
-      onCompanyDataChange((prevData) => ({
-        ...prevData,
+      setCompanyData({
+        ...companyData,
         [name]: value,
-      }));
+      });
     }
   };
 
@@ -62,6 +60,11 @@ const compSizeOptions = compSize.map((companySize) => ({
     value: companySize, 
     label: companySize, 
   }));
+const jobBoardOptions = boards.map((jobBoard) => ({
+    value: jobBoard, 
+    label: jobBoard, 
+  }));
+  
 
   return (
     <div style={{ margin: "3rem 0" }}>
@@ -150,11 +153,19 @@ const compSizeOptions = compSize.map((companySize) => ({
             <div className="nation-state">
             <div className="tech-pro-qualification">
                     <label>Type of Industry*</label>
-                    <Select options={industryOptions} value={companyData.industryType ? { label: companyData.industryType, value: companyData.industryType } : null} onChange={(selectedOption) => handleChange(selectedOption, 'industryType')} />
+                    <Select
+                  options={industryOptions}
+                  value={industryOptions.find(opt => opt.value === companyData.industryType)} // Find the selected option
+                  onChange={(selectedOption) => handleChange(selectedOption, 'industryType')}
+                />
                 </div>
                 <div className="tech-pro-qualification">
                     <label>Company Size</label>
-                    <Select options={compSizeOptions} value={companyData.companySize ? { label: companyData.companySize, value: companyData.companySize } : null} onChange={(selectedOption) => handleChange(selectedOption, 'companySize')} />
+                    <Select
+                  options={compSizeOptions}
+                  value={compSizeOptions.find(opt => opt.value === companyData.companySize)} // Find the selected option
+                  onChange={(selectedOption) => handleChange(selectedOption, 'companySize')}
+                />
                 </div>
             </div>
             <div className="rep-recruiter">
@@ -194,17 +205,11 @@ const compSizeOptions = compSize.map((companySize) => ({
               >
                 Where did you hear about us?
               </label>
-              <select
-                name="jobBoard"
-                value={companyData.jobBoard}
-                onChange={handleValue}
-              >
-                {boards.map((board, index) => (
-                  <option key={index} value={board}>
-                    {board}
-                  </option>
-                ))}
-              </select>
+              <Select
+                  options={jobBoardOptions}
+                  value={jobBoardOptions.find(opt => opt.value === companyData.jobBoard)} // Find the selected option
+                  onChange={(selectedOption) => handleChange(selectedOption, 'jobBoard')}
+                />
             </div>
           </form>
         </div>

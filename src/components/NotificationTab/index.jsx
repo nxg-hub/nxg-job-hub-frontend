@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import AlertTabItem from "./NotificationItem";
 import s from "./index.module.scss";
 import { CiMenuKebab } from "react-icons/ci";
@@ -7,18 +7,28 @@ import { ReactComponent as Search } from "../../../src/static/icons/round-search
 const NotificationTab = () => {
   const [search, setSearch] = useState("");
   const [notifications, setNotifications] = useState([]);
-  const localNotifs = window.localStorage.getItem("NXGNOTIFS");
-  const getReceivedNotifs = () => {
+  // const localNotifs = window.localStorage.getItem("NXGNOTIFS") || [];
+  // const getReceivedNotifs = () => {
+  //   if (localNotifs) {
+  //     setNotifications(JSON.parse(localNotifs));
+  //   }
+  // };
+  const localNotifs = useMemo(() => {
+    return window.localStorage.getItem("NXGNOTIFS") || [];
+  }, []);
+
+
+  const getReceivedNotifs = useCallback(() => {
     if (localNotifs) {
       setNotifications(JSON.parse(localNotifs));
     }
-  };
+  }, [localNotifs]);
 
   useEffect(() => {
     getReceivedNotifs();
     // fetchNotifications();
-    
-  }, [localNotifs]);
+  }, [getReceivedNotifs]);
+
   const showOptions = (e) => {};
   const handleSearch = (e) => {};
   return (

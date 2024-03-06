@@ -99,7 +99,7 @@ console.log(error)
   };
   useEffect(() => {
     AutoLoginUser();
-  }, );
+  });
 
   return (
     <div className="login-main-container">
