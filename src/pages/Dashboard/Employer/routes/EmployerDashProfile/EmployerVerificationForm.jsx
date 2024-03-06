@@ -91,8 +91,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               });
   
               const employerId = response.data.employerID;
-              console.log(employerId);
-              console.log(formData);
+              // console.log(employerId);
+              // console.log(formData);
               // // Remove null or empty values before sending the request
               // const cleanedFormData = Object.fromEntries(
               //   Object.entries(formData).filter(([_, value]) => value !== null && value !== "")
@@ -105,7 +105,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               });
   
               console.log('Response Data:', res.data);
-              console.log(formData);
+              // console.log(formData);
               // Reset errors and navigate on successful submission
               setErrors({ formData: '' });
               // setVerificationStatus(true);
