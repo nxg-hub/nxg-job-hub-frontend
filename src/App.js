@@ -80,7 +80,6 @@ function App() {
         </Route>
     
         {/* Modals */}
-        <Route path="/mailverification" element={<EmailVerificationNotice />} />
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
