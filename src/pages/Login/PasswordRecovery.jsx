@@ -12,28 +12,13 @@ const PasswordRecovery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Check if the user exists
-            // const userRes = await axios.get(
-            //     `${API_HOST_URL}/api/v1/auth/get-user`, { email },
-            //     {
-            //         headers: {
-            //             "Content-Type": "application/json",
-            //         },
-            //     }
-            // );
-
-            // if (userRes.status === 200){
-                // console.log(userRes);
-                const authKey = 
-                JSON.parse(sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")).authKey;
-
                 const response = await axios.post(
                     `${API_HOST_URL}/api/v1/auth/reset-password-email`,
                     { email },
                     {
                       headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': authKey,
+                        // 'Authorization': authKey,
                       },
                     }
                 );
@@ -45,7 +30,6 @@ const PasswordRecovery = () => {
                 } else {
                     setMessage(data.error);
                 }
-            // }
             
         } catch (error) {
             console.error('Error sending password reset link:', error);

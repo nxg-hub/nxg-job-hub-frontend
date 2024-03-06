@@ -1,6 +1,6 @@
 import s from "./index.module.scss";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RadioButton from "../RadioButton";
 import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
@@ -11,11 +11,27 @@ import { API_HOST_URL } from "../../utils/api/API_HOST";
 const SelectAccountType = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
+  const [searchParams, setSearchParams] = useSearchParams();
   // Destructure localStorage data with default values to avoid potential issues
-  const { authKey } =
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  const authKey =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
+    searchParams.get("authKey");
+  // setSearchParams("")
 
+  let localStore =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    {};
+  if (authKey) {
+    localStore = { ...localStore, authKey };
+    window.localStorage.setItem(
+      "NXGJOBHUBLOGINKEYV1",
+      JSON.stringify(localStore)
+    );
+  } else {
+    navigate("/login");
+  }
   const [accountChoice, setAccountChoice] = useState("");
   const accountTypes = {
     techtalent: `${API_HOST_URL}/api/v1/tech-talent/register/`,
@@ -49,6 +65,7 @@ const SelectAccountType = () => {
       // Updated the condition to navigate to the appropriate page based on the accountChoice
       navigate(accountChoice === "employer" ? "/profilelanding" : "/dashboard");
     } catch (err) {
+      console.log(err);
       showPopup({
         type: "danger",
         message: `Account creation failed. Please try again.`,
@@ -56,7 +73,9 @@ const SelectAccountType = () => {
       setTimeout(() => showPopup(undefined), 5000);
     }
   };
-
+  useEffect(() => {
+    setSearchParams("");
+  }, [setSearchParams]);
   return (
     <>
       <div className={s.page}>
