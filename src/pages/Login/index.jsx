@@ -10,6 +10,7 @@ import axios from "axios";
 import Notice from "../.././components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import TextField from "../../components/TextField";
+import AuthOptions from "../../components/AuthOptions";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -173,29 +174,7 @@ console.log(error)
             </div>
           </div>
           <div className="social-acct social-log">
-            <div className="or">
-              <div className="line"></div>
-              <p
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  fontFamily: "Roboto",
-                }}
-              >
-                or
-              </p>
-              <div className="line"></div>
-            </div>
-            <button className="google" style={{ margin: "1rem 0" }}>
-              <FcGoogle style={{ width: "1rem", height: "1rem" }} />
-              <span>Sign Up with Google</span>
-            </button>
-            <button className="google">
-              <FaLinkedin
-                style={{ color: "#2596BE", width: "1rem", height: "1rem" }}
-              />
-              <span>Sign Up with LinkedIn</span>
-            </button>
+          <AuthOptions login={true} />
           </div>
           <p className="signup">
             Don't have an account?{" "}

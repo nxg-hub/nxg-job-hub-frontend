@@ -60,7 +60,7 @@ const Sidebar = ({ profilePic, ...props }) => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     // Navigate to the login page
-    navigate("/");
+    navigate("/login");
   };
   const editProfile = () => {
     // update role and other fields
