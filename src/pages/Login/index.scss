@@ -1,60 +1,63 @@
 .login-main-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .form-col {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
 }
 
 .log-bg {
-    position: relative;
-    width: 100%;
-    height:100vh ;
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
 .logintech {
-    width: 100%;
-    background: #fff;
-    padding: 2rem;
-    margin-top: 20%;
-
-    .title {
-        margin-bottom: 3rem;
-         h1 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-         p {
-            font-size: .8rem;
-            font-weight: 500;
-            padding: .5rem 0;
-        }
+  width: 100%;
+  background: #fff;
+  padding-inline: 2rem;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .title {
+    // margin-bottom: 3rem;
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
     }
+    p {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
+    }
+  }
+
 }
 
 .tech-img {
-    position: absolute;
-    width: 150px;
-    height: 65px;
-    top:4%; 
-    left:6%;
+  position: absolute;
+  width: 150px;
+  height: 65px;
+  top: 4%;
+  left: 6%;
 }
 
 .logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .loginpics {
-    display: none;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .log-pass {
@@ -62,122 +65,122 @@
 }
 
 .forgot {
-    font-family: Montserrat;
-    font-size: .7rem;
-    font-weight: 400;
-    margin: .3rem 0;
+  font-family: Montserrat;
+  font-size: 0.7rem;
+  font-weight: 400;
+  margin: 0.3rem 0;
 }
 
 .signup {
-    text-align: center; 
-    font-size: .8rem;
-     font-weight: 500; 
-    margin-top: 3rem ;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-block: 0px 20px;
 }
 
 .btn {
-    text-align:center; 
-    margin: 2rem 0;
+  text-align: center;
+  margin: 2rem 0;
 }
 
 .remember {
-    margin: 1rem 0;
+  margin: 1rem 0;
 }
 
-.social-log {
-    margin: 1rem 0;
-}
-.password-input{
-    display: flex;
-    border-radius: 5px;
-    justify-content: space-between;
-    align-items:center;
-    border: 1px solid grey;
-    gap:5px;
-    input{
-        border :none;
-    }
-
+.password-input {
+  display: flex;
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid grey;
+  gap: 5px;
+  input {
+    border: none;
+  }
 }
 
-.forgot-container, .otp-main, .reset-main, .verify-main {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    .forgot-text {
-        margin: 2rem 0;
-    }
-    .forgot-login {
-        text-align: start; 
-        font-size: .8rem; 
-        font-weight: 500; 
-        font-family: Montserrat; 
-        margin-top: 3rem;
-    }
+.forgot-container,
+.otp-main,
+.reset-main,
+.verify-main {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  .forgot-text {
+    margin: 2rem 0;
+  }
+  .forgot-login {
+    text-align: start;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: Montserrat;
+    margin-top: 3rem;
+  }
 }
 
 #forgot-btn {
-    margin-top: 1.3rem;
+  margin-top: 1.3rem;
 }
 
 .otp-box {
-    margin: 0.55rem 0.6rem;
-    padding: 0.6rem 0.7rem;
-    border: 0.15rem solid #2596BE;
-    border-radius: 0.4rem;
-    font-size: 1rem;
-    font-weight: 400;
-    font-family: Montserrat;
-    text-align: center;
-    width: 3rem;
-    height: 3rem;
-    background-color: transparent;
+  margin: 0.55rem 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border: 0.15rem solid #2596be;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: Montserrat;
+  text-align: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: transparent;
 }
 
-@media only screen and (min-width:425px) {
-    .log-pass {
-        left: 20rem;
-    }
+@media only screen and (min-width: 425px) {
+  .log-pass {
+    left: 20rem;
+  }
 }
 
-@media only screen and (min-width:768px) {
-    .form-col {
-        flex-direction: row;
-    }
+@media only screen and (min-width: 768px) {
+  .form-col {
+    flex-direction: row;
+  }
 
-    .loginpics {
-        display: block;
-    }
-    .log-bg {
-        width: 50%
-    }
-    .logintech {
-        margin-top: 0%;
-        width: 50%;
-    }
-    .log-pass {
-        left: 90%;
-    }
+  .loginpics {
+    display: block;
+  }
+  .log-bg {
+    width: 50%;
+  }
+  .logintech {
+    margin-top: 50px;
+    justify-content: center;
+    width: 50%;
+  }
+  .log-pass {
+    left: 90%;
+  }
 }
 
-@media only screen and (min-width:1440px) {
-    .tech-img {
-        left: 8%;
-    }
-    .logintech {
-        padding: 4rem;
-    }
-    .log-pass {
-        right : 0
-    }
+@media only screen and (min-width: 1440px) {
+  .tech-img {
+    left: 8%;
+  }
+  .logintech {
+    padding: 4rem;
+  }
+  .log-pass {
+    right: 0;
+  }
 
-    .remember {
-        margin: .4rem 0;
-    }
+  .remember {
+    margin: 0.4rem 0;
+  }
 
-    .btn {
-        margin: 3rem 0;
-    }
+  .btn {
+    margin: 3rem 0;
+  }
 }

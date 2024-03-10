@@ -173,9 +173,7 @@ console.log(error)
               <button style={{ background: "#2596BE" }}>Sign In</button>
             </div>
           </div>
-          <div className="social-acct social-log">
           <AuthOptions login={true} />
-          </div>
           <p className="signup">
             Don't have an account?{" "}
             <Link
