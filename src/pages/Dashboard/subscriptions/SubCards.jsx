@@ -100,9 +100,13 @@ const SubCards = ({onSubscribe}) => {
                             )}
                         </ul>
                     </div>
-                    <div className="sub-cards-btns">
-                        <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
-                    </div>
+                    {subscription.subId === 1 ? (
+                        null
+                    ) : (
+                        <div className="sub-cards-btns">
+                            <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
