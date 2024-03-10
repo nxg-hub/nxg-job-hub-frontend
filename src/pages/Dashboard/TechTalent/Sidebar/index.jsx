@@ -92,8 +92,8 @@ const Sidebar = ({ profilePic, ...props }) => {
       
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic}>
-            <CiUser />
+          <div className={s.displayPic} style={profilePic && {padding: 0}}>
+            {profilePic ? <img src={ profilePic} alt=""/> :  <CiUser />}
           </div>
           <ChangeProfilePicture title="Change profile picture" />
         </div>
