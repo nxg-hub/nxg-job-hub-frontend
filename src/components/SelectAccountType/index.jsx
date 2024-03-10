@@ -16,19 +16,36 @@ const SelectAccountType = () => {
   const authKey =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
-    "Bearer " + searchParams.get("authKey");
-  // setSearchParams("")
-
+    (searchParams.get("authKey")
+      ? "Bearer " + searchParams.get("authKey")
+      : null);
   let localStore =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     {};
+  const checkForUserTypeAndRedirect = async (auth) => {
+    console.log("authkey", authKey);
+    if (localStore) {
+      const res = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: auth,
+        },
+      });
+      if (!res.data.userType) {
+        return;
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  };
   if (authKey) {
     localStore = { ...localStore, authKey };
     window.localStorage.setItem(
       "NXGJOBHUBLOGINKEYV1",
       JSON.stringify(localStore)
     );
+    checkForUserTypeAndRedirect(authKey);
   } else {
     navigate("/login");
   }
