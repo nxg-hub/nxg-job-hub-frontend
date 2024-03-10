@@ -36,34 +36,13 @@ const Sidebar = ({ profilePic, ...props }) => {
     navigate("/dashboard");
     setIsOpen(false);
   };
-  // const fetchNotifications = async () => {
-  //   const sse = new EventSource(url);
-  //   let notifStore = [];
-  //   sse.addEventListener("notifications", async (e) => {
-  //     const data = await e.data;
-  //     const receivedNotifications = JSON.parse(data);
 
-  //     if (
-  //       receivedNotifications.length > 0
-  //     ) {
-  //       setNotifications((notifications) => {
-  //         notifStore = [...notifications, ...receivedNotifications];
-
-  //         window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
-  //         return notifStore;
-  //       });
-  //     }
-  //   });
-  // };
   const handleLogout = () => {
-    // Clear user authentication information
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
-    // Navigate to the login page
     navigate("/login");
   };
   const editProfile = () => {
-    // update role and other fields
   };
   return (
     <div className={s.Sidebar}>

@@ -4,8 +4,6 @@ import "../../components/accounts/inputs.scss";
 import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { FaLinkedin } from "react-icons/fa";
 import axios from "axios";
 import Notice from "../.././components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
