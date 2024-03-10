@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import s from "./index.module.scss";
 import {
   CiUser,
@@ -26,9 +26,12 @@ import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
 import useFetchNotifications from "../../../../utils/hooks/useFetchNotifications";
+import axios from "axios";
+import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
   
@@ -37,6 +40,53 @@ const Sidebar = ({ profilePic, ...props }) => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        if (!loginKey) {
+          console.error('Authentication key not available.');
+          return;
+        }
+        const { authKey, id } = JSON.parse(loginKey);
+        if (!authKey || !id) {
+          console.error('Auth key or user id not available.');
+          return;
+        }
+
+        const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
+          headers: {
+            'Content-Type' : 'application/json',
+            authorization: authKey,
+          },
+        });
+        const userData = response.data;
+        setCompanyName(userData.companyName);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData(); // Invoke the fetchUserData function
+  }, []);
+  // const fetchNotifications = async () => {
+  //   const sse = new EventSource(url);
+  //   let notifStore = [];
+  //   sse.addEventListener("notifications", async (e) => {
+  //     const data = await e.data;
+  //     const receivedNotifications = JSON.parse(data);
+
+  //     if (
+  //       receivedNotifications.length > 0
+  //     ) {
+  //       setNotifications((notifications) => {
+  //         notifStore = [...notifications, ...receivedNotifications];
+
+  //         window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
+  //         return notifStore;
+  //       });
+  //     }
+  //   });
+  // };
   const handleLogout = () => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
@@ -61,7 +111,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           Edit Profile
         </p>
         <div className={s.employerFirm}>
-          <h4>{user.companyName}</h4>
+          <h4>{companyName}</h4>
         </div>
       </div>
       <ul className={s.list}>

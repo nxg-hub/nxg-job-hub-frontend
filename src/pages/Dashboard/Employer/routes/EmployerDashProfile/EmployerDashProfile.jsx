@@ -18,6 +18,7 @@ const EmployerDashProfile = () => {
   const [email, setEmail] = useState(user.email);
   const [address, setAddress] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const currentYear = new Date().getFullYear() ;
   const {isVerified, setVerificationStatus} = useVerification(); 
   const [isVerificationFormVisible] = useState(false);
@@ -54,6 +55,7 @@ const EmployerDashProfile = () => {
       // Update state with fetched data
       setAddress(employerData.address || "");
       setCompanyDescription(employerData.companyDescription || "");
+      setCompanyName(employerData.companyName);
 
       // Set verification status based on the fetched data
       setVerificationStatus(employerData.isVerified || false);
@@ -153,7 +155,7 @@ const EmployerDashProfile = () => {
                 <div className="job-opens">
                     <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)}</span></p>
                     <div className="employer-name">
-                        <p>Recruiter, {user.companyName}</p>
+                        <p>Recruiter, {companyName}</p>
                     </div>
                     {!isVerified && (
                         <Link to="/verifiedForm" className="acct-verify" >
