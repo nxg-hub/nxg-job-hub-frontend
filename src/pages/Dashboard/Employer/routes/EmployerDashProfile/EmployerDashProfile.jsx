@@ -55,7 +55,7 @@ const EmployerDashProfile = () => {
       // Update state with fetched data
       setAddress(employerData.address || "");
       setCompanyDescription(employerData.companyDescription || "");
-      setCompanyName(employerData.companyName);
+      setCompanyName(employerData.companyName || "");
 
       // Set verification status based on the fetched data
       setVerificationStatus(employerData.isVerified || false);
