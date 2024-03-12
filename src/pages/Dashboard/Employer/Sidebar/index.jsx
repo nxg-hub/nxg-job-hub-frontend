@@ -68,25 +68,7 @@ const Sidebar = ({ profilePic, ...props }) => {
     };
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
-  // const fetchNotifications = async () => {
-  //   const sse = new EventSource(url);
-  //   let notifStore = [];
-  //   sse.addEventListener("notifications", async (e) => {
-  //     const data = await e.data;
-  //     const receivedNotifications = JSON.parse(data);
 
-  //     if (
-  //       receivedNotifications.length > 0
-  //     ) {
-  //       setNotifications((notifications) => {
-  //         notifStore = [...notifications, ...receivedNotifications];
-
-  //         window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
-  //         return notifStore;
-  //       });
-  //     }
-  //   });
-  // };
   const handleLogout = () => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
@@ -101,8 +83,8 @@ const Sidebar = ({ profilePic, ...props }) => {
       </Link>
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic}>
-            <CiUser />
+        <div className={s.displayPic} style={profilePic && {padding: 0}}>
+            {profilePic ? <img src={ profilePic} alt=""/> :  <CiUser />}
           </div>
           <ChangeProfilePicture title="Change profile picture" />
         </div>

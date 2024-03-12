@@ -58,6 +58,15 @@
         svg {
           height: 100%;
           width: 100%;
+          object-fit: cover;
+        }
+        img {
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          object-fit: fill;
+          position: absolute;
+          top: 0;
         }
       }
       >svg {
