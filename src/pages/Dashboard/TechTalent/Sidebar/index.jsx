@@ -81,7 +81,7 @@ const Sidebar = ({ profilePic, ...props }) => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     // Navigate to the login page
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -92,8 +92,8 @@ const Sidebar = ({ profilePic, ...props }) => {
       
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic}>
-            <CiUser />
+          <div className={s.displayPic} style={profilePic && {padding: 0}}>
+            {profilePic ? <img src={ profilePic} alt=""/> :  <CiUser />}
           </div>
           <ChangeProfilePicture title="Change profile picture" />
         </div>

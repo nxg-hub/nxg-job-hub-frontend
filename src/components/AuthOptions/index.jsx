@@ -5,23 +5,7 @@ import { ReactComponent as LinkedInIcon } from "../../static/icons/devicon_linke
 
 const AuthOptions = ({ login, register }) => {
 
-  //   if (tokenResponse.access_token) {
-  //     let store = {
-  //       ...tokenResponse,
-  //       authKey: tokenResponse.access_token,
-  //     };
-  //     window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(store));
-  //     navigate("/create");
-  //   }
-  //   console.log(tokenResponse);
-  // };
-  // const handleError = (error) => {
-  //   console.log(error);
-  // };
-  // const GoogleLogin = useGoogleLogin({
-  //   onSuccess: handleSuccess,
-  //   onError: handleError,
-  // });
+ 
   const googleOAuth = async () => {
    window.location.href ="https://job-hub-91sr.onrender.com/oauth2/authorization/google"
   }
@@ -39,12 +23,12 @@ const AuthOptions = ({ login, register }) => {
           className={s.optionButton}
         >
           <GoogleIcon />
-          {login && "Sign in"}
+          {login && "Log in"}
           {register && "Sign up"} with Google
         </button>
         <button type={"button"} className={s.optionButton}>
           <LinkedInIcon />
-          {login && "Sign in"}
+          {login && "Log in"}
           {register && "Sign up"} with LinkedIn
         </button>
       </div>
