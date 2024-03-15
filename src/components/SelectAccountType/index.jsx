@@ -12,36 +12,47 @@ const SelectAccountType = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
-  // Destructure localStorage data with default values to avoid potential issues
+
+  // Get authkey from sources
   const authKey =
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
+    // authkey from url
     (searchParams.get("authKey")
       ? "Bearer " + searchParams.get("authKey")
-      : null);
+      : null) ||
+    // authkey from sessionstorage
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
+    // authkey from localstorage
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
+
   let localStore =
+    // retrieve already stored data from localstorage
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     {};
   const checkForUserTypeAndRedirect = async (auth) => {
-    console.log("authkey", authKey);
     if (localStore) {
-      const res = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+      try {
+        const res = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
           "Content-Type": "application/json",
           authorization: auth,
         },
-      });
-      if (!res.data.userType) {
-        return;
-      } else {
-        navigate("/dashboard");
+   });
+   if (!res.data.userType) {
+     return;
+   } else {
+     navigate("/dashboard");
+    }
+  } catch (error) {
+    console.log(error.data)
+    navigate("/login");
       }
     }
   };
   if (authKey) {
     localStore = { ...localStore, authKey };
-    window.localStorage.setItem(
+    // store in session to prevent expiry
+    window.sessionStorage.setItem(
       "NXGJOBHUBLOGINKEYV1",
       JSON.stringify(localStore)
     );
