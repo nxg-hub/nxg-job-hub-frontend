@@ -20,6 +20,7 @@ function DashProfile() {
   const [email, setEmail] = useState(user.email);
   const [bio, setBio] = useState("");
   const [jobInterest, setJobInterest] = useState("");
+  const [profilePicture, setProfilePicture] = useState("")
   const [residentialAddress, setResidentialAddress] = useState("");
   const [experienceLevel, setExperienceLevel] = useState("");
   const [skills, setSkills] = useState([{skill: ""}]);
@@ -31,6 +32,7 @@ function DashProfile() {
   const {isVerified, setVerificationStatus} = useVerification(); 
   // console.log(user)
   const currentYear = new Date().getFullYear();
+
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -64,9 +66,14 @@ function DashProfile() {
       setResidentialAddress(talentData.residentialAddress || "");
       setBio(talentData.bio || "");
       setJobInterest(talentData.jobInterest || "");
+      setProfilePicture(talentData.profilePicture || "")
 
       // Set verification status based on the fetched data
-      setVerificationStatus(talentData.isVerified || false);
+    const updatedVerificationStatus = talentData.isVerified || false;
+    setVerificationStatus(updatedVerificationStatus);
+
+    // Save verification status to local storage
+    localStorage.setItem('verificationStatus', JSON.stringify(updatedVerificationStatus));
 
     } catch (error) {
       console.error('Error fetching employer data:', error);
@@ -115,7 +122,7 @@ function DashProfile() {
         bio: bio,
         residentialAddress: residentialAddress,
         skills: skills.map(skill => skill.skill),
-        experienceLevel: experienceLevel,
+        experienceLevel: `${experienceLevel.title} at ${experienceLevel.firm} (${experienceLevel.year})`, // Format as string,
       };
 
       const updateResponse = await axios.put(`${API_HOST_URL}/api/v1/tech-talent/${techId}`, formData, {
@@ -126,6 +133,10 @@ function DashProfile() {
       });
 
       console.log('Update successful:', updateResponse.data);
+      // Once the update is successful, set the verification status to true
+      setVerificationStatus(true);
+      // Save verification status to local storage
+      localStorage.setItem('verificationStatus', JSON.stringify(true));
 
     } catch (error) {
       console.error('Error updating data:', error.updateResponse ? error.updateResponse.data : error);
@@ -138,12 +149,19 @@ function DashProfile() {
   
   const handleAddSkill = () => {
     setShowDropdown(true);
-    setSkills([...skills, { skill: "" }]);
+     // Filter out any empty string skills before adding a new empty skill
+    const filteredSkills = skills.filter(skill => skill.skill.trim() !== "");
+    setSkills([...filteredSkills, { skill: "" }]);
   };
 
 
   const handleSelectSkill = (selectedSkill) => {
-    setSkills([...skills, { skill: selectedSkill }]);
+   // Check if the selected skill is not empty
+    if (selectedSkill.trim() !== "") {
+      // Filter out any empty string skills before adding the selected skill
+      const updatedSkills = skills.filter(skill => skill.skill.trim() !== "");
+      setSkills([...updatedSkills, { skill: selectedSkill }]);
+    }
     setShowDropdown(false);
   };
 
@@ -176,7 +194,7 @@ function DashProfile() {
               {isVerified ? (
                 <div className="my-profile-form-pics">
                   <div className="my-profile-form-pics-lg">
-                    <CiUser className='user' />
+                  {profilePicture ? <img src={profilePicture} alt="Profile" className='user' /> : <CiUser className='user'/>}
                   </div>
                   <div className='my-profile-cam-section'>
                     <div className="my-profile-form-pics-sm">
@@ -188,7 +206,7 @@ function DashProfile() {
               ) : (
                 <div className="my-profile-form-pics">
                   <div className="my-profile-form-pics-lg">
-                    <CiUser className='user' />
+                  {profilePicture ? <img src={profilePicture} alt="Profile" className='user'/> : <CiUser className='user'/>}
                   </div>
                   <div className='my-profile-cam-section'>
                     <div className="my-profile-form-pics-sm">
@@ -200,7 +218,7 @@ function DashProfile() {
               <div className="my-profile-header">
                 <h3>{user.firstName}</h3>
                 <div className="my-profile-ps">
-                  <p className="post">{capitalizeWords(jobInterest)}</p>
+                  <p className="post">{jobInterest ? capitalizeWords(jobInterest) : "User's Job Role"}</p>
                   <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)}</span></p>
                 </div>
                 {!isVerified && (
@@ -211,13 +229,6 @@ function DashProfile() {
                 )}
               </div>
               <div className="my-profile-form-one">
-                {/* <div className="my-profile-header">
-                  <h3>{user.firstName}</h3>
-                  <div className="my-profile-ps">
-                    <p className="post">Product Designer</p>
-                    <p className="post-id">Profile ID : <span>{user.firstName}{parseInt(currentYear) - parseInt(user.dateOfBirth)}</span></p>
-                  </div>
-                </div> */}
                 <form>
                   <div className="my-profile-fullname">
                    <div className="my-profile-firstname">
@@ -335,10 +346,16 @@ function DashProfile() {
             <Dialog.Title style={{ textAlign: "center" }}>
              Add Your Experience
             </Dialog.Title>
-              <div className="exp-input">
-                <input type="text" placeholder='Enter your job title' value={title} onChange={(e) =>setTitle(e.target.value)}/>
-                <input type="text" placeholder='Enter company name' value={firm} onChange={(e) =>setFirm(e.target.value)}/>
-                <input type="text" placeholder='Enter your working years' value={year} onChange={(e) =>setYear(e.target.value)}/>
+              <div className="exp-input" style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginTop: "2rem"
+                }}>
+                <input type="text" placeholder='Enter your job title' value={title} onChange={(e) =>setTitle(e.target.value)} style={{ width: "100%", padding: "0.3rem 0.8rem"}}/>
+                <input type="text" placeholder='Enter company name' value={firm} onChange={(e) =>setFirm(e.target.value)} style={{ width: "100%", padding: "0.3rem 0.8rem"}}/>
+                <input type="text" placeholder='Enter your working years' value={year} onChange={(e) =>setYear(e.target.value)} style={{ width: "100%", padding: "0.3rem 0.8rem"}}/>
               </div>
               <div
                 style={{
