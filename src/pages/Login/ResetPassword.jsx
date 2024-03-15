@@ -23,7 +23,7 @@ const ResetPassword = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="*******"
                             autoComplete='current-password'
-                            errormessage='Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!'
+                            // errormessage='Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!'
                             // pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"//Minimum eight characters, at least one letter, one number and one special character
                             required
                         />
