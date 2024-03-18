@@ -15,7 +15,7 @@ function TechTalentOverview() {
   const navigate = useNavigate();
   const openForm = (e) => {
     e.preventDefault();
-    navigate("/tech-talent-profile-form");
+    navigate("/techprofileform");
   };
   return (
     <main className="dash-profile-main-side">

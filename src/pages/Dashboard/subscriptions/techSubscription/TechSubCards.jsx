@@ -6,7 +6,14 @@ import platinum from '../../../../static/icons/platinum-icon.svg';
 import '../../subscriptions/subscription.scss';
 import { BsCheck } from 'react-icons/bs';
 
-const TechSubCards = ({onSubscribe}) => {
+const TechSubCards = ({onSubscribe, countryCode}) => {
+    // Define exchange rate for Nigerian Naira (NGN)
+    const exchangeRateToNGN = 1500; // Replace with the actual exchange rate
+    
+    // Function to convert prices to NGN
+    const convertToNGN = (price) => {
+        return (parseFloat(price.replace('$', '').replace('N', '')) * exchangeRateToNGN).toFixed(2);
+    }
     const monthlySubscriptions = [
         {
             subId: 1,
@@ -85,7 +92,9 @@ const TechSubCards = ({onSubscribe}) => {
                                 <img src={subscription.subLogo} alt=""  />
                                 <h3>{subscription.subTitle}</h3>
                             </div>
-                            <p className='sub-price'>{subscription.subPrice}</p>
+                            {/* <p className='sub-price'>{subscription.subPrice}</p> */}
+                            {/* Convert price to NGN if user is Nigerian */}
+                            <p className='sub-price'>{countryCode === "NG" ? `${convertToNGN(subscription.subPrice)}₦` : subscription.subPrice}</p>
                         </div>
                         <div className="sub-cards-lists">
                             <ul>
