@@ -25,7 +25,6 @@ import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
-// import isLoggedIn  from "./utils/hooks/isLoggedIn.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 function App() {
   
@@ -42,15 +41,9 @@ function App() {
         {/* Log in */}
         <Route path="/login" element={<Login />} />
         <Route  element={<ProtectedRoute/>}>
-          {/* <Route path="/verifiedForm" element={<EmployerVerificationForm />} /> */}
-          <Route path="/verifiedForm" element={<VerificationProvider>
-              <EmployerVerificationForm />
-            </VerificationProvider>}>
+          <Route element={<VerificationProvider/>}>
+              <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
           </Route>
-          <Route
-            path="/tech-talent-profile-form"
-            element={<DashboardProfileForm />}
-          />
           <Route path="/profilelanding" element={<ProfileLanding />}/>
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -61,10 +54,10 @@ function App() {
             <Route path="" element={<Overview />} />
 
             <Route path="notifications" element={<NotificationTab />} />
-            {/* <Route path="profile" element={<ProfileController />} /> */}
-            <Route path="profile" element={<VerificationProvider>
+            <Route path="profile" element={<ProfileController />} />
+            {/* <Route path="profile" element={<VerificationProvider>
               <ProfileController />
-            </VerificationProvider>} />
+            </VerificationProvider>} /> */}
             <Route path="posts">
               <Route path="" element={<JobPosts />} />
               <Route path="create" element={<PostJobs />} />
