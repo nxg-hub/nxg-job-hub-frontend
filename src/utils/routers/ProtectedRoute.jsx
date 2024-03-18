@@ -14,7 +14,7 @@ import isLoggedIn  from '../hooks/isLoggedIn';
 function ProtectedRoute() {
   if (!isLoggedIn()) {
     // Redirect to the login page if not logged in
-    return <Navigate to="/register" />;
+    return <Navigate to="/login" />;
   }
 
   // Render the protected content

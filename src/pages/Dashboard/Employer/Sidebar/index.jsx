@@ -30,11 +30,12 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
-  
+
   const moveToDashboard = () => {
     navigate("/dashboard");
     setIsOpen(false);
@@ -43,27 +44,32 @@ const Sidebar = ({ profilePic, ...props }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        const loginKey =
+          window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+          window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
-          console.error('Authentication key not available.');
+          console.error("Authentication key not available.");
           return;
         }
         const { authKey, id } = JSON.parse(loginKey);
         if (!authKey || !id) {
-          console.error('Auth key or user id not available.');
+          console.error("Auth key or user id not available.");
           return;
         }
 
-        const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
-          headers: {
-            'Content-Type' : 'application/json',
-            authorization: authKey,
-          },
-        });
+        const response = await axios.get(
+          `${API_HOST_URL}/api/employers/get-employer`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: authKey,
+            },
+          }
+        );
         const userData = response.data;
         setCompanyName(userData.companyName);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
     fetchUserData(); // Invoke the fetchUserData function
@@ -74,7 +80,19 @@ const Sidebar = ({ profilePic, ...props }) => {
 
     navigate("/login");
   };
-  const editProfile = () => {
+  const editProfile = () => navigate("/dashboard/profile");
+  const uploadProfilePicture = async (e) => {
+
+    setProfilePicture(e.target.files[0])
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    formData.append('upload_preset', 'tin4r1lt');
+    const res = await axios.post('https://api.cloudinary.com/v1_1/dildznazt/image/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(res.data.secure_url)
   };
   return (
     <div className={s.Sidebar}>
@@ -83,13 +101,34 @@ const Sidebar = ({ profilePic, ...props }) => {
       </Link>
       <div className={s.Profile}>
         <div>
-        <div className={s.displayPic} style={profilePic && {padding: 0}}>
-            {profilePic ? <img src={ profilePic} alt=""/> :  <CiUser />}
+          <div className={s.displayPic} style={profilePic && { padding: 0 }}>
+            {profilePic ? <img src={profilePic} alt="" /> : <CiUser />}
           </div>
-          <ChangeProfilePicture title="Change profile picture" />
+          <label htmlFor="profilepic">
+            <ChangeProfilePicture title="upload profile picture" />
+          </label>
+
+          <input
+            id="profilepic"
+            accept="image/png, image/jpg, image/jpeg"
+            type="file"
+            onChange={uploadProfilePicture}
+            style={{ display: "none" }}
+          />
         </div>
         <strong>{user.firstName}</strong>
-        <p onClick={editProfile} style={{background:"#fff", border:"none", borderRadius:"8.33px", width:"100%", maxWidth:"128px", color:"#000", margin:"0.6rem auto"}}>
+        <p
+          onClick={editProfile}
+          style={{
+            background: "#fff",
+            border: "none",
+            borderRadius: "8.33px",
+            width: "100%",
+            maxWidth: "128px",
+            color: "#000",
+            margin: "0.6rem auto",
+          }}
+        >
           Edit Profile
         </p>
         <div className={s.employerFirm}>
