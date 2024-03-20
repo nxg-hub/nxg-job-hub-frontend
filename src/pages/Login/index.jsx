@@ -5,7 +5,7 @@ import Logo from "../../static/images/logo_colored.png";
 import Logpics from "../../static/images/login-pics.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Notice from "../.././components/Notice";
+import Notice from "../../components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import TextField from "../../components/TextField";
 import AuthOptions from "../../components/AuthOptions";
@@ -69,11 +69,11 @@ const Login = () => {
       }
     } catch (error) {
       let errorMessage = error.response.data || error.message;
-console.log(error)
+      console.log(error);
 
       showpopUp({
         type: "danger",
-        message: "Login failed, "   + errorMessage,
+        message: "Login failed, " + errorMessage,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }

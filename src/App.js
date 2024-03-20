@@ -27,7 +27,7 @@ import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 function App() {
-  
+
   return (
     <>
       <Routes>
@@ -40,11 +40,11 @@ function App() {
         <Route path="/create" element={<SelectAccountType />} />
         {/* Log in */}
         <Route path="/login" element={<Login />} />
-        <Route  element={<ProtectedRoute/>}>
-          <Route element={<VerificationProvider/>}>
-              <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<VerificationProvider />}>
+            <Route path="/verifiedForm" element={<EmployerVerificationForm />} />
           </Route>
-          <Route path="/profilelanding" element={<ProfileLanding />}/>
+          <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
           <Route path="/employerprofile" element={<EmployerProfileForm />} />
@@ -77,12 +77,13 @@ function App() {
             />
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
-      </Route>
-    
+        </Route>
+
         {/* Modals */}
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
+        <Route path="/auth/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
   );
