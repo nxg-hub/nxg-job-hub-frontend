@@ -211,7 +211,7 @@ const EmployerDashProfile = () => {
             <div className="employer-dash1">
                 <section >
                     <div className="employ-dashBtns">
-                        <Link to="wallet">View Wallet</Link>
+                        <Link to="./wallet">View Wallet</Link>
                         <Link to="/verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
                     </div>
                     <div className="employ-dashBtns">

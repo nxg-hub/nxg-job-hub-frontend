@@ -3,6 +3,7 @@ import Select, { components }  from 'react-select';
 import axios from 'axios';
 import { MdOutlineSearch, MdOutlineLocationOn } from 'react-icons/md';
 import { jobTypes, levels } from '../../../utils/data/tech-talent';
+import { API_HOST_URL } from '../../../utils/api/API_HOST';
 
 
 function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
@@ -10,14 +11,15 @@ function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-  const baseUrl = 'http://localhost:8000/posts';
+  const baseUrl = `${API_HOST_URL}/api/job-postings/all`;
+  // const baseUrl = 'http://localhost:8000/posts';
 
-    const fetchedJobs = (searchTerm) => {
+    const fetchedJobs = () => {
       axios.get(baseUrl)
         .then((response) => {
           const jobsArray = response.data.map((job) => ({
-            title: job.title,
-            location: job.location
+            job_title: job.job_title,
+            job_location: job.job_location
           }));
           // Update's the fetched jobs
           onJobsFetched(jobsArray)
@@ -37,25 +39,24 @@ function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
 
     const handleJobSearch = (e) => {
       const searchJob = e.target.value;
-      if (searchJob !== "") {
-        setSearch(searchJob); 
+      setSearch(searchJob);
+      if (searchJob.trim() === "") {
+        onJobsFetched([]);
+      } else {
         onSearchChange(searchJob);
-      } else {
-        onJobsFetched([]);
       }
-      
     };
+    
     const handleLocationSearch = (e) => {
-      const searchLocation = e.target.value;
-      if (searchLocation !== "") {
-        setLocationSearch(searchLocation);
-        onLocationChange(searchLocation);
-      } else {
+      const job_location = e.target.value;
+      setLocationSearch(job_location);
+      if (job_location.trim() === "") {
         onJobsFetched([]);
+      } else {
+        onLocationChange(job_location);
       }
     };
 
-    
     const CheckboxOption = (props) => (
           <components.Option {...props} className='check-section'>
             <input
@@ -74,7 +75,6 @@ function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
       }));
     const handleMultiSelectLevels = (selectedOptions) => {
         setSelectedLevels(selectedOptions);
-        // onSearch({ ...params, levels: selectedOptions.map((option) => option.value) });
     };
 
     const jobTypeOptions = jobTypes.map((jobType) => ({
@@ -83,7 +83,6 @@ function DashboardSearch({onJobsFetched, onSearchChange, onLocationChange}) {
       }));
     const handleMultiSelectJobTypes = (selectedOptions) => {
         setSelectedJobTypes(selectedOptions);
-        // onSearch({ ...params, jobTypes: selectedOptions.map((option) => option.value) });
     };
 
   return (

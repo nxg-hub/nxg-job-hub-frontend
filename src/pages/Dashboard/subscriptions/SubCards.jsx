@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import basic from '../../../static/icons/free-icon.svg';
 import silver from '../../../static/icons/silver-icon.svg';
 import gold from '../../../static/icons/gold-icon.svg';
@@ -7,14 +7,34 @@ import './subscription.scss';
 import { BsCheck } from 'react-icons/bs';
 
 
-const SubCards = ({onSubscribe, nationality}) => {
-    // Define exchange rate for Nigerian Naira (NGN)
-    const exchangeRateToNGN = 1500; // Replace with the actual exchange rate
-    
-    // Function to convert prices to NGN
+const SubCards = ({onSubscribe, country}) => {
+    const [exchangeRate, setExchangeRate] = useState(null);
+    // Function to fetch and convert prices to Naira
+
+    useEffect(() => {
+        fetchExchangeRate();
+    }, []);
+
+    const fetchExchangeRate = async () => {
+        try {
+            const response = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+            const data = await response.json();
+            // console.log(data.usd['ngn']);
+            setExchangeRate(data.usd['ngn']); // Assuming NGN is the target currency
+        } catch (error) {
+            console.error('Error fetching exchange rate:', error);
+        }
+    };
+
     const convertToNGN = (price) => {
-        return (parseFloat(price.replace('$', '').replace('N', '')) * exchangeRateToNGN).toFixed(2);
-    }
+        if (exchangeRate) {
+            const priceInUSD = parseFloat(price.replace('$', ''));
+            const priceInNGN = priceInUSD * exchangeRate;
+            return priceInNGN.toFixed(2) + ' ₦';
+        } else {
+            return price;
+        }
+    };
     const monthlySubscriptions = [
         {
             subId: 1,
@@ -88,9 +108,8 @@ const SubCards = ({onSubscribe, nationality}) => {
                             <img src={subscription.subLogo} alt=""  />
                             <h3>{subscription.subTitle}</h3>
                         </div>
-                        {/* <p className='sub-price'>{subscription.subPrice}</p> */}
                         {/* Convert price to NGN if user is Nigerian */}
-                        <p className='sub-price'>{nationality === "Nigeria" ? `${convertToNGN(subscription.subPrice)}₦` : subscription.subPrice}</p>
+                        <p className='sub-price'>{country === "Nigeria" ? convertToNGN(subscription.subPrice) : subscription.subPrice}</p>
                     </div>
                     <div className="sub-cards-lists">
                         <ul>

@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import s from "./index.module.scss";
 import {
   CiUser,
-  MdOutlineEdit,
   ChangeProfilePicture,
   MyProfile,
   Dashboard,
@@ -23,9 +22,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
+import axios from "axios";
+import { API_HOST_URL } from "../../../../utils/api/API_HOST";
+
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [jobInterest, setJobInterest] = useState("");
   const navigate = useNavigate();
 
   const menuItem = [
@@ -71,6 +74,38 @@ const Sidebar = ({ profilePic, ...props }) => {
     },
   ]
 
+  useEffect(() => {
+    const fetchTalentData = async () => {
+      try {
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        if (!loginKey) {
+          console.error('Authentication key not available.');
+          return;
+        }
+        const { authKey, id } = JSON.parse(loginKey);
+        if (!authKey || !id) {
+          console.error('Auth key or user id not available.');
+          return;
+        }
+
+        const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
+          headers: {
+            'Content-Type' : 'application/json',
+            authorization: authKey,
+          },
+        });
+        const talentData = response.data; // Assuming the response is an object with employer data
+      // console.log(talentData);
+
+      // Update state with fetched data
+      setJobInterest(talentData.jobInterest || "");
+      } catch (error) {
+        console.error('Error fetching talent data:', error);
+      }
+    };
+    fetchTalentData(); // Invoke the fetchUserData function
+  }, []);
+
   const moveToDashboard = () => {
     navigate("/dashboard");
     setIsOpen(false);
@@ -82,6 +117,10 @@ const Sidebar = ({ profilePic, ...props }) => {
 
     // Navigate to the login page
     navigate("/login");
+  };
+
+  const capitalizeWords = (str) => {
+    return str.toLowerCase().replace(/(^|\s)\S/g, (char) => char.toUpperCase());
   };
 
   return (
@@ -98,7 +137,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           <ChangeProfilePicture title="Change profile picture" />
         </div>
         <strong>{user.firstName}</strong>
-        <p>Add role <MdOutlineEdit /></p>
+        <p>{jobInterest ? capitalizeWords(jobInterest) : "User's Job Role"}</p>
       </div>
       <ul className={s.list}>
         {menuItem.map((item, index) => (
