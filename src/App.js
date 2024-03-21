@@ -41,9 +41,12 @@ function App() {
         {/* Log in */}
         <Route path="/login" element={<Login />} />
         <Route  element={<ProtectedRoute/>}>
-          <Route element={<VerificationProvider/>}>
-              <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
-          </Route>
+          {/* <Route element={<VerificationProvider/>}>
+            <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
+          </Route> */}
+          <Route path="/verifiedForm" element={<VerificationProvider>
+            <EmployerVerificationForm />
+          </VerificationProvider>}></Route>
           <Route path="/profilelanding" element={<ProfileLanding />}/>
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />

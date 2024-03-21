@@ -4,7 +4,7 @@ function SearchJobCard({ job }) {
   return (
     <div className="job-card-body">
       <div className="job-card-title">
-        <p>{job.title}</p> -  <span>{job.location}</span>
+        <p>{job.job_title}</p> -  <span>{job.job_location}</span>
       </div>
     </div>
   );
