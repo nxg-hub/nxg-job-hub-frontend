@@ -14,7 +14,7 @@ const ResetPassword = () => {
   window.sessionStorage.setItem("token", `Bearer ${token}`);
   const handleReset = async (e) => {
     e.preventDefault();
-    if (formData.password!== "" || formData.confirmPassword !=="") {
+    if (formData.password !== "" || formData.confirmPassword !== "") {
       let data = {
         newPassword: formData.password,
         confirmPassword: formData.confirmPassword,
@@ -24,13 +24,19 @@ const ResetPassword = () => {
           `${API_HOST_URL}/api/v1/auth/update-password/`,
           data,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            
+            },
+            
           }
         );
         console.log(res);
       } catch (err) {
         // console.log(err)
-        return
+        return;
       }
     }
     console.log("empty");

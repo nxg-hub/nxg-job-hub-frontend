@@ -23,22 +23,25 @@ const useTimestamp = (timestamp) => {
     if (timeDifference < 120) {
       setTime("now");
     } else if (timeDifference >= 172800) {
-      //if it is up to 48 hours
 
+      //if it is up to 48 hours
       setTime(
         `${weekDays[date.getDay()][0]} ${date.getHours()}:${date.getMinutes()} `
       );
     } else if (timeDifference >= 86400) {
+      
       //if it is up to 24 hours
       setTime(`Yesterday at ${date.getHours()}:${date.getMinutes()} `);
     } else if (timeDifference >= 21000) {
+
       //if it is up to 6 hours
       setTime(`Today at ${date.getHours()}:${date.getMinutes()} `);
     } else if (timeDifference >= 3600) {
+      
       //if it is up to 1 hour but less than 6 hours
       setTime(
         timeDifference / 3600 >= 2
-          ? `${timeDifference / 3600} hours ago`
+          ? `${Math.round(timeDifference / 3600)} hours ago`
           : `an hour ago`
       );
     } else if (timeDifference >= 120) {

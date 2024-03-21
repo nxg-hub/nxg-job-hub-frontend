@@ -92,7 +92,16 @@ const Sidebar = ({ profilePic, ...props }) => {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(res.data.secure_url)
+    const image = res.data.secure_url
+    const auth = window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
+console.log(auth.authKey, image)
+    axios.post(`${API_HOST_URL}/api/v1/auth/upload-photo`, {
+      image
+    }, {
+      headers: {
+        authorization: auth.authKey
+      }
+    })
   };
   return (
     <div className={s.Sidebar}>
