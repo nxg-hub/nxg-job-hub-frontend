@@ -28,11 +28,13 @@ import logo from "../../../../static/images/nxg-logo.png";
 import useFetchNotifications from "../../../../utils/hooks/useFetchNotifications";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
+import Notice from "../../../../components/Notice";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(profilePic || null);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
 
@@ -82,17 +84,46 @@ const Sidebar = ({ profilePic, ...props }) => {
   };
   const editProfile = () => navigate("/dashboard/profile");
   const uploadProfilePicture = async (e) => {
-
-    setProfilePicture(e.target.files[0])
-    const formData = new FormData();
-    formData.append('file', e.target.files[0]);
-    formData.append('upload_preset', 'tin4r1lt');
-    const res = await axios.post('https://api.cloudinary.com/v1_1/dildznazt/image/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log(res.data.secure_url)
+    try {
+      setMessage({
+        type: "info",
+        content: "Updating profile picture...",
+      });
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      formData.append("upload_preset", "tin4r1lt");
+      const { authKey } =
+        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProfilePicture(res.data.secure_url)
+      setMessage({
+        type: "info",
+        content: "Profile picture updated.",
+      });
+      setTimeout(() => setMessage(null), 5000);
+     await axios.post(
+        "https://job-hub-91sr.onrender.com/api/v1/auth/upload-photo",
+        { link: `${res.data.secure_url}` },
+        {
+          headers: {
+            Authorization: authKey,
+            "Content-Type": "application/json",
+          },
+        }
+        );
+       
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className={s.Sidebar}>
@@ -101,8 +132,8 @@ const Sidebar = ({ profilePic, ...props }) => {
       </Link>
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={profilePic && { padding: 0 }}>
-            {profilePic ? <img src={profilePic} alt="" /> : <CiUser />}
+          <div className={s.displayPic} style={profilePicture && { padding: 0 }}>
+            {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label htmlFor="profilepic">
             <ChangeProfilePicture title="upload profile picture" />
@@ -321,6 +352,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           </Dialog.Panel>
         </Dialog>
       )}
+       {message && <Notice type={message.type} message={message.content} />}
     </div>
   );
 };

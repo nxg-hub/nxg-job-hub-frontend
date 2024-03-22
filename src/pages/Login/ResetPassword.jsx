@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../../components/TextField";
 import { updateField } from "../../utils/functions/updateField";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import axios from "axios";
+import Notice from "../../components/Notice";
 const ResetPassword = () => {
+const navigate = useNavigate()
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
+  const [message, setMessage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const token = searchParams.get("token");
-  window.sessionStorage.setItem("token", `Bearer ${token}`);
+  const token = searchParams.get("token") || window.sessionStorage.getItem("token");
+  window.sessionStorage.setItem("token", token);
   const handleReset = async (e) => {
     e.preventDefault();
     if (formData.password!== "" || formData.confirmPassword !=="") {
@@ -20,6 +23,10 @@ const ResetPassword = () => {
         confirmPassword: formData.confirmPassword,
       };
       try {
+        setMessage({
+          type: "info",
+          content: "resetting password",
+        });
         let res = await axios.post(
           `${API_HOST_URL}/api/v1/auth/update-password/`,
           data,
@@ -27,14 +34,27 @@ const ResetPassword = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+       res.status===200 && setMessage({
+          type: "warning",
+          content: "Could not send reset password email",
+        });
+        setTimeout(() => setMessage(null), 5000);
+        navigate("/login")
         console.log(res);
       } catch (err) {
-        // console.log(err)
+        setMessage({
+          type: "warning",
+          content: "Could not reset password ",
+        });
+        setTimeout(() => setMessage(null), 5000);
         return
       }
     }
     console.log("empty");
   };
+  useEffect(() => {
+    setSearchParams("")
+  }, [setSearchParams])
   return (
     <div>
       <div
@@ -89,6 +109,8 @@ const ResetPassword = () => {
           </button>
         </form>
       </div>
+      
+      {message && <Notice type={message.type} message={message.content} />}
     </div>
   );
 };
