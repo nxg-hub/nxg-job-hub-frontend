@@ -163,7 +163,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           Edit Profile
         </p>
         <div className={s.employerFirm}>
-          <h4>{companyName}</h4>
+          <h4>{companyName ? companyName : "Recruiter's Name"}</h4>
         </div>
       </div>
       <ul className={s.list}>

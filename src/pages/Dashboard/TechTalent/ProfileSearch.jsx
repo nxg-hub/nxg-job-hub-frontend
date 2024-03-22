@@ -16,8 +16,8 @@ function ProfileSearch() {
       search || locationSearch
         ? fetchedJobs.filter(
             (job) =>
-              job.title.toLowerCase().includes(search.toLowerCase()) ||
-              job.location.toLowerCase().includes(locationSearch.toLowerCase())
+              job.job_title.toLowerCase().includes(search.toLowerCase()) ||
+              job.job_location.toLowerCase().includes(locationSearch.toLowerCase())
           )
         : fetchedJobs;
     setJobs(filteredJobs);
@@ -92,17 +92,17 @@ function ProfileSearch() {
             .filter((job) => {
               const titleMatch =
                 search === "" ||
-                job.title.toLowerCase().includes(search.toLowerCase());
+                job.job_title.toLowerCase().includes(search.toLowerCase());
               const locationMatch =
                 locationSearch === "" ||
-                job.location
+                job.job_location
                   .toLowerCase()
                   .includes(locationSearch.toLowerCase());
               return titleMatch && locationMatch;
             })
             .map((job, index) => {
               return (
-                <SearchJobCard key={index} job={job} location={job.location} />
+                <SearchJobCard key={index} job={job} location={job.job_location} />
               );
             })}
         </div>
