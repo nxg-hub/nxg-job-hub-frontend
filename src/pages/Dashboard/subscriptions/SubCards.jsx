@@ -5,6 +5,8 @@ import gold from '../../../static/icons/gold-icon.svg';
 import platinum from '../../../static/icons/platinum-icon.svg';
 import './subscription.scss';
 import { BsCheck } from 'react-icons/bs';
+import axios from 'axios';
+import { API_HOST_URL } from '../../../utils/api/API_HOST';
 
 
 const SubCards = ({onSubscribe, country}) => {
@@ -83,9 +85,54 @@ const SubCards = ({onSubscribe, country}) => {
         },
     ];
 
-    const handlePayment = () => {
-       onSubscribe(true);
+    const handlePayment = async () => {
+        try {
+            const loginKey =
+              window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
+              window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+      
+            if (!loginKey) {
+              throw new Error('Authentication key not available.');
+            }
+      
+            let authKey;
+            try {
+              authKey = JSON.parse(loginKey).authKey;
+            } catch (error) {
+              throw new Error('Error parsing authentication key:', error);
+            }
+      
+            const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+              headers: {
+                'Content-Type': 'application/json',
+                authorization: authKey,
+              },
+            });
+      
+            const userData = response.data; // Assuming the response is an object with employer data
+            const { firstName, lastName, email, phoneNumber } = userData;
+            // console.log(userData);
+      
+            await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, {
+              firstName,
+              lastName,
+              email,
+              phoneNumber,
+            }, {
+              headers: {
+                'Content-Type' : 'application/json',
+                authorization: authKey,
+              },
+            });
+            console.log('User data sent to subscriptions endpoint successfully:', userData );
+          } catch (error) {
+            console.error('Error posting user data:', error.message);
+          }
+    //    onSubscribe(true);
     }
+    // const handlePayment = () => {
+    //    onSubscribe(true);
+    // }
 
   return (
     <> 

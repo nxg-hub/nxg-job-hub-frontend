@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 export default function CompanyProfile() {
   const [companyDescription, setCompanyDescription] = useState("");
   const [companyWebsite, setCompanyWebsite] = useState("");
-  // const [employerData, setEmployerData] = useState(null);
   const [employerDataLoaded, setEmployerDataLoaded] = useState(false);
 
   useEffect(() => {
