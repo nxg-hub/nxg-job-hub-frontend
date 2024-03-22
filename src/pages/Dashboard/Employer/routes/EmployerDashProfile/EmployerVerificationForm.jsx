@@ -91,12 +91,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               });
   
               const employerId = response.data.employerID;
-              // console.log(employerId);
-              // console.log(formData);
-              // // Remove null or empty values before sending the request
-              // const cleanedFormData = Object.fromEntries(
-              //   Object.entries(formData).filter(([_, value]) => value !== null && value !== "")
-              // );
+            
               const res = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, formData, {
                 headers: {
                   'Content-Type': 'application/json',

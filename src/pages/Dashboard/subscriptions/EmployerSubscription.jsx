@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import './subscription.scss';
 import logo from '../../../static/images/nxg-logo.png';
 import SubCards from './SubCards';
-import { SubPayment } from './subpayments/SubPayment';
+// import { SubPayment } from './subpayments/SubPayment';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../utils/api/API_HOST';
 
@@ -49,6 +49,7 @@ export const EmployerSubscription = () => {
     // Fetch user's nationality from the provided endpoint
     fetchEmployerData();
   }, [fetchEmployerData]);
+ 
   const handleSubscribe = (isSubscribed) => {
     setIsSubscribed(isSubscribed);
   };
@@ -71,7 +72,7 @@ export const EmployerSubscription = () => {
         </button>
       </div>
       )}
-       {isSubscribed && <SubPayment />}  
+       {/* {isSubscribed && <SubPayment />}   */}
     </div>
     
   );

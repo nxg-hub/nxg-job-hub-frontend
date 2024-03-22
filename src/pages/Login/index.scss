@@ -137,7 +137,11 @@
   height: 3rem;
   background-color: transparent;
 }
-
+.reset-form{
+  label{
+text-align: left;
+  }
+}
 @media only screen and (min-width: 425px) {
   .log-pass {
     left: 20rem;

@@ -7,14 +7,9 @@ import { ReactComponent as Search } from "../../../src/static/icons/round-search
 const NotificationTab = () => {
   const [search, setSearch] = useState("");
   const [notifications, setNotifications] = useState([]);
-  // const localNotifs = window.localStorage.getItem("NXGNOTIFS") || [];
-  // const getReceivedNotifs = () => {
-  //   if (localNotifs) {
-  //     setNotifications(JSON.parse(localNotifs));
-  //   }
-  // };
+  
   const localNotifs = useMemo(() => {
-    return window.localStorage.getItem("NXGNOTIFS") || [];
+    return window.localStorage.getItem("NXGNOTIFS") ||"[]";
   }, []);
 
 

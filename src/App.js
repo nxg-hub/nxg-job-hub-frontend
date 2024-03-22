@@ -27,7 +27,7 @@ import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 function App() {
-  
+
   return (
     <>
       <Routes>
@@ -80,12 +80,13 @@ function App() {
             />
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
-      </Route>
-    
+        </Route>
+
         {/* Modals */}
         <Route path="/forgotpassword" element={<PasswordRecovery />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
+        <Route path="/auth/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
   );
