@@ -42,7 +42,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
     }
     const file = files[0];
     if (file.size > 5 * 1024 * 1024) {
-      onFileSelectError({ error: "File cannot exceed more than 5MB" });
+      onFileSelectError({ error: "File size cannot exceed 5MB" });
       return;
     }
     uploadImage(file);

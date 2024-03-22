@@ -12,12 +12,13 @@ const PasswordRecovery = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+
       const response = await axios.post(
         `${API_HOST_URL}/api/v1/auth/reset-password-email/${email}`
       );
       const data = response.data;
       if (response.status === 200) {
+        console.log(response);
         setMessage({
           type: "info",
           content: data,
@@ -30,14 +31,7 @@ const PasswordRecovery = () => {
         });
         setTimeout(() => setMessage(null), 5000);
       }
-    } catch (error) {
-        console.log(error)
-      setMessage({
-        type: "warning",
-        content: error.message,
-      }); 
-      setTimeout(() => setMessage(null), 5000);
-    }
+
   };
 
   return (
@@ -103,8 +97,7 @@ const PasswordRecovery = () => {
             fontFamily: "Montserrat",
             marginTop: "-2.5rem",
           }}
-        >
-        </p>
+        ></p>
         <p className="forgot-login">
           <Link to="/login">Back to Login</Link>
         </p>

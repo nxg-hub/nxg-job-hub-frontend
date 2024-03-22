@@ -1,5 +1,5 @@
 .Sidebar {
-  background: #2596BE;
+  background: #2596be;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -22,29 +22,19 @@
   }
   .Profile {
     text-align: center;
-    // > p {
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    //   gap: 5px;
 
-    //   svg {
-    //     height: 25px;
-    //     width: auto;
-    //   }
-    // }
     strong {
       display: block;
     }
 
-    p{
+    p {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
       cursor: pointer;
     }
-    >div {
+    > div {
       position: relative;
       margin: auto;
       width: max-content;
@@ -55,11 +45,13 @@
         width: 70px;
         padding: 5px;
         background-color: #8d9ca2;
-        svg {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-        }
+     
+          svg {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+        
         img {
           border-radius: 50%;
           height: 100%;
@@ -67,7 +59,7 @@
           object-fit: fill;
         }
       }
-      >svg {
+      label svg {
         position: absolute;
         bottom: 0px;
         right: -5px;
@@ -81,7 +73,7 @@
       border-radius: 10px;
       margin: auto;
       margin-top: 1rem;
-      padding: .2rem 0;
+      padding: 0.2rem 0;
       h4 {
         font-size: 22px;
         font-weight: 400;
@@ -91,7 +83,7 @@
       }
     }
   }
-  .Settings{
+  .Settings {
     background-color: #badced30;
     border-radius: 5px;
   }
@@ -110,10 +102,9 @@
     &::-webkit-scrollbar-thumb {
       display: none;
     }
-    h2{
+    h2 {
       font-size: 18px;
       color: #c5e8f560;
-
     }
 
     .dashboardItem[aria-current="page"] {
@@ -123,7 +114,6 @@
       svg {
         filter: invert(51%) sepia(42%) saturate(833%) hue-rotate(150deg)
           brightness(92%) contrast(85%);
-          
       }
       &:hover {
         cursor: auto;
@@ -142,9 +132,9 @@
     justify-content: flex-start;
     gap: 5px;
     padding: 10px 20px;
-    &.Bell{
+    &.Bell {
       position: relative;
-      &::before{
+      &::before {
         content: attr(data-count);
         position: absolute;
         top: 8px;
@@ -166,7 +156,6 @@
     svg {
       height: 20px;
       width: auto;
-  
     }
     span {
       width: 80%;
@@ -190,8 +179,7 @@
   }
   li.dashboardItem {
     cursor: auto;
-  
-    
+
     ul {
       height: 0;
       visibility: hidden;
@@ -200,7 +188,6 @@
       transform: translateX(0px);
       a {
         font-size: 14px;
-       
       }
       // &:has(.Selected){
       //   height: fit-content !important;
@@ -221,17 +208,16 @@
       }
     }
   }
- 
+
   li.Logout {
     width: 100%;
     margin-left: 20px;
     margin-top: auto;
-    background-color: #2596BE;
+    background-color: #2596be;
     bottom: 5px;
     cursor: pointer;
     &:hover {
-      background-color: #2596BE;
+      background-color: #2596be;
     }
   }
-
 }
