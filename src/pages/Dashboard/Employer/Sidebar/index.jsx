@@ -170,8 +170,8 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Engagements</h2>
         <div className={s.Engagements}>
           <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-            <Dashboard />
-            Dashboard
+            <div><Dashboard /></div>
+            <p>Dashboard</p>
           </NavLink>
           <NavLink
             end
@@ -183,55 +183,55 @@ const Sidebar = ({ profilePic, ...props }) => {
                 : s.dashboardItem
             }
           >
-            <Notification />
-            Notifications
+            <div><Notification /></div>
+           <p> Notifications</p>
           </NavLink>
           <NavLink end to="wallet" className={`${s.dashboardItem} `}>
-            <Wallet />
-            Wallet
+          <div><Wallet /></div>
+            <p>Wallet</p>
           </NavLink>
           <NavLink end to="subscription" className={`${s.dashboardItem} `}>
-            <PiSubtitlesBold />
-            Subscription
+          <div><PiSubtitlesBold /></div>
+            <p>Subscription</p>
           </NavLink>
         </div>
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>
           <NavLink end to="posts/create" className={`${s.dashboardItem} `}>
-            <PostJobs />
-            Post Jobs
+          <div><PostJobs /></div>
+            <p>Post Jobs</p>
           </NavLink>
           <NavLink end to="posts" className={`${s.dashboardItem} `}>
-            <JobPosts />
-            Job Posts
+          <div><JobPosts /></div>
+            <p>Job Posts</p>
           </NavLink>
           <NavLink end to="applicants" className={`${s.dashboardItem} `}>
-            <Applicants />
-            Job Applicants
+          <div><Applicants /></div>
+            <p>Job Applicants</p>
           </NavLink>
           <NavLink end to="interviews" className={`${s.dashboardItem} `}>
-            <Interviews />
-            Interviews
+          <div><Interviews /></div>
+            <p>Interviews</p>
           </NavLink>
           <NavLink end to="services" className={`${s.dashboardItem} `}>
-            <Services fill="white" /> My Company Services
+          <div><Services fill="white" /></div> <p>My Company Services</p>
           </NavLink>
         </div>
         <h2>Settings</h2>
         <div className={s.Settings}>
           <NavLink end to="profile" className={`${s.dashboardItem} `}>
-            <MyProfile />
-            My Profile
+          <div><MyProfile /></div>
+            <p>My Profile</p>
           </NavLink>
           <NavLink end to="contract" className={`${s.dashboardItem} `}>
-            <Contract />
-            Contract
+          <div><Contract /></div>
+            <p>Contract</p>
           </NavLink>
           <li className={`${s.dashboardItem} `}>
             <div className={s.dropdownTitle}>
-              <Settings />
+            <div><Settings /></div>
               <span>
-                Settings
+                <p>Settings</p>
                 <PiCaretDown />
               </span>
             </div>
@@ -242,11 +242,11 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <Password /> Password Settings
+                <div><Password /> </div><p>Password Settings</p>
               </NavLink>
               <NavLink end to="privacy" className={`${s.dashboardItem} `}>
                 {" "}
-                <Privacy /> Privacy
+                <div><Privacy /></div><p>Privacy</p> 
               </NavLink>
               <NavLink
                 end
@@ -254,23 +254,23 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <Terms /> Terms and conditions
+                <div><Terms /></div> <p>Terms and conditions</p>
               </NavLink>
               <NavLink end to="help" className={`${s.dashboardItem} `}>
-                <Help />
-                Help
+              <div><Help /></div>
+                <p>Help</p>
               </NavLink>
             </ul>
           </li>
         </div>
       </ul>
-      <li
+      <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Logout />
-        Logout
-      </li>
+        <div><Logout /></div>
+        <p>Logout</p>
+      </NavLink>
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
