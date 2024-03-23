@@ -10,6 +10,7 @@ class User {
     dob,
     roles,
     nationality,
+    profilePicture,
     userType
   }) {
     this.id = id;
@@ -22,6 +23,7 @@ class User {
     this.dateOfBirth = dob;
     this.roles = roles || " "
     this.nationality = nationality || " "
+    this.profilePicture = profilePicture || " "
     this.userType = userType
   }
 }
