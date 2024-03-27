@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { SlBell } from "react-icons/sl";
@@ -9,14 +9,21 @@ import { jobs as JobRecommendations } from "../../../utils/data/job-recommendati
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
 import { UserContext } from "..";
+// import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
+  const [profileCompleted] = useState(false);
   const openForm = (e) => {
     e.preventDefault();
     navigate("/techprofileform");
   };
+
+  // const handleProfileCompletion = () => {
+  //   setProfileCompleted(true);
+  // };
+
   return (
     <main className="dash-profile-main-side">
       <div className="dash-profile-header">
@@ -32,20 +39,22 @@ function TechTalentOverview() {
       <div className="dash-profile-search-section">
         <ProfileSearch />
       </div>
-      <div className="dash-profile-hero-section">
-        <div className="dash-profile-hero-contents">
-          <div className="dash-profile-content">
-            <h1>Get started by Completing your Profile</h1>
-            <p>
-              Stand a better chance of being hired by completing your profile
-            </p>
-            <button onClick={openForm}>Complete Profile</button>
+      {!profileCompleted ? (
+        <div className="dash-profile-hero-section">
+          <div className="dash-profile-hero-contents">
+            <div className="dash-profile-content">
+              <h1>Get started by Completing your Profile</h1>
+              <p>
+                Stand a better chance of being hired by completing your profile
+              </p>
+              <button onClick={openForm}>Complete Profile</button>
+            </div>
+          </div>
+          <div className="dash-profile-hero-img">
+            <img src={HeroImg} alt="A working secetary illustration" />
           </div>
         </div>
-        <div className="dash-profile-hero-img">
-          <img src={HeroImg} alt="A working secetary illustration" />
-        </div>
-      </div>
+      ) : ( null )}
       <div className="dash-profile-recommended">
         <div className="recommend-jobs-section">
           <div className="recommend-title">

@@ -1,12 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import basic from '../../../../static/icons/free-icon.svg';
 import silver from '../../../../static/icons/silver-icon.svg';
 import gold from '../../../../static/icons/gold-icon.svg';
 import platinum from '../../../../static/icons/platinum-icon.svg';
 import '../../subscriptions/subscription.scss';
 import { BsCheck } from 'react-icons/bs';
+import axios from 'axios';
+import { API_HOST_URL } from '../../../../utils/api/API_HOST';
+import { UserContext } from '../..';
 
 const TechSubCards = ({onSubscribe, countryCode}) => {
+    const user = useContext(UserContext);
     const [exchangeRate, setExchangeRate] = useState(null);
     // Function to fetch and convert prices to NGN
 
@@ -44,7 +48,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                 "Access to all basic features",
                 "Use the website for one month only, completely free"
             ],
-            subGroup : "Free"
+            planType : "Free"
         },
         {
             subId: 2,
@@ -56,7 +60,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                 "Solid foundation for limited job posting and searching.",
                 "10 vetted job posting throughout the entire 3 months period."
             ],
-            subGroup : "Sliver"
+            planType : "Silver"
         },
         {
             subId: 3,
@@ -68,7 +72,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                 "Solid foundation for limited job posting and searching.",
                 "Unlimited vetted job listing, posting and tech talent search."
             ],
-            subGroup : "Most Popular"
+            planType : "Most Popular"
         },
         {
             subId: 4,
@@ -81,13 +85,54 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                 "Unlimited vetted job listing, posting and tech talent search.",
                 "Fast job application, tech talent profile matching mechanism and customer support."
             ],
-            subGroup : "Recommended"
+            planType : "Recommended"
         },
     ];
 
-    const handlePayment = () => {
-        onSubscribe(true);
+    const handlePayment = async (planType) => {
+        try {
+            const userData = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phoneNumber,
+                planType: planType
+            };
+            console.log(userData);
+      
+             const subAcct = await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, userData);
+            console.log(subAcct);
+            if(subAcct.data) {
+                const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
+                    email: user.email,
+                    callback_url: `${window.location.origin}/subscription-callback`
+                });
+                console.log('User subscribed successfully:', subscribeResponse.data);
+                // Verify customer after successful subscription
+                await verifyCustomer(userData);
+            }
+
+          } catch (error) {
+            console.error('Error posting user data:', error.message);
+          }
+        // onSubscribe(true);
     }
+
+    const verifyCustomer = async (user) => {
+        try {
+            const { email, accountNumber, bvn, bankCode, customerCode } = user;
+            await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
+                email,
+                account_number: accountNumber,
+                bvn,
+                bank_code: bankCode,
+                customer_code: customerCode
+            });
+            console.log('Customer verified successfully.');
+        } catch (error) {
+            console.error('Error verifying customer:', error.message);
+        }
+    };
 
   return (
     <>
@@ -130,7 +175,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                             null
                         ) : (
                             <div className="sub-cards-btns">
-                                <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
+                                <button className={subscription.planType === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
                             </div>
                         )}
                     </div>
