@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import TextField from "../../components/TextField";
 import { updateField } from "../../utils/functions/updateField";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import logo from "../../static/images/nxg-logo.png"
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import axios from "axios";
 import Notice from "../../components/Notice";
@@ -13,7 +14,7 @@ const navigate = useNavigate()
   });
   const [message, setMessage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const token = searchParams.get("token") || window.sessionStorage.getItem("token");
+  const token = searchParams.get("token") || window.sessionStorage.getItem("token") || navigate("/login");
   window.sessionStorage.setItem("token", token);
   const handleReset = async (e) => {
     e.preventDefault();
@@ -63,6 +64,9 @@ const navigate = useNavigate()
   }, [setSearchParams])
   return (
     <div>
+      <Link to="/login" >
+      <img style={{ height:"70px", width: "auto", margin:"15px"}} src={logo} alt="" />
+      </Link>
       <div
         className="reset-main"
         style={{
