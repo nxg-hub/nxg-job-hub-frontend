@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import { useNavigate } from 'react-router';
 import logo from '../../../../static/images/nxg-logo.png';
 import TechSubCards from './TechSubCards';
-import { SubPayment } from '../subpayments/SubPayment';
+// import { SubPayment } from '../subpayments/SubPayment';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 import axios from 'axios';
 
@@ -71,7 +71,7 @@ function TechTalentSubscription() {
           </button>
         </div>
       )}
-    {isSubscribed && <SubPayment />}  
+    {/* {isSubscribed && <SubPayment />}   */}
     </div>
   )
 }

@@ -22,7 +22,11 @@ function DashProfile() {
   const [jobInterest, setJobInterest] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [residentialAddress, setResidentialAddress] = useState("");
-  const [experienceLevel, setExperienceLevel] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState({
+    title: "",
+    firm: "",
+    year: "",
+  });
   const [skills, setSkills] = useState([{ skill: "" }]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [openInput, setOpenInput] = useState(false);
@@ -64,10 +68,12 @@ function DashProfile() {
       // console.log(talentData);
 
       // Update state with fetched data
-      setResidentialAddress(talentData.residentialAddress || "");
-      setBio(talentData.bio || "");
-      setJobInterest(talentData.jobInterest || "");
-      setProfilePicture(talentData.profilePicture || "");
+      setResidentialAddress(talentData.residentialAddress);
+      setBio(talentData.bio);
+      setJobInterest(talentData.jobInterest);
+      setProfilePicture(talentData.profilePicture);
+      setExperienceLevel(talentData.experienceLevel);
+      // setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
       const updatedVerificationStatus = talentData.isVerified || false;
@@ -122,7 +128,7 @@ function DashProfile() {
       );
 
       const techId = response.data.techId; // Assuming user object has employerId
-      console.log(techId);
+      // console.log(techId);
 
       const formData = {
         bio: bio,
@@ -131,7 +137,7 @@ function DashProfile() {
         experienceLevel: `${experienceLevel.title} at ${experienceLevel.firm} (${experienceLevel.year})`, // Format as string,
       };
 
-      const updateResponse = await axios.put(
+      await axios.put(
         `${API_HOST_URL}/api/v1/tech-talent/${techId}`,
         formData,
         {
@@ -142,7 +148,7 @@ function DashProfile() {
         }
       );
 
-      console.log("Update successful:", updateResponse.data);
+      console.log("Update successful:", formData.data);
       // Once the update is successful, set the verification status to true
       setVerificationStatus(true);
       // Save verification status to local storage
