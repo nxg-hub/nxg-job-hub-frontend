@@ -24,12 +24,15 @@ import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
+import Notice from "../../../../components/Notice";
 
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
+  const [profilePicture, setProfilePicture] = useState(profilePic || null);
   const [isOpen, setIsOpen] = useState(false);
   const [jobInterest, setJobInterest] = useState("");
   const navigate = useNavigate();
+  const [message, setMessage] = useState(null);
 
   const menuItem = [
     {
@@ -122,7 +125,48 @@ const Sidebar = ({ profilePic, ...props }) => {
   const capitalizeWords = (str) => {
     return str.toLowerCase().replace(/(^|\s)\S/g, (char) => char.toUpperCase());
   };
-
+  const uploadProfilePicture = async (e) => {
+    try {
+      setMessage({
+        type: "info",
+        content: "Updating profile picture...",
+      });
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      formData.append("upload_preset", "tin4r1lt");
+      const { authKey } =
+        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProfilePicture(res.data.secure_url)
+      setMessage({
+        type: "info",
+        content: "Profile picture updated.",
+      });
+      setTimeout(() => setMessage(null), 5000);
+     await axios.post(
+        "https://job-hub-91sr.onrender.com/api/v1/auth/upload-photo",
+        { link: `${res.data.secure_url}` },
+        {
+          headers: {
+            Authorization: authKey,
+            "Content-Type": "application/json",
+          },
+        }
+        );
+       
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div  className={s.Sidebar}>
       <Link to="/" className={s.menuIcon}>
@@ -131,10 +175,19 @@ const Sidebar = ({ profilePic, ...props }) => {
       
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={profilePic && {padding: 0}}>
-            {profilePic ? <img src={ profilePic} alt=""/> :  <CiUser />}
+          <div className={s.displayPic} style={profilePicture && {padding: 0}}>
+            {profilePicture ? <img src={ profilePicture} alt=""/> :  <CiUser />}
           </div>
-          <ChangeProfilePicture title="Change profile picture" />
+          <label htmlFor="profilepic">
+            <ChangeProfilePicture title="upload profile picture" />
+          </label>
+          <input
+            id="profilepic"
+            accept="image/png, image/jpg, image/jpeg"
+            type="file"
+            onChange={uploadProfilePicture}
+            style={{ display: "none" }}
+          />
         </div>
         <strong>{user.firstName}</strong>
         <p>{jobInterest ? capitalizeWords(jobInterest) : "User's Job Role"}</p>
@@ -190,6 +243,7 @@ const Sidebar = ({ profilePic, ...props }) => {
         <div><Logout /></div>
         <p> Logout </p>
       </NavLink>
+      {message && <Notice type={message.type} message={message.content} />}
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
