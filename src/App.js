@@ -26,6 +26,7 @@ import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
+import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 function App() {
 
   return (
@@ -87,6 +88,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
+        <Route path="/iso" element={<SavedJobCard />} />
       </Routes>
     </>
   );
