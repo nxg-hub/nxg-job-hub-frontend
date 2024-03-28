@@ -137,7 +137,6 @@ const EmployerDashProfile = () => {
             <div className="employer-dash">
                 <div className="connect-pics">
                     <div className="connect-img">
-                        {/* <CiUser className='user' /> */}
                       {profilePicture ? (
                         <img src={user.profilePicture} alt="Profile" className="user" />
                       ) : (
@@ -145,7 +144,7 @@ const EmployerDashProfile = () => {
                       )}
                     </div>
                     <div className="online">
-                        {isVerified ? 'Verified' (
+                        {isVerified ? (
                             <div className="verified">
                                 <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
                                 <div className="verified avaliability">
