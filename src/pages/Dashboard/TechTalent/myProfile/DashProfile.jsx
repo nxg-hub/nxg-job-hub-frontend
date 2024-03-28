@@ -18,9 +18,9 @@ function DashProfile() {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [profilePicture, setProfilePicture] = useState(user.profilePicture);
   const [bio, setBio] = useState("");
   const [jobInterest, setJobInterest] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
   const [residentialAddress, setResidentialAddress] = useState("");
   const [experienceLevel, setExperienceLevel] = useState({
     title: "",
@@ -35,6 +35,7 @@ function DashProfile() {
   const [year, setYear] = useState("");
   const { isVerified, setVerificationStatus } = useVerification();
   const currentYear = new Date().getFullYear();
+
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -68,11 +69,10 @@ function DashProfile() {
       // console.log(talentData);
 
       // Update state with fetched data
-      setResidentialAddress(talentData.residentialAddress);
-      setBio(talentData.bio);
-      setJobInterest(talentData.jobInterest);
-      setProfilePicture(talentData.profilePicture);
-      setExperienceLevel(talentData.experienceLevel);
+      setResidentialAddress(talentData.residentialAddress || "");
+      setBio(talentData.bio || "");
+      setJobInterest(talentData.jobInterest || "");
+      setExperienceLevel(talentData.experienceLevel || "");
       // setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
@@ -85,7 +85,7 @@ function DashProfile() {
         JSON.stringify(updatedVerificationStatus)
       );
     } catch (error) {
-      console.error("Error fetching employer data:", error);
+      console.error("Error fetching talent data:", error);
     }
   }, [setVerificationStatus]);
   useEffect(() => {
@@ -93,6 +93,7 @@ function DashProfile() {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setEmail(user.email);
+      setProfilePicture(user.profilePicture || "")
       fetchTalentData();
     }
   }, [user, fetchTalentData]);
@@ -148,7 +149,7 @@ function DashProfile() {
         }
       );
 
-      console.log("Update successful:", formData.data);
+      console.log("Update successful:", formData);
       // Once the update is successful, set the verification status to true
       setVerificationStatus(true);
       // Save verification status to local storage
@@ -201,6 +202,7 @@ function DashProfile() {
   const addExperience = () => {
     setOpenInput(!openInput);
   };
+  
 
   return (
     <div className="dash-profile-main-container">

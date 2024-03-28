@@ -48,18 +48,18 @@ const SubCards = ({onSubscribe, country}) => {
             ],
             spanTitle: "Validity:",
             span: "1 Month",
-            subGroup : "Free"
+            planType : "Free"
         },
         {
             subId: 2,
             subLogo: silver,
-            subTitle: "Sliver",
+            subTitle: "Siliver",
             subPrice: "25$/3months",
             subBenefit: [
                 "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
                 "10 vetted job posting throughout the entire 3 months period."
             ],
-            subGroup : "Sliver"
+            planType : "Sliver"
         },
         {
             subId: 3,
@@ -70,7 +70,7 @@ const SubCards = ({onSubscribe, country}) => {
                 "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
                 "Unlimited vetted job listing, posting and Tech talent search support"
             ],
-            subGroup : "Most Popular"
+            planType : "Most Popular"
         },
         {
             subId: 4,
@@ -81,7 +81,7 @@ const SubCards = ({onSubscribe, country}) => {
                 "The Platinum plan caters to users seeking an even longer commitment with added features.",
                 "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support."
             ],
-            subGroup : "Recommended"
+            planType : "Recommended"
         },
     ];
 
@@ -149,7 +149,7 @@ const SubCards = ({onSubscribe, country}) => {
                 <div className='sub-cards-single' key={subscription.subId}>
                     <div className="sub-cards-title-container">
                         {(index >= monthlySubscriptions.length - 2) && (
-                        <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.subGroup}</p>
+                        <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.planType}</p>
                         )}
                         <div className="sub-cards-title">
                             <img src={subscription.subLogo} alt=""  />
@@ -179,7 +179,7 @@ const SubCards = ({onSubscribe, country}) => {
                         null
                     ) : (
                         <div className="sub-cards-btns">
-                            <button className={subscription.subGroup === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
+                            <button className={subscription.planType === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
                         </div>
                     )}
                 </div>

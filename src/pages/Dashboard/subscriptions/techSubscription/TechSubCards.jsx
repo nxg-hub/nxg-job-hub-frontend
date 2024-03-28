@@ -53,7 +53,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
         {
             subId: 2,
             subLogo: silver,
-            subTitle: "Sliver",
+            subTitle: "Silver",
             subPrice: "25$/3months",
             subBenefit: [
                 "Access to all basic features",
@@ -102,15 +102,15 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
       
              const subAcct = await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, userData);
             console.log(subAcct);
-            if(subAcct.data) {
-                const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
-                    email: user.email,
-                    callback_url: `${window.location.origin}/subscription-callback`
-                });
-                console.log('User subscribed successfully:', subscribeResponse.data);
-                // Verify customer after successful subscription
-                await verifyCustomer(userData);
-            }
+            // if(subAcct.data) {
+            //     const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
+            //         email: user.email,
+            //         callback_url: `${window.location.origin}/subscription-callback`
+            //     });
+            //     console.log('User subscribed successfully:', subscribeResponse.data);
+            //     // Verify customer after successful subscription
+            //     await verifyCustomer(userData);
+            // }
 
           } catch (error) {
             console.error('Error posting user data:', error.message);
@@ -118,21 +118,21 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
         // onSubscribe(true);
     }
 
-    const verifyCustomer = async (user) => {
-        try {
-            const { email, accountNumber, bvn, bankCode, customerCode } = user;
-            await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
-                email,
-                account_number: accountNumber,
-                bvn,
-                bank_code: bankCode,
-                customer_code: customerCode
-            });
-            console.log('Customer verified successfully.');
-        } catch (error) {
-            console.error('Error verifying customer:', error.message);
-        }
-    };
+    // const verifyCustomer = async (user) => {
+    //     try {
+    //         const { email, accountNumber, bvn, bankCode, customerCode } = user;
+    //         await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
+    //             email,
+    //             account_number: accountNumber,
+    //             bvn,
+    //             bank_code: bankCode,
+    //             customer_code: customerCode
+    //         });
+    //         console.log('Customer verified successfully.');
+    //     } catch (error) {
+    //         console.error('Error verifying customer:', error.message);
+    //     }
+    // };
 
   return (
     <>
