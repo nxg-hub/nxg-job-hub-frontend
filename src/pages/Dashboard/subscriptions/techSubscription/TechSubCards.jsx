@@ -9,9 +9,10 @@ import axios from 'axios';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 import { UserContext } from '../..';
 
-const TechSubCards = ({onSubscribe, countryCode}) => {
+const TechSubCards = ({countryCode, verifyCustomer}) => {
     const user = useContext(UserContext);
     const [exchangeRate, setExchangeRate] = useState(null);
+    // const [subChosen, setSubChosen] = useState("");
     // Function to fetch and convert prices to NGN
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
         if (exchangeRate) {
             const priceInUSD = parseFloat(price.replace('$', ''));
             const priceInNGN = priceInUSD * exchangeRate;
-            return priceInNGN.toFixed(2) + ' ₦';
+            return ' ₦' + priceInNGN.toFixed(2);
         } else {
             return price;
         }
@@ -89,8 +90,11 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
         },
     ];
 
-    const handlePayment = async (planType) => {
+    const handlePayment = async (subscription) => {
         try {
+            // Convert planType to string and uppercase
+        const planType = String(subscription.planType).toUpperCase();
+
             const userData = {
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -98,29 +102,43 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                 phone: user.phoneNumber,
                 planType: planType
             };
-            console.log(userData);
       
-             const subAcct = await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, userData);
-            console.log(subAcct);
-            // if(subAcct.data) {
-            //     const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
-            //         email: user.email,
-            //         callback_url: `${window.location.origin}/subscription-callback`
-            //     });
-            //     console.log('User subscribed successfully:', subscribeResponse.data);
-            //     // Verify customer after successful subscription
-            //     await verifyCustomer(userData);
-            // }
+            await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, userData, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            // console.log(userData);
+           
+            if(userData) {
+                const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
+                    email: user.email,
+                    callback_url: `${window.location.origin}/sub-success`
+                });
+                // console.log('User subscribed successfully:', subscribeResponse.data);
 
+                // Check if subscribeResponse.data and authorization_url are available
+            if (subscribeResponse.data && subscribeResponse.data.data && subscribeResponse.data.data.authorization_url) {
+                // Redirect user to the authorization_url
+                window.location.href = subscribeResponse.data.data.authorization_url;
+            } else {
+                console.error('Authorization URL is missing.');
+                // Handle the scenario where authorization_url is missing
+            }
+                
+                // Verify customer after successful subscription
+                await verifyCustomer();
+            }
+           
           } catch (error) {
-            console.error('Error posting user data:', error.message);
+            console.error('Error posting user data:', error.response.message);
           }
         // onSubscribe(true);
     }
 
-    // const verifyCustomer = async (user) => {
+    // const verifyCustomer = async (subscriptionData) => {
     //     try {
-    //         const { email, accountNumber, bvn, bankCode, customerCode } = user;
+    //         const { email, accountNumber, bvn, bankCode, customerCode } = subscriptionData;
     //         await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
     //             email,
     //             account_number: accountNumber,
@@ -149,7 +167,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                     <div className='sub-cards-single' key={subscription.subId}>
                         <div className="sub-cards-title-container">
                             {(index >= monthlySubscriptions.length - 2) && (
-                            <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.subGroup}</p>
+                            <p style={{ float: "right", background: "rgba(102, 182, 209, 1)", color: "#fff", width: "160px", border: "none", borderRadius: "21px", padding: "8px", fontSize: "18px", fontWeight: "500", margin: ".4rem" }}>{subscription.planType}</p>
                             )}
                             <div className="sub-cards-title">
                                 <img src={subscription.subLogo} alt=""  />
@@ -175,7 +193,7 @@ const TechSubCards = ({onSubscribe, countryCode}) => {
                             null
                         ) : (
                             <div className="sub-cards-btns">
-                                <button className={subscription.planType === "Recommended" ? "recommended-btn" : ""} onClick={handlePayment}>Subscribe</button>
+                                <button className={subscription.planType === "Recommended" ? "recommended-btn" : ""} onClick={() => handlePayment(subscription)}>Subscribe</button>
                             </div>
                         )}
                     </div>
