@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import basic from '../../../static/icons/free-icon.svg';
 import silver from '../../../static/icons/silver-icon.svg';
 import gold from '../../../static/icons/gold-icon.svg';
@@ -7,9 +7,11 @@ import './subscription.scss';
 import { BsCheck } from 'react-icons/bs';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../utils/api/API_HOST';
+import { UserContext } from '..';
 
 
-const SubCards = ({onSubscribe, country}) => {
+const SubCards = ({country, verifyCustomer}) => {
+    const user = useContext(UserContext);
     const [exchangeRate, setExchangeRate] = useState(null);
     // Function to fetch and convert prices to Naira
 
@@ -32,7 +34,7 @@ const SubCards = ({onSubscribe, country}) => {
         if (exchangeRate) {
             const priceInUSD = parseFloat(price.replace('$', ''));
             const priceInNGN = priceInUSD * exchangeRate;
-            return priceInNGN.toFixed(2) + ' ₦';
+            return ' ₦' +  priceInNGN.toFixed(2);
         } else {
             return price;
         }
@@ -53,13 +55,13 @@ const SubCards = ({onSubscribe, country}) => {
         {
             subId: 2,
             subLogo: silver,
-            subTitle: "Siliver",
+            subTitle: "Silver",
             subPrice: "25$/3months",
             subBenefit: [
                 "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
                 "10 vetted job posting throughout the entire 3 months period."
             ],
-            planType : "Sliver"
+            planType : "Silver"
         },
         {
             subId: 3,
@@ -85,51 +87,68 @@ const SubCards = ({onSubscribe, country}) => {
         },
     ];
 
-    const handlePayment = async () => {
+    const handlePayment = async (subscription) => {
         try {
-            const loginKey =
-              window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') ||
-              window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+            // Convert planType to string and uppercase
+        const planType = String(subscription.planType).toUpperCase();
+
+            const userData = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phoneNumber,
+                planType: planType
+            };
       
-            if (!loginKey) {
-              throw new Error('Authentication key not available.');
-            }
-      
-            let authKey;
-            try {
-              authKey = JSON.parse(loginKey).authKey;
-            } catch (error) {
-              throw new Error('Error parsing authentication key:', error);
-            }
-      
-            const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-              headers: {
-                'Content-Type': 'application/json',
-                authorization: authKey,
-              },
+            await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, userData, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
             });
-      
-            const userData = response.data; // Assuming the response is an object with employer data
-            const { firstName, lastName, email, phoneNumber } = userData;
             // console.log(userData);
-      
-            await axios.post(`${API_HOST_URL}/api/subscriptions/create-account`, {
-              firstName,
-              lastName,
-              email,
-              phoneNumber,
-            }, {
-              headers: {
-                'Content-Type' : 'application/json',
-                authorization: authKey,
-              },
-            });
-            console.log('User data sent to subscriptions endpoint successfully:', userData );
+           
+            if(userData) {
+                const subscribeResponse = await axios.post(`${API_HOST_URL}/api/subscriptions/subscribe`, {
+                    email: user.email,
+                    callback_url: `${window.location.origin}/sub-success`
+                });
+                // console.log('User subscribed successfully:', subscribeResponse.data);
+
+                // Check if subscribeResponse.data and authorization_url are available
+            if (subscribeResponse.data && subscribeResponse.data.data && subscribeResponse.data.data.authorization_url) {
+                // Redirect user to the authorization_url
+                window.location.href = subscribeResponse.data.data.authorization_url;
+            } else {
+                console.error('Authorization URL is missing.');
+                // Handle the scenario where authorization_url is missing
+            }
+                
+                // Verify customer after successful subscription
+                await verifyCustomer();
+            }
+           
           } catch (error) {
-            console.error('Error posting user data:', error.message);
+            console.error('Error posting user data:', error.response.message);
           }
-    //    onSubscribe(true);
+        // onSubscribe(true);
     }
+
+    // const verifyCustomer = async (user) => {
+    //     try {
+    //         const { email, accountNumber, bvn, bankCode, customerCode } = user;
+    //         await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
+    //             email,
+    //             account_number: accountNumber,
+    //             bvn,
+    //             bank_code: bankCode,
+    //             customer_code: customerCode
+    //         });
+    //         console.log('Customer verified successfully.');
+    //     } catch (error) {
+    //         console.error('Error verifying customer:', error.message);
+    //     }
+    // };
+
     // const handlePayment = () => {
     //    onSubscribe(true);
     // }
