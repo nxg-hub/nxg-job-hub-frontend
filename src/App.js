@@ -27,6 +27,7 @@ import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
+import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
 function App() {
 
   return (
@@ -80,6 +81,9 @@ function App() {
               element={<h2>Terms and Conditions</h2>}
             />
             <Route path="help" element={<h2>Help </h2>} />
+          </Route>
+          <Route path="/sub-success" element={<SubSuccess/>}>
+            <Route path=":reference" element={<SubSuccess/>}/>
           </Route>
         </Route>
 

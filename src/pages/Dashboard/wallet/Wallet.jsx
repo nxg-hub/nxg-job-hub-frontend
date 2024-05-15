@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useContext } from 'react';
 import './wallet.scss';
 import axios from 'axios';
-import User from '../../../static/images/Sarah.png';
+import { CiUser } from "react-icons/ci";
 import { useTable } from 'react-table';
 import BalanceChart from './BalanceChart';
 import WalletFilter from './WalletFilter';
@@ -88,7 +88,12 @@ function Wallet() {
                 <h2>Wallet ID X123456789</h2>
                 <div className="wallet-profile-pics">
                   <div className="wallet-profile-img">
-                    <img src={User} alt="User's identity" />
+                    {/* <img src={User} alt="User's identity" /> */}
+                    {user.profilePicture ? (
+                  <img src={user.profilePicture} alt="Profile" className="user" />
+                ) : (
+                  <CiUser className="user" />
+                )}
                   </div>
                   <h3>{user.firstName} {user.lastName}</h3>
                 </div>

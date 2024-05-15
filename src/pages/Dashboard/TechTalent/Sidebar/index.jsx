@@ -26,9 +26,9 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import Notice from "../../../../components/Notice";
 
-const Sidebar = ({ profilePic, ...props }) => {
+const Sidebar = () => {
   const user = useContext(UserContext);
-  const [profilePicture, setProfilePicture] = useState(profilePic || null);
+  const [profilePicture, setProfilePicture] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [jobInterest, setJobInterest] = useState("");
   const navigate = useNavigate();
@@ -102,6 +102,7 @@ const Sidebar = ({ profilePic, ...props }) => {
 
       // Update state with fetched data
       setJobInterest(talentData.jobInterest || "");
+      setProfilePicture(talentData.profilePicture || "");
       } catch (error) {
         console.error('Error fetching talent data:', error);
       }
@@ -125,6 +126,7 @@ const Sidebar = ({ profilePic, ...props }) => {
   const capitalizeWords = (str) => {
     return str.toLowerCase().replace(/(^|\s)\S/g, (char) => char.toUpperCase());
   };
+
   const uploadProfilePicture = async (e) => {
     try {
       setMessage({
@@ -152,9 +154,16 @@ const Sidebar = ({ profilePic, ...props }) => {
         content: "Profile picture updated.",
       });
       setTimeout(() => setMessage(null), 5000);
-     await axios.post(
-        "https://job-hub-91sr.onrender.com/api/v1/auth/upload-photo",
-        { link: `${res.data.secure_url}` },
+      const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
+        headers: {
+          'Content-Type' : 'application/json',
+          authorization: authKey,
+        },
+      });
+      const techId = response.data.techId;
+     await axios.put(
+        `https://job-hub-91sr.onrender.com/api/v1/tech-talent/${techId}`,
+        { profilePicture: `${res.data.secure_url}` },
         {
           headers: {
             Authorization: authKey,
@@ -162,6 +171,9 @@ const Sidebar = ({ profilePic, ...props }) => {
           },
         }
         );
+        // updateProfilePicture = (res.data.secure_url);
+        // const uploadedPictureUrl = updateProfilePicture
+        // console.log("picture updated", uploadedPictureUrl);
        
     } catch (err) {
       console.log(err);
@@ -175,14 +187,14 @@ const Sidebar = ({ profilePic, ...props }) => {
       
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={profilePicture && {padding: 0}}>
+          <div className={s.displayPic} style={{padding: 0}}>
             {profilePicture ? <img src={ profilePicture} alt=""/> :  <CiUser />}
           </div>
-          <label htmlFor="profilepic">
+          <label htmlFor="profilePicture">
             <ChangeProfilePicture title="upload profile picture" />
           </label>
           <input
-            id="profilepic"
+            id="profilePicture"
             accept="image/png, image/jpg, image/jpeg"
             type="file"
             onChange={uploadProfilePicture}

@@ -16,6 +16,7 @@ const EmployerDashProfile = () => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [profilePicture, setProfilePicture] = useState(user.profilePicture);
   const [address, setAddress] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -69,6 +70,7 @@ const EmployerDashProfile = () => {
       setFirstName(user.firstName)
       setLastName(user.lastName)
       setEmail(user.email)
+      setProfilePicture(user.profilePicture)
       fetchEmployerData();
     }
   }, [user, fetchEmployerData]);
@@ -135,10 +137,14 @@ const EmployerDashProfile = () => {
             <div className="employer-dash">
                 <div className="connect-pics">
                     <div className="connect-img">
-                        <CiUser className='user' />
+                      {profilePicture ? (
+                        <img src={user.profilePicture} alt="Profile" className="user" />
+                      ) : (
+                        <CiUser className="user" />
+                      )}
                     </div>
                     <div className="online">
-                        {isVerified ? 'Verified' (
+                        {isVerified ? (
                             <div className="verified">
                                 <MdOutlineVerifiedUser fontSize="1.2rem" color='#2596be'/>
                                 <div className="verified avaliability">

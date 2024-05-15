@@ -6,10 +6,11 @@ import { useContext } from "react";
 
 const TechTalent = () => {
   const user = useContext(UserContext)
+  
   return (
     <div className={s.Dashboard}>
       <div className={`${s.Sidebad} ${""}`}>
-        <Sidebar className={s.leftSide} profilePic={user.profilePicture} />
+        <Sidebar className={s.leftSide} profilePicture={user.profilePicture} />
       </div>
       {/* Mainpage or <Outlet/> */}
       <div className={s.Sidemain} >

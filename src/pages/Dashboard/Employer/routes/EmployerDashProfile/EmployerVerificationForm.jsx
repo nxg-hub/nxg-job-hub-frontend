@@ -24,14 +24,9 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
     const [loading, setLoading] = useState(false); // Add loading state
 
     const [errors, setErrors] = useState({ formData: '' });
-    if (loading) {
-      return <p>Loading...</p>;
-    };
-
-    // Moved the function declaration to the top
-  // const handleVerificationSuccess = () => {
-  //   onVerificationSuccess();
-  //   };
+    // if (loading) {
+    //   return <p>Loading...</p>;
+    // };
 
     const handleValue = (e, name) => {
         const {value } = e.target;
@@ -58,6 +53,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         e.preventDefault();
         if(!formData.CACCertificate || !formData.taxClearanceCertificate || !formData.companyMemorandum) {
           setErrors({ formData: 'Fill out the required field' });
+          setLoading(false);
         } else {
           try {
             const loginKey =
@@ -66,6 +62,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         
               if (!loginKey) {
                 console.error('Authentication key not available.');
+                setLoading(false);
                 return;
               }
   
@@ -78,11 +75,11 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                 return;
               }
   
-              if (!authKey) {
-                console.error('Auth key not available.');
-                setLoading(false);
-                return;
-              }
+              // if (!authKey) {
+              //   console.error('Auth key not available.');
+              //   setLoading(false);
+              //   return;
+              // }
               const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
                 headers: {
                   'Content-Type' : 'application/json',
@@ -92,28 +89,30 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
   
               const employerId = response.data.employerID;
             
-              const res = await axios.put(`${API_HOST_URL}/api/employers/${employerId}`, formData, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  authorization: authKey,
-                },
-              });
-  
-              console.log('Response Data:', res.data);
-              // console.log(formData);
+              const res = await axios.put(
+                `${API_HOST_URL}/api/employers/${employerId}`,
+                formData,
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    authorization: authKey,
+                  },
+                }
+              );
+
               // Reset errors and navigate on successful submission
-              setErrors({ formData: '' });
-              // setVerificationStatus(true);
-              // onVerificationSuccess();
-              // Call onVerificationSuccess if it is a function
-              if (typeof onVerificationSuccess === 'function') {
+              setErrors({ formData: "" });
+              // Call onVerificationSuccess if it's a function
+              if (typeof onVerificationSuccess === "function") {
                 onVerificationSuccess();
               }
               setIsOpen(true);
               setVerificationStatus(true);
+              console.log('Response Data:', res.data);
           } catch (error) {
             console.log('Error posting data:', error.response ? error.response.data : error);
             setErrors({ data: 'Unable to update user data.' });
+            setLoading(false);
           }
         }
       }
@@ -145,7 +144,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                     <textarea  cols="10" rows="10" value={formData.namesOfDirectors.join('\n')} onChange={(e) => handleValue(e, 'namesOfDirectors')}></textarea>
                 </div>
                 <div className="verified-btn">
-                    <button type='submit'>Verify Account</button>
+                    {/* <button type='submit'>Verify Account</button> */}
+                    <button type='submit' disabled={loading}>{loading ? 'Loading...' : 'Verify Account'}</button>
                 </div>
             </form>
         </div>

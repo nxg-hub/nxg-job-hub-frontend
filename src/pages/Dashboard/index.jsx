@@ -15,6 +15,7 @@ export const UserContext = createContext({
   email: "",
   phoneNumber: "",
   residentialAddress: "",
+  profilePicture: "",
   userType: "",
 });
 
@@ -26,6 +27,7 @@ const Dashboard = () => {
     email: "",
     residentialAddress: "",
     phoneNumber: "",
+    profilePicture: ""
   });
   const [authKey, setAuth] = useState(undefined);
   const [loading, setLoading] = useState({

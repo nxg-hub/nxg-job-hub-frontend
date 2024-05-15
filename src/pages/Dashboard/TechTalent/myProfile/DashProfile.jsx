@@ -18,11 +18,15 @@ function DashProfile() {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [profilePicture, setProfilePicture] = useState(user.profilePicture);
   const [bio, setBio] = useState("");
   const [jobInterest, setJobInterest] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
   const [residentialAddress, setResidentialAddress] = useState("");
-  const [experienceLevel, setExperienceLevel] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState({
+    title: "",
+    firm: "",
+    year: "",
+  });
   const [skills, setSkills] = useState([{ skill: "" }]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [openInput, setOpenInput] = useState(false);
@@ -31,6 +35,7 @@ function DashProfile() {
   const [year, setYear] = useState("");
   const { isVerified, setVerificationStatus } = useVerification();
   const currentYear = new Date().getFullYear();
+
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -67,7 +72,8 @@ function DashProfile() {
       setResidentialAddress(talentData.residentialAddress || "");
       setBio(talentData.bio || "");
       setJobInterest(talentData.jobInterest || "");
-      setProfilePicture(talentData.profilePicture || "");
+      setExperienceLevel(talentData.experienceLevel || "");
+      // setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
       const updatedVerificationStatus = talentData.isVerified || false;
@@ -79,7 +85,7 @@ function DashProfile() {
         JSON.stringify(updatedVerificationStatus)
       );
     } catch (error) {
-      console.error("Error fetching employer data:", error);
+      console.error("Error fetching talent data:", error);
     }
   }, [setVerificationStatus]);
   useEffect(() => {
@@ -87,6 +93,7 @@ function DashProfile() {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setEmail(user.email);
+      setProfilePicture(user.profilePicture || "")
       fetchTalentData();
     }
   }, [user, fetchTalentData]);
@@ -122,7 +129,7 @@ function DashProfile() {
       );
 
       const techId = response.data.techId; // Assuming user object has employerId
-      console.log(techId);
+      // console.log(techId);
 
       const formData = {
         bio: bio,
@@ -131,7 +138,7 @@ function DashProfile() {
         experienceLevel: `${experienceLevel.title} at ${experienceLevel.firm} (${experienceLevel.year})`, // Format as string,
       };
 
-      const updateResponse = await axios.put(
+      await axios.put(
         `${API_HOST_URL}/api/v1/tech-talent/${techId}`,
         formData,
         {
@@ -142,7 +149,7 @@ function DashProfile() {
         }
       );
 
-      console.log("Update successful:", updateResponse.data);
+      console.log("Update successful:", formData);
       // Once the update is successful, set the verification status to true
       setVerificationStatus(true);
       // Save verification status to local storage
@@ -195,6 +202,7 @@ function DashProfile() {
   const addExperience = () => {
     setOpenInput(!openInput);
   };
+  
 
   return (
     <div className="dash-profile-main-container">
