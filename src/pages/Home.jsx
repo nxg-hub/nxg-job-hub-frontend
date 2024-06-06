@@ -51,7 +51,7 @@ const Home = () => {
     <div>
       <div className="landing-main" style={{height: "100vh", width:"100%"}}>
         <Header />
-        <div className="landing-content">
+        <div className="landing-content !w-auto md:!w-1/2 !pt-36 md:!p-4">
           <h1 className="land-title">
             {heroTitle.title1} {""}
             <span>{heroTitle.span}</span> {""}

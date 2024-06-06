@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import logo from '../../../../static/images/nxg-logo.png'
-import banks from '../../../../static/wallet-card-icons/banks.svg'
+import banks from '../../../../static/wallet-card-icons/banks.svg?react'
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../utils/api/API_HOST';
 

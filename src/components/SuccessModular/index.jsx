@@ -1,5 +1,5 @@
 import s from "./index.module.scss";
-import { ReactComponent as Confetti } from "../../static/icons/ConfettiBall.svg";
+import Confetti from "../../static/icons/ConfettiBall.svg?react";
 import ButtonRegular from "../LinkButton";
 
 /**

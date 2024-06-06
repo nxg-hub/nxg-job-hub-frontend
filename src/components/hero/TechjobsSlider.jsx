@@ -7,12 +7,12 @@ import Analysis from '../../../src/static/icons/Data analysis.png';
 import Machine from '../../../src/static/icons/icon _Computer Process_.png';
 import Project from '../../../src/static/icons/icon-browser_.png';
 import UI from '../../../src/static/icons/ux design.png';
-import Cyber from '../../../src/static/icons/Cybersecurity.svg';
-import Web from '../../../src/static/icons/web-development.svg';
-import Digital from '../../../src/static/icons/Digital.svg';
-import Design from '../../../src/static/icons/web-design.svg';
-import DevOps from '../../../src/static/icons/DevOps.svg';
-import Cloud from '../../../src/static/icons/cloud-computing.svg';
+import Cyber from '../../../src/static/icons/Cybersecurity.svg?react';
+import Web from '../../../src/static/icons/web-development.svg?react';
+import Digital from '../../../src/static/icons/Digital.svg?react';
+import Design from '../../../src/static/icons/web-design.svg?react';
+import DevOps from '../../../src/static/icons/DevOps.svg?react';
+import Cloud from '../../../src/static/icons/cloud-computing.svg?react';
 
 const TechjobsSlider =() => {
     const Jobsspaces = [

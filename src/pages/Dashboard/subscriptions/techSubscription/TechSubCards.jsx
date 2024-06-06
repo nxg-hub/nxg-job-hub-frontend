@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import basic from '../../../../static/icons/free-icon.svg';
-import silver from '../../../../static/icons/silver-icon.svg';
-import gold from '../../../../static/icons/gold-icon.svg';
-import platinum from '../../../../static/icons/platinum-icon.svg';
+import basic from '../../../../static/icons/free-icon.svg?react';
+import silver from '../../../../static/icons/silver-icon.svg?react';
+import gold from '../../../../static/icons/gold-icon.svg?react';
+import platinum from '../../../../static/icons/platinum-icon.svg?react';
 import '../../subscriptions/subscription.scss';
 import { BsCheck } from 'react-icons/bs';
 import axios from 'axios';

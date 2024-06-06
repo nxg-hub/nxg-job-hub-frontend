@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Filter from '../../../static/icons/mi_filter.svg';
 import { Dialog } from "@headlessui/react";
-import Calendar from '../../../static/icons/cil_calendar.svg'
+import Calendar from '../../../static/icons/cil_calendar.svg?react'
 
 function getStartOfWeek() {
     const now = new Date();

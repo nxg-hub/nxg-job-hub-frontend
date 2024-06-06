@@ -5,8 +5,8 @@ import { CiUser } from "react-icons/ci";
 import { useTable } from 'react-table';
 import BalanceChart from './BalanceChart';
 import WalletFilter from './WalletFilter';
-import Arrow1Image from '../../../static/icons/Arrow 1.svg';
-import Arrow9Image from '../../../static/icons/Arrow 9.svg';
+import Arrow1Image from '../../../static/icons/Arrow 1.svg?react';
+import Arrow9Image from '../../../static/icons/Arrow 9.svg?react';
 import { UserContext } from '..';
 import PaymentCard from './walletCard/PaymentCard';
 

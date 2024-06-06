@@ -18,7 +18,7 @@ import Spotify from '../../static/icons/spotify-1.png';
 import Apple from '../../static/icons/apple-black.png';
 import Facebook from '../../static/icons/facebook-2.png';
 import AdobeXd from '../../static/icons/xd-logo.png';
-import Linkedin from '../../static/icons/linkedin.svg';
+import Linkedin from '../../static/icons/linkedin.svg?react';
 
 const Sponsors = () => {
     
