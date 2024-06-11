@@ -18,6 +18,7 @@ import  Wallet  from "../../../../static/icons/uil_wallet.svg?react";
 import { BiBookmark as SavedJobs } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import { MdOutlineEdit } from "react-icons/md";
+export { default as JobListings } from '../../../../static/icons/joblistings.svg?react'
 export {
   CiUser,
   MdOutlineEdit,

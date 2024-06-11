@@ -10,6 +10,7 @@ import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/inde
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
+import JobListings from "./pages/Dashboard/job-listings";
 import Register from "./pages/Register/index.jsx";
 import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
@@ -71,6 +72,7 @@ function App() {
             <Route path="applications" element={<h2>My Applications </h2>} />
             <Route path="saved" element={<h2>Saved Jobs </h2>} />
             <Route path="wallet" element={<Wallet />} />
+            <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
