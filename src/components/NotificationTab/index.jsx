@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import AlertTabItem from "./NotificationItem";
 import s from "./index.module.scss";
 import { CiMenuKebab } from "react-icons/ci";
-import { ReactComponent as Search } from "../../../src/static/icons/round-search.svg";
+import  Search from "../../../src/static/icons/round-search.svg?react";
 
 const NotificationTab = () => {
   const [search, setSearch] = useState("");

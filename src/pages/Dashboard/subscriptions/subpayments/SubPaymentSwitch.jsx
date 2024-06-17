@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import '../../subscriptions/subscription.scss';
-import Card from '../../../../static/wallet-card-icons/Pay-card.svg';
-import cardInactive from '../../../../static/wallet-card-icons/cardInactive.svg';
-import Transfer from '../../../../static/wallet-card-icons/Pay-transfer.svg';
-import transferActive from '../../../../static/wallet-card-icons/transferActive.svg';
-import Ussd from '../../../../static/wallet-card-icons/Pay-ussd.svg';
-import ussdActive from '../../../../static/wallet-card-icons/ussdActive.svg';
-import Bank from '../../../../static/wallet-card-icons/Pay-bank.svg';
-import bankActive from '../../../../static/wallet-card-icons/bankActive.svg';
-import QR from '../../../../static/wallet-card-icons/Pay-qr-code.svg';
-import qrCodeActive from '../../../../static/wallet-card-icons/qrCodeActive.svg';
+import Card from '../../../../static/wallet-card-icons/Pay-card.svg?react';
+import cardInactive from '../../../../static/wallet-card-icons/cardInactive.svg?react';
+import Transfer from '../../../../static/wallet-card-icons/Pay-transfer.svg?react';
+import transferActive from '../../../../static/wallet-card-icons/transferActive.svg?react';
+import Ussd from '../../../../static/wallet-card-icons/Pay-ussd.svg?react';
+import ussdActive from '../../../../static/wallet-card-icons/ussdActive.svg?react';
+import Bank from '../../../../static/wallet-card-icons/Pay-bank.svg?react';
+import bankActive from '../../../../static/wallet-card-icons/bankActive.svg?react';
+import QR from '../../../../static/wallet-card-icons/Pay-qr-code.svg?react';
+import qrCodeActive from '../../../../static/wallet-card-icons/qrCodeActive.svg?react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 
 const SubPaymentSwitch = ({isToggled, onToggle}) => {

@@ -260,6 +260,10 @@ header {
   .landing-main {
     .landing-content {
       margin: 20% 4%;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       .land-title {
         font-size: 60px;
         line-height: 80px;

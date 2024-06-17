@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { BsArrowLeft } from 'react-icons/bs';
 import FileUploader from '../../../../../components/accounts/FileUploader';
 import { Dialog } from '@headlessui/react';
-import { ReactComponent as Confetti } from "../../../../../static/icons/ConfettiBall.svg";
+import Confetti from "../../../../../static/icons/ConfettiBall.svg?react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_HOST_URL } from '../../../../../utils/api/API_HOST';

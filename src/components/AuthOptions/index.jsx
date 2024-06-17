@@ -1,6 +1,6 @@
 import s from "./index.module.scss";
-import { ReactComponent as GoogleIcon } from "../../static/icons/flat-color-icons_google.svg";
-import { ReactComponent as LinkedInIcon } from "../../static/icons/devicon_linkedin.svg";
+import GoogleIcon from "../../static/icons/flat-color-icons_google.svg?react";
+import LinkedInIcon from "../../static/icons/devicon_linkedin.svg?react";
 
 
 const AuthOptions = ({ login, register }) => {

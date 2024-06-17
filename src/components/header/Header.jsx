@@ -20,8 +20,8 @@ const Header = () => {
         <img src={Logo} alt="Nxg Company Logo" className="logo" />
       </div>
       <div className="nav-container">
-        <nav className={menu ? null : 'nav-show'}>
-          <ul>
+        <nav className={menu ? null : 'nav-show z-50 fixed !h-full'}>
+          <ul className="!justify-center !h-full">
             <Navbar />
             <div className="nav-btns">
               <NavLink to="/login" className="login-btn">
@@ -34,7 +34,7 @@ const Header = () => {
           </ul>
         </nav>
       </div>
-      <button id="nav-toggle" onClick={handleShowMenu}>
+      <button id="nav-toggle" onClick={handleShowMenu} className="!z-50">
         {
           menu ? (<FiMenu className="menu-icon" onClick={handleShowMenu} />)
           : (<GrFormClose className="menu-icon"  onClick={handleShowMenu}/>)

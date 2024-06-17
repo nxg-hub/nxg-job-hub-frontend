@@ -12,6 +12,7 @@ import {
   Notification,
   Wallet,
   SavedJobs,
+  JobListings,
   Logout,
   Password,
   Terms,
@@ -44,6 +45,11 @@ const Sidebar = () => {
       path: "notifications",
       name: "Notifications",
       icon: <Notification />
+    },
+    {
+      path: "job-listings",
+      name: "Job Listings",
+      icon: <JobListings />
     },
     {
       path: "wallet",

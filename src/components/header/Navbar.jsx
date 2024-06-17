@@ -16,7 +16,7 @@ const Navbar = () => {
 
   
   return (
-    <div className="navbar">
+    <div className="navbar !items-center">
       {NavLinks.map((link) => {
         return (
           <NavLink

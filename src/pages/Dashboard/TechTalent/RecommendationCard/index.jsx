@@ -1,7 +1,7 @@
 import s from "./index.module.scss";
-import { ReactComponent as SaveJob } from "../../../../static/icons/carbon_bookmark.svg";
-import { ReactComponent as Location } from "../../../../static/icons/Location.svg";
-import { ReactComponent as Views } from "../../../../static/icons/ph_eye-light.svg";
+import SaveJob from "../../../../static/icons/carbon_bookmark.svg?react";
+import Location from "../../../../static/icons/Location.svg?react";
+import Views from "../../../../static/icons/ph_eye-light.svg?react";
 const RecommendationCard = ({
   company_name,
   company_logo,

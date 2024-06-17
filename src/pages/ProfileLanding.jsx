@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import Logo from "../static/images/logo_colored.png";
 import "../components/header/header.scss";
 import Inputs from "../../src/components/accounts/Inputs";
-import { ReactComponent as Search } from "../../src/static/icons/round-search.svg";
-import { ReactComponent as Filter } from "../../src/static/icons/filter.svg";
+import Search from "../../src/static/icons/round-search.svg?react";
+import Filter from "../../src/static/icons/filter.svg?react";
 
-import { ReactComponent as Messages } from "../../src/static/icons/mail-unread.svg";
-import { ReactComponent as Notifications } from "../../src/static/icons/notification-new.svg";
-import { ReactComponent as Profile } from "../../src/static/icons/profile.svg";
+import Messages from "../../src/static/icons/mail-unread.svg?react";
+import Notifications from "../../src/static/icons/notification-new.svg?react";
+import Profile from "../../src/static/icons/profile.svg?react";
 import AlertTab from "../components/NotificationTab";
 import notification_data from "../utils/data/notifications";
 import ProfileNavbar from "../components/header/ProfileNavbar";

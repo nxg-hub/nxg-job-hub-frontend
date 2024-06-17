@@ -1,21 +1,22 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import ProfileLanding from "./pages/ProfileLanding";
-import Services from "./pages/Services";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Explore from "./components/hero/Explore";
-import Dashboard from "./pages/Dashboard";
-import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile";
+import Home from "./pages/Home.jsx";
+import ProfileLanding from "./pages/ProfileLanding.jsx";
+import Services from "./pages/Services.jsx";
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
+import Explore from "./components/hero/Explore.jsx";
+import Dashboard from "./pages/Dashboard/index.jsx";
+import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/index.jsx";
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
+import JobListings from "./pages/Dashboard/job-listings";
 import Register from "./pages/Register/index.jsx";
 import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import { Otp } from "./pages/Login/Otp.jsx";
-import SelectAccountType from "./components/SelectAccountType";
+import SelectAccountType from "./components/SelectAccountType/index.jsx";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import NotificationTab from "./components/NotificationTab/index.jsx";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
@@ -71,6 +72,7 @@ function App() {
             <Route path="applications" element={<h2>My Applications </h2>} />
             <Route path="saved" element={<h2>Saved Jobs </h2>} />
             <Route path="wallet" element={<Wallet />} />
+            {/* <Route path="job-listings" element={<JobListings />} /> */}
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
@@ -93,6 +95,7 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
+        <Route path="job-listings" element={<JobListings />} />
       </Routes>
     </>
   );
