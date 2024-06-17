@@ -72,7 +72,7 @@ function App() {
             <Route path="applications" element={<h2>My Applications </h2>} />
             <Route path="saved" element={<h2>Saved Jobs </h2>} />
             <Route path="wallet" element={<Wallet />} />
-            <Route path="job-listings" element={<JobListings />} />
+            {/* <Route path="job-listings" element={<JobListings />} /> */}
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
@@ -95,6 +95,7 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
+        <Route path="job-listings" element={<JobListings />} />
       </Routes>
     </>
   );

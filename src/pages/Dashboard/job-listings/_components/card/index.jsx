@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const JobCard = ({ details }) => {
+const JobCard = ({ details, onClick, handleApply }) => {
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in">
       <div className="flex flex-col gap-y-2">
@@ -42,14 +42,14 @@ const JobCard = ({ details }) => {
               <span>{details?.views} views</span>
               <span>{details?.applicants} Applicants</span>
             </div>
-            <div className="flex items-center gap-2 group">
+            <div className="flex items-center gap-2 group" onClick={onClick}>
             <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">See more</Link>
             <img src="/dashboard/right-arrow.png" alt="see more" className="group-hover:translate-x-2 transition-all ease-in-out" />
             </div>
           </div>
         </div>
 
-        <button className="bg-[#2596BE] my-4 py-2 rounded-[8px] hover:scale-95 transition-all ease-in text-white">Apply Now</button>
+        <button className="bg-[#2596BE] my-4 py-2 rounded-[8px] hover:scale-95 transition-all ease-in text-white" onClick={handleApply}>Apply Now</button>
       </div>
     </div>
   );
