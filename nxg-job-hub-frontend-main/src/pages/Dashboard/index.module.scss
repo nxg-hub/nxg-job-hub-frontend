@@ -1,0 +1,24 @@
+.Dashboard {
+  display: flex;
+  height: 100vh;
+ 
+  .Sidebad {
+    width: 300px;
+    transition: all 0.5s;
+    @media (max-width: 850px) {
+        width: 55px;
+    }
+  }
+  // Dashboard Main Side Styling
+  .Sidemain {
+    width: 100%;
+    background-color: rgba(37, 150, 190, 0.1);
+    overflow-y: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track,
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

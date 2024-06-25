@@ -1,0 +1,88 @@
+.RecommendationCardWrapper {
+  padding: 15px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1px #00000013;
+  min-width: 300px;
+  background-color: white;
+  margin: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  .CompanyDetails {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    div{
+      width: 100%;
+      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      small{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      span{
+        display: flex;
+        justify-content: space-between;
+        svg{
+          cursor: pointer;
+        }
+        p{
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+     }
+  }
+  .JobDescription {
+    >p{
+      font-size: 18px;
+font-weight: 500;
+}
+>p:last-child{
+  font-size: 14px;
+  font-weight: 500;
+
+    }
+    small {
+      font-size: 12px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      margin-block: 5px 10px;
+    }
+    span {
+      display: flex;
+      margin-block: 5px;
+      gap: 5px;
+      p {
+        border-radius: 8px;
+        padding: 4px 8px;
+        background: #e5f2f7;
+        color: #006A90;
+      }
+    }
+  }
+  .jobAnalytics {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      border-radius: 4px;
+      background: #006a90;
+      display: inline-block;
+      font-size: 14px;
+      padding: 4px 8px;
+      color: #fff;
+    }
+    small {
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

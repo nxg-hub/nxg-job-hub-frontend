@@ -1,0 +1,295 @@
+// .navbar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   padding: 0 20px;
+// }
+
+// /* Style the logo */
+// .logo img {
+//   height: 50px; /* Adjust the height as needed */
+// }
+
+// /* Style the navigation items */
+// .nav-items {
+//   list-style: none;
+//   display: flex;
+//   align-items: center; /* Align items vertically in the navbar */
+// }
+
+// .nav-items li {
+//   margin-left: 30px; /* Adjust the spacing between items */
+// }
+
+// .nav-items a {
+//   text-decoration: none;
+//   color: #fff; /* Change to your desired link color */
+// }
+
+// /* Move navigation items to the right */
+// .nav-items {
+//   margin-left: auto;
+// }
+
+// /* Style the buttons */
+// .nav-buttons button {
+//   background-color: #fff; /* Change to your desired button color */
+//   color: #000;
+//   border: none;
+//   padding: 10px 15px;
+//   margin-left: 30px; /* Adjust the spacing between buttons */
+//   cursor: pointer;
+// }
+
+
+// /* Media Query for Mobile Devices */
+// @media (max-width: 768px) {
+//   .navbar {
+//       flex-direction: column;
+//       align-items: flex-start;
+//   }
+
+//   .nav-items {
+//       margin-top: 20px; /* Add spacing between items */
+//       flex-direction: column;
+//       align-items: flex-start;
+//   }
+
+//   .nav-items li {
+//       margin-left: 0; /* Remove margin for items */
+//       margin-bottom: 10px; /* Add spacing between items */
+//   }
+
+//   .nav-buttons {
+//       margin-top: 20px; /* Add spacing between items */
+//   }
+// }
+
+// /* Center the container vertically and horizontally */
+// .container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+   
+// }
+
+// /* Style the form */
+// .centralized-form {
+//   background-color: #fff;
+//   padding: 20px;
+//   max-width: 450px;
+//   width: 100%;
+// }
+
+// h2 {
+//   text-align: center;
+//   font-size: 20px;
+//   font-family: Arial, Helvetica, sans-serif;
+//   margin-bottom: 50px;
+// }
+
+// h4 {
+//   text-align: center;
+//   font-family: Arial, Helvetica, sans-serif;
+//   margin-bottom: 30px;
+// }
+
+// /* Style form elements */
+// .form-group {
+//   margin-bottom: 15px;
+// }
+
+// label {
+//   text-align: left;
+//   padding-right: 80px;
+// }
+
+// .label-container {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// input[type="text"],
+// input[type="email"],
+// input[type="password"],
+// input[type="date"]
+// {
+//   width: 100%;
+//   padding: 5px;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+// }
+
+
+// input[type="file"]
+// {
+//   width: 100%;
+//   padding: 100px, 0px;
+//   border: 1px solid #ccc;
+// }
+
+// select {
+//   width: 103%;
+//   padding: 5px;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+//   font-size: 12px;
+// }
+
+// option {
+//   font-size: 12px;
+//   color: #ccc;
+// }
+
+// .radio {
+//   font-size: 14px;
+// }
+
+// .password-container {
+//   position: relative;
+// }
+
+
+
+
+
+// .toggle-password {
+//   position: absolute;
+//   top: 50%;
+//   right: 10px;
+//   transform: translateY(-50%);
+//   cursor: pointer;
+// }
+
+// /* Style the eye icon */
+// .toggle-password:hover {
+//   color: #007bff; /* Change color on hover (optional) */
+// }
+
+
+
+
+// .next-button {
+//   width: 100%;
+//   padding: 6px;
+//   border: none;
+//   border-radius: 8px;
+//   background-color: #014F86;
+//   color: #fff;
+//   margin-top: 60px;
+//   cursor: pointer;
+// }
+
+// .create-button {
+//   width: 100%;
+//   padding: 6px;
+//   border: none;
+//   border-radius: 8px;
+//   background-color: #014F86;
+//   color: #fff;
+//   margin-top: 10px;
+//   cursor: pointer;
+// }
+
+// .code-button {
+//   width: 80%;
+//   padding: 6px;
+//   border: none;
+//   border-radius: 8px;
+//   background-color: #014F86;
+//   color: #fff;
+//   margin-top: 20px;
+//   margin-left: 40px;
+//   cursor: pointer;
+// }
+
+// select,
+// input[type="text"] {
+//   padding: 5px;
+//   font-size: 16px;
+//   display: block; /* Ensures the elements are stacked vertically */
+//   margin-bottom: 10px; /* Adds spacing between each label-input pair */
+// }
+
+// /* Responsive styles */
+// @media (max-width: 768px) {
+//   .centralized-form {
+//       max-width: 80%;
+//   }
+  
+// }
+
+
+
+// .form-row {
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 10px;
+// }
+
+// .form-col {
+//   width: calc(50% - 15px); /* Adjust as needed */
+// }
+
+// .form-col01 {
+//   width: 15%;
+// }
+
+// .form-col02 {
+//   width: 60%;
+// }
+
+// .form-col03 {
+//   width: 20%;
+//   margin-left: 20px;
+// }
+
+// /* Reset default input styles */
+// .input-row input {
+//   border: none;
+//   outline: none;
+//   width: calc(8.6666% - 10px); /* Distribute inputs evenly in the row with spacing */
+//   margin-right: 10px; /* Add spacing between inputs */
+// }
+
+// /* Add a gray bottom border to each input */
+// .input-row input {
+//   border-bottom: 1px solid #ccc;
+//   padding-bottom: 5px; /* Optional: Adjust spacing between the input and the border */
+//   border-radius: 0px;
+//   text-align: center;
+// }
+
+// /* Style for the input row container (optional) */
+// .input-row {
+//   display: flex;
+//   justify-content: center; /* Align inputs to the left within the container */
+//   align-items: baseline;
+//   padding: 5px;
+//   margin-bottom: 10px;
+// }
+
+// .container1 {
+//   width: 90%;
+//   padding: 30px;
+//   border: 1px solid #ccc;
+//   text-align: center;
+//   margin-top: 20px;
+// }
+
+// .drag-area .icon {
+//   font-size: 50px;
+// }
+
+// .change-color {
+//   color: #87CEEB;
+// }
+
+// a {
+//   color: #87CEEB;
+// }
+
