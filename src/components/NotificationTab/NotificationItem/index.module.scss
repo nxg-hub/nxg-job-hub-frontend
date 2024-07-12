@@ -1,0 +1,64 @@
+.AlertTabItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background: #EEF3F4;
+  padding-inline: 20px;
+  border-radius: 5px;
+  > img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+  }
+  > div {
+    border-bottom: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 10px;
+    overflow: hidden; width: 100%;
+    span {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 70%;
+      cursor: pointer;
+
+      h3 {
+        font-size: 15px;
+      }
+      p {
+        font-size: 13px;
+        color: #1f1f1f;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+    .Options {
+      display: flex;
+      flex-direction: column;
+      gap:3px;
+      align-items: flex-end;
+      justify-content: flex-end;
+      text-align: right;
+      cursor: default;
+      svg{
+        cursor: pointer;
+      }
+      small {
+        font-size: 12px;
+        width: max-content;
+        opacity: 0.8;
+        &::first-letter {
+          text-transform: capitalize;
+        }
+        text-align: right;
+      }
+    }
+  }
+}
