@@ -183,9 +183,7 @@ const Login = () => {
           </p>
         </form>
       </div>
-
       {popup && <Notice type={popup.type} message={popup.message} />}
-
     </div>
   );
 };
