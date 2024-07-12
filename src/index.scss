@@ -10,7 +10,10 @@
   margin: 0;
   list-style: none;
   text-decoration: none;
-  font-family: Manrope, "Montserrat";
+}
+
+* {
+  font-family: Manrope, "Montserrat", serif;
 }
 
 .logo {
