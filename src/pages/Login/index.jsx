@@ -97,7 +97,13 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    AutoLoginUser();
+    AutoLoginUser()
+  .then(() => {
+      // Handle successful login if needed
+    })
+        .catch((error) => {
+          console.error("Auto login failed:", error);
+        });
   });
 
   return (

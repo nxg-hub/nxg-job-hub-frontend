@@ -122,7 +122,7 @@
             width: 100%;
             max-width: 970px;
             height: 343px;
-            top: 10;
+            top: auto;
             left:  0;
             padding: 0 .5rem;
             transform: translateX(0%);
@@ -585,7 +585,7 @@
             background: transparent;
             padding: 6rem 7rem;
             font-family: Manrope;
-            color: #2596BE
+            color: #2596BE;
             h4 {
                 font-size: 40px;
                 font-weight: 700;
