@@ -1,0 +1,309 @@
+.Sidebar {
+  background: #2596be;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 0px;
+  color: white;
+  height: 100%;
+  overflow: hidden;
+  // position: relative;
+  > a {
+    height: 85px;
+    width: 150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .Profile {
+    text-align: center;
+
+    strong {
+      display: block;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    > div {
+      position: relative;
+      margin: auto;
+      width: max-content;
+      // background-color: beige;
+      > div {
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        padding: 5px;
+        background-color: #8d9ca2;
+     
+          svg {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+        
+        img {
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          object-fit: fill;
+        }
+      }
+      label svg {
+        position: absolute;
+        bottom: 0px;
+        right: -5px;
+        cursor: pointer;
+      }
+    }
+    .employerFirm {
+      background: rgba(0, 66, 89, 0.2);
+      width: 100%;
+      max-width: 215px;
+      border-radius: 10px;
+      margin: auto;
+      margin-top: 1rem;
+      padding: 0.2rem 0;
+      h4 {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 32.78px;
+        color: #ffffff;
+        opacity: 0.7;
+      }
+    }
+  }
+  .Settings {
+    background-color: #badced30;
+    border-radius: 5px;
+  }
+  ul.list {
+    padding-left: 20px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+    h2 {
+      font-size: 18px;
+      color: #c5e8f560;
+    }
+
+    .dashboardItem[aria-current="page"] {
+      color: #2596be;
+      background-color: #ffffff;
+      pointer-events: none;
+      svg {
+        filter: invert(51%) sepia(42%) saturate(833%) hue-rotate(150deg)
+          brightness(92%) contrast(85%);
+      }
+      &:hover {
+        cursor: auto;
+      }
+    }
+  }
+  a.dashboardItem,
+  .dropdownTitle {
+    display: flex;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    align-items: center;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 10px 20px;
+    div {
+      align-items: center;
+      svg {
+        height: 25px;
+        width: auto;
+        margin: 4px 0 0 0;
+      }
+    }
+    &.Bell {
+      position: relative;
+      &::before {
+        content: attr(data-count);
+        position: absolute;
+        top: 8px;
+        left: 30px;
+        background-color: red;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        z-index: 200;
+        border: 1px solid;
+        color: white;
+        font-weight: 800;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    p {
+      display: block;
+    }
+    
+    span {
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      p {
+        display: block;
+      }
+      svg {
+        height: 14px;
+      }
+    }
+    &:hover {
+      color: #2596be;
+      cursor: pointer;
+      background-color: #ffffffc4;
+      svg {
+        filter: invert(51%) sepia(42%) saturate(833%) hue-rotate(150deg)
+          brightness(92%) contrast(85%);
+      }
+    }
+  }
+  li.dashboardItem {
+    cursor: auto;
+
+    ul {
+      height: 0;
+      visibility: hidden;
+      scale: 0;
+      opacity: 0;
+      transform: translateX(0px);
+      a {
+        font-size: 14px;
+      }
+      // &:has(.Selected){
+      //   height: fit-content !important;
+      //   scale: 1 !important;
+      //   visibility: visible !important;
+      //   transform: translateX(20px);
+      //   opacity: 1;
+      // }
+    }
+    &:hover {
+      ul {
+        height: fit-content;
+        scale: 1;
+        visibility: visible;
+        transform: translateX(20px);
+        opacity: 1;
+        transition: transform 0.25s linear;
+      }
+    }
+  }
+
+  a.Logout {
+    width: 100%;
+    margin-left: 20px;
+    margin-top: auto;
+    background-color: #2596be;
+    bottom: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #2596be;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .Sidebar {
+    a {
+      width: 54px;
+      img {
+        height: 50px;
+        width: 100%;
+      }
+    }
+    .Profile {
+      padding: 2px;
+      strong {
+        display: none;
+      }
+      p {
+        display: none;
+      }
+      > div {
+        > div {
+          border-radius: 50%;
+          height: 50px;
+          width: 50px;
+          padding: 5px;
+        }
+        > svg {
+          right: -2px;
+        }
+      }
+      .employerFirm {
+        h4 {
+          font-size: 14px;
+          line-height: 18px;
+        }
+      }
+    }
+    ul.list {
+      padding: 0 0 0 5px;
+      h2 {
+        display: none;
+      }
+    }
+    a.dashboardItem,
+    .dropdownTitle {
+      padding: 3px;
+      div {
+        align-items: center;
+      }
+      p {
+        display: none;
+      }
+      span {
+        width: 100%;
+        p {
+          display: none;
+        }
+        svg {
+          display: none;
+          height: 10px;
+        }
+      }
+    }
+    li.dashboardItem {
+      ul {
+        a {
+          margin-left: -12px;
+          font-size: 14px;
+        }
+      }
+     
+    }
+    a.Logout {
+      margin-left: 5px;
+    }
+  }
+}

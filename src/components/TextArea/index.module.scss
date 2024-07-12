@@ -1,0 +1,39 @@
+.TextAreaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 2px;
+  margin-block: 10px;
+
+  .FieldLabel {
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+    .TextArea {
+      // height: 36px;
+      font-size: 16px;
+      color: #494848;
+      background-color: transparent;
+      padding-inline: 8px;
+      border: 1px solid rgb(194, 192, 192);
+      border-radius: 6.4px;
+      outline: none;
+      width: 100%;
+      max-width: 500px;
+      &[type="password"] {
+        width: 95%;
+      }
+    }
+    &.hasErr{
+      border-color: red !important;
+    }
+
+  
+  .inputErr {
+    color:red;
+    font-size: 12px;
+  }
+}

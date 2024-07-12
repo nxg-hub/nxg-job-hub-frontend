@@ -1,0 +1,51 @@
+.TextFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 2px;
+  margin-block: 10px;
+
+  .FieldLabel {
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .InputFieldWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3px;
+    border: 1px solid rgb(194, 192, 192);
+    border-radius: 6.4px;
+    
+    .inputField {
+      height: 36px;
+      font-size: 16px;
+      color: #494848;
+      background-color: transparent;
+      padding-inline: 8px;
+      border: none;
+      outline: none;
+      width: 100%;
+      &[type="password"] {
+        width: 95%;
+      }
+    }
+    &.hasErr{
+      border-color: red !important;
+    }
+    svg {
+      cursor: pointer;
+      font-size: 38px;
+      color: #7b7b7b;
+      padding-inline: 10px;
+      border-left: 0.5px solid rgba(128, 128, 128, 0.349);
+    }
+  }
+  .inputErr {
+    color:red;
+    font-size: 12px;
+  }
+}
