@@ -134,13 +134,13 @@ const SelectAccountType = () => {
                 name={"account_choice"}
                 onchange={handleChange}
               />
-              <RadioButton
+              {/* <RadioButton
                 label={"I'm an agent"}
                 value={"agent"}
                 id={"agent"}
                 name={"account_choice"}
                 onchange={handleChange}
-              />
+              /> */}
             </div>
             <button
               className={s.ContinueButton}
