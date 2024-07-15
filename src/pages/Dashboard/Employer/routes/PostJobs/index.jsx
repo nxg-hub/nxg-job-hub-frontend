@@ -14,31 +14,36 @@ import Notice from "../../../../../components/Notice";
 import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
 const PostJobs = () => {
   const user = useContext(UserContext);
+  const currentDate = new Date().toLocaleDateString("en-CA");
+  const { firstName, lastName, accountTypeID: id, picture: profilePicture} = user;
   const data = {
-    employerID: user.accountTypeID,
+    employerID: id,
     job_title: "",
     job_description: "",
-    requirements: "",
-    responsibilities: "",
-    salary: "",
-    jobType: "",
-    deadline: "",
-    benefits: "",
     company_bio: "",
+    salary: "",
+    job_type: "",
+    deadline: "",
+    requirements: "",
     job_location: "",
+    createdAt: currentDate,
+    employer_name: `${firstName + ' ' + lastName}`,
+    employer_profile_pic: profilePicture ? profilePicture : "N/A" ,
+    tags: [],
+    responsibilities: "",
+    benefits: "",
     region: "",
     contact_details: "",
-    tags: "",
   };
   const [formData, setFormData] = useState(data);
+
   const [formErrors, setFormErrors] = useState(data);
   const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
-
   const submitForm = async (e) => {
     e.preventDefault();
     let post = new JobPost(formData);
-    if (formErrors.company_bio.length < 20)
+    if (formData.company_bio.length < 20)
       setFormErrors({
         ...formErrors,
         company_bio: "Company bio must have at least 20 characters",
@@ -51,8 +56,9 @@ const PostJobs = () => {
       const { authKey } =
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
       const res = await axios.post(
-        `${API_HOST_URL}/api/job-postings/post`,
+        `${API_HOST_URL}/api/job-postings/employer-post-job`,
         post,
         {
           headers: {
@@ -60,6 +66,7 @@ const PostJobs = () => {
           },
         }
       );
+      console.log(res.data);
       if (res.data)
         showpopUp({
           type: "success",
@@ -70,6 +77,8 @@ const PostJobs = () => {
         navigate("/dashboard/posts");
       }, 5000);
     } catch (err) {
+      console.log(err);
+
       showpopUp({
         type: "danger",
         message:
