@@ -120,7 +120,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
   return (
     <div style={{padding:"2rem"}}>
         <BsArrowLeft className='verify-arrow' onClick={handleBack}/>
-        <div className="verifiedForm-main">
+        <div className="verifiedForm-main text-center">
             <h2>
                 Verify Your Account To Enjoy All Our Services And Make New Recruits Without Any Restrictions To Your Account!
             </h2>

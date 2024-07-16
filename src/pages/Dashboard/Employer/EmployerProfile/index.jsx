@@ -63,12 +63,12 @@ function EmployerProfileForm() {
     zipCode: '',
     position: '',
   });
-
   // Initial state for the second form
   const [companyData, setCompanyData] = useState({
     companyName: '',
     companyAddress: '',
     companyWebsite: '',
+    // companyDesc: '',
     companyPhone: '',
     companyZipCode: '',
     industryType: '',
@@ -146,7 +146,7 @@ function EmployerProfileForm() {
   
       const employerId = response.data.employerID;
       // console.log(employerId);
-  
+  // console.log(combinedData)
       const res = await axios.patch(`${API_HOST_URL}/api/employers/${employerId}`, combinedData, {
         headers: {
           'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ function EmployerProfileForm() {
                 <div className="rep-phone">
                   <label>Phone Number*</label>
                   <PhoneInput
-                    inputStyle={{ backgroundColor: '#ffffff', border: '0.06rem solid #c9c9c9', margin: '0.55rem 0', padding: '0.9rem 0.8rem', width: '25.1rem', height: '41px', fontSize: '.7rem', fontWeight: "400", fontFamily: "Montserrat", borderTopRightRadius: '0.4rem', borderBottomRightRadius: '0.4rem', color: "#c9c9c9" }}
+                    inputStyle={{ backgroundColor: '#ffffff', border: '0.06rem solid #c9c9c9', margin: '0.55rem 0', padding: '0.9rem 0.8rem', width: '25.1rem', height: '41px', fontSize: '.7rem', fontWeight: "400", fontFamily: "Montserrat", borderTopRightRadius: '0.4rem', borderBottomRightRadius: '0.4rem', color: "#000" }}
                     name="phoneNumber"
                     aria-label="tel"
                     defaultCountry="ng"
@@ -235,6 +235,7 @@ function EmployerProfileForm() {
                   type='text'
                   name="address"
                   title='Home Address'
+                  className="placeholder:!text-[#181818]"
                   value={personalData.address}
                   onChange={handlePersonalDataChange}
                   placeholder="Enter your home address"
@@ -244,6 +245,7 @@ function EmployerProfileForm() {
                 <Inputs
                   type='text'
                   name="nationality"
+                  className="placeholder:!text-[#181818]"
                   title='Nationality*'
                   value={personalData.nationality}
                   onChange={handlePersonalDataChange}
@@ -254,6 +256,7 @@ function EmployerProfileForm() {
                   type='text'
                   name="state"
                   title='State/District'
+                  className="placeholder:!text-[#181818]"
                   value={personalData.state}
                   onChange={handlePersonalDataChange}
                   placeholder="Enter your State/District"
@@ -265,6 +268,7 @@ function EmployerProfileForm() {
                   name="country"
                   title='Country'
                   value={personalData.country}
+                  className="placeholder:!text-[#181818]"
                   onChange={handlePersonalDataChange}
                   placeholder="Enter your country"
                 />
@@ -272,6 +276,7 @@ function EmployerProfileForm() {
                   type='text'
                   name="zipCode"
                   title='Zip Code'
+                  className="placeholder:!text-[#181818]"
                   value={personalData.zipCode}
                   onChange={handlePersonalDataChange}
                   placeholder="Enter zip code"
