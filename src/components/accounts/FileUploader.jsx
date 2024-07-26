@@ -11,7 +11,6 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
   const onDragEnter = () => fileInput.current.classList.add('dragover');
   const onDragLeave = () => fileInput.current.classList.remove('dragover');
   const onDrop = () => fileInput.current.classList.remove('dragover');
-
   const uploadImage = async (file) => {
     setLoading(true);
     const formData = new FormData();
@@ -37,7 +36,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
   };
 
   const uploadFiles = (files) => {
-   
+    const file = files[0];
     if (!files || files.length === 0) {
       alert("Select a file")
       return;
@@ -50,7 +49,7 @@ const FileUploader = ({ title, name, value, onFileSelectError, onFileChange }) =
       return;
     }
 
-    const file = files[0];
+    
     if (file.size > 5 * 1024 * 1024) {
       onFileSelectError({ error: "File size cannot exceed 5MB" });
       return;
