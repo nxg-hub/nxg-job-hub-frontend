@@ -224,10 +224,12 @@
     margin-left: 20px;
     margin-top: auto;
     background-color: #2596be;
+    padding: 10px !important;
+    height: fit-content;
     bottom: 5px;
     cursor: pointer;
     &:hover {
-      background-color: #2596be;
+      background-color: #fff;
     }
   }
 }

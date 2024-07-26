@@ -31,7 +31,7 @@ export default function CompanyProfile() {
         });
         const employerData = response.data;
         
-        setCompanyDescription(employerData.companyDescription || "");
+        setCompanyDescription(employerData.companyName || "");
         setCompanyWebsite(employerData.companyWebsite || "");
         setEmployerDataLoaded(true);
       } catch (error) {
@@ -48,7 +48,7 @@ export default function CompanyProfile() {
         <>
           {companyDescription ? (
             <div className='company-contents'>
-              <p className="company-contents-text">{companyDescription}</p>
+              <p className="company-contents-text uppercase tracking-wider !font-medium">{companyDescription}</p>
               <Link to={companyWebsite}>View Company Website</Link>
             </div>
           ) : (

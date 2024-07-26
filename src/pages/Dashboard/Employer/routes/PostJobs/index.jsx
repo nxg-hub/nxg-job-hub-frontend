@@ -16,6 +16,8 @@ const PostJobs = () => {
   const user = useContext(UserContext);
   const currentDate = new Date().toLocaleDateString("en-CA");
   const { firstName, lastName, accountTypeID: id, picture: profilePicture} = user;
+
+  console.log(user)
   const data = {
     employerID: id,
     job_title: "",

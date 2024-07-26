@@ -16,12 +16,12 @@ function FormStepper({ companyData,  setCompanyData, onCompleteProfile }) {
       ...companyData,
       [name]: updatedValue,
     });
-    console.log("Selected Option:", companyData);
+    // console.log("Selected Option:", companyData);
   };
 
   const handleValue = (e) => {
     const { name, value, type, checked } = e.target;
-    console.log("Input Change Event:", companyData);
+    // console.log("Input Change Event:", companyData);
     // Ensure only one vacancy is selected
     if (type === 'radio' ) {
       setCompanyData({
@@ -40,6 +40,7 @@ function FormStepper({ companyData,  setCompanyData, onCompleteProfile }) {
     e.preventDefault();
     if (
       companyData.companyName === "" ||
+      // companyData.companyDesc === "" ||
       companyData.companyAddress === "" ||
       companyData.companyWebsite === "" ||
       companyData.companyPhone === "" ||
@@ -89,6 +90,18 @@ const jobBoardOptions = boards.map((jobBoard) => ({
                 required
               />
             </div>
+            {/* <div className="company-name">
+              <Inputs
+                type="text"
+                name="companyDesc"
+                title="Company Description*"
+                value={companyData.companyDesc}
+                onChange={handleValue}
+                placeholder="Enter your company description"
+                errormessage="Company description must be filled!"
+                required
+              />
+            </div> */}
             <div className="company-name">
               <Inputs
                 type="text"
@@ -106,6 +119,7 @@ const jobBoardOptions = boards.map((jobBoard) => ({
                 type="url"
                 name="companyWebsite"
                 title="Company Website*"
+                className="placeholder:!text-[#181818]"
                 value={companyData.companyWebsite}
                 onChange={handleValue}
                 placeholder="Enter your company website link"
@@ -129,7 +143,7 @@ const jobBoardOptions = boards.map((jobBoard) => ({
                     fontFamily: "Montserrat",
                     borderTopRightRadius: "0.4rem",
                     borderBottomRightRadius: "0.4rem",
-                    color: "#c9c9c9",
+                    color: "#181818",
                   }}
                   name="companyPhone"
                   aria-label="tel"
