@@ -30,7 +30,6 @@ import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
 function App() {
-
   return (
     <>
       <Routes>
@@ -43,20 +42,30 @@ function App() {
         <Route path="/create" element={<SelectAccountType />} />
         {/* Log in */}
         <Route path="/login" element={<Login />} />
-        <Route  element={<ProtectedRoute/>}>
+        <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
           </Route> */}
-          <Route path="/verifiedForm" element={<VerificationProvider>
-            <EmployerVerificationForm />
-          </VerificationProvider>}></Route>
-          <Route path="/profilelanding" element={<ProfileLanding />}/>
+          <Route
+            path="/verifiedForm"
+            element={
+              <VerificationProvider>
+                <EmployerVerificationForm />
+              </VerificationProvider>
+            }
+          ></Route>
+          <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
           <Route path="/employerprofile" element={<EmployerProfileForm />} />
-          <Route path="/dashboard" element={<VerificationProvider>
-            <Dashboard />
-          </VerificationProvider>}>
+          <Route
+            path="/dashboard"
+            element={
+              <VerificationProvider>
+                <Dashboard />
+              </VerificationProvider>
+            }
+          >
             <Route path="" element={<Overview />} />
 
             <Route path="notifications" element={<NotificationTab />} />
@@ -84,8 +93,8 @@ function App() {
             />
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
-          <Route path="/sub-success" element={<SubSuccess/>}>
-            <Route path=":reference" element={<SubSuccess/>}/>
+          <Route path="/sub-success" element={<SubSuccess />}>
+            <Route path=":reference" element={<SubSuccess />} />
           </Route>
         </Route>
 
