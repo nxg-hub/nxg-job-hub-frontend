@@ -1,69 +1,71 @@
 .landing-main {
-    background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../static/images/Team-working-together.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-        .landing-content {
-          width: 100%;
-          margin: 3%;
-          padding: 1rem;
-          font-family: Inter;
-          color: #fff;
-          .land-title {
-            font-size: 45px;
-            font-weight: 800;
-            line-height: 60px;
-      
-              span {
-                color: #2596be;
-              }
-          }
-          .land-text {
-            font-size: 22px;
-            font-weight: 300;
-            line-height: 28px;
-            margin: 1rem 0;
-          }
-          .land-btns {
-            margin: 1.6rem 0;
-            width: 50%;
-            a{
-              display: block;
-              color: #fff;
-              font-weight: 400;
-              background: #2596be;
-              width: 100%;
-              padding: 12px;
-              border: .07rem solid #2596be;
-              border-radius: 0.4rem;
-              text-align: center;
-            }
-          }
-        }
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(../../static/images/Team-working-together.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  .landing-content {
+    width: 100%;
+    margin: 3%;
+    padding: 1rem;
+    font-family: Inter;
+    color: #fff;
+    .land-title {
+      font-size: 45px;
+      font-weight: 800;
+      line-height: 60px;
+
+      span {
+        color: #2596be;
+      }
+    }
+    .land-text {
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 28px;
+      margin: 1rem 0;
+    }
+    .land-btns {
+      margin: 1.6rem;
+      width: 50%;
+      a {
+        display: block;
+        color: #fff;
+        font-weight: 400;
+        background: #2596be;
+        width: 100%;
+        padding: 12px;
+        border: 0.07rem solid #2596be;
+        border-radius: 0.4rem;
+        text-align: center;
+      }
+    }
+  }
 }
 
 .jobs-btns {
   width: 100%;
   max-width: 87rem;
-    margin: 6% auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    a {
-        display: block;
-        color: #fff;
-        font-weight: 400;
-        width: 100%;
-        background: #2596be;
-        margin: 0 1rem;
-        padding: 12px;
-        border: .07rem solid #2596be;
-        border-radius: 0.7rem;
-        text-align: center;
-    }
-    .find-btn {
-        color: #2596be;
-        background: transparent;
-    }
+  margin: 6% auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  a {
+    display: block;
+    color: #fff;
+    font-weight: 400;
+    width: 100%;
+    background: #2596be;
+    margin: 0 1rem;
+    padding: 12px;
+    border: 0.07rem solid #2596be;
+    border-radius: 0.7rem;
+    text-align: center;
+  }
+  .find-btn {
+    color: #2596be;
+    background: transparent;
+  }
 }
 
 .profile-landing {
@@ -76,17 +78,17 @@
   header {
     .navbar {
       a {
-              font-size: 14px;
-              font-weight: 400;
-              color: #fff;
-              padding: 10px 12px;
-              text-align: center;
-              height: 40px;
-              margin:0 8px;
-              &:hover {
-                color: #2596BE;
-              }
-            }
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        padding: 10px 12px;
+        text-align: center;
+        height: 40px;
+        margin: 0 8px;
+        &:hover {
+          color: #2596be;
+        }
+      }
     }
   }
   .profileLanding-contents {
@@ -100,7 +102,7 @@
       font-size: 50px;
       font-weight: 800;
       line-height: 80px;
-  
+
       span {
         color: #2596be;
       }
@@ -114,23 +116,22 @@
     .land-btns {
       margin: 1.6rem 0;
       width: 50%;
-      a{
+      a {
         display: block;
         color: #fff;
         font-weight: 400;
         background: #2596be;
         width: 100%;
         padding: 12px;
-        border: .07rem solid #2596be;
+        border: 0.07rem solid #2596be;
         border-radius: 0.4rem;
         text-align: center;
       }
     }
-
   }
 
   .AlertTabWrapper {
-    position: fixed;  
+    position: fixed;
     top: 0px;
     right: 0px;
     background-color: #00000089;
@@ -140,9 +141,7 @@
     align-items: center;
     width: 100%;
     cursor: pointer;
-  
   }
-  
 }
 
 // Header & Navbar Styling
@@ -169,12 +168,12 @@ header {
     .menu-icon {
       width: 2.2rem;
       height: auto;
-      color: #2596BE;
+      color: #2596be;
     }
   }
   .nav-container {
     nav {
-      margin:  0;
+      margin: 0;
       position: fixed;
       left: 0;
       top: -120%;
@@ -196,59 +195,59 @@ header {
             font-family: Inter;
             font-size: 18px;
             font-weight: 500;
-            color: #2596BE;
+            color: #2596be;
             padding: 10px;
             height: 40px;
             border: none;
-            margin:0 0px;
+            margin: 0 0px;
             &:hover {
-              background: #2596BE;
+              background: #2596be;
               color: #fff;
             }
-          } 
-        }
-        .nav-btns {
-            display: flex;
-            flex-direction: column;
-            margin-left: 0rem;
-            a {
-                font-size: 18px;
-                font-weight: 500;
-                color: #fff;
-                text-align: center;
-                padding: 10px 40px;
-                height: 40px;
-            }
-            .login-btn {
-                background: transparent;
-                border: .07rem solid #2596be;
-                color: #2596BE;
-                border-radius: 0.4rem;
-                margin: .5rem 0rem;
-                &:hover{
-                  border-color: #fff;
-                  color: #2596be;
-                }
-            }
-            .signup-btn {
-                background: #2596be;
-                border: none;
-                border-radius: 0.4rem;
-                &:hover{
-                  background: #fff;
-                  color: #2596be;
-              }
-            } 
           }
         }
+        .nav-btns {
+          display: flex;
+          flex-direction: column;
+          margin-left: 0rem;
+          a {
+            font-size: 18px;
+            font-weight: 500;
+            color: #fff;
+            text-align: center;
+            padding: 10px 40px;
+            height: 40px;
+          }
+          .login-btn {
+            background: transparent;
+            border: 0.07rem solid #2596be;
+            color: #2596be;
+            border-radius: 0.4rem;
+            margin: 0.5rem 0rem;
+            &:hover {
+              border-color: #fff;
+              color: #2596be;
+            }
+          }
+          .signup-btn {
+            background: #2596be;
+            border: none;
+            border-radius: 0.4rem;
+            &:hover {
+              background: #fff;
+              color: #2596be;
+            }
+          }
+        }
+      }
     }
     .nav-show {
       top: 0;
     }
-  } 
+  }
 }
 
-@media only screen and (min-width:768px) {
+@media only screen and (min-width: 768px) {
   header {
     .h-logo-mobile {
       display: block;
@@ -258,6 +257,8 @@ header {
     }
   }
   .landing-main {
+    background-position: center;
+    background-position-y: center;
     .landing-content {
       margin: 20% 4%;
       height: 80vh;
@@ -274,7 +275,6 @@ header {
       }
     }
   }
-  
 }
 
 @media only screen and (min-width: 1024px) {
@@ -295,7 +295,7 @@ header {
         top: 0;
         height: 6.3vh;
         background: transparent;
-        margin: .7rem 0;
+        margin: 0.7rem 0;
         ul {
           flex-direction: row;
           .navbar {
@@ -310,9 +310,9 @@ header {
               padding: 10px 12px;
               text-align: center;
               height: 40px;
-              margin:0 8px;
+              margin: 0 8px;
               &:hover {
-                color: #2596BE;
+                color: #2596be;
                 background: transparent;
               }
             }
@@ -321,13 +321,13 @@ header {
             flex-direction: row;
             justify-content: space-evenly;
             align-items: center;
-            margin-left: .7rem;
+            margin-left: 0.7rem;
             a {
               font-size: 14px;
               padding: 10px 15px;
             }
             .login-btn {
-              margin: 0 .7rem 0 0;
+              margin: 0 0.7rem 0 0;
               color: #fff;
             }
           }
@@ -336,6 +336,8 @@ header {
     }
   }
   .landing-main {
+    background-position: center;
+    background-position-y: center;
     .landing-content {
       width: 45%;
       margin: 6%;
@@ -362,7 +364,6 @@ header {
         line-height: 45px;
       }
     }
-
   }
 }
 // @media only screen and (min-width: 1280px) {
@@ -417,12 +418,12 @@ header {
 
   gap: 25px;
   margin-left: -10%;
-  width:15%;
+  width: 15%;
   a {
     font-size: 13px;
     svg {
-        height: 25px;
-        width: auto;
+      height: 25px;
+      width: auto;
     }
   }
 }
