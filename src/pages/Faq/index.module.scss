@@ -1,0 +1,26 @@
+$primary-color: #006A90;
+$black-color: #000000;
+
+.heading{
+    color: $primary-color;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48.41px;
+    padding: 30px 0px;
+
+}
+.title{
+    color:$black-color;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24.2px;
+}
+.body{
+    color:$black-color;
+    line-height: 24.2px;
+    font-size: 15px;
+    font-weight: 400;
+}
+.faqItem{
+    margin-bottom: 20px;
+}

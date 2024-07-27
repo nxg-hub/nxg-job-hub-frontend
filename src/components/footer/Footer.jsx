@@ -127,7 +127,7 @@ const Footer = () => {
                     <div>
                       <h2 style={{ fontSize: "2rem", fontWeight: "700", lineHeight: "2.5rem", color:"#2596BE", marginBottom:"1.5rem" }}>Thank You !</h2>
                       <p style={{ fontSize: "1rem", fontWeight: "400", lineHeight:'22px' }}>
-                        `Thank  you {email} for subscribing to the newsletter.<br/>
+                        `Thank you for subscribing to the newsletter.<br/>
                         You should receive a confirmation email soon.`
                       </p>
                     </div>
