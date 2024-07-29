@@ -15,7 +15,13 @@ import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
 const PostJobs = () => {
   const user = useContext(UserContext);
   const currentDate = new Date().toLocaleDateString("en-CA");
-  const { firstName, lastName, accountTypeID: id, picture: profilePicture} = user;
+  const {
+    firstName,
+    lastName,
+    accountTypeID: id,
+    picture: profilePicture,
+  } = user;
+
   const data = {
     employerID: id,
     job_title: "",
@@ -27,8 +33,8 @@ const PostJobs = () => {
     requirements: "",
     job_location: "",
     createdAt: currentDate,
-    employer_name: `${firstName + ' ' + lastName}`,
-    employer_profile_pic: profilePicture ? profilePicture : "N/A" ,
+    employer_name: `${firstName + " " + lastName}`,
+    employer_profile_pic: profilePicture ? profilePicture : "N/A",
     tags: [],
     responsibilities: "",
     benefits: "",
@@ -36,7 +42,7 @@ const PostJobs = () => {
     contact_details: "",
   };
   const [formData, setFormData] = useState(data);
-
+  const [postJobError, setPostJobError] = useState("");
   const [formErrors, setFormErrors] = useState(data);
   const [popup, showpopUp] = useState(undefined);
   const navigate = useNavigate();
@@ -56,7 +62,6 @@ const PostJobs = () => {
       const { authKey } =
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-
       const res = await axios.post(
         `${API_HOST_URL}/api/job-postings/employer-post-job`,
         post,
@@ -66,7 +71,7 @@ const PostJobs = () => {
           },
         }
       );
-      console.log(res.data);
+
       if (res.data)
         showpopUp({
           type: "success",
@@ -77,12 +82,17 @@ const PostJobs = () => {
         navigate("/dashboard/posts");
       }, 5000);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === Number("400")) {
+        setPostJobError(
+          "Your account has not yet been verfied, if you haven't, please upload all specified documents"
+        );
+      } else {
+        setPostJobError("Error in posting job");
+      }
 
       showpopUp({
         type: "danger",
-        message:
-          "Failed to post job. Please check your internet connection and try again.",
+        message: postJobError,
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }
