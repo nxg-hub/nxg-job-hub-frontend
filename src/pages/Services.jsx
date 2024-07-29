@@ -3,10 +3,11 @@ import Header from "../components/header/Header";
 import CategoriesOfService from "../components/Services/CategoriesOfService";
 import af from "../static/images/additionalFeatures.png";
 import sp from "../static/images/securityPrivacy.png";
+import Footer from "../components/footer/Footer";
 
 const Services = () => {
   return (
-    <section className="w-full bg-white pb-20">
+    <section className="w-full bg-white">
       <div className="bg-black">
         <Header />
       </div>
@@ -90,7 +91,7 @@ const Services = () => {
           </div>
         </div>
       </div>
-      <div className="w-[80%] m-auto mt-24 space-y-11">
+      <div className="w-[80%] m-auto mt-24 space-y-11 pb-20">
         <h2 className="sm:text-xl md:text-3xl font-extrabold">
           Get Started with NXG Job Hub
         </h2>
@@ -102,6 +103,7 @@ const Services = () => {
           grow in the tech industry.
         </p>
       </div>
+      <Footer />
     </section>
   );
 };
