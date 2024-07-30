@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "../components/header/Header";
-import AboutBgCoWorkers from "../static/images/AboutBgCoworkers.png";
 import ObjectiveCard from "../components/About/ObjectiveCard";
+import Footer from "../components/footer/Footer";
 
 const About = () => {
   return (
-    <section className="bg-white w-full pb-[50px]">
+    <section className="bg-white w-full">
       <div className="bg-black">
         <Header />
       </div>
@@ -89,7 +89,7 @@ const About = () => {
             that matter and build careers that inspire.
           </p>
         </article>
-        <div className="mt-11 md:flex w-[90%] m-auto">
+        <div className="mt-11 md:flex w-[90%] m-auto pb-20">
           <div className="bg-AboutGroup bg-contain w-[100%] m-auto h-[200px] mb-4 bg-no-repeat md:w-[50%] md:h-[300px]"></div>
           <article className="w-[100%] m-auto space-y-3 md:w-[50%] tracking-widest">
             <h2 className="text-sm md:text-[20px] md:text-right">
@@ -121,6 +121,7 @@ const About = () => {
           </article>
         </div>
       </div>
+      <Footer />
     </section>
   );
 };
