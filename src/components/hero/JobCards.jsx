@@ -73,13 +73,11 @@ const JobCards = () => {
           >
             {jobs.length > 0 &&
               jobs.map((job) => (
-                <SwiperSlide key={job.id || job.heading}>
-                  {" "}
-                  // Use unique identifier (id preferred)
+                <SwiperSlide key={job.jobID || job.job_title}>
                   <div className="detail-holder">
                     <div className="price-shadow">
                       <div className="p-shadows"></div>
-                      <div className="p-detail">{job.price}</div>
+                      <div className="p-detail">{job.salary}</div>
                     </div>
                     <div className="card-content">
                       <div className="card-location">
@@ -97,25 +95,26 @@ const JobCards = () => {
                             marginLeft: ".6rem",
                           }}
                         >
-                          {job.location}
+                          {job.job_location}
                         </p>
                       </div>
                       <div className="card-detail">
-                        <h3>{job.heading}</h3>
+                        <h3>{job.job_title}</h3>
                         <div className="card-detail-texts">
-                          <span>{job.schedule}</span>
-                          <p>{job.body}</p>
+                          {job.job_title}-<span>{job.requirements}</span>
+                          <p>{job.job_description}</p>
                         </div>
                         <div className="read" style={{ marginTop: "1rem" }}>
                           <Link
-                            to={`/detail/${job.id}`}
+                            to={`/detail/${job.jobID}`}
                             style={{
                               color: "#2596BE",
                               fontSize: "18px",
                               fontWeight: "400",
                             }}
                           >
-                            {job.herf}
+                            Read More
+                            {/* {job.herf} */}
                           </Link>
                         </div>
                       </div>

@@ -29,6 +29,7 @@ import { VerificationProvider } from "./pages/Dashboard/Employer/routes/Employer
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
+import Findjob from "./pages/FindJob/FindjobPage.jsx";
 function App() {
   return (
     <>
@@ -37,6 +38,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/findjob" element={<Findjob />} />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
