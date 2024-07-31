@@ -16,7 +16,7 @@ const Footer = () => {
     { title: "Our services", href: "/services" },
     { title: "Privacy policy", href: "/privacy" },
     { title: "Terms and conditions", href: "/terms" },
-    { title: "Our alliances", href: "/terms" }
+    { title: "Our alliances", href: "#" }
   ];
   const HelpFooterLinks = [
     { title: "FAQs", href: "/faqs" },
@@ -97,9 +97,9 @@ const Footer = () => {
               <h5>Subscribe To Our Newsletter</h5>
               <p>Subscribe to get job notifications and other useful updates  in your inbox.</p>
             </div>
-            <form name='newsletter' method='POST' onSubmit={handleSubmit}>
-              <input type="hidden" name='form-name' value='newsletter' />
-              <div style={{width:'100%'}}> 
+            <form className='form-body' name='newsletter' method='POST' onSubmit={handleSubmit}>
+              {/* <input type="hidden" name='form-name' value='newsletter' /> */}
+              <div className="input-container" style={{width:'100%'}}> 
                 {errors.email && <p style={{ color: 'red', marginTop:'-.95rem', fontSize:'.8rem' }}>{errors.email}</p>}
                 <input 
                   type="email" 
@@ -127,7 +127,7 @@ const Footer = () => {
                     <div>
                       <h2 style={{ fontSize: "2rem", fontWeight: "700", lineHeight: "2.5rem", color:"#2596BE", marginBottom:"1.5rem" }}>Thank You !</h2>
                       <p style={{ fontSize: "1rem", fontWeight: "400", lineHeight:'22px' }}>
-                        `Thank  you {email} for subscribing to the newsletter.<br/>
+                        `Thank you for subscribing to the newsletter.<br/>
                         You should receive a confirmation email soon.`
                       </p>
                     </div>
@@ -148,27 +148,27 @@ const Footer = () => {
             <h6>Follow us</h6>
             <div className="media-handles">
               <div className="facebk">
-                <Link>
+                <Link to={"https://web.facebook.com/nextgenhubdigital?mibextid=kFxxJD&_rdc=1&_rdr"} target="_blank">
                   <BiLogoFacebook style={{width:"1.1rem", height:"1.1rem", color:"#2596be", marginTop:".3rem"}}/>
                 </Link>
               </div>
               <div className="google">
-                <Link>
+                <Link to={"#"} >
                   <BiLogoGoogle style={{width:"1.1rem", height:"1.1rem", color:"#2596be", marginTop:".3rem"}}/>
                 </Link>
               </div>
               <div className="linkedin">
-                <Link>
+                <Link to={"https://www.linkedin.com/company/nextgenhub-digital/"}  target="_blank">
                   <BiLogoLinkedin style={{width:"1.1rem", height:"1.1rem", color:"#2596be", marginTop:".2rem"}}/>
                 </Link>
               </div>
               <div className="twit">
-                <Link>
+                <Link to={"#"}>
                   <RiTwitterXFill style={{width:"1.1rem", height:"1.1rem", color:"#2596be", marginTop:".3rem"}}/>
                 </Link>
               </div>
               <div className="insta">
-                <Link>
+                <Link to={"#"}>
                   <SiInstapaper style={{width:"1.1rem", height:"1.1rem", color:"#2596be", marginTop:".3rem"}}/>
                 </Link>
               </div>

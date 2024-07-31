@@ -289,8 +289,8 @@
   // Contact Page Styling
   .contact-main {
     position: absolute;
-    top: 12%;
-    left: 0%;
+    // top: 12%;
+    // left: 0%;
     background-color: #ffffff;
     width: 100%;
     max-width: 40rem;
@@ -347,10 +347,10 @@
     .date {
       width: 28rem;
     }
-    .contact-main {
-      top: 15%;
-      left: 8%;
-    }
+    // .contact-main {
+    //   top: 15%;
+    //   left: 8%;
+    // }
 }
   
 @media only screen and (min-width:1024px) {
@@ -374,10 +374,10 @@
     width: 26rem;
   }
 
-  .contact-main {
-    top: 22%;
-    left: 18%;
-  }
+  // .contact-main {
+  //   top: 22%;
+  //   left: 18%;
+  // }
    
 }
 @media only screen and (min-width:1440px) {
@@ -401,9 +401,9 @@
     width: 26rem;
   }
 
-  .contact-main {
-    top: 22%;
-    left: 28%;
-  }
+  // .contact-main {
+  //   top: 22%;
+  //   left: 28%;
+  // }
    
 }
