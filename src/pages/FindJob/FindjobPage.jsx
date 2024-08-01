@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./FindJob.scss";
 import { Link } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
-import avater from "../../static/images/Ellipse 607.png";
+import avater from "../../static/images/user.png";
+import Logo from "../../static/images/nxg-logo.png";
+import Footer from "../../components/footer/Footer";
 
 const FindjobPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,20 +59,28 @@ const FindjobPage = () => {
 
   return (
     <div className="jobfinder">
-      <div className="searchFilter">
-        <input
-          className="input"
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <IoSearchOutline className="search-icon" />
-        {searchTerm && (
-          <button className="clear-button" onClick={handleClearSearch}>
-            Clear
-          </button>
-        )}
+      <div className="header">
+        <div className="h-logo" style={{ width: "160px", height: "65px" }}>
+          <Link to="/">
+            {" "}
+            <img src={Logo} alt="Nxg Company Logo" className="logo" />
+          </Link>
+        </div>
+        <div className="searchFilter">
+          <input
+            className="input"
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <IoSearchOutline className="search-icon" />
+          {searchTerm && (
+            <button className="clear-button" onClick={handleClearSearch}>
+              Clear
+            </button>
+          )}
+        </div>
       </div>
 
       {isLoading ? (
@@ -82,7 +92,9 @@ const FindjobPage = () => {
               {filteredJobs.map((data) => (
                 <div className="jobPost" key={data.id}>
                   <div className="employer-img">
-                    <img src={data.employer_profile_pic || avater} alt="" />
+                    <div className="user-img">
+                      <img src={data.employer_profile_pic || avater} alt="" />
+                    </div>
                     <div className="employer-details">
                       <h4 className="name">
                         <b>{data.employer_name || "Kristy Haag"}</b>
@@ -101,14 +113,15 @@ const FindjobPage = () => {
                       <h3 className="descb">
                         <b>Description:</b> {data.job_description}
                       </h3>
-                      <Link to="#" className="linkMore">
+                      <Link to="/login" className="linkMore">
                         See More
                       </Link>
                     </div>
 
                     <div className="btns">
-                      <button className="btnA">Accept</button>
-                      <button className="btnB">Decline</button>
+                      <Link to="/login">
+                        <button className="btnA">Accept</button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -120,6 +133,7 @@ const FindjobPage = () => {
           )}
         </>
       )}
+      <Footer />
     </div>
   );
 };

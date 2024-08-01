@@ -30,6 +30,9 @@ import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
 import Findjob from "./pages/FindJob/FindjobPage.jsx";
+import Faq from "./pages/Faq/Faq.jsx";
+import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
+import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 function App() {
   return (
     <>
@@ -39,6 +42,12 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/findjob" element={<Findjob />} />
+        <Route path="/faqs" element={<Faq/>} />
+        <Route path="/privacy" element={<PrivacyPolicy/>} />
+        <Route
+              path="/terms"
+              element={<TermsAndCondition/>}
+            />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
@@ -88,11 +97,8 @@ function App() {
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
             <Route path="password-settings" element={<Passwordsettings />} />
-            <Route path="Privacy" element={<h2>Privacy</h2>} />
-            <Route
-              path="terms-and-conditions"
-              element={<h2>Terms and Conditions</h2>}
-            />
+            
+            
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>
