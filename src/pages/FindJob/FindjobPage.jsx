@@ -98,7 +98,7 @@ const FindjobPage = () => {
                       <h3>
                         <b>Budget:</b> {data.salary}
                       </h3>
-                      <h3>
+                      <h3 className="descb">
                         <b>Description:</b> {data.job_description}
                       </h3>
                       <Link to="#" className="linkMore">

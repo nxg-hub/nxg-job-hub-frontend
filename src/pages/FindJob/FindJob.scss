@@ -1,5 +1,8 @@
 .jobfinder {
   padding: 50px;
+  @media (max-width: 850px) {
+    padding: 20px;
+  }
   .searchFilter {
     display: flex;
     align-items: center;
@@ -28,6 +31,9 @@
     margin-bottom: 2rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     padding: 30px 50px;
+    @media (max-width: 850px) {
+      padding: 30px 80px;
+    }
   }
   .details {
     display: flex;
@@ -36,6 +42,11 @@
     align-items: center;
     gap: 3rem;
     position: relative;
+  }
+  .descb {
+    @media (max-width: 850px) {
+      width: 80%;
+    }
   }
   .linkMore {
     color: rgba(35, 56, 98, 1);
@@ -47,6 +58,9 @@
   }
   .employer-img {
     width: 20%;
+    @media (max-width: 850px) {
+      width: auto;
+    }
     .employer-img img {
       width: 100%;
       height: auto;
@@ -70,6 +84,9 @@
   padding: 5px 100px;
   color: #ffff;
   border-radius: 1rem;
+  @media (max-width: 850px) {
+    padding: 5px 50px;
+  }
 }
 
 .btnB {
@@ -77,4 +94,7 @@
   color: rgba(203, 60, 60, 1);
   padding: 5px 100px;
   border-radius: 1rem;
+  @media (max-width: 850px) {
+    padding: 5px 50px;
+  }
 }
