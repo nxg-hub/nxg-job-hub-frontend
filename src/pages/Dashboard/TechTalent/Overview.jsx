@@ -54,7 +54,7 @@ function TechTalentOverview() {
             <img src={HeroImg} alt="A working secetary illustration" />
           </div>
         </div>
-      ) : ( null )}
+      ) : null}
       <div className="dash-profile-recommended">
         <div className="recommend-jobs-section">
           <div className="recommend-title">

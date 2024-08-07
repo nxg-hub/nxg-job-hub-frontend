@@ -39,78 +39,83 @@ const Sidebar = () => {
     {
       path: "/dashboard",
       name: "Dashboard",
-      icon: <Dashboard />
+      icon: <Dashboard />,
     },
     {
       path: "notifications",
       name: "Notifications",
-      icon: <Notification />
+      icon: <Notification />,
     },
     {
-      path: "job-listings",
+      path: "/job-listings",
       name: "Job Listings",
-      icon: <JobListings />
+      icon: <JobListings />,
     },
     {
       path: "wallet",
       name: "Wallet",
-      icon: <Wallet />
+      icon: <Wallet />,
     },
     {
       path: "profile",
       name: " My Profile",
-      icon: <MyProfile />
+      icon: <MyProfile />,
     },
     {
       path: "applications",
       name: "Applications",
-      icon: <Applications />
+      icon: <Applications />,
     },
     {
       path: "saved",
       name: "Saved Jobs",
-      icon: <SavedJobs fill="white" />
+      icon: <SavedJobs fill="white" />,
     },
     {
       path: "analytics",
       name: "Analytics",
-      icon: <Analytics />
+      icon: <Analytics />,
     },
     {
       path: "subscription",
       name: "Subscription",
-      icon: <PiSubtitlesBold />
+      icon: <PiSubtitlesBold />,
     },
-  ]
+  ];
 
   useEffect(() => {
     const fetchTalentData = async () => {
       try {
-        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        const loginKey =
+          window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+          window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
-          console.error('Authentication key not available.');
+          console.error("Authentication key not available.");
           return;
         }
         const { authKey, id } = JSON.parse(loginKey);
         if (!authKey || !id) {
-          console.error('Auth key or user id not available.');
+          console.error("Auth key or user id not available.");
           return;
         }
 
-        const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
-          headers: {
-            'Content-Type' : 'application/json',
-            authorization: authKey,
-          },
-        });
+        const response = await axios.get(
+          `${API_HOST_URL}/api/v1/tech-talent/get-user`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: authKey,
+            },
+          }
+        );
         const talentData = response.data; // Assuming the response is an object with employer data
-      // console.log(talentData);
+        // console.log(talentData);
 
-      // Update state with fetched data
-      setJobInterest(talentData.jobInterest || "");
-      setProfilePicture(talentData.profilePicture || "");
+        // Update state with fetched data
+        setJobInterest(talentData.jobInterest || "");
+        setProfilePicture(talentData.profilePicture || "");
       } catch (error) {
-        console.error('Error fetching talent data:', error);
+        console.error("Error fetching talent data:", error);
       }
     };
     fetchTalentData(); // Invoke the fetchUserData function
@@ -154,20 +159,23 @@ const Sidebar = () => {
           },
         }
       );
-      setProfilePicture(res.data.secure_url)
+      setProfilePicture(res.data.secure_url);
       setMessage({
         type: "info",
         content: "Profile picture updated.",
       });
       setTimeout(() => setMessage(null), 5000);
-      const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
-        headers: {
-          'Content-Type' : 'application/json',
-          authorization: authKey,
-        },
-      });
+      const response = await axios.get(
+        `${API_HOST_URL}/api/v1/tech-talent/get-user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: authKey,
+          },
+        }
+      );
       const techId = response.data.techId;
-     await axios.put(
+      await axios.put(
         `https://job-hub-91sr.onrender.com/api/v1/tech-talent/${techId}`,
         { profilePicture: `${res.data.secure_url}` },
         {
@@ -176,25 +184,24 @@ const Sidebar = () => {
             "Content-Type": "application/json",
           },
         }
-        );
-        // updateProfilePicture = (res.data.secure_url);
-        // const uploadedPictureUrl = updateProfilePicture
-        // console.log("picture updated", uploadedPictureUrl);
-       
+      );
+      // updateProfilePicture = (res.data.secure_url);
+      // const uploadedPictureUrl = updateProfilePicture
+      // console.log("picture updated", uploadedPictureUrl);
     } catch (err) {
       console.log(err);
     }
   };
   return (
-    <div  className={s.Sidebar}>
+    <div className={s.Sidebar}>
       <Link to="/" className={s.menuIcon}>
         <img src={logo} alt="logo" />
       </Link>
-      
+
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={{padding: 0}}>
-            {profilePicture ? <img src={ profilePicture} alt=""/> :  <CiUser />}
+          <div className={s.displayPic} style={{ padding: 0 }}>
+            {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label htmlFor="profilePicture">
             <ChangeProfilePicture title="upload profile picture" />
@@ -212,16 +219,23 @@ const Sidebar = () => {
       </div>
       <ul className={s.list}>
         {menuItem.map((item, index) => (
-          <NavLink end to={item.path} key={index} className={`${s.dashboardItem} `}>
+          <NavLink
+            end
+            to={item.path}
+            key={index}
+            className={`${s.dashboardItem} `}
+          >
             <div>{item.icon}</div>
             <p>{item.name}</p>
-        </NavLink>
+          </NavLink>
         ))}
         <li className={`${s.dashboardItem} `}>
           <div className={s.dropdownTitle}>
-            <div><Settings /></div>
+            <div>
+              <Settings />
+            </div>
             <span>
-             <p> Settings</p>
+              <p> Settings</p>
               <PiCaretDown />
             </span>
           </div>
@@ -237,7 +251,6 @@ const Sidebar = () => {
             <NavLink end to="privacy" className={`${s.dashboardItem} `}>
               {" "}
               <Privacy /> <p>Privacy</p>
-
             </NavLink>
             <NavLink
               end
@@ -250,15 +263,19 @@ const Sidebar = () => {
           </ul>
         </li>
         <NavLink end to="help" className={`${s.dashboardItem} `}>
-          <div><Help /></div>
-         <p> Help </p>
+          <div>
+            <Help />
+          </div>
+          <p> Help </p>
         </NavLink>
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div><Logout /></div>
+        <div>
+          <Logout />
+        </div>
         <p> Logout </p>
       </NavLink>
       {message && <Notice type={message.type} message={message.content} />}
@@ -280,8 +297,8 @@ const Sidebar = () => {
             background: "#ffffff",
             border: "none",
             borderRadius: "24px",
-            padding:"2rem 1rem",
-            zIndex: "100"
+            padding: "2rem 1rem",
+            zIndex: "100",
           }}
         >
           <Dialog.Panel>

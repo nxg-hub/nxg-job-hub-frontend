@@ -42,12 +42,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/findjob" element={<Findjob />} />
-        <Route path="/faqs" element={<Faq/>} />
-        <Route path="/privacy" element={<PrivacyPolicy/>} />
-        <Route
-              path="/terms"
-              element={<TermsAndCondition/>}
-            />
+        <Route path="/faqs" element={<Faq />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
@@ -78,7 +75,6 @@ function App() {
             }
           >
             <Route path="" element={<Overview />} />
-
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
             {/* <Route path="profile" element={<VerificationProvider>
@@ -90,15 +86,13 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
-            <Route path="saved" element={<h2>Saved Jobs </h2>} />
-            <Route path="wallet" element={<Wallet />} />
-            {/* <Route path="job-listings" element={<JobListings />} /> */}
+            <Route path="saved" element={<Saved />} />
+            <Route path="wallet" element={<Wallet />} />W
+            <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
             <Route path="password-settings" element={<Passwordsettings />} />
-            
-            
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>
@@ -112,7 +106,7 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
-        <Route path="job-listings" element={<JobListings />} />
+        {/* <Route path="job-listings" element={<JobListings />} /> */}
       </Routes>
     </>
   );
