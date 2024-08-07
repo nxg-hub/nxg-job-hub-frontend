@@ -86,7 +86,7 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
-            <Route path="saved" element={<Saved />} />
+            {/*<Route path="saved" element={<Saved />} />*/}
             <Route path="wallet" element={<Wallet />} />W
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
