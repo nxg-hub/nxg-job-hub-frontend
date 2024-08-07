@@ -25,6 +25,7 @@ const JobListings = () => {
 
   return (
     <div className="relative">
+      <h2>job Listing</h2>
       {(showDetails || successfull) && (
         <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
       )}

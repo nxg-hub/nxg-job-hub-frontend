@@ -1,9 +1,7 @@
-import s from './index.module.scss'
+import s from "./index.module.scss";
 
 const SavedJobCard = () => {
-  return (
-    <div className={s.SavedJobCard}></div>
-  )
-}
+  return <div className={s.SavedJobCard}></div>;
+};
 
-export default SavedJobCard
+export default SavedJobCard;
