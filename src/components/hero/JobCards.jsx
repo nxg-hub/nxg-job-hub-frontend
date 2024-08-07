@@ -101,7 +101,7 @@ const JobCards = () => {
                       <div className="card-detail">
                         <h3>{job.job_title}</h3>
                         <div className="card-detail-texts">
-                          {job.job_title}-<span>{job.requirements}</span>
+                          {job.job_title}
                           <p>{job.job_description}</p>
                         </div>
                         <div className="read" style={{ marginTop: "1rem" }}>
