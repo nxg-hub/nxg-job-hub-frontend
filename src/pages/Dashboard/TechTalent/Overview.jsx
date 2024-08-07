@@ -27,6 +27,7 @@ function TechTalentOverview() {
     (state) => state.NearbyJobSlice.displayJob
   );
   const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
+  const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -124,7 +125,9 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {showNearByJobs ? (
+          {nearJobLoader ? (
+            <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
+          ) : showNearByJobs ? (
             nearByJobs.map((jobRecommendation, i) => {
               // jobRecommendation.company_logo = figma;
               return (

@@ -22,8 +22,7 @@ export const postEndPoint = (url) => {
           return response.json();
         })
         .then((data) => {
-          setData(data);
-          setLoading(false);
+          console.log(data);
         })
 
         .catch((error) => {
@@ -32,5 +31,5 @@ export const postEndPoint = (url) => {
     };
     fetchData();
   }, []);
-  return { data, loading };
+  //   return { data, loading };
 };
