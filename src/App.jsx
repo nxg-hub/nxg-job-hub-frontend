@@ -27,7 +27,7 @@ import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
-import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
+import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
 import Findjob from "./pages/FindJob/FindjobPage.jsx";
 import Faq from "./pages/Faq/Faq.jsx";
@@ -86,7 +86,7 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
-            <Route path="saved" element={<h2>Saved Job </h2>} />
+            {/*<Route path="saved" element={<Saved />} />*/}
             <Route path="wallet" element={<Wallet />} />W
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
