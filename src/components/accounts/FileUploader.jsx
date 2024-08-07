@@ -10,7 +10,7 @@ const FileUploader = ({
   onFileChange,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [fileTypeError, setFileTypeError] = useState('')
+  const [fileTypeError, setFileTypeError] = useState("");
   const [url, setUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const fileInput = useRef(null);
@@ -24,10 +24,6 @@ const FileUploader = ({
   const onDragLeave = () => fileInput.current.classList.remove("dragover");
   const onDrop = () => fileInput.current.classList.remove("dragover");
 
-  const [document, setDocument] = useState("")
-  const onDragEnter = () => fileInput.current.classList.add('dragover');
-  const onDragLeave = () => fileInput.current.classList.remove('dragover');
-  const onDrop = () => fileInput.current.classList.remove('dragover');
   const uploadImage = async (file) => {
     setLoading(true);
     setError(false);
@@ -61,23 +57,26 @@ const FileUploader = ({
   const uploadFiles = (files) => {
     const file = files[0];
     if (!files || files.length === 0) {
-      alert("Select a file")
+      alert("Select a file");
       return;
     }
-    const allowedFileTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+    const allowedFileTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
 
     if (!allowedFileTypes.includes(file.type)) {
       onFileSelectError({ error: "Only DOC and PDF files are allowed" });
-      setFileTypeError('Only DOC and PDF files are allowed')
+      setFileTypeError("Only DOC and PDF files are allowed");
       return;
     }
 
-    
     if (file.size > 5 * 1024 * 1024) {
       onFileSelectError({ error: "File size cannot exceed 5MB" });
       return;
     }
-    setDocument(files[0]?.name)
+    setDocument(files[0]?.name);
     uploadImage(file);
   };
 
@@ -95,9 +94,6 @@ const FileUploader = ({
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDrop={onDrop}>
-        <div className="drop-file-input-img-label">
-        onDrop={onDrop}
-      >
         <div className="drop-file-input-img-label flex justify-center flex-col items-center">
           <IoMdCloudUpload className="upload-img" />
           <div className="drop-file-labels">
@@ -114,7 +110,7 @@ const FileUploader = ({
           onChange={(e) => uploadFiles(e.target.files)}
           id="drop-file-input"
         />
-     <span>   {fileTypeError}</span>
+        <span> {fileTypeError}</span>
       </div>
       {url && (
         <div className="drop-file-preview">
