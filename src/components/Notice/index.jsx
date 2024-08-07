@@ -12,7 +12,6 @@ const Notice = ({ message, type, ...props }) => {
   };
   return (
     <div className={`${s.Notice} ${s[type]}`} {...props}>
-      {" "}
       <span>
         {noticeTypes[type]} {message}
       </span>{" "}

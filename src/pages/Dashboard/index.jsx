@@ -27,7 +27,7 @@ const Dashboard = () => {
     email: "",
     residentialAddress: "",
     phoneNumber: "",
-    profilePicture: ""
+    profilePicture: "",
   });
   const [authKey, setAuth] = useState(undefined);
   const [loading, setLoading] = useState({
@@ -67,10 +67,10 @@ const Dashboard = () => {
         JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         {};
-// get authkey if null, redirect to login
-if (localdata.authKey) {
-  setAuth(localdata.authKey);
-  try {
+      // get authkey if null, redirect to login
+      if (localdata.authKey) {
+        setAuth(localdata.authKey);
+        try {
           // get usertype  redirect to appropriate dashboard
           const { data } = await axios.get(
             `${API_HOST_URL}/api/v1/auth/get-user`,

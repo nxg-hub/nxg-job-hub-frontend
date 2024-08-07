@@ -87,7 +87,6 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         //   setLoading(false);
         //   return;
         // }
-       
         const response = await axios.get(
           `${API_HOST_URL}/api/employers/get-employer`,
           {
@@ -99,6 +98,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         );
 
         const employerId = response.data.employerID;
+
         const res = await axios.put(
           `${API_HOST_URL}/api/employers/${employerId}`,
           formData,
@@ -133,7 +133,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
   return (
     <div style={{ padding: "2rem" }}>
       <BsArrowLeft className="verify-arrow" onClick={handleBack} />
-      <div className="verifiedForm-main text-center">
+      <div className="verifiedForm-main">
         <h2>
           Verify Your Account To Enjoy All Our Services And Make New Recruits
           Without Any Restrictions To Your Account!
@@ -141,8 +141,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         <form className="verified-section" onSubmit={handleSubmit}>
           {errors.formData && (
             <p
-              style={{ color: "red", marginTop: "-.95rem", fontSize: ".8rem" }}
-            >
+              style={{ color: "red", marginTop: "-.95rem", fontSize: ".8rem" }}>
               {errors.formData}
             </p>
           )}
@@ -180,8 +179,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               cols="10"
               rows="10"
               value={formData.namesOfDirectors.join("\n")}
-              onChange={(e) => handleValue(e, "namesOfDirectors")}
-            ></textarea>
+              onChange={(e) => handleValue(e, "namesOfDirectors")}></textarea>
           </div>
           <div className="verified-btn">
             {/* <button type='submit'>Verify Account</button> */}
@@ -198,8 +196,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               background: "rgba(0, 0, 0, 0.6)",
               height: "100vh",
               paddingTop: "4%",
-            }}
-          >
+            }}>
             <Dialog.Panel
               style={{
                 width: "100%",
@@ -211,16 +208,14 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                 background: "#ffffff",
                 borderRadius: "30px",
                 margin: "auto",
-              }}
-            >
+              }}>
               <Dialog.Title
                 style={{
                   fontFamily: "Manrope",
                   margin: "2rem 0",
                   color: "#000000",
                   textAlign: "center",
-                }}
-              >
+                }}>
                 <div className="veri-modal">
                   <h2>Verification Successful</h2>
                   <Confetti />
@@ -232,8 +227,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                       margin: "1rem 0",
                       width: "100%",
                       maxWidth: "500px",
-                    }}
-                  >
+                    }}>
                     Congratulations your account has been verified successfully.
                   </p>
                 </div>
@@ -249,8 +243,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                       fontSize: "1rem",
                       fontWeight: "400",
                     }}
-                    to={"/dashboard"}
-                  >
+                    to={"/dashboard"}>
                     Back To Dashboard
                   </Link>
                 </div>
