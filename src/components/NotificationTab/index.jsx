@@ -2,16 +2,15 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import AlertTabItem from "./NotificationItem";
 import s from "./index.module.scss";
 import { CiMenuKebab } from "react-icons/ci";
-import  Search from "../../../src/static/icons/round-search.svg?react";
+import Search from "../../../src/static/icons/round-search.svg?react";
 
 const NotificationTab = () => {
   const [search, setSearch] = useState("");
   const [notifications, setNotifications] = useState([]);
-  
-  const localNotifs = useMemo(() => {
-    return window.localStorage.getItem("NXGNOTIFS") ||"[]";
-  }, []);
 
+  const localNotifs = useMemo(() => {
+    return window.localStorage.getItem("NXGNOTIFS") || "[]";
+  }, []);
 
   const getReceivedNotifs = useCallback(() => {
     if (localNotifs) {

@@ -12,13 +12,15 @@ import { useVerification } from "../../Employer/routes/EmployerDashProfile/Verif
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
+import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 
 function DashProfile() {
   const user = useContext(UserContext);
+
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [profilePicture, setProfilePicture] = useState(user.profilePicture);
+  const [profilePicture, setProfilePicture] = useState("");
   const [bio, setBio] = useState("");
   const [jobInterest, setJobInterest] = useState("");
   const [residentialAddress, setResidentialAddress] = useState("");
@@ -66,6 +68,7 @@ function DashProfile() {
       );
 
       const talentData = response.data; // Assuming the response is an object with employer data
+      setProfilePicture(talentData.profilePicture);
       // console.log(talentData);
 
       // Update state with fetched data
@@ -93,7 +96,7 @@ function DashProfile() {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setEmail(user.email);
-      setProfilePicture(user.profilePicture || "")
+      setProfilePicture(user.profilePicture || "");
       fetchTalentData();
     }
   }, [user, fetchTalentData]);
@@ -202,7 +205,6 @@ function DashProfile() {
   const addExperience = () => {
     setOpenInput(!openInput);
   };
-  
 
   return (
     <div className="dash-profile-main-container">
@@ -285,8 +287,7 @@ function DashProfile() {
                     cols="5"
                     rows="5"
                     value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                  ></textarea>
+                    onChange={(e) => setBio(e.target.value)}></textarea>
                 </div>
                 <div className="my-profile-email">
                   <Inputs type="email" title="Email" value={email} readOnly />
@@ -329,8 +330,7 @@ function DashProfile() {
             </div>
             <div
               className="add-experience-btn add-skill"
-              onClick={handleAddSkill}
-            >
+              onClick={handleAddSkill}>
               <GoPlus className="plus-icon" /> <span>Add Skill</span>
             </div>
             {showDropdown && (
@@ -378,8 +378,7 @@ function DashProfile() {
                   borderRadius: "24px",
                   padding: "2rem 1rem",
                   zIndex: "100",
-                }}
-              >
+                }}>
                 <Dialog.Panel>
                   <Dialog.Title style={{ textAlign: "center" }}>
                     Add Your Experience
@@ -392,8 +391,7 @@ function DashProfile() {
                       alignItems: "center",
                       gap: "8px",
                       marginTop: "2rem",
-                    }}
-                  >
+                    }}>
                     <input
                       type="text"
                       placeholder="Enter your job title"
@@ -424,8 +422,7 @@ function DashProfile() {
                       alignItems: "center",
                       gap: "8px",
                       margin: "3rem auto",
-                    }}
-                  >
+                    }}>
                     <button
                       onClick={handleInput}
                       style={{
@@ -438,8 +435,7 @@ function DashProfile() {
                         color: "#fff",
                         fontSize: "25px",
                         fontWeight: "500",
-                      }}
-                    >
+                      }}>
                       Add Input
                     </button>
                   </div>

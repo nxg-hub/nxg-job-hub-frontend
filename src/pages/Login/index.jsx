@@ -34,6 +34,8 @@ const Login = () => {
       });
 
       const authKey = res.headers.authorization;
+      console.log(res);
+      console.log(authKey);
 
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
@@ -137,16 +139,14 @@ const Login = () => {
             <div className="forgot">
               <Link
                 to="/forgotpassword"
-                style={{ color: "#A39E9E", textDecoration: "underline" }}
-              >
+                style={{ color: "#A39E9E", textDecoration: "underline" }}>
                 Forgot Password?
               </Link>
             </div>
             <div className="remember">
               <div
                 className="check"
-                style={{ display: "flex", alignItems: "center" }}
-              >
+                style={{ display: "flex", alignItems: "center" }}>
                 <input
                   id="checkbox"
                   type="checkbox"
@@ -161,8 +161,7 @@ const Login = () => {
                     fontWeight: "500",
                     fontFamily: "Inter",
                     margin: ".4rem",
-                  }}
-                >
+                  }}>
                   Keep me logged in
                 </label>
               </div>
@@ -176,8 +175,7 @@ const Login = () => {
             Don't have an account?{" "}
             <Link
               to="/register"
-              style={{ color: "#2596BE", textDecoration: "underline" }}
-            >
+              style={{ color: "#2596BE", textDecoration: "underline" }}>
               Sign Up
             </Link>
           </p>
@@ -185,7 +183,6 @@ const Login = () => {
       </div>
 
       {popup && <Notice type={popup.type} message={popup.message} />}
-
     </div>
   );
 };

@@ -76,13 +76,15 @@ const Services = () => {
             </div>
             <div className="mt-5 text-sm md:text-[20px] tracking-widest space-y-5">
               <p>
-                *Data Encryption: Safeguard your information with advanced
+                &#8226;Data Encryption: Safeguard your information with advanced
                 encryption.
               </p>
-              <p>*Privacy Controls: Manage your data sharing preferences.</p>
               <p>
-                *Compliance Standards: Adhere to industry-standard security
-                practices.
+                &#8226;Privacy Controls: Manage your data sharing preferences.
+              </p>
+              <p>
+                &#8226;Compliance Standards: Adhere to industry-standard
+                security practices.
               </p>
             </div>
           </article>

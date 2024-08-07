@@ -1,12 +1,7 @@
-import s from './index.module.scss'
+import s from "./index.module.scss";
 
 const SavedJobs = () => {
-  return (
-    <div className={s.SavedJobs}>
+  return <div className={s.SavedJobs}>I can edit the saved job page</div>;
+};
 
-      
-    </div> 
-  )
-}
-
-export default SavedJobs
+export default SavedJobs;

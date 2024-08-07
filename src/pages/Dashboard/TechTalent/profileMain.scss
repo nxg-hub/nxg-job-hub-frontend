@@ -12,15 +12,15 @@
       gap: 5px;
       align-items: center;
       cursor: pointer;
-      &:hover{
+      &:hover {
         font-size: 23px;
-        transition: font-size .25s linear;
+        transition: font-size 0.25s linear;
       }
       svg {
         display: none;
         font-size: 25px;
         color: #004259;
-        @media (max-width: 850px){
+        @media (max-width: 850px) {
           display: block;
         }
       }
@@ -293,7 +293,7 @@
   }
   //Recommended Jobs Styling
   .dash-profile-recommended {
-    margin: 1rem 0;
+    // margin: 1rem 0;
     .recommend-jobs-section {
       display: flex;
       justify-content: space-between;

@@ -17,7 +17,9 @@ function ProfileSearch() {
         ? fetchedJobs.filter(
             (job) =>
               job.job_title.toLowerCase().includes(search.toLowerCase()) ||
-              job.job_location.toLowerCase().includes(locationSearch.toLowerCase())
+              job.job_location
+                .toLowerCase()
+                .includes(locationSearch.toLowerCase())
           )
         : fetchedJobs;
     setJobs(filteredJobs);
@@ -61,8 +63,7 @@ function ProfileSearch() {
           fontWeight: "500",
           marginBottom: ".5rem",
           color: "rgba(0, 0, 0, 0.47)",
-        }}
-      >
+        }}>
         Search for Jobs
       </p>
       <div className="profile-search-container">
@@ -87,7 +88,7 @@ function ProfileSearch() {
         </div>
       </div>
       {jobs.length !== 0 && (
-        <div className="fetch-jobs">
+        <div className="fetch-jobs h-[300px] bg-transparent overflow-scroll">
           {jobs
             .filter((job) => {
               const titleMatch =
@@ -102,7 +103,11 @@ function ProfileSearch() {
             })
             .map((job, index) => {
               return (
-                <SearchJobCard key={index} job={job} location={job.job_location} />
+                <SearchJobCard
+                  key={index}
+                  job={job}
+                  location={job.job_location}
+                />
               );
             })}
         </div>
