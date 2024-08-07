@@ -1,44 +1,72 @@
 import React, { useState } from "react";
 import Inputs from "../../../../components/accounts/Inputs";
 import "./settings.scss";
+import axios from "axios";
+import { API_HOST_URL } from "../../../../utils/api/API_HOST";
+import { Eye } from "../../../../utils/functions/PasswordEye";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 function Passwordsettings() {
-  
-  // const [showPassword, setShowPassword] = useState(false);
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
+  const [showPassword, setShowPassword] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  // const handleShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
-    // Your password validation logic
-    const isValidPassword =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-        newPassword
-      );
+    try {
+      // Your password validation logic
+      const isValidPassword =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+          newPassword
+        );
 
-    if (!isValidPassword) {
-      setPasswordError(
-        "Password should be a minimum of 8 characters and should include at least 1 special character, numbers, and letters!"
+      if (!isValidPassword) {
+        setPasswordError(
+          "Password should be a minimum of 8 characters and should include at least 1 special character, numbers, and letters!"
+        );
+        return;
+      }
+      // Check if the current password matches the entered current password
+      // if (currentPassword !== password) {
+      //   setPasswordError("Current password is incorrect!");
+      //   return;
+      // }
+      // Check if the new password matches the confirm password
+      if (newPassword !== confirmPassword) {
+        setPasswordError("New password and confirm password do not match!");
+        return;
+      }
+
+      const { res } = await axios.post(
+        `${API_HOST_URL}/api/v1/auth/update-password/in-app`,
+        {
+          oldPassword: currentPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+        },
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
       );
-      return;
+    } catch (err) {
+      console.log(err);
     }
-    // Check if the current password matches the entered current password
-    // if (currentPassword !== password) {
-    //   setPasswordError("Current password is incorrect!");
-    //   return;
-    // }
-    // Check if the new password matches the confirm password
-    if (newPassword !== confirmPassword) {
-      setPasswordError("New password and confirm password do not match!");
-      return;
-    }
+
     // Display success message
     setIsOpen(true);
   };
@@ -52,9 +80,9 @@ function Passwordsettings() {
         <div className="password-change">
           <h3>Change Password</h3>
           <form className="pass-update" onSubmit={handlePasswordChange}>
-            <div className="current-pass">
+            <div className="current-pass relative">
               <Inputs
-                type="password"
+                type={showPassword ? "text" : "password"}
                 title="Current Password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
@@ -63,10 +91,23 @@ function Passwordsettings() {
                 errormessage="Password must be correct!"
                 required
               />
+              <div>
+                {showPassword ? (
+                  <BsEye
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                ) : (
+                  <BsEyeSlash
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
-            <div className="current-pass">
+            <div className="current-pass relative">
               <Inputs
-                type="password"
+                type={showPassword ? "text" : "password"}
                 title="New Password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -76,10 +117,23 @@ function Passwordsettings() {
                 errormessage="Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!"
                 required
               />
+              <div>
+                {showPassword ? (
+                  <BsEye
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                ) : (
+                  <BsEyeSlash
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
-            <div className="current-pass">
+            <div className="current-pass relative">
               <Inputs
-                type="password"
+                type={showPassword ? "text" : "password"}
                 title="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -88,6 +142,19 @@ function Passwordsettings() {
                 errormessage="Password did not match!"
                 required
               />
+              <div>
+                {showPassword ? (
+                  <BsEye
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                ) : (
+                  <BsEyeSlash
+                    onClick={handleShowPassword}
+                    className="absolute top-[55px] right-[10px] cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
             <div className="pass-btn">
               <button>Change Password</button>

@@ -29,10 +29,6 @@ import { VerificationProvider } from "./pages/Dashboard/Employer/routes/Employer
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
-import Findjob from "./pages/FindJob/FindjobPage.jsx";
-import Faq from "./pages/Faq/Faq.jsx";
-import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
-import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 function App() {
   return (
     <>
@@ -60,8 +56,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -72,8 +67,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
@@ -86,13 +80,26 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
+<<<<<<< HEAD
             <Route path="saved" element={<Saved />} />
             <Route path="wallet" element={<Wallet />} />W
+=======
+            <Route path="saved" element={<SavedJobs />} />
+            <Route path="wallet" element={<Wallet />} />
+>>>>>>> main
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
             <Route path="password-settings" element={<Passwordsettings />} />
+<<<<<<< HEAD
+=======
+            <Route path="Privacy" element={<h2>Privacy</h2>} />
+            <Route
+              path="terms-and-conditions"
+              element={<h2>Terms and Conditions</h2>}
+            />
+>>>>>>> main
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>
@@ -106,7 +113,11 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
+<<<<<<< HEAD
         {/* <Route path="job-listings" element={<JobListings />} /> */}
+=======
+        {/* <Route path="dashboard/job-listings" element={<JobListings />} /> */}
+>>>>>>> main
       </Routes>
     </>
   );

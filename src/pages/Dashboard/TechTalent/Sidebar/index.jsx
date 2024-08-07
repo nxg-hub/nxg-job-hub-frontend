@@ -47,7 +47,7 @@ const Sidebar = () => {
       icon: <Notification />,
     },
     {
-      path: "/job-listings",
+      path: "job-listings",
       name: "Job Listings",
       icon: <JobListings />,
     },
