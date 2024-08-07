@@ -15,6 +15,11 @@ const FileUploader = ({
   const [fileName, setFileName] = useState("");
   const fileInput = useRef(null);
 
+  // const onDragEnter = () => fileInput.current.classList.add("dragover");
+  // const onDragLeave = () => fileInput.current.classList.remove("dragover");
+  // const onDrop = () => fileInput.current.classList.remove("dragover");
+
+  const [document, setDocument] = useState("");
   const onDragEnter = () => fileInput.current.classList.add("dragover");
   const onDragLeave = () => fileInput.current.classList.remove("dragover");
   const onDrop = () => fileInput.current.classList.remove("dragover");
@@ -54,6 +59,17 @@ const FileUploader = ({
     }
     const file = files[0];
     setFileName(file.name);
+    const allowedFileTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+
+    if (!allowedFileTypes.includes(file.type)) {
+      onFileSelectError({ error: "Only DOC and PDF files are allowed" });
+      setFileTypeError("Only DOC and PDF files are allowed");
+      return;
+    }
 
     if (file.size > 5 * 1024 * 1024) {
       onFileSelectError({ error: "File size cannot exceed 5MB" });
