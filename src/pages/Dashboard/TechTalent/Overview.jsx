@@ -76,16 +76,12 @@ function TechTalentOverview() {
             <img src={HeroImg} alt="A working secetary illustration" />
           </div>
         </div>
-<<<<<<< HEAD
-      ) : null}
-      <div className="dash-profile-recommended">
-=======
       )}
       <div
         className={`dash-profile-recommended ${
           profileCompleted ? "mt-[100px]" : ""
-        }`}>
->>>>>>> main
+        }`}
+      >
         <div className="recommend-jobs-section">
           <div className="recommend-title">
             <strong>Recommended Jobs for you</strong>
