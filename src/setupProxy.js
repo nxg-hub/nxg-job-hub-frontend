@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: "https://job-hub-91sr.onrender.com",
+      target: "https://nxg-job-hub-8758c68a4346.herokuapp.com",
       changeOrigin: true,
     })
   );

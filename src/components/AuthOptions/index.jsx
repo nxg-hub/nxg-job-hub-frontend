@@ -7,7 +7,7 @@ const AuthOptions = ({ login, register }) => {
 
  
   const googleOAuth = async () => {
-   window.location.href ="https://job-hub-91sr.onrender.com/oauth2/authorization/google"
+   window.location.href ="https://nxg-job-hub-8758c68a4346.herokuapp.com/oauth2/authorization/google"
   }
   return (
     <div className={s.AuthOptions}>
