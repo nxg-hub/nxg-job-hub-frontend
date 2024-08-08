@@ -12,13 +12,13 @@ import AuthOptions from "../../components/AuthOptions";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [check, setCheck] = useState(false);
+  const [check, setCheck] = useState(true);
   const [popup, showpopUp] = useState(undefined);
 
   const navigate = useNavigate();
 
   const onCheck = () => {
-    setCheck(!check);
+    setCheck(true);
   };
 
   const handleLogin = async (e) => {
@@ -98,12 +98,12 @@ const Login = () => {
   };
   useEffect(() => {
     AutoLoginUser()
-  .then(() => {
-      // Handle successful login if needed
-    })
-        .catch((error) => {
-          console.error("Auto login failed:", error);
-        });
+      .then(() => {
+        // Handle successful login if needed
+      })
+      .catch((error) => {
+        console.error("Auto login failed:", error);
+      });
   });
 
   return (

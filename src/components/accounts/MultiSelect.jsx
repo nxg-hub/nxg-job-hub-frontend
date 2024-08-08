@@ -38,8 +38,8 @@ const MultiSelect = () => {
     <div>
       <div className="job-types">
         <label>Choose your prefered job types</label>
-        <Select 
-          style={{textAlign:'left'}}
+        <Select
+          style={{ textAlign: "left" }}
           options={jobTypeOptions}
           isMulti
           onChange={handleMultiSelectJobType}
@@ -63,28 +63,28 @@ const MultiSelect = () => {
           onChange={handleMultiSelectWorkMode}
           value={selectedWorkMode}
         />
-        </div>
-        <div className="photo-upload"style={{margin: '.7rem 0'}}>
-            <FileUploader 
-                title='Upload your passport'
-                onFileSelectSuccess={(file) => (file)} // Pass the success callback function
-                onFileSelectError={({error}) => alert(error)} 
-            />
-        </div>
-        <div className="resume">
-            <FileUploader
-                title='Upload your Resume / CV'
-                onFileSelectSuccess={(file) => (file)} 
-                onFileSelectError={({error}) => alert(error)} 
-            />
-        </div>
-        <div className="cover-letter">
-            <FileUploader
-                title='Upload your Cover Letter'
-                onFileSelectSuccess={(file) => (file)} 
-                onFileSelectError={({error}) => alert(error)} 
-            />
-        </div>
+      </div>
+      <div className="photo-upload" style={{ margin: ".7rem 0" }}>
+        <FileUploader
+          title="Upload your passport"
+          onFileSelectSuccess={(file) => file} // Pass the success callback function
+          onFileSelectError={({ error }) => alert(error)}
+        />
+      </div>
+      <div className="resume">
+        <FileUploader
+          title="Upload your Resume / CV"
+          onFileSelectSuccess={(file) => file}
+          onFileSelectError={({ error }) => alert(error)}
+        />
+      </div>
+      <div className="cover-letter">
+        <FileUploader
+          title="Upload your Cover Letter"
+          onFileSelectSuccess={(file) => file}
+          onFileSelectError={({ error }) => alert(error)}
+        />
+      </div>
     </div>
   );
 };

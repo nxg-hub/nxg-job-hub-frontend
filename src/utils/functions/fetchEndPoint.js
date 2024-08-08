@@ -4,6 +4,7 @@ import { API_HOST_URL } from "../api/API_HOST";
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+// console.log(token);
 
 export const useApiRequest = (url) => {
   const [data, setData] = useState([]);

@@ -19,6 +19,7 @@ function MultiStepForm1({ formData, setFormData, onComplete }) {
         value: country.value,
       }));
   }, []);
+  console.log(countryList());
   const [formDataCompleted, setFormDataCompleted] = useState(false);
 
   const handleChange = (e) => {

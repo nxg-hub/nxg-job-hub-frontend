@@ -28,6 +28,7 @@ function TechTalentOverview() {
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
+  console.log(nearByJobs);
   const profileCompleted = loggedInUser.verified;
 
   //fetching recommended jobs

@@ -15,18 +15,14 @@ const FileUploader = ({
   const [fileName, setFileName] = useState("");
   const fileInput = useRef(null);
 
-  // const onDragEnter = () => fileInput.current.classList.add("dragover");
-  // const onDragLeave = () => fileInput.current.classList.remove("dragover");
-  // const onDrop = () => fileInput.current.classList.remove("dragover");
-
   const [document, setDocument] = useState("");
   const onDragEnter = () => fileInput.current.classList.add("dragover");
   const onDragLeave = () => fileInput.current.classList.remove("dragover");
   const onDrop = () => fileInput.current.classList.remove("dragover");
 
   const uploadImage = async (file) => {
-    setLoading(true);
-    setError(false);
+    // setLoading(true);
+    // setError(false);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "tin4r1lt");
@@ -43,6 +39,7 @@ const FileUploader = ({
       );
       setUrl(res.data.secure_url);
       onFileChange(res.data.secure_url);
+      console.log(res);
       // alert("File uploaded successfully.");
     } catch (error) {
       console.error("Error uploading file:", error.message);
@@ -126,21 +123,21 @@ const FileUploader = ({
             {/* <span className="drop-file-delete" onClick={fileRemove}>
               x
             </span> */}
-            <div className="bg-[#5EAB2F] w-[80%] px-3 py-2 text-white flex justify-between">
-              <p>{`${fileName} Uploaded Successfully `} </p>
+            <div className=" w-[80%] px-3 py-2 text-white flex justify-between">
+              {/* <p>{`${fileName} Uploaded Successfully `} </p>
               <span className="drop-file-delete" onClick={fileRemove}>
                 x
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
       )}
-      {error && !loading ? (
+      {/* {error && !loading ? (
         <div className=" w-[80%] px-3 py-2 text-red-500 font-bold">
           <p>File upload failed. Please try again.</p>
         </div>
-      ) : null}
-      <div>{loading && <div>Loading...</div>}</div>
+      ) : null} */}
+      {/* <div>{loading && <div>Loading...</div>}</div> */}
     </div>
   );
 };
