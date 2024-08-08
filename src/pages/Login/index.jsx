@@ -97,7 +97,13 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    AutoLoginUser();
+    AutoLoginUser()
+  .then(() => {
+      // Handle successful login if needed
+    })
+        .catch((error) => {
+          console.error("Auto login failed:", error);
+        });
   });
 
   return (
@@ -179,7 +185,6 @@ const Login = () => {
           </p>
         </form>
       </div>
-
       {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );

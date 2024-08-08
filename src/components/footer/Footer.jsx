@@ -15,8 +15,8 @@ const Footer = () => {
     { title: "About us", href: "/about" },
     { title: "Our services", href: "/services" },
     { title: "Privacy policy", href: "/privacy" },
-    { title: "Terms and conditions", href: "/terms-and-conditions" },
-    { title: "Our alliances", href: "/terms" },
+    { title: "Terms and conditions", href: "/terms" },
+    { title: "Our alliances", href: "#" },
   ];
   const HelpFooterLinks = [
     { title: "FAQs", href: "/faqs" },
@@ -90,9 +90,13 @@ const Footer = () => {
                 your inbox.
               </p>
             </div>
-            <form name="newsletter" method="POST" onSubmit={handleSubmit}>
-              <input type="hidden" name="form-name" value="newsletter" />
-              <div style={{ width: "100%" }}>
+            <form
+              className="form-body"
+              name="newsletter"
+              method="POST"
+              onSubmit={handleSubmit}>
+              {/* <input type="hidden" name='form-name' value='newsletter' /> */}
+              <div className="input-container" style={{ width: "100%" }}>
                 {errors.email && (
                   <p
                     style={{
@@ -166,7 +170,7 @@ const Footer = () => {
                           fontWeight: "400",
                           lineHeight: "22px",
                         }}>
-                        `Thank you {email} for subscribing to the newsletter.
+                        `Thank you for subscribing to the newsletter.
                         <br />
                         You should receive a confirmation email soon.`
                       </p>
@@ -196,7 +200,11 @@ const Footer = () => {
             <h6>Follow us</h6>
             <div className="media-handles">
               <div className="facebk">
-                <Link>
+                <Link
+                  to={
+                    "https://web.facebook.com/nextgenhubdigital?mibextid=kFxxJD&_rdc=1&_rdr"
+                  }
+                  target="_blank">
                   <BiLogoFacebook
                     style={{
                       width: "1.1rem",
@@ -208,7 +216,7 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="google">
-                <Link>
+                <Link to={"#"}>
                   <BiLogoGoogle
                     style={{
                       width: "1.1rem",
@@ -220,7 +228,9 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="linkedin">
-                <Link>
+                <Link
+                  to={"https://www.linkedin.com/company/nextgenhub-digital/"}
+                  target="_blank">
                   <BiLogoLinkedin
                     style={{
                       width: "1.1rem",
@@ -232,7 +242,7 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="twit">
-                <Link>
+                <Link to={"#"}>
                   <RiTwitterXFill
                     style={{
                       width: "1.1rem",
@@ -244,7 +254,7 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="insta">
-                <Link>
+                <Link to={"#"}>
                   <SiInstapaper
                     style={{
                       width: "1.1rem",

@@ -10,7 +10,7 @@ const FileUploader = ({
   onFileChange,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [fileTypeError, setFileTypeError] = useState("");
   const [url, setUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const fileInput = useRef(null);
@@ -43,9 +43,11 @@ const FileUploader = ({
       );
       setUrl(res.data.secure_url);
       onFileChange(res.data.secure_url);
+      // alert("File uploaded successfully.");
     } catch (error) {
       console.error("Error uploading file:", error.message);
       setError(true);
+      // alert("File upload failed. Please try again.");
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -53,12 +55,11 @@ const FileUploader = ({
   };
 
   const uploadFiles = (files) => {
+    const file = files[0];
     if (!files || files.length === 0) {
       alert("Select a file");
       return;
     }
-    const file = files[0];
-    setFileName(file.name);
     const allowedFileTypes = [
       "application/pdf",
       "application/msword",
@@ -75,6 +76,7 @@ const FileUploader = ({
       onFileSelectError({ error: "File size cannot exceed 5MB" });
       return;
     }
+    setDocument(files[0]?.name);
     uploadImage(file);
   };
 
@@ -92,12 +94,13 @@ const FileUploader = ({
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDrop={onDrop}>
-        <div className="drop-file-input-img-label">
+        <div className="drop-file-input-img-label flex justify-center flex-col items-center">
           <IoMdCloudUpload className="upload-img" />
           <div className="drop-file-labels">
             <h6>Browse files here</h6>
             <p>Drag and drop files here</p>
           </div>
+          {document !== "" && <span>{document}</span>}
         </div>
         <input
           type="file"
@@ -107,6 +110,7 @@ const FileUploader = ({
           onChange={(e) => uploadFiles(e.target.files)}
           id="drop-file-input"
         />
+        <span> {fileTypeError}</span>
       </div>
       {url && (
         <div className="drop-file-preview">

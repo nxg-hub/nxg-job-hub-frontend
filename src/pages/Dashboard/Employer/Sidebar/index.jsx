@@ -186,10 +186,10 @@ const Sidebar = ({ profilePic, ...props }) => {
             <div><Notification /></div>
            <p> Notifications</p>
           </NavLink>
-          <NavLink end to="wallet" className={`${s.dashboardItem} `}>
+          {/* <NavLink end to="wallet" className={`${s.dashboardItem} `}>
           <div><Wallet /></div>
             <p>Wallet</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink end to="subscription" className={`${s.dashboardItem} `}>
           <div><PiSubtitlesBold /></div>
             <p>Subscription</p>

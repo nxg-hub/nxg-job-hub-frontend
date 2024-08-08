@@ -17,7 +17,7 @@ const Contact = () => {
     }
   }
   return (
-    <div style={{position:"relative", background:"#e6e4e4", height:"100vh"}}>
+    <div style={{position:"relative", background:"#e6e4e4", height:"100vh",display: "flex",justifyContent: "center",alignItems: "center"}}>
       <div className="contact-main">
         <h2>SAY SOMETHING</h2>
         <form onSubmit={sendMessage}>
