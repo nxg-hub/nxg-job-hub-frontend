@@ -1,13 +1,19 @@
 import s from "./index.module.scss";
-import SaveJob from "../../../../static/icons/carbon_bookmark.svg?react";
 import Location from "../../../../static/icons/Location.svg?react";
 import Views from "../../../../static/icons/ph_eye-light.svg?react";
 import ApplyBtn from "./ApplyBtn";
+import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
+import SaveBtn from "./saveBtn";
+
 const RecommendationCard = ({ recommendedJobs }) => {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
   });
+  const save = (id) => {
+    console.log(id);
+    console.log("hey");
+  };
 
   return (
     <div className={s.RecommendationCardWrapper}>
@@ -16,7 +22,7 @@ const RecommendationCard = ({ recommendedJobs }) => {
         <div>
           <span>
             <p> {recommendedJobs.company_name} </p>
-            <SaveJob title="Save job" />
+            <SaveBtn jobID={recommendedJobs.jobID} />
           </span>
           <small>
             <Location /> {recommendedJobs.job_location}

@@ -15,7 +15,7 @@ const Footer = () => {
     { title: "About us", href: "/about" },
     { title: "Our services", href: "/services" },
     { title: "Privacy policy", href: "/privacy" },
-    { title: "Terms and conditions", href: "/terms" },
+    { title: "Terms and conditions", href: "/terms-and-conditions" },
     { title: "Our alliances", href: "/terms" },
   ];
   const HelpFooterLinks = [

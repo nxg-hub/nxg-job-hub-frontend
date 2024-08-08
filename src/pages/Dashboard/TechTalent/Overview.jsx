@@ -21,6 +21,7 @@ function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [success] = useState(false);
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
