@@ -3,13 +3,14 @@ import Select, { components } from "react-select";
 import { relevance } from "../../../utils/data/tech-talent";
 import DashboardSearch from "./DashboardSearch";
 import SearchJobCard from "./SearchJobCard";
+import { useSelector } from "react-redux";
 
 function ProfileSearch() {
   const [selectedRelevance, setSelectedRelevance] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-
+  // const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
   const handleJobFetched = (fetchedJobs) => {
     // Apply search filtering only if there's a search term
     const filteredJobs =
@@ -88,7 +89,7 @@ function ProfileSearch() {
         </div>
       </div>
       {jobs.length !== 0 && (
-        <div className="fetch-jobs h-[300px] bg-transparent overflow-scroll">
+        <div className={`fetch-jobs h-[300px] bg-blue-200 overflow-scroll `}>
           {jobs
             .filter((job) => {
               const titleMatch =

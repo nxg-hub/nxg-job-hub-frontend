@@ -9,12 +9,31 @@ import { jobs as JobRecommendations } from "../../../utils/data/job-recommendati
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
 import { UserContext } from "..";
+import { useSelector } from "react-redux";
+import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
+import spinner from "../../../static/icons/spinner.svg";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  const [profileCompleted] = useState(false);
+  const [success] = useState(false);
+
+  //getting nearby jobs and loggedInUser from the redux store
+  const showNearByJobs = useSelector(
+    (state) => state.NearbyJobSlice.displayJob
+  );
+  const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
+  const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
+  const loggedInUser = useSelector(
+    (state) => state.LoggedInUserSlice.loggedInUser
+  );
+  const profileCompleted = loggedInUser.verified;
+
+  //fetching recommended jobs
+  const { data: recommendedJobs, loading: recommendedJobLoader } =
+    useApiRequest(`/api/job-postings/${user.id}/recommend`);
+
   const openForm = (e) => {
     e.preventDefault();
     navigate("/techprofileform");
@@ -68,10 +87,16 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation, i) => {
-            jobRecommendation.company_logo = figma;
-            return <RecommendationCard key={i} {...jobRecommendation} />;
-          })}
+          {!recommendedJobs ? (
+            recommendedJobs?.map((jobRecommendation, i) => {
+              // jobRecommendation.company_logo = figma;
+              return <RecommendationCard key={i} {...jobRecommendation} />;
+            })
+          ) : (
+            <div className="w-[80%] m-auto text-justify font-bold">
+              <h2>No recommended Jobs at the moment</h2>
+            </div>
+          )}
         </div>
         <div className="recommend-jobs-section">
           <div className="recommend-title">
@@ -85,10 +110,23 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation, i) => {
-            jobRecommendation.company_logo = figma;
-            return <RecommendationCard key={i * 5} {...jobRecommendation} />;
-          })}
+          {nearJobLoader ? (
+            <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
+          ) : showNearByJobs ? (
+            nearByJobs.map((jobRecommendation, i) => {
+              // jobRecommendation.company_logo = figma;
+              return (
+                <RecommendationCard
+                  key={i * 5}
+                  recommendedJobs={jobRecommendation}
+                />
+              );
+            })
+          ) : (
+            <div className="w-[80%] m-auto text-justify font-bold">
+              <h2>Search for Jobs near you.</h2>
+            </div>
+          )}
         </div>
       </div>
     </main>

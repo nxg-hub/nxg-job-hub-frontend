@@ -33,6 +33,7 @@ import Findjob from "./pages/FindJob/FindjobPage.jsx";
 import Faq from "./pages/Faq/Faq.jsx";
 import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
+import { Privacy } from "./pages/Dashboard/TechTalent/Sidebar/SidebarIcons.js";
 function App() {
   return (
     <>
@@ -60,8 +61,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -72,8 +72,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
@@ -86,13 +85,15 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
-            {/*<Route path="saved" element={<Saved />} />*/}
+            <Route path="saved" element={<h2>saved job</h2>} />
             <Route path="wallet" element={<Wallet />} />W
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
             <Route path="password-settings" element={<Passwordsettings />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsAndCondition />} />
             <Route path="help" element={<h2>Help </h2>} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>

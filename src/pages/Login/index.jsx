@@ -34,8 +34,6 @@ const Login = () => {
       });
 
       const authKey = res.headers.authorization;
-      console.log(res);
-      console.log(authKey);
 
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
