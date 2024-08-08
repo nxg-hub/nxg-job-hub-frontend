@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Accordion.module.scss"
-import chevronUp from "/Users/user/Desktop/nxg-job-hub-frontend/src/assets/svg/chevron-up.svg";
-import chevronDown from "/Users/user/Desktop/nxg-job-hub-frontend/src/assets/svg/chevron-down.svg";
+import chevronUp from "/src/assets/svg/chevron-up.svg";
+import chevronDown from "/src/assets/svg/chevron-down.svg";
 
 const Accordion = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);

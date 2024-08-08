@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "../../../components/Container/Container";
-import styles from '/Users/user/Desktop/nxg-job-hub-frontend/src/pages/Dashboard/Help/index.module.scss'
-import Accordion from "./Accordion/Accordion"; 
+import styles from '../Help/index.module.scss'
+import Accordion from "./Accordion/Accordion";
 const Help = () => {
   return <Container> 
     <div className={styles.helpContainer}>
