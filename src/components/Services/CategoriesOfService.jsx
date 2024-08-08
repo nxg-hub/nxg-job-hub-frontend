@@ -37,8 +37,8 @@ const CategoriesOfService = () => {
         />
         <ServiceCard
           img={dc}
-          title="Profile Building"
-          content="Create a compelling profile that showcases your abilities and attracts potential employers. Highlight your skills, projects, and achievements to stand out in the competitive job market."
+          title="Direct Communication"
+          content="Engage with employers and agents directly through our built-in messaging system. Receive interview invitations, feedback, and updates in real-time."
           extraContent1={`Messaging System: Communicate with employers and agents effortlessly.  `}
           extraContent2={` Interview Scheduling: Coordinate interview times and follow-ups directly on the platform.`}
           extraContent3={`Real-Time Notifications: Stay updated with instant alerts and messages.`}

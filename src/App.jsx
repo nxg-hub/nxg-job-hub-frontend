@@ -106,7 +106,7 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
-        {/* <Route path="job-listings" element={<JobListings />} /> */}
+        { <Route path="job-listings" element={<JobListings />} /> }
       </Routes>
     </>
   );
