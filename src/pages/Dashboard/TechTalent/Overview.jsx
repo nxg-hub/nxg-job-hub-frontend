@@ -9,12 +9,14 @@ import { jobs as JobRecommendations } from "../../../utils/data/job-recommendati
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
 import { UserContext } from "..";
+import { useSelector } from "react-redux";
+import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
+import spinner from "../../../static/icons/spinner.svg";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [success] = useState(false);
 
   //getting nearby jobs and loggedInUser from the redux store
@@ -29,9 +31,8 @@ function TechTalentOverview() {
   const profileCompleted = loggedInUser.verified;
 
   //fetching recommended jobs
-  const { data: recommendedJobs, loading: recentJobLoader } = useApiRequest(
-    `/api/job-postings/${user.id}/recommend`
-  );
+  const { data: recommendedJobs, loading: recommendedJobLoader } =
+    useApiRequest(`/api/job-postings/${user.id}/recommend`);
 
   const openForm = (e) => {
     e.preventDefault();
@@ -86,10 +87,16 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {JobRecommendations.map((jobRecommendation, i) => {
-            jobRecommendation.company_logo = figma;
-            return <RecommendationCard key={i} {...jobRecommendation} />;
-          })}
+          {!recommendedJobs ? (
+            recommendedJobs?.map((jobRecommendation, i) => {
+              // jobRecommendation.company_logo = figma;
+              return <RecommendationCard key={i} {...jobRecommendation} />;
+            })
+          ) : (
+            <div className="w-[80%] m-auto text-justify font-bold">
+              <h2>No recommended Jobs at the moment</h2>
+            </div>
+          )}
         </div>
         <div className="recommend-jobs-section">
           <div className="recommend-title">

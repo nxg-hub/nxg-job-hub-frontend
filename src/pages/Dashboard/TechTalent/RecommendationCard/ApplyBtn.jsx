@@ -22,6 +22,7 @@ const ApplyBtn = ({ jobID }) => {
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
+  console.log(loggedInUser);
 
   const isVerified = loggedInUser.verified;
 
@@ -53,7 +54,7 @@ const ApplyBtn = ({ jobID }) => {
         setError(true);
       }
     } else {
-      null;
+      alert("user is not verified. please complete your profile");
     }
   };
   //   useEffect(() => {
@@ -71,7 +72,7 @@ const ApplyBtn = ({ jobID }) => {
         onClick={apply}
         className="text-sm bg-[#006a90] text-white px-3 py-1 rounded-md ">
         {loading ? "..........." : "Apply Now"}
-        {!isVerified ? "user is not verified" : null}
+        {/* {!isVerified ? "user is not verified" : null} */}
       </button>
     </>
   );
