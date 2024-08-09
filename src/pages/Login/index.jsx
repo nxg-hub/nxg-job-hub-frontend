@@ -95,15 +95,33 @@ const Login = () => {
         navigate("/dashboard");
       }
     }
+
+    const storedDataNoRememberMe = JSON.parse(
+        window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
+    );
+
+    if (storedDataNoRememberMe) {
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: storedDataNoRememberMe.authKey,
+        },
+      });
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        navigate("/dashboard");
+      }
+    }
   };
   useEffect(() => {
     AutoLoginUser()
-      .then(() => {
-        // Handle successful login if needed
-      })
-      .catch((error) => {
-        console.error("Auto login failed:", error);
-      });
+      // .then(() => {
+      //   // Handle successful login if needed
+      // })
+      // .catch((error) => {
+      //   console.error("Auto login failed:", error);
+      // });
   });
 
   return (
