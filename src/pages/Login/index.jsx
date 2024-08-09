@@ -50,14 +50,13 @@ const Login = () => {
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
+      } else if (!check && authKey) {
+        // if login without "remember me", start a session
+        window.sessionStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email, id })
+        );
       }
-      // else if (!check && authKey) {
-      //   // if login without "remember me", start a session
-      //   window.localStorage.setItem(
-      //     "NXGJOBHUBLOGINKEYV1",
-      //     JSON.stringify({ authKey, email, id })
-      //   );
-      // }
 
       if (!userRes.data.userType) {
         navigate("/create");
@@ -81,7 +80,8 @@ const Login = () => {
   };
   const AutoLoginUser = async () => {
     const storedData = JSON.parse(
-      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
+      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+        window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
     if (storedData) {
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
@@ -96,33 +96,15 @@ const Login = () => {
         navigate("/dashboard");
       }
     }
-
-    const storedDataNoRememberMe = JSON.parse(
-        window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-    );
-
-    if (storedDataNoRememberMe) {
-      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: storedDataNoRememberMe.authKey,
-        },
-      });
-      if (!userRes.data.userType) {
-        navigate("/create");
-      } else {
-        navigate("/dashboard");
-      }
-    }
   };
   useEffect(() => {
     AutoLoginUser()
-      // .then(() => {
-      //   // Handle successful login if needed
-      // })
-      // .catch((error) => {
-      //   console.error("Auto login failed:", error);
-      // });
+      .then(() => {
+        // Handle successful login if needed
+      })
+      .catch((error) => {
+        console.error("Auto login failed:", error);
+      });
   });
 
   return (
