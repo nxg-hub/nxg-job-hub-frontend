@@ -80,7 +80,7 @@ const Login = () => {
   };
   const AutoLoginUser = async () => {
     const storedData = JSON.parse(
-      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+      // window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
         window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
     if (storedData) {
@@ -101,6 +101,7 @@ const Login = () => {
     AutoLoginUser()
       .then(() => {
         // Handle successful login if needed
+        navigate("/techprofileform")
       })
       .catch((error) => {
         console.error("Auto login failed:", error);
