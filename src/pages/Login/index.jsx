@@ -57,6 +57,13 @@ const Login = () => {
           JSON.stringify({ authKey, email, id })
         );
       }
+      else if (authKey) {
+        // if login without "remember me", start a session
+        window.localStorage.setItem(
+            "NXGJOBHUBLOGINKEYV1",
+            JSON.stringify(authKey)
+        );
+      }
 
       if (!userRes.data.userType) {
         navigate("/create");
@@ -98,12 +105,12 @@ const Login = () => {
   };
   useEffect(() => {
     AutoLoginUser()
-      .then(() => {
-        // Handle successful login if needed
-      })
-      .catch((error) => {
-        console.error("Auto login failed:", error);
-      });
+      // .then(() => {
+      //   // Handle successful login if needed
+      // })
+      // .catch((error) => {
+      //   console.error("Auto login failed:", error);
+      // });
   });
 
   return (
