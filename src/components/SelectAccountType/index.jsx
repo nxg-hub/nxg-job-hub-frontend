@@ -35,7 +35,7 @@ const SelectAccountType = () => {
         const res = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${auth}`,
+          authorization: auth,
         },
    });
    if (!res.data.userType) {
@@ -81,7 +81,7 @@ const SelectAccountType = () => {
         {},
         {
           headers: {
-            authorization: `Bearer ${authKey}`,
+            authorization: authKey,
             "Content-Type": "application/json",
           },
         }
