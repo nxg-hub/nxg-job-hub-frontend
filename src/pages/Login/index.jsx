@@ -78,10 +78,75 @@ const Login = () => {
       setTimeout(() => showpopUp(undefined), 5000);
     }
   };
+
+  const handleOAuthCallback = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const authKey = urlParams.get("authKey");
+
+    if (authKey) {
+      try {
+        const userResp = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${authKey}`,
+          },
+        });
+
+        const id = userResp.data.id; // Assuming the user ID is returned in the response
+
+        if (authKey) {
+          // if "remember me" is set, Save authentication key to local storage
+          window.localStorage.setItem(
+              "NXGJOBHUBLOGINKEYV1",
+              JSON.stringify(authKey)
+          );
+        }
+
+        // else if (!check && authKey) {
+        //   // if login without "remember me", start a session
+        //   window.sessionStorage.setItem(
+        //       "NXGJOBHUBLOGINKEYV1",
+        //       JSON.stringify({ authKey, email, id })
+        //   );
+        // }
+
+        if (!userResp.data.userType) {
+          navigate("/create");
+        } else {
+          navigate(
+              userResp.data.userType === "employer"
+                  ? "/profilelanding"
+                  : "/dashboard"
+          );
+        }
+      } catch (error) {
+        console.error("OAuth login failed:", error);
+        showpopUp({
+          type: "danger",
+          message: "OAuth login failed. Please try again.",
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Check if we are on the OAuth callback URL
+    if (window.location.search.includes("authKey")) {
+      handleOAuthCallback();
+    } else {
+      AutoLoginUser()
+          .then(() => {
+            // Handle successful login if needed
+          })
+          .catch((error) => {
+            console.error("Auto login failed:", error);
+          });
+    }
+  }, [navigate]);
+
   const AutoLoginUser = async () => {
     const storedData = JSON.parse(
-      // window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-        window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
+      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
     if (storedData) {
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
@@ -101,7 +166,6 @@ const Login = () => {
     AutoLoginUser()
       .then(() => {
         // Handle successful login if needed
-        navigate("/techprofileform")
       })
       .catch((error) => {
         console.error("Auto login failed:", error);

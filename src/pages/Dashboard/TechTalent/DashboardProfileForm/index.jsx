@@ -130,11 +130,11 @@ function TechTalentProfileForm() {
         console.error("Authentication key not available.");
         return;
       }
-      // const { id, authKey } = JSON.parse(loginKey);
-      // if (!id || !authKey) {
-      //   console.error("User ID  or Auth key not available.");
-      //   return;
-      // }
+      const { id, authKey } = JSON.parse(loginKey);
+      if (!id || !authKey) {
+        console.error("User ID  or Auth key not available.");
+        return;
+      }
 
       const response = await axios.get(
         `${API_HOST_URL}/api/v1/tech-talent/get-user`,
