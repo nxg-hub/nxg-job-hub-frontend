@@ -111,7 +111,7 @@ const Sidebar = ({ profilePic, ...props }) => {
       });
       setTimeout(() => setMessage(null), 5000);
      await axios.post(
-        "https://job-hub-91sr.onrender.com/api/v1/auth/upload-photo",
+        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
         { link: `${res.data.secure_url}` },
         {
           headers: {

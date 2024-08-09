@@ -124,7 +124,7 @@
         "name": "James Okafor",
         "description": "Electronic Money Transfer POS services...",
         "amount": "- $300",
-        "img": "icons/Arrow 1.svg",
+        "img": "icons/Arrow 1.",
         "transactionType": "Debit",
         "transactionDate": "4/09/23",
         "transactionTime": "14:23"

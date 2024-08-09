@@ -120,7 +120,7 @@ const FindjobPage = () => {
 
                     <div className="btns">
                       <Link to="/login">
-                        <button className="btnA">Accept</button>
+                        <button className="btnA">Apply</button>
                       </Link>
                     </div>
                   </div>

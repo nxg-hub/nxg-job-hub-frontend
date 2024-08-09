@@ -176,7 +176,7 @@ const Sidebar = () => {
       );
       const techId = response.data.techId;
       await axios.put(
-        `https://job-hub-91sr.onrender.com/api/v1/tech-talent/${techId}`,
+        `https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/tech-talent/${techId}`,
         { profilePicture: `${res.data.secure_url}` },
         {
           headers: {
