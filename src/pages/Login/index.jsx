@@ -52,7 +52,7 @@ const Login = () => {
         );
       } else if (!check && authKey) {
         // if login without "remember me", start a session
-        window.sessionStorage.setItem(
+        window.localStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
@@ -97,7 +97,7 @@ const Login = () => {
     }
 
     const storedDataNoRememberMe = JSON.parse(
-        window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")
+        window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
 
     if (storedDataNoRememberMe) {
