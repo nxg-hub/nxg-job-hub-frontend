@@ -50,13 +50,14 @@ const Login = () => {
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
-      } else if (!check && authKey) {
-        // if login without "remember me", start a session
-        window.localStorage.setItem(
-          "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify({ authKey, email, id })
-        );
       }
+      // else if (!check && authKey) {
+      //   // if login without "remember me", start a session
+      //   window.localStorage.setItem(
+      //     "NXGJOBHUBLOGINKEYV1",
+      //     JSON.stringify({ authKey, email, id })
+      //   );
+      // }
 
       if (!userRes.data.userType) {
         navigate("/create");
