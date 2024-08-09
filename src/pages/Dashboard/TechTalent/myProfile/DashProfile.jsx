@@ -9,7 +9,7 @@ import { UserContext } from "../..";
 import { talentSkills } from "../../../../utils/data/tech-talent";
 import { Dialog } from "@headlessui/react";
 import { useVerification } from "../../Employer/routes/EmployerDashProfile/VerificationContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
@@ -37,7 +37,10 @@ function DashProfile() {
   const [year, setYear] = useState("");
   const { isVerified, setVerificationStatus } = useVerification();
   const currentYear = new Date().getFullYear();
-
+  const navigate = useNavigate();
+  const navigateCompleteProfilePage = () => {
+    navigate("/techprofileform");
+  };
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -253,7 +256,7 @@ function DashProfile() {
                 </p>
               </div>
               {!isVerified && (
-                <Link className="acct-verify">
+                <Link to="/techprofileform" className="acct-verify">
                   <MdOutlineVerifiedUser fontSize="1.2rem" color="#2596be" />
                   <span>Verify Account</span>
                 </Link>

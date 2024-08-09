@@ -27,35 +27,35 @@ const ApplyBtn = ({ jobID }) => {
   const isVerified = loggedInUser.verified;
 
   const apply = async () => {
-    if (isVerified) {
-      try {
-        setLoading(true);
-        const res = await axios.post(
-          `${API_HOST_URL}/api/job-postings/${jobID}/apply`,
-          jobPostingId,
+    // if (isVerified) {
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${API_HOST_URL}/api/job-postings/${jobID}/apply`,
+        jobPostingId,
 
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token.authKey,
-            },
-          }
-        );
-        console.log(jobID);
-        if (res.status === 200) {
-          setSuccess(true);
-          setLoading(false);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
         }
-        console.log(res.data);
-        console.log(success);
-        alert(res.data);
-      } catch (error) {
-        console.log(error);
-        setError(true);
+      );
+      console.log(jobID);
+      if (res.status === 200) {
+        setSuccess(true);
+        setLoading(false);
       }
-    } else {
-      alert("user is not verified. please complete your profile");
+      console.log(res.data);
+      console.log(success);
+      alert(res.data);
+    } catch (error) {
+      console.log(error);
+      setError(true);
     }
+    // } else {
+    //   //   alert("user is not verified. please complete your profile");
+    // }
   };
   //   useEffect(() => {
   //     dispatch(getJobID({ jobPostingId: jobID }));
