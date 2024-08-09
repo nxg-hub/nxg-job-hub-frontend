@@ -11,9 +11,8 @@ const JobListings = () => {
 
   const fetchData = async () => {
     const response = await fetch(
-      // "/api/job-postings/all"
       "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/job-postings/all?page=0&size=1&sort=string"
-    ); // Replace with your API endpoint
+    );
     const data = await response.json();
     setJobs(data);
   };
