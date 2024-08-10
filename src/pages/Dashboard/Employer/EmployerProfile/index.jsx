@@ -38,7 +38,7 @@ function EmployerProfileForm() {
         }
 
         if (!id) {
-          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+          const response = await axios.get(`${API_HOST_URL}/api/v1/employers/get-employer`, {
             headers: {
               'Content-Type': 'application/json',
               authorization: authKey,
@@ -53,7 +53,7 @@ function EmployerProfileForm() {
           window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
         }
 
-        const userData = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        const userData = await axios.get(`${API_HOST_URL}/api/v1/employers/get-employer`, {
           headers: {
             'Content-Type': 'application/json',
             authorization: authKey,
