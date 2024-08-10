@@ -58,14 +58,16 @@ const FileUploader = ({
       return;
     }
     const allowedFileTypes = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "image/jpeg",
+        "image/png",
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ];
 
     if (!allowedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "Only DOC and PDF files are allowed" });
-      setFileTypeError("Only DOC and PDF files are allowed");
+      onFileSelectError({ error: "Only JPG, PNG, DOC and PDF files are allowed" });
+      setFileTypeError("Only JPG, PNG, DOC and PDF files are allowed");
       return;
     }
 
