@@ -1,0 +1,186 @@
+.dash-profile-main-side {
+  font-family: Manrope;
+  padding: 10px;
+}
+.dash-profile-search-section {
+  margin: 1rem 0;
+}
+.profile-search-container {
+  // width: 100%;
+  .profile-search-wrapper {
+    //   width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    gap: 5px;
+    align-items: center;
+    .profile-search-section {
+      grid-column: 1;
+      background: #fff;
+      padding: 0.8rem 0.5rem;
+      border-radius: 6px;
+    }
+    .relevance-section {
+      grid-column: 1;
+      padding: 0.8rem 0.5rem;
+    }
+    #profile-search {
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: row;
+      gap: 10px;
+      align-items: center;
+      .dash-search-section,
+      .dash-location {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        border-right: 1.4px solid #8e8e8e !important;
+        & :focus {
+          outline: none;
+        }
+        .dash-search-icon,
+        .dash-location-icon {
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+        .dash-search-input,
+        .dash-location-input {
+          padding: 0 8px;
+          margin-left: -0.3rem;
+          border: none;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: Manrope;
+          width: 100%;
+          color: #8e8e8e;
+          background-color: transparent;
+          cursor: pointer;
+        }
+      }
+      .dash-employ-type {
+        width: 100%;
+        align-items: center;
+        border-right: 1.4px solid #8e8e8e !important;
+        .css-13cymwt-control {
+          min-height: 0px !important;
+          padding: 0 8px;
+          border: none !important;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: Manrope !important;
+          outline: none !important;
+          border-radius: 0;
+          color: #8e8e8e;
+          background-color: transparent;
+          cursor: pointer;
+        }
+      }
+      .dash-level {
+        width: 100%;
+        align-items: center;
+        .css-13cymwt-control {
+          min-height: 0px !important;
+          padding: 0 8px;
+          border: none !important;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: Manrope !important;
+          outline: none !important;
+          border-radius: 0;
+          color: #8e8e8e;
+          background-color: transparent;
+          cursor: pointer;
+        }
+      }
+      .dash-search-btn {
+        width: 100%;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button {
+          color: #ffffff;
+          background: #006a90;
+          border: none;
+          padding: 8px;
+          width: 100%;
+          font-family: Manrope;
+          font-size: 12px;
+          font-weight: 500;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+    #relevance {
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+      align-items: center;
+      .sort {
+        color: #222020;
+        font-size: 15px;
+        font-weight: 500;
+        font-family: Manrope;
+      }
+      .relevance-select {
+        width: 100%;
+        .css-13cymwt-control {
+          min-height: 0px !important;
+          padding: 0 8px;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: Manrope !important;
+          outline: none !important;
+          border-color: #2596be !important;
+          border-radius: 4px;
+          color: #8e8e8e;
+          background-color: #ffffff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+//Search Job Card styling
+.fetch-jobs {
+  margin: 0.5rem 0;
+}
+.job-card-body {
+  background: #fff;
+  .job-card-title {
+    display: flex;
+    margin: 8px 0;
+    padding: 10px 20px;
+    border: 1px solid #006a90;
+    border-radius: 5px;
+  }
+}
+//JobPagination Styling
+// .pagination-previous,
+// .pagination-next,
+// .pagination-item {
+//   width: 2rem;
+//   height: 2rem;
+//   background: #dfdede;
+//   padding: 4px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   cursor: pointer;
+//   .pagination-icons {
+//     width: 0.8rem;
+//     height: 0.8rem;
+//   }
+// }
+// .pagination-previous {
+//   margin-right: 0.2rem;
+// }
+// .pagination-item {
+//   margin: 0 0.2rem 0 0;
+// }
+// .active-item {
+//   background: #006a90;
+//   color: #dfdede;
+// }
