@@ -80,7 +80,7 @@ const Sidebar = () => {
     const fetchTalentData = async () => {
       try {
         const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
-        console.log('Stored loginKey:', loginKey);
+        // console.log('Stored loginKey:', loginKey);
         if (!loginKey) {
           console.error('Authentication key not available.');
           return;
@@ -89,12 +89,12 @@ const Sidebar = () => {
         // Parse the login key to get the initial values
         let parsedLoginKey = JSON.parse(loginKey);
         const authKey = parsedLoginKey.authKey;
-        let id = parsedLoginKey.id;
+        // let id = parsedLoginKey.id;
 
-        console.log('Auth Key:', authKey);
-        console.log('User ID:', id);
-
-        console.log('Parsed loginKey:', parsedLoginKey);
+        // console.log('Auth Key:', authKey);
+        // console.log('User ID:', id);
+        //
+        // console.log('Parsed loginKey:', parsedLoginKey);
 
         // Fetch user data to get the techId
         const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
@@ -110,7 +110,9 @@ const Sidebar = () => {
 
         // Update the login key with the updated id
         const updatedLoginKey = JSON.stringify(parsedLoginKey);
-        console.log(updatedLoginKey);
+
+         // console.log(updatedLoginKey);
+
         window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey); // Or sessionStorage
 
         // Now you can use the updated id
