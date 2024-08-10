@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { SlBell } from "react-icons/sl";
@@ -18,7 +18,6 @@ function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const [success] = useState(false);
-  const [profileCompleted, setProfileCompleted] = useState(false);
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
@@ -30,18 +29,11 @@ function TechTalentOverview() {
     (state) => state.LoggedInUserSlice.loggedInUser
   );
   console.log(nearByJobs);
-  // const profileCompleted = loggedInUser.verified;
+  const profileCompleted = loggedInUser.verified;
 
   //fetching recommended jobs
   const { data: recommendedJobs, loading: recommendedJobLoader } =
     useApiRequest(`/api/job-postings/${user.id}/recommend`);
-  useEffect(() => {
-    // Ensure profile completion status is updated based on loggedInUser
-    if (loggedInUser?.verified) {
-      setProfileCompleted(true);
-    }
-  }, [loggedInUser]);
-
 
   const openForm = (e) => {
     e.preventDefault();
@@ -68,7 +60,7 @@ function TechTalentOverview() {
         <ProfileSearch />
       </div>
       {!profileCompleted ? (
-        <div className="dash-profile-hero-section">
+        <div className="dash-profile-hero-section" hidden>
           <div className="dash-profile-hero-contents">
             <div className="dash-profile-content">
               <h1>Get started by Completing your Profile</h1>
