@@ -18,124 +18,61 @@ function EmployerProfileForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
-  //       if (!loginKey) {
-  //         console.error('Authentication key not available.');
-  //         setLoading(false);
-  //         return;
-  //       }
-  //
-  //       let parsedLoginKey = JSON.parse(loginKey);
-  //       const { authKey, id } = parsedLoginKey;
-  //
-  //       if (!authKey) {
-  //         console.error('Auth key not available.');
-  //         setLoading(false);
-  //         return;
-  //       }
-  //
-  //       if (!id) {
-  //         const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             authorization: authKey,
-  //           },
-  //         });
-  //         const userData = response.data;
-  //
-  //         parsedLoginKey.id = userData.id;
-  //
-  //         const updatedLoginKey = JSON.stringify(parsedLoginKey);
-  //         console.log("New Key:", updatedLoginKey);
-  //         window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
-  //       }
-  //
-  //       const userData = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           authorization: authKey,
-  //         },
-  //       }).then(response => response.data);
-  //
-  //       setFirstName(userData.firstName || '');
-  //       setLastName(userData.lastName || '');
-  //       setEmail(userData.email || '');
-  //       setPhoneNumber(userData.phoneNumber || '');
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //       setLoading(false);
-  //     }
-  //   };
-  //
-  //   fetchUserData();
-  // }, []);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Retrieve login key from local or session storage
-        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
           console.error('Authentication key not available.');
+          setLoading(false);
           return;
         }
 
-        let parsedLoginKey;
-        try {
-          parsedLoginKey = JSON.parse(loginKey);
-        } catch (error) {
-          console.error('Error parsing authentication key:', error);
-          return;
-        }
-
+        let parsedLoginKey = JSON.parse(loginKey);
         const { authKey, id } = parsedLoginKey;
 
         if (!authKey) {
           console.error('Auth key not available.');
+          setLoading(false);
           return;
         }
 
         if (!id) {
-          // Fetch user data to get the id if not available
-          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+          const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
             headers: {
               'Content-Type': 'application/json',
               authorization: authKey,
             },
           });
-
           const userData = response.data;
 
-          // Update the id in parsedLoginKey
           parsedLoginKey.id = userData.id;
 
-          // Update the login key in local or session storage
           const updatedLoginKey = JSON.stringify(parsedLoginKey);
-          console.log('New Key:', updatedLoginKey);
+          console.log("New Key:", updatedLoginKey);
           window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
         }
 
-        // Proceed with fetching the employer data
-        const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
+        const userData = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
           headers: {
             'Content-Type': 'application/json',
             authorization: authKey,
           },
-        });
+        }).then(response => response.data);
 
-        const userData = response.data;
-        setCompanyName(userData.companyName || ''); // Update state with company name
+        setFirstName(userData.firstName || '');
+        setLastName(userData.lastName || '');
+        setEmail(userData.email || '');
+        setPhoneNumber(userData.phoneNumber || '');
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setLoading(false);
       }
     };
 
-    fetchUserData(); // Invoke the fetchUserData function
-  }, []); // Dependency array is empty, so this effect runs once after initial render
+    fetchUserData();
+  }, []);
 
   const [personalData, setPersonalData] = useState({
     address: '',
