@@ -88,6 +88,7 @@ function EmployerProfileForm() {
 
           // Update the login key in local or session storage
           const updatedLoginKey = JSON.stringify(parsedLoginKey);
+          console.log("New Key:", updatedLoginKey);
           window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
         }
 
