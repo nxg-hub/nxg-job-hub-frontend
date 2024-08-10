@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import JobCard from "./_components/card";
 import CardDetails from "./_components/card-details";
 import Successfull from "./_components/successfull";
+import ProfileSearch from "../../Dashboard/TechTalent/ProfileSearch";
+// import "../../Dashboard/TechTalent/profileMain.scss";
+import "./searchBar.scss";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -36,8 +39,10 @@ const JobListings = () => {
   };
 
   return (
-    <div className="relative">
-      <h2>Job Listing</h2>
+    <div className="dash-profile-main-side relative">
+      <div className="dash-profile-search-section">
+        <ProfileSearch />
+      </div>
       {(showDetails || successfull) && (
         <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
       )}
