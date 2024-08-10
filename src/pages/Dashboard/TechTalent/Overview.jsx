@@ -40,9 +40,10 @@ function TechTalentOverview() {
     navigate("/techprofileform");
   };
 
-  // const handleProfileCompletion = () => {
-  //   setProfileCompleted(true);
-  // };
+  const handleProfileCompletion = () => {
+    setProfileCompleted(true);
+  };
+  handleProfileCompletion();
 
   return (
     <main className="dash-profile-main-side">
@@ -59,8 +60,9 @@ function TechTalentOverview() {
       <div className="dash-profile-search-section">
         <ProfileSearch />
       </div>
+
       {!profileCompleted ? (
-        <div className="dash-profile-hero-section" hidden>
+        <div className="dash-profile-hero-section">
           <div className="dash-profile-hero-contents">
             <div className="dash-profile-content">
               <h1>Get started by Completing your Profile</h1>
