@@ -33,7 +33,6 @@ import Findjob from "./pages/FindJob/FindjobPage.jsx";
 import Faq from "./pages/Faq/Faq.jsx";
 import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
-import { Privacy } from "./pages/Dashboard/TechTalent/Sidebar/SidebarIcons.js";
 import Help from "./pages/Dashboard/Help/Help.jsx";
 import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
 function App() {

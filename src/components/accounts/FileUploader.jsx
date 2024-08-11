@@ -6,7 +6,7 @@ const FileUploader = ({
   title,
   name,
   value,
-  onFileSelectError,
+  // onFileSelectError,
   onFileChange,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -64,13 +64,13 @@ const FileUploader = ({
     ];
 
     if (!allowedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "Only DOC and PDF files are allowed" });
+      // onFileSelectError({ error: "Only DOC and PDF files are allowed" });
       setFileTypeError("Only DOC and PDF files are allowed");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      onFileSelectError({ error: "File size cannot exceed 5MB" });
+      // onFileSelectError({ error: "File size cannot exceed 5MB" });
       return;
     }
     setDocument(files[0]?.name);

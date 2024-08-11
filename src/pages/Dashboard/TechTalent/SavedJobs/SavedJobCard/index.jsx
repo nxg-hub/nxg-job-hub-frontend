@@ -1,11 +1,36 @@
 import { Link } from "react-router-dom";
+import ApplyBtn from "../../RecommendationCard/ApplyBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import {
+  applyForJob,
+  closeModal,
+  setNoticeTrue,
+} from "../../../../../redux/TalentApplicationSlice";
+import Successfull from "../../../job-listings/_components/successfull";
 
-const SavedJobCard = ({ job }) => {
+const SavedJobCard = ({ job, onClick }) => {
   const jobData = job.jobPosting;
+  const [jobPostingId] = useState({
+    jobPostingId: jobData.jobID,
+  });
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
   });
+  const dispatch = useDispatch();
+
+  const loggedInUser = useSelector(
+    (state) => state.LoggedInUserSlice.loggedInUser
+  );
+  const isVerified = loggedInUser.verified;
+
+  const apply = () => {
+    isVerified
+      ? dispatch(applyForJob(jobPostingId))
+      : dispatch(setNoticeTrue());
+  };
+
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in">
       <div className="flex flex-col gap-y-2">
@@ -56,7 +81,7 @@ const SavedJobCard = ({ job }) => {
               <span>{jobData?.views} views</span>
               <span>{jobData?.applicants} Applicants</span>
             </div>
-            <div className="flex items-center gap-2 group">
+            <div className="flex items-center gap-2 group" onClick={onClick}>
               <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">
                 See more
               </Link>
@@ -71,8 +96,7 @@ const SavedJobCard = ({ job }) => {
 
         <button
           className="bg-[#2596BE] my-4 py-2 rounded-[8px] hover:scale-95 transition-all ease-in text-white"
-          // onClick={handleApply}>
-        >
+          onClick={apply}>
           Apply Now
         </button>
       </div>
