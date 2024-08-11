@@ -52,9 +52,16 @@ const Login = () => {
         );
       } else if (!check && authKey) {
         // if login without "remember me", start a session
-        window.localStorage.setItem(
+        window.sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
+        );
+      }
+      else if (authKey) {
+        // if login without "remember me", start a session
+        window.localStorage.setItem(
+            "NXGJOBHUBLOGINKEYV1",
+            JSON.stringify(authKey)
         );
       }
 
@@ -87,24 +94,6 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
           authorization: storedData.authKey,
-        },
-      });
-      if (!userRes.data.userType) {
-        navigate("/create");
-      } else {
-        navigate("/dashboard");
-      }
-    }
-
-    const storedDataNoRememberMe = JSON.parse(
-        window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-    );
-
-    if (storedDataNoRememberMe) {
-      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: storedDataNoRememberMe.authKey,
         },
       });
       if (!userRes.data.userType) {

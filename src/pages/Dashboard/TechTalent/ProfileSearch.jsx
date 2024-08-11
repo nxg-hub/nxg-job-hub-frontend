@@ -3,6 +3,7 @@ import Select, { components } from "react-select";
 import { relevance } from "../../../utils/data/tech-talent";
 import DashboardSearch from "./DashboardSearch";
 import SearchJobCard from "./SearchJobCard";
+// import "./profileMain.scss";
 import { useSelector } from "react-redux";
 
 function ProfileSearch() {
@@ -64,7 +65,8 @@ function ProfileSearch() {
           fontWeight: "500",
           marginBottom: ".5rem",
           color: "rgba(0, 0, 0, 0.47)",
-        }}>
+        }}
+      >
         Search for Jobs
       </p>
       <div className="profile-search-container">

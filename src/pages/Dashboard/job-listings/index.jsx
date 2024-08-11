@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import JobCard from "./_components/card";
 import CardDetails from "./_components/card-details";
-import { JobListDetails } from "./data";
 import Successfull from "./_components/successfull";
+import ProfileSearch from "../../Dashboard/TechTalent/ProfileSearch";
+// import "../../Dashboard/TechTalent/profileMain.scss";
+import "./searchBar.scss";
 
 const JobListings = () => {
+  const [jobs, setJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [successfull, setSuccessfull] = useState(false);
 
-  const handleCardClick = (id) => {
-    setSelectedCardId(id);
+  const fetchData = async () => {
+    const response = await fetch(
+      "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/job-postings/all?page=0&size=1&sort=string"
+    );
+    const data = await response.json();
+    setJobs(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleCardClick = (job) => {
+    setSelectedCardId(job.jobId);
     setShowDetails(true);
   };
 
@@ -24,17 +39,17 @@ const JobListings = () => {
   };
 
   return (
-    <div className="relative">
-      <h2>job Listing</h2>
+    <div className="dash-profile-main-side relative">
+      <div className="dash-profile-search-section">
+        <ProfileSearch />
+      </div>
       {(showDetails || successfull) && (
         <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
       )}
       {showDetails && (
         <div className="fixed lg:absolute z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
           <CardDetails
-            details={JobListDetails.find(
-              (details) => details.id === selectedCardId
-            )}
+            job={jobs.find((job) => job.jobId === selectedCardId)}
             onClose={handleClose}
           />
         </div>
@@ -45,11 +60,11 @@ const JobListings = () => {
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-        {JobListDetails.map((details) => (
+        {jobs.map((job) => (
           <JobCard
-            key={details.id}
-            details={details}
-            onClick={() => handleCardClick(details.id)}
+            key={job.id}
+            job={job}
+            handleShowDetails={() => handleCardClick(job)}
             handleApply={handleApply}
           />
         ))}
