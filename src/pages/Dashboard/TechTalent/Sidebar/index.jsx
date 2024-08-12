@@ -223,7 +223,8 @@ const Sidebar = () => {
             end
             to={item.path}
             key={index}
-            className={`${s.dashboardItem} `}>
+            className={`${s.dashboardItem} `}
+          >
             <div>{item.icon}</div>
             <p>{item.name}</p>
           </NavLink>
@@ -242,7 +243,8 @@ const Sidebar = () => {
             <NavLink
               end
               to="password-settings"
-              className={`${s.dashboardItem} `}>
+              className={`${s.dashboardItem} `}
+            >
               {" "}
               <Password /> <p>Password Settings</p>
             </NavLink>
@@ -265,7 +267,8 @@ const Sidebar = () => {
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div>
           <Logout />
         </div>
@@ -292,7 +295,8 @@ const Sidebar = () => {
             borderRadius: "24px",
             padding: "2rem 1rem",
             zIndex: "100",
-          }}>
+          }}
+        >
           <Dialog.Panel>
             <Dialog.Title style={{ textAlign: "center" }}>
               <p
@@ -300,7 +304,8 @@ const Sidebar = () => {
                   fontSize: "40px",
                   fontWeight: "600",
                   textAlign: "center",
-                }}>
+                }}
+              >
                 Are you sure you want to logout?
               </p>
               <div
@@ -311,7 +316,8 @@ const Sidebar = () => {
                   alignItems: "center",
                   gap: "8px",
                   margin: "3rem auto",
-                }}>
+                }}
+              >
                 <button
                   onClick={moveToDashboard}
                   style={{
@@ -325,7 +331,8 @@ const Sidebar = () => {
                     fontSize: "25px",
                     fontWeight: "500",
                     margin: "2.5rem 0",
-                  }}>
+                  }}
+                >
                   Back To Dashboard
                 </button>
                 <button
@@ -340,7 +347,8 @@ const Sidebar = () => {
                     color: "#fff",
                     fontSize: "25px",
                     fontWeight: "500",
-                  }}>
+                  }}
+                >
                   Continue To Logout
                 </button>
               </div>
