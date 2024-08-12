@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileMain.scss";
 import { SlBell } from "react-icons/sl";
@@ -9,15 +9,16 @@ import { jobs as JobRecommendations } from "../../../utils/data/job-recommendati
 import RecommendationCard from "./RecommendationCard";
 import figma from "../../../static/icons/logos_figma.svg";
 import { UserContext } from "..";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
+import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  const [success] = useState(false);
+  const dispatch = useDispatch();
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
@@ -28,7 +29,7 @@ function TechTalentOverview() {
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
-  console.log(nearByJobs);
+  //checking if user is verified
   const profileCompleted = loggedInUser.verified;
 
   //fetching recommended jobs
@@ -39,10 +40,9 @@ function TechTalentOverview() {
     e.preventDefault();
     navigate("/techprofileform");
   };
-
-  // const handleProfileCompletion = () => {
-  //   setProfileCompleted(true);
-  // };
+  useEffect(() => {
+    dispatch(fetchLoggedInUser());
+  });
 
   return (
     <main className="dash-profile-main-side">

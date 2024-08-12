@@ -13,8 +13,8 @@ const token =
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 export const fetchLoggedInUser = createAsyncThunk(
   "logedInUser/fetchUser",
-  async (url) => {
-    return await fetch(`${API_HOST_URL}${url}`, {
+  async () => {
+    return await fetch(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

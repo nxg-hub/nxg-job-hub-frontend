@@ -6,43 +6,46 @@ const initialState = {
   loading: false,
   error: false,
   success: false,
-  jobPostingId: "",
+  notice: false,
 };
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-export const applyForJob = createAsyncThunk(
-  "apply/applyJob",
-  async (url, jobPostingId) => {
-    console.log(jobPostingId);
-    try {
-      const res = await axios.post(
-        `${API_HOST_URL}/api/job-postings/${jobPostingId}/apply`,
-        jobPostingId,
+export const applyForJob = createAsyncThunk("apply/applyJob", async (id) => {
+  try {
+    const res = await axios.post(
+      `${API_HOST_URL}/api/job-postings/${id.jobPostingId}/apply`,
+      id,
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token.authKey,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      setError(true);
-    }
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token.authKey,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    setError(true);
   }
-);
+});
 
 const TalentApplicationSlice = createSlice({
   name: "applyForJob",
   initialState,
   reducers: {
-    // getJobID: (state, action) => {
-    //   const id = action.payload;
-    //   state.jobPostingId = { jobPostingId: id.jobPostingId };
-    //   console.log(state.jobPostingId);
-    // },
+    closeModal: (state) => {
+      state.success = false;
+    },
+    closeErrorModal: (state) => {
+      state.error = false;
+    },
+    setNoticeTrue: (state) => {
+      state.notice = true;
+    },
+    setNoticeFalse: (state) => {
+      state.notice = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -62,6 +65,7 @@ const TalentApplicationSlice = createSlice({
       });
   },
 });
-export const { getJobID } = TalentApplicationSlice.actions;
+export const { closeModal, closeErrorModal, setNoticeTrue, setNoticeFalse } =
+  TalentApplicationSlice.actions;
 
 export default TalentApplicationSlice.reducer;

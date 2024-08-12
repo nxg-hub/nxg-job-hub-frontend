@@ -16,15 +16,15 @@ const RecommendationCard = ({ recommendedJobs }) => {
   };
 
   return (
-    <div className={s.RecommendationCardWrapper}>
-      <div className={s.CompanyDetails}>
-        <img src={recommendedJobs.company_logo} alt="company_logo" />
-        <div>
+    <div className={`${s.RecommendationCardWrapper} `}>
+      <div className={`${s.CompanyDetails} relative`}>
+        <img src={recommendedJobs.company_logo} alt="logo" />
+        <div className="">
           <span>
             <p> {recommendedJobs.company_name} </p>
             <SaveBtn jobID={recommendedJobs.jobID} />
           </span>
-          <small>
+          <small className="capitalize float-left absolute">
             <Location /> {recommendedJobs.job_location}
           </small>
         </div>
