@@ -168,13 +168,13 @@ const Sidebar = ({ profilePic, ...props }) => {
           },
         }
       );
-      setProfilePicture(res.data.secure_url)
+      setProfilePicture(res.data.secure_url);
       setMessage({
         type: "info",
         content: "Profile picture updated.",
       });
       setTimeout(() => setMessage(null), 5000);
-     await axios.post(
+      await axios.post(
         "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
         { link: `${res.data.secure_url}` },
         {
@@ -183,8 +183,7 @@ const Sidebar = ({ profilePic, ...props }) => {
             "Content-Type": "application/json",
           },
         }
-        );
-       
+      );
     } catch (err) {
       console.log(err);
     }
@@ -196,7 +195,10 @@ const Sidebar = ({ profilePic, ...props }) => {
       </Link>
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={profilePicture && { padding: 0 }}>
+          <div
+            className={s.displayPic}
+            style={profilePicture && { padding: 0 }}
+          >
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label htmlFor="profilepic">
@@ -234,7 +236,9 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Engagements</h2>
         <div className={s.Engagements}>
           <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-            <div><Dashboard /></div>
+            <div>
+              <Dashboard />
+            </div>
             <p>Dashboard</p>
           </NavLink>
           <NavLink
@@ -247,53 +251,74 @@ const Sidebar = ({ profilePic, ...props }) => {
                 : s.dashboardItem
             }
           >
-            <div><Notification /></div>
-           <p> Notifications</p>
+            <div>
+              <Notification />
+            </div>
+            <p> Notifications</p>
           </NavLink>
           {/* <NavLink end to="wallet" className={`${s.dashboardItem} `}>
           <div><Wallet /></div>
             <p>Wallet</p>
           </NavLink> */}
           <NavLink end to="subscription" className={`${s.dashboardItem} `}>
-          <div><PiSubtitlesBold /></div>
+            <div>
+              <PiSubtitlesBold />
+            </div>
             <p>Subscription</p>
           </NavLink>
         </div>
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>
           <NavLink end to="posts/create" className={`${s.dashboardItem} `}>
-          <div><PostJobs /></div>
+            <div>
+              <PostJobs />
+            </div>
             <p>Post Jobs</p>
           </NavLink>
           <NavLink end to="posts" className={`${s.dashboardItem} `}>
-          <div><JobPosts /></div>
+            <div>
+              <JobPosts />
+            </div>
             <p>Job Posts</p>
           </NavLink>
           <NavLink end to="applicants" className={`${s.dashboardItem} `}>
-          <div><Applicants /></div>
+            <div>
+              <Applicants />
+            </div>
             <p>Job Applicants</p>
           </NavLink>
           <NavLink end to="interviews" className={`${s.dashboardItem} `}>
-          <div><Interviews /></div>
+            <div>
+              <Interviews />
+            </div>
             <p>Interviews</p>
           </NavLink>
           <NavLink end to="services" className={`${s.dashboardItem} `}>
-          <div><Services fill="white" /></div> <p>My Company Services</p>
+            <div>
+              <Services fill="white" />
+            </div>{" "}
+            <p>My Company Services</p>
           </NavLink>
         </div>
         <h2>Settings</h2>
         <div className={s.Settings}>
           <NavLink end to="profile" className={`${s.dashboardItem} `}>
-          <div><MyProfile /></div>
+            <div>
+              <MyProfile />
+            </div>
             <p>My Profile</p>
           </NavLink>
           <NavLink end to="contract" className={`${s.dashboardItem} `}>
-          <div><Contract /></div>
+            <div>
+              <Contract />
+            </div>
             <p>Contract</p>
           </NavLink>
           <li className={`${s.dashboardItem} `}>
             <div className={s.dropdownTitle}>
-            <div><Settings /></div>
+              <div>
+                <Settings />
+              </div>
               <span>
                 <p>Settings</p>
                 <PiCaretDown />
@@ -306,11 +331,17 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <div><Password /> </div><p>Password Settings</p>
+                <div>
+                  <Password />{" "}
+                </div>
+                <p>Password Settings</p>
               </NavLink>
               <NavLink end to="privacy" className={`${s.dashboardItem} `}>
                 {" "}
-                <div><Privacy /></div><p>Privacy</p> 
+                <div>
+                  <Privacy />
+                </div>
+                <p>Privacy</p>
               </NavLink>
               <NavLink
                 end
@@ -318,10 +349,15 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <div><Terms /></div> <p>Terms and conditions</p>
+                <div>
+                  <Terms />
+                </div>{" "}
+                <p>Terms and conditions</p>
               </NavLink>
               <NavLink end to="help" className={`${s.dashboardItem} `}>
-              <div><Help /></div>
+                <div>
+                  <Help />
+                </div>
                 <p>Help</p>
               </NavLink>
             </ul>
@@ -332,7 +368,9 @@ const Sidebar = ({ profilePic, ...props }) => {
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div><Logout /></div>
+        <div>
+          <Logout />
+        </div>
         <p>Logout</p>
       </NavLink>
       {/* Render the LogoutModal component if showLogoutModal is true */}
@@ -416,7 +454,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           </Dialog.Panel>
         </Dialog>
       )}
-       {message && <Notice type={message.type} message={message.content} />}
+      {message && <Notice type={message.type} message={message.content} />}
     </div>
   );
 };
