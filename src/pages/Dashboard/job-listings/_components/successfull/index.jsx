@@ -2,7 +2,7 @@ import React from "react";
 
 const Successfull = ({ onClose }) => {
   return (
-    <div className=" bg-white rounded-[24px] text-base font-medium px-10 py-5">
+    <div className="bg-white z-30 absolute top-[150px] left-[15%] md:left-[25%] w-[80%] md:w-[60%] m-auto  rounded-[24px] text-base font-medium px-10 py-5">
       <div className="flex items-center gap-y-3 text-center justify-center flex-col">
         <div className="flex items-center gap-x-1">
           <span className="text-xl">Job application was successful</span>
@@ -14,8 +14,7 @@ const Successfull = ({ onClose }) => {
         <span>Check your email for more details about your application</span>
         <button
           className="w-1/2 py-2  bg-[#2596BE] text-white"
-          onClick={onClose}
-        >
+          onClick={onClose}>
           Go to email
         </button>
       </div>

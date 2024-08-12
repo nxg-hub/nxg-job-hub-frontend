@@ -43,39 +43,103 @@ const Sidebar = ({ profilePic, ...props }) => {
     setIsOpen(false);
   };
 
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const loginKey =
+  //         window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+  //         window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+  //       if (!loginKey) {
+  //         console.error("Authentication key not available.");
+  //         return;
+  //       }
+  //       const { authKey, id } = JSON.parse(loginKey);
+  //       if (!authKey || !id) {
+  //         console.error("Auth key or user id not available.");
+  //         return;
+  //       }
+  //
+  //       const response = await axios.get(
+  //         `${API_HOST_URL}/api/employers/get-employer`,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             authorization: authKey,
+  //           },
+  //         }
+  //       );
+  //       const userData = response.data;
+  //       setCompanyName(userData.companyName);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+  //   fetchUserData(); // Invoke the fetchUserData function
+  // }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const loginKey =
-          window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-          window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        // Retrieve login key from local or session storage
+        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
         if (!loginKey) {
-          console.error("Authentication key not available.");
-          return;
-        }
-        const { authKey, id } = JSON.parse(loginKey);
-        if (!authKey || !id) {
-          console.error("Auth key or user id not available.");
+          console.error('Authentication key not available.');
           return;
         }
 
-        const response = await axios.get(
-          `${API_HOST_URL}/api/employers/get-employer`,
-          {
+        let parsedLoginKey;
+        try {
+          parsedLoginKey = JSON.parse(loginKey);
+        } catch (error) {
+          console.error('Error parsing authentication key:', error);
+          return;
+        }
+
+        const { authKey, id } = parsedLoginKey;
+
+        if (!authKey) {
+          console.error('Auth key not available.');
+          return;
+        }
+
+        if (!id) {
+          // Fetch user data to get the id if not available
+          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               authorization: authKey,
             },
-          }
-        );
+          });
+
+          const userData = response.data;
+
+          // Update the id in parsedLoginKey
+          parsedLoginKey.id = userData.id;
+
+          // Update the login key in local or session storage
+          const updatedLoginKey = JSON.stringify(parsedLoginKey);
+          console.log('New Key:', updatedLoginKey);
+          window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
+        }
+
+        // Proceed with fetching the employer data
+        const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: authKey,
+          },
+        });
+
         const userData = response.data;
-        setCompanyName(userData.companyName);
+        setCompanyName(userData.companyName || ''); // Update state with company name
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
       }
     };
+
     fetchUserData(); // Invoke the fetchUserData function
-  }, []);
+  }, []); // Dependency array is empty, so this effect runs once after initial render
+
 
   const handleLogout = () => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
