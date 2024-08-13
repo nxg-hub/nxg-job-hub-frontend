@@ -91,10 +91,10 @@ const Sidebar = () => {
         const authKey = parsedLoginKey.authKey;
         // let id = parsedLoginKey.id;
 
-        // console.log('Auth Key:', authKey);
-        // console.log('User ID:', id);
-        //
-        // console.log('Parsed loginKey:', parsedLoginKey);
+        console.log('Auth Key:', authKey);
+        console.log('User ID:', id);
+
+        console.log('Parsed loginKey:', parsedLoginKey);
 
         // Fetch user data to get the techId
         const response = await axios.get(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
