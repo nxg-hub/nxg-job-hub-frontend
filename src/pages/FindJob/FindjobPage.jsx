@@ -5,21 +5,19 @@ import { IoSearchOutline } from "react-icons/io5";
 import avater from "../../static/images/user.png";
 import Logo from "../../static/images/nxg-logo.png";
 import Footer from "../../components/footer/Footer";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const FindjobPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [jobsResult, setJobsResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL =
-    "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/job-postings/all?page=0&size=1&sort=string";
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }

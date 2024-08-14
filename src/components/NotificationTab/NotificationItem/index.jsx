@@ -13,9 +13,9 @@ const NotificationItem = ({ item, ...props }) => {
           <p className={s.message}>{item.message}</p>
         </span>
         <div className={s.Options}>
-        <CiMenuKebab />
-        <small className={s.timestamp}>{time}</small>
-       </div>
+          <CiMenuKebab />
+          <small className={s.timestamp}>{time}</small>
+        </div>
       </div>
     </div>
   );
