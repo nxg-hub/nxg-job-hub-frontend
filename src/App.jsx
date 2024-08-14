@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard/index.jsx";
 import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/index.jsx";
 import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
-import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
+// import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
 import JobListings from "./pages/Dashboard/job-listings";
 import Register from "./pages/Register/index.jsx";
 import Login from "./pages/Login/index.jsx";
@@ -35,6 +35,8 @@ import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 import Help from "./pages/Dashboard/Help/Help.jsx";
 import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
+import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
+import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
 function App() {
   return (
     <>
@@ -85,9 +87,11 @@ function App() {
               <Route path="create" element={<PostJobs />} />
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
+            <Route path="interviews" element={<Interview />} />
+            <Route path="services" element={<CompanyServices />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
             <Route path="saved" element={<SavedJobs />} />
-            <Route path="wallet" element={<Wallet />} />W
+            {/* <Route path="wallet" element={<Wallet />} />W */}
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />

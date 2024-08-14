@@ -4,14 +4,19 @@ import { relevance } from "../../../utils/data/tech-talent";
 import DashboardSearch from "./DashboardSearch";
 import SearchJobCard from "./SearchJobCard";
 // import "./profileMain.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedRelevance } from "../../../redux/FilterSlice";
 
 function ProfileSearch() {
-  const [selectedRelevance, setSelectedRelevance] = useState([]);
+  // const [selectedRelevance, setSelectedRelevance] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-  // const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
+  const showOptions = useSelector((state) => state.NearbyJobSlice.showOptions);
+  const selectedRelevance = useSelector(
+    (state) => state.FilterSlice.selectedRelevance
+  );
+  const dispatch = useDispatch();
   const handleJobFetched = (fetchedJobs) => {
     // Apply search filtering only if there's a search term
     const filteredJobs =
@@ -54,7 +59,8 @@ function ProfileSearch() {
     label: relevanceType,
   }));
   const handleMultiSelectRelevance = (selectedOptions) => {
-    setSelectedRelevance(selectedOptions);
+    // setSelectedRelevance(selectedOptions);
+    dispatch(setSelectedRelevance(selectedOptions));
   };
 
   return (
@@ -65,8 +71,7 @@ function ProfileSearch() {
           fontWeight: "500",
           marginBottom: ".5rem",
           color: "rgba(0, 0, 0, 0.47)",
-        }}
-      >
+        }}>
         Search for Jobs
       </p>
       <div className="profile-search-container">
@@ -80,7 +85,7 @@ function ProfileSearch() {
             <label className="sort">sort by</label>
             <Select
               options={relevanceOptions}
-              isMulti
+              // isMulti
               components={{ Option: CheckboxOption }}
               onChange={handleMultiSelectRelevance}
               value={selectedRelevance}
@@ -90,7 +95,7 @@ function ProfileSearch() {
           </div>
         </div>
       </div>
-      {jobs.length !== 0 && (
+      {jobs.length !== 0 && showOptions && (
         <div className={`fetch-jobs h-[300px] bg-blue-200 overflow-scroll `}>
           {jobs
             .filter((job) => {

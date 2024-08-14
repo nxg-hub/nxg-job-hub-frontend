@@ -14,6 +14,7 @@ const SavedJobCard = ({ job, onClick }) => {
   const [jobPostingId] = useState({
     jobPostingId: jobData.jobID,
   });
+  console.log(jobData);
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
@@ -53,19 +54,21 @@ const SavedJobCard = ({ job, onClick }) => {
           </div>
         </div>
 
-        <span className="font-medium md:text-lg">{jobData?.job_title}</span>
+        <span className="font-medium md:text-lg capitalize">
+          {jobData?.job_title}
+        </span>
 
         <span className="text-base font-normal text-[#263238]">
-          {jobData?.job_description}
+          {jobData?.job_description.slice(0, 80)}.....
         </span>
 
         <div className="flex gap-x-2">
           <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
-            {!job.job_type && "Full time"}
+            {jobData.job_type}
           </span>
-          <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
+          {/* <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
             {!job.job_type && "On-site"}
-          </span>
+          </span> */}
         </div>
 
         <div className="flex flex-col">

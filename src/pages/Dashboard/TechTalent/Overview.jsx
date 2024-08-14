@@ -19,6 +19,7 @@ function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [filtermsg, setFilterMsg] = useState(false);
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
@@ -42,8 +43,13 @@ function TechTalentOverview() {
   };
   useEffect(() => {
     dispatch(fetchLoggedInUser());
-  });
+  }, []);
 
+  //getting the filtered job type from the redux store
+  const selectedJobTypes = useSelector(
+    (state) => state.FilterSlice.selectedJobTypes
+  );
+  const jobType = selectedJobTypes.value;
   return (
     <main className="dash-profile-main-side">
       <div className="dash-profile-header">
@@ -113,8 +119,8 @@ function TechTalentOverview() {
         <div className="JobRecommendations">
           {nearJobLoader ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
-          ) : showNearByJobs ? (
-            nearByJobs.map((jobRecommendation, i) => {
+          ) : showNearByJobs && !jobType ? (
+            nearByJobs?.map((jobRecommendation, i) => {
               // jobRecommendation.company_logo = figma;
               return (
                 <RecommendationCard
@@ -123,9 +129,29 @@ function TechTalentOverview() {
                 />
               );
             })
+          ) : showNearByJobs && jobType ? (
+            nearByJobs
+              ?.filter((job) => {
+                // job.job_type !== jobType ? setFilterMsg(true) : null;
+                return job.job_type === jobType;
+              })
+              .map((jobRecommendation, i) => {
+                // jobRecommendation.company_logo = figma;
+                return (
+                  <RecommendationCard
+                    key={i * 5}
+                    recommendedJobs={jobRecommendation}
+                  />
+                );
+              })
           ) : (
             <div className="w-[80%] m-auto text-justify font-bold">
-              <h2>Search for Jobs near you.</h2>
+              <h2>
+                {/* {filtermsg
+                  ? "Could not find your search term"
+                  : "Search for Jobs near you."} */}
+                Search for Jobs near you.
+              </h2>
             </div>
           )}
         </div>

@@ -4,17 +4,31 @@ import axios from "axios";
 import { MdOutlineSearch, MdOutlineLocationOn } from "react-icons/md";
 import { jobTypes, levels } from "../../../utils/data/tech-talent";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showOptions } from "../../../redux/NearbyJobSlice";
+import {
+  setSelectedJobTypes,
+  setSelectedLevels,
+} from "../../../redux/FilterSlice";
 
 function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
-  const [selectedJobTypes, setSelectedJobTypes] = useState([]);
-  const [selectedLevels, setSelectedLevels] = useState([]);
+  // const [selectedJobTypes, setSelectedJobTypes] = useState([]);
+  // const [selectedLevels, setSelectedLevels] = useState([]);
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const selectedJobTypes = useSelector(
+    (state) => state.FilterSlice.selectedJobTypes
+  );
+  const selectedLevels = useSelector(
+    (state) => state.FilterSlice.selectedLevels
+  );
   const baseUrl = `${API_HOST_URL}/api/job-postings/all`;
   // const baseUrl = 'http://localhost:8000/posts';
 
   const fetchedJobs = () => {
+    setLoading(true);
     axios
       .get(baseUrl)
       .then((response) => {
@@ -24,14 +38,15 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
         }));
         // Update's the fetched jobs
         onJobsFetched(jobsArray);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error occured fetching data:", error);
       });
   };
-
   // fetchedJobs();
   const handleSearchJobs = () => {
+    dispatch(showOptions());
     if (search === "" || locationSearch === "") {
       fetchedJobs("");
     } else {
@@ -76,7 +91,8 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
     label: level,
   }));
   const handleMultiSelectLevels = (selectedOptions) => {
-    setSelectedLevels(selectedOptions);
+    // setSelectedLevels(selectedOptions);
+    dispatch(setSelectedLevels(selectedOptions));
   };
 
   const jobTypeOptions = jobTypes.map((jobType) => ({
@@ -84,7 +100,8 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
     label: jobType,
   }));
   const handleMultiSelectJobTypes = (selectedOptions) => {
-    setSelectedJobTypes(selectedOptions);
+    // setSelectedJobTypes(selectedOptions);
+    dispatch(setSelectedJobTypes(selectedOptions));
   };
 
   return (
@@ -114,7 +131,7 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
           <Select
             id="employ-select"
             options={jobTypeOptions}
-            isMulti
+            // isMulti
             components={{ Option: CheckboxOption }}
             onChange={handleMultiSelectJobTypes}
             value={selectedJobTypes}
@@ -125,7 +142,7 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
           <Select
             className="level-select"
             options={levelOptions}
-            isMulti
+            // isMulti
             components={{ Option: CheckboxOption }}
             onChange={handleMultiSelectLevels}
             value={selectedLevels}
@@ -133,7 +150,9 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
           />
         </div>
         <div className="dash-search-btn">
-          <button onClick={handleSearchJobs}>Search Jobs</button>
+          <button onClick={handleSearchJobs}>
+            {loading ? "Loading...." : "Search Jobs"}
+          </button>
         </div>
       </div>
     </>

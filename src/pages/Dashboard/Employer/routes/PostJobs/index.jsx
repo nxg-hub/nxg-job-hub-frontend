@@ -29,6 +29,7 @@ const PostJobs = () => {
     company_bio: "",
     salary: "",
     job_type: "",
+    job_mode: "",
     deadline: "",
     requirements: "",
     job_location: "",
@@ -38,7 +39,7 @@ const PostJobs = () => {
     tags: [],
     responsibilities: "",
     benefits: "",
-    region: "",
+    // region: "",
     contact_details: "",
   };
   const [formData, setFormData] = useState(data);
@@ -172,8 +173,7 @@ const PostJobs = () => {
             id={"jobType"}
             name={"jobType"}
             onChange={(e) => updateField(e, setFormData)}
-            err={formErrors.jobType}
-          >
+            err={formErrors.job_type}>
             {jobTypes.map(({ id, value, title }) => (
               <option value={value} key={id}>
                 {title}
@@ -194,14 +194,14 @@ const PostJobs = () => {
         />
 
         <div className={s.SelectFields}>
-          <label htmlFor="job_location">Job Location:</label>
+          <label htmlFor="job_mode">Job Mode:</label>
           <select
             required
-            id={"job_location"}
-            name={"job_location"}
+            id={"job_mode"}
+            name={"job_mode"}
+            value={formData.job_mode}
             onChange={(e) => updateField(e, setFormData)}
-            err={formErrors.job_location}
-          >
+            err={formErrors.job_mode}>
             {jobLocations.map(({ id, value, title }) => (
               <option value={value} key={id}>
                 {title}
@@ -209,9 +209,19 @@ const PostJobs = () => {
             ))}
           </select>
         </div>
+        <TextField
+          required
+          label={"Job Location:"}
+          id={"job_location"}
+          name={"job_location"}
+          type={"text"}
+          value={formData.job_location}
+          onchange={(e) => updateField(e, setFormData)}
+          err={formErrors.job_location}
+        />
         {/* SHow field for work region if hybrid or onsite is selected */}
-        {(formData.job_location === "hybrid" ||
-          formData.job_location === "on-site") && (
+        {/* {(formData.job_mode === "hybrid" ||
+          formData.job_mode === "on-site") && (
           <TextField
             required
             label={"Work region:"}
@@ -223,7 +233,7 @@ const PostJobs = () => {
             onchange={(e) => updateField(e, setFormData)}
             err={formErrors.region}
           />
-        )}
+        )} */}
 
         <TextField
           label={"Tags:"}

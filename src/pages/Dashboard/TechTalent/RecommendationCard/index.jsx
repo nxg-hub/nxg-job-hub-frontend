@@ -10,10 +10,6 @@ const RecommendationCard = ({ recommendedJobs }) => {
     style: "currency",
     currency: "NGN",
   });
-  const save = (id) => {
-    console.log(id);
-    console.log("hey");
-  };
 
   return (
     <div className={`${s.RecommendationCardWrapper} `}>
@@ -30,7 +26,7 @@ const RecommendationCard = ({ recommendedJobs }) => {
         </div>
       </div>
       <div className={s.JobDescription}>
-        <p>{recommendedJobs.job_title}</p>
+        <p className="capitalize">{recommendedJobs.job_title}</p>
         <small>{recommendedJobs.job_description}</small>
         <span>{recommendedJobs.job_type}</span>
         <p>{formatter.format(recommendedJobs.salary)};</p>
