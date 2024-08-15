@@ -1,4 +1,5 @@
 import s from "./index.module.scss";
+import { NavLink } from "react-router-dom";
 
 const JobCard = ({
   job_title,
@@ -6,6 +7,7 @@ const JobCard = ({
   applicants,
   createdAt,
   deadline,
+  jobID,
 }) => {
   const formattedDate = new Date(createdAt).toLocaleDateString("en-CA", {
     year: "numeric",
@@ -38,7 +40,9 @@ const JobCard = ({
           </p>
         </div>
       </footer>
-      <button>Review Applications</button>
+      <NavLink to={`review-applicants/${jobID}`}>
+        <button>Review Applications</button>
+      </NavLink>
     </div>
   );
 };

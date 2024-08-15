@@ -37,6 +37,8 @@ import Help from "./pages/Dashboard/Help/Help.jsx";
 import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
 import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
 import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
+import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
+import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
 function App() {
   return (
     <>
@@ -87,6 +89,11 @@ function App() {
               <Route path="create" element={<PostJobs />} />
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
+            <Route
+              path="review-applicants/:id"
+              element={<ReviewApplicants />}
+            />
+            <Route path="review-appliedtalent/:id" element={<FullReview />} />
             <Route path="interviews" element={<Interview />} />
             <Route path="services" element={<CompanyServices />} />
             <Route path="applications" element={<h2>My Applications </h2>} />

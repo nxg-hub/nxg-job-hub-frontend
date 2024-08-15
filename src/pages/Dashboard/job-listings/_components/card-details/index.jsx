@@ -8,7 +8,9 @@ const CardDetails = ({ job, onClose }) => {
           <div className="items-center gap-x-2 flex">
             <img src="/dashboard/figma-logo.png" alt="logo" />
             <div className="flex flex-col">
-              <span className="font-bold md:text-xl">{job.employerID}</span>
+              <span className="font-bold md:text-xl">
+                {job.employer_name || "Employer"}
+              </span>
               <div className="flex items-center gap-x-2">
                 <img src="/dashboard/location.png" alt="location" />
                 <span className="md:text-sm font-medium text-[#444444]">

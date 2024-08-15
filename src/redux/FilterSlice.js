@@ -5,6 +5,7 @@ const initialState = {
   selectedRelevance: [],
   selectedJobTypes: [],
   selectedLevels: [],
+  jobID: "",
 };
 
 const FilterSlice = createSlice({
@@ -20,9 +21,16 @@ const FilterSlice = createSlice({
     setSelectedLevels: (state, action) => {
       state.selectedLevels = action.payload;
     },
+    getJobID: (state, action) => {
+      state.jobID = action.payload;
+    },
   },
 });
-export const { setSelectedRelevance, setSelectedJobTypes, setSelectedLevels } =
-  FilterSlice.actions;
+export const {
+  setSelectedRelevance,
+  setSelectedJobTypes,
+  setSelectedLevels,
+  getJobID,
+} = FilterSlice.actions;
 
 export default FilterSlice.reducer;

@@ -15,6 +15,7 @@ import useFetchJobs from "../../../../../utils/hooks/useFetchJobs";
 const EmployerOverview = () => {
   const user = useContext(UserContext);
   const { posts } = useFetchJobs(user.accountTypeID);
+
   return (
     <div className={s.EmployerOverview}>
       <div className={s.Header}>
@@ -31,7 +32,6 @@ const EmployerOverview = () => {
               value={posts.length}
             />
             <EngagementCard
-              
               logo={<Applicants fill="#006A90" />}
               title={"Applicants"}
               value={0}
@@ -67,10 +67,7 @@ const EmployerOverview = () => {
           posts.map((post, o) => <JobCard key={o} {...post} />)
         ) : (
           <div className={s.NoPostsFallbackUI}>
-            <h3>
-              {" "}
-              You have not made any posts yet
-            </h3>
+            <h3> You have not made any posts yet</h3>
             <Link to="./posts/create">Create a Job Post</Link>
           </div>
         )}
