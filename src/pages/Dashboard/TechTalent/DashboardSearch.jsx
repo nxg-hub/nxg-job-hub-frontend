@@ -13,10 +13,6 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
   const [locationSearch, setLocationSearch] = useState("");
   const baseUrl = `${API_HOST_URL}/api/job-postings/all`;
   // const baseUrl = 'http://localhost:8000/posts';
-  const loggedInUser = useSelector(
-    (state) => state.LoggedInUserSlice.loggedInUser
-  );
-  const userLocation = loggedInUser.state;
 
   const fetchedJobs = () => {
     axios
@@ -111,7 +107,7 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
             placeholder="Location"
             className="dash-location-input"
             onChange={handleLocationSearch}
-            value={locationSearch ? locationSearch : userLocation}
+            value={locationSearch}
           />
         </div>
         <div className="dash-employ-type">

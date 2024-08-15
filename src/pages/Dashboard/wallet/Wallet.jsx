@@ -13,7 +13,7 @@ import PaymentCard from './walletCard/PaymentCard';
 function Wallet() {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]); // State to hold the transaction data
-  const baseUrl = 'http://localhost:8000/transactions';
+  const baseUrl = 'https://nxg-job-hub-8758c68a4346.herokuapp.com/transactions';
   const user = useContext(UserContext);
 
   useEffect(() => {

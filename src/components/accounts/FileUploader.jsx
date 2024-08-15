@@ -6,7 +6,7 @@ const FileUploader = ({
   title,
   name,
   value,
-  onFileSelectError,
+  // onFileSelectError,
   onFileChange,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -57,6 +57,8 @@ const FileUploader = ({
       return;
     }
     const allowedFileTypes = [
+      "image/jpeg",
+      "image/png",
       "application/pdf",
       "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -64,7 +66,11 @@ const FileUploader = ({
 
     if (!allowedFileTypes.includes(file.type)) {
       // onFileSelectError("Only DOC and PDF files are allowed");
-      setFileTypeError("Only DOC and PDF files are allowed");
+      // setFileTypeError("Only DOC and PDF files are allowed");
+      // onFileSelectError({
+      //   error: "Only JPG, PNG, DOC and PDF files are allowed",
+      // });
+      setFileTypeError("Only JPG, PNG, DOC and PDF files are allowed");
       return;
     }
 

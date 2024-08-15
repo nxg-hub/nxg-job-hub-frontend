@@ -33,8 +33,8 @@ import Findjob from "./pages/FindJob/FindjobPage.jsx";
 import Faq from "./pages/Faq/Faq.jsx";
 import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
-import { Privacy } from "./pages/Dashboard/TechTalent/Sidebar/SidebarIcons.js";
 import Help from "./pages/Dashboard/Help/Help.jsx";
+import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
 function App() {
   return (
     <>
@@ -86,7 +86,7 @@ function App() {
             </Route>
             <Route path="applicants" element={<JobApplicants />} />
             <Route path="applications" element={<h2>My Applications </h2>} />
-            <Route path="saved" element={<h2>saved job</h2>} />
+            <Route path="saved" element={<SavedJobs />} />
             <Route path="wallet" element={<Wallet />} />W
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
@@ -95,8 +95,7 @@ function App() {
             <Route path="password-settings" element={<Passwordsettings />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsAndCondition />} />
-            
-            <Route path="help" element={<Help/>} />
+            <Route path="help" element={<Help />} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>
             <Route path=":reference" element={<SubSuccess />} />
@@ -109,7 +108,7 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
         <Route path="/iso" element={<SavedJobCard />} />
-        { <Route path="job-listings" element={<JobListings />} /> }
+        {<Route path="job-listings" element={<JobListings />} />}
       </Routes>
     </>
   );
