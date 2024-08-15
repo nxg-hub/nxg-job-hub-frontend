@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import Spinner from "../../../../assets/svg/spinner.svg?.react";
 import Inputs from "../../../../components/accounts/Inputs";
 import "./settings.scss";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
-import { Eye } from "../../../../utils/functions/PasswordEye";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 function Passwordsettings() {
@@ -12,12 +12,12 @@ function Passwordsettings() {
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
+  const [loading, setLoading] = useState("");
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -25,9 +25,9 @@ function Passwordsettings() {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     try {
-      // Your password validation logic
+      setLoading(true);
       const isValidPassword =
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
           newPassword
         );
 
@@ -35,27 +35,26 @@ function Passwordsettings() {
         setPasswordError(
           "Password should be a minimum of 8 characters and should include at least 1 special character, numbers, and letters!"
         );
+        setTimeout(() => {
+          setPasswordError("");
+        }, 2000);
         return;
       }
-      // Check if the current password matches the entered current password
-      // if (currentPassword !== password) {
-      //   setPasswordError("Current password is incorrect!");
-      //   return;
-      // }
-      // Check if the new password matches the confirm password
       if (newPassword !== confirmPassword) {
         setPasswordError("New password and confirm password do not match!");
+        setTimeout(() => {
+          setPasswordError("");
+        }, 2000);
         return;
       }
 
-      const { res } = await axios.post(
+      const response = await axios.post(
         `${API_HOST_URL}/api/v1/auth/update-password/in-app`,
         {
           oldPassword: currentPassword,
           newPassword: newPassword,
           confirmPassword: confirmPassword,
         },
-
         {
           headers: {
             "Content-Type": "application/json",
@@ -63,12 +62,37 @@ function Passwordsettings() {
           },
         }
       );
+      // console.log(response);
+      if (response.status === 200) {
+        setSuccessMessage("Password change is successful");
+        setConfirmPassword("");
+        setCurrentPassword("");
+        setNewPassword("");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2000);
+        setPasswordError("");
+      } else {
+        setPasswordError("Failed to update password. Please try again.");
+        setTimeout(() => {
+          setPasswordError("");
+        }, 2000);
+      }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 400) {
+        setPasswordError(
+          "Incorrect Password, please input your current password correctly"
+        );
+        setTimeout(() => {
+          setPasswordError("");
+        }, 2000);
+      } else {
+        console.log(err);
+        setPasswordError("An error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
-
-    // Display success message
-    setIsOpen(true);
   };
 
   return (
@@ -88,7 +112,7 @@ function Passwordsettings() {
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Enter your current password"
                 autoComplete="off"
-                errormessage="Password must be correct!"
+                // errormessage="Password must be correct!"
                 required
               />
               <div>
@@ -113,8 +137,6 @@ function Passwordsettings() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter your new password"
                 autoComplete="current-password"
-                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-                errormessage="Password should be a minimum of 8 characters and should inculde at least 1 special charater, numbers and letters!"
                 required
               />
               <div>
@@ -139,7 +161,6 @@ function Passwordsettings() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-Enter your new password"
                 autoComplete="current-password"
-                errormessage="Password did not match!"
                 required
               />
               <div>
@@ -155,21 +176,28 @@ function Passwordsettings() {
                   />
                 )}
               </div>
+              {passwordError !== "" && (
+                <div className="text-sm text-start text-[#ee2a2a]">
+                  <p>{passwordError}</p>
+                </div>
+              )}{" "}
+              {successMessage !== "" && (
+                <div className="change-successful">
+                  <p>Password change was successful</p>
+                </div>
+              )}
             </div>
-            <div className="pass-btn">
-              <button>Change Password</button>
+            <div className="pass-btn w-full">
+              <button className="flex items-center justify-center">
+                {" "}
+                {loading ? (
+                  <img src={Spinner} className="w-[30px]" alt="loading" />
+                ) : (
+                  "Change Password"
+                )}
+              </button>
             </div>
           </form>
-          {isOpen && (
-            <div className="change-successful">
-              <p>Password change was successful</p>
-            </div>
-          )}
-          {passwordError && (
-            <div className="change-failed">
-              <p>{passwordError}</p>
-            </div>
-          )}
         </div>
       </div>
     </div>

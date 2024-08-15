@@ -32,9 +32,11 @@ import Notice from "../../../../components/Notice";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [profilePicture, setProfilePicture] = useState(profilePic || null);
+  console.log(profilePicture);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [message, setMessage] = useState(null);
+  const [uploadError, setUploadError] = useState("");
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
 
@@ -138,27 +140,69 @@ const Sidebar = ({ profilePic, ...props }) => {
     };
 
     fetchUserData(); // Invoke the fetchUserData function
-  }, []); // Dependency array is empty, so this effect runs once after initial render
-
-
+  }, []);
   const handleLogout = () => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     navigate("/login");
   };
   const editProfile = () => navigate("/dashboard/profile");
+
+  const uploadToNXG = async () => {
+    const authKey =
+      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
+    if (!authKey || !authKey.authKey) {
+      throw new Error(
+        "Invalid or missing authentication key. Please log in again."
+      );
+    }
+    try {
+      const response = await fetch(
+        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: authKey.authKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ link: `${profilePicture}` }),
+        }
+      );
+
+      console.log(response.status);
+
+      if (response && response.status === 200) {
+        console.log("Profile picture successfully updated");
+        setUploadError(null);
+      } else {
+        throw new Error("Failed to update profile picture. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      setUploadError(
+        "An error occurred while updating the profile picture. Please try again."
+      );
+    }
+  };
+  useEffect(() => {
+    if (profilePicture) {
+      uploadToNXG();
+    }
+  }, [profilePicture]);
+
   const uploadProfilePicture = async (e) => {
     try {
       setMessage({
         type: "info",
         content: "Updating profile picture...",
       });
+
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
       formData.append("upload_preset", "tin4r1lt");
-      const { authKey } =
-        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
       const res = await axios.post(
         "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
         formData,
@@ -168,24 +212,19 @@ const Sidebar = ({ profilePic, ...props }) => {
           },
         }
       );
+
       setProfilePicture(res.data.secure_url);
+
       setMessage({
         type: "info",
         content: "Profile picture updated.",
       });
       setTimeout(() => setMessage(null), 5000);
-      await axios.post(
-        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
-        { link: `${res.data.secure_url}` },
-        {
-          headers: {
-            Authorization: authKey,
-            "Content-Type": "application/json",
-          },
-        }
-      );
     } catch (err) {
       console.log(err);
+      setUploadError(
+        "An error occurred while updating the profile picture. Please try again."
+      );
     }
   };
   return (
