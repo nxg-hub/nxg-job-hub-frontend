@@ -19,7 +19,6 @@ const FileUploader = ({
   const onDragEnter = () => fileInput.current.classList.add("dragover");
   const onDragLeave = () => fileInput.current.classList.remove("dragover");
   const onDrop = () => fileInput.current.classList.remove("dragover");
-
   const uploadImage = async (file) => {
     // setLoading(true);
     // setError(false);
@@ -39,7 +38,7 @@ const FileUploader = ({
       );
       setUrl(res.data.secure_url);
       onFileChange(res.data.secure_url);
-      console.log(res);
+      // console.log(res);
       // alert("File uploaded successfully.");
     } catch (error) {
       console.error("Error uploading file:", error.message);
@@ -64,15 +63,16 @@ const FileUploader = ({
     ];
 
     if (!allowedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "Only DOC and PDF files are allowed" });
+      // onFileSelectError("Only DOC and PDF files are allowed");
       setFileTypeError("Only DOC and PDF files are allowed");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      onFileSelectError({ error: "File size cannot exceed 5MB" });
+      setFileTypeError("File size cannot exceed 5MB");
       return;
     }
+    setFileTypeError('')
     setDocument(files[0]?.name);
     uploadImage(file);
   };
@@ -90,7 +90,8 @@ const FileUploader = ({
         className="file-uploader "
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
-        onDrop={onDrop}>
+        onDrop={onDrop}
+      >
         <div className="drop-file-input-img-label flex justify-center flex-col items-center">
           <IoMdCloudUpload className="upload-img" />
           <div className="drop-file-labels">
@@ -98,6 +99,7 @@ const FileUploader = ({
             <p>Drag and drop files here</p>
           </div>
           {document !== "" && <span>{document}</span>}
+          <span className="text-sm py-2 text-[#f11515]">{fileTypeError}</span>
         </div>
         <input
           type="file"
@@ -107,7 +109,6 @@ const FileUploader = ({
           onChange={(e) => uploadFiles(e.target.files)}
           id="drop-file-input"
         />
-        <span> {fileTypeError}</span>
       </div>
       {url && (
         <div className="drop-file-preview">

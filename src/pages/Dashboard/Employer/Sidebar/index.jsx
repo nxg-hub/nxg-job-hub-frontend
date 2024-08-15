@@ -32,9 +32,11 @@ import Notice from "../../../../components/Notice";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [profilePicture, setProfilePicture] = useState(profilePic || null);
+  console.log(profilePicture);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [message, setMessage] = useState(null);
+  const [uploadError, setUploadError] = useState("");
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
 
@@ -76,25 +78,68 @@ const Sidebar = ({ profilePic, ...props }) => {
     };
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
 
     navigate("/login");
   };
   const editProfile = () => navigate("/dashboard/profile");
+
+  const uploadToNXG = async () => {
+    const authKey =
+      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
+    if (!authKey || !authKey.authKey) {
+      throw new Error(
+        "Invalid or missing authentication key. Please log in again."
+      );
+    }
+    try {
+      const response = await fetch(
+        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: authKey.authKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ link: `${profilePicture}` }),
+        }
+      );
+
+      console.log(response.status);
+
+      if (response && response.status === 200) {
+        console.log("Profile picture successfully updated");
+        setUploadError(null);
+      } else {
+        throw new Error("Failed to update profile picture. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      setUploadError(
+        "An error occurred while updating the profile picture. Please try again."
+      );
+    }
+  };
+  useEffect(() => {
+    if (profilePicture) {
+      uploadToNXG();
+    }
+  }, [profilePicture]);
+
   const uploadProfilePicture = async (e) => {
     try {
       setMessage({
         type: "info",
         content: "Updating profile picture...",
       });
+
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
       formData.append("upload_preset", "tin4r1lt");
-      const { authKey } =
-        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
       const res = await axios.post(
         "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
         formData,
@@ -104,25 +149,19 @@ const Sidebar = ({ profilePic, ...props }) => {
           },
         }
       );
-      setProfilePicture(res.data.secure_url)
+
+      setProfilePicture(res.data.secure_url);
+
       setMessage({
         type: "info",
         content: "Profile picture updated.",
       });
-      setTimeout(() => setMessage(null), 5000);
-     await axios.post(
-        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
-        { link: `${res.data.secure_url}` },
-        {
-          headers: {
-            Authorization: authKey,
-            "Content-Type": "application/json",
-          },
-        }
-        );
-       
+      setTimeout(() => setMessage(null), 10000);
     } catch (err) {
       console.log(err);
+      setUploadError(
+        "An error occurred while updating the profile picture. Please try again."
+      );
     }
   };
   return (
@@ -132,7 +171,10 @@ const Sidebar = ({ profilePic, ...props }) => {
       </Link>
       <div className={s.Profile}>
         <div>
-          <div className={s.displayPic} style={profilePicture && { padding: 0 }}>
+          <div
+            className={s.displayPic}
+            style={profilePicture && { padding: 0 }}
+          >
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label htmlFor="profilepic">
@@ -170,7 +212,9 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Engagements</h2>
         <div className={s.Engagements}>
           <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-            <div><Dashboard /></div>
+            <div>
+              <Dashboard />
+            </div>
             <p>Dashboard</p>
           </NavLink>
           <NavLink
@@ -183,53 +227,74 @@ const Sidebar = ({ profilePic, ...props }) => {
                 : s.dashboardItem
             }
           >
-            <div><Notification /></div>
-           <p> Notifications</p>
+            <div>
+              <Notification />
+            </div>
+            <p> Notifications</p>
           </NavLink>
           {/* <NavLink end to="wallet" className={`${s.dashboardItem} `}>
           <div><Wallet /></div>
             <p>Wallet</p>
           </NavLink> */}
           <NavLink end to="subscription" className={`${s.dashboardItem} `}>
-          <div><PiSubtitlesBold /></div>
+            <div>
+              <PiSubtitlesBold />
+            </div>
             <p>Subscription</p>
           </NavLink>
         </div>
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>
           <NavLink end to="posts/create" className={`${s.dashboardItem} `}>
-          <div><PostJobs /></div>
+            <div>
+              <PostJobs />
+            </div>
             <p>Post Jobs</p>
           </NavLink>
           <NavLink end to="posts" className={`${s.dashboardItem} `}>
-          <div><JobPosts /></div>
+            <div>
+              <JobPosts />
+            </div>
             <p>Job Posts</p>
           </NavLink>
           <NavLink end to="applicants" className={`${s.dashboardItem} `}>
-          <div><Applicants /></div>
+            <div>
+              <Applicants />
+            </div>
             <p>Job Applicants</p>
           </NavLink>
           <NavLink end to="interviews" className={`${s.dashboardItem} `}>
-          <div><Interviews /></div>
+            <div>
+              <Interviews />
+            </div>
             <p>Interviews</p>
           </NavLink>
           <NavLink end to="services" className={`${s.dashboardItem} `}>
-          <div><Services fill="white" /></div> <p>My Company Services</p>
+            <div>
+              <Services fill="white" />
+            </div>{" "}
+            <p>My Company Services</p>
           </NavLink>
         </div>
         <h2>Settings</h2>
         <div className={s.Settings}>
           <NavLink end to="profile" className={`${s.dashboardItem} `}>
-          <div><MyProfile /></div>
+            <div>
+              <MyProfile />
+            </div>
             <p>My Profile</p>
           </NavLink>
           <NavLink end to="contract" className={`${s.dashboardItem} `}>
-          <div><Contract /></div>
+            <div>
+              <Contract />
+            </div>
             <p>Contract</p>
           </NavLink>
           <li className={`${s.dashboardItem} `}>
             <div className={s.dropdownTitle}>
-            <div><Settings /></div>
+              <div>
+                <Settings />
+              </div>
               <span>
                 <p>Settings</p>
                 <PiCaretDown />
@@ -242,11 +307,17 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <div><Password /> </div><p>Password Settings</p>
+                <div>
+                  <Password />{" "}
+                </div>
+                <p>Password Settings</p>
               </NavLink>
               <NavLink end to="privacy" className={`${s.dashboardItem} `}>
                 {" "}
-                <div><Privacy /></div><p>Privacy</p> 
+                <div>
+                  <Privacy />
+                </div>
+                <p>Privacy</p>
               </NavLink>
               <NavLink
                 end
@@ -254,10 +325,15 @@ const Sidebar = ({ profilePic, ...props }) => {
                 className={`${s.dashboardItem} `}
               >
                 {" "}
-                <div><Terms /></div> <p>Terms and conditions</p>
+                <div>
+                  <Terms />
+                </div>{" "}
+                <p>Terms and conditions</p>
               </NavLink>
               <NavLink end to="help" className={`${s.dashboardItem} `}>
-              <div><Help /></div>
+                <div>
+                  <Help />
+                </div>
                 <p>Help</p>
               </NavLink>
             </ul>
@@ -268,7 +344,9 @@ const Sidebar = ({ profilePic, ...props }) => {
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div><Logout /></div>
+        <div>
+          <Logout />
+        </div>
         <p>Logout</p>
       </NavLink>
       {/* Render the LogoutModal component if showLogoutModal is true */}
@@ -352,7 +430,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           </Dialog.Panel>
         </Dialog>
       )}
-       {message && <Notice type={message.type} message={message.content} />}
+      {message && <Notice type={message.type} message={message.content} />}
     </div>
   );
 };

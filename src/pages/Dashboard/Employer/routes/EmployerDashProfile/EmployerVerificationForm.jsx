@@ -4,6 +4,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import FileUploader from "../../../../../components/accounts/FileUploader";
 import { Dialog } from "@headlessui/react";
 import Confetti from "../../../../../static/icons/ConfettiBall.svg?react";
+import Spinner from "../../../../../assets/svg/spinner.svg?.react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
@@ -23,11 +24,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
   });
   const [loading, setLoading] = useState(false); // Add loading state
 
-  const [errors, setErrors] = useState({ formData: "" });
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // };
-
+  const [errors, setErrors] = useState("");
+  // console.log(errors);
   const handleValue = (e, name) => {
     const { value } = e.target;
     const updatedValue =
@@ -57,12 +55,15 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
     if (
       !formData.CACCertificate ||
       !formData.taxClearanceCertificate ||
-      !formData.companyMemorandum
+      !formData.companyMemorandum || !formData.namesOfDirectors.length === 0
     ) {
-      setErrors({ formData: "Fill out the required field" });
+      setErrors("Fill out the required field");
       setLoading(false);
+      return;
     } else {
+      setErrors("")
       try {
+        setLoading(true);
         const loginKey =
           window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
           window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
@@ -82,11 +83,6 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
           return;
         }
 
-        // if (!authKey) {
-        //   console.error('Auth key not available.');
-        //   setLoading(false);
-        //   return;
-        // }
         const response = await axios.get(
           `${API_HOST_URL}/api/employers/get-employer`,
           {
@@ -111,7 +107,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
         );
 
         // Reset errors and navigate on successful submission
-        setErrors({ formData: "" });
+        setErrors("");
         // Call onVerificationSuccess if it's a function
         if (typeof onVerificationSuccess === "function") {
           onVerificationSuccess();
@@ -124,7 +120,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
           "Error posting data:",
           error.response ? error.response.data : error
         );
-        setErrors({ data: "Unable to update user data." });
+        setErrors("Unable to update user data.");
         setLoading(false);
       }
     }
@@ -139,12 +135,7 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
           Without Any Restrictions To Your Account!
         </h2>
         <form className="verified-section" onSubmit={handleSubmit}>
-          {errors.formData && (
-            <p
-              style={{ color: "red", marginTop: "-.95rem", fontSize: ".8rem" }}>
-              {errors.formData}
-            </p>
-          )}
+     
           <div className="tech-pro-form">
             <FileUploader
               title="Upload CAC Certificate*"
@@ -179,12 +170,20 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               cols="10"
               rows="10"
               value={formData.namesOfDirectors.join("\n")}
-              onChange={(e) => handleValue(e, "namesOfDirectors")}></textarea>
+              onChange={(e) => handleValue(e, "namesOfDirectors")}
+            ></textarea>
           </div>
+          {errors && (
+            <span
+            className="text-base text-[#dd3737]"
+            >
+              {errors}
+            </span>
+          )}
           <div className="verified-btn">
             {/* <button type='submit'>Verify Account</button> */}
-            <button type="submit" disabled={loading}>
-              {loading ? "Loading..." : "Verify Account"}
+            <button type="submit" disabled={loading} className="flex items-center justify-center mx-auto">
+              {loading ? <img src={Spinner} className="w-[30px]" alt="loading" /> : "Verify Account"}
             </button>
           </div>
         </form>
@@ -196,7 +195,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
               background: "rgba(0, 0, 0, 0.6)",
               height: "100vh",
               paddingTop: "4%",
-            }}>
+            }}
+          >
             <Dialog.Panel
               style={{
                 width: "100%",
@@ -208,15 +208,17 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                 background: "#ffffff",
                 borderRadius: "30px",
                 margin: "auto",
-              }}>
+              }}
+            >
               <Dialog.Title
                 style={{
                   fontFamily: "Manrope",
                   margin: "2rem 0",
                   color: "#000000",
                   textAlign: "center",
-                }}>
-                <div className="veri-modal">
+                }}
+              >
+                <div className="veri-modal flex flex-col justify-center items-center">
                   <h2>Verification Successful</h2>
                   <Confetti />
                   <p
@@ -227,7 +229,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                       margin: "1rem 0",
                       width: "100%",
                       maxWidth: "500px",
-                    }}>
+                    }}
+                  >
                     Congratulations your account has been verified successfully.
                   </p>
                 </div>
@@ -243,7 +246,8 @@ const EmployerVerificationForm = ({ onVerificationSuccess }) => {
                       fontSize: "1rem",
                       fontWeight: "400",
                     }}
-                    to={"/dashboard"}>
+                    to={"/dashboard"}
+                  >
                     Back To Dashboard
                   </Link>
                 </div>
