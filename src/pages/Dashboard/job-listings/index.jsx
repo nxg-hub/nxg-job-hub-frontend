@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import JobCard from "./_components/card";
 import CardDetails from "./_components/card-details";
 import Successfull from "./_components/successfull";
-import ProfileSearch from "../../Dashboard/TechTalent/ProfileSearch";
-// import "../../Dashboard/TechTalent/profileMain.scss";
 import "./searchBar.scss";
+import { API_HOST_URL } from "../../../utils/api/API_HOST.js";
+import ProfileSearch from "../TechTalent/ProfileSearch.jsx";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -13,9 +13,7 @@ const JobListings = () => {
   const [successfull, setSuccessfull] = useState(false);
 
   const fetchData = async () => {
-    const response = await fetch(
-      "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/job-postings/all?page=0&size=1&sort=string"
-    );
+    const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
     const data = await response.json();
     setJobs(data);
   };
