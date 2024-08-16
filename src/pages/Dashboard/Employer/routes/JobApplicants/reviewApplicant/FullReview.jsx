@@ -1,38 +1,123 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useApiRequest } from "../../../../../../utils/functions/fetchEndPoint";
 import { useSelector } from "react-redux";
+import { API_HOST_URL } from "../../../../../../utils/api/API_HOST";
+import { Link, useNavigate } from "react-router-dom";
+import { BsArrowLeft } from "react-icons/bs";
+import { Document, Page, pdfjs } from "react-pdf";
 
 const FullReview = () => {
   const jobID = useSelector((state) => state.FilterSlice.jobID);
 
-  const { data: jobApplicant } = useApiRequest(
-    `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
-  );
+  //   const { data: jobApplicant } = useApiRequest(
+  //     `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
+  //   );
 
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  const [jobApplicant, setJobApplicant] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await fetch(
+        `${API_HOST_URL}/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`,
+        {
+          method: "GET",
+          responseType: "arrayBuffer",
+          headers: {
+            "Content-Type": "application/json",
+            // Accept: "application/pdf",
+            Authorization: token.authKey,
+          },
+        }
+      )
+        .then((response) => {
+          //Create a Blob from the PDF Stream
+          //   console.log(response);
+          //   const file = new Blob([response.data], {
+          //     type: "application/pdf",
+          //   });
+
+          //   console.log(file);
+          //   //Build a URL from the file
+          //   const fileURL = URL.createObjectURL(file);
+          //   setFile(fileURL);
+          //Open the URL on new Window
+          //   window.open(fileURL);
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setJobApplicant(data);
+          const file = new Blob([data[0].techTalent.resume], {
+            type: "application/pdf",
+          });
+
+          //Build a URL from the file
+          const fileURL = window.URL.createObjectURL(file);
+
+          console.log(file);
+          setFile(fileURL);
+          setLoading(false);
+        })
+
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    fetchData();
+  }, []);
+
+  //   console.log(jobApplicant);
   const appDetails = jobApplicant[0]?.techTalent;
   const appDetails2 = jobApplicant[0]?.applicant;
-  console.log(String(appDetails?.resume));
+  console.log(appDetails?.resume);
   const onButtonClick = () => {
-    const pdfUrl = String(appDetails?.resume);
+    // window.open(file);
     const link = document.createElement("a");
-    link.href = pdfUrl;
+    link.href = file;
     link.download = "document.pdf"; // specify the filename
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
+  const navigate = useNavigate();
 
   return (
     <div className=" w-[90%] m-auto">
+      <Link
+        to={".."}
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(-1);
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          fontSize: "12px",
+          fontWeight: "400",
+          color: "#000",
+          margin: "0 0 1rem 1rem",
+          paddingTop: ".5rem",
+        }}>
+        <BsArrowLeft style={{ fontSize: "26px" }} />
+        <span>Back</span>
+      </Link>
       <div className="mt-8 h-[150px] w-[250px] m-auto">
         <img
           className="rounded-full m-auto w-[100px]  md:w-[150px]"
           src={appDetails?.profilePicture}
           alt="pic"
         />
-        <h3 className="text-center">{appDetails2?.firstName}</h3>
+        <h3 className="text-center font-bold font-mono md:text-2xl mt-2">
+          {appDetails2?.firstName}
+        </h3>
       </div>
-      <div className="w-[90%] bg-white m-auto h-[500px] mt-5">
+      <div className=" w-[95%] md:w-[90%] bg-white m-auto h-[400px] rounded-xl pt-4 mt-8">
         <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
           <span className="font-bold font-mono">Porfolio Link:</span>
           <a
@@ -70,10 +155,13 @@ const FullReview = () => {
         </h2>
         <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
           <span className="font-bold font-mono">Resume:</span>
-          <button onClick={onButtonClick}>Download PDF</button>
+          {/* <button target="_blank" onClick={onButtonClick}>
+            Download PDF
+          </button> */}
+          <Document src={appDetails?.resume} />
         </h2>
       </div>
-      <span className="pl-[30px] space-x-4 m-auto text-center">
+      <div className="mt-5 py-6 space-x-4 m-auto md:w-[60%] text-center">
         <button
           // onClick={handleAccept}
           className="bg-[#126704] text-white py-2 px-6 rounded-lg">
@@ -84,7 +172,7 @@ const FullReview = () => {
           className="bg-[#FF2323] text-white py-2 px-6 rounded-lg">
           Reject
         </button>
-      </span>
+      </div>
     </div>
   );
 };
