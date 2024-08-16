@@ -138,7 +138,7 @@ const EmployerDashProfile = () => {
                 <div className="connect-pics">
                     <div className="connect-img">
                       {profilePicture ? (
-                        <img src={user.profilePicture} alt="Profile" className="user" />
+                        <img src={profilePicture} alt="Profile" className="user" />
                       ) : (
                         <CiUser className="user" />
                       )}
@@ -217,7 +217,7 @@ const EmployerDashProfile = () => {
             <div className="employer-dash1">
                 <section >
                     <div className="employ-dashBtns">
-                        <Link to="/dashboard/wallet">View Wallet</Link>
+                        {/* <Link to="/dashboard/wallet">View Wallet</Link> */}
                         <Link to="/verifiedForm" className='verifiedForm-btn'>Verify Account</Link>
                     </div>
                     <div className="employ-dashBtns">
