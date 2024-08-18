@@ -37,6 +37,7 @@ const FileUploader = ({
         }
       );
       setUrl(res.data.secure_url);
+      console.log(url);
       onFileChange(res.data.secure_url);
       // console.log(res);
       // alert("File uploaded successfully.");
@@ -78,7 +79,7 @@ const FileUploader = ({
       setFileTypeError("File size cannot exceed 5MB");
       return;
     }
-    setFileTypeError('')
+    setFileTypeError("");
     setDocument(files[0]?.name);
     uploadImage(file);
   };
@@ -96,8 +97,7 @@ const FileUploader = ({
         className="file-uploader "
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
-        onDrop={onDrop}
-      >
+        onDrop={onDrop}>
         <div className="drop-file-input-img-label flex justify-center flex-col items-center">
           <IoMdCloudUpload className="upload-img" />
           <div className="drop-file-labels">

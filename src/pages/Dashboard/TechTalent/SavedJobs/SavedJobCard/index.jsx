@@ -10,11 +10,11 @@ import {
 import Successfull from "../../../job-listings/_components/successfull";
 
 const SavedJobCard = ({ job, onClick }) => {
-  const jobData = job.jobPosting;
+  console.log(job);
+  const jobData = job?.jobPosting;
   const [jobPostingId] = useState({
-    jobPostingId: jobData.jobID,
+    jobPostingId: jobData?.jobID,
   });
-  console.log(jobData);
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
@@ -42,7 +42,7 @@ const SavedJobCard = ({ job, onClick }) => {
               <span className="font-bold md:text-xl">{jobData?.company}</span>
               <div className="flex items-center gap-x-2">
                 <img src="/dashboard/location.png" alt="location" />
-                <span className="md:text-sm font-medium text-[#444444]">
+                <span className="md:text-sm font-medium text-[#444444] capitalize">
                   {jobData?.job_location}
                 </span>
               </div>

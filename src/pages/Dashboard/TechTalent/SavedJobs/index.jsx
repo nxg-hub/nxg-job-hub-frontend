@@ -14,6 +14,7 @@ import {
 import { fetchLoggedInUser } from "../../../../redux/LoggedInUserSlice";
 import AppErrorMessage from "../RecommendationCard/AppErrorMessage";
 import ProfileSearch from "../ProfileSearch";
+import { resetToDefault } from "../../../../redux/FilterSlice";
 
 const SavedJobs = () => {
   //fetching saved job
@@ -26,6 +27,7 @@ const SavedJobs = () => {
   const dispatch = useDispatch();
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
+  const [filterMsg, setFilterMsg] = useState(false);
 
   const success = useSelector((state) => state.TalentApplicationSlice.success);
   const applyloader = useSelector(
@@ -49,11 +51,23 @@ const SavedJobs = () => {
   const close = () => {
     dispatch(closeModal());
   };
+  //getting the filtered job type from the redux store
+  const selectedJobTypes = useSelector(
+    (state) => state.FilterSlice.selectedJobTypes
+  );
+  const jobType = selectedJobTypes.value;
+  //reseting the filter parameters to default onmount
+  useEffect(() => {
+    dispatch(resetToDefault());
+  }, []);
 
+  //storing the job url to be passed as props to the search component
+  const savedJobUrl = `/api/v1/tech-talent/my-jobs`;
+  console.log(saved);
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-search-section">
-        <ProfileSearch />
+        <ProfileSearch url={savedJobUrl} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6 w-full">
         {loading ? (
@@ -80,7 +94,7 @@ const SavedJobs = () => {
               Something went wrong, check internet connection and try again
             </h2>
           </div>
-        ) : (
+        ) : !jobType ? (
           saved?.map((job) => (
             <SavedJobCard
               job={job}
@@ -88,7 +102,20 @@ const SavedJobs = () => {
               onClick={() => handleCardClick(job.id)}
             />
           ))
+        ) : (
+          saved
+            ?.filter((job) => {
+              return job.jobPosting.job_type === jobType;
+            })
+            .map((job) => (
+              <SavedJobCard
+                job={job}
+                key={job.id}
+                onClick={() => handleCardClick(job.id)}
+              />
+            ))
         )}
+
         {showDetails && (
           <div className="fixed lg:absolute z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
             <SavedJobDetails

@@ -6,6 +6,7 @@ const initialState = {
   selectedJobTypes: [],
   selectedLevels: [],
   jobID: "",
+  postPage: false,
 };
 
 const FilterSlice = createSlice({
@@ -24,6 +25,13 @@ const FilterSlice = createSlice({
     getJobID: (state, action) => {
       state.jobID = action.payload;
     },
+    resetToDefault: (state) => {
+      state.selectedRelevance = [];
+      (state.selectedJobTypes = []), (state.selectedLevels = []);
+    },
+    postPageTrue: (state) => {
+      state.postPage = true;
+    },
   },
 });
 export const {
@@ -31,6 +39,8 @@ export const {
   setSelectedJobTypes,
   setSelectedLevels,
   getJobID,
+  resetToDefault,
+  postPageTrue,
 } = FilterSlice.actions;
 
 export default FilterSlice.reducer;

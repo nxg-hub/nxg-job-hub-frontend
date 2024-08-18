@@ -17,10 +17,10 @@ const ReviewApplicants = () => {
   useEffect(() => {
     dispatch(getJobID(id));
   }, []);
-  //   console.log(jobId);
+  //   console.log(jobApplicant);
 
   return (
-    <div className="h-[100vh] overflow-y-scroll pb-10">
+    <div className="h-[100vh] overflow-y-scroll pb-10 ">
       {loading ? (
         <img
           className="w-[30%] absolute left-[45%] top-[25%]"
@@ -37,7 +37,11 @@ const ReviewApplicants = () => {
           {jobApplicant.map((app, i) => (
             <AllApplicantForAJob key={i} app={app} />
           ))}
-
+          {jobApplicant.length === 0 && (
+            <div className="w-[50%] m-auto font-bold">
+              <h2>Nobody has applied for this job yet.</h2>
+            </div>
+          )}
           {/* <SuggestedApplicantModal /> */}
         </>
       )}

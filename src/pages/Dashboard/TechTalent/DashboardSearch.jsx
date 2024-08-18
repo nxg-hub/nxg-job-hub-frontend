@@ -11,7 +11,12 @@ import {
   setSelectedLevels,
 } from "../../../redux/FilterSlice";
 
-function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
+function DashboardSearch({
+  onJobsFetched,
+  onSearchChange,
+  onLocationChange,
+  url,
+}) {
   // const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   // const [selectedLevels, setSelectedLevels] = useState([]);
   const [search, setSearch] = useState("");
@@ -24,18 +29,31 @@ function DashboardSearch({ onJobsFetched, onSearchChange, onLocationChange }) {
   const selectedLevels = useSelector(
     (state) => state.FilterSlice.selectedLevels
   );
-  const baseUrl = `${API_HOST_URL}/api/job-postings/all`;
+  const baseUrl = `${API_HOST_URL}${url}`;
   // const baseUrl = 'http://localhost:8000/posts';
 
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const fetchedJobs = () => {
     setLoading(true);
     axios
-      .get(baseUrl)
+      .get(baseUrl, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token.authKey,
+        },
+      })
       .then((response) => {
-        const jobsArray = response.data.map((job) => ({
-          job_title: job.job_title,
-          job_location: job.job_location,
-        }));
+        const jobsArray = !response.data.content
+          ? response.data.map((job) => ({
+              job_title: job.job_title,
+              job_location: job.job_location,
+            }))
+          : response.data.content.map((job) => ({
+              job_title: job.jobPosting.job_title,
+              job_location: job.jobPosting.job_location,
+            }));
         // Update's the fetched jobs
         onJobsFetched(jobsArray);
         setLoading(false);

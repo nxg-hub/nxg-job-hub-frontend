@@ -9,9 +9,9 @@ import { Document, Page, pdfjs } from "react-pdf";
 const FullReview = () => {
   const jobID = useSelector((state) => state.FilterSlice.jobID);
 
-  //   const { data: jobApplicant } = useApiRequest(
-  //     `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
-  //   );
+  // const { data: jobApplicant } = useApiRequest(
+  //   `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
+  // );
 
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -50,7 +50,6 @@ const FullReview = () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           setJobApplicant(data);
           const file = new Blob([data[0].techTalent.resume], {
             type: "application/pdf",
@@ -59,7 +58,6 @@ const FullReview = () => {
           //Build a URL from the file
           const fileURL = window.URL.createObjectURL(file);
 
-          console.log(file);
           setFile(fileURL);
           setLoading(false);
         })
@@ -70,11 +68,10 @@ const FullReview = () => {
     };
     fetchData();
   }, []);
-
-  //   console.log(jobApplicant);
   const appDetails = jobApplicant[0]?.techTalent;
   const appDetails2 = jobApplicant[0]?.applicant;
-  console.log(appDetails?.resume);
+  console.log(appDetails2);
+  console.log(jobApplicant[0]?.applicationId);
   const onButtonClick = () => {
     // window.open(file);
     const link = document.createElement("a");
@@ -85,6 +82,32 @@ const FullReview = () => {
     document.body.removeChild(link);
   };
   const navigate = useNavigate();
+  const applyID = jobApplicant[0]?.applicationId;
+  console.log(applyID);
+  const handleAcceptApplication = async () => {
+    console.log("hey");
+    try {
+      return await fetch(
+        `${API_HOST_URL}/api/employers/${applyID}/review-applicant/accept`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      )
+        .then((res) => {
+          console.log(res);
+          return res.json();
+        })
+        .then((data) => {
+          return data;
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className=" w-[90%] m-auto">
@@ -163,7 +186,7 @@ const FullReview = () => {
       </div>
       <div className="mt-5 py-6 space-x-4 m-auto md:w-[60%] text-center">
         <button
-          // onClick={handleAccept}
+          onClick={handleAcceptApplication}
           className="bg-[#126704] text-white py-2 px-6 rounded-lg">
           Accept
         </button>

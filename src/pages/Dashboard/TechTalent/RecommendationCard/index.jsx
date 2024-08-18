@@ -10,7 +10,9 @@ const RecommendationCard = ({ recommendedJobs }) => {
     style: "currency",
     currency: "NGN",
   });
-
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${recommendedJobs.jobID}/applicants/count`
+  );
   return (
     <div className={`${s.RecommendationCardWrapper} `}>
       <div className={`${s.CompanyDetails} relative`}>
@@ -35,7 +37,10 @@ const RecommendationCard = ({ recommendedJobs }) => {
         <small>
           <Views /> {recommendedJobs.view} views
         </small>
-        <small> applicants</small>
+        <small>
+          {" "}
+          applicants:<strong>{applicantCount}</strong>
+        </small>
         <ApplyBtn jobID={recommendedJobs.jobID} />
       </div>
     </div>

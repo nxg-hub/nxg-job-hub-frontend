@@ -7,7 +7,7 @@ import SearchJobCard from "./SearchJobCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedRelevance } from "../../../redux/FilterSlice";
 
-function ProfileSearch() {
+function ProfileSearch({ url }) {
   // const [selectedRelevance, setSelectedRelevance] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -77,6 +77,7 @@ function ProfileSearch() {
       <div className="profile-search-container">
         <div className="profile-search-wrapper">
           <DashboardSearch
+            url={url}
             onJobsFetched={handleJobFetched}
             onSearchChange={handleSearchChange}
             onLocationChange={handleLocationChange}

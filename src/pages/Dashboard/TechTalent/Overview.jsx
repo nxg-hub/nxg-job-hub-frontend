@@ -14,6 +14,7 @@ import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
+import { resetToDefault } from "../../../redux/FilterSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
@@ -66,6 +67,13 @@ function TechTalentOverview() {
     (state) => state.FilterSlice.selectedJobTypes
   );
   const jobType = selectedJobTypes.value;
+  //reseting the filter parameters to default onmount
+  useEffect(() => {
+    dispatch(resetToDefault());
+  }, []);
+
+  //storing the job url to be passed as props to the search component
+  const allJobsUrl = `/api/job-postings/all`;
   return (
     <main className="dash-profile-main-side">
       <div className="dash-profile-header">
@@ -86,9 +94,9 @@ function TechTalentOverview() {
         </div>
       </div>
       <div className="dash-profile-search-section">
-        <ProfileSearch />
+        <ProfileSearch url={allJobsUrl} />
       </div>
-      {!profileCompleted ? (
+      {!profileCompleted && (
         <div className="dash-profile-hero-section">
           <div className="dash-profile-hero-contents">
             <div className="dash-profile-content">
@@ -103,7 +111,7 @@ function TechTalentOverview() {
             <img src={HeroImg} alt="A working secetary illustration" />
           </div>
         </div>
-      ) : null}
+      )}
       <div className="dash-profile-recommended">
         <div className="recommend-jobs-section">
           <div className="recommend-title">
