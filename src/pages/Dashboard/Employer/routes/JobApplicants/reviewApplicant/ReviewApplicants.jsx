@@ -9,7 +9,7 @@ import { getJobID } from "../../../../../../redux/FilterSlice";
 const ReviewApplicants = () => {
   const { id } = useParams();
   const { data: job, loading } = useApiRequest(`/api/job-postings/get-${id}`);
-  const { data: jobApplicant } = useApiRequest(
+  const { data: jobApplicant, error } = useApiRequest(
     `/api/v1/admin/job-postings/${id}/get-all-applicants-for-a-job`
   );
 
@@ -27,6 +27,10 @@ const ReviewApplicants = () => {
           src={spinner}
           alt="spinner"
         />
+      ) : !loading && error ? (
+        <div className="w-[80%] m-auto mt-[300px] text-xl">
+          <h2>Something went wrong. Check internet connecton</h2>
+        </div>
       ) : (
         <>
           <div className="w-[85%] m-auto my-11">
