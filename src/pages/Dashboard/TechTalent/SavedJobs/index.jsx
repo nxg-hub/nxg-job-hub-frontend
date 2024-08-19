@@ -152,7 +152,7 @@ const SavedJobs = () => {
         {success && (
           <>
             <Successfull onClose={close} />
-            <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+            {/* <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" /> */}
           </>
         )}
         {applyError && (
