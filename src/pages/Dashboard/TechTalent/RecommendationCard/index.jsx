@@ -10,11 +10,9 @@ const RecommendationCard = ({ recommendedJobs }) => {
     style: "currency",
     currency: "NGN",
   });
-  const save = (id) => {
-    console.log(id);
-    console.log("hey");
-  };
-
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${recommendedJobs.jobID}/applicants/count`
+  );
   return (
     <div className={`${s.RecommendationCardWrapper} `}>
       <div className={`${s.CompanyDetails} relative`}>
@@ -30,7 +28,7 @@ const RecommendationCard = ({ recommendedJobs }) => {
         </div>
       </div>
       <div className={s.JobDescription}>
-        <p>{recommendedJobs.job_title}</p>
+        <p className="capitalize">{recommendedJobs.job_title}</p>
         <small>{recommendedJobs.job_description}</small>
         <span>{recommendedJobs.job_type}</span>
         <p>{formatter.format(recommendedJobs.salary)};</p>
@@ -39,7 +37,10 @@ const RecommendationCard = ({ recommendedJobs }) => {
         <small>
           <Views /> {recommendedJobs.view} views
         </small>
-        <small> applicants</small>
+        <small>
+          {" "}
+          applicants:<strong>{applicantCount}</strong>
+        </small>
         <ApplyBtn jobID={recommendedJobs.jobID} />
       </div>
     </div>

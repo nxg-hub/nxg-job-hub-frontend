@@ -77,10 +77,12 @@ const JobListings = () => {
     setSuccessfull(true);
   };
 
+  //storing the job url to be passed as props to the search component
+  const allJobsUrl = `/api/job-postings/all`;
   return (
     <div className="dash-profile-main-side relative">
       <div className="dash-profile-search-section">
-        <ProfileSearch />
+        <ProfileSearch url={allJobsUrl} />
       </div>
       {(showDetails || successfull) && (
         <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />

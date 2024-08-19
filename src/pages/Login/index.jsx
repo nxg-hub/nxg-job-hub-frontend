@@ -12,7 +12,7 @@ import AuthOptions from "../../components/AuthOptions";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [check, setCheck] = useState(true);
+  const [check, setCheck] = useState(false);
   const [popup, showpopUp] = useState(undefined);
 
   const navigate = useNavigate();
@@ -56,12 +56,11 @@ const Login = () => {
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
-      }
-      else if (authKey) {
+      } else if (authKey) {
         // if login without "remember me", start a session
         window.localStorage.setItem(
-            "NXGJOBHUBLOGINKEYV1",
-            JSON.stringify(authKey)
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify(authKey)
         );
       }
 
@@ -104,15 +103,14 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    AutoLoginUser()
-      // .then(() => {
-      //   // Handle successful login if needed
-      // })
-      // .catch((error) => {
-      //   console.error("Auto login failed:", error);
-      // });
+    AutoLoginUser();
+    // .then(() => {
+    //   // Handle successful login if needed
+    // })
+    // .catch((error) => {
+    //   console.error("Auto login failed:", error);
+    // });
   });
-
   return (
     <div className="login-main-container">
       <div className="form-col">
