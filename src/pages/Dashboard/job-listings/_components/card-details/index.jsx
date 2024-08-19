@@ -1,4 +1,5 @@
 import React from "react";
+import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
 
 const CardDetails = ({ job, onClose }) => {
   return (
@@ -7,7 +8,7 @@ const CardDetails = ({ job, onClose }) => {
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
             <img src="/dashboard/figma-logo.png" alt="logo" />
-            <div className="flex flex-col">
+            <div className="flex flex-col capitalize">
               <span className="font-bold md:text-xl">
                 {job.employer_name || "Employer"}
               </span>
@@ -20,13 +21,14 @@ const CardDetails = ({ job, onClose }) => {
             </div>
           </div>
           <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
-            <img src="/dashboard/save.png" alt="save" />
-            <span>Save</span>
+            <SaveBtn />
           </div>
         </div>
 
         <div className="flex gap-y-1 flex-col">
-          <span className="font-medium md:text-xl">{job.job_title}</span>
+          <span className="font-medium md:text-xl capitalize">
+            {job.job_title}
+          </span>
           <div className="flex text-[#263238] gap-x-3 items-center font-normal md:text-sm text-xs">
             <img src="/dashboard/users.png" alt="views" />
             <span>{job.employees} employees</span>
