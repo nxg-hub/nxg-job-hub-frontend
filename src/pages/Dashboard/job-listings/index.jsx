@@ -11,6 +11,7 @@ const JobListings = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [successfull, setSuccessfull] = useState(false);
+  const [isUserVerified, setIsUserVerified] = useState(false);
 
   const fetchData = async () => {
     const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
@@ -27,9 +28,49 @@ const JobListings = () => {
     setShowDetails(true);
   };
 
-  const handleApply = () => {
-    setSuccessfull(true);
+  useEffect(() => {
+    fetchData();
+    const checkVerification = async () => {
+      const verified = await isUserVerified();
+      setIsUserVerified(verified);
+    };
+    checkVerification();
+  }, []);
+
+  const handleApply = async (job) => {
+    if (!isUserVerified) {
+      alert("Please verify your account to apply for jobs.");
+      return;
+    }
+
+    const { name, email } = user;
+    try {
+      const response = await fetch(
+        `${API_HOST_URL}/api/job-postings/{jobID}/apply`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email }),
+        }
+      );
+
+      if (response.ok) {
+        setSuccessfull(true);
+        setError(null);
+      } else {
+        const errorData = await response.json();
+        setError(
+          errorData.message ||
+            "An error occurred while submitting your application."
+        );
+      }
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again later.");
+    }
   };
+  // const handleApply = () => {
+  //   setSuccessfull(true);
+  // };
 
   const handleClose = () => {
     setShowDetails(false);
@@ -65,7 +106,8 @@ const JobListings = () => {
             key={job.id}
             job={job}
             handleShowDetails={() => handleCardClick(job)}
-            handleApply={handleApply}
+            handleApply={isUserVerified ? () => handleApply(job) : () => {}}
+            // handleApply={handleApply}
           />
         ))}
       </div>

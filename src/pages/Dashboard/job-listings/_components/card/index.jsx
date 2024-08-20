@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
 
 const JobCard = ({ job, handleShowDetails, handleApply }) => {
   return (
@@ -8,7 +9,7 @@ const JobCard = ({ job, handleShowDetails, handleApply }) => {
         <div className="flex justify-between">
           <div className="items-center gap-x-2 flex">
             <img src="/dashboard/figma-logo.png" alt="logo" />
-            <div className="flex flex-col">
+            <div className="flex flex-col capitalize">
               <span className="font-bold md:text-xl">
                 {job.employer_name || "Employer"}
               </span>
@@ -21,15 +22,17 @@ const JobCard = ({ job, handleShowDetails, handleApply }) => {
             </div>
           </div>
           <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
-            <img src="/dashboard/save.png" alt="save" />
-            <span>Save</span>
+            <SaveBtn />
           </div>
         </div>
 
-        <span className="font-medium md:text-lg">{job.job_title}</span>
+        <span className="font-medium md:text-lg capitalize">
+          {job.job_title}
+        </span>
 
         <span className="text-base font-normal text-[#263238]">
-          {job.job_description}
+          {job.job_description.substring(0, 250)}
+          {job.job_description.length > 250 && "..."}
         </span>
 
         <div className="flex gap-x-2">
