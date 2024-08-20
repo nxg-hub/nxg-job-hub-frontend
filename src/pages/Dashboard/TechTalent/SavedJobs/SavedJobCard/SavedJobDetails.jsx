@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { applyForJob } from "../../../../../redux/TalentApplicationSlice";
+import {
+  applyForJob,
+  setNoticeTrue,
+} from "../../../../../redux/TalentApplicationSlice";
 
 const SavedJobDetails = ({ details, onClose }) => {
   const formatter = new Intl.NumberFormat("en-US", {
@@ -84,6 +87,7 @@ const SavedJobDetails = ({ details, onClose }) => {
           <span className="text-sm md:text-base text-[#000000] font-medium">
             Job Description
           </span>
+
           <span className="text-[13px] md:text-sm text-[#263238] font-medium">
             {details.jobPosting?.job_description}
           </span>

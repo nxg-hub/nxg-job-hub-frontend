@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   error: "",
   displayJob: false,
+  showOptions: false,
 };
 
 const token =
@@ -33,7 +34,14 @@ export const fetchNearJob = createAsyncThunk(
 const nearJobSlice = createSlice({
   name: "nearbyJob",
   initialState,
-  reducers: {},
+  reducers: {
+    showOptions: (state) => {
+      state.showOptions = true;
+    },
+    closeOptions: (state) => {
+      state.showOptions = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchNearJob.pending, (state) => {
@@ -53,6 +61,6 @@ const nearJobSlice = createSlice({
       });
   },
 });
-export const {} = nearJobSlice.actions;
+export const { showOptions, closeOptions } = nearJobSlice.actions;
 
 export default nearJobSlice.reducer;

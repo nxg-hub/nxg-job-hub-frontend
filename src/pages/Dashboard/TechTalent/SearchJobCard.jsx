@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNearJob } from "../../../redux/NearbyJobSlice";
+import { closeOptions, fetchNearJob } from "../../../redux/NearbyJobSlice";
 
 function SearchJobCard({ job }) {
   const dispatch = useDispatch();
-  const [showOptions, setShowOptions] = useState(false);
   const fetchNearbyJob = () => {
+    dispatch(closeOptions());
     dispatch(
       fetchNearJob(
         `/api/job-postings/recommend-nearby-jobs?userCity=${job.job_location}`

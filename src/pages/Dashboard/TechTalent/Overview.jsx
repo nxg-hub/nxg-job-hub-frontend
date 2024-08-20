@@ -14,12 +14,14 @@ import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
+import { resetToDefault } from "../../../redux/FilterSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [filtermsg, setFilterMsg] = useState(false);
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
 
   const fetchNotifications = async () => {
@@ -60,6 +62,18 @@ function TechTalentOverview() {
     fetchNotifications();
   }, []);
 
+  //getting the filtered job type from the redux store
+  const selectedJobTypes = useSelector(
+    (state) => state.FilterSlice.selectedJobTypes
+  );
+  const jobType = selectedJobTypes.value;
+  //reseting the filter parameters to default onmount
+  useEffect(() => {
+    dispatch(resetToDefault());
+  }, []);
+
+  //storing the job url to be passed as props to the search component
+  const allJobsUrl = `/api/job-postings/all`;
   return (
     <main className="dash-profile-main-side">
       <div className="dash-profile-header">
@@ -80,9 +94,9 @@ function TechTalentOverview() {
         </div>
       </div>
       <div className="dash-profile-search-section">
-        <ProfileSearch />
+        <ProfileSearch url={allJobsUrl} />
       </div>
-      {!profileCompleted ? (
+      {!profileCompleted && (
         <div className="dash-profile-hero-section">
           <div className="dash-profile-hero-contents">
             <div className="dash-profile-content">
@@ -97,7 +111,7 @@ function TechTalentOverview() {
             <img src={HeroImg} alt="A working secetary illustration" />
           </div>
         </div>
-      ) : null}
+      )}
       <div className="dash-profile-recommended">
         <div className="recommend-jobs-section">
           <div className="recommend-title">
@@ -136,8 +150,8 @@ function TechTalentOverview() {
         <div className="JobRecommendations">
           {nearJobLoader ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
-          ) : showNearByJobs ? (
-            nearByJobs.map((jobRecommendation, i) => {
+          ) : showNearByJobs && !jobType ? (
+            nearByJobs?.map((jobRecommendation, i) => {
               // jobRecommendation.company_logo = figma;
               return (
                 <RecommendationCard
@@ -146,9 +160,29 @@ function TechTalentOverview() {
                 />
               );
             })
+          ) : showNearByJobs && jobType ? (
+            nearByJobs
+              ?.filter((job) => {
+                // job.job_type !== jobType ? setFilterMsg(true) : null;
+                return job.job_type === jobType;
+              })
+              .map((jobRecommendation, i) => {
+                // jobRecommendation.company_logo = figma;
+                return (
+                  <RecommendationCard
+                    key={i * 5}
+                    recommendedJobs={jobRecommendation}
+                  />
+                );
+              })
           ) : (
             <div className="w-[80%] m-auto text-justify font-bold">
-              <h2>Search for Jobs near you.</h2>
+              <h2>
+                {/* {filtermsg
+                  ? "Could not find your search term"
+                  : "Search for Jobs near you."} */}
+                Search for Jobs near you.
+              </h2>
             </div>
           )}
         </div>

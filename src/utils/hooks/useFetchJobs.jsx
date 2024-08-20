@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { API_HOST_URL } from "../api/API_HOST";
 
 const useFetchJobs = (id) => {
-  const posts_url =
-    `${API_HOST_URL}/api/employers/postings/${id}`;
+  const posts_url = `${API_HOST_URL}/api/employers/postings/${id}`;
   const [posts, setPosts] = useState([]);
   const [popup, showpopUp] = useState(undefined);
 
@@ -23,7 +22,7 @@ const useFetchJobs = (id) => {
       }
     };
     fetchPosts();
-  }, );
+  }, []);
   return { posts, popup };
 };
 
