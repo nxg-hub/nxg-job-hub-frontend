@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import JobCard from "./_components/card";
 import CardDetails from "./_components/card-details";
 import Successfull from "./_components/successfull";
-import "./searchBar.scss";
 import { API_HOST_URL } from "../../../utils/api/API_HOST.js";
 import ProfileSearch from "../TechTalent/ProfileSearch.jsx";
 
