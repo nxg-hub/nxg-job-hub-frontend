@@ -2,7 +2,7 @@ import React from 'react'
 import './sponsor.scss'
 import Jona from '../../static/images/testimony5.jpg'
 import Janet from '../../static/images/testimonyimg2.png'
-import Peter from '../../static/images/testimony1.jpg'
+import Peter from '../../static/images/testimonyimg1.png'
 import { RiDoubleQuotesR } from 'react-icons/ri'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Autoplay } from 'swiper/modules';
