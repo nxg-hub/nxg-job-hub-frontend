@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import avater from "../../../../static/images/user.png";
 import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
-import "./Application.scss";
 
 const JobApplication = () => {
   const {

@@ -2,13 +2,9 @@ import React, { useState, useEffect } from "react";
 import JobCard from "./_components/card";
 import CardDetails from "./_components/card-details";
 import Successfull from "./_components/successfull";
+import "./searchBar.scss";
 import { API_HOST_URL } from "../../../utils/api/API_HOST.js";
 import ProfileSearch from "../TechTalent/ProfileSearch.jsx";
-
-// import {
-//   applyForJob,
-//   setNoticeTrue,
-// } from "../../../redux/TalentApplicationSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import spinner from "../../../static/icons/spinner.svg";
 import { resetJobDisplay } from "../../../redux/NearbyJobSlice.js";
@@ -23,14 +19,6 @@ const JobListings = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [successfull, setSuccessfull] = useState(false);
-
-
-  const fetchData = async () => {
-    const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
-    const data = await response.json();
-    setJobs(data);
-    console.log(data);
-
   const [isUserVerified, setIsUserVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -80,19 +68,6 @@ const JobListings = () => {
     setSelectedCardId(job.jobId);
     setShowDetails(true);
   };
-
-
-  const handleApply = () => {
-    setSuccessfull(true);
-  };
-
-  // const handleApply = () => {
-  //   onClose();
-  //   isVerified
-  //     ? dispatch(applyForJob(jobPostingId))
-  //     : dispatch(setNoticeTrue());
-  // };
-
   const closeNoticeModal = () => {
     dispatch(setNoticeFalsejobListing());
   };
@@ -143,20 +118,6 @@ const JobListings = () => {
             src={spinner}
             alt="spinner"
           />
-        </div>
-      )}
-      {successfull && (
-        <div className="fixed lg:absolute z-50 w-full lg:w-1/2 bottom-0 lg:top-[20%] lg:left-[25%]">
-          <Successfull onClose={() => setSuccessfull(false)} />
-        </div>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-        {jobs.map((job) => (
-          <JobCard
-            key={job.id}
-            job={job}
-            handleShowDetails={() => handleCardClick(job)}
-            handleApply={handleApply}
         ) : (
           !showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
@@ -175,7 +136,6 @@ const JobListings = () => {
             className="w-[30%] absolute left-[35%]"
             src={spinner}
             alt="spinner"
-
           />
         ) : (
           showSearchedJobs && (
