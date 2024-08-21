@@ -45,7 +45,6 @@ function TechTalentOverview() {
 
   useEffect(() => {
     dispatch(fetchLoggedInUser());
-    fetchNotifications();
   }, []);
 
   //getting the filtered job type from the redux store
