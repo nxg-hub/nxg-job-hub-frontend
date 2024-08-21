@@ -5,6 +5,7 @@ import "swiper/css/bundle";
 import { chosen } from "./Datas";
 import { MdLocationPin } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const JobCards = () => {
   const [jobs, setJobs] = useState([]);
@@ -18,7 +19,7 @@ const JobCards = () => {
 
       try {
         const response = await fetch(
-          "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/job-postings/recent-job-postings"
+          `${API_HOST_URL}/api/job-postings/recent-job-postings`
         );
         const data = await response.json();
         setJobs(data);
@@ -106,7 +107,7 @@ const JobCards = () => {
                         </div>
                         <div className="read" style={{ marginTop: "1rem" }}>
                           <Link
-                            to={`/detail/${job.jobID}`}
+                            to={`/login`}
                             style={{
                               color: "#2596BE",
                               fontSize: "18px",
@@ -114,7 +115,6 @@ const JobCards = () => {
                             }}
                           >
                             Read More
-                            {/* {job.herf} */}
                           </Link>
                         </div>
                       </div>
