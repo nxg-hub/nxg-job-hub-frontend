@@ -9,12 +9,14 @@ import Successfull from "../../job-listings/_components/successfull";
 import {
   applyForJob,
   closeModal,
+  getCurrentAppPage,
   setNoticeFalse,
 } from "../../../../redux/TalentApplicationSlice";
 import { fetchLoggedInUser } from "../../../../redux/LoggedInUserSlice";
 import AppErrorMessage from "../RecommendationCard/AppErrorMessage";
 import ProfileSearch from "../ProfileSearch";
 import { resetToDefault } from "../../../../redux/FilterSlice";
+import { getCurrentPage } from "../../../../redux/NearbyJobSlice";
 
 const SavedJobs = () => {
   //fetching saved job
@@ -29,12 +31,20 @@ const SavedJobs = () => {
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [filterMsg, setFilterMsg] = useState(false);
 
-  const success = useSelector((state) => state.TalentApplicationSlice.success);
-  const applyloader = useSelector(
-    (state) => state.TalentApplicationSlice.loading
+  const success = useSelector(
+    (state) => state.TalentApplicationSlice.successSaved
   );
+  const loader = useSelector((state) => state.TalentApplicationSlice.loading);
   const applyError = useSelector((state) => state.TalentApplicationSlice.error);
   const notice = useSelector((state) => state.TalentApplicationSlice.notice);
+  const showSearchedJobs = useSelector(
+    (state) => state.NearbyJobSlice.showJobListing
+  );
+  const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
+  const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
+  const showSavedJob = useSelector(
+    (state) => state.NearbyJobSlice.showSavedJob
+  );
 
   const handleCardClick = (id) => {
     setSelectedCardId(id);
@@ -56,14 +66,20 @@ const SavedJobs = () => {
     (state) => state.FilterSlice.selectedJobTypes
   );
   const jobType = selectedJobTypes.value;
-  //reseting the filter parameters to default onmount
+  //reseting the filter parameters to default onmount and getting current page
+  const currentPage = "saved";
   useEffect(() => {
+    dispatch(getCurrentPage(currentPage));
     dispatch(resetToDefault());
   }, []);
 
   //storing the job url to be passed as props to the search component
   const savedJobUrl = `/api/v1/tech-talent/my-jobs`;
-  console.log(saved);
+  //searched term to fitered
+  const searchedJobTitle = useSelector(
+    (state) => state.NearbyJobSlice.jobTitle
+  );
+
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-search-section">
@@ -82,13 +98,13 @@ const SavedJobs = () => {
               Something went wrong, check internet connection and try again
             </h2>
           </div>
-        ) : applyloader ? (
+        ) : loader ? (
           <img
             className="w-[30%] absolute left-[45%]"
             src={spinner}
             alt="spinner"
           />
-        ) : !applyloader && error ? (
+        ) : !loader && error ? (
           <div className="w-[80%] m-auto mt-[400px] text-xl md:text-2xl">
             <h2>
               Something went wrong, check internet connection and try again
@@ -97,7 +113,7 @@ const SavedJobs = () => {
         ) : !jobType ? (
           saved?.map((job) => (
             <SavedJobCard
-              job={job}
+              job={job.jobPosting}
               key={job.id}
               onClick={() => handleCardClick(job.id)}
             />
@@ -109,12 +125,37 @@ const SavedJobs = () => {
             })
             .map((job) => (
               <SavedJobCard
-                job={job}
+                job={job.jobPosting}
                 key={job.id}
                 onClick={() => handleCardClick(job.id)}
               />
             ))
         )}
+        {/* {nearJobLoader ? (
+          <img
+            className="w-[30%] absolute left-[35%]"
+            src={spinner}
+            alt="spinner"
+          />
+        ) : (
+          showSearchedJobs && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
+              {nearByJobs
+                ?.filter((job) => {
+                  return job.job_title === searchedJobTitle;
+                })
+                .map((job) => (
+                  <SavedJobCard
+                    job={job}
+                    key={job.id}
+                    onClick={() => handleCardClick(job.id)}
+                  />
+
+                  // handleApply={handleApply}
+                ))}
+            </div>
+          )
+        )} */}
 
         {showDetails && (
           <div className="fixed lg:absolute z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
@@ -125,9 +166,14 @@ const SavedJobs = () => {
           </div>
         )}
         {showDetails && (
-          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+          <div
+            onClick={() => {
+              setShowDetails(false);
+            }}
+            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+          />
         )}
-        {applyloader && (
+        {loader && (
           <img
             className="w-[30%] absolute left-[45%]"
             src={spinner}
@@ -152,7 +198,7 @@ const SavedJobs = () => {
         {success && (
           <>
             <Successfull onClose={close} />
-            {/* <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" /> */}
+            <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
           </>
         )}
         {applyError && (

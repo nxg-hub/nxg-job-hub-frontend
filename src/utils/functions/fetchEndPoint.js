@@ -9,6 +9,7 @@ const token =
 export const useApiRequest = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -28,10 +29,11 @@ export const useApiRequest = (url) => {
         })
 
         .catch((error) => {
+          setError(true);
           console.log(error);
         });
     };
     fetchData();
   }, []);
-  return { data, loading };
+  return { data, loading, error };
 };

@@ -7,7 +7,7 @@ import SearchJobCard from "./SearchJobCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedRelevance } from "../../../redux/FilterSlice";
 
-function ProfileSearch({ url }) {
+function ProfileSearch({ url, currentPage }) {
   // const [selectedRelevance, setSelectedRelevance] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -116,6 +116,7 @@ function ProfileSearch({ url }) {
                   key={index}
                   job={job}
                   location={job.job_location}
+                  currentPage={currentPage}
                 />
               );
             })}

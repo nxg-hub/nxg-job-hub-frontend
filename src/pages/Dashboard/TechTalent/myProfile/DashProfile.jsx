@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
+import { useSelector } from "react-redux";
 
 function DashProfile() {
   const user = useContext(UserContext);
@@ -38,9 +39,14 @@ function DashProfile() {
   const { isVerified, setVerificationStatus } = useVerification();
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  const [uploadSucess, setUploadSuccess] = useState(false);
   const navigateCompleteProfilePage = () => {
     navigate("/techprofileform");
   };
+  const loggedInUser = useSelector(
+    (state) => state.LoggedInUserSlice.loggedInUser
+  );
+  const userVerified = loggedInUser.verified;
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -144,7 +150,7 @@ function DashProfile() {
         experienceLevel: `${experienceLevel.title} at ${experienceLevel.firm} (${experienceLevel.year})`, // Format as string,
       };
 
-      await axios.put(
+      const res = await axios.put(
         `${API_HOST_URL}/api/v1/tech-talent/${techId}`,
         formData,
         {
@@ -154,7 +160,7 @@ function DashProfile() {
           },
         }
       );
-
+      res.status === 200 ? setUploadSuccess(true) : null;
       console.log("Update successful:", formData);
       // Once the update is successful, set the verification status to true
       setVerificationStatus(true);
@@ -255,7 +261,7 @@ function DashProfile() {
                   </span>
                 </p>
               </div>
-              {!isVerified && (
+              {!userVerified && (
                 <Link to="/techprofileform" className="acct-verify">
                   <MdOutlineVerifiedUser fontSize="1.2rem" color="#2596be" />
                   <span>Verify Account</span>
@@ -451,6 +457,23 @@ function DashProfile() {
           </form>
         </div>
       </div>
+      {uploadSucess && (
+        <>
+          <div className="bg-blue-200 w-[70%] z-30 m-auto md:w-[50%] rounded-lg h-[100px] absolute right-[10%] top-[35%] md:text-xl md:right-[20%]">
+            <h2 className="mt-11 text-center font-bold">
+              Profile Updated Successfully
+            </h2>
+            <span
+              onClick={() => {
+                setUploadSuccess(false);
+              }}
+              className="cursor-pointer font-bold absolute top-[10px] right-[10px] md:right-[10%] md:bottom-[75px] lg:right-[10%] lg:bottom-[50px] text-red-600">
+              x
+            </span>
+          </div>
+          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+        </>
+      )}
     </div>
   );
 }

@@ -8,12 +8,11 @@ import {
   setNoticeTrue,
 } from "../../../../../redux/TalentApplicationSlice";
 import Successfull from "../../../job-listings/_components/successfull";
+import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
 
 const SavedJobCard = ({ job, onClick }) => {
-  console.log(job);
-  const jobData = job?.jobPosting;
   const [jobPostingId] = useState({
-    jobPostingId: jobData?.jobID,
+    jobPostingId: job?.jobID,
   });
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -31,19 +30,21 @@ const SavedJobCard = ({ job, onClick }) => {
       ? dispatch(applyForJob(jobPostingId))
       : dispatch(setNoticeTrue());
   };
-
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${job.jobID}/applicants/count`
+  );
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in">
       <div className="flex flex-col gap-y-2">
         <div className="flex justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src={jobData?.logo} alt="logo" />
+            <img src={job?.logo} alt="logo" />
             <div className="flex flex-col">
-              <span className="font-bold md:text-xl">{jobData?.company}</span>
+              <span className="font-bold md:text-xl">{job?.company}</span>
               <div className="flex items-center gap-x-2">
                 <img src="/dashboard/location.png" alt="location" />
                 <span className="md:text-sm font-medium text-[#444444] capitalize">
-                  {jobData?.job_location}
+                  {job?.job_location}
                 </span>
               </div>
             </div>
@@ -55,16 +56,16 @@ const SavedJobCard = ({ job, onClick }) => {
         </div>
 
         <span className="font-medium md:text-lg capitalize">
-          {jobData?.job_title}
+          {job?.job_title}
         </span>
 
         <span className="text-base font-normal text-[#263238]">
-          {jobData?.job_description.slice(0, 80)}.....
+          {job?.job_description.slice(0, 80)}.....
         </span>
 
         <div className="flex gap-x-2">
           <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
-            {jobData.job_type}
+            {job.job_type}
           </span>
           {/* <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
             {!job.job_type && "On-site"}
@@ -75,14 +76,16 @@ const SavedJobCard = ({ job, onClick }) => {
           <div className="flex items-center gap-x-2">
             <img src="/dashboard/pay.png" alt="pay" />
             <span className="font-medium md:text-sm">
-              {formatter.format(jobData?.salary)}
+              {formatter.format(job?.salary)}
             </span>
           </div>
           <div className="flex justify-between">
             <div className="flex gap-x-3 items-center font-normal text-xs">
               <img src="/dashboard/view.png" alt="views" />
-              <span>{jobData?.views} views</span>
-              <span>{jobData?.applicants} Applicants</span>
+              <span>{job?.views} views</span>
+              <span>
+                Applicants:<span className="font-bold">{applicantCount}</span>
+              </span>
             </div>
             <div className="flex items-center gap-2 group" onClick={onClick}>
               <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">

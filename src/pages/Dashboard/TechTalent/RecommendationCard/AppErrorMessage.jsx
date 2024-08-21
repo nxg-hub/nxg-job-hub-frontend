@@ -15,7 +15,8 @@ const AppErrorMessage = () => {
           <span className="text-xl">Ooops!!, Something went wrong!!</span>
         </div>
         <span>
-          ChecK Internet Connection and Try Again.
+          Make sure you have updated your skills on your profile page,<br></br>
+          Check internet connection and try again
           {/* <span className="text-lg font-semibold">“My Applications”</span> */}
         </span>
         <button onClick={close} className="w-1/2 py-2  bg-[#2596BE] text-white">

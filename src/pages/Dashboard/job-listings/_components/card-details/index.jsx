@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  applyInJobListing,
+  setNoticeTruejobListing,
+} from "../../../../../redux/JobListingApplicationSlice";
+import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
 
 const CardDetails = ({ job, onClose }) => {
+  const [jobPostingId] = useState({
+    jobPostingId: job.jobID,
+  });
+  const dispatch = useDispatch();
+
+  const loggedInUser = useSelector(
+    (state) => state.LoggedInUserSlice.loggedInUser
+  );
+  const isVerified = loggedInUser.verified;
+
+  const apply = () => {
+    onClose();
+    isVerified
+      ? dispatch(applyInJobListing(jobPostingId))
+      : dispatch(setNoticeTruejobListing());
+  };
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${job.jobID}/applicants/count`
+  );
   return (
     <div className=" bg-white px-4 lg:px-10 py-5">
       <div className="flex w-full gap-y-4 flex-col">
@@ -36,7 +61,10 @@ const CardDetails = ({ job, onClose }) => {
           <div className="flex gap-x-3 text-[#263238] items-center font-normal md:text-sm text-xs">
             <img src="/dashboard/view.png" alt="views" />
             <span>{job.views} views</span>
-            <span>{job.applicants} Applicants</span>
+            <span>
+              {" "}
+              Applicants:<span className="font-bold">{applicantCount}</span>
+            </span>
           </div>
           <div className="flex gap-x-3 text-[#263238] items-center font-normal md:text-sm text-xs">
             <img src="/dashboard/brief.png" alt="views" />
@@ -84,10 +112,7 @@ const CardDetails = ({ job, onClose }) => {
         </div>
       </div>
       <div className="flex justify-center py-2 items-center">
-        <button
-          className="w-1/2 py-2  bg-[#2596BE] text-white"
-          onClick={onClose}
-        >
+        <button className="w-1/2 py-2  bg-[#2596BE] text-white" onClick={apply}>
           Apply now
         </button>
       </div>

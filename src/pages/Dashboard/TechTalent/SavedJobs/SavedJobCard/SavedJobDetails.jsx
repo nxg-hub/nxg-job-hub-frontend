@@ -4,6 +4,7 @@ import {
   applyForJob,
   setNoticeTrue,
 } from "../../../../../redux/TalentApplicationSlice";
+import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
 
 const SavedJobDetails = ({ details, onClose }) => {
   const formatter = new Intl.NumberFormat("en-US", {
@@ -27,6 +28,9 @@ const SavedJobDetails = ({ details, onClose }) => {
       ? dispatch(applyForJob(jobPostingId))
       : dispatch(setNoticeTrue());
   };
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${jobData.jobID}/applicants/count`
+  );
   return (
     <div className=" bg-white px-4 lg:px-10 py-5 w-[90%] relative m-auto">
       <div className="flex w-full gap-y-4 flex-col">
@@ -58,7 +62,9 @@ const SavedJobDetails = ({ details, onClose }) => {
           <div className="flex gap-x-3 text-[#263238] items-center font-normal md:text-sm text-xs">
             <img src="/dashboard/view.png" alt="views" />
             <span>{details?.views} views</span>
-            <span>{details?.applicants} Applicants</span>
+            <span>
+              Applicants:<span className="font-bold">{applicantCount}</span>
+            </span>
           </div>
           <div className="flex gap-x-3 text-[#263238] items-center font-normal md:text-sm text-xs">
             <img src="/dashboard/brief.png" alt="views" />
