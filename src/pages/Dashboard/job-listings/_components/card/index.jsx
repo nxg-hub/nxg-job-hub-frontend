@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
+import { data } from "autoprefixer";
+import JobListings from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyInJobListing,
@@ -50,6 +53,8 @@ const JobCard = ({ job, handleShowDetails }) => {
             </div>
           </div>
           <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
+            <SaveBtn jobID={JobListings.jobId} />
+
             <SaveJobListBtn jobID={job.jobID} />
           </div>
         </div>
@@ -88,7 +93,8 @@ const JobCard = ({ job, handleShowDetails }) => {
             <button
               className="flex items-center gap-2 group"
               // onClick={onClick}
-              onClick={() => handleShowDetails(job)}>
+              onClick={() => handleShowDetails(job)}
+            >
               <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">
                 See more
               </Link>
@@ -103,7 +109,8 @@ const JobCard = ({ job, handleShowDetails }) => {
 
         <button
           className="bg-[#2596BE] my-4 py-2 rounded-[8px] hover:scale-95 transition-all ease-in text-white"
-          onClick={apply}>
+          onClick={apply}
+        >
           Apply Now
         </button>
       </div>

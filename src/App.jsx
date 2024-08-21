@@ -39,6 +39,7 @@ import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx
 import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
 import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
 import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
+import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
 function App() {
   return (
     <>
@@ -66,7 +67,8 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }
+          ></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -77,7 +79,8 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
+            }
+          >
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
@@ -96,7 +99,7 @@ function App() {
             <Route path="review-appliedtalent/:id" element={<FullReview />} />
             <Route path="interviews" element={<Interview />} />
             <Route path="services" element={<CompanyServices />} />
-            <Route path="applications" element={<h2>My Applications </h2>} />
+            <Route path="applications" element={<Applications />} />
             <Route path="saved" element={<SavedJobs />} />
             {/* <Route path="wallet" element={<Wallet />} />W */}
             <Route path="job-listings" element={<JobListings />} />
