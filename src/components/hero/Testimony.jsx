@@ -1,8 +1,8 @@
 import React from 'react'
 import './sponsor.scss'
 import Jona from '../../static/images/testimony5.jpg'
-import Janet from '../../static/images/testimony1.jpg'
-import Peter from '../../static/images/testimony4.jpg'
+import Janet from '../../static/images/testimonyimg2.png'
+import Peter from '../../static/images/testimony1.jpg'
 import { RiDoubleQuotesR } from 'react-icons/ri'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Autoplay } from 'swiper/modules';
@@ -19,7 +19,7 @@ const Testimony = () => {
         },
         {
             id:2,
-            name:"Grace Abang",
+            name:"Janet Davids",
             img: Janet,
             text: "I love this job hub as they helped me get my first job as a web developer through their timely job alerts and detailed CV. I highly recommend using this platform if you need a  sharp boost in your career"
         },
