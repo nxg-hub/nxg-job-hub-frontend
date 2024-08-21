@@ -37,7 +37,7 @@ const FileUploader = ({
         }
       );
       setUrl(res.data.secure_url);
-      console.log(url);
+      console.log(res.data.secure_url);
       onFileChange(res.data.secure_url);
       // console.log(res);
       // alert("File uploaded successfully.");
