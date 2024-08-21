@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
-import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import { resetToDefault } from "../../../redux/FilterSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
@@ -64,7 +63,6 @@ function TechTalentOverview() {
 
   useEffect(() => {
     dispatch(fetchLoggedInUser());
-    fetchNotifications();
   }, []);
 
   //getting the filtered job type from the redux store
@@ -100,11 +98,6 @@ function TechTalentOverview() {
           <div className="dash-profile-icons">
             <NavLink to="/dashboard/notifications">
               <SlBell className="dash-icons" />
-              {unreadNotificationCount > 0 && (
-                <span className="notification-count">
-                  {unreadNotificationCount}
-                </span>
-              )}
             </NavLink>
           </div>
         </div>

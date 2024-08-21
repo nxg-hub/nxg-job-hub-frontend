@@ -169,7 +169,8 @@ const JobListings = () => {
               </h2>
               <span
                 onClick={closeNoticeModal}
-                className="cursor-pointer font-bold relative bottom-[90px] left-[100px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600">
+                className="cursor-pointer font-bold relative bottom-[90px] left-[100px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600"
+              >
                 x
               </span>
             </div>
