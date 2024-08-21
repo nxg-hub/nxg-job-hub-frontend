@@ -3,6 +3,7 @@ import NearbyJobSlice from "./NearbyJobSlice";
 import LoggedInUserSlice from "./LoggedInUserSlice";
 import TalentApplicationSlice from "./TalentApplicationSlice";
 import FilterSlice from "./FilterSlice";
+import JobListingApplicationSlice from "./JobListingApplicationSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     LoggedInUserSlice,
     TalentApplicationSlice,
     FilterSlice,
+    JobListingApplicationSlice,
   },
 });

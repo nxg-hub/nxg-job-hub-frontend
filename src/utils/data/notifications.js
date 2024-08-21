@@ -41,5 +41,5 @@ const notification_data = [
       "lorem ipsum dolor sit amet gat fred hert feras derm gert weda vers fear ijh kill nig min hugg tree. lorem ipsum dolor sit amet gat fred hert feras derm gert",
     timestamp: Date.now() - 172800000,
   },
-]
-export default notification_data
+];
+export default notification_data;

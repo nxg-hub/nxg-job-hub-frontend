@@ -5,8 +5,10 @@ import axios from "axios";
 const initialState = {
   loading: false,
   error: false,
-  success: false,
+  successSaved: false,
   notice: false,
+  jobListingLoader: false,
+  currentPage: "",
 };
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -35,7 +37,7 @@ const TalentApplicationSlice = createSlice({
   initialState,
   reducers: {
     closeModal: (state) => {
-      state.success = false;
+      state.successSaved = false;
     },
     closeErrorModal: (state) => {
       state.error = false;
@@ -46,26 +48,36 @@ const TalentApplicationSlice = createSlice({
     setNoticeFalse: (state) => {
       state.notice = false;
     },
+    getCurrentAppPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(applyForJob.pending, (state) => {
         state.loading = true;
+        state.jobListingLoader = true;
         state.error = false;
       })
       .addCase(applyForJob.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.success = true;
+        state.successSaved = true;
       })
       .addCase(applyForJob.rejected, (state, action) => {
         state.loading = false;
+        state.jobListingLoader = false;
         state.error = true;
-        state.success = false;
+        state.successSaved = false;
       });
   },
 });
-export const { closeModal, closeErrorModal, setNoticeTrue, setNoticeFalse } =
-  TalentApplicationSlice.actions;
+export const {
+  closeModal,
+  closeErrorModal,
+  setNoticeTrue,
+  setNoticeFalse,
+  getCurrentAppPage,
+} = TalentApplicationSlice.actions;
 
 export default TalentApplicationSlice.reducer;

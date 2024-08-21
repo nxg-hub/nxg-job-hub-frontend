@@ -31,11 +31,11 @@ const SubCards = ({ country, verifyCustomer }) => {
     }
   };
 
-  const convertToNGN = (price) => {
+  const convertToDollar = (price) => {
     if (exchangeRate) {
-      const priceInUSD = parseFloat(price.replace("$", ""));
-      const priceInNGN = priceInUSD * exchangeRate;
-      return " ₦" + priceInNGN.toFixed(2);
+      const priceInNGN = parseFloat(price.replace("₦", "")) * 1000;
+      const priceInDollar = priceInNGN / exchangeRate;
+      return " $" + priceInDollar.toFixed(2);
     } else {
       return price;
     }
@@ -45,7 +45,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 1,
       subLogo: basic,
       subTitle: "Free",
-      subPrice: "0$",
+      subPrice: "0₦",
       subBenefit: [
         "As a way to welcome new users and allow them to explore our platform, the first month of usage is completely free. During this period, users will have access to all basic features .",
       ],
@@ -57,7 +57,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 2,
       subLogo: silver,
       subTitle: "Silver",
-      subPrice: "25$/3months",
+      subPrice: `25,000₦/3months`,
       subBenefit: [
         "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
         "10 vetted job posting throughout the entire 3 months period.",
@@ -68,7 +68,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 3,
       subLogo: gold,
       subTitle: "Gold",
-      subPrice: "70$/6months",
+      subPrice: "70,000₦/6months",
       subBenefit: [
         "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
         "Unlimited vetted job listing, posting and Tech talent search support",
@@ -79,7 +79,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 4,
       subLogo: platinum,
       subTitle: "Platinum",
-      subPrice: "90$/Yearly",
+      subPrice: "90,000₦/Yearly",
       subBenefit: [
         "The Platinum plan caters to users seeking an even longer commitment with added features.",
         "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
@@ -110,7 +110,7 @@ const SubCards = ({ country, verifyCustomer }) => {
           },
         }
       );
-      console.log(userData);
+      //   console.log(userData);
 
       if (userData) {
         const subscribeResponse = await axios.post(
@@ -120,6 +120,7 @@ const SubCards = ({ country, verifyCustomer }) => {
             callback_url: `${window.location.origin}/sub-success`,
           }
         );
+        console.log(subscribeResponse);
         // console.log('User subscribed successfully:', subscribeResponse.data);
 
         // Check if subscribeResponse.data and authorization_url are available
@@ -201,9 +202,9 @@ const SubCards = ({ country, verifyCustomer }) => {
               </div>
               {/* Convert price to NGN if user is Nigerian */}
               <p className="sub-price">
-                {country === "Nigeria"
-                  ? convertToNGN(subscription.subPrice)
-                  : subscription.subPrice}
+                {country === "nigeria"
+                  ? subscription.subPrice
+                  : convertToDollar(subscription.subPrice)}
               </p>
             </div>
             <div className="sub-cards-lists">
