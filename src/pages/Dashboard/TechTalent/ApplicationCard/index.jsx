@@ -57,7 +57,7 @@ const JobApplication = () => {
                       <b>Budget:</b> {data?.jobPosting?.salary}
                     </h3>
                     <h3 className="">
-                      Application Status:
+                      <b>Application Status:</b>
                       <span>{data?.applicationStatus}</span>
                     </h3>
                   </div>
