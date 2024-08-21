@@ -70,8 +70,7 @@ const ProfileLanding = () => {
           alignItems: "center",
           maxWidth: "80rem",
           margin: "auto",
-        }}
-      >
+        }}>
         <div className="h-logo" style={{ width: "5.5rem", height: "3.2rem" }}>
           <img src={Logo} alt="Nxg Company Logo" className="logo" />
         </div>
@@ -103,8 +102,7 @@ const ProfileLanding = () => {
           <div
             title="close"
             onClick={hideAlertTab}
-            className={"AlertTabWrapper"}
-          >
+            className={"AlertTabWrapper"}>
             {" "}
             <AlertTab controls={hideAlertTab} items={notification_data} />
           </div>

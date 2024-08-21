@@ -26,6 +26,7 @@ import logo from "../../../../static/images/nxg-logo.png";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import Notice from "../../../../components/Notice";
+import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 
 const Sidebar = () => {
   const user = useContext(UserContext);
@@ -34,6 +35,10 @@ const Sidebar = () => {
   const [jobInterest, setJobInterest] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
+
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const menuItem = [
     {
@@ -82,6 +87,43 @@ const Sidebar = () => {
       icon: <PiSubtitlesBold />,
     },
   ];
+
+  const { data: loggedInUser } = useApiRequest("/api/v1/auth/get-user");
+  const userID = loggedInUser.id;
+
+  const logOutUser = async () => {
+    console.log(userID);
+
+    try {
+      const response = await fetch(
+        `${API_HOST_URL}/api/v1/auth/logout?userId=${userID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      );
+      console.log(response);
+      if (response.ok) {
+        // Clear user authentication information
+        localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+        // Navigate to the login page
+        navigate("/login");
+        setLoading(false);
+      } else if (response.status === 500) {
+        setLoginError("Database error, please try again");
+        setLoading(false);
+      } else {
+        console.error("Logout failed", response.status);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
   useEffect(() => {
     const fetchTalentData = async () => {
       try {
@@ -99,10 +141,10 @@ const Sidebar = () => {
         const authKey = parsedLoginKey.authKey;
         // let id = parsedLoginKey.id;
 
-        console.log("Auth Key:", authKey);
-        console.log("User ID:", id);
+        // console.log("Auth Key:", authKey);
+        // console.log("User ID:", id);
 
-        console.log("Parsed loginKey:", parsedLoginKey);
+        // console.log("Parsed loginKey:", parsedLoginKey);
 
         // Fetch user data to get the techId
         const response = await axios.get(
@@ -160,11 +202,11 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    // Clear user authentication information
-    localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-    console.log("hey");
-    // Navigate to the login page
-    navigate("/login");
+    // // Clear user authentication information
+    // localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+    // // Navigate to the login page
+    // navigate("/login");
+    logOutUser();
   };
 
   const capitalizeWords = (str) => {
@@ -283,10 +325,7 @@ const Sidebar = () => {
               {" "}
               <Privacy /> <p>Privacy</p>
             </NavLink>
-            <NavLink
-              end
-              to="terms-and-conditions"
-              className={`${s.dashboardItem} `}>
+            <NavLink end to="terms" className={`${s.dashboardItem} `}>
               {" "}
               <Terms /> <p>Terms and conditions</p>
             </NavLink>
@@ -311,77 +350,92 @@ const Sidebar = () => {
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
+          className="fixed left-[50%] top-[50%]  translate-x-[-50%] translate-y-[-50%] w-[60%] flex justify-center items-center bg-white border-none rounded-[24px] py-8 px-4 z-[100]"
           open={isOpen}
           onClose={() => setIsOpen(false)}
-          style={{
-            position: "fixed",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            maxWidth: "800px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "#ffffff",
-            border: "none",
-            borderRadius: "24px",
-            padding: "2rem 1rem",
-            zIndex: "100",
-          }}>
-          <Dialog.Panel>
-            <Dialog.Title style={{ textAlign: "center" }}>
-              <p
-                style={{
-                  fontSize: "40px",
-                  fontWeight: "600",
-                  textAlign: "center",
-                }}>
-                Are you sure you want to logout?
-              </p>
-              <div
-                style={{
-                  width: "100%",
-                  display: "block",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  margin: "3rem auto",
-                }}>
-                <button
-                  onClick={moveToDashboard}
+          style={
+            {
+              // position: "fixed",
+              // left: "50%",
+              // top: "50%",
+              // transform: "translate(-50%, -50%)",
+              // width: "100%",
+              // maxWidth: "800px",
+              // display: "flex",
+              // justifyContent: "center",
+              // alignItems: "center",
+              // background: "#ffffff",
+              // border: "none",
+              // borderRadius: "24px",
+              // padding: "2rem 1rem",
+              // zIndex: "100",
+            }
+          }>
+          <Dialog.Backdrop className="fixed inset-0 bg-black/30" />
+          <div className="w-full">
+            <Dialog.Panel>
+              <Dialog.Title style={{ textAlign: "center" }}>
+                <p
+                  className="text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] font-extrabold text-center"
+                  style={
+                    {
+                      // fontSize: "40px",
+                      // fontWeight: "600",
+                      // textAlign: "center",
+                    }
+                  }>
+                  Are you sure you want to logout?
+                </p>
+                <div
                   style={{
                     width: "100%",
-                    maxWidth: "580px",
-                    padding: "8px",
-                    background: "#006A90",
-                    border: "none",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "25px",
-                    fontWeight: "500",
-                    margin: "2.5rem 0",
+                    display: "block",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    margin: "3rem auto",
                   }}>
-                  Back To Dashboard
-                </button>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    width: "100%",
-                    maxWidth: "580px",
-                    padding: "8px",
-                    background: "#006A90",
-                    border: "none",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "25px",
-                    fontWeight: "500",
-                  }}>
-                  Continue To Logout
-                </button>
-              </div>
-            </Dialog.Title>
-          </Dialog.Panel>
+                  <button
+                    onClick={moveToDashboard}
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                    style={
+                      {
+                        // width: "100%",
+                        // maxWidth: "580px",
+                        // padding: "8px",
+                        // background: "#006A90",
+                        // border: "none",
+                        // borderRadius: "10px",
+                        // color: "#fff",
+                        // fontSize: "25px",
+                        // fontWeight: "500",
+                        // margin: "2.5rem 0",
+                      }
+                    }>
+                    Back To Dashboard
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                    style={
+                      {
+                        // width: "100%",
+                        // maxWidth: "580px",
+                        // padding: "8px",
+                        // background: "#006A90",
+                        // border: "none",
+                        // borderRadius: "10px",
+                        // color: "#fff",
+                        // fontSize: "25px",
+                        // fontWeight: "500",
+                      }
+                    }>
+                    Continue To Logout
+                  </button>
+                </div>
+              </Dialog.Title>
+            </Dialog.Panel>
+          </div>
         </Dialog>
       )}
     </div>

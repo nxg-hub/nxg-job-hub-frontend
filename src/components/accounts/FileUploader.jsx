@@ -28,7 +28,7 @@ const FileUploader = ({
 
     try {
       const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+        "https://api.cloudinary.com/v1_1/dildznazt/raw/upload",
         formData,
         {
           headers: {

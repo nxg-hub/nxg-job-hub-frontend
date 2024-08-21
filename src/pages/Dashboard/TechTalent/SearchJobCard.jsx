@@ -1,9 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { closeOptions, fetchNearJob } from "../../../redux/NearbyJobSlice";
+import {
+  closeOptions,
+  fetchNearJob,
+  getCurrentPage,
+  getJobTitle,
+} from "../../../redux/NearbyJobSlice";
 
-function SearchJobCard({ job }) {
+function SearchJobCard({ job, currentPage }) {
   const dispatch = useDispatch();
   const fetchNearbyJob = () => {
+    dispatch(getJobTitle(job.job_title));
+    dispatch(getCurrentPage(currentPage));
     dispatch(closeOptions());
     dispatch(
       fetchNearJob(

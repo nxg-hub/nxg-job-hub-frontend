@@ -31,11 +31,21 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
     }
   };
 
-  const convertToNGN = (price) => {
+  // const convertToNGN = (price) => {
+  //   if (exchangeRate) {
+  //     const priceInUSD = parseFloat(price.replace("$", ""));
+  //     const priceInNGN = priceInUSD * exchangeRate;
+  //     return " ₦" + priceInNGN.toFixed(2);
+  //   } else {
+  //     return price;
+  //   }
+  // };
+  const convertToDollar = (price) => {
     if (exchangeRate) {
-      const priceInUSD = parseFloat(price.replace("$", ""));
-      const priceInNGN = priceInUSD * exchangeRate;
-      return " ₦" + priceInNGN.toFixed(2);
+      const priceInNGN = parseFloat(price.replace("₦", "")) * 1000;
+
+      const priceInDollar = priceInNGN / exchangeRate;
+      return " $" + priceInDollar.toFixed(2);
     } else {
       return price;
     }
@@ -46,10 +56,10 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 1,
       subLogo: basic,
       subTitle: "Free",
-      subPrice: "0$",
+      subPrice: "0₦",
       subBenefit: [
         "Access to all basic features",
-        "Use the website for one month only, completely free",
+        // "Use the website for one month only, completely free",
       ],
       planType: "Free",
     },
@@ -57,7 +67,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 2,
       subLogo: silver,
       subTitle: "Silver",
-      subPrice: "25$/3months",
+      subPrice: "25,000₦/3months",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",
@@ -69,7 +79,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 3,
       subLogo: gold,
       subTitle: "Gold",
-      subPrice: "70$/6months",
+      subPrice: "70,000₦/6months",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",
@@ -81,7 +91,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 4,
       subLogo: platinum,
       subTitle: "Platinum",
-      subPrice: "90$/Yearly",
+      subPrice: "90,000₦/Yearly",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",
@@ -95,7 +105,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
   const handlePayment = async (subscription) => {
     try {
       // Convert planType to string and uppercase
-      const planType = String(subscription.planType).toUpperCase();
+      const planType = String(subscription.subTitle).toUpperCase();
 
       const userData = {
         firstName: user.firstName,
@@ -124,6 +134,8 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
             callback_url: `${window.location.origin}/sub-success`,
           }
         );
+        console.log(subscribeResponse);
+        console.log(`${window.location.origin}/sub-success`);
         // console.log('User subscribed successfully:', subscribeResponse.data);
 
         // Check if subscribeResponse.data and authorization_url are available
@@ -204,8 +216,8 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
               {/* <p className='sub-price'>{countryCode === "NG" ? `${convertToNGN(subscription.subPrice)}₦` : subscription.subPrice}</p> */}
               <p className="sub-price">
                 {countryCode === "NG"
-                  ? convertToNGN(subscription.subPrice)
-                  : subscription.subPrice}
+                  ? subscription.subPrice
+                  : convertToDollar(subscription.subPrice)}
               </p>
             </div>
             <div className="sub-cards-lists">
