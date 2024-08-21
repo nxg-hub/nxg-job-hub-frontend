@@ -76,11 +76,11 @@ const Sidebar = () => {
       name: "Saved Jobs",
       icon: <SavedJobs fill="white" />,
     },
-    {
-      path: "analytics",
-      name: "Analytics",
-      icon: <Analytics />,
-    },
+    // {
+    //   path: "analytics",
+    //   name: "Analytics",
+    //   icon: <Analytics />,
+    // },
     {
       path: "subscription",
       name: "Subscription",
