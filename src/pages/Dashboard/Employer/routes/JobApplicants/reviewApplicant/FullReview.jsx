@@ -10,17 +10,25 @@ import spinner from "../../../../../../static/icons/spinner.svg";
 const FullReview = () => {
   const jobID = useSelector((state) => state.FilterSlice.jobID);
 
-  const { data: jobApplicant, loading } = useApiRequest(
+  const {
+    data: jobApplicant,
+    loading,
+    error,
+  } = useApiRequest(
     `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
   );
-
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-  // const [jobApplicant, setJobApplicant] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [file, setFile] = useState([]);
+
+  const [acceptSuccess, setAcceptSuccess] = useState(false);
+  const [accepterror, setAcceptError] = useState(false);
+  const [acceptLoading, setAcceptLoading] = useState(false);
+
+  const [rejectSuccess, setRejectSuccess] = useState(false);
+  const [rejectError, setRejectError] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
+  // const [file, setFile] = useState([]);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     setLoading(true);
@@ -74,9 +82,7 @@ const FullReview = () => {
   // }, []);
   const appDetails = jobApplicant[0]?.techTalent;
   const appDetails2 = jobApplicant[0]?.applicant;
-  // console.log(appDetails2);
-  // console.log(jobApplicant[0]?.applicationId);
-  console.log(loading);
+
   const onButtonClick = () => {
     // window.open(file);
     const link = document.createElement("a");
@@ -88,9 +94,8 @@ const FullReview = () => {
   };
   const navigate = useNavigate();
   const applyID = jobApplicant[0]?.applicationId;
-  console.log(applyID);
   const handleAcceptApplication = async () => {
-    console.log("hey");
+    setAcceptLoading(true);
     try {
       return await fetch(
         `${API_HOST_URL}/api/employers/${applyID}/review-applicant/accept`,
@@ -103,17 +108,54 @@ const FullReview = () => {
         }
       )
         .then((res) => {
+          res.status === 200
+            ? setAcceptSuccess(true) && setAcceptLoading(false)
+            : null;
           console.log(res);
           return res.json();
         })
         .then((data) => {
+          console.log(data);
           return data;
         });
     } catch (err) {
+      setAcceptError(true);
       console.log(err);
+    } finally {
+      setAcceptLoading(false);
     }
   };
-
+  const handleRejectApplication = async () => {
+    setRejectLoading(true);
+    try {
+      return await fetch(
+        `${API_HOST_URL}/api/employers/${applyID}/review-applicant/reject`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      )
+        .then((res) => {
+          res.status === 200
+            ? setRejectSuccess(true) && setRejectLoading(false)
+            : null;
+          console.log(res);
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+    } catch (err) {
+      setRejectError(true);
+      console.log(err);
+    } finally {
+      setRejectLoading(false);
+    }
+  };
   return (
     <div className=" w-[90%] m-auto">
       <Link
@@ -197,24 +239,61 @@ const FullReview = () => {
             </h2>
             <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
               <span className="font-bold font-mono">Resume:</span>
-              {/* <button target="_blank" onClick={onButtonClick}>
-          Download PDF
-          </button> */}
-              <Document src={appDetails?.resume} />
+              <button target="_blank" onClick={onButtonClick}>
+                Download PDF
+              </button>
+              {/* <Document src={appDetails?.resume} /> */}
+              <a
+                className="text-blue-600"
+                href={appDetails?.resume}
+                target="_blank">
+                resume
+              </a>
             </h2>
           </div>
           <div className="mt-5 py-6 space-x-4 m-auto md:w-[60%] text-center">
             <button
               onClick={handleAcceptApplication}
               className="bg-[#126704] text-white py-2 px-6 rounded-lg">
-              Accept
+              {acceptLoading ? "loading.." : "Accept"}
             </button>
             <button
-              // onClick={handleReject}
+              onClick={handleRejectApplication}
               className="bg-[#FF2323] text-white py-2 px-6 rounded-lg">
-              Reject
+              {rejectLoading ? "loading.." : "Reject"}
             </button>
           </div>
+        </>
+      )}
+      {acceptSuccess && (
+        <>
+          <div className="absolute top-[100px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[50%] m-auto bg-blue-200 z-30 h-[130px] md:h-[100px] py-5 text-center">
+            <h2 className="font-bold">Application Accepted Successfully.</h2>
+            <span
+              onClick={() => {
+                setAcceptSuccess(false);
+              }}
+              className="cursor-pointer font-bold relative bottom-[70px] left-[80px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600">
+              x
+            </span>
+          </div>
+          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+        </>
+      )}
+
+      {rejectSuccess && (
+        <>
+          <div className="absolute top-[100px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[50%] m-auto bg-blue-200 z-30 h-[130px] md:h-[100px] py-5 text-center">
+            <h2 className="font-bold">Application Rejected Successfully.</h2>
+            <span
+              onClick={() => {
+                setRejectSuccess(false);
+              }}
+              className="cursor-pointer font-bold relative bottom-[70px] left-[80px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600">
+              x
+            </span>
+          </div>
+          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
         </>
       )}
     </div>

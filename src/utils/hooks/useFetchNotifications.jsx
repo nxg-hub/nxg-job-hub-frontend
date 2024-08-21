@@ -16,10 +16,10 @@ const useFetchNotifications = () => {
       const receivedNotifications = JSON.parse(data);
       if (receivedNotifications.length > 0) {
         setNotifications((notifications) => {
-                  let notifStore = [...notifications, ...receivedNotifications];
-                  window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
-                  return notifStore;
-                });
+          let notifStore = [...notifications, ...receivedNotifications];
+          window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
+          return notifStore;
+        });
       }
     });
   };
@@ -27,6 +27,7 @@ const useFetchNotifications = () => {
   useEffect(() => {
     fetchNotifications();
   });
+  // console.log(notifications);
   return notifications.length > 0 && notifications;
 };
 

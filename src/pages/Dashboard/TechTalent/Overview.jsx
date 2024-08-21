@@ -21,6 +21,20 @@ function TechTalentOverview() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [filtermsg, setFilterMsg] = useState(false);
+  const [filteredJobType, setFilteredJobType] = useState([]);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+
+  const fetchNotifications = async () => {
+    // Your logic to fetch notifications from the API
+    const response = await fetch(
+      `${API_HOST_URL}/v1/auth/notifications/stream/{userID}`
+    );
+    const notifications = await response.json();
+    const unreadCount = notifications.filter(
+      (notification) => !notification.isRead
+    ).length;
+    setUnreadNotificationCount(unreadCount);
+  };
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
@@ -28,6 +42,10 @@ function TechTalentOverview() {
   );
   const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
   const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
+  const searchedJobTitle = useSelector(
+    (state) => state.NearbyJobSlice.jobTitle
+  );
+
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -56,9 +74,20 @@ function TechTalentOverview() {
   useEffect(() => {
     dispatch(resetToDefault());
   }, []);
+  //filtering search
+
+  useEffect(() => {
+    const filteredJob = nearByJobs?.filter((job) => {
+      // job.job_type !== jobType ? setFilterMsg(true) : null;
+      return job.job_type === jobType;
+    });
+    setFilteredJobType(filteredJob);
+  }, [jobType, nearByJobs]);
 
   //storing the job url to be passed as props to the search component
   const allJobsUrl = `/api/job-postings/all`;
+  //current page to be passed as prop to the search component
+  const currentPage = "dashboard";
   return (
     <main className="dash-profile-main-side">
       <div className="dash-profile-header">
@@ -74,7 +103,7 @@ function TechTalentOverview() {
         </div>
       </div>
       <div className="dash-profile-search-section">
-        <ProfileSearch url={allJobsUrl} />
+        <ProfileSearch url={allJobsUrl} currentPage={currentPage} />
       </div>
       {!profileCompleted && (
         <div className="dash-profile-hero-section">
@@ -130,21 +159,10 @@ function TechTalentOverview() {
         <div className="JobRecommendations">
           {nearJobLoader ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
-          ) : showNearByJobs && !jobType ? (
-            nearByJobs?.map((jobRecommendation, i) => {
-              // jobRecommendation.company_logo = figma;
-              return (
-                <RecommendationCard
-                  key={i * 5}
-                  recommendedJobs={jobRecommendation}
-                />
-              );
-            })
-          ) : showNearByJobs && jobType ? (
+          ) : showNearByJobs && !jobType && searchedJobTitle ? (
             nearByJobs
               ?.filter((job) => {
-                // job.job_type !== jobType ? setFilterMsg(true) : null;
-                return job.job_type === jobType;
+                return job.job_title === searchedJobTitle;
               })
               .map((jobRecommendation, i) => {
                 // jobRecommendation.company_logo = figma;
@@ -155,14 +173,30 @@ function TechTalentOverview() {
                   />
                 );
               })
-          ) : (
+          ) : showNearByJobs && jobType ? (
+            // nearByJobs
+            //   ?.filter((job) => {
+            //     // job.job_type !== jobType ? setFilterMsg(true) : null;
+
+            //     return job.job_type === jobType;
+            //   })
+            filteredJobType.map((jobRecommendation, i) => {
+              // jobRecommendation.company_logo = figma;
+              return (
+                <RecommendationCard
+                  key={i * 5}
+                  recommendedJobs={jobRecommendation}
+                />
+              );
+            })
+          ) : filtermsg ? (
             <div className="w-[80%] m-auto text-justify font-bold">
-              <h2>
-                {/* {filtermsg
-                  ? "Could not find your search term"
-                  : "Search for Jobs near you."} */}
-                Search for Jobs near you.
-              </h2>
+              <h2>Could not find your search.</h2>
+            </div>
+          ) : (
+            // <>hey</>
+            <div className="w-[80%] m-auto text-justify font-bold">
+              <h2>Search for Jobs near you.</h2>
             </div>
           )}
         </div>

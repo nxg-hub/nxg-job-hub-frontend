@@ -39,12 +39,69 @@ const Sidebar = ({ profilePic, ...props }) => {
   const [uploadError, setUploadError] = useState("");
   const navigate = useNavigate();
   const notifications = useFetchNotifications();
+  const [viewedNotification, setViewedNotification] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(notifications);
+  const [userID, setUserID] = useState([]);
 
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const moveToDashboard = () => {
     navigate("/dashboard");
     setIsOpen(false);
   };
+  useEffect(() => {
+    try {
+      fetch(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token.authKey,
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          setUserID(data.id);
 
+          return data;
+        });
+    } catch (err) {
+      console.log("error:", err);
+    }
+  }, []);
+
+  const logOutUser = async () => {
+    try {
+      const response = await fetch(
+        `${API_HOST_URL}/api/v1/auth/logout?userId=${userID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      );
+      console.log(response);
+      if (response.ok) {
+        localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+        navigate("/login");
+        setLoading(false);
+      } else if (response.status === 500) {
+        setLoginError("Database error, please try again");
+        setLoading(false);
+      } else {
+        console.error("Logout failed", response.status);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
   // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
@@ -83,9 +140,11 @@ const Sidebar = ({ profilePic, ...props }) => {
     const fetchUserData = async () => {
       try {
         // Retrieve login key from local or session storage
-        const loginKey = window.localStorage.getItem('NXGJOBHUBLOGINKEYV1') || window.sessionStorage.getItem('NXGJOBHUBLOGINKEYV1');
+        const loginKey =
+          window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+          window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
-          console.error('Authentication key not available.');
+          console.error("Authentication key not available.");
           return;
         }
 
@@ -93,58 +152,65 @@ const Sidebar = ({ profilePic, ...props }) => {
         try {
           parsedLoginKey = JSON.parse(loginKey);
         } catch (error) {
-          console.error('Error parsing authentication key:', error);
+          console.error("Error parsing authentication key:", error);
           return;
         }
 
         const { authKey, id } = parsedLoginKey;
 
         if (!authKey) {
-          console.error('Auth key not available.');
+          console.error("Auth key not available.");
           return;
         }
 
         if (!id) {
           // Fetch user data to get the id if not available
-          const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: authKey,
-            },
-          });
+          const response = await axios.get(
+            `${API_HOST_URL}/api/v1/auth/get-user`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: authKey,
+              },
+            }
+          );
 
           const userData = response.data;
 
           // Update the id in parsedLoginKey
+
           parsedLoginKey.id = userData.id;
 
           // Update the login key in local or session storage
           const updatedLoginKey = JSON.stringify(parsedLoginKey);
-          console.log('New Key:', updatedLoginKey);
-          window.localStorage.setItem('NXGJOBHUBLOGINKEYV1', updatedLoginKey);
+          console.log("New Key:", updatedLoginKey);
+          window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", updatedLoginKey);
         }
 
         // Proceed with fetching the employer data
-        const response = await axios.get(`${API_HOST_URL}/api/employers/get-employer`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: authKey,
-          },
-        });
+        const response = await axios.get(
+          `${API_HOST_URL}/api/employers/get-employer`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: authKey,
+            },
+          }
+        );
 
         const userData = response.data;
-        setCompanyName(userData.companyName || ''); // Update state with company name
+        setCompanyName(userData.companyName || ""); // Update state with company name
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData(); // Invoke the fetchUserData function
   }, []);
   const handleLogout = () => {
-    localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-
-    navigate("/login");
+    // localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+    // navigate("/login");
+    logOutUser();
   };
   const editProfile = () => navigate("/dashboard/profile");
 
@@ -236,8 +302,7 @@ const Sidebar = ({ profilePic, ...props }) => {
         <div>
           <div
             className={s.displayPic}
-            style={profilePicture && { padding: 0 }}
-          >
+            style={profilePicture && { padding: 0 }}>
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label htmlFor="profilepic">
@@ -263,8 +328,7 @@ const Sidebar = ({ profilePic, ...props }) => {
             maxWidth: "128px",
             color: "#000",
             margin: "0.6rem auto",
-          }}
-        >
+          }}>
           Edit Profile
         </p>
         <div className={s.employerFirm}>
@@ -281,15 +345,19 @@ const Sidebar = ({ profilePic, ...props }) => {
             <p>Dashboard</p>
           </NavLink>
           <NavLink
+            onClick={() => {
+              setViewedNotification(true);
+            }}
             end
-            data-count={notifications.length}
+            data-count={viewedNotification ? [] : notifications.length}
             to="notifications"
             className={
               notifications.length > 0
-                ? `${s.dashboardItem} ${s.Bell}`
-                : s.dashboardItem
-            }
-          >
+                ? `${s.dashboardItem} ${s.Bell} `
+                : `${s.dashboardItem}`
+                ? viewedNotification
+                : `!hidden !bg-transparent`
+            }>
             <div>
               <Notification />
             </div>
@@ -367,8 +435,7 @@ const Sidebar = ({ profilePic, ...props }) => {
               <NavLink
                 end
                 to="password-settings"
-                className={`${s.dashboardItem} `}
-              >
+                className={`${s.dashboardItem} `}>
                 {" "}
                 <div>
                   <Password />{" "}
@@ -382,11 +449,7 @@ const Sidebar = ({ profilePic, ...props }) => {
                 </div>
                 <p>Privacy</p>
               </NavLink>
-              <NavLink
-                end
-                to="terms-and-conditions"
-                className={`${s.dashboardItem} `}
-              >
+              <NavLink end to="terms" className={`${s.dashboardItem} `}>
                 {" "}
                 <div>
                   <Terms />
@@ -405,8 +468,7 @@ const Sidebar = ({ profilePic, ...props }) => {
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+        onClick={() => setIsOpen(!isOpen)}>
         <div>
           <Logout />
         </div>
@@ -415,82 +477,78 @@ const Sidebar = ({ profilePic, ...props }) => {
       {/* Render the LogoutModal component if showLogoutModal is true */}
       {isOpen && (
         <Dialog
+          className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[60%] flex justify-center items-center bg-white border-none rounded-[24px] py-8 px-4 z-[100]"
           open={isOpen}
           onClose={() => setIsOpen(false)}
-          style={{
-            position: "fixed",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            maxWidth: "800px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "#ffffff",
-            border: "none",
-            borderRadius: "24px",
-            padding: "2rem 1rem",
-            zIndex: "100",
-          }}
-        >
-          <Dialog.Panel>
-            <Dialog.Title style={{ textAlign: "center" }}>
-              <p
-                style={{
-                  fontSize: "40px",
-                  fontWeight: "600",
-                  textAlign: "center",
-                }}
-              >
-                Are you sure you want to logout?
-              </p>
-              <div
-                style={{
-                  width: "100%",
-                  display: "block",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  margin: "3rem auto",
-                }}
-              >
-                <button
-                  onClick={moveToDashboard}
+          style={
+            {
+              // position: "fixed",
+              // left: "50%",
+              // top: "50%",
+              // transform: "translate(-50%, -50%)",
+              // width: "100%",
+              // maxWidth: "800px",
+              // display: "flex",
+              // justifyContent: "center",
+              // alignItems: "center",
+              // background: "#ffffff",
+              // border: "none",
+              // borderRadius: "24px",
+              // padding: "2rem 1rem",
+              // zIndex: "100",
+            }
+          }>
+          <Dialog.Backdrop className="fixed inset-0 bg-black/30" />
+          <div className="w-full">
+            <Dialog.Panel>
+              <Dialog.Title style={{ textAlign: "center" }}>
+                <p
+                  className="text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] font-extrabold text-center"
+                  style={
+                    {
+                      // fontSize: "40px",
+                      // fontWeight: "600",
+                      // textAlign: "center",
+                    }
+                  }>
+                  Are you sure you want to logout?
+                </p>
+                <div
                   style={{
                     width: "100%",
-                    maxWidth: "580px",
-                    padding: "8px",
-                    background: "#006A90",
-                    border: "none",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "25px",
-                    fontWeight: "500",
-                    margin: "2.5rem 0",
-                  }}
-                >
-                  Back To Dashboard
-                </button>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    width: "100%",
-                    maxWidth: "580px",
-                    padding: "8px",
-                    background: "#006A90",
-                    border: "none",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "25px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Continue To Logout
-                </button>
-              </div>
-            </Dialog.Title>
-          </Dialog.Panel>
+                    display: "block",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    margin: "3rem auto",
+                  }}>
+                  <button
+                    onClick={moveToDashboard}
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10">
+                    Back To Dashboard
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                    style={
+                      {
+                        // width: "100%",
+                        // maxWidth: "580px",
+                        // padding: "8px",
+                        // background: "#006A90",
+                        // border: "none",
+                        // borderRadius: "10px",
+                        // color: "#fff",
+                        // fontSize: "25px",
+                        // fontWeight: "500",
+                      }
+                    }>
+                    Continue To Logout
+                  </button>
+                </div>
+              </Dialog.Title>
+            </Dialog.Panel>
+          </div>
         </Dialog>
       )}
       {message && <Notice type={message.type} message={message.content} />}

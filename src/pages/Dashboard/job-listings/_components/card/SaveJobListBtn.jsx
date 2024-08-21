@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import SaveJob from "../../../../static/icons/carbon_bookmark.svg?react";
+import SaveJob from "../../../../../static/icons/carbon_bookmark.svg?react";
 import axios from "axios";
-import { API_HOST_URL } from "../../../../utils/api/API_HOST";
-// import g from "../../../../static"/
-
-const saveBtn = ({ jobID }) => {
+import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
+const SaveJobListBtn = ({ jobID }) => {
   const [jobPostingId] = useState({
     jobPostingId: jobID,
   });
@@ -48,7 +46,7 @@ const saveBtn = ({ jobID }) => {
     }
   };
   return (
-    <>
+    <div>
       <p className="float-right" onClick={saveJob}>
         <SaveJob title="Save job" />
         <span className="text-xs text-blue-600">
@@ -57,13 +55,13 @@ const saveBtn = ({ jobID }) => {
       </p>
       {saved && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">This job is already saved!</h2>
             <span
               onClick={() => {
                 setSaved(false);
               }}
-              className="cursor-pointer font-bold relative bottom-[50px] pb-3 left-[95%]  lg:left-[95%] lg:bottom-[58px] text-red-600">
+              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
               x
             </span>
           </div>
@@ -77,7 +75,7 @@ const saveBtn = ({ jobID }) => {
       )}
       {error && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">
               Something went wrong!!, Check internet connection.
             </h2>
@@ -85,7 +83,7 @@ const saveBtn = ({ jobID }) => {
               onClick={() => {
                 setError(false);
               }}
-              className="cursor-pointer font-bold relative bottom-[70px] pb-3 left-[95%]  lg:left-[95%] lg:bottom-[58px] text-red-600">
+              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
               x
             </span>
           </div>
@@ -99,13 +97,13 @@ const saveBtn = ({ jobID }) => {
       )}
       {success && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">Job Saved Successfully.</h2>
             <span
               onClick={() => {
                 setSuccess(false);
               }}
-              className="cursor-pointer font-bold relative bottom-[55px] pb-3 left-[95%]  lg:left-[95%] lg:bottom-[58px] text-red-600">
+              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
               x
             </span>
           </div>
@@ -117,8 +115,8 @@ const saveBtn = ({ jobID }) => {
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 
-export default saveBtn;
+export default SaveJobListBtn;
