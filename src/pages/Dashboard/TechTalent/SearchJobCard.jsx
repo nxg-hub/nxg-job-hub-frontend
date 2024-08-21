@@ -15,7 +15,8 @@ function SearchJobCard({ job }) {
   return (
     <div
       onClick={fetchNearbyJob}
-      className={`job-card-body cursor-pointer w-[95%] m-auto`}>
+      className={`job-card-body cursor-pointer w-[95%] m-auto`}
+    >
       <div className="job-card-title">
         <p>{job.job_title}</p> - <p>{job.job_location}</p>
       </div>

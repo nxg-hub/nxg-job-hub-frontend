@@ -6,10 +6,6 @@ import { useNavigate } from "react-router-dom";
 const NotificationItem = ({ item, ...props }) => {
   const time = useTimestamp(item.dateTime);
   const navigate = useNavigate();
-
-  const handleViewJobClick = () => {
-    navigate(`/dashboard/job-listings`);
-  };
   return (
     <div {...props} className={s.AlertTabItem}>
       {/* <img src={img} alt="PROFILEPICTURE" /> */}
@@ -18,9 +14,6 @@ const NotificationItem = ({ item, ...props }) => {
           {/* <h3 className={s.name}>{item.from}</h3> */}
           <p className={s.message}>{item.message}</p>
         </span>
-        <button className="btn-job" onClick={handleViewJobClick}>
-          View Jobs
-        </button>
         <div className={s.Options}>
           <CiMenuKebab />
           <small className={s.timestamp}>{time}</small>

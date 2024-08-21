@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
-import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import { resetToDefault } from "../../../redux/FilterSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
@@ -22,19 +21,6 @@ function TechTalentOverview() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [filtermsg, setFilterMsg] = useState(false);
-  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
-
-  const fetchNotifications = async () => {
-    // Your logic to fetch notifications from the API
-    const response = await fetch(
-      `${API_HOST_URL}/v1/auth/notifications/stream/{userID}`
-    );
-    const notifications = await response.json();
-    const unreadCount = notifications.filter(
-      (notification) => !notification.isRead
-    ).length;
-    setUnreadNotificationCount(unreadCount);
-  };
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
@@ -84,11 +70,6 @@ function TechTalentOverview() {
           <div className="dash-profile-icons">
             <NavLink to="/dashboard/notifications">
               <SlBell className="dash-icons" />
-              {unreadNotificationCount > 0 && (
-                <span className="notification-count">
-                  {unreadNotificationCount}
-                </span>
-              )}
             </NavLink>
           </div>
         </div>

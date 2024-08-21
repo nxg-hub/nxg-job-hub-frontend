@@ -4,18 +4,22 @@ import CardDetails from "./_components/card-details";
 import Successfull from "./_components/successfull";
 import { API_HOST_URL } from "../../../utils/api/API_HOST.js";
 import ProfileSearch from "../TechTalent/ProfileSearch.jsx";
+// import {
+//   applyForJob,
+//   setNoticeTrue,
+// } from "../../../redux/TalentApplicationSlice.js";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [successfull, setSuccessfull] = useState(false);
-  const [isUserVerified, setIsUserVerified] = useState(false);
 
   const fetchData = async () => {
     const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
     const data = await response.json();
     setJobs(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -27,48 +31,15 @@ const JobListings = () => {
     setShowDetails(true);
   };
 
-  useEffect(() => {
-    fetchData();
-    const checkVerification = async () => {
-      const verified = await isUserVerified();
-      setIsUserVerified(verified);
-    };
-    checkVerification();
-  }, []);
-
-  const handleApply = async (job) => {
-    if (!isUserVerified) {
-      alert("Please verify your account to apply for jobs.");
-      return;
-    }
-
-    const { name, email } = user;
-    try {
-      const response = await fetch(
-        `${API_HOST_URL}/api/job-postings/{jobID}/apply`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email }),
-        }
-      );
-
-      if (response.ok) {
-        setSuccessfull(true);
-        setError(null);
-      } else {
-        const errorData = await response.json();
-        setError(
-          errorData.message ||
-            "An error occurred while submitting your application."
-        );
-      }
-    } catch (error) {
-      setError("An unexpected error occurred. Please try again later.");
-    }
+  const handleApply = () => {
+    setSuccessfull(true);
   };
+
   // const handleApply = () => {
-  //   setSuccessfull(true);
+  //   onClose();
+  //   isVerified
+  //     ? dispatch(applyForJob(jobPostingId))
+  //     : dispatch(setNoticeTrue());
   // };
 
   const handleClose = () => {
@@ -105,8 +76,7 @@ const JobListings = () => {
             key={job.id}
             job={job}
             handleShowDetails={() => handleCardClick(job)}
-            handleApply={isUserVerified ? () => handleApply(job) : () => {}}
-            // handleApply={handleApply}
+            handleApply={handleApply}
           />
         ))}
       </div>

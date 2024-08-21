@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
+import { data } from "autoprefixer";
+import JobListings from "../..";
 
 const JobCard = ({ job, handleShowDetails, handleApply }) => {
   return (
@@ -22,7 +24,7 @@ const JobCard = ({ job, handleShowDetails, handleApply }) => {
             </div>
           </div>
           <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
-            <SaveBtn />
+            <SaveBtn jobID={JobListings.jobId} />
           </div>
         </div>
 
