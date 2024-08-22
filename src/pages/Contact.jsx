@@ -52,23 +52,23 @@ const Contact = () => {
                     />
                     <button type="submit" className="send-btn">Send</button>
                 </form>
-                {isOpen && (
-                    <Dialog
-                        open={isOpen} onClose={() => setIsOpen(false)}
-                        style={{ position: 'absolute', left: '40%', top: '35%', transform: 'translate(-50% -50%)', width: '20rem', height: '15rem', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff', border: '0.06rem solid #d9d9d9', borderRadius: '20px' }}
-                    >
-                        <Dialog.Panel>
-                            <Dialog.Title style={{ textAlign: 'center' }}>
-                                <div onClick={() => setIsOpen(false)} style={{ color: '#000000', opacity: '0.3', textAlign: 'end', marginTop: '-4rem', cursor: 'pointer' }}>
-                                    <AiOutlineClose />
-                                </div>
-                                <div style={{ marginTop: '3rem' }}>
-                                    <p style={{ fontFamily: 'Manrope', fontSize: '26px', fontWeight: '700', color: '#006A90' }}>Message sent!</p>
-                                </div>
-                            </Dialog.Title>
-                        </Dialog.Panel>
-                    </Dialog>
-                )}
+                {/*{isOpen && (*/}
+                {/*    <Dialog*/}
+                {/*        open={isOpen} onClose={() => setIsOpen(false)}*/}
+                {/*        style={{ position: 'absolute', left: '40%', top: '35%', transform: 'translate(-50% -50%)', width: '20rem', height: '15rem', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff', border: '0.06rem solid #d9d9d9', borderRadius: '20px' }}*/}
+                {/*    >*/}
+                {/*        <Dialog.Panel>*/}
+                {/*            <Dialog.Title style={{ textAlign: 'center' }}>*/}
+                {/*                <div onClick={() => setIsOpen(false)} style={{ color: '#000000', opacity: '0.3', textAlign: 'end', marginTop: '-4rem', cursor: 'pointer' }}>*/}
+                {/*                    <AiOutlineClose />*/}
+                {/*                </div>*/}
+                {/*                <div style={{ marginTop: '3rem' }}>*/}
+                {/*                    <p style={{ fontFamily: 'Manrope', fontSize: '26px', fontWeight: '700', color: '#006A90' }}>Message sent!</p>*/}
+                {/*                </div>*/}
+                {/*            </Dialog.Title>*/}
+                {/*        </Dialog.Panel>*/}
+                {/*    </Dialog>*/}
+                {/*)}*/}
             </div>
         </div>
     );
