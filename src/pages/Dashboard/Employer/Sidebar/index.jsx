@@ -254,7 +254,7 @@ const Sidebar = ({ profilePic, ...props }) => {
   };
   useEffect(() => {
     if (profilePicture) {
-      uploadProfilePicture();
+      uploadToNXG();
     }
   }, [profilePicture]);
 
