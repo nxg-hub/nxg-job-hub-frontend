@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles.scss';
 import Container from '../../components/Container/Container';
-import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
 const PrivacyPolicy = () => {
   return (
