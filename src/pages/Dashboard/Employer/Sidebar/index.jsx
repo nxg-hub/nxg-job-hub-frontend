@@ -31,7 +31,7 @@ import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import Notice from "../../../../components/Notice";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
-  const [profilePicture, setProfilePicture] = useState(profilePic || null);
+  const [profilePicture, setProfilePicture] = useState("");
   console.log(profilePicture);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
