@@ -14,8 +14,8 @@ function TechTalentProfileForm() {
   const [formData, setFormData] = useState({
     countryCode: "",
     zipCode: "",
-    residentialAddress: "",
     state: "",
+    residentialAddress: "",
     highestQualification: "",
     professionalCert: "",
     experienceLevel: "",
@@ -79,8 +79,8 @@ function TechTalentProfileForm() {
     const formErrors = {};
     if (
       formData.countryCode === "" ||
-      formData.zipCode === ""
-      // formData.state === ""
+      // formData.zipCode === ""
+      formData.state === ""
     ) {
       formErrors.formData = "All fields must be filled";
       setErrors(formErrors);
