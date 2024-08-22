@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from "../components/header/Header";
 import { Dialog } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
+import Footer from "../components/footer/Footer";
 
 const Contact = () => {
     const [fullName, setFullName] = useState('');
@@ -80,83 +81,9 @@ const Contact = () => {
                 )}
             </div>
         </div>
+            <Footer />
         </section>
     );
 };
 
 export default Contact;
-
-
-// import React, { useState } from 'react'
-// import { Dialog } from '@headlessui/react'
-// import{ AiOutlineClose } from 'react-icons/ai'
-//
-// const Contact = () => {
-//   const [fullName, setFullName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [message, setMessage] = useState("");
-//   const [isOpen, setIsOpen] = useState(false);
-//
-//   const sendMessage = (e) => {
-//     e.preventDefault();
-//     if(email !== "" && message !== "") {
-//       console.log(email, message);
-//       setIsOpen(true);
-//
-//     }
-//   }
-//   return (
-//     <div style={{position:"relative", background:"#e6e4e4", height:"100vh",display: "flex",justifyContent: "center",alignItems: "center"}}>
-//       <div className="contact-main">
-//         <h2>SAY SOMETHING</h2>
-//         <form onSubmit={sendMessage}>
-//           <input
-//               type="text"
-//               name="fullName"
-//               autoComplete='off'
-//               placeholder='Your name'
-//               value={fullName}
-//               onChange={(e) => setFullName(e.target.value)}
-//               />
-//           <input
-//               type="email"
-//               name="email"
-//               autoComplete='off'
-//               placeholder='Your email'
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//               />
-//               <textarea
-//                 name="message"
-//                 value={message}
-//                 rows="6"
-//                 cols="10"
-//                 onChange={(e) => setMessage(e.target.value)}
-//                 placeholder='Message'
-//               >
-//               </textarea>
-//             <button className='send-btn'>Send</button>
-//         </form>
-//         {isOpen && (
-//           <Dialog
-//             open={isOpen} onClose={() => setIsOpen(false)}
-//             style={{ position: "absolute", left: "40%", top: "35%", transform: "translate(-50% -50%)", width: "20rem", height: "15rem", display: "flex", justifyContent: "center", alignItems: "center", background: '#ffffff', border: "0.06rem solid #d9d9d9", borderRadius: '20px' }}
-//           >
-//             <Dialog.Panel>
-//               <Dialog.Title style={{textAlign: "center" }}>
-//                 <div onClick={() => setIsOpen(false)} style={{color:'#000000', opacity:"0.3", textAlign: "end", marginTop:'-4rem', cursor:'pointer'}}>
-//                   <AiOutlineClose/>
-//                 </div>
-//                 <div style={{marginTop:'3rem'}}>
-//                   <p style={{ fontFamily: "Manrope", fontSize: "26px", fontWeight: "700", color:"#006A90" }}>Message sent !</p>
-//                 </div>
-//               </Dialog.Title>
-//             </Dialog.Panel>
-//           </Dialog>
-//         )}
-//       </div>
-//     </div>
-//   )
-// }
-//
-// export default Contact
