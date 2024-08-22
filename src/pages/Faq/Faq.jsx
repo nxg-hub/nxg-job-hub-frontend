@@ -1,9 +1,15 @@
 import React from 'react';
 import FaqItem from './FaqItem';
 import Container from '../../components/Container/Container';
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import styles from "./index.module.scss"
 const Faq = () => {
   return (
+      <section className="w-full bg-white">
+          <div className="bg-black">
+              <Header />
+          </div>
     <Container>
       <h1 className={styles.heading}>FAQs</h1>
       <FaqItem title="What is NXG Job Hub?" body="NXG Job Hub is an exclusive online platform where verified employers and agents can discover vetted tech talents for various job opportunities across the globe." />
@@ -18,6 +24,8 @@ const Faq = () => {
       <FaqItem title="How secure is my data on NXG Job Hub?" body="We prioritize the security and privacy of your personal information. NXG Job Hub employs robust security measures, including encryption and data protection protocols, to safeguard all user data." />
       <FaqItem title="How can I manage my subscription on NXG Job Hub?" body="You can manage your subscription settings by accessing your account dashboard. From there, you can upgrade, downgrade, or cancel your subscription plan as per your hiring requirements." />
     </Container>
+          <Footer />
+      </section>
   );
 };
 
