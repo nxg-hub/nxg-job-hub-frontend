@@ -1,9 +1,15 @@
 import React from 'react';
 import './styles.scss';
 import Container from '../../components/Container/Container';
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
 const PrivacyPolicy = () => {
   return (
+      <section className="w-full bg-white">
+        <div className="bg-black">
+          <Header />
+        </div>
     <Container>
         <h1 className='heading'>Privacy Policy</h1>
     <div className="privacy-policy">
@@ -191,6 +197,8 @@ const PrivacyPolicy = () => {
       <p className="section-body">Thank you for trusting NXG Job Hub with your information. We are committed to ensuring your privacy and security while providing a seamless job search and hiring experience.</p>
     </div>
     </Container>
+        <Footer />
+      </section>
   );
 };
 
