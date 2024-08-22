@@ -37,7 +37,7 @@ const Contact = () => {
                     />
                     <input
                         type="email"
-                        name="email"
+                        name="emailAddress"
                         autoComplete='off'
                         placeholder='Your email'
                         value={email}

@@ -28,19 +28,33 @@ const Footer = () => {
     { title: "Find a job", href: "/findjob" },
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email) {
-      setErrors({ email: "Valid email is required" });
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setErrors({ email: "Valid email is required" });
-    } else {
-      // console.log(`Form from ${email} submitted successfully.`);
-      setIsOpen(true);
-    }
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!email) {
+  //     setErrors({ email: "Valid email is required" });
+  //   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+  //     setErrors({ email: "Valid email is required" });
+  //   } else {
+  //     // console.log(`Form from ${email} submitted successfully.`);
+  //     setIsOpen(true);
+  //   }
+  // };
 
-  return (
+    const handleSubmit = (e) => {
+        if (!email) {
+            e.preventDefault(); // Prevent form submission if email is missing
+            setErrors({ email: "Valid email is required" });
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+            e.preventDefault(); // Prevent form submission if email format is invalid
+            setErrors({ email: "Valid email is required" });
+        } else {
+            // Remove e.preventDefault() to allow form submission to Netlify
+            setIsOpen(true); // Show the dialog or perform any other action
+        }
+    };
+
+
+    return (
     <div>
       <div className="footer-main-container">
         <div className="footer-contents">
