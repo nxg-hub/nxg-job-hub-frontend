@@ -242,7 +242,7 @@ const Sidebar = ({ profilePic, ...props }) => {
       });
       setTimeout(() => setMessage(null), 5000);
       const response = await axios.get(
-          `${API_HOST_URL}/api/employers/get-employer`,
+          `${API_HOST_URL}/api/v1/auth/get-user`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -250,9 +250,9 @@ const Sidebar = ({ profilePic, ...props }) => {
             },
           }
       );
-      const employerId = response.data.employerID;
+      const employerId = response.data.id;
       await axios.put(
-          `${API_HOST_URL}/api/employers/get-employer${employerId}`,
+          `${API_HOST_URL}/api/v1/auth/get-user${employerId}`,
           { profilePicture: `${res.data.secure_url}` },
           {
             headers: {
