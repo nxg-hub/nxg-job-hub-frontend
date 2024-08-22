@@ -230,7 +230,7 @@ const Sidebar = ({ profilePic, ...props }) => {
         {
           method: "POST",
           headers: {
-            Authorization: authKey,
+            Authorization: authKey.authKey,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ link: `${profilePicture}` }),
@@ -259,27 +259,43 @@ const Sidebar = ({ profilePic, ...props }) => {
   }, [profilePicture]);
 
   const uploadProfilePicture = async (e) => {
+    // try {
+    //   setMessage({
+    //     type: "info",
+    //     content: "Updating profile picture...",
+    //   });
+    //
+    //   const formData = new FormData();
+    //   formData.append("file", e.target.files[0]);
+    //   formData.append("upload_preset", "tin4r1lt");
+    //
+    //   const res = await axios.post(
+    //     "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+
     try {
-      setMessage({
-        type: "info",
-        content: "Updating profile picture...",
-      });
-
-      const formData = new FormData();
-      formData.append("file", e.target.files[0]);
-      formData.append("upload_preset", "tin4r1lt");
-
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const response = await fetch(
+          "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+          {
+            method: "POST",
+            headers: {
+              Authorization: authKey.authKey,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ link: `${profilePicture}` }),
+          }
       );
 
-      setProfilePicture(res.data.secure_url);
+      console.log(response.status);
+
+
+      setProfilePicture(`${profilePicture}`);
 
       setMessage({
         type: "info",
