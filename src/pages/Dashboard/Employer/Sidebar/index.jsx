@@ -214,86 +214,72 @@ const Sidebar = ({ profilePic, ...props }) => {
   };
   const editProfile = () => navigate("/dashboard/profile");
 
-  const uploadToNXG = async () => {
-    const authKey =
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-
-    if (!authKey || !authKey.authKey) {
-      throw new Error(
-        "Invalid or missing authentication key. Please log in again."
-      );
-    }
-    try {
-      const response = await fetch(
-        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
-        {
-          method: "POST",
-          headers: {
-            Authorization: authKey.authKey,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ link: `${profilePicture}` }),
-        }
-      );
-
-      console.log(response.status);
-
-      if (response && response.status === 200) {
-        console.log("Profile picture successfully updated");
-        setUploadError(null);
-      } else {
-        throw new Error("Failed to update profile picture. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error uploading profile picture:", error);
-      setUploadError(
-        "An error occurred while updating the profile picture. Please try again."
-      );
-    }
-  };
+  // const uploadToNXG = async () => {
+  //   const authKey =
+  //     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+  //     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  //
+  //   if (!authKey || !authKey.authKey) {
+  //     throw new Error(
+  //       "Invalid or missing authentication key. Please log in again."
+  //     );
+  //   }
+  //   try {
+  //     const response = await fetch(
+  //       "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: authKey.authKey,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ link: `${profilePicture}` }),
+  //       }
+  //     );
+  //
+  //     console.log(response.status);
+  //
+  //     if (response && response.status === 200) {
+  //       console.log("Profile picture successfully updated");
+  //       setUploadError(null);
+  //     } else {
+  //       throw new Error("Failed to update profile picture. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading profile picture:", error);
+  //     setUploadError(
+  //       "An error occurred while updating the profile picture. Please try again."
+  //     );
+  //   }
+  // };
   useEffect(() => {
     if (profilePicture) {
-      uploadToNXG();
+      uploadProfilePicture();
     }
   }, [profilePicture]);
 
   const uploadProfilePicture = async (e) => {
     try {
-      setMessage({
-        type: "info",
-        content: "Updating profile picture...",
-      });
+      // setMessage({
+      //   type: "info",
+      //   content: "Updating profile picture...",
+      // });
 
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
-      // formData.append("upload_preset", "tin4r1lt");
-      const authKey =
-          JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-          JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-
-      if (!authKey || !authKey.authKey) {
-        throw new Error(
-            "Invalid or missing authentication key. Please log in again."
-        );
-      }
-
+      formData.append("upload_preset", "tin4r1lt");
 
       const res = await axios.post(
-
-        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
         formData,
         {
-          method: "POST",
           headers: {
-            Authorization: authKey ,
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify({ link: `${profilePicture}` }),
         }
       );
 
-      setProfilePicture(res.data.url);
+      setProfilePicture(res.data.secure_url);
 
       setMessage({
         type: "info",
