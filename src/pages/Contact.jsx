@@ -9,9 +9,10 @@ const Contact = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const sendMessage = (e) => {
-        e.preventDefault();
         if (email !== '' && message !== '') {
             setIsOpen(true);
+        } else {
+            e.preventDefault(); // Prevent form submission only if fields are empty
         }
     };
 
