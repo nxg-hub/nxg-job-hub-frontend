@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Header from "../components/header/Header";
 import { Dialog } from '@headlessui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -17,7 +18,14 @@ const Contact = () => {
     };
 
     return (
-        <div style={{ position: 'relative', background: '#e6e4e4', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <section className="w-full bg-white">
+            <div className="bg-black">
+                <Header/>
+            </div>
+
+    <div style={{
+        position: 'relative',
+        background: '#e6e4e4', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div className="contact-main">
                 <h2>SEND A MESSAGE</h2>
                 <form
@@ -72,6 +80,7 @@ const Contact = () => {
                 )}
             </div>
         </div>
+        </section>
     );
 };
 
