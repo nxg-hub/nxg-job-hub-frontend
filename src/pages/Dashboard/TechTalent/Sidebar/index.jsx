@@ -325,7 +325,7 @@ const Sidebar = () => {
               {" "}
               <Privacy /> <p>Privacy</p>
             </NavLink>
-            <NavLink end to="terms" className={`${s.dashboardItem} `}>
+            <NavLink end to="terms-and-condition" className={`${s.dashboardItem} `}>
               {" "}
               <Terms /> <p>Terms and conditions</p>
             </NavLink>

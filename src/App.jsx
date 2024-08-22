@@ -51,7 +51,7 @@ function App() {
         <Route path="/findjob" element={<Findjob />} />
         <Route path="/faqs" element={<Faq />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsAndCondition />} />
+       
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
@@ -108,7 +108,7 @@ function App() {
             <Route path="profile-details" element={<h2>Profile Details</h2>} />
             <Route path="password-settings" element={<Passwordsettings />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
-            <Route path="terms" element={<TermsAndCondition />} />
+            <Route path="terms-and-condition" element={<TermsAndCondition />} />
             <Route path="help" element={<Help />} />
           </Route>
           <Route path="/sub-success" element={<SubSuccess />}>
