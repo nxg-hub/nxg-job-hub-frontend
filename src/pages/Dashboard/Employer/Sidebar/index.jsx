@@ -258,6 +258,42 @@ const Sidebar = ({ profilePic, ...props }) => {
     }
   }, [profilePicture]);
 
+  // const uploadProfilePicture = async (e) => {
+  //   try {
+  //     setMessage({
+  //       type: "info",
+  //       content: "Updating profile picture...",
+  //     });
+  //
+  //     const formData = new FormData();
+  //     formData.append("file", e.target.files[0]);
+  //     formData.append("upload_preset", "tin4r1lt");
+  //
+  //     const res = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //
+  //     setProfilePicture(res.data.secure_url);
+  //
+  //     setMessage({
+  //       type: "info",
+  //       content: "Profile picture updated.",
+  //     });
+  //     setTimeout(() => setMessage(null), 5000);
+  //   } catch (err) {
+  //     console.log(err);
+  //     setUploadError(
+  //       "An error occurred while updating the profile picture. Please try again."
+  //     );
+  //   }
+  // };
+
   const uploadProfilePicture = async (e) => {
     try {
       setMessage({
@@ -267,16 +303,15 @@ const Sidebar = ({ profilePic, ...props }) => {
 
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
-      formData.append("upload_preset", "tin4r1lt");
 
       const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+          "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
       );
 
       setProfilePicture(res.data.secure_url);
@@ -289,7 +324,7 @@ const Sidebar = ({ profilePic, ...props }) => {
     } catch (err) {
       console.log(err);
       setUploadError(
-        "An error occurred while updating the profile picture. Please try again."
+          "An error occurred while updating the profile picture. Please try again."
       );
     }
   };
