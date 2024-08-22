@@ -230,7 +230,7 @@ const Sidebar = ({ profilePic, ...props }) => {
         {
           method: "POST",
           headers: {
-            Authorization: authKey.authKey,
+            Authorization: authKey,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ link: `${profilePicture}` }),
