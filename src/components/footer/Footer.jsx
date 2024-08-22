@@ -202,7 +202,7 @@ const Footer = () => {
               <div className="facebk">
                 <Link
                   to={
-                    "https://web.facebook.com/nextgenhubdigital?mibextid=kFxxJD&_rdc=1&_rdr"
+                    "https://www.facebook.com/nxgjobhub"
                   }
                   target="_blank">
                   <BiLogoFacebook
@@ -229,7 +229,7 @@ const Footer = () => {
               </div>
               <div className="linkedin">
                 <Link
-                  to={"https://www.linkedin.com/company/nextgenhub-digital/"}
+                  to={"https://www.linkedin.com/showcase/nxg-job-hub"}
                   target="_blank">
                   <BiLogoLinkedin
                     style={{
