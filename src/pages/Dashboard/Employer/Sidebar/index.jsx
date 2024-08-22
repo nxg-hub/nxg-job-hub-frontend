@@ -222,16 +222,17 @@ const Sidebar = ({ profilePic, ...props }) => {
       });
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
-      formData.append("upload_preset", "tin4r1lt");
+      // formData.append("upload_preset", "tin4r1lt");
       const { authKey } =
       JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
       JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
       const res = await axios.post(
-          "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+          "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
+              authorization: authKey,
             },
           }
       );
@@ -240,29 +241,29 @@ const Sidebar = ({ profilePic, ...props }) => {
         type: "info",
         content: "Profile picture updated.",
       });
-      setTimeout(() => setMessage(null), 5000);
-      const response = await axios.get(
-          `${API_HOST_URL}/api/v1/auth/get-user`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              authorization: authKey,
-            },
-          }
-      );
-      const employerId = response.data.id;
-      await axios.put(
-          `${API_HOST_URL}/api/v1/auth/get-user${employerId}`,
-          { profilePicture: `${res.data.secure_url}` },
-          {
-            headers: {
-              Authorization: authKey,
-              "Content-Type": "application/json",
-            },
-          }
-      );
-      const uploadedPictureUrl = (res.data.secure_url)
-      console.log("picture updated", uploadedPictureUrl);
+      // setTimeout(() => setMessage(null), 5000);
+      // const response = await axios.get(
+      //     `${API_HOST_URL}/api/v1/auth/get-user`,
+      //     {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //         authorization: authKey,
+      //       },
+      //     }
+      // );
+      // const employerId = response.data.id;
+      // await axios.put(
+      //     `${API_HOST_URL}/api/v1/auth/get-user${employerId}`,
+      //     { profilePicture: `${res.data.secure_url}` },
+      //     {
+      //       headers: {
+      //         Authorization: authKey,
+      //         "Content-Type": "application/json",
+      //       },
+      //     }
+      // );
+      // const uploadedPictureUrl = (res.data.secure_url)
+      // console.log("picture updated", uploadedPictureUrl);
     } catch (err) {
       console.log(err);
     }
