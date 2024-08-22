@@ -344,25 +344,45 @@ const Sidebar = ({ profilePic, ...props }) => {
             </div>
             <p>Dashboard</p>
           </NavLink>
+
           <NavLink
-            onClick={() => {
-              setViewedNotification(true);
-            }}
-            end
-            data-count={viewedNotification ? [] : notifications.length}
-            to="notifications"
-            className={
-              notifications.length > 0
-                ? `${s.dashboardItem} ${s.Bell} `
-                : `${s.dashboardItem}`
-                ? viewedNotification
-                : `!hidden !bg-transparent`
-            }>
+              onClick={() => {
+                setViewedNotification(true);
+              }}
+              end
+              data-count={viewedNotification ? 0 : notifications.length} // Update data-count based on viewedNotification
+              to="notifications"
+              className={
+                notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
+                    ? `${s.dashboardItem} ${s.Bell}`
+                    : `${s.dashboardItem}`
+              }
+          >
             <div>
               <Notification />
             </div>
-            <p> Notifications</p>
+            <p>Notifications</p>
           </NavLink>
+
+          {/*<NavLink*/}
+          {/*  onClick={() => {*/}
+          {/*    setViewedNotification(true);*/}
+          {/*  }}*/}
+          {/*  end*/}
+          {/*  data-count={viewedNotification ? [] : notifications.length}*/}
+          {/*  to="notifications"*/}
+          {/*  className={*/}
+          {/*    notifications.length > 0*/}
+          {/*      ? `${s.dashboardItem} ${s.Bell} `*/}
+          {/*      : `${s.dashboardItem}`*/}
+          {/*      ? viewedNotification*/}
+          {/*      : `!hidden !bg-transparent`*/}
+          {/*  }>*/}
+          {/*  <div>*/}
+          {/*    <Notification />*/}
+          {/*  </div>*/}
+          {/*  <p> Notifications</p>*/}
+          {/*</NavLink>*/}
           {/* <NavLink end to="wallet" className={`${s.dashboardItem} `}>
           <div><Wallet /></div>
             <p>Wallet</p>
