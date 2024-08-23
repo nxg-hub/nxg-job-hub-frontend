@@ -116,7 +116,7 @@ const TermsAndCondition = () => {
             <section className={styles.section}>
                 <h2>Contact Information</h2>
                 <p>
-                    For any questions or concerns regarding these Terms, please contact us at info@nxgjobhub.com.
+                    For any questions or concerns regarding these Terms, please contact us at https://nxgjobhub.com/contact
                 </p>
             </section>
         </Container>
