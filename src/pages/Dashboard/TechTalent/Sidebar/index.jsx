@@ -92,8 +92,6 @@ const Sidebar = () => {
   const userID = loggedInUser.id;
 
   const logOutUser = async () => {
-    console.log(userID);
-
     try {
       const response = await fetch(
         `${API_HOST_URL}/api/v1/auth/logout?userId=${userID}`,
@@ -105,7 +103,7 @@ const Sidebar = () => {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         // Clear user authentication information
         localStorage.removeItem("NXGJOBHUBLOGINKEYV1");

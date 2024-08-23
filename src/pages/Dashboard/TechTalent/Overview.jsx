@@ -69,6 +69,7 @@ function TechTalentOverview() {
   useEffect(() => {
     dispatch(fetchLoggedInUser());
     dispatch(fetchNearJob(`/api/job-postings/recommend-nearby-jobs`));
+    location.reload();
   }, []);
 
   //getting the filtered job type from the redux store

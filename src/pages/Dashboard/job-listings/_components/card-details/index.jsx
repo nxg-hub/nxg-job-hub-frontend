@@ -47,9 +47,9 @@ const CardDetails = ({ job, onClose }) => {
               </div>
             </div>
           </div>
-          <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
+          {/* <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
             <SaveBtn />
-          </div>
+          </div> */}
         </div>
 
         <div className="flex gap-y-1 flex-col">
@@ -113,9 +113,14 @@ const CardDetails = ({ job, onClose }) => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center py-2 items-center">
+      <div className="flex justify-center gap-2 py-2 items-center">
         <button className="w-1/2 py-2  bg-[#2596BE] text-white" onClick={apply}>
           Apply now
+        </button>
+        <button
+          className="w-1/2 py-2  bg-[#2596BE] text-white"
+          onClick={onClose}>
+          Close
         </button>
       </div>
     </div>
