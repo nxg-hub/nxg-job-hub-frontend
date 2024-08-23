@@ -490,7 +490,7 @@ const Sidebar = ({ profilePic, ...props }) => {
             </div>
             <p>My Profile</p>
           </NavLink>
-          <NavLink end to="contract" className={`${s.dashboardItem} `}>
+          <NavLink end to="terms" className={`${s.dashboardItem} `}>
             <div>
               <Contract />
             </div>
