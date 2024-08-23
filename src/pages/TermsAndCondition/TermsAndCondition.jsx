@@ -142,7 +142,7 @@ const TermsAndCondition = () => {
                 <h2>Contact Information</h2>
                 <p>
                     For any questions or concerns regarding these Terms, please contact us at{' '}
-                    <a href="https://nxgjobhub.com/contact" target="_blank" rel="noopener noreferrer">
+                    <a href="https://nxgjobhub.com/contact" target="_blank" rel="noopener noreferrer" className={styles.highlightLink}>
                         https://nxgjobhub.com/contact
                     </a>
                 </p>

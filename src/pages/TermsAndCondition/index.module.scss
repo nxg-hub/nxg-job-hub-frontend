@@ -27,6 +27,15 @@ $black-color: #000000;
       line-height: 1.6;
     }
 
+    .highlightLink {
+      color: #006A90;
+      text-decoration: none;
+    }
+
+    .highlightLink:hover {
+      text-decoration: underline;
+    }
+
     &:last-child {
       margin-bottom: 0;
       border-bottom: none;  // Remove border from the last section
