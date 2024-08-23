@@ -7,12 +7,15 @@ import { API_HOST_URL } from "../../../utils/api/API_HOST.js";
 import ProfileSearch from "../TechTalent/ProfileSearch.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import spinner from "../../../static/icons/spinner.svg";
-import { resetJobDisplay } from "../../../redux/NearbyJobSlice.js";
+import { resetJobDisplay } from "../../../redux/SearchJobSlice.js";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice.js";
 import {
+  closeErrorModaljobListing,
   closeModaljobListing,
+  setMultiApplyErrFalse,
   setNoticeFalsejobListing,
 } from "../../../redux/JobListingApplicationSlice.js";
+import AppErrorMessage from "../TechTalent/RecommendationCard/AppErrorMessage.jsx";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -24,10 +27,10 @@ const JobListings = () => {
   const dispatch = useDispatch();
   //getting nearby jobs and loggedInUser from the redux store
   const showSearchedJobs = useSelector(
-    (state) => state.NearbyJobSlice.showJobListing
+    (state) => state.SearchJobSlice.showJobListing
   );
-  const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
-  const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
+  const searchedJob = useSelector((state) => state.SearchJobSlice.searchedJob);
+  const searchJobLoader = useSelector((state) => state.SearchJobSlice.loading);
   //application states from redux store
   const success = useSelector(
     (state) => state.JobListingApplicationSlice.successJobListing
@@ -36,14 +39,22 @@ const JobListings = () => {
     (state) => state.JobListingApplicationSlice.jobListingLoader
   );
   const applyError = useSelector(
-    (state) => state.JobListingApplicationSlice.error
+    (state) => state.JobListingApplicationSlice.jobListingerror
   );
+  const multipleApplication = useSelector(
+    (state) => state.JobListingApplicationSlice.multiApplyErr
+  );
+  console.log(multipleApplication);
+  const multiError = useSelector(
+    (state) => state.JobListingApplicationSlice.multipleJobListingApp
+  );
+  console.log(multiError);
   const notice = useSelector(
     (state) => state.JobListingApplicationSlice.notice
   );
   //searched term to fitered
   const searchedJobTitle = useSelector(
-    (state) => state.NearbyJobSlice.jobTitle
+    (state) => state.SearchJobSlice.jobTitle
   );
   const fetchData = async () => {
     setLoading(true);
@@ -74,12 +85,15 @@ const JobListings = () => {
   const close = () => {
     dispatch(closeModaljobListing());
   };
+  const closeErr = () => {
+    dispatch(closeErrorModaljobListing());
+  };
 
   const handleClose = () => {
     setShowDetails(false);
     // setSuccessfull(true);
   };
-  console.log(nearByJobs);
+  // console.log(nearByJobs);
   //storing the job url to be passed as props to the search component
   const allJobsUrl = `/api/job-postings/all`;
   //current page to be passed as prop to the search component
@@ -99,7 +113,7 @@ const JobListings = () => {
           />
         )}
         {showDetails && (
-          <div className="fixed lg:absolute z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
+          <div className="fixed lg:absolute m-auto left-[15%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
             <CardDetails
               job={jobs.find((job) => job.jobId === selectedCardId)}
               onClose={handleClose}
@@ -131,7 +145,7 @@ const JobListings = () => {
             </div>
           )
         )}
-        {nearJobLoader ? (
+        {searchJobLoader ? (
           <img
             className="w-[30%] absolute left-[35%]"
             src={spinner}
@@ -140,7 +154,7 @@ const JobListings = () => {
         ) : (
           showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-              {nearByJobs
+              {searchedJob
                 ?.filter((job) => {
                   return job.job_title === searchedJobTitle;
                 })
@@ -158,23 +172,67 @@ const JobListings = () => {
         {success && (
           <>
             <Successfull onClose={close} />
-            <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+            <div
+              onClick={close}
+              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+            />
           </>
         )}
         {notice && (
           <>
             <div className="absolute top-[100px] md:text-xl right-[20%] w-[70%] px-3 rounded-md md:w-[50%] m-auto bg-blue-200 z-30 h-[130px] md:h-[100px] py-5 text-center">
               <h2 className="font-bold">
-                User is not Verified, Please Complete your Profile and Try Again
+                User is not Verified, Please Complete your Profile and Try
+                Again.<br></br>
+                If you have completed profile, please wait while we verify you.
               </h2>
               <span
                 onClick={closeNoticeModal}
-                className="cursor-pointer font-bold relative bottom-[90px] left-[100px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600"
-              >
+                className="cursor-pointer font-bold relative bottom-[90px] left-[100px] md:left-[50%] md:bottom-[75px] lg:left-[45%] lg:bottom-[50px] text-red-600">
                 x
               </span>
             </div>
             <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+          </>
+        )}
+        {applyError && !multipleApplication && (
+          <>
+            <AppErrorMessage onClose={closeErr} />
+            <div
+              onClick={() => {
+                closeErr;
+              }}
+              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+            />
+          </>
+        )}
+        {!applyloader && multipleApplication && (
+          <>
+            <div
+              className={` bg-white z-30 absolute top-[300px] left-[10%] md:left-[20%] w-[80%] md:w-[60%] m-auto  rounded-[24px] text-base font-medium px-10 py-5`}>
+              <div className="flex items-center gap-y-3 text-center justify-center flex-col">
+                <div className="flex items-center gap-x-1">
+                  <span className="text-xl">
+                    You have already applied to this job. Multiple applications
+                    are not allowed.
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    dispatch(setMultiApplyErrFalse());
+                  }}
+                  className="w-1/2 py-2  bg-[#2596BE] text-white">
+                  Close
+                </button>
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setMultipleApplication(false);
+              }}
+              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+            />
           </>
         )}
       </div>

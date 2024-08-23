@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import s from "./index.module.scss";
 import {
   Applicants,
@@ -19,15 +19,16 @@ import {
   Settings,
   Terms,
 } from "./SidebarIcons";
-import {PiCaretDown, PiSubtitlesBold} from "react-icons/pi";
-import {Link, NavLink, useNavigate} from "react-router-dom";
-import {UserContext} from "../..";
-import {Dialog} from "@headlessui/react";
+import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../..";
+import { Dialog } from "@headlessui/react";
 import logo from "../../../../static/images/nxg-logo.png";
 import useFetchNotifications from "../../../../utils/hooks/useFetchNotifications";
 import axios from "axios";
-import {API_HOST_URL} from "../../../../utils/api/API_HOST";
+import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import Notice from "../../../../components/Notice";
+import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
@@ -41,8 +42,6 @@ const Sidebar = ({ profilePic, ...props }) => {
   const notifications = useFetchNotifications();
   const [viewedNotification, setViewedNotification] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(notifications);
-  const [userID, setUserID] = useState([]);
 
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -51,29 +50,10 @@ const Sidebar = ({ profilePic, ...props }) => {
     navigate("/dashboard");
     setIsOpen(false);
   };
-  useEffect(() => {
-    try {
-      fetch(`${API_HOST_URL}/api/v1/auth/get-user`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token.authKey,
-        },
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          // console.log(data);
-          setUserID(data.id);
 
-          return data;
-        });
-    } catch (err) {
-      console.log("error:", err);
-    }
-  }, []);
-
+  const { data: loggedInUser } = useApiRequest("/api/employers/get-employer");
+  const userID = loggedInUser.employerID;
+  console.log(userID);
   const logOutUser = async () => {
     try {
       const response = await fetch(
@@ -86,7 +66,7 @@ const Sidebar = ({ profilePic, ...props }) => {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
         navigate("/login");
@@ -218,28 +198,28 @@ const Sidebar = ({ profilePic, ...props }) => {
     try {
       setMessage({
         type: "info",
-        content: "Updating profile picture...",
+        content: "Updating company logo...",
       });
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
       // formData.append("upload_preset", "tin4r1lt");
       const { authKey } =
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+        JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+        JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"));
       const res = await axios.post(
-          "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              authorization: authKey,
-            },
-          }
+        "https://nxg-job-hub-8758c68a4346.herokuapp.com/api/v1/auth/upload-photo",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: authKey,
+          },
+        }
       );
       setProfilePicture(res.data.secure_url);
       setMessage({
         type: "info",
-        content: "Profile picture updated.",
+        content: "Company logo updated.",
       });
       // setTimeout(() => setMessage(null), 5000);
       // const response = await axios.get(
@@ -401,18 +381,17 @@ const Sidebar = ({ profilePic, ...props }) => {
           </NavLink>
 
           <NavLink
-              onClick={() => {
-                setViewedNotification(true);
-              }}
-              end
-              data-count={viewedNotification ? 0 : notifications.length} // Update data-count based on viewedNotification
-              to="notifications"
-              className={
-                notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
-                    ? `${s.dashboardItem} ${s.Bell}`
-                    : `${s.dashboardItem}`
-              }
-          >
+            onClick={() => {
+              setViewedNotification(true);
+            }}
+            end
+            data-count={viewedNotification ? 0 : notifications.length} // Update data-count based on viewedNotification
+            to="notifications"
+            className={
+              notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
+                ? `${s.dashboardItem} ${s.Bell}`
+                : `${s.dashboardItem}`
+            }>
             <div>
               <Notification />
             </div>

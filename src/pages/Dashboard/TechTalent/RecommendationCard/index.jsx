@@ -14,8 +14,8 @@ const RecommendationCard = ({ recommendedJobs }) => {
     `/api/employers/${recommendedJobs.jobID}/applicants/count`
   );
   return (
-    <div className={`${s.RecommendationCardWrapper} !relative`}>
-      <div className={`${s.CompanyDetails} relative`}>
+    <div className={`${s.RecommendationCardWrapper} `}>
+      <div className={`${s.CompanyDetails} `}>
         <img src={recommendedJobs.company_logo} alt="logo" />
         <div className="">
           <span>

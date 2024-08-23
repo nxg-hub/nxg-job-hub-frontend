@@ -57,7 +57,7 @@ const saveBtn = ({ jobID }) => {
       </p>
       {saved && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[20px] md:text-xl right-[5%] w-[50%] px-3 rounded-md  m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">This job is already saved!</h2>
             <span
               onClick={() => {
@@ -77,7 +77,7 @@ const saveBtn = ({ jobID }) => {
       )}
       {error && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[20px] md:text-xl right-[5%] w-[50%] px-3 rounded-md  m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">
               Something went wrong!!, Check internet connection.
             </h2>
@@ -99,7 +99,7 @@ const saveBtn = ({ jobID }) => {
       )}
       {success && (
         <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[50%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
+          <div className=" absolute top-[20px] md:text-xl right-[5%] w-[50%] px-3 rounded-md m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
             <h2 className="font-bold ">Job Saved Successfully.</h2>
             <span
               onClick={() => {

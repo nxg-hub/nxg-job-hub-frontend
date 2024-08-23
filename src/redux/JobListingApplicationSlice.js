@@ -3,17 +3,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_HOST_URL } from "../utils/api/API_HOST";
 import axios from "axios";
 const initialState = {
-  error: false,
+  jobListingerror: false,
   successJobListing: false,
   notice: false,
   jobListingLoader: false,
+  multipleJobListingApp: "",
+  multiApplyErr: false,
 };
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 export const applyInJobListing = createAsyncThunk(
   "apply/applyJob",
-  async (id) => {
+  async (id, { rejectWithValue }) => {
     try {
       const res = await axios.post(
         `${API_HOST_URL}/api/job-postings/${id.jobPostingId}/apply`,
@@ -28,7 +30,7 @@ export const applyInJobListing = createAsyncThunk(
       );
     } catch (error) {
       console.log(error);
-      setError(true);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -41,7 +43,7 @@ const jobListingApplicationSlice = createSlice({
       state.successJobListing = false;
     },
     closeErrorModaljobListing: (state) => {
-      state.error = false;
+      state.jobListingerror = false;
     },
     setNoticeTruejobListing: (state) => {
       state.notice = true;
@@ -49,21 +51,36 @@ const jobListingApplicationSlice = createSlice({
     setNoticeFalsejobListing: (state) => {
       state.notice = false;
     },
+    setMultiApplyErrTrue: (state) => {
+      state.multipleJobListingApp ===
+      "You have already applied to this job. Multiple applications are not allowed."
+        ? (state.multiApplyErr = true)
+        : (state.jobListingerror = false);
+      // ? (state.jobListingerror = true)
+      // : null;
+    },
+    setMultiApplyErrFalse: (state) => {
+      state.multiApplyErr = false;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(applyInJobListing.pending, (state) => {
         state.jobListingLoader = true;
-        state.error = false;
+        state.jobListingerror = false;
       })
       .addCase(applyInJobListing.fulfilled, (state, action) => {
         state.jobListingLoader = false;
-        state.error = false;
+        state.jobListingerror = false;
         state.successJobListing = true;
       })
       .addCase(applyInJobListing.rejected, (state, action) => {
         state.jobListingLoader = false;
-        state.error = true;
+        state.multipleJobListingApp = action.payload;
+        state.multipleJobListingApp !==
+        "You have already applied to this job. Multiple applications are not allowed."
+          ? (state.jobListingerror = true)
+          : null;
         state.successJobListing = false;
       });
   },
@@ -73,6 +90,8 @@ export const {
   closeErrorModaljobListing,
   setNoticeTruejobListing,
   setNoticeFalsejobListing,
+  setMultiApplyErrTrue,
+  setMultiApplyErrFalse,
 } = jobListingApplicationSlice.actions;
 
 export default jobListingApplicationSlice.reducer;

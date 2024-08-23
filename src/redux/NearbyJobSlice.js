@@ -45,16 +45,16 @@ const nearJobSlice = createSlice({
     closeOptions: (state) => {
       state.showOptions = false;
     },
-    getCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
-    },
-    resetJobDisplay: (state) => {
-      // state.displayJob = false;
-      state.showJobListing = false;
-    },
-    getJobTitle: (state, action) => {
-      state.jobTitle = action.payload;
-    },
+    // getCurrentPage: (state, action) => {
+    //   state.currentPage = action.payload;
+    // },
+    // resetJobDisplay: (state) => {
+    //   // state.displayJob = false;
+    //   state.showJobListing = false;
+    // },
+    // getJobTitle: (state, action) => {
+    //   state.jobTitle = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -66,13 +66,13 @@ const nearJobSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.nearByJobs = action.payload;
-        state.currentPage === "dashboard"
-          ? (state.displayJob = true)
-          : state.currentPage === "jobListing"
-          ? (state.showJobListing = true)
-          : state.currentPage === "saved"
-          ? (state.showSavedJob = true)
-          : null;
+        // state.currentPage === "dashboard"
+        //   ? (state.displayJob = true)
+        //   : state.currentPage === "jobListing"
+        //   ? (state.showJobListing = true)
+        //   : state.currentPage === "saved"
+        //   ? (state.showSavedJob = true)
+        //   : null;
       })
       .addCase(fetchNearJob.rejected, (state, action) => {
         state.loading = false;
@@ -84,9 +84,9 @@ const nearJobSlice = createSlice({
 export const {
   showOptions,
   closeOptions,
-  getCurrentPage,
-  resetJobDisplay,
-  getJobTitle,
+  // getCurrentPage,
+  // resetJobDisplay,
+  // getJobTitle,
 } = nearJobSlice.actions;
 
 export default nearJobSlice.reducer;

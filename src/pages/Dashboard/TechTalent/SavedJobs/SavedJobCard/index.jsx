@@ -14,6 +14,7 @@ const SavedJobCard = ({ job, onClick }) => {
   const [jobPostingId] = useState({
     jobPostingId: job?.jobID,
   });
+  console.log(job);
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
@@ -30,9 +31,9 @@ const SavedJobCard = ({ job, onClick }) => {
       ? dispatch(applyForJob(jobPostingId))
       : dispatch(setNoticeTrue());
   };
-  const { data: applicantCount } = useApiRequest(
-    `/api/employers/${job.jobID}/applicants/count`
-  );
+  // const { data: applicantCount } = useApiRequest(
+  //   `/api/employers/${job.jobID}/applicants/count`
+  // );
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in">
       <div className="flex flex-col gap-y-2">
@@ -84,7 +85,7 @@ const SavedJobCard = ({ job, onClick }) => {
               <img src="/dashboard/view.png" alt="views" />
               <span>{job?.views} views</span>
               <span>
-                Applicants:<span className="font-bold">{applicantCount}</span>
+                Applicants:<span className="font-bold">{}</span>
               </span>
             </div>
             <div className="flex items-center gap-2 group" onClick={onClick}>
