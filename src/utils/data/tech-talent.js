@@ -42,6 +42,8 @@ const jobs = [
   "Scrum Master",
   "Data Scientist",
   "Data Analyst",
+  "Data Entry",
+  "Virtual Assistant",
   "Graphic Design",
   "Frontend Developer",
   "Backend Developer",
