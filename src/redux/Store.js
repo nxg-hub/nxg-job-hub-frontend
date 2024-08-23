@@ -4,6 +4,7 @@ import LoggedInUserSlice from "./LoggedInUserSlice";
 import TalentApplicationSlice from "./TalentApplicationSlice";
 import FilterSlice from "./FilterSlice";
 import JobListingApplicationSlice from "./JobListingApplicationSlice";
+import SearchJobSlice from "./SearchJobSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     TalentApplicationSlice,
     FilterSlice,
     JobListingApplicationSlice,
+    SearchJobSlice,
   },
 });

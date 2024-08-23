@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getTalentID } from "../../../../../../redux/FilterSlice";
 
 const AllApplicantForAJob = (app) => {
   const applicantDetails = app.app.applicant;
   const applicantTalent = app.app.techTalent;
+  const id = applicantDetails.id;
+  const dispatch = useDispatch();
+  const getTalentId = () => {
+    dispatch(getTalentID(id));
+  };
 
   return (
     <ul className="shadow-sm shadow-[#00000040] w-[90%] m-auto pl-5 py-3 flex items-center">
@@ -22,7 +29,9 @@ const AllApplicantForAJob = (app) => {
         </li>
       </div>
       <div className="bg-[#2596BE] text-white txt-sm px-2 md:px-3 py-2 mr-5 md:mr-0  h-[40px] rounded-lg">
-        <Link to={`../review-appliedtalent/${applicantDetails?.id}`}>
+        <Link
+          onClick={getTalentId}
+          to={`../review-appliedtalent/${applicantDetails?.id}`}>
           <button>Review</button>
         </Link>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { closeErrorModal } from "../../../../redux/TalentApplicationSlice";
 
-const AppErrorMessage = () => {
+const AppErrorMessage = ({ onClose }) => {
   const dispatch = useDispatch();
   const close = () => {
     dispatch(closeErrorModal());
@@ -16,10 +16,15 @@ const AppErrorMessage = () => {
         </div>
         <span>
           Make sure you have updated your skills on your profile page,<br></br>
-          Check internet connection and try again
+          Check internet connection and try again.
+          <br />
+          {/* If you have done the above task, please kindly check back while we
+          verify you. */}
           {/* <span className="text-lg font-semibold">“My Applications”</span> */}
         </span>
-        <button onClick={close} className="w-1/2 py-2  bg-[#2596BE] text-white">
+        <button
+          onClick={onClose}
+          className="w-1/2 py-2  bg-[#2596BE] text-white">
           Close
         </button>
       </div>

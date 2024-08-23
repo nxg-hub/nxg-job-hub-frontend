@@ -26,9 +26,13 @@ export const applyForJob = createAsyncThunk("apply/applyJob", async (id) => {
         },
       }
     );
+    res.data =
+      "You have already applied to this job. Multiple applications are not allowed."
+        ? res.data
+        : null;
   } catch (error) {
     console.log(error);
-    setError(true);
+    return error;
   }
 });
 

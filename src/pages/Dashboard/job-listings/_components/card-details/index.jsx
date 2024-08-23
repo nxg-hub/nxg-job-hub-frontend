@@ -3,6 +3,7 @@ import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyInJobListing,
+  setMultiApplyErrTrue,
   setNoticeTruejobListing,
 } from "../../../../../redux/JobListingApplicationSlice";
 import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
@@ -21,15 +22,16 @@ const CardDetails = ({ job, onClose }) => {
   const apply = () => {
     onClose();
     isVerified
-      ? dispatch(applyInJobListing(jobPostingId))
+      ? dispatch(applyInJobListing(jobPostingId)) &&
+        dispatch(setMultiApplyErrTrue())
       : dispatch(setNoticeTruejobListing());
   };
   const { data: applicantCount } = useApiRequest(
     `/api/employers/${job.jobID}/applicants/count`
   );
   return (
-    <div className=" bg-white px-4 lg:px-10 py-5">
-      <div className="flex w-full gap-y-4 flex-col">
+    <div className=" bg-white px-4 w-[80%] lg:w-full  lg:px-10 py-5">
+      <div className="flex w-full m-auto gap-y-4 flex-col">
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
             <img src="/dashboard/figma-logo.png" alt="logo" />

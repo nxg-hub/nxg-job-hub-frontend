@@ -15,7 +15,7 @@ const AppMessage = ({ jobAppSuccess }) => {
           <span className="text-xl">Job application was successful</span>
         </div>
         <span>
-          You can track your application status in the{" "}
+          You can track your application status in the
           <span className="text-lg font-semibold">“My Applications”</span>
         </span>
         <span>Check your email for more details about your application</span>

@@ -41,7 +41,6 @@ const Sidebar = ({ profilePic, ...props }) => {
   const notifications = useFetchNotifications();
   const [viewedNotification, setViewedNotification] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(notifications);
   const [userID, setUserID] = useState([]);
 
   const token =
@@ -262,7 +261,7 @@ const Sidebar = ({ profilePic, ...props }) => {
     try {
       setMessage({
         type: "info",
-        content: "Updating profile picture...",
+        content: "Updating company logo...",
       });
 
       const formData = new FormData();
@@ -283,7 +282,7 @@ const Sidebar = ({ profilePic, ...props }) => {
 
       setMessage({
         type: "info",
-        content: "Profile picture updated.",
+        content: "Company logo updated.",
       });
       setTimeout(() => setMessage(null), 5000);
     } catch (err) {
@@ -346,18 +345,17 @@ const Sidebar = ({ profilePic, ...props }) => {
           </NavLink>
 
           <NavLink
-              onClick={() => {
-                setViewedNotification(true);
-              }}
-              end
-              data-count={viewedNotification ? 0 : notifications.length} // Update data-count based on viewedNotification
-              to="notifications"
-              className={
-                notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
-                    ? `${s.dashboardItem} ${s.Bell}`
-                    : `${s.dashboardItem}`
-              }
-          >
+            onClick={() => {
+              setViewedNotification(true);
+            }}
+            end
+            data-count={viewedNotification ? 0 : notifications.length} // Update data-count based on viewedNotification
+            to="notifications"
+            className={
+              notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
+                ? `${s.dashboardItem} ${s.Bell}`
+                : `${s.dashboardItem}`
+            }>
             <div>
               <Notification />
             </div>
