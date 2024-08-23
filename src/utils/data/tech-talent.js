@@ -82,6 +82,7 @@ const talentSkills = [
   "JavaScript",
   "React",
   "Angular",
+  "Vue.js",
   "Flutter",
   "Node.js",
   "Python",
