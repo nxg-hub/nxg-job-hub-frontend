@@ -1,12 +1,17 @@
-.heading{
-    $primary-color : #006A90;;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 48.41px;
+$primary-color: #006A90;
+$black-color: #000000;
 
+.heading {
+  $primary-color;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48.41px;
+}
   .section {
-    margin-bottom: 2rem;
-
+    margin-bottom: 3rem; // Increased spacing between sections
+    padding: 1rem 0; // Added padding for extra space inside sections
+    border-bottom: 1px solid #ccc; // Optional: adds a bottom border for better visual separation
+  }
     h2 {
       font-size: 1.5rem;
       margin-bottom: 1rem;
@@ -24,7 +29,5 @@
 
     &:last-child {
       margin-bottom: 0;
+      border-bottom: none;  // Remove border from the last section
     }
-  }
-  
-  }
