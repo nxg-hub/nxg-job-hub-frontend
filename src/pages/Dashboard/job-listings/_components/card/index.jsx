@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
 import { data } from "autoprefixer";
-import JobListings from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyInJobListing,
+  setMultiApplyErrTrue,
   setNoticeTruejobListing,
 } from "../../../../../redux/JobListingApplicationSlice";
 import SaveJobListBtn from "./SaveJobListBtn";
 import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
+import ApplyBtn from "../../../TechTalent/RecommendationCard/ApplyBtn";
 
 const JobCard = ({ job, handleShowDetails }) => {
   const [jobPostingId] = useState({
@@ -28,7 +29,8 @@ const JobCard = ({ job, handleShowDetails }) => {
 
   const apply = () => {
     isVerified
-      ? dispatch(applyInJobListing(jobPostingId))
+      ? dispatch(applyInJobListing(jobPostingId)) &&
+        dispatch(setMultiApplyErrTrue())
       : dispatch(setNoticeTruejobListing());
   };
   const { data: applicantCount } = useApiRequest(
@@ -53,8 +55,6 @@ const JobCard = ({ job, handleShowDetails }) => {
             </div>
           </div>
           <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
-            <SaveBtn jobID={JobListings.jobId} />
-
             <SaveJobListBtn jobID={job.jobID} />
           </div>
         </div>
@@ -79,7 +79,9 @@ const JobCard = ({ job, handleShowDetails }) => {
         <div className="flex flex-col">
           <div className="flex items-center gap-x-2">
             <img src="/dashboard/pay.png" alt="pay" />
-            <span className="font-medium md:text-sm">{job.salary}</span>
+            <span className="font-medium md:text-sm">
+              {formatter.format(job.salary)}
+            </span>
           </div>
           <div className="flex justify-between">
             <div className="flex gap-x-3 items-center font-normal text-xs">
@@ -93,8 +95,7 @@ const JobCard = ({ job, handleShowDetails }) => {
             <button
               className="flex items-center gap-2 group"
               // onClick={onClick}
-              onClick={() => handleShowDetails(job)}
-            >
+              onClick={() => handleShowDetails(job)}>
               <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">
                 See more
               </Link>
@@ -109,10 +110,10 @@ const JobCard = ({ job, handleShowDetails }) => {
 
         <button
           className="bg-[#2596BE] my-4 py-2 rounded-[8px] hover:scale-95 transition-all ease-in text-white"
-          onClick={apply}
-        >
+          onClick={apply}>
           Apply Now
         </button>
+        {/* <ApplyBtn jobID={job.jobID} /> */}
       </div>
     </div>
   );

@@ -9,14 +9,23 @@ import spinner from "../../../../../../static/icons/spinner.svg";
 
 const FullReview = () => {
   const jobID = useSelector((state) => state.FilterSlice.jobID);
+  const talentID = useSelector((state) => state.FilterSlice.talentID);
 
   const {
     data: jobApplicant,
     loading,
     error,
   } = useApiRequest(
-    `/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`
+    `/api/employers/job-postings/${jobID}/get-all-applicants-for-a-job`
   );
+
+  const reviewedApplicant = jobApplicant.find((app) => {
+    return app.applicant.id === talentID;
+  });
+  console.log(reviewedApplicant);
+  // console.log(jobApplicant);
+  console.log(jobID);
+  console.log(talentID);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -28,70 +37,11 @@ const FullReview = () => {
   const [rejectSuccess, setRejectSuccess] = useState(false);
   const [rejectError, setRejectError] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
-  // const [file, setFile] = useState([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     await fetch(
-  //       `${API_HOST_URL}/api/v1/admin/job-postings/${jobID}/get-all-applicants-for-a-job`,
-  //       {
-  //         method: "GET",
-  //         responseType: "arrayBuffer",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           // Accept: "application/pdf",
-  //           Authorization: token.authKey,
-  //         },
-  //       }
-  //     )
-  //       .then((response) => {
-  //         //Create a Blob from the PDF Stream
-  //         //   console.log(response);
-  //         //   const file = new Blob([response.data], {
-  //         //     type: "application/pdf",
-  //         //   });
 
-  //         //   console.log(file);
-  //         //   //Build a URL from the file
-  //         //   const fileURL = URL.createObjectURL(file);
-  //         //   setFile(fileURL);
-  //         //Open the URL on new Window
-  //         //   window.open(fileURL);
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         setJobApplicant(data);
-  //         setLoading(false);
-  //         const file = new Blob([data[0].techTalent.resume], {
-  //           type: "application/pdf",
-  //         });
+  const appDetails = reviewedApplicant?.techTalent;
 
-  //         //Build a URL from the file
-  //         const fileURL = window.URL.createObjectURL(file);
+  const appDetails2 = reviewedApplicant?.applicant;
 
-  //         setFile(fileURL);
-  //         setLoading(false);
-  //       })
-
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setError(true);
-  //       });
-  //   };
-  //   fetchData();
-  // }, []);
-  const appDetails = jobApplicant[0]?.techTalent;
-  const appDetails2 = jobApplicant[0]?.applicant;
-
-  const onButtonClick = () => {
-    // window.open(file);
-    const link = document.createElement("a");
-    link.href = file;
-    link.download = "document.pdf"; // specify the filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
   const navigate = useNavigate();
   const applyID = jobApplicant[0]?.applicationId;
   const handleAcceptApplication = async () => {
@@ -191,7 +141,7 @@ const FullReview = () => {
         <>
           <div className="mt-8 h-[150px] w-[250px] m-auto">
             <img
-              className="rounded-full m-auto w-[100px]  md:w-[150px]"
+              className="rounded-full m-auto w-[100px] h-[130px]  md:w-[150px]"
               src={appDetails?.profilePicture}
               alt="pic"
             />
@@ -221,34 +171,47 @@ const FullReview = () => {
             </h2>
             <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
               <span className="font-bold font-mono">LinkedIn Link:</span>
-              <a
-                className="text-blue-600"
-                href={appDetails?.linkedInUrl}
-                target="_blank">
-                View LinkedIn
-              </a>
+              {appDetails?.linkedInUrl ? (
+                <a
+                  className="text-blue-600"
+                  href={appDetails?.linkedInUrl}
+                  target="_blank">
+                  View LinkedIn
+                </a>
+              ) : (
+                <span>No link provided</span>
+              )}
             </h2>
             <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
               <span className="font-bold font-mono">Cover Letter:</span>
-              <a
-                className="text-blue-600"
-                href={appDetails?.coverletter}
-                target="_blank">
-                View
-              </a>
+              {appDetails?.coverletter ? (
+                <a
+                  className="text-blue-600"
+                  href={appDetails?.coverletter}
+                  target="_blank">
+                  View Cover Letter
+                </a>
+              ) : (
+                <span className="capitalize font-bold">
+                  No document provided
+                </span>
+              )}
             </h2>
             <h2 className="md:text-xl py-3 px-4 font-mono md:flex justify-between md:w-[70%] m-auto">
               <span className="font-bold font-mono">Resume:</span>
-              <button target="_blank" onClick={onButtonClick}>
-                Download PDF
-              </button>
-              {/* <Document src={appDetails?.resume} /> */}
-              <a
-                className="text-blue-600"
-                href={appDetails?.resume}
-                target="_blank">
-                resume
-              </a>
+
+              {appDetails?.resume ? (
+                <a
+                  className="text-blue-600"
+                  href={appDetails?.resume}
+                  target="_blank">
+                  View Resume
+                </a>
+              ) : (
+                <span className="capitalize font-bold">
+                  No document provided
+                </span>
+              )}
             </h2>
           </div>
           <div className="mt-5 py-6 space-x-4 m-auto md:w-[60%] text-center">
@@ -277,7 +240,12 @@ const FullReview = () => {
               x
             </span>
           </div>
-          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+          <div
+            onClick={() => {
+              setAcceptSuccess(false);
+            }}
+            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+          />
         </>
       )}
 
@@ -293,7 +261,12 @@ const FullReview = () => {
               x
             </span>
           </div>
-          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+          <div
+            onClick={() => {
+              setRejectSuccess(false);
+            }}
+            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+          />
         </>
       )}
     </div>

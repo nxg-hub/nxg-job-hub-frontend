@@ -8,8 +8,12 @@ import { getJobID } from "../../../../../../redux/FilterSlice";
 
 const ReviewApplicants = () => {
   const { id } = useParams();
-  const { data: job, loading } = useApiRequest(`/api/job-postings/get-${id}`);
-  const { data: jobApplicant, error } = useApiRequest(
+  const { data: job } = useApiRequest(`/api/job-postings/get-${id}`);
+  const {
+    data: jobApplicant,
+    loading,
+    error,
+  } = useApiRequest(
     `/api/v1/admin/job-postings/${id}/get-all-applicants-for-a-job`
   );
 
@@ -17,7 +21,6 @@ const ReviewApplicants = () => {
   useEffect(() => {
     dispatch(getJobID(id));
   }, []);
-  //   console.log(jobApplicant);
 
   return (
     <div className="h-[100vh] overflow-y-scroll pb-10 ">

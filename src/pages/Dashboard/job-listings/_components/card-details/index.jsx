@@ -3,6 +3,7 @@ import SaveBtn from "../../../TechTalent/RecommendationCard/saveBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyInJobListing,
+  setMultiApplyErrTrue,
   setNoticeTruejobListing,
 } from "../../../../../redux/JobListingApplicationSlice";
 import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
@@ -21,15 +22,16 @@ const CardDetails = ({ job, onClose }) => {
   const apply = () => {
     onClose();
     isVerified
-      ? dispatch(applyInJobListing(jobPostingId))
+      ? dispatch(applyInJobListing(jobPostingId)) &&
+        dispatch(setMultiApplyErrTrue())
       : dispatch(setNoticeTruejobListing());
   };
   const { data: applicantCount } = useApiRequest(
     `/api/employers/${job.jobID}/applicants/count`
   );
   return (
-    <div className=" bg-white px-4 lg:px-10 py-5">
-      <div className="flex w-full gap-y-4 flex-col">
+    <div className=" bg-white px-4 w-[80%] lg:w-full  lg:px-10 py-5">
+      <div className="flex w-full m-auto gap-y-4 flex-col">
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
             <img src="/dashboard/figma-logo.png" alt="logo" />
@@ -45,9 +47,9 @@ const CardDetails = ({ job, onClose }) => {
               </div>
             </div>
           </div>
-          <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
+          {/* <div className="flex hover:cursor-pointer items-center gap-x-2 border border-[#2596BE] text-[#2596BE] rounded-[5px] px-4 text-sm">
             <SaveBtn />
-          </div>
+          </div> */}
         </div>
 
         <div className="flex gap-y-1 flex-col">
@@ -111,9 +113,14 @@ const CardDetails = ({ job, onClose }) => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center py-2 items-center">
+      <div className="flex justify-center gap-2 py-2 items-center">
         <button className="w-1/2 py-2  bg-[#2596BE] text-white" onClick={apply}>
           Apply now
+        </button>
+        <button
+          className="w-1/2 py-2  bg-[#2596BE] text-white"
+          onClick={onClose}>
+          Close
         </button>
       </div>
     </div>

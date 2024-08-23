@@ -14,6 +14,7 @@ import { useApiRequest } from "../../../utils/functions/fetchEndPoint";
 import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
 import { resetToDefault } from "../../../redux/FilterSlice";
+import { fetchNearJob } from "../../../redux/NearbyJobSlice";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
@@ -38,12 +39,16 @@ function TechTalentOverview() {
 
   //getting nearby jobs and loggedInUser from the redux store
   const showNearByJobs = useSelector(
-    (state) => state.NearbyJobSlice.displayJob
+    (state) => state.SearchJobSlice.displayJob
   );
   const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
+  const searchedJob = useSelector((state) => state.SearchJobSlice.searchedJob);
+  const searchedJobLoader = useSelector(
+    (state) => state.SearchJobSlice.loading
+  );
   const nearJobLoader = useSelector((state) => state.NearbyJobSlice.loading);
   const searchedJobTitle = useSelector(
-    (state) => state.NearbyJobSlice.jobTitle
+    (state) => state.SearchJobSlice.jobTitle
   );
 
   const loggedInUser = useSelector(
@@ -63,6 +68,7 @@ function TechTalentOverview() {
 
   useEffect(() => {
     dispatch(fetchLoggedInUser());
+    dispatch(fetchNearJob(`/api/job-postings/recommend-nearby-jobs`));
   }, []);
 
   //getting the filtered job type from the redux store
@@ -77,7 +83,7 @@ function TechTalentOverview() {
   //filtering search
 
   useEffect(() => {
-    const filteredJob = nearByJobs?.filter((job) => {
+    const filteredJob = searchedJob?.filter((job) => {
       // job.job_type !== jobType ? setFilterMsg(true) : null;
       return job.job_type === jobType;
     });
@@ -157,10 +163,18 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {nearJobLoader ? (
+          {!showNearByJobs && nearJobLoader ? (
+            <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
+          ) : (
+            !showNearByJobs &&
+            nearByJobs.map((job, i) => {
+              return <RecommendationCard key={i * 5} recommendedJobs={job} />;
+            })
+          )}
+          {searchedJobLoader && showNearByJobs ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
           ) : showNearByJobs && !jobType && searchedJobTitle ? (
-            nearByJobs
+            searchedJob
               ?.filter((job) => {
                 return job.job_title === searchedJobTitle;
               })
@@ -174,14 +188,7 @@ function TechTalentOverview() {
                 );
               })
           ) : showNearByJobs && jobType ? (
-            // nearByJobs
-            //   ?.filter((job) => {
-            //     // job.job_type !== jobType ? setFilterMsg(true) : null;
-
-            //     return job.job_type === jobType;
-            //   })
             filteredJobType.map((jobRecommendation, i) => {
-              // jobRecommendation.company_logo = figma;
               return (
                 <RecommendationCard
                   key={i * 5}
@@ -194,10 +201,11 @@ function TechTalentOverview() {
               <h2>Could not find your search.</h2>
             </div>
           ) : (
-            // <>hey</>
-            <div className="w-[80%] m-auto text-justify font-bold">
-              <h2>Search for Jobs near you.</h2>
-            </div>
+            !nearByJobs && (
+              <div className="w-[80%] m-auto text-justify font-bold">
+                <h2>Search for Jobs near you.</h2>
+              </div>
+            )
           )}
         </div>
       </div>

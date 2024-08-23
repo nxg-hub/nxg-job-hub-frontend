@@ -270,7 +270,7 @@ function MultiStepForm1({ formData = {}, setFormData, onComplete }) {
 
   useEffect(() => {
     const submitForm = () => {
-      if (formData.countryCode && formData.zipCode && formData.residentialAddress && !formDataCompleted) {
+      if (formData.countryCode && formData.state && formData.residentialAddress && !formDataCompleted) {
         setFormDataCompleted(true);
         if (typeof onComplete === 'function') {
           onComplete(formData);
@@ -337,9 +337,9 @@ function MultiStepForm1({ formData = {}, setFormData, onComplete }) {
           <div className="tech-pro-location">
             <Inputs
                 type='text'
-                name="zipCode"
+                name="state"
                 title='Current Location*'
-                value={formData.zipCode || ''}
+                value={formData.state || ''}
                 onChange={handleChange}
                 placeholder="Enter your State"
             />

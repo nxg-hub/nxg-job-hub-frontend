@@ -32,7 +32,7 @@ const SavedJobDetails = ({ details, onClose }) => {
     `/api/employers/${jobData.jobID}/applicants/count`
   );
   return (
-    <div className=" bg-white px-4 lg:px-10 py-5 w-[90%] relative m-auto">
+    <div className=" bg-white px-4 lg:px-10 py-5 w-[75%] md:w-[90%] relative m-auto">
       <div className="flex w-full gap-y-4 flex-col">
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
@@ -124,9 +124,14 @@ const SavedJobDetails = ({ details, onClose }) => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center py-2 items-center">
+      <div className="flex gap-2 justify-center py-2 items-center">
         <button className="w-1/2 py-2  bg-[#2596BE] text-white" onClick={apply}>
           Apply now
+        </button>
+        <button
+          onClick={onClose}
+          className="w-1/2 py-2  bg-[#2596BE] text-white">
+          Close
         </button>
       </div>
     </div>

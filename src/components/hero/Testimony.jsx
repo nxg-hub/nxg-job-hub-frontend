@@ -1,8 +1,8 @@
 import React from 'react'
 import './sponsor.scss'
-import Jona from '../../static/images/John.png'
-import Janet from '../../static/images/Mary.png'
-import Peter from '../../static/images/Peter.png'
+import Jona from '../../static/images/testimony5.jpg'
+import Janet from '../../static/images/testimonyimg2.png'
+import Peter from '../../static/images/testimonyimg1.png'
 import { RiDoubleQuotesR } from 'react-icons/ri'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Autoplay } from 'swiper/modules';
@@ -13,21 +13,21 @@ const Testimony = () => {
     const Testimonies = [
         {
             id:1,
-            name:"Jonathan Miller",
+            name:"Chris Oghenerhwe",
             img: Jona,
-            text: "I love this job hub as they helped me get my first job as a web developer through their timely job alerts and detailed CV. I highly recommend using this platform if you need a  sharp boost in your career"
+            text: "I'm so grateful for NXG Job Hub! Thanks to their timely job alerts and the guidance I received on crafting a detailed CV, I landed my first job as a web developer. If you're looking to give your career a strong start, I highly recommend this platform."
         },
         {
             id:2,
-            name:"Janet Donald",
+            name:"Janet Davids",
             img: Janet,
-            text: "I love this job hub as they helped me get my first job as a web developer through their timely job alerts and detailed CV. I highly recommend using this platform if you need a  sharp boost in your career"
+            text: "NXG Job Hub made all the difference in my job search. Their prompt job alerts and support in creating a polished CV helped me secure my first web developer role. This platform is a must if you're serious about advancing your career."
         },
         {
             id:3,
-            name:"Peter Parker",
+            name:"Peter Williams",
             img: Peter,
-            text: "I love this job hub as they helped me get my first job as a web developer through their timely job alerts and detailed CV. I highly recommend using this platform if you need a  sharp boost in your career"
+            text: "Getting my first job as a web developer was a breeze with NXG Job Hub. Their job alerts were always on point, and their advice on my CV was spot on. I highly recommend this platform to anyone looking for a career boost!"
         },
     ]
   return (

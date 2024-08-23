@@ -16,7 +16,7 @@ import { fetchLoggedInUser } from "../../../../redux/LoggedInUserSlice";
 import AppErrorMessage from "../RecommendationCard/AppErrorMessage";
 import ProfileSearch from "../ProfileSearch";
 import { resetToDefault } from "../../../../redux/FilterSlice";
-import { getCurrentPage } from "../../../../redux/NearbyJobSlice";
+import { getCurrentPage } from "../../../../redux/SearchJobSlice";
 
 const SavedJobs = () => {
   //fetching saved job
@@ -79,7 +79,6 @@ const SavedJobs = () => {
   const searchedJobTitle = useSelector(
     (state) => state.NearbyJobSlice.jobTitle
   );
-
   return (
     <div className="dash-profile-main-side">
       <div className="dash-profile-search-section">
@@ -158,7 +157,7 @@ const SavedJobs = () => {
         )} */}
 
         {showDetails && (
-          <div className="fixed lg:absolute z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
+          <div className="fixed lg:absolute left-[8%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
             <SavedJobDetails
               details={saved.find((job) => job.id === selectedCardId)}
               onClose={handleClose}
@@ -198,15 +197,18 @@ const SavedJobs = () => {
         {success && (
           <>
             <Successfull onClose={close} />
-            <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
+            <div
+              onClick={close}
+              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+            />
           </>
         )}
-        {applyError && (
+        {/* {applyError && (
           <>
             <AppErrorMessage />
             <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
