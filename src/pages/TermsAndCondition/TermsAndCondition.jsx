@@ -29,17 +29,17 @@ const TermsAndCondition = () => {
                 <p>
                     Users must be at least 18 years old to create an account and use our services. By using the platform, you represent and warrant that you have the right, authority, and capacity to enter into these Terms.
                 </p>
-
+                <br/>
                 <h3>Account Registration</h3>
                 <p>
                     Users must create an account to access certain features of the platform. Users agree to provide accurate and complete information during the registration process and to update such information as necessary.
                 </p>
-
+<br/>
                 <h3>User Responsibilities</h3>
                 <p>
                     Users are responsible for maintaining the confidentiality of their account credentials. Users agree not to engage in any activity that interferes with or disrupts the platform.
                 </p>
-
+<br/>
                 <h3>Prohibited Conduct</h3>
                 <p>
                     Users may not use the platform for any unlawful purpose or in violation of any applicable laws. Users are prohibited from posting or transmitting any content that is defamatory, obscene, abusive, or otherwise objectionable.
@@ -52,7 +52,7 @@ const TermsAndCondition = () => {
                 <p>
                     Our platform utilizes advanced algorithms to match tech talent with relevant job opportunities. Users acknowledge that job matching is based on the information provided and that NXG Job Hub does not guarantee job placement or hiring.
                 </p>
-
+<br/>
                 <h3>Streamlined Communication</h3>
                 <p>
                     Users can communicate directly with other users through the platform’s communication tools. Users agree to use communication features responsibly and in accordance with these Terms.
@@ -65,7 +65,7 @@ const TermsAndCondition = () => {
                 <p>
                     Users retain ownership of any content they post on the platform. By posting content, users grant NXG Job Hub a non-exclusive, royalty-free, worldwide license to use, reproduce, and display such content in connection with the platform.
                 </p>
-
+<br/>
                 <h3>Intellectual Property Rights</h3>
                 <p>
                     All content, trademarks, and logos on the platform are the property of NXG Job Hub or its licensors and are protected by intellectual property laws. Users may not use any content from the platform without express permission from NXG Job Hub.
