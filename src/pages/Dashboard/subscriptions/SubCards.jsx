@@ -234,9 +234,8 @@ const SubCards = ({ country, verifyCustomer }) => {
                       ? "recommended-btn"
                       : ""
                   }
-                  onClick={() => {
-                    handlePayment(subscription);
-                  }}>
+                  // onClick={() => {handlePayment(subscription);}}>
+                  onClick={() => handlePayment(subscription)}>
                   Subscribe
                 </button>
               </div>
