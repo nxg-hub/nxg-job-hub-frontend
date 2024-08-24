@@ -376,7 +376,16 @@ const TechSubCards = ({ countryCode, verifyTransaction }) => {
               </div>
               {/* Convert price to NGN if user is Nigerian */}
               {/* <p className='sub-price'>{countryCode === "NG" ? `${convertToNGN(subscription.subPrice)}₦` : subscription.subPrice}</p> */}
-              <p className="sub-price">
+              <p className="sub-price" style={{ float: "right",
+                background: "rgba(102, 182, 209, 1)",
+                color: "#fff",
+                width: "160px",
+                border: "none",
+                borderRadius: "21px",
+                padding: "8px",
+                fontSize: "18px",
+                fontWeight: "500",
+                margin: ".4rem",}}>
                 {countryCode === "NG"
                   ? subscription.subPrice
                   : convertToDollar(subscription.subPrice)}
