@@ -51,31 +51,70 @@
                 background: #ffffff;
                 border: 1px solid #006A90;
                 border-radius: 20px;
+
                 .sub-cards-title-container {
-                    text-align: flex-start;
+                    display: flex; // Apply flexbox layout to the container
+                    flex-direction: column; // Align items vertically
                     border-bottom: 1px solid rgba(37, 150, 190, 0.3);
+
                     .sub-cards-title {
                         display: flex;
                         align-items: center;
-                        width: 80%;
-                        margin: 1.5rem auto;
+                        justify-content: flex-start; // Align content to the start
+                        width: 100%;
+                        margin: 1.5rem 0;
+                        padding: 0 1rem;
+
                         h3 {
-                            font-size: 40px;
+                            font-size: 32px;
                             font-weight: 800;
-                            line-height: 54.64px;
-                            margin-left: .5rem;
+                            line-height: 1.2;
+                            margin-left: 0.5rem;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                     }
+
                     .sub-price {
-                        width: 60%;
-                        font-size: 25px;
+                        width: auto;
+                        font-size: 20px;
                         font-weight: 700;
-                        line-height: 34.15px;
-                        margin: auto;
+                        line-height: 1.2;
                         margin-top: -0.5rem;
                         text-align: start;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
+
+
+                //.sub-cards-title-container {
+                //    text-align: flex-start;
+                //    border-bottom: 1px solid rgba(37, 150, 190, 0.3);
+                //    .sub-cards-title {
+                //        display: flex;
+                //        align-items: center;
+                //        width: 80%;
+                //        margin: 1.5rem auto;
+                //        h3 {
+                //            font-size: 40px;
+                //            font-weight: 800;
+                //            line-height: 54.64px;
+                //            margin-left: .5rem;
+                //        }
+                //    }
+                //    .sub-price {
+                //        width: 60%;
+                //        font-size: 25px;
+                //        font-weight: 700;
+                //        line-height: 34.15px;
+                //        margin: auto;
+                //        margin-top: -0.5rem;
+                //        text-align: start;
+                //    }
+                //}
                 .sub-cards-lists {
                     flex-grow: 1;
                     ul {
