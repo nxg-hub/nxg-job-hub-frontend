@@ -56,7 +56,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 1,
       subLogo: basic,
       subTitle: "Free",
-      subPrice: "0₦",
+      subPrice: "₦0",
       subBenefit: [
         "Access to all basic features",
         // "Use the website for one month only, completely free",
@@ -85,7 +85,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
         "Solid foundation for limited job posting and searching.",
         "Unlimited vetted job listing, posting and tech talent search.",
       ],
-      planType: "Gold",
+      planType: "Most Popular",
     },
     {
       subId: 4,
@@ -98,7 +98,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
         "Unlimited vetted job listing, posting and tech talent search.",
         "Fast job application, tech talent profile matching mechanism and customer support.",
       ],
-      planType: "Platinum",
+      planType: "Recommended",
     },
   ];
 
