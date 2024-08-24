@@ -59,7 +59,7 @@ const SubCards = ({ country, verifyTransaction }) => {
       subTitle: "Silver",
       subPrice: `₦25,000/3months`,
       subBenefit: [
-        "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
+        "The Silver plan is designed for tech agent organizations and employers to have access to all basic features on this personalized job platform and provide a solid foundation for limited posting",
         "10 vetted job posting throughout the entire 3 months period.",
       ],
       planType: "Silver",
@@ -82,7 +82,7 @@ const SubCards = ({ country, verifyTransaction }) => {
       subPrice: "₦90,000/Yearly",
       subBenefit: [
         "The Platinum plan caters to users seeking an even longer commitment with added features.",
-        "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
+        "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
       ],
       planType: "Recommended",
     },
@@ -361,7 +361,7 @@ const SubCards = ({ country, verifyTransaction }) => {
                 border: "none",
                 borderRadius: "21px",
                 padding: "8px",
-                fontSize: "16px",
+                fontSize: "17px",
                 fontWeight: "500",
                 margin: ".4rem",
               }}>

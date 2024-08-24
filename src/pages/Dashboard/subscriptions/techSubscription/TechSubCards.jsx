@@ -82,7 +82,7 @@ const TechSubCards = ({ countryCode, verifyTransaction }) => {
       subPrice: "₦70,000/6months",
       subBenefit: [
         "Access to all basic features",
-        "Solid foundation for limited job posting and searching.",
+        "Solid foundation for limited searching.",
         "Unlimited vetted job listing, posting and tech talent search.",
       ],
       planType: "Most Popular",
@@ -94,8 +94,10 @@ const TechSubCards = ({ countryCode, verifyTransaction }) => {
       subPrice: "₦90,000/Yearly",
       subBenefit: [
         "Access to all basic features",
-        "Solid foundation for limited job posting and searching.",
-        "Unlimited vetted job listing, posting and tech talent search.",
+        "Solid foundation for unlimited job posting and searching.",
+        "Profile is featured to vetted employers",
+        "Resume review",
+        "Unlimited vetted job search",
         "Fast job application, tech talent profile matching mechanism and customer support.",
       ],
       planType: "Recommended",
