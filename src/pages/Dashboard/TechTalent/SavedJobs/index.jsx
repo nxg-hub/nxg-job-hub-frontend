@@ -25,6 +25,9 @@ const SavedJobs = () => {
     loading,
     error,
   } = useApiRequest("/api/v1/tech-talent/my-jobs");
+
+  JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const saved = savedJob.content;
   const dispatch = useDispatch();
   const [showDetails, setShowDetails] = useState(false);
@@ -69,6 +72,10 @@ const SavedJobs = () => {
   //reseting the filter parameters to default onmount and getting current page
   const currentPage = "saved";
   useEffect(() => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     dispatch(getCurrentPage(currentPage));
     dispatch(resetToDefault());
   }, []);

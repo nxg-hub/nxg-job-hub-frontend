@@ -1,7 +1,8 @@
 // Slice
 import { createSlice, current, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_HOST_URL } from "../utils/api/API_HOST";
-
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 const initialState = {
   nearByJobs: [],
   loading: false,
@@ -20,6 +21,10 @@ const token =
 export const fetchNearJob = createAsyncThunk(
   "nearJob/fetchNearJob",
   async (url) => {
+    // if (!token.authKey) {
+    //   navigate("/login");
+    //   return;
+    // }
     return await fetch(`${API_HOST_URL}${url}`, {
       method: "GET",
       headers: {

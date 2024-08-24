@@ -10,6 +10,7 @@ import {
   setSelectedJobTypes,
   setSelectedLevels,
 } from "../../../redux/FilterSlice";
+import { useNavigate } from "react-router-dom";
 
 function DashboardSearch({
   onJobsFetched,
@@ -19,6 +20,7 @@ function DashboardSearch({
 }) {
   // const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   // const [selectedLevels, setSelectedLevels] = useState([]);
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,6 +38,10 @@ function DashboardSearch({
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const fetchedJobs = () => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     setLoading(true);
     axios
       .get(baseUrl, {

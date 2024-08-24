@@ -55,6 +55,7 @@ function DashProfile() {
 
       if (!loginKey) {
         console.error("Authentication key not available.");
+        navigate("/login");
         return;
       }
 

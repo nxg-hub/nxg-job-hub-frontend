@@ -3,6 +3,15 @@ import avater from "../../../../static/images/user.png";
 import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 
 const JobApplication = () => {
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  useEffect(() => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
+  }, []);
   const {
     data: MyApplication,
     loading,
@@ -31,8 +40,7 @@ const JobApplication = () => {
             {jobsResult.map((data) => (
               <div
                 className="job-Post bg-white rounded shadow-md p-4 flex flex-col items-start px-[30px] py-[20px]"
-                key={data.id}
-              >
+                key={data.id}>
                 <div className="employerimg flex items-center mb-4">
                   <div className="userimg mr-4">
                     <img

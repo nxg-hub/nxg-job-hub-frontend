@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_HOST_URL } from "../api/API_HOST";
-
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -11,6 +12,10 @@ export const useApiRequest = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   useEffect(() => {
+    // if (!token.authKey) {
+    //   navigate("/login");
+    //   return;
+    // }
     const fetchData = async () => {
       setLoading(true);
       await fetch(`${API_HOST_URL}${url}`, {

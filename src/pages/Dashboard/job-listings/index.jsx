@@ -16,8 +16,12 @@ import {
   setNoticeFalsejobListing,
 } from "../../../redux/JobListingApplicationSlice.js";
 import AppErrorMessage from "../TechTalent/RecommendationCard/AppErrorMessage.jsx";
+import { useNavigate } from "react-router-dom";
 
 const JobListings = () => {
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const [jobs, setJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -25,6 +29,7 @@ const JobListings = () => {
   const [isUserVerified, setIsUserVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   //getting nearby jobs and loggedInUser from the redux store
   const showSearchedJobs = useSelector(
     (state) => state.SearchJobSlice.showJobListing
@@ -57,6 +62,10 @@ const JobListings = () => {
     (state) => state.SearchJobSlice.jobTitle
   );
   const fetchData = async () => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     setLoading(true);
     try {
       const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
@@ -70,6 +79,10 @@ const JobListings = () => {
     }
   };
   useEffect(() => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     dispatch(fetchLoggedInUser());
     dispatch(resetJobDisplay());
     fetchData();
