@@ -136,8 +136,13 @@ const SubCards = ({ country, verifyTransaction }) => {
           // Handle the scenario where authorization_url is missing
         }
 
-        // Verify customer after successful subscription
-        await verifyTransaction();
+        try {
+          await verifyTransaction();
+        } catch (error) {
+          console.error("Error verifying transaction:", error);
+          // Handle verification error here
+          // You can display an error message to the user
+        }
       }
     } catch (error) {
       console.error("Error posting user data:", error.response.message);
