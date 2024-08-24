@@ -24,7 +24,7 @@ export const SubSuccess = ({ planType }) => {
                     console.log(response);
                     console.log(response.data.data.status);
 
-                    if ( response.data.data.status === "success") {
+                    if (response.data.data.status === "Verification successful") {
                         setSubMessage(`subscription is successful!`);
                         // Redirect to the dashboard
                         window.location.href = "/dashboard";
@@ -33,11 +33,15 @@ export const SubSuccess = ({ planType }) => {
                         window.history.replaceState({}, document.title, "/dashboard");
                     } else {
                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
-                        // Redirect to the dashboard
-                        // window.location.href = "/dashboard";
-                        //
-                        // // Clear query parameters from the URL
-                        // window.history.replaceState({}, document.title, "/dashboard");
+
+                        // Delay of 5 seconds before redirecting to the dashboard
+                        setTimeout(() => {
+                            // Redirect to the dashboard
+                            window.location.href = "/dashboard";
+
+                            // Clear query parameters from the URL
+                            window.history.replaceState({}, document.title, "/dashboard");
+                        }, 5000); // 5000 milliseconds = 5 seconds
                     }
 
                     console.log('Transaction verified successfully.', response.data);
@@ -51,7 +55,7 @@ export const SubSuccess = ({ planType }) => {
         verifyTransaction().catch(error => {
             console.error('Error in verifyTransaction:', error);
         });
-    }, [searchParams, user.firstName, planType]);
+    }, [searchParams]);
 
     return (
         <div>{subMessage}</div>
