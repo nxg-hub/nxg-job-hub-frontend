@@ -21,33 +21,35 @@ export const SubSuccess = ({ planType }) => {
                             "Content-Type": "application/json",
                         }
                     });
-                    console.log(response);
-                    console.log('Transaction verified successfully.', response.data);
 
+                    // Handle successful verification
                     if (response.data && response.data.status === "success") {
                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
-                        window.location.href = "/success?message=" + encodeURIComponent("Transaction Successful!");
+
+                        // Option 1: Redirect with success message (consider security)
+                        // window.location.href = "/success?message=" + encodeURIComponent("Transaction Successful!");
+
+                        // Option 2: Display success message on the page (preferred)
+                        // No redirection needed, success message is already displayed in subMessage
                     } else {
                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
                     }
-
-                    console.log('Transaction verified successfully.', response.data);
                 } catch (error) {
                     setSubMessage("Error verifying transaction. Please try again.");
                     console.error('Error verifying transaction:', error.message);
                 }
             }
         };
-verifyTransaction();
-        // verifyTransaction().catch(error => {
-        //     console.error('Error in verifyTransaction:', error);
+
+        verifyTransaction().catch(error => {
+            console.error('Error in verifyTransaction:', error);
+        });
     }, [searchParams, user.firstName, planType]);
 
     return (
-        <div>{subMessage}</div>
+        <div className="success-message">{subMessage}</div>
     );
 };
-
 
 // import React, { useEffect, useState, useContext } from 'react';
 // import { UserContext } from '..';
