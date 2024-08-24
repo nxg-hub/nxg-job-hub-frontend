@@ -23,7 +23,7 @@ export const SubSuccess = ({ planType }) => {
                     });
                     console.log(response);
 
-                    if (response.data && response.message === "Verification successful") {
+                    if (response) {
                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
                     } else {
                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
