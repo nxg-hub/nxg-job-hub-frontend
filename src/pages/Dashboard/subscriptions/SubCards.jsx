@@ -235,7 +235,7 @@ const SubCards = ({ country, verifyCustomer }) => {
                       : ""
                   }
                   onClick={() => {
-                    handlePayment(subscription.subTitle);
+                    handlePayment(subscription);
                   }}>
                   Subscribe
                 </button>
