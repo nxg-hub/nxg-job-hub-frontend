@@ -8,13 +8,13 @@ import { getJobID } from "../../../../../../redux/FilterSlice";
 
 const ReviewApplicants = () => {
   const { id } = useParams();
-  const { data: job } = useApiRequest(`/api/job-postings/get-${id}`);
+  const { data: job } = useApiRequest(`api/job-postings/get-${id}`);
   const {
     data: jobApplicant,
     loading,
     error,
   } = useApiRequest(
-    `/api/v1/admin/job-postings/${id}/get-all-applicants-for-a-job`
+    `api/employers/job-postings/${id}/get-all-applicants-for-a-job`
   );
 
   const dispatch = useDispatch();
