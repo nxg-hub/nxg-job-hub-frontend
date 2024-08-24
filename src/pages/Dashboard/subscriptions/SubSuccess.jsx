@@ -1,152 +1,52 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '..';
+import React, { useEffect, useState,  useContext } from 'react';
+import { UserContext } from '..'
 import { useSearchParams } from 'react-router-dom';
 import { API_HOST_URL } from '../../../utils/api/API_HOST';
 import axios from 'axios';
 
 export const SubSuccess = ({ planType }) => {
     const user = useContext(UserContext);
-    const [subMessage, setSubMessage] = useState("");
+
+    const [sub, setSub] = useState("");
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        const verifyTransaction = async () => {
-            if (searchParams.has("reference")) {
-                const transactionReference = searchParams.get("reference");
+        if (searchParams.has("reference")) {
+            const subReference = searchParams.get("reference");
 
-                try {
-                    const response = await axios.post(`${API_HOST_URL}/api/subscriptions/verify-transaction`, null, {
-                        params: { reference: transactionReference },
+            async function verifyCustomer() {
+                // try {
+                //     const subscriptionData = { email:user.email,
+                //       account_number:user.account_number,
+                //       bvn:user.bvn,
+                //       bank_code:user.bank_code,
+                //       customer_code: user.customer_code,
+                //     };
+                    const form = new FormData(subscriptionData);
+                    form.append("reference", subReference);
+
+                    const response = await axios.post(`${API_HOST_URL}/api/subscriptions/verify-transaction`, form, {
                         headers: {
                             "Content-Type": "application/json",
                         }
                     });
 
-                    // Handle successful verification
-                    if (response.data && response.data.status === "success") {
-                        console.log(response.data.status);
-                        setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
-
-                        // Option 1: Redirect with success message (consider security)
-                        // window.location.href = "/success?message=" + encodeURIComponent("Transaction Successful!");
-
-                        // Option 2: Display success message on the page (preferred)
-                        // No redirection needed, success message is already displayed in subMessage
-                    } else {
-                        setSubMessage("There was an issue verifying your subscription. Please contact support.");
-                    }
-                } catch (error) {
-                    setSubMessage("Error verifying transaction. Please try again.");
-                    console.error('Error verifying transaction:', error.message);
+                    setSub(response.data);
+                    console.log('Customer verified successfully.', response.data);
                 }
-            }
-        };
+                // catch (error) {
+                //     console.error('Error verifying customer:', error.message);
+                // }
+            // };
 
-        verifyTransaction().catch(error => {
-            console.error('Error in verifyTransaction:', error);
-        });
+            verifyCustomer();
+        }
     }, [searchParams, user.firstName, planType]);
 
     return (
-        <div className="success-message">{subMessage}</div>
+        <div>{{sub}`${user.firstName} your ${planType} subscription is successful`}</div>
     );
-};
-
-// import React, { useEffect, useState, useContext } from 'react';
-// import { UserContext } from '..';
-// import { useSearchParams } from 'react-router-dom';
-// import { API_HOST_URL } from '../../../utils/api/API_HOST';
-// import axios from 'axios';
-//
-// export const SubSuccess = ({ planType }) => {
-//     const user = useContext(UserContext);
-//     const [subMessage, setSubMessage] = useState("");
-//     const [searchParams] = useSearchParams();
-//
-//     useEffect(() => {
-//         if (searchParams.has("reference")) {
-//             const transactionReference = searchParams.get("reference");
-//
-//             async function verifyTransaction() {
-//                 try {
-//                     const response = await axios.post(`${API_HOST_URL}/api/subscriptions/verify-transaction`, null, {
-//                         params: { reference: transactionReference },
-//                         headers: {
-//                             "Content-Type": "application/json",
-//                         }
-//                     });
-//
-//                     if (response.data && response.data.status === "success") {
-//                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
-//                     } else {
-//                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
-//                     }
-//
-//                     console.log('Transaction verified successfully.', response.data);
-//                 } catch (error) {
-//                     setSubMessage("Error verifying transaction. Please try again.");
-//                     console.error('Error verifying transaction:', error.message);
-//                 }
-//             };
-//
-//             verifyTransaction();
-//         }
-//     }, [searchParams, user.firstName, planType]);
-//
-//     return (
-//         <div>{subMessage}</div>
-//     );
-// };
-
-
-// import React, { useEffect, useState,  useContext } from 'react';
-// import { UserContext } from '..'
-// import { useSearchParams } from 'react-router-dom';
-// import { API_HOST_URL } from '../../../utils/api/API_HOST';
-// import axios from 'axios';
-//
-// export const SubSuccess = ({ planType }) => {
-//     const user = useContext(UserContext);
-//
-//     const [sub, setSub] = useState("");
-//     const [searchParams] = useSearchParams();
-//
-//     useEffect(() => {
-//         if (searchParams.has("reference")) {
-//             const subReference = searchParams.get("reference");
-//
-//             async function verifyCustomer() {
-//                 try {
-//                     const subscriptionData = { email:user.email,
-//                       account_number:user.account_number,
-//                       bvn:user.bvn,
-//                       bank_code:user.bank_code,
-//                       customer_code: user.customer_code,
-//                     };
-//                     const form = new FormData(subscriptionData);
-//                     form.append("reference", subReference);
-//
-//                     const response = await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, form, {
-//                         headers: {
-//                             "Content-Type": "application/json",
-//                         }
-//                     });
-//
-//                     setSub(response.data);
-//                     console.log('Customer verified successfully.', response.data);
-//                 } catch (error) {
-//                     console.error('Error verifying customer:', error.message);
-//                 }
-//             };
-//
-//             verifyCustomer();
-//         }
-//     }, [searchParams, user.account_number, user.bvn, user.customer_code, user.bank_code, user.email]);
-//
-//     return (
-//         <div>{{sub}`${user.firstName} your ${planType} subscription is successful`}</div>
-//     );
-// }
+}
 
 
 

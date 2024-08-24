@@ -9,7 +9,7 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import { UserContext } from "../..";
 
-const TechSubCards = ({ countryCode, verifyTransaction }) => {
+const TechSubCards = ({ countryCode, verifyCustomer }) => {
   const user = useContext(UserContext);
   const [exchangeRate, setExchangeRate] = useState(null);
   // const [subChosen, setSubChosen] = useState("");
@@ -152,7 +152,7 @@ const TechSubCards = ({ countryCode, verifyTransaction }) => {
         }
 
         // Verify customer after successful subscription
-        await verifyTransaction();
+        await verifyCustomer();
       }
     } catch (error) {
       console.error("Error posting user data:", error.response.message);

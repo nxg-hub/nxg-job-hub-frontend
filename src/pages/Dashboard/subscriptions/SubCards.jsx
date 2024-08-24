@@ -9,7 +9,7 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import { UserContext } from "..";
 
-const SubCards = ({ country, verifyTransaction }) => {
+const SubCards = ({ country, verifyCustomer }) => {
   const user = useContext(UserContext);
   const [exchangeRate, setExchangeRate] = useState(null);
   // Function to fetch and convert prices to Naira
@@ -136,13 +136,8 @@ const SubCards = ({ country, verifyTransaction }) => {
           // Handle the scenario where authorization_url is missing
         }
 
-        try {
-          await verifyTransaction();
-        } catch (error) {
-          console.error("Error verifying transaction:", error);
-          // Handle verification error here
-          // You can display an error message to the user
-        }
+        // Verify customer after successful subscription
+        await verifyCustomer();
       }
     } catch (error) {
       console.error("Error posting user data:", error.response.message);
