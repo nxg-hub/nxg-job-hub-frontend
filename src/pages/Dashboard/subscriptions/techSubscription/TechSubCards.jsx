@@ -85,7 +85,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
         "Solid foundation for limited job posting and searching.",
         "Unlimited vetted job listing, posting and tech talent search.",
       ],
-      planType: "Most Popular",
+      planType: "Gold",
     },
     {
       subId: 4,
@@ -98,7 +98,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
         "Unlimited vetted job listing, posting and tech talent search.",
         "Fast job application, tech talent profile matching mechanism and customer support.",
       ],
-      planType: "Recommended",
+      planType: "Platinum",
     },
   ];
 

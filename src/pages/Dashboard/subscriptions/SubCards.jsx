@@ -73,7 +73,7 @@ const SubCards = ({ country, verifyCustomer }) => {
         "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
         "Unlimited vetted job listing, posting and Tech talent search support",
       ],
-      planType: "Most Popular",
+      planType: "Gold",
     },
     {
       subId: 4,
@@ -84,7 +84,7 @@ const SubCards = ({ country, verifyCustomer }) => {
         "The Platinum plan caters to users seeking an even longer commitment with added features.",
         "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
       ],
-      planType: "Recommended",
+      planType: "Platinum",
     },
   ];
 
