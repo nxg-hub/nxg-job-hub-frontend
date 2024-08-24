@@ -73,7 +73,7 @@ const SubCards = ({ country, verifyTransaction }) => {
         "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
         "Unlimited vetted job listing, posting and Tech talent search support",
       ],
-      planType: "Gold",
+      planType: "Most Popular",
     },
     {
       subId: 4,
@@ -84,14 +84,14 @@ const SubCards = ({ country, verifyTransaction }) => {
         "The Platinum plan caters to users seeking an even longer commitment with added features.",
         "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
       ],
-      planType: "Platinum",
+      planType: "Recommended",
     },
   ];
 
   const handlePayment = async (subscription) => {
     try {
       // Convert planType to string and uppercase
-      const planType = String(subscription.planType).toUpperCase();
+      const planType = String(subscription.subTitle).toUpperCase();
 
       const userData = {
         firstName: user.firstName,
