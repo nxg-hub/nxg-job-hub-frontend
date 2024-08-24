@@ -9,7 +9,7 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import { UserContext } from "..";
 
-const SubCards = ({ country, verifyCustomer }) => {
+const SubCards = ({ country, verifyTransaction }) => {
   const user = useContext(UserContext);
   const [exchangeRate, setExchangeRate] = useState(null);
   // Function to fetch and convert prices to Naira
@@ -137,7 +137,7 @@ const SubCards = ({ country, verifyCustomer }) => {
         }
 
         // Verify customer after successful subscription
-        await verifyCustomer();
+        await verifyTransaction();
       }
     } catch (error) {
       console.error("Error posting user data:", error.response.message);
