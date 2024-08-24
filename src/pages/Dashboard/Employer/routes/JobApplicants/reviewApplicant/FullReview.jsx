@@ -18,7 +18,7 @@ const FullReview = () => {
   } = useApiRequest(
     `/api/employers/job-postings/${jobID}/get-all-applicants-for-a-job`
   );
-console.log(${jobID});
+console.log(jobID);
   const reviewedApplicant = jobApplicant.find((app) => {
     return app.applicant.id === talentID;
   });

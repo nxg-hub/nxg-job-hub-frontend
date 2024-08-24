@@ -16,7 +16,7 @@ const ReviewApplicants = () => {
   } = useApiRequest(
     `/api/employers/job-postings/${id}/get-all-applicants-for-a-job`
   );
-console.log(${id});
+console.log(id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJobID(id));
