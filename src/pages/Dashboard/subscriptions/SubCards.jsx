@@ -330,7 +330,12 @@ const SubCards = ({ country, verifyTransaction }) => {
                   <p
                       style={{
                         float: "right",
-                        background: "rgba(77, 242, 19, 1)",
+                        background:
+                            subscription.subId === 3
+                                ? "rgba(255, 255, 153, 1)" // Background color for subId 3
+                                : subscription.subId === 4
+                                    ? "rgba(77, 242, 19, 1)" // Background color for subId 4
+                                    : "rgba(77, 242, 19, 1)", // Default background color
                         color: "#fff",
                         width: "160px",
                         border: "none",
@@ -361,7 +366,7 @@ const SubCards = ({ country, verifyTransaction }) => {
                 border: "none",
                 borderRadius: "21px",
                 padding: "8px",
-                fontSize: "17px",
+                fontSize: "16px",
                 fontWeight: "500",
                 margin: ".4rem",
               }}>
