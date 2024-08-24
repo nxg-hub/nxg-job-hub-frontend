@@ -117,7 +117,7 @@ const SubCards = ({ country, verifyCustomer }) => {
           `${API_HOST_URL}/api/subscriptions/subscribe`,
           {
             email: user.email,
-            callback_url: `${window.location.origin}/sub-success`,
+            // callback_url: `${window.location.origin}/sub-success`,
           }
         );
         console.log(subscribeResponse);
