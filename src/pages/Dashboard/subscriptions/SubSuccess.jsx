@@ -23,10 +23,20 @@ export const SubSuccess = ({ planType }) => {
                     });
                     console.log(response);
 
-                    if (response) {
+                    if ( response.data.data === "Verification successful") {
                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
+                        // Redirect to the dashboard
+                        window.location.href = "/dashboard";
+
+                        // Clear query parameters from the URL
+                        window.history.replaceState({}, document.title, "/dashboard");
                     } else {
                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
+                        // Redirect to the dashboard
+                        window.location.href = "/dashboard";
+
+                        // Clear query parameters from the URL
+                        window.history.replaceState({}, document.title, "/dashboard");
                     }
 
                     console.log('Transaction verified successfully.', response.data);
