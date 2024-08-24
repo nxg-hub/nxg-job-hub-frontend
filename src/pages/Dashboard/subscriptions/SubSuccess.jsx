@@ -22,6 +22,7 @@ export const SubSuccess = ({ planType }) => {
                         }
                     });
                     console.log(response);
+                    console.log('Transaction verified successfully.', response.data.status);
 
                     if (response.data.status === "success") {
                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
@@ -29,7 +30,7 @@ export const SubSuccess = ({ planType }) => {
                         setSubMessage("There was an issue verifying your subscription. Please contact support.");
                     }
 
-                    console.log('Transaction verified successfully.', response.data);
+                    console.log('Transaction verified successfully.', response.data.status);
                 } catch (error) {
                     setSubMessage("Error verifying transaction. Please try again.");
                     console.error('Error verifying transaction:', error.message);
