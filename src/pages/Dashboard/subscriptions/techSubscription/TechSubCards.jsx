@@ -67,7 +67,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 2,
       subLogo: silver,
       subTitle: "Silver",
-      subPrice: "25,000₦/3months",
+      subPrice: "₦25,000/3months",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",
@@ -79,7 +79,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 3,
       subLogo: gold,
       subTitle: "Gold",
-      subPrice: "70,000₦/6months",
+      subPrice: "₦70,000/6months",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",
@@ -91,7 +91,7 @@ const TechSubCards = ({ countryCode, verifyCustomer }) => {
       subId: 4,
       subLogo: platinum,
       subTitle: "Platinum",
-      subPrice: "90,000₦/Yearly",
+      subPrice: "₦90,000/Yearly",
       subBenefit: [
         "Access to all basic features",
         "Solid foundation for limited job posting and searching.",

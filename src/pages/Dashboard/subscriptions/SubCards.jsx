@@ -45,7 +45,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 1,
       subLogo: basic,
       subTitle: "Free",
-      subPrice: "0₦",
+      subPrice: "₦0",
       subBenefit: [
         "As a way to welcome new users and allow them to explore our platform, the first month of usage is completely free. During this period, users will have access to all basic features .",
       ],
@@ -57,7 +57,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 2,
       subLogo: silver,
       subTitle: "Silver",
-      subPrice: `25,000₦/3months`,
+      subPrice: `₦25,000/3months`,
       subBenefit: [
         "The Silver plan is designed for tech agents to have access to all basic features on this website and provide a solid foundation for limited job seaching and posting",
         "10 vetted job posting throughout the entire 3 months period.",
@@ -68,7 +68,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 3,
       subLogo: gold,
       subTitle: "Gold",
-      subPrice: "70,000₦/6months",
+      subPrice: "₦70,000/6months",
       subBenefit: [
         "The Gold plan offers extended benefits for users looking for more flexibiity and a longer commitment.",
         "Unlimited vetted job listing, posting and Tech talent search support",
@@ -79,7 +79,7 @@ const SubCards = ({ country, verifyCustomer }) => {
       subId: 4,
       subLogo: platinum,
       subTitle: "Platinum",
-      subPrice: "90,000₦/Yearly",
+      subPrice: "₦90,000/Yearly",
       subBenefit: [
         "The Platinum plan caters to users seeking an even longer commitment with added features.",
         "Access to unlimited vetted tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
