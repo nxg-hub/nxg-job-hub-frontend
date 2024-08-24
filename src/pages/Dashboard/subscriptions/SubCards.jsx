@@ -330,7 +330,7 @@ const SubCards = ({ country, verifyTransaction }) => {
                   <p
                       style={{
                         float: "right",
-                        background: "rgba(102, 182, 209, 1)",
+                        background: "rgba(77, 242, 19, 1)",
                         color: "#fff",
                         width: "160px",
                         border: "none",
@@ -361,7 +361,7 @@ const SubCards = ({ country, verifyTransaction }) => {
                 border: "none",
                 borderRadius: "21px",
                 padding: "8px",
-                fontSize: "18px",
+                fontSize: "16px",
                 fontWeight: "500",
                 margin: ".4rem",
               }}>
