@@ -336,7 +336,12 @@ const SubCards = ({ country, verifyTransaction }) => {
                                 : subscription.subId === 4
                                     ? "rgba(77, 242, 19, 1)" // Background color for subId 4
                                     : "rgba(77, 242, 19, 1)", // Default background color
-                        color: "#fff",
+                        color:
+                            subscription.subId === 3
+                                ? "rgba(77, 242, 19, 1)" // Background color for subId 3
+                                : subscription.subId === 4
+                                    ? "#fff" // Background color for subId 4
+                                    : "#fff", // Default background color
                         width: "160px",
                         border: "none",
                         borderRadius: "21px",
