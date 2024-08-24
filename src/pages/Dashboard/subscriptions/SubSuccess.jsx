@@ -24,6 +24,7 @@ export const SubSuccess = ({ planType }) => {
 
                     // Handle successful verification
                     if (response.data && response.data.status === "success") {
+                        console.log(response.data.status);
                         setSubMessage(`${user.firstName}, your ${planType} subscription is successful!`);
 
                         // Option 1: Redirect with success message (consider security)
