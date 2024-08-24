@@ -24,7 +24,7 @@ export const SubSuccess = ({ planType }) => {
                     console.log(response);
                     console.log(response.data.data.status);
 
-                    if ( response.data.data.status === "Verification successful") {
+                    if ( response.data.data.status === "success") {
                         setSubMessage(`subscription is successful!`);
                         // Redirect to the dashboard
                         window.location.href = "/dashboard";
