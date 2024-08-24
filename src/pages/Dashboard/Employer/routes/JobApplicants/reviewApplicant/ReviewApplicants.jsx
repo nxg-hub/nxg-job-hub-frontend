@@ -14,7 +14,7 @@ const ReviewApplicants = () => {
     loading,
     error,
   } = useApiRequest(
-    `api/employers/job-postings/${id}/get-all-applicants-for-a-job`
+    `/api/employers/job-postings/${id}/get-all-applicants-for-a-job`
   );
 
   const dispatch = useDispatch();
