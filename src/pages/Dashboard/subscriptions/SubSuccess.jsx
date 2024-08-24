@@ -38,10 +38,9 @@ export const SubSuccess = ({ planType }) => {
                 }
             }
         };
-
-        verifyTransaction().catch(error => {
-            console.error('Error in verifyTransaction:', error);
-        });
+verifyTransaction();
+        // verifyTransaction().catch(error => {
+        //     console.error('Error in verifyTransaction:', error);
     }, [searchParams, user.firstName, planType]);
 
     return (
