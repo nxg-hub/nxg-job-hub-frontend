@@ -327,46 +327,62 @@ const SubCards = ({ country, verifyTransaction }) => {
           <div className="sub-cards-single" key={subscription.subId}>
             <div className="sub-cards-title-container">
               {index >= monthlySubscriptions.length - 2 && (
-                <p
-                  style={{
-                    float: "right",
-                    background: "rgba(102, 182, 209, 1)",
-                    color: "#fff",
-                    width: "160px",
-                    border: "none",
-                    borderRadius: "21px",
-                    padding: "8px",
-                    fontSize: "18px",
-                    fontWeight: "500",
-                    margin: ".4rem",
-                  }}>
-                  {subscription.planType}
-                </p>
+                  <p
+                      style={{
+                        float: "right",
+                        background: "rgba(102, 182, 209, 1)",
+                        color: "#fff",
+                        width: "160px",
+                        border: "none",
+                        borderRadius: "21px",
+                        padding: "8px",
+                        fontSize: "18px",
+                        fontWeight: "500",
+                        margin: ".4rem",
+                      }}>
+                    {subscription.planType}
+                  </p>
               )}
               <div className="sub-cards-title">
-                <img src={subscription.subLogo} alt="" />
+                <img src={subscription.subLogo} alt=""/>
                 <h3>{subscription.subTitle}</h3>
               </div>
               {/* Convert price to NGN if user is Nigerian */}
-              <p className="sub-price">
+              {/*<p className="sub-price">*/}
+              {/*  {country === "nigeria"*/}
+              {/*    ? subscription.subPrice*/}
+              {/*    : convertToDollar(subscription.subPrice)}*/}
+              {/*</p>*/}
+              <p className="sub-price" style={{
+                float: "right",
+                background: "rgba(102, 182, 209, 1)",
+                color: "#fff",
+                width: "160px",
+                border: "none",
+                borderRadius: "21px",
+                padding: "8px",
+                fontSize: "18px",
+                fontWeight: "500",
+                margin: ".4rem",
+              }}>
                 {country === "nigeria"
-                  ? subscription.subPrice
-                  : convertToDollar(subscription.subPrice)}
+                    ? subscription.subPrice
+                    : convertToDollar(subscription.subPrice)}
               </p>
             </div>
             <div className="sub-cards-lists">
               <ul>
                 {subscription.subBenefit.map((benefit, index) => (
-                  <li key={index}>
-                    <div className="sub-check">
-                      <BsCheck style={{ color: "rgba(77, 242, 19, 1)" }} />
-                    </div>
-                    <p>{benefit}</p>
-                  </li>
+                    <li key={index}>
+                      <div className="sub-check">
+                        <BsCheck style={{color: "rgba(77, 242, 19, 1)"}}/>
+                      </div>
+                      <p>{benefit}</p>
+                    </li>
                 ))}
                 {subscription.subId === 1 && (
-                  <div className="sub-span">
-                    <p>
+                    <div className="sub-span">
+                      <p>
                       <span>{subscription.spanTitle}</span> {subscription.span}
                     </p>
                   </div>
