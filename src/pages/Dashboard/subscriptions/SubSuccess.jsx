@@ -3,10 +3,12 @@ import { UserContext } from '..';
 import { useSearchParams } from 'react-router-dom';
 import { API_HOST_URL } from '../../../utils/api/API_HOST';
 import axios from 'axios';
+import {FaCheckCircle, FaTimesCircle} from "react-icons/fa";
 
 export const SubSuccess = ({ planType }) => {
     const user = useContext(UserContext);
     const [subMessage, setSubMessage] = useState("");
+    const [isSuccess, setIsSuccess] = useState(null);
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -21,18 +23,20 @@ export const SubSuccess = ({ planType }) => {
                             "Content-Type": "application/json",
                         }
                     });
-                    console.log(response);
+                    // console.log(response);
                     console.log(response.data.data.status);
 
                     if (response.data.data.status === "success") {
                         setSubMessage(`subscription is successful!`);
+                        setIsSuccess(true)
                         // Redirect to the dashboard
                         window.location.href = "/dashboard";
 
                         // Clear query parameters from the URL
                         window.history.replaceState({}, document.title, "/dashboard");
                     } else {
-                        setSubMessage("There was an issue verifying your subscription. Please contact support.");
+                        setSubMessage("There was an issue verifying your subscription. Payment Not Confirmed. Please contact support.");
+                        setIsSuccess(false)
 
                         // Delay of 5 seconds before redirecting to the dashboard
                         setTimeout(() => {
@@ -58,7 +62,20 @@ export const SubSuccess = ({ planType }) => {
     }, [searchParams]);
 
     return (
-        <div>{subMessage}</div>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+            {isSuccess === null ? null : (
+                <div>
+                    {isSuccess ? (
+                        <FaCheckCircle style={{ color: 'green', fontSize: '50px', marginBottom: '20px' }} />
+                    ) : (
+                        <FaTimesCircle style={{ color: 'red', fontSize: '50px', marginBottom: '20px' }} />
+                    )}
+                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: isSuccess ? 'green' : 'red' }}>
+                        {subMessage}
+                    </p>
+                </div>
+            )}
+        </div>
     );
 };
 
