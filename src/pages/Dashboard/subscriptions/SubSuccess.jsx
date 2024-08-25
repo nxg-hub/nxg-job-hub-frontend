@@ -8,7 +8,7 @@ import {FaCheckCircle, FaTimesCircle} from "react-icons/fa";
 export const SubSuccess = ({ planType }) => {
     const user = useContext(UserContext);
     const [subMessage, setSubMessage] = useState("");
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(null);
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
