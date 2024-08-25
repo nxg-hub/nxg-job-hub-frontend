@@ -26,14 +26,17 @@ export const SubSuccess = ({ planType }) => {
                     // console.log(response);
                     console.log(response.data.data.status);
 
-                    if (response.data.data.status === "success is not") {
+                    if (response.data.data.status === "success") {
                         setSubMessage(`subscription is successful!`);
                         setIsSuccess(true)
-                        // Redirect to the dashboard
-                        window.location.href = "/dashboard";
+                        // Delay of 5 seconds before redirecting to the dashboard
+                        setTimeout(() => {
+                            // Redirect to the dashboard
+                            window.location.href = "/dashboard";
 
-                        // Clear query parameters from the URL
-                        window.history.replaceState({}, document.title, "/dashboard");
+                            // Clear query parameters from the URL
+                            window.history.replaceState({}, document.title, "/dashboard");
+                        }, 5000); // 5000 milliseconds = 5 seconds
                     } else {
                         setSubMessage("There was an issue verifying your subscription. Payment Not Confirmed. Please contact support.");
                         setIsSuccess(false)
