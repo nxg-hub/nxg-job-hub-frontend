@@ -66,7 +66,9 @@ export const SubSuccess = ({ planType }) => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            {isSuccess ? (
+            {isSuccess === null ? (
+                <p>Loading...</p> // Show a loading message or spinner while awaiting response
+            ) : isSuccess ? (
                 <>
                     <div style={{ fontSize: '100px', color: 'green' }}>✔</div>
                     <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'green' }}>{subMessage}</p>
