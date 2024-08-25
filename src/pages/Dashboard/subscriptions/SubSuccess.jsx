@@ -8,7 +8,7 @@ import {FaCheckCircle, FaTimesCircle} from "react-icons/fa";
 export const SubSuccess = ({ planType }) => {
     const user = useContext(UserContext);
     const [subMessage, setSubMessage] = useState("");
-    const [isSuccess, setIsSuccess] = useState(null);
+    const [isSuccess, setIsSuccess] = useState(false);
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -63,17 +63,16 @@ export const SubSuccess = ({ planType }) => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            {isSuccess === null ? null : (
-                <div>
-                    {isSuccess ? (
-                        <FaCheckCircle style={{ color: 'green', fontSize: '50px', marginBottom: '20px' }} />
-                    ) : (
-                        <FaTimesCircle style={{ color: 'red', fontSize: '50px', marginBottom: '20px' }} />
-                    )}
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: isSuccess ? 'green' : 'red' }}>
-                        {subMessage}
-                    </p>
-                </div>
+            {isSuccess ? (
+                <>
+                    <div style={{ fontSize: '100px', color: 'green' }}>✔</div>
+                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'green' }}>{subMessage}</p>
+                </>
+            ) : (
+                <>
+                    <div style={{ fontSize: '100px', color: 'red' }}>✘</div>
+                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'red' }}>{subMessage}</p>
+                </>
             )}
         </div>
     );
