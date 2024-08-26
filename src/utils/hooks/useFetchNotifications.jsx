@@ -26,7 +26,7 @@ const useFetchNotifications = () => {
 
   useEffect(() => {
     fetchNotifications();
-  });
+  }, []);
   // console.log(notifications);
   return notifications.length > 0 && notifications;
 };

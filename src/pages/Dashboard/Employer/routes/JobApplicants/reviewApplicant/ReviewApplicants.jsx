@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useApiRequest } from "../../../../../../utils/functions/fetchEndPoint";
 import AllApplicantForAJob from "./AllApplicantForAJob";
 import spinner from "../../../../../../static/icons/spinner.svg";
 import { useDispatch } from "react-redux";
 import { getJobID } from "../../../../../../redux/FilterSlice";
+import { BsArrowLeft } from "react-icons/bs";
 
 const ReviewApplicants = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data: job } = useApiRequest(`/api/job-postings/get-${id}`);
   const {
@@ -14,9 +16,8 @@ const ReviewApplicants = () => {
     loading,
     error,
   } = useApiRequest(
-    `/api/v1/admin/job-postings/${id}/get-all-applicants-for-a-job`
+    `/api/employers/job-postings/${id}/get-all-applicants-for-a-job`
   );
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJobID(id));
@@ -24,6 +25,25 @@ const ReviewApplicants = () => {
 
   return (
     <div className="h-[100vh] overflow-y-scroll pb-10 ">
+      <Link
+        to={".."}
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(-1);
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          fontSize: "12px",
+          fontWeight: "400",
+          color: "#000",
+          margin: "0 0 1rem 1rem",
+          paddingTop: ".5rem",
+        }}>
+        <BsArrowLeft style={{ fontSize: "26px" }} />
+        <span>Back</span>
+      </Link>
       {loading ? (
         <img
           className="w-[30%] absolute left-[45%] top-[25%]"

@@ -5,14 +5,27 @@ import TalentApplicationSlice from "./TalentApplicationSlice";
 import FilterSlice from "./FilterSlice";
 import JobListingApplicationSlice from "./JobListingApplicationSlice";
 import SearchJobSlice from "./SearchJobSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+import { combineReducers } from "@reduxjs/toolkit";
+import { version } from "react";
 
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+
+const reducer = combineReducers({
+  NearbyJobSlice,
+  LoggedInUserSlice,
+  TalentApplicationSlice,
+  FilterSlice,
+  JobListingApplicationSlice,
+  SearchJobSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 export default configureStore({
-  reducer: {
-    NearbyJobSlice,
-    LoggedInUserSlice,
-    TalentApplicationSlice,
-    FilterSlice,
-    JobListingApplicationSlice,
-    SearchJobSlice,
-  },
+  reducer: persistedReducer,
 });

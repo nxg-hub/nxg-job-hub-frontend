@@ -20,7 +20,7 @@ import SelectAccountType from "./components/SelectAccountType/index.jsx";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import NotificationTab from "./components/NotificationTab/index.jsx";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
-import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
+// import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
 import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
 import ProfileController from "./utils/routers/ProfileController.jsx";
 import Overview from "./utils/routers/Overview.jsx";
@@ -67,8 +67,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -79,8 +78,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
@@ -91,7 +89,7 @@ function App() {
               <Route path="" element={<JobPosts />} />
               <Route path="create" element={<PostJobs />} />
             </Route>
-            <Route path="applicants" element={<JobApplicants />} />
+            {/* <Route path="applicants" element={<JobApplicants />} /> */}
             <Route
               path="posts/review-applicants/:id"
               element={<ReviewApplicants />}

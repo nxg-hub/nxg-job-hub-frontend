@@ -22,10 +22,6 @@ const FullReview = () => {
   const reviewedApplicant = jobApplicant.find((app) => {
     return app.applicant.id === talentID;
   });
-  console.log(reviewedApplicant);
-  // console.log(jobApplicant);
-  console.log(jobID);
-  console.log(talentID);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));

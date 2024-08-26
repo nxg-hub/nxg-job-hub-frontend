@@ -43,10 +43,6 @@ function DashProfile() {
   const navigateCompleteProfilePage = () => {
     navigate("/techprofileform");
   };
-  const loggedInUser = useSelector(
-    (state) => state.LoggedInUserSlice.loggedInUser
-  );
-  const userVerified = loggedInUser.verified;
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -89,7 +85,7 @@ function DashProfile() {
       // setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
-      const updatedVerificationStatus = talentData.isVerified || false;
+      const updatedVerificationStatus = talentData.verified || false;
       setVerificationStatus(updatedVerificationStatus);
 
       // Save verification status to local storage
@@ -262,7 +258,7 @@ function DashProfile() {
                   </span>
                 </p>
               </div>
-              {!userVerified && (
+              {!isVerified && (
                 <Link to="/techprofileform" className="acct-verify">
                   <MdOutlineVerifiedUser fontSize="1.2rem" color="#2596be" />
                   <span>Verify Account</span>
