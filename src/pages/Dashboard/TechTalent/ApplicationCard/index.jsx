@@ -36,10 +36,10 @@ const JobApplication = () => {
         </div>
       ) : (
         <>
-          <div className="jobresults grid grid-cols-3 gap-7 p-[70px]">
+          <div className="jobresults grid lg:grid-cols-3 grid-cols-2 gap-4 p-[20px] lg:gap-7 lg:p-[70px]">
             {jobsResult.map((data) => (
               <div
-                className="job-Post bg-white rounded shadow-md p-4 flex flex-col items-start px-[30px] py-[20px]"
+                className="job-Post bg-white rounded shadow-md p-4 flex flex-col items-start lg:px-[30px] px-[10px] py-[8px] lg:py-[20px]"
                 key={data.id}>
                 <div className="employerimg flex items-center mb-4">
                   <div className="userimg mr-4">

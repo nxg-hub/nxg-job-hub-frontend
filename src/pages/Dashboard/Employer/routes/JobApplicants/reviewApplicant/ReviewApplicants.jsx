@@ -10,7 +10,7 @@ import { BsArrowLeft } from "react-icons/bs";
 const ReviewApplicants = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: job } = useApiRequest(`/api/job-postings/get-${id}`);
+  const { data: job } = useApiRequest(`api/job-postings/get-${id}`);
   const {
     data: jobApplicant,
     loading,
