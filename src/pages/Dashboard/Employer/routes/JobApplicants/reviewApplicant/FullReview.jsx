@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { API_HOST_URL } from "../../../../../../utils/api/API_HOST";
 import { Link, useNavigate } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
-import { Document, Page, pdfjs } from "react-pdf";
 import spinner from "../../../../../../static/icons/spinner.svg";
 
 const FullReview = () => {
@@ -39,7 +38,8 @@ const FullReview = () => {
   const appDetails2 = reviewedApplicant?.applicant;
 
   const navigate = useNavigate();
-  const applyID = jobApplicant[0]?.applicationId;
+  const applyID = reviewedApplicant?.applicationId;
+
   const handleAcceptApplication = async () => {
     setAcceptLoading(true);
     try {
@@ -61,7 +61,6 @@ const FullReview = () => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           return data;
         });
     } catch (err) {
@@ -92,7 +91,6 @@ const FullReview = () => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           return data;
         });
     } catch (err) {

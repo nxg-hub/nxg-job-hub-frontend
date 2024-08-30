@@ -76,17 +76,28 @@ const PostJobs = () => {
       if (res.data)
         showpopUp({
           type: "success",
-          message: "Job post created successfully.",
+          message:
+            "Job post created successfully. Job will be made available to the public after succeeful verification.",
         });
       setTimeout(() => {
         showpopUp(undefined);
         navigate("/dashboard/posts");
       }, 5000);
     } catch (err) {
-      if (err.response.status === Number("400")) {
+      if (
+        err.response.data ===
+        "Employer is not verified. Job posting cannot be created"
+      ) {
         setPostJobError(
           "Your account has not yet been verfied, if you haven't, please upload all specified documents"
         );
+        navigate("/verifiedForm");
+      } else if (
+        err.response.data ===
+        " Employer subscription is inactive. Job posting cannot be created."
+      ) {
+        setPostJobError("No active subscription");
+        navigate("/subscription");
       } else {
         setPostJobError("Error in posting job");
       }

@@ -79,6 +79,7 @@ const jobListingApplicationSlice = createSlice({
         state.jobListingLoader = false;
         state.jobListingerror = false;
         state.successJobListing = true;
+        state.multiApplyErr = false;
       })
       .addCase(applyInJobListing.rejected, (state, action) => {
         state.jobListingLoader = false;

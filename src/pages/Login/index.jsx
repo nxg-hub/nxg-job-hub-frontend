@@ -32,7 +32,6 @@ const Login = () => {
         email,
         password,
       });
-
       const authKey = res.headers.authorization;
       if (!authKey) {
         navigate("/login");

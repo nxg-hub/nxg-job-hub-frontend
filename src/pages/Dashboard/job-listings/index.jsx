@@ -49,11 +49,9 @@ const JobListings = () => {
   const multipleApplication = useSelector(
     (state) => state.JobListingApplicationSlice.multiApplyErr
   );
-  console.log(multipleApplication);
   const multiError = useSelector(
     (state) => state.JobListingApplicationSlice.multipleJobListingApp
   );
-  console.log(multiError);
   const notice = useSelector(
     (state) => state.JobListingApplicationSlice.notice
   );
@@ -89,7 +87,7 @@ const JobListings = () => {
   }, []);
 
   const handleCardClick = (job) => {
-    setSelectedCardId(job.jobId);
+    setSelectedCardId(job.jobID);
     setShowDetails(true);
   };
   const closeNoticeModal = () => {
@@ -117,27 +115,25 @@ const JobListings = () => {
         <ProfileSearch url={allJobsUrl} currentPage={currentPage} />
       </div>
       <div className="">
-        {(showDetails || successfull) && (
-          <div
-            onClick={() => {
-              setShowDetails(false) || setSuccessfull(false);
-            }}
-            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
-          />
-        )}
         {showDetails && (
-          <div className="fixed lg:absolute m-auto left-[15%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
-            <CardDetails
-              job={jobs.find((job) => job.jobId === selectedCardId)}
-              onClose={handleClose}
+          <>
+            <div className="fixed lg:relative m-auto left-[15%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[1%]">
+              <CardDetails
+                job={jobs.find((job) => job.jobID === selectedCardId)}
+                onClose={handleClose}
+              />
+            </div>
+            <div
+              onClick={handleClose}
+              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
             />
-          </div>
+          </>
         )}
-        {successfull && (
-          <div className="fixed lg:absolute z-50 w-full lg:w-1/2 bottom-0 lg:top-[20%] lg:left-[25%]">
+        {/* {successfull && (
+          <div className="fixed lg:relative z-50 w-full lg:w-1/2 bottom-0 lg:top-[20%] lg:left-[25%]">
             <Successfull onClose={() => setSuccessfull(false)} />
           </div>
-        )}
+        )} */}
 
         {loading || (applyloader && !showSearchedJobs) ? (
           <img
@@ -148,13 +144,17 @@ const JobListings = () => {
         ) : (
           !showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-              {jobs.map((job, i) => (
-                <JobCard
-                  key={i}
-                  job={job}
-                  handleShowDetails={() => handleCardClick(job)}
-                />
-              ))}
+              {jobs
+                .filter((job) => {
+                  return job.jobStatus === "ACCEPTED";
+                })
+                .map((job, i) => (
+                  <JobCard
+                    key={i}
+                    job={job}
+                    handleShowDetails={() => handleCardClick(job)}
+                  />
+                ))}
             </div>
           )
         )}
@@ -169,7 +169,10 @@ const JobListings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
               {searchedJob
                 ?.filter((job) => {
-                  return job.job_title === searchedJobTitle;
+                  return (
+                    job.job_title === searchedJobTitle &&
+                    job.jobStatus === "ACCEPTED"
+                  );
                 })
                 .map((job, i) => (
                   <JobCard
@@ -185,10 +188,8 @@ const JobListings = () => {
         {success && (
           <>
             <Successfull onClose={close} />
-            <div
-              onClick={close}
-              className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
-            />
+
+            <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
           </>
         )}
         {notice && (
@@ -242,7 +243,7 @@ const JobListings = () => {
             </div>
             <div
               onClick={() => {
-                setMultipleApplication(false);
+                dispatch(setMultiApplyErrFalse());
               }}
               className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
             />

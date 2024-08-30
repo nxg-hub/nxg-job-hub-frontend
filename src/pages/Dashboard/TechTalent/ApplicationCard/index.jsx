@@ -44,6 +44,7 @@ const JobApplication = () => {
                 <div className="employerimg flex items-center mb-4">
                   <div className="userimg mr-4">
                     <img
+                      className="w-[50px] h-[50px]"
                       src={data?.jobPosting?.employer_profile_pic || avater}
                       alt=""
                     />

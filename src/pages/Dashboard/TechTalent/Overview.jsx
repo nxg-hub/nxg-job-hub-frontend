@@ -174,16 +174,23 @@ function TechTalentOverview() {
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
           ) : (
             !showNearByJobs &&
-            nearByJobs.map((job, i) => {
-              return <RecommendationCard key={i * 5} recommendedJobs={job} />;
-            })
+            nearByJobs
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job, i) => {
+                return <RecommendationCard key={i * 5} recommendedJobs={job} />;
+              })
           )}
           {searchedJobLoader && showNearByJobs ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
           ) : showNearByJobs && !jobType && searchedJobTitle ? (
             searchedJob
               ?.filter((job) => {
-                return job.job_title === searchedJobTitle;
+                return (
+                  job.job_title === searchedJobTitle &&
+                  job.jobStatus === "ACCEPTED"
+                );
               })
               .map((jobRecommendation, i) => {
                 // jobRecommendation.company_logo = figma;

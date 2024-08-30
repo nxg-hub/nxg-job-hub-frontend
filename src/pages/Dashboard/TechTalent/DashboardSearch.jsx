@@ -52,14 +52,23 @@ function DashboardSearch({
       })
       .then((response) => {
         const jobsArray = !response.data.content
-          ? response.data.map((job) => ({
-              job_title: job.job_title,
-              job_location: job.job_location,
-            }))
-          : response.data.content.map((job) => ({
-              job_title: job.jobPosting.job_title,
-              job_location: job.jobPosting.job_location,
-            }));
+          ? response.data
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job) => ({
+                job_title: job.job_title,
+                job_location: job.job_location,
+              }))
+          : response.data.content
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job) => ({
+                job_title: job.jobPosting.job_title,
+                job_location: job.jobPosting.job_location,
+              }));
+        // console.log(jobsArray);
         // Update's the fetched jobs
         onJobsFetched(jobsArray);
         setLoading(false);

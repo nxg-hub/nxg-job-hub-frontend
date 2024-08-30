@@ -34,7 +34,11 @@ const CardDetails = ({ job, onClose }) => {
       <div className="flex w-full m-auto gap-y-4 flex-col">
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src="/dashboard/figma-logo.png" alt="logo" />
+            <img
+              className="w-[50px] h-[50px]"
+              src={job.employer_profile_pic}
+              alt="logo"
+            />
             <div className="flex flex-col capitalize">
               <span className="font-bold md:text-xl">
                 {job.employer_name || "Employer"}
@@ -42,7 +46,7 @@ const CardDetails = ({ job, onClose }) => {
               <div className="flex items-center gap-x-2">
                 <img src="/dashboard/location.png" alt="location" />
                 <span className="md:text-sm font-medium text-[#444444]">
-                  {job.location}
+                  {job.job_location}
                 </span>
               </div>
             </div>

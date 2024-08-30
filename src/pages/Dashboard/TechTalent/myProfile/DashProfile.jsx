@@ -365,6 +365,13 @@ function DashProfile() {
             <div className="add-experience-btn" onClick={addExperience}>
               <GoPlus className="plus-icon" /> <span>Add Experience</span>
             </div>
+            <div
+              onClick={() => {
+                navigate("/techprofileform");
+              }}
+              className="mt-6 bg-transparent px-4 py-3 border border-gray-800 rounded-md w-[50%] cursor-pointer ">
+              Edit profile
+            </div>
             {openInput && (
               <Dialog
                 open={openInput}

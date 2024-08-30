@@ -19,7 +19,6 @@ const SavedJobCard = ({ job, onClick }) => {
     currency: "NGN",
   });
   const dispatch = useDispatch();
-
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -38,7 +37,11 @@ const SavedJobCard = ({ job, onClick }) => {
       <div className="flex flex-col gap-y-2">
         <div className="flex justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src={job?.logo} alt="logo" />
+            <img
+              className="w-[50px] h-[50px]"
+              src={job?.employer_profile_pic}
+              alt="logo"
+            />
             <div className="flex flex-col">
               <span className="font-bold md:text-xl">{job?.company}</span>
               <div className="flex items-center gap-x-2">

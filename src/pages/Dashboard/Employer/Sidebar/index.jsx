@@ -339,8 +339,11 @@ const Sidebar = ({ profilePic, ...props }) => {
             style={profilePicture && { padding: 0 }}>
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
-          <label htmlFor="profilepic">
-            <ChangeProfilePicture title="upload profile picture" />
+          <label className="flex flex-col" htmlFor="profilepic">
+            <span className="absolute right-7">
+              <ChangeProfilePicture title="upload company logo" />
+            </span>
+            <span className="relative">Company Logo </span>
           </label>
 
           <input

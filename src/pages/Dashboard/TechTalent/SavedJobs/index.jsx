@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Successfull from "../../job-listings/_components/successfull";
 import {
   applyForJob,
+  closeErrorModal,
   closeModal,
   getCurrentAppPage,
   setNoticeFalse,
@@ -26,7 +27,8 @@ const SavedJobs = () => {
     error,
   } = useApiRequest("/api/v1/tech-talent/my-jobs");
 
-  JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const saved = savedJob.content;
   const dispatch = useDispatch();
@@ -63,6 +65,9 @@ const SavedJobs = () => {
   };
   const close = () => {
     dispatch(closeModal());
+  };
+  const closeErr = () => {
+    dispatch(closeErrorModal());
   };
   //getting the filtered job type from the redux store
   const selectedJobTypes = useSelector(
@@ -164,7 +169,7 @@ const SavedJobs = () => {
         )} */}
 
         {showDetails && (
-          <div className="fixed lg:absolute left-[8%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
+          <div className="fixed lg:absolute left-[8%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[2%] bottom-[0%] lg:left-[25%]">
             <SavedJobDetails
               details={saved.find((job) => job.id === selectedCardId)}
               onClose={handleClose}
@@ -210,12 +215,12 @@ const SavedJobs = () => {
             />
           </>
         )}
-        {/* {applyError && (
+        {applyError && (
           <>
-            <AppErrorMessage />
+            <AppErrorMessage onClose={closeErr} />
             <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
           </>
-        )} */}
+        )}
       </div>
     </div>
   );

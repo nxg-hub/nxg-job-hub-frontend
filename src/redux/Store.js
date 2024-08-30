@@ -9,6 +9,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { version } from "react";
+import InterviewSlice from "./InterviewSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   FilterSlice,
   JobListingApplicationSlice,
   SearchJobSlice,
+  InterviewSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

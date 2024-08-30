@@ -11,32 +11,33 @@ const initialState = {
   notice: false,
   jobListingLoader: false,
   currentPage: "",
+  saveMultiApplyErr: false,
+  multiApp: "",
 };
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-export const applyForJob = createAsyncThunk("apply/applyJob", async (id) => {
-  try {
-    const res = await axios.post(
-      `${API_HOST_URL}/api/job-postings/${id.jobPostingId}/apply`,
-      id,
+export const applyForJob = createAsyncThunk(
+  "apply/applyJob",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `${API_HOST_URL}/api/job-postings/${id.jobPostingId}/apply`,
+        id,
 
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token.authKey,
-        },
-      }
-    );
-    res.data =
-      "You have already applied to this job. Multiple applications are not allowed."
-        ? res.data
-        : null;
-  } catch (error) {
-    console.log(error);
-    return error;
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const TalentApplicationSlice = createSlice({
   name: "applyForJob",
@@ -73,6 +74,7 @@ const TalentApplicationSlice = createSlice({
       .addCase(applyForJob.rejected, (state, action) => {
         state.loading = false;
         state.jobListingLoader = false;
+        state.multiApp = action.payload;
         state.error = true;
         state.successSaved = false;
       });
