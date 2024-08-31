@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_HOST_URL } from "../utils/api/API_HOST";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 const initialState = {
   jobListingerror: false,
   successJobListing: false,
@@ -16,6 +18,10 @@ const token =
 export const applyInJobListing = createAsyncThunk(
   "apply/applyJob",
   async (id, { rejectWithValue }) => {
+    // if (!token.authKey) {
+    //   navigate("/login");
+    //   return;
+    // }
     try {
       const res = await axios.post(
         `${API_HOST_URL}/api/job-postings/${id.jobPostingId}/apply`,
@@ -73,6 +79,7 @@ const jobListingApplicationSlice = createSlice({
         state.jobListingLoader = false;
         state.jobListingerror = false;
         state.successJobListing = true;
+        state.multiApplyErr = false;
       })
       .addCase(applyInJobListing.rejected, (state, action) => {
         state.jobListingLoader = false;

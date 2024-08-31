@@ -16,7 +16,11 @@ const RecommendationCard = ({ recommendedJobs }) => {
   return (
     <div className={`${s.RecommendationCardWrapper} `}>
       <div className={`${s.CompanyDetails} `}>
-        <img src={recommendedJobs.company_logo} alt="logo" />
+        <img
+          className="w-[50px] h-[50px]"
+          src={recommendedJobs.employer_profile_pic}
+          alt="logo"
+        />
         <div className="">
           <span>
             <p> {recommendedJobs.company_name} </p>

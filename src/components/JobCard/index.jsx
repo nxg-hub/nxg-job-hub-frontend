@@ -9,7 +9,7 @@ import { API_HOST_URL } from "../../utils/api/API_HOST";
 const JobCard = ({
   job_title,
   job_description,
-
+  jobStatus,
   createdAt,
   deadline,
   jobID,
@@ -52,6 +52,9 @@ const JobCard = ({
       <header className={s.CardHeader}>
         <p>
           Job Title: <strong>{job_title}</strong>
+        </p>
+        <p>
+          Job Status: <strong>{jobStatus}</strong>
         </p>
       </header>
       <main>

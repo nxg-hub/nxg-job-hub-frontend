@@ -32,9 +32,11 @@ const Login = () => {
         email,
         password,
       });
-
       const authKey = res.headers.authorization;
-
+      if (!authKey) {
+        navigate("/login");
+        return;
+      }
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
           "Content-Type": "application/json",

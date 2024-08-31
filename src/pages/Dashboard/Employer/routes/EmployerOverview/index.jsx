@@ -17,7 +17,8 @@ const EmployerOverview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(3);
   const user = useContext(UserContext);
-  const { posts } = useFetchJobs(user.accountTypeID);
+  const { posts, loading } = useFetchJobs(user.accountTypeID);
+
   // Get current posts
   const indexOfLastPost = currentPage * jobsPerPage;
   const indexOfFirstPost = indexOfLastPost - jobsPerPage;
@@ -74,7 +75,11 @@ const EmployerOverview = () => {
       </div>
       <div className={s.Recently}>
         <h2>Recently Posted Jobs:</h2>
-        {currentJobPost.length > 0 ? (
+        {loading ? (
+          <div>
+            <h2>Loading Jobs....</h2>
+          </div>
+        ) : currentJobPost.length > 0 ? (
           currentJobPost.map((post, o) => <JobCard key={o} {...post} />)
         ) : (
           <div className={s.NoPostsFallbackUI}>
@@ -98,7 +103,7 @@ const EmployerOverview = () => {
       <div className="employer-stats">
         <Statistics />
         <CompanyProfile />
-        <CompanyServices />
+        {/* <CompanyServices /> */}
       </div>
     </div>
   );

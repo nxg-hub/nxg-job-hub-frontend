@@ -12,7 +12,7 @@ const JobPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(3);
   const { accountTypeID } = useContext(UserContext);
-  const { posts, popup } = useFetchJobs(accountTypeID);
+  const { posts, popup, loading } = useFetchJobs(accountTypeID);
   const dispatch = useDispatch();
   const postPage = useSelector((state) => state.FilterSlice.postPage);
   // Get current posts
@@ -32,7 +32,11 @@ const JobPosts = () => {
     <div className="">
       <div className={s.JobPosts}>
         <div>
-          {currentJobPost.length > 0 ? (
+          {loading ? (
+            <div>
+              <h2>Loading Jobs.....</h2>
+            </div>
+          ) : currentJobPost.length > 0 ? (
             currentJobPost.map((post, i) => {
               // const description = JSON.parse(post.description.split("/").join()[0]);
               return <JobCard key={i} {...post} postPage={postPage} />;

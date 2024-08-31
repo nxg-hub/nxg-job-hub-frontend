@@ -14,13 +14,11 @@ const SavedJobCard = ({ job, onClick }) => {
   const [jobPostingId] = useState({
     jobPostingId: job?.jobID,
   });
-  console.log(job);
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "NGN",
   });
   const dispatch = useDispatch();
-
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -31,15 +29,19 @@ const SavedJobCard = ({ job, onClick }) => {
       ? dispatch(applyForJob(jobPostingId))
       : dispatch(setNoticeTrue());
   };
-  // const { data: applicantCount } = useApiRequest(
-  //   `/api/employers/${job.jobID}/applicants/count`
-  // );
+  const { data: applicantCount } = useApiRequest(
+    `/api/employers/${job.jobID}/applicants/count`
+  );
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in">
       <div className="flex flex-col gap-y-2">
         <div className="flex justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src={job?.logo} alt="logo" />
+            <img
+              className="w-[50px] h-[50px]"
+              src={job?.employer_profile_pic}
+              alt="logo"
+            />
             <div className="flex flex-col">
               <span className="font-bold md:text-xl">{job?.company}</span>
               <div className="flex items-center gap-x-2">

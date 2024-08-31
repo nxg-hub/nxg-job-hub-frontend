@@ -10,6 +10,7 @@ import {
   setSelectedJobTypes,
   setSelectedLevels,
 } from "../../../redux/FilterSlice";
+import { useNavigate } from "react-router-dom";
 
 function DashboardSearch({
   onJobsFetched,
@@ -19,6 +20,7 @@ function DashboardSearch({
 }) {
   // const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   // const [selectedLevels, setSelectedLevels] = useState([]);
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,6 +38,10 @@ function DashboardSearch({
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const fetchedJobs = () => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     setLoading(true);
     axios
       .get(baseUrl, {
@@ -46,14 +52,23 @@ function DashboardSearch({
       })
       .then((response) => {
         const jobsArray = !response.data.content
-          ? response.data.map((job) => ({
-              job_title: job.job_title,
-              job_location: job.job_location,
-            }))
-          : response.data.content.map((job) => ({
-              job_title: job.jobPosting.job_title,
-              job_location: job.jobPosting.job_location,
-            }));
+          ? response.data
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job) => ({
+                job_title: job.job_title,
+                job_location: job.job_location,
+              }))
+          : response.data.content
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job) => ({
+                job_title: job.jobPosting.job_title,
+                job_location: job.jobPosting.job_location,
+              }));
+        // console.log(jobsArray);
         // Update's the fetched jobs
         onJobsFetched(jobsArray);
         setLoading(false);

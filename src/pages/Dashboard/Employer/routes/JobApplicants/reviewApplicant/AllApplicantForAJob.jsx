@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getTalentID } from "../../../../../../redux/FilterSlice";
 
 const AllApplicantForAJob = (app) => {
   const applicantDetails = app.app.applicant;
   const applicantTalent = app.app.techTalent;
+  const matchingScore = app.app.matchingScore;
   const id = applicantDetails.id;
   const dispatch = useDispatch();
   const getTalentId = () => {
@@ -25,6 +26,10 @@ const AllApplicantForAJob = (app) => {
             <span className="font-bold items-center">
               {applicantDetails?.firstName}
             </span>
+          </h3>
+          <h3>
+            Matching Score:
+            <span className="font-bold items-center">{matchingScore}</span>
           </h3>
         </li>
       </div>

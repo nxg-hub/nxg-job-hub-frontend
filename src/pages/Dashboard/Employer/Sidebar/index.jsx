@@ -33,7 +33,7 @@ import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 const Sidebar = ({ profilePic, ...props }) => {
   const user = useContext(UserContext);
   const [profilePicture, setProfilePicture] = useState(profilePic || null);
-  console.log(profilePicture);
+  // console.log(profilePicture);
   const [isOpen, setIsOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [message, setMessage] = useState(null);
@@ -53,7 +53,6 @@ const Sidebar = ({ profilePic, ...props }) => {
 
   const { data: loggedInUser } = useApiRequest("/api/employers/get-employer");
   const userID = loggedInUser.employerID;
-  console.log(userID);
   const logOutUser = async () => {
     try {
       const response = await fetch(
@@ -330,7 +329,7 @@ const Sidebar = ({ profilePic, ...props }) => {
   // };
   return (
     <div className={s.Sidebar}>
-      <Link to="/">
+      <Link>
         <img src={logo} alt="logo" />
       </Link>
       <div className={s.Profile}>
@@ -340,8 +339,11 @@ const Sidebar = ({ profilePic, ...props }) => {
             style={profilePicture && { padding: 0 }}>
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
-          <label htmlFor="profilepic">
-            <ChangeProfilePicture title="upload profile picture" />
+          <label className="flex flex-col" htmlFor="profilepic">
+            <span className="absolute right-7">
+              <ChangeProfilePicture title="upload company logo" />
+            </span>
+            <span className="relative">Company Logo </span>
           </label>
 
           <input
@@ -349,6 +351,7 @@ const Sidebar = ({ profilePic, ...props }) => {
             accept="image/png, image/jpg, image/jpeg"
             type="file"
             onChange={uploadProfilePicture}
+            placeholder="Company Logo"
             style={{ display: "none" }}
           />
         </div>
@@ -442,24 +445,24 @@ const Sidebar = ({ profilePic, ...props }) => {
             </div>
             <p>Job Posts</p>
           </NavLink>
-          <NavLink end to="applicants" className={`${s.dashboardItem} `}>
+          {/* <NavLink end to="applicants" className={`${s.dashboardItem} `}>
             <div>
               <Applicants />
             </div>
             <p>Job Applicants</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink end to="interviews" className={`${s.dashboardItem} `}>
             <div>
               <Interviews />
             </div>
             <p>Interviews</p>
           </NavLink>
-          <NavLink end to="services" className={`${s.dashboardItem} `}>
+          {/* <NavLink end to="services" className={`${s.dashboardItem} `}>
             <div>
               <Services fill="white" />
             </div>{" "}
             <p>My Company Services</p>
-          </NavLink>
+          </NavLink> */}
         </div>
         <h2>Settings</h2>
         <div className={s.Settings}>

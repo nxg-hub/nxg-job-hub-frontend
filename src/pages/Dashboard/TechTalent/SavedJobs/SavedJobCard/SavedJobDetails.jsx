@@ -16,7 +16,6 @@ const SavedJobDetails = ({ details, onClose }) => {
     jobPostingId: jobData.jobID,
   });
   const dispatch = useDispatch();
-
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -36,13 +35,17 @@ const SavedJobDetails = ({ details, onClose }) => {
       <div className="flex w-full gap-y-4 flex-col">
         <div className="flex w-full justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src={details?.logo} alt="logo" />
+            <img
+              className="w-[50px] h-[50px]"
+              src={details?.jobPosting?.employer_profile_pic}
+              alt="logo"
+            />
             <div className="flex flex-col">
               <span className="font-bold md:text-xl">{details?.company}</span>
               <div className="flex items-center gap-x-2">
                 <img src="/dashboard/location.png" alt="location" />
                 <span className="md:text-sm capitalize font-medium text-[#444444]">
-                  {details.jobPosting?.job_location}
+                  {details?.jobPosting?.job_location}
                 </span>
               </div>
             </div>
