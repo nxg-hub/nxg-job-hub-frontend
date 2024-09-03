@@ -41,7 +41,15 @@ const JobCard = ({ job, handleShowDetails }) => {
       <div className="flex flex-col gap-y-2">
         <div className="flex justify-between">
           <div className="items-center gap-x-2 flex">
-            <img src="/dashboard/figma-logo.png" alt="logo" />
+            <img
+              className="w-[50px] h-[50px]"
+              src={
+                job.employer_profile_pic
+                  ? `${job.employer_profile_pic} `
+                  : "/dashboard/figma-logo.png"
+              }
+              alt="logo"
+            />
             <div className="flex flex-col capitalize">
               <span className="font-bold md:text-xl">
                 {job.employer_name || "Employer"}

@@ -24,6 +24,9 @@ function TechTalentOverview() {
   const [filtermsg, setFilterMsg] = useState(false);
   const [filteredJobType, setFilteredJobType] = useState([]);
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const fetchNotifications = async () => {
     // Your logic to fetch notifications from the API
@@ -67,6 +70,10 @@ function TechTalentOverview() {
   };
 
   useEffect(() => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     dispatch(fetchLoggedInUser());
     dispatch(fetchNearJob(`/api/job-postings/recommend-nearby-jobs`));
   }, []);
@@ -167,16 +174,23 @@ function TechTalentOverview() {
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
           ) : (
             !showNearByJobs &&
-            nearByJobs.map((job, i) => {
-              return <RecommendationCard key={i * 5} recommendedJobs={job} />;
-            })
+            nearByJobs
+              .filter((job) => {
+                return job.jobStatus === "ACCEPTED";
+              })
+              .map((job, i) => {
+                return <RecommendationCard key={i * 5} recommendedJobs={job} />;
+              })
           )}
           {searchedJobLoader && showNearByJobs ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
           ) : showNearByJobs && !jobType && searchedJobTitle ? (
             searchedJob
               ?.filter((job) => {
-                return job.job_title === searchedJobTitle;
+                return (
+                  job.job_title === searchedJobTitle &&
+                  job.jobStatus === "ACCEPTED"
+                );
               })
               .map((jobRecommendation, i) => {
                 // jobRecommendation.company_logo = figma;

@@ -5,10 +5,19 @@ import {
   searchJob,
 } from "../../../redux/SearchJobSlice";
 import { closeOptions } from "../../../redux/NearbyJobSlice";
+import { useNavigate } from "react-router-dom";
 
 function SearchJobCard({ job, currentPage }) {
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchNearbyJob = () => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     dispatch(getJobTitle(job.job_title));
     dispatch(getCurrentPage(currentPage));
     dispatch(closeOptions());

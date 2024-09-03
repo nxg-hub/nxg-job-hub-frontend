@@ -1,7 +1,8 @@
 // Slice
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_HOST_URL } from "../utils/api/API_HOST";
-
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 const initialState = {
   loggedInUser: [],
   loading: false,
@@ -14,6 +15,10 @@ const token =
 export const fetchLoggedInUser = createAsyncThunk(
   "logedInUser/fetchUser",
   async () => {
+    // if (!token.authKey) {
+    //   navigate("/login");
+    //   return;
+    // }
     return await fetch(`${API_HOST_URL}/api/v1/tech-talent/get-user`, {
       method: "GET",
       headers: {

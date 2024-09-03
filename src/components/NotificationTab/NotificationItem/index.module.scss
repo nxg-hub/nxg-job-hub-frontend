@@ -58,7 +58,9 @@
         &::first-letter {
           text-transform: capitalize;
         }
-        text-align: right;
+        & {
+          text-align: right;
+        }
       }
     }
     button {

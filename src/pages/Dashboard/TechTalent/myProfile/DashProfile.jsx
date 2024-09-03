@@ -43,10 +43,6 @@ function DashProfile() {
   const navigateCompleteProfilePage = () => {
     navigate("/techprofileform");
   };
-  const loggedInUser = useSelector(
-    (state) => state.LoggedInUserSlice.loggedInUser
-  );
-  const userVerified = loggedInUser.verified;
   const fetchTalentData = useCallback(async () => {
     try {
       const loginKey =
@@ -55,6 +51,7 @@ function DashProfile() {
 
       if (!loginKey) {
         console.error("Authentication key not available.");
+        navigate("/login");
         return;
       }
 
@@ -88,7 +85,7 @@ function DashProfile() {
       // setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
-      const updatedVerificationStatus = talentData.isVerified || false;
+      const updatedVerificationStatus = talentData.verified || false;
       setVerificationStatus(updatedVerificationStatus);
 
       // Save verification status to local storage
@@ -261,7 +258,7 @@ function DashProfile() {
                   </span>
                 </p>
               </div>
-              {!userVerified && (
+              {!isVerified && (
                 <Link to="/techprofileform" className="acct-verify">
                   <MdOutlineVerifiedUser fontSize="1.2rem" color="#2596be" />
                   <span>Verify Account</span>
@@ -367,6 +364,13 @@ function DashProfile() {
             </div>
             <div className="add-experience-btn" onClick={addExperience}>
               <GoPlus className="plus-icon" /> <span>Add Experience</span>
+            </div>
+            <div
+              onClick={() => {
+                navigate("/techprofileform");
+              }}
+              className="mt-6 bg-transparent px-4 py-3 border border-gray-800 rounded-md w-[50%] cursor-pointer ">
+              Edit profile
             </div>
             {openInput && (
               <Dialog

@@ -329,12 +329,12 @@ const Sidebar = () => {
             </NavLink>
           </ul>
         </li>
-        <NavLink end to="help" className={`${s.dashboardItem} `}>
+        {/* <NavLink end to="help" className={`${s.dashboardItem} `}>
           <div>
             <Help />
           </div>
           <p> Help </p>
-        </NavLink>
+        </NavLink> */}
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}

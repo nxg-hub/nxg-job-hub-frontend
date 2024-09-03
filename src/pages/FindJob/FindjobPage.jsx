@@ -6,8 +6,11 @@ import avater from "../../static/images/user.png";
 import Logo from "../../static/images/nxg-logo.png";
 import Footer from "../../components/footer/Footer";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
+import ReactPaginate from "react-paginate";
 
 const FindjobPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(3);
   const [searchTerm, setSearchTerm] = useState("");
   const [jobsResult, setJobsResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +25,10 @@ const FindjobPage = () => {
           throw new Error(`API request failed with status ${response.status}`);
         }
         const data = await response.json();
-        setJobsResult(data);
+        const acceptedData = data.filter((job) => {
+          return job.jobStatus === "ACCEPTED";
+        });
+        setJobsResult(acceptedData);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -50,10 +56,22 @@ const FindjobPage = () => {
 
   const filteredJobs =
     searchTerm && jobsResult.length > 0
-      ? jobsResult.filter((job) =>
-          job.job_title.toLowerCase().includes(searchTerm)
+      ? jobsResult.filter(
+          (job) =>
+            job.job_title.toLowerCase().includes(searchTerm) &&
+            job.jobStatus === "ACCEPTED"
         )
       : jobsResult;
+
+  // Get current posts
+  const indexOfLastPost = currentPage * jobsPerPage;
+  const indexOfFirstPost = indexOfLastPost - jobsPerPage;
+  const currentJobPost = filteredJobs.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
 
   return (
     <div className="jobfinder">
@@ -87,14 +105,14 @@ const FindjobPage = () => {
         <>
           {filteredJobs.length > 0 && (
             <div className="job-results">
-              {filteredJobs.map((data) => (
+              {currentJobPost.map((data) => (
                 <div className="jobPost" key={data.id}>
                   <div className="employer-img">
                     <div className="user-img">
                       <img src={data.employer_profile_pic || avater} alt="" />
                     </div>
                     <div className="employer-details">
-                      <h4 className="name">
+                      <h4 className="name capitalize">
                         <b>{data.employer_name || "Kristy Haag"}</b>
                       </h4>
                       <h2>Employer</h2>
@@ -102,7 +120,7 @@ const FindjobPage = () => {
                   </div>
                   <div className="details">
                     <div className="jobDetails">
-                      <h3>
+                      <h3 className=" capitalize">
                         <b>Job Category:</b> {data.job_title}
                       </h3>
                       <h3>
@@ -129,8 +147,21 @@ const FindjobPage = () => {
           {filteredJobs.length === 0 && searchTerm && (
             <p className="no-results">No jobs found for "{searchTerm}"</p>
           )}
+          <ReactPaginate
+            onPageChange={paginate}
+            pageCount={Math.ceil(filteredJobs.length / jobsPerPage)}
+            previousLabel={"Prev"}
+            nextLabel={"Next"}
+            containerClassName={"pagination"}
+            pageLinkClassName={"page-number"}
+            previousLinkClassName={"page-number"}
+            nextLinkClassName={"page-number"}
+            activeLinkClassName="active bg-[#2596BE] px-3 rounded-xl"
+            className="flex w-[90%] m-auto justify-between pt-3 pb-3"
+          />
         </>
       )}
+
       <Footer />
     </div>
   );

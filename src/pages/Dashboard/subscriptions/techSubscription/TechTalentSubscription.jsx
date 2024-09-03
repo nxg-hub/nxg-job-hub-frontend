@@ -12,6 +12,10 @@ function TechTalentSubscription() {
   const navigate = useNavigate();
 
   const fetchTalentData = useCallback(async () => {
+    if (!token.authKey) {
+      navigate("/login");
+      return;
+    }
     try {
       const loginKey =
         window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||

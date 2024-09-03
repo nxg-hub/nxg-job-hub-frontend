@@ -68,6 +68,7 @@ const Dashboard = () => {
         JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
         {};
       // get authkey if null, redirect to login
+
       if (localdata.authKey) {
         setAuth(localdata.authKey);
         try {
@@ -103,6 +104,9 @@ const Dashboard = () => {
             message:
               "Failed to fetch user resources. Please try logging in again.",
           });
+          err.response.data === "Expired JWT token!"
+            ? navigate("/login")
+            : null;
         }
       } else {
         navigate("/login");

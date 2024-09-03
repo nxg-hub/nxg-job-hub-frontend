@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { FaSquareFull } from "react-icons/fa";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../../../utils/api/API_HOST";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CompanyProfile() {
   const [companyDescription, setCompanyDescription] = useState("");
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [employerDataLoaded, setEmployerDataLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployerData = async () => {
@@ -16,6 +17,7 @@ export default function CompanyProfile() {
           window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
           window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
         if (!loginKey) {
+          navigate("/login");
           console.error("Authentication key not available.");
           return;
         }
