@@ -103,7 +103,7 @@ const JobCards = () => {
                         <h3>{job.job_title}</h3>
                         <div className="card-detail-texts">
                           {job.job_title}
-                          <p>{job.job_description}</p>
+                          <p>{job.job_description.slice(0, 310)}...</p>
                         </div>
                         <div className="read" style={{ marginTop: "1rem" }}>
                           <Link
