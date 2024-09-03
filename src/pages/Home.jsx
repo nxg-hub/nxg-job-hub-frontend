@@ -78,7 +78,7 @@ const Home = () => {
         <Link to={"/register"} className="post-btn">
           Post Jobs
         </Link>
-        <Link to="/findjob" className="find-btn">
+        <Link to="/login" className="find-btn">
           Find Jobs
         </Link>
       </div>

@@ -25,7 +25,7 @@ const Footer = () => {
   const QuickFooterLinks = [
     { title: "Get started", href: "/register" },
     { title: "Post a job", href: "/login" },
-    { title: "Find a job", href: "/findjob" },
+    { title: "Find a job", href: "/login" },
   ];
 
   // const handleSubmit = (e) => {
