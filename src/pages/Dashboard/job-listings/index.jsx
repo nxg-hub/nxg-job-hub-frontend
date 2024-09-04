@@ -36,6 +36,12 @@ const JobListings = () => {
   );
   const searchedJob = useSelector((state) => state.SearchJobSlice.searchedJob);
   const searchJobLoader = useSelector((state) => state.SearchJobSlice.loading);
+
+  //getting the filtered job type from the redux store
+  const selectedJobTypes = useSelector(
+    (state) => state.FilterSlice.selectedJobTypes
+  );
+  const jobType = selectedJobTypes.value;
   //application states from redux store
   const success = useSelector(
     (state) => state.JobListingApplicationSlice.successJobListing
@@ -76,6 +82,10 @@ const JobListings = () => {
       setLoading(false);
     }
   };
+
+  const acceptedJob = jobs.filter((job) => {
+    return job.jobStatus === "ACCEPTED";
+  });
   useEffect(() => {
     if (!token.authKey) {
       navigate("/login");
@@ -104,7 +114,6 @@ const JobListings = () => {
     setShowDetails(false);
     // setSuccessfull(true);
   };
-  // console.log(nearByJobs);
   //storing the job url to be passed as props to the search component
   const allJobsUrl = `/api/job-postings/all`;
   //current page to be passed as prop to the search component
@@ -144,17 +153,25 @@ const JobListings = () => {
         ) : (
           !showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-              {jobs
-                .filter((job) => {
-                  return job.jobStatus === "ACCEPTED";
-                })
-                .map((job, i) => (
-                  <JobCard
-                    key={i}
-                    job={job}
-                    handleShowDetails={() => handleCardClick(job)}
-                  />
-                ))}
+              {!jobType
+                ? acceptedJob.map((job, i) => (
+                    <JobCard
+                      key={i}
+                      job={job}
+                      handleShowDetails={() => handleCardClick(job)}
+                    />
+                  ))
+                : acceptedJob
+                    .filter((job) => {
+                      return job.job_type === jobType;
+                    })
+                    .map((job, i) => (
+                      <JobCard
+                        key={i}
+                        job={job}
+                        handleShowDetails={() => handleCardClick(job)}
+                      />
+                    ))}
             </div>
           )
         )}
@@ -167,21 +184,38 @@ const JobListings = () => {
         ) : (
           showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
-              {searchedJob
-                ?.filter((job) => {
-                  return (
-                    job.job_title === searchedJobTitle &&
-                    job.jobStatus === "ACCEPTED"
-                  );
-                })
-                .map((job, i) => (
-                  <JobCard
-                    key={i}
-                    job={job}
-                    handleShowDetails={() => handleCardClick(job)}
-                    // handleApply={handleApply}
-                  />
-                ))}
+              {!jobType
+                ? searchedJob
+                    ?.filter((job) => {
+                      return (
+                        job.job_title === searchedJobTitle &&
+                        job.jobStatus === "ACCEPTED"
+                      );
+                    })
+                    .map((job, i) => (
+                      <JobCard
+                        key={i}
+                        job={job}
+                        handleShowDetails={() => handleCardClick(job)}
+                        // handleApply={handleApply}
+                      />
+                    ))
+                : searchedJob
+                    ?.filter((job) => {
+                      return (
+                        job.job_title === searchedJobTitle &&
+                        job.jobStatus === "ACCEPTED" &&
+                        job.job_type === jobType
+                      );
+                    })
+                    .map((job, i) => (
+                      <JobCard
+                        key={i}
+                        job={job}
+                        handleShowDetails={() => handleCardClick(job)}
+                        // handleApply={handleApply}
+                      />
+                    ))}
             </div>
           )
         )}

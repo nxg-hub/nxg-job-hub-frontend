@@ -14,6 +14,7 @@ const Interview = () => {
   const employerID = employerData?.employerID;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [noApplicant, setNoApplicant] = useState(false);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -28,35 +29,39 @@ const Interview = () => {
   //fetching number of applicants for each job
   const fetchData = async () => {
     setLoading(true);
-    await fetch(
-      `${API_HOST_URL}/api/employers/employers/${employerID}/get-all-applicants?page=0&size=1000&sort=string`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token.authKey,
-        },
-      }
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setAllApplicant(data);
-        setLoading(false);
-      })
-
-      .catch((error) => {
-        console.log(error);
-        setError(true);
-      });
+    try {
+      await fetch(
+        `${API_HOST_URL}/api/employers/employers/${employerID}/get-all-applicants?page=0&size=1000&sort=string`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      )
+        .then((response) => {
+          if (response.status === 404) {
+            setNoApplicant(true);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setAllApplicant(data);
+          setLoading(false);
+        });
+    } catch (err) {
+      console.log(error);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     if (employerID) {
       fetchData();
     }
   }, [employerID]);
-
   //filtering all accepted applicant
   const accepted = allApplicant?.filter((app) => {
     return app.applicationStatus === "APPROVED";
@@ -69,12 +74,16 @@ const Interview = () => {
           src={spinner}
           alt="spinner"
         />
-      ) : !loading && error ? (
+      ) : !loading && error && !noApplicant ? (
         <div>
           <h2>
             Something went wrong. <br /> Check Internet Connection.
           </h2>
         </div>
+      ) : !loading && noApplicant ? (
+        <h2 className="font-bold mt-11 text-center">
+          You do not have any accepted applicants yet.
+        </h2>
       ) : (
         <>
           <div className="w-[80%] m-auto mt-[50px] font-bold  md:text-3xl font-mono text-center">

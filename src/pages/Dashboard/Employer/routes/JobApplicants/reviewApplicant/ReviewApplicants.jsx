@@ -19,9 +19,14 @@ const ReviewApplicants = () => {
     loading,
     error,
   } = useApiRequest(
-    `/api/employers/job-postings/${id}/get-all-applicants-for-a-job`
+    `/api/employers/job-postings/${id}/get-all-applicants-for-a-job?page=0&size=1000&sort=string`
   );
+  const pendingApplicant = jobApplicant.filter(
+    (app) => app.applicationStatus === "PENDING"
+  );
+
   const job = jobApplicant[0]?.jobPosting;
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getJobID(id));
@@ -59,19 +64,19 @@ const ReviewApplicants = () => {
         </div>
       ) : (
         <>
-          {jobApplicant.length !== 0 && (
+          {pendingApplicant.length !== 0 && (
             <div className="w-[85%] m-auto my-11">
               <h1 className="text-center text-sm md:text-xl font-extrabold capitalize">
                 {`All Applicants For ${job?.job_title}  Position at ${job?.employer_name} `}
               </h1>
             </div>
           )}
-          {jobApplicant.map((app, i) => (
+          {pendingApplicant.map((app, i) => (
             <AllApplicantForAJob key={i} app={app} />
           ))}
-          {jobApplicant.length === 0 && (
+          {pendingApplicant.length === 0 && (
             <div className="w-[50%] m-auto font-bold">
-              <h2>Nobody has applied for this job yet.</h2>
+              <h2>Nobody pending review for this job yet.</h2>
             </div>
           )}
           {/* <SuggestedApplicantModal /> */}

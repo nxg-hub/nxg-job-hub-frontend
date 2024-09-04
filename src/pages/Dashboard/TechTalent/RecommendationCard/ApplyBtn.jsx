@@ -3,8 +3,6 @@ import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { applyForJob } from "../../../../redux/TalentApplicationSlice";
-import AppMessage from "./AppMessage";
-import AppErrorMessage from "./AppErrorMessage";
 import spinner from "../../../../static/icons/spinner.svg";
 
 const ApplyBtn = ({ jobID }) => {
@@ -46,7 +44,10 @@ const ApplyBtn = ({ jobID }) => {
             }
           )
           .then((res) => {
-            console.log(res);
+            console.log(res.data);
+            if (res.data === "Application Successful!") {
+              setSuccess(true);
+            }
             return res.json();
           })
           .then((data) => {
@@ -69,6 +70,8 @@ const ApplyBtn = ({ jobID }) => {
       setNotice(true);
     }
   };
+  // console.log(error);
+  // console.log(success);
 
   //
 
