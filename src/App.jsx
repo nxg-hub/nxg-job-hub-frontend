@@ -35,7 +35,7 @@ import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 import Help from "./pages/Dashboard/Help/Help.jsx";
 import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
-import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
+import  from "./pages/Dashboard/Employer/routes/Interview/Interview";
 import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
 import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
 import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";

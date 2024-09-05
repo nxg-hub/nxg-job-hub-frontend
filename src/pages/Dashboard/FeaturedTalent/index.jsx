@@ -133,6 +133,7 @@ function FeaturedTalent() {
                 >
                   View Resume
                 </a>
+                <button>Request For Talent</button>
               </div>
             )}
           </div>
