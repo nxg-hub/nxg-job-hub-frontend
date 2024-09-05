@@ -40,6 +40,7 @@ import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices
 import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
 import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
 import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
+import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 function App() {
   return (
     <>
@@ -67,7 +68,8 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }
+          ></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -78,10 +80,12 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
+            }
+          >
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
+            <Route path="featuredTalent" element={<FeaturedTalent />} />
             {/* <Route path="profile" element={<VerificationProvider>
               <ProfileController />
             </VerificationProvider>} /> */}

@@ -1,0 +1,72 @@
+/* FeaturedTalent.scss */
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 96%;
+  margin: 1rem;
+  h2 {
+    margin-bottom: 6rem;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .talent-list {
+    margin-bottom: 20px;
+    // .talent-item {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   flex-direction: row;
+    //   border-bottom: 1px solid #e0e0e0;
+    // }
+    .talent-item {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      border-bottom: 1px solid #e0e0e0;
+      .talent-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+    }
+    .talentText {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #e0e0e0;
+      border-top: 1px solid #e0e0e0;
+    }
+    .talent-item:last-child {
+      border-bottom: none;
+    }
+    .talent-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .view-button:hover {
+      color: #0056b3;
+    }
+  }
+  .add-talent {
+    color: #0056b3;
+    padding: 10px 30px;
+    border: 1px solid #0056b3;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .addbutton {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+  }
+}
