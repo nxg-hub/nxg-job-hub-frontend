@@ -66,8 +66,10 @@
         &:last-child {
           border-bottom: none;
         }
-        justify-content: center;
-        padding: 5px;
+        .task {
+          justify-content: center;
+          padding: 5px;
+        }
         small {
           text-align: center;
           color: grey;

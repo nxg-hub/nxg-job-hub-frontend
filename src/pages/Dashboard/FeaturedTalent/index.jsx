@@ -1,49 +1,3 @@
-// import React from "react";
-// import "./FeaturedTalent.scss";
-// import { TalentProfile } from "./Data";
-// import icon from "../../../static/icons/mi_filter.svg";
-// import "./FeaturedTalent.scss";
-
-// function FeaturedTalent() {
-//   return (
-//     <div className="featured-talents-list container">
-//       <h2>Featured Talents</h2>
-//       <div className="talent-list">
-//         <div className="talentText">
-//           <div className="text">
-//             <h4>Tech Talents</h4>
-//             <h4>Frontend Developer</h4>
-//           </div>
-//           <div className="icon">
-//             <img src={icon} alt="" />
-//           </div>
-//         </div>
-//         {TalentProfile.map((talent) => (
-//           <div key={talent.id} className="talent-item">
-//             <div className="talent-info">
-//               {" "}
-//               <img
-//                 src={talent.picture}
-//                 alt="talentPicture"
-//                 className="profile-pic"
-//               />
-//               <div className="detail">
-//                 <h3>{talent.name}</h3>
-//                 <h3>{talent.title}</h3>
-//               </div>
-//             </div>
-//             <div className="view-button" to="/">
-//               View
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default FeaturedTalent;
-
 import React, { useEffect, useState } from "react";
 import "./FeaturedTalent.scss";
 import icon from "../../../static/icons/mi_filter.svg";
@@ -117,10 +71,15 @@ function FeaturedTalent() {
       <div className="talent-list">
         <div className="talentText">
           <div className="text">
-            <h4>Tech Talents</h4>
+            <h4>
+              <b>Tech Talents</b>
+            </h4>
             <h4>{selectedTechStack}</h4>
           </div>
           <div className="icon" onClick={toggleFilterVisibility}>
+            <h3>
+              <b>Filter</b>
+            </h3>
             <img src={icon} alt="" />
           </div>
         </div>
