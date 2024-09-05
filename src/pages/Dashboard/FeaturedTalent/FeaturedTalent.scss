@@ -6,6 +6,7 @@
   padding: 20px;
   max-width: 96%;
   margin: 1rem;
+  cursor: pointer;
   h2 {
     margin-bottom: 6rem;
     font-weight: bold;
@@ -13,12 +14,6 @@
   }
   .talent-list {
     margin-bottom: 20px;
-    // .talent-item {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   flex-direction: row;
-    //   border-bottom: 1px solid #e0e0e0;
-    // }
     .talent-item {
       display: flex;
       justify-content: space-between;

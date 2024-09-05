@@ -71,10 +71,15 @@ function FeaturedTalent() {
       <div className="talent-list">
         <div className="talentText">
           <div className="text">
-            <h4>Tech Talents</h4>
+            <h4>
+              <b>Tech Talents</b>
+            </h4>
             <h4>{selectedTechStack}</h4>
           </div>
           <div className="icon" onClick={toggleFilterVisibility}>
+            <h3>
+              <b>Filter</b>
+            </h3>
             <img src={icon} alt="" />
           </div>
         </div>
