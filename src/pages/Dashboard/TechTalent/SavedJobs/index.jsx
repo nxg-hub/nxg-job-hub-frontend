@@ -30,7 +30,11 @@ const SavedJobs = () => {
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-  const saved = savedJob.content;
+  const saved = savedJob?.content;
+  const acceptedSaved = saved?.filter((job) => {
+    return job.jobPosting.jobStatus === "ACCEPTED";
+  });
+
   const dispatch = useDispatch();
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -84,7 +88,6 @@ const SavedJobs = () => {
     dispatch(getCurrentPage(currentPage));
     dispatch(resetToDefault());
   }, []);
-
   //storing the job url to be passed as props to the search component
   const savedJobUrl = `/api/v1/tech-talent/my-jobs`;
   //searched term to fitered
@@ -122,7 +125,7 @@ const SavedJobs = () => {
             </h2>
           </div>
         ) : !jobType ? (
-          saved?.map((job) => (
+          acceptedSaved?.map((job) => (
             <SavedJobCard
               job={job.jobPosting}
               key={job.id}
@@ -130,7 +133,7 @@ const SavedJobs = () => {
             />
           ))
         ) : (
-          saved
+          acceptedSaved
             ?.filter((job) => {
               return job.jobPosting.job_type === jobType;
             })

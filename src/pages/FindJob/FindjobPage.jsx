@@ -44,7 +44,7 @@ const FindjobPage = () => {
     setSearchTerm(searchValue);
 
     const filtered = jobsResult.filter((job) =>
-      job.job_title.toLowerCase().includes(searchValue)
+      job?.job_title.toLowerCase().includes(searchValue)
     );
     setFilteredJobs(filtered);
   };
@@ -127,7 +127,8 @@ const FindjobPage = () => {
                         <b>Budget:</b> {data.salary}
                       </h3>
                       <h3 className="descb">
-                        <b>Description:</b> {data.job_description}
+                        <b>Description:</b> {data.job_description.slice(0, 300)}
+                        ....
                       </h3>
                       <Link to="/login" className="linkMore">
                         See More
