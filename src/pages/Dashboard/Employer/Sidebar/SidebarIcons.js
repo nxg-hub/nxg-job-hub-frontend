@@ -13,15 +13,16 @@ import Password from "../../../../static/icons/lock_icon.svg?react";
 import Wallet from "../../../../static/icons/uil_wallet.svg?react";
 import { CiUser } from "react-icons/ci";
 import { MdOutlineEdit } from "react-icons/md";
-import Notification from "../../../../static/icons/notification-new.svg?react"
-import Services from "../../../../static/icons/Company_services.svg?react"
-import Contract from "../../../../static/icons/clarity_contract-line.svg?react"
-import Interviews from "../../../../static/icons/tdesign_system-application.svg?react"
-import JobPosts from "../../../../static/icons/eos-icons_cronjob.svg?react"
-import PostJobs from "../../../../static/icons/map_general-contractor.svg?react"
-import Applicants from "../../../../static/icons/carbon_load-balancer-application.svg?react"
+import Notification from "../../../../static/icons/notification-new.svg?react";
+import Services from "../../../../static/icons/Company_services.svg?react";
+import Contract from "../../../../static/icons/clarity_contract-line.svg?react";
+import Interviews from "../../../../static/icons/tdesign_system-application.svg?react";
+import JobPosts from "../../../../static/icons/eos-icons_cronjob.svg?react";
+import PostJobs from "../../../../static/icons/map_general-contractor.svg?react";
+import Applicants from "../../../../static/icons/carbon_load-balancer-application.svg?react";
 export {
-  CiUser, ChangeProfilePicture,
+  CiUser,
+  ChangeProfilePicture,
   EditProfile,
   MyProfile,
   MdOutlineEdit,
@@ -36,5 +37,10 @@ export {
   Terms,
   Password,
   Notification,
-  Services, Contract,Interviews, Applicants, PostJobs, JobPosts
+  Services,
+  Contract,
+  Interviews,
+  Applicants,
+  PostJobs,
+  JobPosts,
 };

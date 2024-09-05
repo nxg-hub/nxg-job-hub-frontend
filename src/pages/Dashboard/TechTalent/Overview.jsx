@@ -45,6 +45,7 @@ function TechTalentOverview() {
     (state) => state.SearchJobSlice.displayJob
   );
   const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
+
   const searchedJob = useSelector((state) => state.SearchJobSlice.searchedJob);
   const searchedJobLoader = useSelector(
     (state) => state.SearchJobSlice.loading
@@ -87,12 +88,11 @@ function TechTalentOverview() {
   useEffect(() => {
     dispatch(resetToDefault());
   }, []);
-  //filtering search
 
+  //filtering search
   useEffect(() => {
     const filteredJob = searchedJob?.filter((job) => {
-      // job.job_type !== jobType ? setFilterMsg(true) : null;
-      return job.job_type === jobType;
+      return job.job_type === jobType && job.jobStatus === "ACCEPTED";
     });
     setFilteredJobType(filteredJob);
   }, [jobType, nearByJobs]);
@@ -147,7 +147,7 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {!recommendedJobs ? (
+          {recommendedJobs.length > 0 ? (
             recommendedJobs?.map((jobRecommendation, i) => {
               // jobRecommendation.company_logo = figma;
               return <RecommendationCard key={i} {...jobRecommendation} />;
