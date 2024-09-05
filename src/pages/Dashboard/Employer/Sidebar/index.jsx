@@ -19,7 +19,7 @@ import {
   Settings,
   Terms,
 } from "./SidebarIcons";
-import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
+import { PiCaretDown, PiSubtitlesBold, PiShieldCheck } from "react-icons/pi";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
 import { Dialog } from "@headlessui/react";
@@ -336,7 +336,8 @@ const Sidebar = ({ profilePic, ...props }) => {
         <div>
           <div
             className={s.displayPic}
-            style={profilePicture && { padding: 0 }}>
+            style={profilePicture && { padding: 0 }}
+          >
             {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
           </div>
           <label className="flex flex-col" htmlFor="profilepic">
@@ -366,7 +367,8 @@ const Sidebar = ({ profilePic, ...props }) => {
             maxWidth: "128px",
             color: "#000",
             margin: "0.6rem auto",
-          }}>
+          }}
+        >
           Edit Profile
         </p>
         <div className={s.employerFirm}>
@@ -394,7 +396,8 @@ const Sidebar = ({ profilePic, ...props }) => {
               notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
                 ? `${s.dashboardItem} ${s.Bell}`
                 : `${s.dashboardItem}`
-            }>
+            }
+          >
             <div>
               <Notification />
             </div>
@@ -429,6 +432,12 @@ const Sidebar = ({ profilePic, ...props }) => {
               <PiSubtitlesBold />
             </div>
             <p>Subscription</p>
+          </NavLink>
+          <NavLink end to="featuredTalent" className={`${s.dashboardItem} `}>
+            <div>
+              <PiShieldCheck />
+            </div>
+            <p>Featured Talent </p>
           </NavLink>
         </div>
         <h2>Manage Hiring</h2>
@@ -492,7 +501,8 @@ const Sidebar = ({ profilePic, ...props }) => {
               <NavLink
                 end
                 to="password-settings"
-                className={`${s.dashboardItem} `}>
+                className={`${s.dashboardItem} `}
+              >
                 {" "}
                 <div>
                   <Password />{" "}
@@ -525,7 +535,8 @@ const Sidebar = ({ profilePic, ...props }) => {
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div>
           <Logout />
         </div>
@@ -554,7 +565,8 @@ const Sidebar = ({ profilePic, ...props }) => {
               // padding: "2rem 1rem",
               // zIndex: "100",
             }
-          }>
+          }
+        >
           <Dialog.Backdrop className="fixed inset-0 bg-black/30" />
           <div className="w-full">
             <Dialog.Panel>
@@ -567,7 +579,8 @@ const Sidebar = ({ profilePic, ...props }) => {
                       // fontWeight: "600",
                       // textAlign: "center",
                     }
-                  }>
+                  }
+                >
                   Are you sure you want to logout?
                 </p>
                 <div
@@ -578,10 +591,12 @@ const Sidebar = ({ profilePic, ...props }) => {
                     alignItems: "center",
                     gap: "8px",
                     margin: "3rem auto",
-                  }}>
+                  }}
+                >
                   <button
                     onClick={moveToDashboard}
-                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10">
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                  >
                     Back To Dashboard
                   </button>
                   <button
@@ -599,7 +614,8 @@ const Sidebar = ({ profilePic, ...props }) => {
                         // fontSize: "25px",
                         // fontWeight: "500",
                       }
-                    }>
+                    }
+                  >
                     Continue To Logout
                   </button>
                 </div>

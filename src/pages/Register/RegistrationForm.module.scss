@@ -1,6 +1,6 @@
 .formWrapper {
   width: 80vw;
-  max-width:512px;
+  max-width: 512px;
   background-color: white;
   padding: 52px;
   border-radius: 16px;
@@ -16,11 +16,11 @@
   }
 
   .top {
+    margin-bottom: 15px;
     h5 {
       font-weight: 500;
       font-size: 13px;
     }
-    margin-bottom: 15px;
   }
   .phone {
     .inputErr {
@@ -40,19 +40,17 @@
 
   .GenderFields {
     display: flex;
-   gap: 10px;
-   label{
-    font-weight: normal ;
-    color: rgb(58, 58, 58);
-    cursor: pointer;
+    gap: 10px;
+    label {
+      font-weight: normal;
+      color: rgb(58, 58, 58);
+      cursor: pointer;
+    }
+    input {
+      cursor: pointer;
+    }
   }
-  input{
-     cursor: pointer;
-
-   }
-  }
-.Text
-  .TextLabel {
+  .Text .TextLabel {
     font-size: 14px;
     font-weight: 500;
     font-family: "Inter", sans-serif;
@@ -101,7 +99,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   gap: 5px;
-  div{
+  div {
     margin: 0;
   }
 }
