@@ -86,7 +86,7 @@ const Interview = () => {
         </h2>
       ) : (
         <>
-          <div className="w-[80%] m-auto mt-[50px] font-bold  md:text-3xl font-mono text-center">
+          <div className="w-[80%] m-auto mt-[50px] font-bold capitalize  md:text-3xl font-mono text-center">
             <h2>Set Up Interview With All Accepted Applicants</h2>
           </div>
           {accepted.map((app) => (
