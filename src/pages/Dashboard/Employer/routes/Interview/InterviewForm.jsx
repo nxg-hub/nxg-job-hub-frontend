@@ -94,7 +94,7 @@ const InterviewForm = ({ accepted }) => {
   };
 
   return (
-    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 relative md:right-[5%] bottom-[500px]">
+    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 relative md:right-[5%] bottom-[250px]">
       {!success && !error && (
         <Formik
           initialValues={{
