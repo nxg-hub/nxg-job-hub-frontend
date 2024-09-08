@@ -24,21 +24,21 @@ const Accepted = (applicant) => {
         <div>
           <li className="text-[16px] py-2">
             <h3>
-              <span className="font-bold items-center">
+              <span className="font-bold items-center capitalize">
                 Name:{applicantDetails?.firstName}
               </span>
             </h3>
           </li>
           <li className="text-[16px] py-2">
             <h3>
-              <span className="font-bold items-center">
+              <span className="font-bold items-center capitalize">
                 Role:{applicantJobDetail?.job_title}
               </span>
             </h3>
           </li>
           <li className="text-[16px] py-2">
             <h3>
-              <span className="font-bold items-center">
+              <span className="font-bold items-center capitalize">
                 Job Location:{applicantJobDetail?.job_location}
               </span>
             </h3>
