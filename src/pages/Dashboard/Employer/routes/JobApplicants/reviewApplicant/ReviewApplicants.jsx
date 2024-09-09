@@ -76,7 +76,7 @@ const ReviewApplicants = () => {
           ))}
           {pendingApplicant.length === 0 && (
             <div className="w-[50%] m-auto font-bold">
-              <h2>Nobody pending review for this job yet.</h2>
+              <h2>No pending review for this job yet.</h2>
             </div>
           )}
           {/* <SuggestedApplicantModal /> */}
