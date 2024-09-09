@@ -36,7 +36,7 @@ export const fetchNearJob = createAsyncThunk(
         return res.json();
       })
       .then((data) => {
-        return data;
+        return data.filter((job) => job.jobStatus === "ACCEPTED");
       });
   }
 );

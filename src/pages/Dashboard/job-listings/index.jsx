@@ -75,7 +75,8 @@ const JobListings = () => {
       const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
       response.ok ? setLoading(false) : null;
       const data = await response.json();
-      setJobs(data);
+      const accepted = data.filter((job) => job.jobStatus === "ACCEPTED");
+      setJobs(accepted);
     } catch (err) {
       console.log(err);
     } finally {
@@ -83,8 +84,11 @@ const JobListings = () => {
     }
   };
 
-  const acceptedJob = jobs.filter((job) => {
-    return job.jobStatus === "ACCEPTED";
+  const filteredJobType = jobs.filter((job) => {
+    return job.job_type === jobType;
+  });
+  const filteredSearch = searchedJob?.filter((job) => {
+    return job.job_title === searchedJobTitle && job.job_type === jobType;
   });
   useEffect(() => {
     if (!token.authKey) {
@@ -114,6 +118,7 @@ const JobListings = () => {
     setShowDetails(false);
     // setSuccessfull(true);
   };
+
   //storing the job url to be passed as props to the search component
   const allJobsUrl = `/api/job-postings/all`;
   //current page to be passed as prop to the search component
@@ -154,24 +159,26 @@ const JobListings = () => {
           !showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
               {!jobType
-                ? acceptedJob.map((job, i) => (
+                ? jobs.map((job, i) => (
                     <JobCard
                       key={i}
                       job={job}
                       handleShowDetails={() => handleCardClick(job)}
                     />
                   ))
-                : acceptedJob
-                    .filter((job) => {
-                      return job.job_type === jobType;
-                    })
-                    .map((job, i) => (
-                      <JobCard
-                        key={i}
-                        job={job}
-                        handleShowDetails={() => handleCardClick(job)}
-                      />
-                    ))}
+                : jobType && filteredJobType.length > 0
+                ? filteredJobType.map((job, i) => (
+                    <JobCard
+                      key={i}
+                      job={job}
+                      handleShowDetails={() => handleCardClick(job)}
+                    />
+                  ))
+                : !filteredJobType.length > 0 && (
+                    <p className="font-bold capitalize text-center">
+                      No jobs found.
+                    </p>
+                  )}
             </div>
           )
         )}
@@ -183,14 +190,12 @@ const JobListings = () => {
           />
         ) : (
           showSearchedJobs && (
+            //display searched jobs
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
               {!jobType
                 ? searchedJob
                     ?.filter((job) => {
-                      return (
-                        job.job_title === searchedJobTitle &&
-                        job.jobStatus === "ACCEPTED"
-                      );
+                      return job.job_title === searchedJobTitle;
                     })
                     .map((job, i) => (
                       <JobCard
@@ -200,22 +205,20 @@ const JobListings = () => {
                         // handleApply={handleApply}
                       />
                     ))
-                : searchedJob
-                    ?.filter((job) => {
-                      return (
-                        job.job_title === searchedJobTitle &&
-                        job.jobStatus === "ACCEPTED" &&
-                        job.job_type === jobType
-                      );
-                    })
-                    .map((job, i) => (
-                      <JobCard
-                        key={i}
-                        job={job}
-                        handleShowDetails={() => handleCardClick(job)}
-                        // handleApply={handleApply}
-                      />
-                    ))}
+                : filteredSearch.length > 0 && jobType
+                ? filteredSearch.map((job, i) => (
+                    <JobCard
+                      key={i}
+                      job={job}
+                      handleShowDetails={() => handleCardClick(job)}
+                      // handleApply={handleApply}
+                    />
+                  ))
+                : !filteredSearch.length > 0 && (
+                    <p className="font-bold capitalize text-center">
+                      No jobs found.
+                    </p>
+                  )}
             </div>
           )
         )}

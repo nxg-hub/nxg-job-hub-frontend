@@ -14,6 +14,7 @@ import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 import { useApiRequest } from "../../../../utils/functions/fetchEndPoint";
 import { useSelector } from "react-redux";
+import Notice from "../../../../components/Notice";
 
 function DashProfile() {
   const user = useContext(UserContext);
@@ -39,7 +40,7 @@ function DashProfile() {
   const { isVerified, setVerificationStatus } = useVerification();
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
-  const [uploadSucess, setUploadSuccess] = useState(false);
+  const [popup, showpopUp] = useState(undefined);
   const navigateCompleteProfilePage = () => {
     navigate("/techprofileform");
   };
@@ -75,7 +76,6 @@ function DashProfile() {
 
       const talentData = response.data; // Assuming the response is an object with employer data
       setProfilePicture(talentData.profilePicture);
-      // console.log(talentData);
 
       // Update state with fetched data
       setResidentialAddress(talentData.residentialAddress || "");
@@ -157,8 +157,17 @@ function DashProfile() {
           },
         }
       );
-      res.status === 200 ? setUploadSuccess(true) : null;
-      console.log("Update successful:", formData);
+      if (res.status === 200) {
+        showpopUp({
+          type: "success",
+          message: "Update successful",
+        });
+        setTimeout(() => {
+          showpopUp(undefined);
+        }, 5000);
+      }
+      //  ? setUploadSuccess(true) : null;
+      console.log("Update successful:");
       // Once the update is successful, set the verification status to true
       setVerificationStatus(true);
       // Save verification status to local storage
@@ -168,6 +177,12 @@ function DashProfile() {
         "Error updating data:",
         error.updateResponse ? error.updateResponse.data : error
       );
+
+      showpopUp({
+        type: "danger",
+        message: postJobError,
+      });
+      setTimeout(() => showpopUp(undefined), 5000);
     }
   };
 
@@ -178,15 +193,22 @@ function DashProfile() {
   const handleAddSkill = () => {
     setShowDropdown(true);
     // Filter out any empty string skills before adding a new empty skill
-    const filteredSkills = skills.filter((skill) => skill.skill.trim() !== "");
-    setSkills([...filteredSkills, { skill: "" }]);
-  };
+    const filteredSkills = skills.filter((skill) => {
+      // return skill && skill.trim() !== "";
+      return skill.skill.trim() !== "";
+    });
 
+    setSkills([...filteredSkills, { skill: "" }]);
+    // setSkills([...skills, { skill: "" }]);
+  };
   const handleSelectSkill = (selectedSkill) => {
     // Check if the selected skill is not empty
     if (selectedSkill.trim() !== "") {
       // Filter out any empty string skills before adding the selected skill
-      const updatedSkills = skills.filter((skill) => skill.skill.trim() !== "");
+      const updatedSkills = skills.filter((skill) => {
+        return skill && skill.skill.trim() !== "";
+      });
+
       setSkills([...updatedSkills, { skill: selectedSkill }]);
     }
     setShowDropdown(false);
@@ -211,7 +233,6 @@ function DashProfile() {
   const addExperience = () => {
     setOpenInput(!openInput);
   };
-
   return (
     <div className="dash-profile-main-container">
       <div className="my-profile-heading">
@@ -392,67 +413,75 @@ function DashProfile() {
                   padding: "2rem 1rem",
                   zIndex: "100",
                 }}>
-                <Dialog.Panel>
-                  <Dialog.Title style={{ textAlign: "center" }}>
-                    Add Your Experience
-                  </Dialog.Title>
-                  <div
-                    className="exp-input"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "8px",
-                      marginTop: "2rem",
-                    }}>
-                    <input
-                      type="text"
-                      placeholder="Enter your job title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      style={{ width: "100%", padding: "0.3rem 0.8rem" }}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Enter company name"
-                      value={firm}
-                      onChange={(e) => setFirm(e.target.value)}
-                      style={{ width: "100%", padding: "0.3rem 0.8rem" }}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Enter your working years"
-                      value={year}
-                      onChange={(e) => setYear(e.target.value)}
-                      style={{ width: "100%", padding: "0.3rem 0.8rem" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "block",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "8px",
-                      margin: "3rem auto",
-                    }}>
-                    <button
-                      onClick={handleInput}
+                <Dialog.Backdrop
+                  onClick={() => {
+                    setOpenInput(false);
+                  }}
+                  className="fixed inset-0 bg-black/30"
+                />
+                <div className="w-full">
+                  <Dialog.Panel>
+                    <Dialog.Title style={{ textAlign: "center" }}>
+                      Add Your Experience
+                    </Dialog.Title>
+                    <div
+                      className="exp-input"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "8px",
+                        marginTop: "2rem",
+                      }}>
+                      <input
+                        type="text"
+                        placeholder="Enter your job title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        style={{ width: "100%", padding: "0.3rem 0.8rem" }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Enter company name"
+                        value={firm}
+                        onChange={(e) => setFirm(e.target.value)}
+                        style={{ width: "100%", padding: "0.3rem 0.8rem" }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Enter your working years"
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                        style={{ width: "100%", padding: "0.3rem 0.8rem" }}
+                      />
+                    </div>
+                    <div
                       style={{
                         width: "100%",
-                        maxWidth: "580px",
-                        padding: "8px",
-                        background: "#006A90",
-                        border: "none",
-                        borderRadius: "10px",
-                        color: "#fff",
-                        fontSize: "25px",
-                        fontWeight: "500",
+                        display: "block",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "8px",
+                        margin: "3rem auto",
                       }}>
-                      Add Input
-                    </button>
-                  </div>
-                </Dialog.Panel>
+                      <button
+                        onClick={handleInput}
+                        style={{
+                          width: "100%",
+                          maxWidth: "580px",
+                          padding: "8px",
+                          background: "#006A90",
+                          border: "none",
+                          borderRadius: "10px",
+                          color: "#fff",
+                          fontSize: "25px",
+                          fontWeight: "500",
+                        }}>
+                        Add Input
+                      </button>
+                    </div>
+                  </Dialog.Panel>
+                </div>
               </Dialog>
             )}
             <div className="my-profile-btn">
@@ -461,23 +490,7 @@ function DashProfile() {
           </form>
         </div>
       </div>
-      {uploadSucess && (
-        <>
-          <div className="bg-blue-200 w-[70%] z-30 m-auto md:w-[50%] rounded-lg h-[100px] absolute right-[10%] top-[35%] md:text-xl md:right-[20%]">
-            <h2 className="mt-11 text-center font-bold">
-              Profile Updated Successfully
-            </h2>
-            <span
-              onClick={() => {
-                setUploadSuccess(false);
-              }}
-              className="cursor-pointer font-bold absolute top-[10px] right-[10px] md:right-[10%] md:bottom-[75px] lg:right-[10%] lg:bottom-[50px] text-red-600">
-              x
-            </span>
-          </div>
-          <div className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0" />
-        </>
-      )}
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );
 }
