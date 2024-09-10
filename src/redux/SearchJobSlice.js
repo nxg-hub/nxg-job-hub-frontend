@@ -34,7 +34,7 @@ export const searchJob = createAsyncThunk("nearJob/searchJob", async (url) => {
       return res.json();
     })
     .then((data) => {
-      return data;
+      return data.filter((job) => job.jobStatus === "ACCEPTED");
     });
 });
 const searchJobSlice = createSlice({

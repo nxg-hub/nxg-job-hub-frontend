@@ -13,12 +13,14 @@ import JobCard from "../../../../../components/JobCard";
 import Swiper, { Swiper2 } from "./Swiper";
 import useFetchJobs from "../../../../../utils/hooks/useFetchJobs";
 import ReactPaginate from "react-paginate";
+import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
 const EmployerOverview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(3);
   const user = useContext(UserContext);
   const { posts, loading } = useFetchJobs(user.accountTypeID);
-
+  const { data } = useApiRequest(`/api/v1/admin/${user.accountTypeID}/stats
+`);
   // Get current posts
   const indexOfLastPost = currentPage * jobsPerPage;
   const indexOfFirstPost = indexOfLastPost - jobsPerPage;
@@ -46,7 +48,7 @@ const EmployerOverview = () => {
             <EngagementCard
               logo={<Applicants fill="#006A90" />}
               title={"Applicants"}
-              value={0}
+              value={data.applicantCount}
             />
             <EngagementCard
               logo={<JobPosts fill="#006A90" />}

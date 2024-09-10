@@ -79,18 +79,32 @@ function MultiStepForm3({ formData, setFormData, onComplete }) {
         <div className="tech-pro-form">
           <FileUploader
             title="Upload Passport*"
+            fileType={["image/jpeg", "image/png"]}
+            acceptedFile="jpeg and png"
             onFileChange={(files) => onFileChange(files, "profilePicture")}
           />
         </div>
         <div className="tech-pro-form">
           <FileUploader
             title="Upload Resume/CV*"
+            fileType={[
+              "application/pdf",
+              "application/msword",
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            ]}
+            acceptedFile="PDF and DOC"
             onFileChange={(files) => onFileChange(files, "resume")}
           />
         </div>
         <div className="tech-pro-form">
           <FileUploader
             title="Upload Cover Letter*"
+            fileType={[
+              "application/pdf",
+              "application/msword",
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            ]}
+            acceptedFile="PDF and DOC"
             onFileChange={(files) => onFileChange(files, "coverletter")}
           />
         </div>

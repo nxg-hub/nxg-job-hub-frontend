@@ -41,7 +41,7 @@ function TechTalentOverview() {
   };
 
   //getting nearby jobs and loggedInUser from the redux store
-  const showNearByJobs = useSelector(
+  const showSearchedJobs = useSelector(
     (state) => state.SearchJobSlice.displayJob
   );
   const nearByJobs = useSelector((state) => state.NearbyJobSlice.nearByJobs);
@@ -170,10 +170,11 @@ function TechTalentOverview() {
           </div>
         </div>
         <div className="JobRecommendations">
-          {!showNearByJobs && nearJobLoader ? (
+          {!showSearchedJobs && nearJobLoader ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
-          ) : (
-            !showNearByJobs &&
+          ) : !showSearchedJobs && nearByJobs ? (
+            //display nearby jobs
+
             nearByJobs
               .filter((job) => {
                 return job.jobStatus === "ACCEPTED";
@@ -181,10 +182,18 @@ function TechTalentOverview() {
               .map((job, i) => {
                 return <RecommendationCard key={i * 5} recommendedJobs={job} />;
               })
+          ) : (
+            !nearByJobs.length > 0 &&
+            !showSearchedJobs && (
+              <div className="w-[80%] m-auto text-justify font-bold">
+                <h2>Search for Jobs near you.</h2>
+              </div>
+            )
           )}
-          {searchedJobLoader && showNearByJobs ? (
+          {searchedJobLoader && showSearchedJobs ? (
             <img className="w-[20%] m-auto" src={spinner} alt="spinner" />
-          ) : showNearByJobs && !jobType && searchedJobTitle ? (
+          ) : //searching for a job
+          showSearchedJobs && !jobType && searchedJobTitle ? (
             searchedJob
               ?.filter((job) => {
                 return (
@@ -201,7 +210,9 @@ function TechTalentOverview() {
                   />
                 );
               })
-          ) : showNearByJobs && jobType ? (
+          ) : showSearchedJobs && jobType && filteredJobType.length > 0 ? (
+            //filterring by jobType
+
             filteredJobType.map((jobRecommendation, i) => {
               return (
                 <RecommendationCard
@@ -210,14 +221,10 @@ function TechTalentOverview() {
                 />
               );
             })
-          ) : filtermsg ? (
-            <div className="w-[80%] m-auto text-justify font-bold">
-              <h2>Could not find your search.</h2>
-            </div>
           ) : (
-            !nearByJobs && (
+            !filteredJobType.length > 0 && (
               <div className="w-[80%] m-auto text-justify font-bold">
-                <h2>Search for Jobs near you.</h2>
+                <h2>Could not find your search.</h2>
               </div>
             )
           )}

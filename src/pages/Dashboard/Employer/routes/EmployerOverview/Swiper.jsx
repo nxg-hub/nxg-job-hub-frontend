@@ -8,13 +8,16 @@ register();
 const Swiper = () => {
   const user = useContext(UserContext);
   const userID = user.id;
+  // console.log(userID);
   const { data } = useApiRequest(`/api/interviews/employer/${userID}`);
   // console.log(data);
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const currentDate = `${year}-0${month}-${day}`;
+  const currentDate = `${year}-${month < 10 ? "0" : null}${month}-${
+    day < 10 ? "0" : null
+  }${day}`;
 
   const swipe = useRef();
   useEffect(() => {
@@ -121,7 +124,9 @@ export const Swiper2 = () => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const currentDate = `${year}-0${month}-${day}`;
+  const currentDate = `${year}-${month < 10 ? "0" : null}${month}-${
+    day < 10 ? "0" : null
+  }${day}`;
   const swipe2 = useRef();
   useEffect(() => {
     const labels2 = ["New", "Updated", "Completed"];

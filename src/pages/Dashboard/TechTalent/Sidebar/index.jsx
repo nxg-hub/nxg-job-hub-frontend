@@ -35,6 +35,7 @@ const Sidebar = () => {
   const [jobInterest, setJobInterest] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -428,7 +429,7 @@ const Sidebar = () => {
                         // fontWeight: "500",
                       }
                     }>
-                    Continue To Logout
+                    {loading ? "Logging Out..." : "Continue To Logout"}
                   </button>
                 </div>
               </Dialog.Title>
