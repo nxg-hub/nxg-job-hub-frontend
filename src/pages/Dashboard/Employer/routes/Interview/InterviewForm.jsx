@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { interviewMode } from "../../../../../utils/data/interviewMode";
-import TextArea from "../../../../../components/TextArea";
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MyTextArea from "./MyTextArea";
@@ -81,20 +80,11 @@ const InterviewForm = ({ accepted }) => {
   //     }
   //   }
 
-  const data = {
-    jobTitle: `${jobTitle}`,
-    talentName: `${firstName} ${lastName}`,
-    talentEmail: `${email}`,
-    interviewDate: "",
-    time: "",
-    description: "",
-    meetingLink: "",
-    modeOfInterview: "",
-    interviewAddress: "",
-  };
-
   return (
-    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 relative md:right-[5%] bottom-[250px]">
+    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 absolute md:right-[15%] top-[50px] rounded-2xl">
+      <h2 className="capitalize text-center font-bold md:text-3xl mb-4">
+        Set up interview
+      </h2>
       {!success && !error && (
         <Formik
           initialValues={{
@@ -162,7 +152,7 @@ const InterviewForm = ({ accepted }) => {
               </div>
               <div className=" w-[90%] md:w-[60%] m-auto space-y-2">
                 <MyTextArea
-                  className="w-full h-[150px] pl-2 rounded-2xl bg-white border"
+                  className="w-full h-[50px] pl-2 rounded-2xl bg-white border"
                   label="Description:"
                   type="text"
                   name="description"
@@ -171,9 +161,7 @@ const InterviewForm = ({ accepted }) => {
                 />
               </div>
               <div className=" w-[90%] md:w-[60%] m-auto space-y-2">
-                <label className="block font-bold md:text-2xl ">
-                  Interview Mode
-                </label>
+                <label className="block">Interview Mode</label>
                 <select
                   className="w-full h-[50px] bg-white border rounded-2xl"
                   required

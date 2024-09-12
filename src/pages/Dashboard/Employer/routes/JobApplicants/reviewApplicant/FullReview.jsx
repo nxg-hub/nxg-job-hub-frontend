@@ -57,7 +57,6 @@ const FullReview = () => {
           res.status === 200
             ? setAcceptSuccess(true) && setAcceptLoading(false)
             : null;
-          console.log(res);
           return res.json();
         })
         .then((data) => {
@@ -87,7 +86,6 @@ const FullReview = () => {
           res.status === 200
             ? setRejectSuccess(true) && setRejectLoading(false)
             : null;
-          console.log(res);
           return res.json();
         })
         .then((data) => {
@@ -123,7 +121,7 @@ const FullReview = () => {
       </Link>
       {loading ? (
         <img
-          className="w-[30%] absolute left-[45%] top-[25%]"
+          className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[35%] md:h-[500px] m-auto mt-[-150px]"
           src={spinner}
           alt="spinner"
         />

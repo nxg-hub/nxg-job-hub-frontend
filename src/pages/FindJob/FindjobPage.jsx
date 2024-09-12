@@ -56,10 +56,8 @@ const FindjobPage = () => {
 
   const filteredJobs =
     searchTerm && jobsResult.length > 0
-      ? jobsResult.filter(
-          (job) =>
-            job.job_title.toLowerCase().includes(searchTerm) &&
-            job.jobStatus === "ACCEPTED"
+      ? jobsResult.filter((job) =>
+          job.job_title.toLowerCase().includes(searchTerm)
         )
       : jobsResult;
 

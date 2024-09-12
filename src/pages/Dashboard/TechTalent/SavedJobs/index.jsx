@@ -102,7 +102,7 @@ const SavedJobs = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6 w-full">
         {loading ? (
           <img
-            className="w-[30%] absolute left-[45%]"
+            className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
             src={spinner}
             alt="spinner"
           />

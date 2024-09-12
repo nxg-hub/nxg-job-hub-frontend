@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setInterviewFormTrue } from "../../../../../redux/InterviewSlice";
+import {
+  setFeedBackFormTrue,
+  setInterviewFormTrue,
+} from "../../../../../redux/InterviewSlice";
 
 const Accepted = (applicant) => {
   const applicantDetails = applicant.applicant.applicant;
@@ -11,6 +14,9 @@ const Accepted = (applicant) => {
   const dispatch = useDispatch();
   const openForm = (id) => {
     dispatch(setInterviewFormTrue(id));
+  };
+  const openfeedbackForm = (id) => {
+    dispatch(setFeedBackFormTrue(id));
   };
 
   return (
@@ -52,13 +58,23 @@ const Accepted = (applicant) => {
           </li>
         </div>
       </div>
-      <div className="bg-[#2596BE] absolute top-2 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
-        <button
-          onClick={() => {
-            openForm(applicantDetails.id);
-          }}>
-          Set Up Interview
-        </button>
+      <div className="flex flex-col gap-2  absolute top-2 right-2 md:top-[60px] md:right-5">
+        <div className="bg-[#2596BE]  top-2 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
+          <button
+            onClick={() => {
+              openForm(applicantDetails.id);
+            }}>
+            Set Up Interview
+          </button>
+        </div>
+        <div className="bg-green-400  top-4 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
+          <button
+            onClick={() => {
+              openfeedbackForm(applicantDetails.id);
+            }}>
+            Feed Back
+          </button>
+        </div>
       </div>
     </ul>
   );
