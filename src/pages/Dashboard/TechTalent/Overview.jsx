@@ -75,7 +75,7 @@ function TechTalentOverview() {
       navigate("/login");
       return;
     }
-    dispatch(fetchLoggedInUser());
+    dispatch(fetchLoggedInUser(`/api/v1/tech-talent/get-user`));
     dispatch(fetchNearJob(`/api/job-postings/recommend-nearby-jobs`));
   }, []);
 
@@ -92,7 +92,7 @@ function TechTalentOverview() {
   //filtering search
   useEffect(() => {
     const filteredJob = searchedJob?.filter((job) => {
-      return job.job_type === jobType && job.jobStatus === "ACCEPTED";
+      return job.job_type === jobType;
     });
     setFilteredJobType(filteredJob);
   }, [jobType, nearByJobs]);
@@ -196,10 +196,7 @@ function TechTalentOverview() {
           showSearchedJobs && !jobType && searchedJobTitle ? (
             searchedJob
               ?.filter((job) => {
-                return (
-                  job.job_title === searchedJobTitle &&
-                  job.jobStatus === "ACCEPTED"
-                );
+                return job.job_title === searchedJobTitle;
               })
               .map((jobRecommendation, i) => {
                 // jobRecommendation.company_logo = figma;

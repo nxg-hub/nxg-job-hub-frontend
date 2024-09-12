@@ -93,6 +93,7 @@ const Sidebar = () => {
   const userID = loggedInUser.id;
 
   const logOutUser = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${API_HOST_URL}/api/v1/auth/logout?userId=${userID}`,
@@ -120,9 +121,10 @@ const Sidebar = () => {
       }
     } catch (error) {
       console.error("Logout failed", error);
+    } finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
     const fetchTalentData = async () => {
       try {

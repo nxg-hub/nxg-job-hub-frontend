@@ -10,6 +10,7 @@ import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { version } from "react";
 import InterviewSlice from "./InterviewSlice";
+import LoggedInEmployerSlice from "./LoggedInEmployerSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   JobListingApplicationSlice,
   SearchJobSlice,
   InterviewSlice,
+  LoggedInEmployerSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

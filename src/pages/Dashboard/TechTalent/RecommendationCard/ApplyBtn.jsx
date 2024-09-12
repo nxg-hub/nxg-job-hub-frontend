@@ -44,8 +44,7 @@ const ApplyBtn = ({ jobID }) => {
             }
           )
           .then((res) => {
-            console.log(res.data);
-            if (res.data === "Application Successful!") {
+            if (res.status === 200) {
               setSuccess(true);
             }
             return res.json();
@@ -56,7 +55,6 @@ const ApplyBtn = ({ jobID }) => {
           });
         console.log(res);
       } catch (error) {
-        !error ? setSuccess(true) : null;
         error?.response?.data ===
         "You have already applied to this job. Multiple applications are not allowed."
           ? setMultipleApplication(true)
@@ -68,6 +66,7 @@ const ApplyBtn = ({ jobID }) => {
       }
     } else {
       setNotice(true);
+      return;
     }
   };
   // console.log(error);
@@ -150,7 +149,7 @@ const ApplyBtn = ({ jobID }) => {
           />
         </>
       )}
-      {error && (
+      {/* {error && (
         <>
           <div
             className={` bg-white z-30 absolute top-[0px] left-[5%] md:left-[10%] md:top-[10px] w-[90%] md:w-[85%] m-auto  rounded-[24px] text-base font-medium px-10 py-5`}>
@@ -163,7 +162,7 @@ const ApplyBtn = ({ jobID }) => {
                 <br></br>
                 Check internet connection and try again.
                 {/* <span className="text-lg font-semibold">“My Applications”</span> */}
-              </span>
+      {/* </span>
               <button
                 onClick={() => {
                   setError(false);
@@ -180,7 +179,8 @@ const ApplyBtn = ({ jobID }) => {
             className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
           />
         </>
-      )}
+      ) */}
+      {/* // */}
       {multipleApplication && (
         <>
           <div

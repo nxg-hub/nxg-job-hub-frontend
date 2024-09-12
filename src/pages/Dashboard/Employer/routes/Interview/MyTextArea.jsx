@@ -5,7 +5,7 @@ const MyTextArea = ({ label, value, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className="block w-[100%] m-auto ">
-      <label className="md:text-2xl font-bold" htmlFor={props.id || props.name}>
+      <label className="" htmlFor={props.id || props.name}>
         {label}
       </label>
       <textarea

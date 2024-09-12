@@ -24,7 +24,7 @@ const ReviewApplicants = () => {
   const pendingApplicant = jobApplicant.filter(
     (app) => app.applicationStatus === "PENDING"
   );
-
+  // console.log(jobApplicant);
   const job = jobApplicant[0]?.jobPosting;
 
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const ReviewApplicants = () => {
       </Link>
       {loading ? (
         <img
-          className="w-[30%] absolute left-[45%] top-[25%]"
+          className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[35%] md:h-[500px] m-auto mt-[-150px]"
           src={spinner}
           alt="spinner"
         />

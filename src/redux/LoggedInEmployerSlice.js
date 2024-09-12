@@ -4,7 +4,7 @@ import { API_HOST_URL } from "../utils/api/API_HOST";
 // import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
 const initialState = {
-  loggedInUser: [],
+  loggedInEmployer: [],
   loading: false,
   error: false,
 };
@@ -12,10 +12,10 @@ const initialState = {
 const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-export const fetchLoggedInUser = createAsyncThunk(
+export const fetchLoggedInEmployer = createAsyncThunk(
   "logedInUser/fetchUser",
   async (url) => {
-    return await fetch(`${API_HOST_URL}${url}`, {
+    return await fetch(`${API_HOST_URL}/api/employers/get-employer`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,27 +30,27 @@ export const fetchLoggedInUser = createAsyncThunk(
       });
   }
 );
-const loggedInUserSlice = createSlice({
+const loggedInEmployerSlice = createSlice({
   name: "loggedInUser",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLoggedInUser.pending, (state) => {
+      .addCase(fetchLoggedInEmployer.pending, (state) => {
         state.loading = true;
         state.error = false;
       })
-      .addCase(fetchLoggedInUser.fulfilled, (state, action) => {
+      .addCase(fetchLoggedInEmployer.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
         state.loggedInUser = action.payload;
       })
-      .addCase(fetchLoggedInUser.rejected, (state, action) => {
+      .addCase(fetchLoggedInEmployer.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
       });
   },
 });
-export const {} = loggedInUserSlice.actions;
+export const {} = loggedInEmployerSlice.actions;
 
-export default loggedInUserSlice.reducer;
+export default loggedInEmployerSlice.reducer;

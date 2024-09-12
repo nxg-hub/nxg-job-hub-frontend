@@ -5,7 +5,13 @@ import InterviewForm from "./InterviewForm";
 import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
 import spinner from "../../../../../static/icons/spinner.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setInterviewFormFalse } from "../../../../../redux/InterviewSlice";
+import {
+  setFeedBackFormFalse,
+  setInterviewFormFalse,
+} from "../../../../../redux/InterviewSlice";
+import FeedbackForm from "./FeedbackForm";
+import { fetchLoggedInUser } from "../../../../../redux/LoggedInUserSlice";
+import { fetchLoggedInEmployer } from "../../../../../redux/LoggedInEmployerSlice";
 
 const Interview = () => {
   const dispatch = useDispatch();
@@ -22,9 +28,19 @@ const Interview = () => {
 
   //getting all neccessary states from interviewSlice in the redux store
   const form = useSelector((state) => state.InterviewSlice.interviewForm);
+  const feedbackForm = useSelector(
+    (state) => state.InterviewSlice.feedbackForm
+  );
+
   const closeForm = () => {
     dispatch(setInterviewFormFalse());
   };
+  const closefeedbackForm = () => {
+    dispatch(setFeedBackFormFalse());
+  };
+  useEffect(() => {
+    dispatch(fetchLoggedInEmployer());
+  }, []);
 
   //fetching number of applicants for each job
   const fetchData = async () => {
@@ -70,7 +86,7 @@ const Interview = () => {
     <div>
       {loading ? (
         <img
-          className="w-[30%] absolute left-[45%] top-[25%]"
+          className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[35%] md:h-[500px] m-auto mt-[-150px]"
           src={spinner}
           alt="spinner"
         />
@@ -99,6 +115,15 @@ const Interview = () => {
               <InterviewForm accepted={accepted} />
               <div
                 onClick={closeForm}
+                className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
+              />
+            </>
+          )}
+          {feedbackForm && (
+            <>
+              <FeedbackForm accepted={accepted} />
+              <div
+                onClick={closefeedbackForm}
                 className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
               />
             </>
