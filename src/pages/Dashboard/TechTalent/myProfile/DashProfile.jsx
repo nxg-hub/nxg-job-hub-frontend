@@ -180,7 +180,7 @@ function DashProfile() {
 
       showpopUp({
         type: "danger",
-        message: postJobError,
+        message: "Error updating data",
       });
       setTimeout(() => showpopUp(undefined), 5000);
     }

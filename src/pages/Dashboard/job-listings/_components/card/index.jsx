@@ -101,7 +101,7 @@ const JobCard = ({ job, handleShowDetails }) => {
               </span>
             </div>
             <button
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2 group  hover:bg-white"
               // onClick={onClick}
               onClick={() => handleShowDetails(job)}>
               <Link className="underline underline-[#215E7D] underline-offset-4 text-[#215E7D]">

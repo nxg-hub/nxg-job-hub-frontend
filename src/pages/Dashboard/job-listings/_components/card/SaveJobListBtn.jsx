@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import SaveJob from "../../../../../static/icons/carbon_bookmark.svg?react";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../../utils/api/API_HOST";
+import Notice from "../../../../../components/Notice";
 const SaveJobListBtn = ({ jobID }) => {
   const [jobPostingId] = useState({
     jobPostingId: jobID,
   });
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [error, setError] = useState(false);
+  const [popup, showpopUp] = useState(undefined);
+  const [postJobError, setPostJobError] = useState("");
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -30,18 +30,28 @@ const SaveJobListBtn = ({ jobID }) => {
 
       console.log(res);
       if (res.status === 200) {
-        // setSuccess(true);
         setLoading(false);
+        showpopUp({
+          type: "success",
+          message: "Job Save successful",
+        });
+        setTimeout(() => {
+          showpopUp(undefined);
+        }, 5000);
       }
     } catch (error) {
       console.log(error);
+      console.log(error);
       error.response.data === "Job Already Saved!"
-        ? setSaved(true)
-        : setError(true);
+        ? setPostJobError("Job Already Saved!")
+        : setPostJobError("Error in saving job");
 
-      // setError(true);
+      showpopUp({
+        type: "danger",
+        message: postJobError,
+      });
+      setTimeout(() => showpopUp(undefined), 5000);
     } finally {
-      !error && !saved ? setSuccess(true) : null;
       setLoading(false);
     }
   };
@@ -53,68 +63,8 @@ const SaveJobListBtn = ({ jobID }) => {
           {loading ? "...." : "save"}
         </span>
       </p>
-      {saved && (
-        <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
-            <h2 className="font-bold ">This job is already saved!</h2>
-            <span
-              onClick={() => {
-                setSaved(false);
-              }}
-              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
-              x
-            </span>
-          </div>
-          <div
-            onClick={() => {
-              setSaved(false);
-            }}
-            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
-          />
-        </>
-      )}
-      {error && (
-        <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
-            <h2 className="font-bold ">
-              Something went wrong!!, Check internet connection.
-            </h2>
-            <span
-              onClick={() => {
-                setError(false);
-              }}
-              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
-              x
-            </span>
-          </div>
-          <div
-            onClick={() => {
-              setError(false);
-            }}
-            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
-          />
-        </>
-      )}
-      {success && (
-        <>
-          <div className=" absolute top-[0px] md:text-xl right-[20%] w-[80%] px-3 rounded-md md:w-[80%] m-auto bg-blue-200 z-30 h-[100px] py-5 text-center">
-            <h2 className="font-bold ">Job Saved Successfully.</h2>
-            <span
-              onClick={() => {
-                setSuccess(false);
-              }}
-              className="cursor-pointer text-xl md:text-3xl font-bold relative left-[50%] bottom-[50px] pb-3 md:left-[60%] z-40  lg:left-[57%] lg:bottom-[58px] text-red-600">
-              x
-            </span>
-          </div>
-          <div
-            onClick={() => {
-              setSuccess(false);
-            }}
-            className="absolute z-20 bg-black bg-opacity-25 top-0 h-full left-0 right-0 bottom-0"
-          />
-        </>
-      )}
+
+      {popup && <Notice type={popup.type} message={popup.message} />}
     </div>
   );
 };
