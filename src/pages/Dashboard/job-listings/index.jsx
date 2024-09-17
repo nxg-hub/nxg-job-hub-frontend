@@ -17,6 +17,7 @@ import {
 } from "../../../redux/JobListingApplicationSlice.js";
 import AppErrorMessage from "../TechTalent/RecommendationCard/AppErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
+import { resetToDefault } from "../../../redux/FilterSlice.js";
 
 const JobListings = () => {
   const token =
@@ -63,6 +64,10 @@ const JobListings = () => {
     (state) => state.FilterSlice.selectedRelevance
   );
   const relevanceOption = selectedRelevance.value;
+  //reseting the filter parameters to default onmount
+  useEffect(() => {
+    dispatch(resetToDefault());
+  }, []);
   //searched term to fitered
   const searchedJobTitle = useSelector(
     (state) => state.SearchJobSlice.jobTitle
