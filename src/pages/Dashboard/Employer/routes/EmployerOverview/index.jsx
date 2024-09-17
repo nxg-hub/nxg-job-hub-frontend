@@ -20,7 +20,13 @@ const EmployerOverview = () => {
   const user = useContext(UserContext);
   const { posts, loading } = useFetchJobs(user.accountTypeID);
   const { data } = useApiRequest(`/api/v1/admin/${user.accountTypeID}/stats
+
 `);
+  const { data: count } =
+    useApiRequest(`/api/employers/counts/get-applicattions/employer/${user.accountTypeID}
+
+  `);
+
   // Get current posts
   const indexOfLastPost = currentPage * jobsPerPage;
   const indexOfFirstPost = indexOfLastPost - jobsPerPage;
@@ -53,12 +59,12 @@ const EmployerOverview = () => {
             <EngagementCard
               logo={<JobPosts fill="#006A90" />}
               title={"Reviewed"}
-              value={0}
+              value={count.reviewed}
             />
             <EngagementCard
               logo={<JobPosts fill="#006A90" />}
               title={"Shortlisted"}
-              value={0}
+              value={count.shortlisted}
             />
           </span>
         </div>

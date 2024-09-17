@@ -59,7 +59,7 @@ const Accepted = (applicant) => {
         </div>
       </div>
       <div className="flex flex-col gap-2  absolute top-2 right-2 md:top-[60px] md:right-5">
-        <div className="bg-[#2596BE]  top-2 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
+        <div className="  top-2 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
           <button
             onClick={() => {
               openForm(applicantDetails.id);
@@ -67,7 +67,7 @@ const Accepted = (applicant) => {
             Set Up Interview
           </button>
         </div>
-        <div className="bg-green-400  top-4 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
+        <div className="  top-4 right-2 md:top-[60px] md:right-5 text-white text-sm px-2 md:px-3 py-2 mr-5 md:mr-0 rounded-lg">
           <button
             onClick={() => {
               openfeedbackForm(applicantDetails.id);

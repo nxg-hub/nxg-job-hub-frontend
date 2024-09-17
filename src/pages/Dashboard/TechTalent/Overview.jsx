@@ -196,7 +196,10 @@ function TechTalentOverview() {
           showSearchedJobs && !jobType && searchedJobTitle ? (
             searchedJob
               ?.filter((job) => {
-                return job.job_title === searchedJobTitle;
+                return (
+                  job.job_title.toLowerCase().trim() ===
+                  searchedJobTitle.toLowerCase().trim()
+                );
               })
               .map((jobRecommendation, i) => {
                 // jobRecommendation.company_logo = figma;
@@ -219,7 +222,8 @@ function TechTalentOverview() {
               );
             })
           ) : (
-            !filteredJobType.length > 0 && (
+            !filteredJobType.length > 0 &&
+            showSearchedJobs && (
               <div className="w-[80%] m-auto text-justify font-bold">
                 <h2>Could not find your search.</h2>
               </div>

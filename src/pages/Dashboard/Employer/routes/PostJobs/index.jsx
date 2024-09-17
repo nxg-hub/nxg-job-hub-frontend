@@ -77,7 +77,7 @@ const PostJobs = () => {
         showpopUp({
           type: "success",
           message:
-            "Job post created successfully. Job will be made available to the public after succeeful verification.",
+            "Job post created successfully. Job will be made available to the public after successful verification.",
         });
       setTimeout(() => {
         showpopUp(undefined);
