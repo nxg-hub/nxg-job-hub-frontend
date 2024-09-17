@@ -11,6 +11,7 @@ import {
 import SaveJobListBtn from "./SaveJobListBtn";
 import { useApiRequest } from "../../../../../utils/functions/fetchEndPoint";
 import ApplyBtn from "../../../TechTalent/RecommendationCard/ApplyBtn";
+import moment from "moment/moment";
 
 const JobCard = ({ job, handleShowDetails }) => {
   const [jobPostingId] = useState({
@@ -21,7 +22,7 @@ const JobCard = ({ job, handleShowDetails }) => {
     currency: "NGN",
   });
   const dispatch = useDispatch();
-
+  //getting logged in user and checking if user is verified
   const loggedInUser = useSelector(
     (state) => state.LoggedInUserSlice.loggedInUser
   );
@@ -36,6 +37,28 @@ const JobCard = ({ job, handleShowDetails }) => {
   const { data: applicantCount } = useApiRequest(
     `/api/employers/${job.jobID}/applicants/count`
   );
+  //getting date job was posted
+  const jobPostDate = moment(job.createdAt).format("YYYY-MM-DD");
+  //getting current date
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  //setting current date
+  const currentDate = `${year}-${month < 10 ? "0" : null}${month}-${
+    day < 10 ? "0" : ""
+  }${day}`;
+  let date1 = new Date(currentDate);
+  let date2 = new Date(jobPostDate);
+
+  // Calculating the time difference
+  // of two dates
+  let Difference_In_Time = date1.getTime() - date2.getTime();
+
+  // Calculating the no. of days between
+  // two dates
+  let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
   return (
     <div className="px-6 bg-white py-4 hover:scale-95 transition-all ease-in relative">
       <div className="flex flex-col gap-y-2">
@@ -79,9 +102,16 @@ const JobCard = ({ job, handleShowDetails }) => {
           <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
             {job.job_type}
           </span>
-          {/* <span className="border border-[#215E7D] rounded-[8px] p-1 text-[#215E7D]">
-            On-site
-          </span> */}
+          <span className=" text-xs rounded-[8px] p-1 pt-2 font-medium uppercase">
+            Posted
+            <span className="pl-1">
+              {Difference_In_Days < 7
+                ? `${Difference_In_Days} days ago`
+                : Difference_In_Days > 6
+                ? `${Math.round(Difference_In_Days / 7)} Weeks Ago`
+                : jobPostDate}
+            </span>
+          </span>
         </div>
 
         <div className="flex flex-col">
@@ -96,7 +126,6 @@ const JobCard = ({ job, handleShowDetails }) => {
               <img src="/dashboard/view.png" alt="views" />
               <span>{job.view} views</span>
               <span>
-                {" "}
                 Applicants:<span className="font-bold">{applicantCount}</span>
               </span>
             </div>

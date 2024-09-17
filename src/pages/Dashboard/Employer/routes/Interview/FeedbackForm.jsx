@@ -43,7 +43,7 @@ const FeedbackForm = ({ accepted }) => {
     }
   };
   return (
-    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 absolute md:right-[15%] top-[50px] rounded-2xl">
+    <div className="w-[80%] bg-blue-100 m-auto py-6 md:w-[70%] z-50 relative md:right-[5%] bottom-[600px] rounded-2xl">
       <h2 className="capitalize text-center font-bold md:text-3xl mb-4">
         feedback!!
       </h2>

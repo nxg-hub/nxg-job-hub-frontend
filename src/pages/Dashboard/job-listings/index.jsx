@@ -17,6 +17,7 @@ import {
 } from "../../../redux/JobListingApplicationSlice.js";
 import AppErrorMessage from "../TechTalent/RecommendationCard/AppErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
+import { resetToDefault } from "../../../redux/FilterSlice.js";
 
 const JobListings = () => {
   const token =
@@ -55,12 +56,18 @@ const JobListings = () => {
   const multipleApplication = useSelector(
     (state) => state.JobListingApplicationSlice.multiApplyErr
   );
-  const multiError = useSelector(
-    (state) => state.JobListingApplicationSlice.multipleJobListingApp
-  );
   const notice = useSelector(
     (state) => state.JobListingApplicationSlice.notice
   );
+
+  const selectedRelevance = useSelector(
+    (state) => state.FilterSlice.selectedRelevance
+  );
+  const relevanceOption = selectedRelevance.value;
+  //reseting the filter parameters to default onmount
+  useEffect(() => {
+    dispatch(resetToDefault());
+  }, []);
   //searched term to fitered
   const searchedJobTitle = useSelector(
     (state) => state.SearchJobSlice.jobTitle
@@ -87,6 +94,7 @@ const JobListings = () => {
   const filteredJobType = jobs.filter((job) => {
     return job.job_type === jobType;
   });
+  // console.log(jobs);
   const filteredSearch = searchedJob?.filter((job) => {
     return job.job_title === searchedJobTitle && job.job_type === jobType;
   });
@@ -123,6 +131,7 @@ const JobListings = () => {
   const allJobsUrl = `/api/job-postings/all`;
   //current page to be passed as prop to the search component
   const currentPage = "jobListing";
+
   return (
     <div className="dash-profile-main-side relative">
       <div className="dash-profile-search-section">
@@ -131,7 +140,7 @@ const JobListings = () => {
       <div className="">
         {showDetails && (
           <>
-            <div className="fixed lg:relative m-auto left-[15%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[1%]">
+            <div className="fixed  m-auto left-[15%] z-50 w-full lg:w-1/2 h-full overflow-auto lg:top-[8%] bottom-[0%] lg:left-[25%]">
               <CardDetails
                 job={jobs.find((job) => job.jobID === selectedCardId)}
                 onClose={handleClose}
@@ -159,13 +168,15 @@ const JobListings = () => {
           !showSearchedJobs && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-20 px-2 lg:px-10 gap-6">
               {!jobType
-                ? jobs.map((job, i) => (
-                    <JobCard
-                      key={i}
-                      job={job}
-                      handleShowDetails={() => handleCardClick(job)}
-                    />
-                  ))
+                ? jobs
+                    .reverse()
+                    .map((job, i) => (
+                      <JobCard
+                        key={i}
+                        job={job}
+                        handleShowDetails={() => handleCardClick(job)}
+                      />
+                    ))
                 : jobType && filteredJobType.length > 0
                 ? filteredJobType.map((job, i) => (
                     <JobCard
@@ -195,7 +206,10 @@ const JobListings = () => {
               {!jobType
                 ? searchedJob
                     ?.filter((job) => {
-                      return job.job_title === searchedJobTitle;
+                      return (
+                        job.job_title.toLowerCase().trim() ===
+                        searchedJobTitle.toLowerCase().trim()
+                      );
                     })
                     .map((job, i) => (
                       <JobCard

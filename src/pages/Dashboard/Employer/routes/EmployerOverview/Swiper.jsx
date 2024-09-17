@@ -16,7 +16,7 @@ const Swiper = () => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const currentDate = `${year}-${month < 10 ? "0" : null}${month}-${
-    day < 10 ? "0" : null
+    day < 10 ? "0" : ""
   }${day}`;
 
   const swipe = useRef();
@@ -125,7 +125,7 @@ export const Swiper2 = () => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const currentDate = `${year}-${month < 10 ? "0" : null}${month}-${
-    day < 10 ? "0" : null
+    day < 10 ? "0" : ""
   }${day}`;
   const swipe2 = useRef();
   useEffect(() => {

@@ -71,8 +71,7 @@ function ProfileSearch({ url, currentPage }) {
           fontWeight: "500",
           marginBottom: ".5rem",
           color: "rgba(0, 0, 0, 0.47)",
-        }}
-      >
+        }}>
         Search for Jobs
       </p>
       <div className="profile-search-container">

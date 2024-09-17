@@ -54,7 +54,17 @@ const JobCard = ({
           Job Title: <strong>{job_title}</strong>
         </p>
         <p>
-          Job Status: <strong>{jobStatus}</strong>
+          Job Status:{" "}
+          <strong
+            className={`${
+              jobStatus === "ACCEPTED"
+                ? "text-green-400"
+                : jobStatus === "REJECTED"
+                ? "text-red-500"
+                : "text-yellow-300"
+            } font-bold  `}>
+            {jobStatus}
+          </strong>
         </p>
       </header>
       <main>
