@@ -26,12 +26,13 @@ function DashProfile() {
   const [bio, setBio] = useState("");
   const [jobInterest, setJobInterest] = useState("");
   const [residentialAddress, setResidentialAddress] = useState("");
-  const [experienceLevel, setExperienceLevel] = useState({
-    title: "",
-    firm: "",
-    year: "",
-  });
-  const [skills, setSkills] = useState([{ skill: "" }]);
+  // const [experienceLevel, setExperienceLevel] = useState({
+  //   title: "",
+  //   firm: "",
+  //   year: "",
+  // });
+  const [experienceLevel, setExperienceLevel] = useState("");
+  const [skills, setSkills] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [openInput, setOpenInput] = useState(false);
   const [title, setTitle] = useState("");
@@ -41,6 +42,8 @@ function DashProfile() {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
   const [popup, showpopUp] = useState(undefined);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const navigateCompleteProfilePage = () => {
     navigate("/techprofileform");
   };
@@ -75,6 +78,7 @@ function DashProfile() {
       );
 
       const talentData = response.data; // Assuming the response is an object with employer data
+      // console.log(talentData);
       setProfilePicture(talentData.profilePicture);
 
       // Update state with fetched data
@@ -82,7 +86,7 @@ function DashProfile() {
       setBio(talentData.bio || "");
       setJobInterest(talentData.jobInterest || "");
       setExperienceLevel(talentData.experienceLevel || "");
-      // setSkills(talentData.skills || []);
+      setSkills(talentData.skills || []);
 
       // Set verification status based on the fetched data
       const updatedVerificationStatus = talentData.verified || false;
@@ -143,10 +147,11 @@ function DashProfile() {
       const formData = {
         bio: bio,
         residentialAddress: residentialAddress,
-        skills: skills.map((skill) => skill.skill),
-        experienceLevel: `${experienceLevel.title} at ${experienceLevel.firm} (${experienceLevel.year})`, // Format as string,
+        skills: skills.map((skill) => skill),
+        experienceLevel: experienceLevel, // Format as string,
       };
 
+      setLoading(true);
       const res = await axios.put(
         `${API_HOST_URL}/api/v1/tech-talent/${techId}`,
         formData,
@@ -158,6 +163,7 @@ function DashProfile() {
         }
       );
       if (res.status === 200) {
+        setLoading(false);
         showpopUp({
           type: "success",
           message: "Update successful",
@@ -183,6 +189,8 @@ function DashProfile() {
         message: "Error updating data",
       });
       setTimeout(() => showpopUp(undefined), 5000);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -193,43 +201,50 @@ function DashProfile() {
   const handleAddSkill = () => {
     setShowDropdown(true);
     // Filter out any empty string skills before adding a new empty skill
-    const filteredSkills = skills.filter((skill) => {
-      // return skill && skill.trim() !== "";
-      return skill.skill.trim() !== "";
-    });
+    // const filteredSkills = skills.filter((skill) => {
+    //   // return skill && skill.trim() !== "";
+    //   return skill.skill.trim() !== "";
+    // });
 
-    setSkills([...filteredSkills, { skill: "" }]);
-    // setSkills([...skills, { skill: "" }]);
+    setSkills([...skills]);
+    // setSkills([...filteredSkills, { skill: "" }]);
   };
   const handleSelectSkill = (selectedSkill) => {
     // Check if the selected skill is not empty
     if (selectedSkill.trim() !== "") {
       // Filter out any empty string skills before adding the selected skill
-      const updatedSkills = skills.filter((skill) => {
-        return skill && skill.skill.trim() !== "";
-      });
+      // console.log(skills);
+      // const updatedSkills = skills.filter((skill) => {
+      //   console.log(skill);
+      //   return skill && skill.skill.trim() !== "";
+      // });
+      setSkills([...skills, selectedSkill]);
 
-      setSkills([...updatedSkills, { skill: selectedSkill }]);
+      // setSkills([...updatedSkills, { skill: selectedSkill }]);
     }
     setShowDropdown(false);
   };
 
   const handleRemoveSkill = (selectedSkill) => {
-    const updatedSkills = skills.filter(
-      (skill) => skill.skill !== selectedSkill
-    );
+    const updatedSkills = skills.filter((skill) => skill !== selectedSkill);
     setSkills(updatedSkills);
   };
 
   const handleInput = () => {
-    setExperienceLevel({
-      title: title,
-      firm: firm,
-      year: year,
-    });
-    setOpenInput(false);
+    if (title === "" || firm === "" || year === "") {
+      setErr(true);
+    } else {
+      setExperienceLevel(
+        // {
+        //     title: title,
+        //     firm: firm,
+        //     year: year,
+        //   }
+        `${title} at ${firm} (${year}) years` //format as string
+      );
+      setOpenInput(false);
+    }
   };
-
   const addExperience = () => {
     setOpenInput(!openInput);
   };
@@ -338,15 +353,13 @@ function DashProfile() {
               <div className="textarea">
                 {skills.map((selectedSkill, index) => (
                   <div className="selected-skill" key={index}>
-                    {selectedSkill.skill && (
+                    {selectedSkill && (
                       <div className="skill">
-                        <span>{selectedSkill.skill}</span>
-                        {selectedSkill.skill && (
+                        <span>{selectedSkill}</span>
+                        {selectedSkill && (
                           <GoX
                             className="delete-icon"
-                            onClick={() =>
-                              handleRemoveSkill(selectedSkill.skill)
-                            }
+                            onClick={() => handleRemoveSkill(selectedSkill)}
                           />
                         )}
                       </div>
@@ -361,12 +374,14 @@ function DashProfile() {
               <GoPlus className="plus-icon" /> <span>Add Skill</span>
             </div>
             {showDropdown && (
-              <div className="skills-lists">
+              <div className="skills-lists bg-gray-300 rounded-lg px-3 py-2">
                 <div className="talent-dropdown">
                   {talentSkills.map((skill, index) => (
-                    <p key={index} onClick={() => handleSelectSkill(skill)}>
-                      {skill}
-                    </p>
+                    <span className="bg-white px-2 rounded-2xl">
+                      <p key={index} onClick={() => handleSelectSkill(skill)}>
+                        {skill}
+                      </p>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -375,12 +390,12 @@ function DashProfile() {
               <div className="textarea job-experience">
                 <label>Work Experience</label>
                 <div className="firm">
-                  <h3>{title}</h3>
-                  <p>{firm}</p>
+                  <h3>{experienceLevel}</h3>
+                  {/* <p>{firm}</p> */}
                 </div>
-                <div className="period">
-                  <p>{year}</p>
-                </div>
+                {/* <div className="period">
+                  <p>{year ? `${year} years` : null} </p>
+                </div> */}
               </div>
             </div>
             <div className="add-experience-btn" onClick={addExperience}>
@@ -440,6 +455,7 @@ function DashProfile() {
                         onChange={(e) => setTitle(e.target.value)}
                         style={{ width: "100%", padding: "0.3rem 0.8rem" }}
                       />
+
                       <input
                         type="text"
                         placeholder="Enter company name"
@@ -455,9 +471,14 @@ function DashProfile() {
                         style={{ width: "100%", padding: "0.3rem 0.8rem" }}
                       />
                     </div>
+                    {err && (
+                      <p className="text-xs text-red-600 mt-4 text-center">
+                        All fields are required!!
+                      </p>
+                    )}
                     <div
                       style={{
-                        width: "100%",
+                        width: "80%",
                         display: "block",
                         justifyContent: "center",
                         alignItems: "center",
@@ -476,6 +497,7 @@ function DashProfile() {
                           color: "#fff",
                           fontSize: "25px",
                           fontWeight: "500",
+                          margin: "auto",
                         }}>
                         Add Input
                       </button>
@@ -485,7 +507,9 @@ function DashProfile() {
               </Dialog>
             )}
             <div className="my-profile-btn">
-              <button type="submit">Update Profile</button>
+              <button type="submit">
+                {loading ? "Loading...." : "Update Profile"}
+              </button>
             </div>
           </form>
         </div>

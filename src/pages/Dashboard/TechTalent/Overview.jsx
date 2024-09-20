@@ -15,6 +15,7 @@ import spinner from "../../../static/icons/spinner.svg";
 import { fetchLoggedInUser } from "../../../redux/LoggedInUserSlice";
 import { resetToDefault } from "../../../redux/FilterSlice";
 import { fetchNearJob } from "../../../redux/NearbyJobSlice";
+import { useVerification } from "../Employer/routes/EmployerDashProfile/VerificationContext";
 // import DashboardProfileForm from "../../../../src/pages/Dashboard/TechTalent/DashboardProfileForm/index"
 
 function TechTalentOverview() {
@@ -24,6 +25,7 @@ function TechTalentOverview() {
   const [filtermsg, setFilterMsg] = useState(false);
   const [filteredJobType, setFilteredJobType] = useState([]);
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+  const { isVerified, setVerificationStatus } = useVerification();
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -60,6 +62,8 @@ function TechTalentOverview() {
   );
   //checking if user is verified
   const profileCompleted = loggedInUser.verified;
+  setVerificationStatus(profileCompleted);
+  
 
   //fetching recommended jobs
   const { data: recommendedJobs, loading: recommendedJobLoader } =
@@ -118,7 +122,7 @@ function TechTalentOverview() {
       <div className="dash-profile-search-section">
         <ProfileSearch url={allJobsUrl} currentPage={currentPage} />
       </div>
-      {!profileCompleted && (
+      {!isVerified && (
         <div className="dash-profile-hero-section">
           <div className="dash-profile-hero-contents">
             <div className="dash-profile-content">

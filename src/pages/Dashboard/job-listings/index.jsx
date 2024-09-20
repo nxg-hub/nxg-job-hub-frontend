@@ -160,7 +160,7 @@ const JobListings = () => {
 
         {loading || (applyloader && !showSearchedJobs) ? (
           <img
-            className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
+            className="w-[30%] md:w-[10%] h-[400px] absolute top-[400px] md:top-[300px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
             src={spinner}
             alt="spinner"
           />
@@ -195,7 +195,7 @@ const JobListings = () => {
         )}
         {searchJobLoader ? (
           <img
-            className="w-[30%] md:w-[10%] h-[400px] absolute top-[200px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
+            className="w-[30%] md:w-[10%] h-[400px] absolute top-[400px] md:top-[300px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
             src={spinner}
             alt="spinner"
           />
