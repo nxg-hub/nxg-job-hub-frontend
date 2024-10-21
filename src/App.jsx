@@ -41,6 +41,7 @@ import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/re
 import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
 import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
+import PostJobForm from "./pages/PostJobForm.jsx";
 function App() {
   return (
     <>
@@ -49,6 +50,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/post-job-form" element={<PostJobForm />} />
         <Route path="/findjob" element={<Findjob />} />
         <Route path="/faqs" element={<Faq />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -68,8 +70,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
@@ -80,8 +81,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
