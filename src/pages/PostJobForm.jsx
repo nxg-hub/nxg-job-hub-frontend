@@ -1,35 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../static/images/nxg-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { jobTypes } from "../utils/data/jobTypes";
 import { jobLocations } from "../utils/data/jobLocations";
 import Header from "../components/header/Header";
-import {
-  companyIndusrty,
-  employerJobType,
-  industry,
-} from "../utils/data/employer";
+import { companyIndusrty, employerJobType } from "../utils/data/employer";
 import PostJobModal from "../components/Modal/PostJobModal";
-// import axios from "axios";
+import axios from "axios";
+import { API_HOST_URL } from "../utils/api/API_HOST";
 
 const PostJobForm = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const validationSchemas = Yup.object().shape({
-    job_title: Yup.string().required("Required"),
-    company_bio: Yup.string()
+    jobTitle: Yup.string().required("Required"),
+    companyBio: Yup.string()
       .min(20, "Company bio must have at least 20 characters")
       .required("Required"),
-    job_description: Yup.string()
+    jobDescription: Yup.string()
       .min(20, "job description must have at least 20 characters")
 
       .required("Required"),
     deadline: Yup.string().required("Required"),
-    requirements: Yup.string().required("Required"),
+    jobRequirement: Yup.string().required("Required"),
     salary: Yup.string().required("Required"),
-    job_location: Yup.string().required("Required"),
+    jobLocation: Yup.string().required("Required"),
     tags: Yup.string().required("Required"),
-    logo: Yup.mixed()
+    companyLogo: Yup.mixed()
       .required("A file is required")
       .test("fileSize", "File size is too large", (value) => {
         return value && value.size <= 5048576; // 5MB limit
@@ -37,17 +35,17 @@ const PostJobForm = () => {
       .test("fileType", "Unsupported File Format", (value) => {
         return value && ["image/jpeg", "image/png"].includes(value.type);
       }),
-    job_mode: Yup.string().required("Required"),
-    job_type: Yup.string().required("Required"),
-    employer_name: Yup.string().required("Required"),
+    jobMode: Yup.string().required("Required"),
+    jobType: Yup.string().required("Required"),
+    companyName: Yup.string().required("Required"),
     industry: Yup.string().required("Required"),
-    regNum: Yup.string().required("Required"),
-    email: Yup.string()
+    companyRegistrationNumber: Yup.string().required("Required"),
+    companyEmail: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
-    phoneNumber: Yup.string().required("Required"),
-    address: Yup.string().required("Required"),
-    receipt: Yup.mixed()
+    companyPhoneNumber: Yup.string().required("Required"),
+    companyAddress: Yup.string().required("Required"),
+    paymentReceipt: Yup.mixed()
       .required("A file is required")
       .test("fileSize", "File size is too large", (value) => {
         return value && value.size <= 5048576; // 5MB limit
@@ -64,37 +62,99 @@ const PostJobForm = () => {
         );
       }),
   });
+  const submitForm = async (url, formData) => {
+    try {
+      setLoading(true);
+      await axios
+        .post(url, formData, {
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+          },
+        })
+        .then(function (response) {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+      // setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = async (e, setFieldValue, field) => {
     const { value } = e.target;
 
     setFieldValue(field, value); // Update Formik's state
   };
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
+    setLoading(true);
+    try {
+      let { paymentReceipt, companyLogo, tags, ...otherValues } = values;
+
+      // Create an array of file uploads
+      let uploadFiles = [paymentReceipt, companyLogo].map((file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "tin4r1lt");
+
+        return axios.post(
+          `${API_HOST_URL}/api/v1/auth/upload-to-cloudinary`,
+          // `${API_HOST_URL}/api/cloudinary/upload-file`,
+          formData
+        );
+      });
+
+      // Wait for all uploads to complete
+      let responses = await Promise.all(uploadFiles);
+
+      // Get URLs of uploaded files
+      let fileUrls = responses.map((response) => response.data);
+
+      [paymentReceipt, companyLogo] = fileUrls;
+      // Handle form submission with otherValues and the uploaded file URLs
+      const submittedData = {
+        ...otherValues,
+        paymentReceipt: paymentReceipt,
+        companyLogo: companyLogo,
+        tags: [tags],
+      };
+      console.log(submittedData);
+      submitForm(`${API_HOST_URL}/api/v1/job-posts`, submittedData);
+      setLoading(false);
+
+      navigate("/successfulJobPost");
+    } catch (error) {
+      console.error("Error uploading files:", error);
+    } finally {
+      setLoading(false);
+    }
+
     setSubmitting(false);
   };
 
   const initialValues = {
-    job_title: "",
-    company_bio: "",
-    job_description: "",
+    jobTitle: "",
+    companyBio: "",
+    jobDescription: "",
     deadline: "",
-    requirements: "",
+    jobRequirement: "",
     salary: "",
-    job_location: "",
+    jobLocation: "",
     tags: "",
-    job_mode: "",
-    job_type: "",
-    logo: "",
-    employer_name: "",
+    jobMode: "",
+    jobType: "",
+    companyLogo: "",
+    companyName: "",
     industry: "",
-    regNum: "",
-    webUrl: "",
-    email: "",
-    phoneNumber: "",
-    address: "",
-    receipt: "",
+    companyRegistrationNumber: "",
+    companyWebsiteLink: "",
+    companyEmail: "",
+    companyPhoneNumber: "",
+    companyAddress: "",
+    paymentReceipt: "",
   };
   return (
     <div>
@@ -117,64 +177,64 @@ const PostJobForm = () => {
                     Job Details
                   </h2>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4 ">
-                    <label className="font-bold" htmlFor="job_title">
+                    <label className="font-bold" htmlFor="jobTitle">
                       Job Title
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="job_title"
+                      name="jobTitle"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="job_title"
+                      name="jobTitle"
                       component="div"
                     />
                   </div>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="job_description">
+                    <label className="font-bold" htmlFor="jobDescription">
                       Job Description
                     </label>
                     <Field
                       as="textarea"
                       className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="job_description"
+                      name="jobDescription"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="job_description"
+                      name="jobDescription"
                       component="div"
                     />
                   </div>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="requirements">
-                      Requirements
+                    <label className="font-bold" htmlFor="jobRequirement">
+                      Job Requirement
                     </label>
                     <Field
                       as="textarea"
                       className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="requirements"
+                      name="jobRequirement"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="requirements"
+                      name="jobRequirement"
                       component="div"
                     />
                   </div>
                   <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
-                    <label className="font-bold" htmlFor="job_type">
+                    <label className="font-bold" htmlFor="jobType">
                       Job Type
                     </label>
 
                     <select
                       className="bg-primary py-4 px-2 rounded-lg"
                       required
-                      id="job_type"
-                      name="job_type"
+                      id="jobType"
+                      name="jobType"
                       onChange={(e) =>
-                        handleChange(e, setFieldValue, "job_type", values)
+                        handleChange(e, setFieldValue, "jobType", values)
                       }>
                       {employerJobType.map(({ id, title }) => (
                         <option key={id} className="block mt-2">
@@ -184,20 +244,20 @@ const PostJobForm = () => {
                     </select>
                     <ErrorMessage
                       className="text-red-500"
-                      name="job_type"
+                      name="jobType"
                       component="div"
                     />
                   </div>
                   <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
-                    <label className="font-bold" htmlFor="job_mode">
+                    <label className="font-bold" htmlFor="jobMode">
                       Job Mode
                     </label>
 
                     <select
                       className="bg-primary py-4 px-2 rounded-lg"
-                      name="job_mode"
+                      name="jobMode"
                       onChange={(e) =>
-                        handleChange(e, setFieldValue, "job_mode", values)
+                        handleChange(e, setFieldValue, "jobMode", values)
                       }>
                       {jobLocations.map(({ id, value }) => (
                         <option key={id} className="block mt-2">
@@ -207,23 +267,23 @@ const PostJobForm = () => {
                     </select>
                     <ErrorMessage
                       className="text-red-500"
-                      name="job_mode"
+                      name="jobMode"
                       component="div"
                     />
                   </div>
 
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="job_location">
+                    <label className="font-bold" htmlFor="jobLocation">
                       Job Location
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="job_location"
+                      name="jobLocation"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="job_location"
+                      name="jobLocation"
                       component="div"
                     />
                   </div>
@@ -251,6 +311,7 @@ const PostJobForm = () => {
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
                       name="tags"
+                      placeholder="tags:frontend, product manager..."
                     />
                     <ErrorMessage
                       className="text-red-500"
@@ -285,112 +346,114 @@ const PostJobForm = () => {
                       Upload Company Logo
                     </label>
                     <input
-                      id="logo"
-                      name="logo"
+                      id="companyLogo"
+                      name="companyLogo"
                       type="file"
                       onChange={(event) => {
                         const file = event.currentTarget.files[0];
-                        setFieldValue("logo", file);
+                        setFieldValue("companyLogo", file);
                       }}
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="logo"
+                      name="companyLogo"
                       component="div"
                     />
                   </div>
 
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="company_bio">
+                    <label className="font-bold" htmlFor="companyBio">
                       Company Bio
                     </label>
                     <Field
                       as="textarea"
                       className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="company_bio"
+                      name="companyBio"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="company_bio"
+                      name="companyBio"
                       component="div"
                     />
                   </div>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="employer_name">
+                    <label className="font-bold" htmlFor="companyName">
                       Company Name
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="employer_name"
+                      name="companyName"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="employer_name"
+                      name="companyName"
                       component="div"
                     />
                   </div>
 
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="regNum">
+                    <label
+                      className="font-bold"
+                      htmlFor="companyRegistrationNumber">
                       CAC REG. NO:
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="regNum"
+                      name="companyRegistrationNumber"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="regNum"
+                      name="companyRegistrationNumber"
                       component="div"
                     />
                   </div>
 
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="webUrl">
+                    <label className="font-bold" htmlFor="companyWebsiteLink">
                       Website
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="webUrl"
+                      name="companyWebsiteLink"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="webUrl"
+                      name="companyWebsiteLink"
                       component="div"
                     />
                   </div>
 
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="phoneNumber">
+                    <label className="font-bold" htmlFor="companyPhoneNumber">
                       Phone Contact
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="number"
-                      name="phoneNumber"
+                      name="companyPhoneNumber"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="phoneNumber"
+                      name="companyPhoneNumber"
                       component="div"
                     />
                   </div>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="email">
+                    <label className="font-bold" htmlFor="companyEmail">
                       Email Contact
                     </label>
                     <Field
                       className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="email"
-                      name="email"
+                      name="companyEmail"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="email"
+                      name="companyEmail"
                       component="div"
                     />
                   </div>
@@ -420,18 +483,18 @@ const PostJobForm = () => {
                     />
                   </div>
                   <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                    <label className="font-bold" htmlFor="address">
+                    <label className="font-bold" htmlFor="companyAddress">
                       Company Address
                     </label>
                     <Field
                       as="textarea"
                       className="h-[150px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
                       type="text"
-                      name="address"
+                      name="companyAddress"
                     />
                     <ErrorMessage
                       className="text-red-500"
-                      name="address"
+                      name="companyAddress"
                       component="div"
                     />
                   </div>
@@ -442,7 +505,7 @@ const PostJobForm = () => {
                       <p className="mb-5 font-bold">Choose Payment Mode</p>
 
                       <Link
-                        to="https://paystack.com/pay/nxg-reg"
+                        to="https://paystack.com/pay/externaljobpost"
                         target="_blank"
                         className="text-secondary underline md:text-md">
                         Click Here To Pay With Card
@@ -474,21 +537,23 @@ const PostJobForm = () => {
                       </p>
                     </article>
                     <div className="w-[90%] md:w-[90%] m-auto mt-4">
-                      <label className="font-bold block" htmlFor="receipt">
-                        Upload Payment Receipt
+                      <label
+                        className="font-bold block"
+                        htmlFor="paymentReceipt">
+                        Upload Payment paymentReceipt
                       </label>
                       <input
-                        id="receipt"
-                        name="receipt"
+                        id="paymentReceipt"
+                        name="paymentReceipt"
                         type="file"
                         onChange={(event) => {
                           const file = event.currentTarget.files[0];
-                          setFieldValue("receipt", file);
+                          setFieldValue("paymentReceipt", file);
                         }}
                       />
                       <ErrorMessage
                         className="text-red-500"
-                        name="receipt"
+                        name="paymentReceipt"
                         component="div"
                       />
                     </div>
@@ -500,7 +565,7 @@ const PostJobForm = () => {
                     disabled={isSubmitting}
                     className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto bg-[#006A90]"
                     type="submit">
-                    {"Submit"}
+                    {loading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </Form>

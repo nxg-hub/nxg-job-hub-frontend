@@ -42,6 +42,7 @@ import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewAp
 import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
+import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
 function App() {
   return (
     <>
@@ -55,6 +56,7 @@ function App() {
         <Route path="/faqs" element={<Faq />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
+        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
         {/* Registration */}
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<SelectAccountType />} />
