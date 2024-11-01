@@ -81,7 +81,7 @@
       }
       .relevance-section {
         grid-column: 1;
-        padding: 0.8rem 0.5rem;
+        padding: 0.8rem 0.8rem;
       }
       #profile-search {
         display: grid;
@@ -185,6 +185,8 @@
         }
         .relevance-select {
           width: 100%;
+          grid-column: span 2 / span 2;
+
           .css-13cymwt-control {
             min-height: 0px !important;
             padding: 0 8px;

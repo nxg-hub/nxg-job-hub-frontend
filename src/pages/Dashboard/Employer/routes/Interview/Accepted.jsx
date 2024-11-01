@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import avater from "../../../../../static/images/user.png";
+
 import {
   setFeedBackFormTrue,
   setInterviewFormTrue,
@@ -24,7 +25,11 @@ const Accepted = (applicant) => {
       <div className="w-[80%] md:flex gap-2 ">
         <img
           className="h-[64px] w-[64px] rounded-full"
-          src={applicantTalent?.profilePicture}
+          src={
+            applicantTalent?.profilePicture
+              ? applicantTalent?.profilePicture
+              : avater
+          }
           alt="profilePic"
         />
         <div>
