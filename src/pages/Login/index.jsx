@@ -181,7 +181,7 @@ const Login = () => {
               <button style={{ background: "#2596BE" }}>Sign In</button>
             </div>
           </div>
-          <AuthOptions login={true} />
+          {/* <AuthOptions login={true} /> */}
           <p className="signup">
             Don't have an account?{" "}
             <Link
