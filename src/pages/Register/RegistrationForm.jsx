@@ -346,7 +346,7 @@ const RegistrationForm = ({ userType }) => {
               register
               value="Register"
             />
-            <AuthOptions register />
+            {/* <AuthOptions register /> */}
 
             <p>
               Already have an account? <Link to="/login">Log in</Link>

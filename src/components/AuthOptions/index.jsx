@@ -2,13 +2,11 @@ import s from "./index.module.scss";
 import GoogleIcon from "../../static/icons/flat-color-icons_google.svg?react";
 import LinkedInIcon from "../../static/icons/devicon_linkedin.svg?react";
 
-
 const AuthOptions = ({ login, register }) => {
-
- 
   const googleOAuth = async () => {
-   window.location.href ="https://nxg-job-hub-8758c68a4346.herokuapp.com/oauth2/authorization/google"
-  }
+    window.location.href =
+      "https://nxg-job-hub-8758c68a4346.herokuapp.com/oauth2/authorization/google";
+  };
   return (
     <div className={s.AuthOptions}>
       <div className={s.formDivider}>
@@ -18,10 +16,9 @@ const AuthOptions = ({ login, register }) => {
       </div>
       <div>
         <button
-          type={"button"}
+          type={"button "}
           onClick={() => googleOAuth()}
-          className={s.optionButton}
-        >
+          className={`${s.optionButton}`}>
           <GoogleIcon />
           {login && "Log in"}
           {register && "Sign up"} with Google
