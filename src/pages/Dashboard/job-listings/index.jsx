@@ -133,7 +133,7 @@ const JobListings = () => {
   const currentPage = "jobListing";
 
   return (
-    <div className="dash-profile-main-side relative">
+    <div className="dash-profile-main-side ">
       <div className="dash-profile-search-section">
         <ProfileSearch url={allJobsUrl} currentPage={currentPage} />
       </div>
@@ -160,7 +160,7 @@ const JobListings = () => {
 
         {loading || (applyloader && !showSearchedJobs) ? (
           <img
-            className="w-[30%] md:w-[10%] h-[400px] absolute top-[400px] md:top-[300px] right-[45%] md:h-[500px] m-auto mt-[-150px]"
+            className="w-[20%] md:w-[10%] h-[400px] absolute top-[400px] md:top-[300px] right-[35%] md:h-[500px] m-auto mt-[-150px]"
             src={spinner}
             alt="spinner"
           />
@@ -274,7 +274,7 @@ const JobListings = () => {
         {!applyloader && multipleApplication && (
           <>
             <div
-              className={` bg-white z-30 absolute top-[300px] left-[10%] md:left-[20%] w-[80%] md:w-[60%] m-auto  rounded-[24px] text-base font-medium px-10 py-5`}>
+              className={` bg-white z-30 fixed top-[300px] left-[10%] md:left-[30%] w-[80%] md:w-[60%] m-auto  rounded-[24px] text-base font-medium px-10 py-5`}>
               <div className="flex items-center gap-y-3 text-center justify-center flex-col">
                 <div className="flex items-center gap-x-1">
                   <span className="text-xl">
