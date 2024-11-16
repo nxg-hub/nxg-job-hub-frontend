@@ -270,7 +270,7 @@ const Sidebar = () => {
   };
   return (
     <div className={s.Sidebar}>
-      <Link to="/" className={s.menuIcon}>
+      <Link className={s.menuIcon}>
         <img src={logo} alt="logo" />
       </Link>
 
