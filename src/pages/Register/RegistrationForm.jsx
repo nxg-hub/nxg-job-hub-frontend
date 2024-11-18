@@ -27,7 +27,7 @@ const RegistrationForm = ({ userType }) => {
     gender: "",
     password: "",
     confirmPassword: "",
-    dob: "",
+    // dob: "",
     acceptedPrivacy: false,
     userType: userType,
   };
@@ -40,7 +40,7 @@ const RegistrationForm = ({ userType }) => {
     address: "",
     password: "",
     confirmPassword: "",
-    dob: "",
+    // dob: "",
     acceptedPrivacy: "",
   };
 
@@ -276,7 +276,7 @@ const RegistrationForm = ({ userType }) => {
                 type="radio"
               />
             </div>
-            <TextField
+            {/* <TextField
               onchange={(e) => updateField(e, setFormdata)}
               label={"Date of birth"}
               type={"date"}
@@ -286,7 +286,7 @@ const RegistrationForm = ({ userType }) => {
               id={"dob"}
               err={errors.dob}
               value={formData.dob}
-            />
+            /> */}
 
             <TextField
               onchange={(e) => {
