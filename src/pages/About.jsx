@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/header/Header";
 import ObjectiveCard from "../components/About/ObjectiveCard";
 import Footer from "../components/footer/Footer";
 
 const About = () => {
+  useEffect(() => {
+    //page to scroll to top unmount
+    document.documentElement.scrollTop = 0; // For most modern browsers
+  }, []);
   return (
-    <section className="bg-white w-full">
+    <section className="bg-white w-full scroll-smooth">
       <div className="bg-black">
         <Header />
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/header/Header";
 import CategoriesOfService from "../components/Services/CategoriesOfService";
 import af from "../static/images/additionalFeatures.png";
@@ -6,6 +6,10 @@ import sp from "../static/images/securityPrivacy.png";
 import Footer from "../components/footer/Footer";
 
 const Services = () => {
+  useEffect(() => {
+    //page to scroll to top unmount
+    document.documentElement.scrollTop = 0; // For most modern browsers
+  }, []);
   return (
     <section className="w-full bg-white">
       <div className="bg-black">
