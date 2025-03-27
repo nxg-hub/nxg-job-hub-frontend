@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
-import Notice from "../Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
-import NXGRadioButtonGroup from "../ui/nxgradiogroup";
+import NXGRadioButtonGroup from "../../components/ui/nxgradiogroup";
+import Notice from "../../components/Notice";
+import { AiOutlineClose } from "react-icons/ai";
 
-const SelectAccountType = () => {
+const SelectProfession = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -69,7 +69,6 @@ const SelectAccountType = () => {
     { label: "Tech Talent", value: "techtalent" },
     { label: "Agent", value: "agent" },
     { label: "Employer", value: "employer" },
-    { label: "Non Tech Talent/Service Provider", value: "nttsp" },
   ];
 
   const accountTypes = {
@@ -118,7 +117,7 @@ const SelectAccountType = () => {
     <div className="flex flex-col space-y-10">
       <nav className="flex justify-between items-center w-full bg-sky-600 p-4">
         <img
-          className="w-20 sm:w-24"
+          className="w-1/12"
           src={Logo}
           alt=""
         />
@@ -190,4 +189,4 @@ const SelectAccountType = () => {
   );
 };
 
-export default SelectAccountType;
+export default SelectProfession;

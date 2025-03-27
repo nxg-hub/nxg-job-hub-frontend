@@ -43,25 +43,72 @@ import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
+import RegisterUser from "./pages/TestingComponents/Register.jsx";
+import SelectProfession from "./pages/TestingComponents/SelectProfession.jsx";
+import { ButtonLoading } from "./pages/TestingComponents/ShadcnTest.jsx";
 function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/post-job-form" element={<PostJobForm />} />
-        <Route path="/findjob" element={<Findjob />} />
-        <Route path="/faqs" element={<Faq />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsAndCondition />} />
-        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        <Route
+          exact
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/services"
+          element={<Services />}
+        />
+        <Route
+          path="/test"
+          element={<ButtonLoading />}
+        />
+        <Route
+          path="/about"
+          element={<About />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+        <Route
+          path="/post-job-form"
+          element={<PostJobForm />}
+        />
+        <Route
+          path="/findjob"
+          element={<Findjob />}
+        />
+        <Route
+          path="/faqs"
+          element={<Faq />}
+        />
+        <Route
+          path="/privacy"
+          element={<PrivacyPolicy />}
+        />
+        <Route
+          path="/terms"
+          element={<TermsAndCondition />}
+        />
+        <Route
+          path="/successfulJobPost"
+          element={<SuccessfulJobPost />}
+        />
         {/* Registration */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/create" element={<SelectAccountType />} />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+        <Route
+          path="/create"
+          element={<SelectAccountType />}
+        />
         {/* Log in */}
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
@@ -73,10 +120,22 @@ function App() {
                 <EmployerVerificationForm />
               </VerificationProvider>
             }></Route>
-          <Route path="/profilelanding" element={<ProfileLanding />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/techprofileform" element={<DashboardProfileForm />} />
-          <Route path="/employerprofile" element={<EmployerProfileForm />} />
+          <Route
+            path="/profilelanding"
+            element={<ProfileLanding />}
+          />
+          <Route
+            path="/explore"
+            element={<Explore />}
+          />
+          <Route
+            path="/techprofileform"
+            element={<DashboardProfileForm />}
+          />
+          <Route
+            path="/employerprofile"
+            element={<EmployerProfileForm />}
+          />
           <Route
             path="/dashboard"
             element={
@@ -84,49 +143,131 @@ function App() {
                 <Dashboard />
               </VerificationProvider>
             }>
-            <Route path="" element={<Overview />} />
-            <Route path="notifications" element={<NotificationTab />} />
-            <Route path="profile" element={<ProfileController />} />
-            <Route path="featuredTalent" element={<FeaturedTalent />} />
+            <Route
+              path=""
+              element={<Overview />}
+            />
+            <Route
+              path="notifications"
+              element={<NotificationTab />}
+            />
+            <Route
+              path="profile"
+              element={<ProfileController />}
+            />
+            <Route
+              path="featuredTalent"
+              element={<FeaturedTalent />}
+            />
             {/* <Route path="profile" element={<VerificationProvider>
               <ProfileController />
             </VerificationProvider>} /> */}
             <Route path="posts">
-              <Route path="" element={<JobPosts />} />
-              <Route path="create" element={<PostJobs />} />
+              <Route
+                path=""
+                element={<JobPosts />}
+              />
+              <Route
+                path="create"
+                element={<PostJobs />}
+              />
             </Route>
             {/* <Route path="applicants" element={<JobApplicants />} /> */}
             <Route
               path="posts/review-applicants/:id"
               element={<ReviewApplicants />}
             />
-            <Route path="review-appliedtalent/:id" element={<FullReview />} />
-            <Route path="interviews" element={<Interview />} />
-            <Route path="services" element={<CompanyServices />} />
-            <Route path="applications" element={<Applications />} />
-            <Route path="saved" element={<SavedJobs />} />
+            <Route
+              path="review-appliedtalent/:id"
+              element={<FullReview />}
+            />
+            <Route
+              path="interviews"
+              element={<Interview />}
+            />
+            <Route
+              path="services"
+              element={<CompanyServices />}
+            />
+            <Route
+              path="applications"
+              element={<Applications />}
+            />
+            <Route
+              path="saved"
+              element={<SavedJobs />}
+            />
             {/* <Route path="wallet" element={<Wallet />} />W */}
-            <Route path="job-listings" element={<JobListings />} />
-            <Route path="analytics" element={<h2>Analytics </h2>} />
-            <Route path="subscription" element={<SubscriptionController />} />
-            <Route path="profile-details" element={<h2>Profile Details</h2>} />
-            <Route path="password-settings" element={<Passwordsettings />} />
-            <Route path="privacy" element={<PrivacyPolicy />} />
-            <Route path="terms" element={<TermsAndCondition />} />
-            <Route path="help" element={<Help />} />
+            <Route
+              path="job-listings"
+              element={<JobListings />}
+            />
+            <Route
+              path="analytics"
+              element={<h2>Analytics </h2>}
+            />
+            <Route
+              path="subscription"
+              element={<SubscriptionController />}
+            />
+            <Route
+              path="profile-details"
+              element={<h2>Profile Details</h2>}
+            />
+            <Route
+              path="password-settings"
+              element={<Passwordsettings />}
+            />
+            <Route
+              path="privacy"
+              element={<PrivacyPolicy />}
+            />
+            <Route
+              path="terms"
+              element={<TermsAndCondition />}
+            />
+            <Route
+              path="help"
+              element={<Help />}
+            />
           </Route>
-          <Route path="/sub-success" element={<SubSuccess />}>
-            <Route path=":reference" element={<SubSuccess />} />
+          <Route
+            path="/sub-success"
+            element={<SubSuccess />}>
+            <Route
+              path=":reference"
+              element={<SubSuccess />}
+            />
           </Route>
         </Route>
 
         {/* Modals */}
-        <Route path="/forgotpassword" element={<PasswordRecovery />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/otp" element={<Otp />} />
-        <Route path="/auth/reset-password" element={<ResetPassword />} />
-        <Route path="/iso" element={<SavedJobCard />} />
-        {<Route path="job-listings" element={<JobListings />} />}
+        <Route
+          path="/forgotpassword"
+          element={<PasswordRecovery />}
+        />
+        <Route
+          path="/resetpassword"
+          element={<ResetPassword />}
+        />
+        <Route
+          path="/otp"
+          element={<Otp />}
+        />
+        <Route
+          path="/auth/reset-password"
+          element={<ResetPassword />}
+        />
+        <Route
+          path="/iso"
+          element={<SavedJobCard />}
+        />
+        {
+          <Route
+            path="job-listings"
+            element={<JobListings />}
+          />
+        }
       </Routes>
     </>
   );
