@@ -46,6 +46,8 @@ import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.js
 import RegisterUser from "./pages/TestingComponents/Register.jsx";
 import SelectProfession from "./pages/TestingComponents/SelectProfession.jsx";
 import { ButtonLoading } from "./pages/TestingComponents/ShadcnTest.jsx";
+import TestSignupForm from "./pages/TestingComponents/SignupPage.jsx";
+import TestLoginForm from "./pages/TestingComponents/Login.jsx";
 function App() {
   return (
     <>
@@ -60,8 +62,12 @@ function App() {
           element={<Services />}
         />
         <Route
-          path="/test"
-          element={<ButtonLoading />}
+          path="/test/signup"
+          element={<TestSignupForm />}
+        />
+        <Route
+          path="/test/login"
+          element={<TestLoginForm />}
         />
         <Route
           path="/about"
