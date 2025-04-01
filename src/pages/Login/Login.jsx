@@ -24,14 +24,18 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
+import { Loader2 } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast";
 
 const formSchema = z.object({
-  email: z.string(),
+  email: z.string().email(),
   password: z.string(),
   keep_loggin: z.boolean().optional(),
 });
 
-export default function TestLoginForm() {
+export default function LoginForm() {
+  const [loginLoading, setLoginLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const { toast } = useToast();
@@ -41,8 +45,8 @@ export default function TestLoginForm() {
   });
 
   async function onSubmit(values) {
+    setLoginLoading(true);
     try {
-      // console.log(values);
       const res = await axios.post(`${API_HOST_URL}/api/v1/auth/login`, {
         email: values.email,
         password: values.password,
@@ -64,13 +68,13 @@ export default function TestLoginForm() {
 
       const id = userRes.data.id; // Assuming the user ID is returned in the response
 
-      if (check && authKey) {
+      if (values.keep_loggin && authKey) {
         // if "remember me" is set, Save authentication key to local storage
         window.localStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
-      } else if (!check && authKey) {
+      } else if (!values.keep_loggin && authKey) {
         // if login without "remember me", start a session
         window.sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
@@ -87,54 +91,80 @@ export default function TestLoginForm() {
       if (!userRes.data.userType) {
         navigate("/create");
       } else {
-        navigate(
-          userRes.data.userType === "employer"
-            ? "/profilelanding"
-            : "/dashboard"
-        );
+        toast({
+          className: cn(
+            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: "Successful",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+              <code className="text-white">Logging in...</code>
+            </pre>
+          ),
+          duration: 2500,
+        });
+        setTimeout(() => {
+          navigate(
+            userRes.data.userType === "employer"
+              ? "/profilelanding"
+              : "/dashboard"
+          );
+        }, 3000);
       }
-
-      toast({
-        className: cn(
-          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Successful",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              Login now {values.keep_loggin ? "Yes" : "No"}
-            </code>
-          </pre>
-        ),
-      });
     } catch (error) {
-      // let errorMessage = error.response.data || error.message;
       console.error("Form login error", error);
 
-      toast({
-        className: cn(
-          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "errorMessage",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              Failed to login. Please try again.
-            </code>
-          </pre>
-        ),
-      });
-    }
-    // catch (error) {
-    //   let errorMessage = error.response.data || error.message;
-    //   console.log(error);
+      if (error.response) {
+        if (error.response.status === 401 || error.response.status === 404) {
+          toast({
+            className: cn(
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: "Failed to login",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+                <code className="text-white">
+                  Wrong email or password combination
+                </code>
+              </pre>
+            ),
+          });
+          setTimeout(() => {
+            setLoginLoading(false);
+          }, 3000);
+        }
+      }
 
-    //   showpopUp({
-    //     type: "danger",
-    //     message: "Login failed, " + errorMessage,
-    //   });
-    //   setTimeout(() => showpopUp(undefined), 5000);
-    // }
+      if (!error.response) {
+        toast({
+          className: cn(
+            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: "Network error",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-sky-700 p-4">
+              <code className="text-white">
+                Failed to login, please check your
+                <br />
+                internet connection.
+              </code>
+            </pre>
+          ),
+          action: (
+            <ToastAction
+              onClick={form.handleSubmit(onSubmit)}
+              className="hover:text-sky-900"
+              altText="Try again">
+              Try again
+            </ToastAction>
+          ),
+        });
+
+        setTimeout(() => {
+          setLoginLoading(false);
+        }, 3000);
+      }
+    }
   }
 
   const AutoLoginUser = async () => {
@@ -196,7 +226,7 @@ export default function TestLoginForm() {
                       <FormControl>
                         <Input
                           placeholder="example@gmail.com"
-                          type="email"
+                          type="text"
                           {...field}
                         />
                       </FormControl>
@@ -224,7 +254,7 @@ export default function TestLoginForm() {
                 />
                 <div>
                   <Link
-                    to={"/"}
+                    to="/forgotpassword"
                     className="underline text-sm">
                     Forget Passoword?
                   </Link>
@@ -251,13 +281,22 @@ export default function TestLoginForm() {
                   )}
                 />
                 <Button
+                  disabled={loginLoading}
                   className="w-full bg-sky-600 border-none hover:bg-sky-700"
                   type="submit">
-                  <span>Sign in</span>
+                  {loginLoading ? (
+                    <div className="flex items-center space-x-1">
+                      <Loader2 className="animate-spin" />
+                      <span>Please wait</span>
+                    </div>
+                  ) : (
+                    <span>Sign in</span>
+                  )}
                 </Button>
               </form>
             </Form>
-            <div>
+            {/* Logging using third party vendor  /> */}
+            {/* <div>
               <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
                 <div class="flex-grow border-t border-gray-300"></div>
                 <span class="px-4">or</span>
@@ -291,12 +330,12 @@ export default function TestLoginForm() {
                   </span>
                 </Button>
               </section>
-            </div>
-            <div className="text-center mt-20">
+            </div> */}
+            <div className="text-center">
               <p>
                 Don't have an account?{" "}
                 <Link
-                  to={"/"}
+                  to="/register"
                   className="underline text-sm text-sky-600">
                   Sign up
                 </Link>
