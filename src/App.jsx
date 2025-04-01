@@ -11,7 +11,6 @@ import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsetti
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 // import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
 import JobListings from "./pages/Dashboard/job-listings";
-import Register from "./pages/Register/index.jsx";
 import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
@@ -43,6 +42,11 @@ import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
+
+import SelectProfession from "./pages/TestingComponents/SelectProfession.jsx";
+import LoginForm from "./pages/Login/Login.jsx";
+import SignupForm from "./pages/Register/SignupPage.jsx";
+
 function App() {
   return (
     <>
@@ -91,7 +95,7 @@ function App() {
         {/* Registration */}
         <Route
           path="/register"
-          element={<Register />}
+          element={<SignupForm />}
         />
         <Route
           path="/create"
@@ -100,7 +104,7 @@ function App() {
         {/* Log in */}
         <Route
           path="/login"
-          element={<Login />}
+          element={<LoginForm />}
         />
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
