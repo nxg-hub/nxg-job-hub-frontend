@@ -42,8 +42,6 @@ import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
-
-import SelectProfession from "./pages/TestingComponents/SelectProfession.jsx";
 import LoginForm from "./pages/Login/Login.jsx";
 import SignupForm from "./pages/Register/SignupPage.jsx";
 

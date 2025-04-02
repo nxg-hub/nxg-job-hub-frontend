@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -31,6 +30,7 @@ import { cn } from "@/lib/utils";
 import User from "@/utils/classes/User";
 import EmailVerificationNotice from "@/components/EmailVerificationNotice";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z
   .object({
