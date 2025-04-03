@@ -5,12 +5,23 @@ import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
 import Notice from "../Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
-import NXGRadioButtonGroup from "../ui/nxgradiogroup";
+import { Button } from "@/components/ui/button";
+import { RadioGroupItem } from "../ui/radio-group";
+
+import { RadioGroup } from "../ui/radio-group";
+import { Label } from "../ui/label";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "../ui/toaster";
+import { cn } from "@/lib/utils";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
   const [popup, showPopup] = useState(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [submittingLoading, setSubmittingLoading] = useState(false);
+  const { toast } = useToast();
 
   // Get authkey from sources
   const authKey =
@@ -76,14 +87,19 @@ const SelectAccountType = () => {
     techtalent: `${API_HOST_URL}/api/v1/tech-talent/register/`,
     agent: `${API_HOST_URL}/api/agents/createAgent`,
     employer: `${API_HOST_URL}/api/employers/createEmployer`,
+    nttsp: `${API_HOST_URL}/api/v1/nttsp/register`,
+  };
+
+  const handleChange = (value) => {
+    setAccountChoice(value);
+    console.log(value);
   };
 
   const setAccountType = async () => {
+    setSubmittingLoading(true);
+    // Check if the accountChoice is valid before proceeding
+
     try {
-      showPopup({
-        type: "info",
-        message: `Creating ${accountChoice} account...`,
-      });
       await axios.post(
         accountTypes[accountChoice],
         {},
@@ -94,19 +110,45 @@ const SelectAccountType = () => {
           },
         }
       );
-      showPopup({
-        type: "success",
-        message: `Created ${accountChoice} account successfully`,
+      toast({
+        className: cn(
+          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: "Successful",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+            <code className="text-white">
+              Created ${accountChoice} account successfully
+            </code>
+          </pre>
+        ),
+        duration: 2500,
       });
       // Updated the condition to navigate to the appropriate page based on the accountChoice
-      navigate(accountChoice === "employer" ? "/profilelanding" : "/dashboard");
+      setTimeout(() => {
+        navigate(
+          accountChoice === "employer" ? "/profilelanding" : "/dashboard"
+        );
+      }, 3000);
     } catch (err) {
       console.log(err);
-      showPopup({
-        type: "danger",
-        message: `Account creation failed. Please try again.`,
+      setSubmittingLoading(false);
+      toast({
+        className: cn(
+          "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: "Failed ",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+            <code className="text-white">
+              Account creation failed. Please try again.
+            </code>
+          </pre>
+        ),
       });
-      setTimeout(() => showPopup(undefined), 5000);
+      setTimeout(() => {
+        setSubmittingLoading(false);
+      }, 3000);
     }
   };
 
@@ -150,24 +192,44 @@ const SelectAccountType = () => {
                 Get started and connect with professionals!
               </p>
             </div>
-            <NXGRadioButtonGroup
-              radios={accountRadios}
-              name="role"
-              selectedRadio={accountChoice}
-              onChange={setAccountChoice}
-              className="space-y-4 mb-10"></NXGRadioButtonGroup>
-            <button
+            <RadioGroup
+              className="flex flex-col space-y-1 mb-6"
+              onValueChange={handleChange}>
+              {accountRadios.map((radio) => (
+                <div
+                  key={radio.value}
+                  className="flex items-center justify-between space-x-20 space-y-0 border
+                 rounded p-4 text-base ">
+                  <Label htmlFor={radio.value}>{radio.label}</Label>
+                  <RadioGroupItem
+                    className="p-0 "
+                    value={radio.value}
+                    id={radio.value}
+                  />
+                </div>
+              ))}
+            </RadioGroup>
+            <Button
               className={
-                accountChoice === ""
-                  ? "w-2/3 bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed"
-                  : "w-2/3 bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer"
+                accountChoice === "" || submittingLoading
+                  ? "w-2/3 bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300"
+                  : "w-2/3 bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700"
               }
+              type="button"
               onClick={setAccountType}
               aria-disabled={!accountChoice}
-              disabled={!accountChoice}
+              disabled={!accountChoice || submittingLoading}
               to={`./${accountChoice}`}>
-              Continue
-            </button>
+              {submittingLoading ? (
+                <div className="flex items-center space-x-1">
+                  <Loader2 className="animate-spin" />
+                  <span>Please wait</span>
+                </div>
+              ) : (
+                <span>Continue</span>
+              )}
+            </Button>
+
             <p>
               Already have an account?{" "}
               <Link
@@ -180,12 +242,7 @@ const SelectAccountType = () => {
           </div>
         </div>
       </div>
-      {popup && (
-        <Notice
-          type={popup.type}
-          message={popup.message}
-        />
-      )}
+      <Toaster />
     </div>
   );
 };

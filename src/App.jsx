@@ -15,7 +15,7 @@ import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import { Otp } from "./pages/Login/Otp.jsx";
-import SelectAccountType from "./components/SelectAccountType/index.jsx";
+import SelectAccountType from "./components/SelectAccountType/selectaccountype.jsx";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import NotificationTab from "./components/NotificationTab/index.jsx";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
