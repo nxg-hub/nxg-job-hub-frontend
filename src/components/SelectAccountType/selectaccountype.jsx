@@ -92,7 +92,6 @@ const SelectAccountType = () => {
 
   const handleChange = (value) => {
     setAccountChoice(value);
-    console.log(value);
   };
 
   const setAccountType = async () => {
@@ -128,6 +127,11 @@ const SelectAccountType = () => {
       setTimeout(() => {
         navigate(
           accountChoice === "employer" ? "/profilelanding" : "/dashboard"
+        );
+        navigate(
+          accountChoice === "nttsp"
+            ? "/profilelanding"
+            : "/services/job-dashboard"
         );
       }, 3000);
     } catch (err) {
