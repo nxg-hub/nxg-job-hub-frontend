@@ -44,6 +44,7 @@ import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
 import LoginForm from "./pages/Login/Login.jsx";
 import SignupForm from "./pages/Register/SignupPage.jsx";
+import { JobDashboard } from "./pages/job-dashboard.jsx";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
         <Route
           path="/services"
           element={<Services />}
+        />
+        <Route
+          path="/services/job-dashboard"
+          element={<JobDashboard />}
         />
         <Route
           path="/about"
