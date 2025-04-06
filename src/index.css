@@ -46,6 +46,28 @@
   background-color: #2596be !important;
   opacity: 1 !important;
 }
+/* Hide scrollbar by default */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+  opacity: 0;
+}
+
+/* Hide thumb by default */
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 4px;
+}
+
+/* Show scrollbar on hover */
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+}
+
+/* Optional: show track on hover too */
+.sidebar:hover::-webkit-scrollbar {
+  opacity: 1;
+}
+
 
 @layer base {
   :root {

@@ -126,10 +126,7 @@ const SelectAccountType = () => {
       // Updated the condition to navigate to the appropriate page based on the accountChoice
       setTimeout(() => {
         navigate(
-          accountChoice === "employer" ? "/profilelanding" : "/dashboard"
-        );
-        navigate(
-          accountChoice === "nttsp"
+          accountChoice === "employer"
             ? "/profilelanding"
             : "/services/job-dashboard"
         );
@@ -152,6 +149,11 @@ const SelectAccountType = () => {
       });
       setTimeout(() => {
         setSubmittingLoading(false);
+        navigate(
+          accountChoice === "nttsp"
+            ? "/profilelanding"
+            : "/services/job-dashboard"
+        );
       }, 3000);
     }
   };

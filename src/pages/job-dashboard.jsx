@@ -290,7 +290,9 @@ export function JobDashboard() {
           <Sidebar
             collapsible="icon"
             className="bg-[#0078B4] text-white">
-            <SidebarContent className="bg-sky-700">
+            <SidebarContent
+              className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
+            scrollbar-hidden">
               <div>
                 <img
                   src={logo}
@@ -345,37 +347,39 @@ export function JobDashboard() {
               </SidebarMenu>
             </SidebarFooter>
 
-            <SidebarRail className="border-none" />
+            <SidebarRail className="border-none hover:bg-transparent" />
           </Sidebar>
 
           {/* Main Content */}
           <SidebarInset>
             {/* Header */}
-            <header className="bg-white p-4 flex justify-between items-center border-b">
-              <div className="flex items-center">
-                <SidebarTrigger className="mr-2 border-none" />
-                <h1 className="text-xl font-semibold text-gray-800">
-                  Sarah's Dashboard
-                </h1>
-              </div>
+            <header className="bg-white p-4 flex flex-col items-start border-b">
+              <SidebarTrigger className="mr-2 border-none" />
+              <div className="flex justify-between items-center w-full">
+                <div className="flex items-center">
+                  <h1 className="text-xl font-semibold text-gray-800">
+                    Sarah's Dashboard
+                  </h1>
+                </div>
 
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="relative border-none">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                    <span className="sr-only">Notifications</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="p-0 w-[380px]"
-                  align="end">
-                  <NotificationPanel />
-                </PopoverContent>
-              </Popover>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="relative border-none">
+                      <Bell className="h-5 w-5" />
+                      <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                      <span className="sr-only">Notifications</span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="p-0 w-[380px]"
+                    align="end">
+                    <NotificationPanel />
+                  </PopoverContent>
+                </Popover>
+              </div>
             </header>
 
             {/* Search Section */}
