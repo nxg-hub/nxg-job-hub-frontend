@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import {
   Bell,
@@ -53,6 +54,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
@@ -285,254 +287,279 @@ export function JobDashboard() {
   return (
     <TooltipProvider delayDuration={0}>
       <SidebarProvider>
-        <div className="flex h-screen bg-gray-50">
-          {/* Sidebar */}
-          <Sidebar
-            collapsible="icon"
-            className="bg-[#0078B4] text-white">
-            <SidebarContent className="bg-sky-700">
-              <div>
-                <img
-                  src={logo}
-                  alt="Next Gen Hub Logo"
-                  className="object-contain w-32 h-32 mx-auto"
-                />
-
-                <div className="mt-4 px-4 flex flex-col items-center">
-                  <Avatar className="border-2 border-white h-20 w-20">
-                    <AvatarImage
-                      src={sarahicon}
-                      alt="Sarah"
-                    />
-                    <AvatarFallback>S</AvatarFallback>
-                  </Avatar>
-                  <h3 className="mt-2 font-semibold text-lg">Sarah</h3>
-                  <p className="text-sm text-gray-200">Product designer</p>
-                </div>
-              </div>
-              <SidebarGroup className="pr-0 mr-0">
-                <SidebarGroupContent className="pr-0 mr-0">
-                  <SidebarMenu className="space-y-5">
-                    {sidebarItems.map((item) => (
-                      <SidebarMenuItem key={item.label}>
-                        <SidebarMenuButton
-                          asChild
-                          isActive={item.active}
-                          tooltip={item.label}
-                          className="text-white hover:bg-white/10 hover:text-white rounded-r-none p-5">
-                          <NavLink>
-                            <span>{item.icon}</span>
-                            <span>{item.label}</span>
-                          </NavLink>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-
-            <SidebarFooter>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    tooltip="Logout"
-                    className="text-sky-700 hover:bg-white/10 hover:text-white border-none">
-                    <LogOut className="h-4 w-4" />
-                    <span>Logout</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarFooter>
-
-            <SidebarRail className="border-none" />
-          </Sidebar>
-
-          {/* Main Content */}
-          <SidebarInset>
-            {/* Header */}
-            <header className="bg-white p-4 flex justify-between items-center border-b">
-              <div className="flex items-center">
-                <SidebarTrigger className="mr-2 border-none" />
-                <h1 className="text-xl font-semibold text-gray-800">
-                  Sarah's Dashboard
-                </h1>
-              </div>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="relative border-none">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                    <span className="sr-only">Notifications</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="p-0 w-[380px]"
-                  align="end">
-                  <NotificationPanel />
-                </PopoverContent>
-              </Popover>
-            </header>
-
-            {/* Search Section */}
-            <div className="p-4 bg-white border-b">
-              <p className="text-sm text-gray-500 mb-2">Search for Jobs</p>
-              <div className="flex flex-wrap gap-2">
-                <div className="relative flex-1 min-w-[200px]">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                  <Input
-                    type="text"
-                    placeholder="Product Designer"
-                    className="pl-9"
-                  />
-                </div>
-
-                <div className="relative flex-1 min-w-[200px]">
-                  <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                  <Input
-                    type="text"
-                    placeholder="Location"
-                    className="pl-9"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Select>
-                    <SelectTrigger className="hover:bg-gray-100 hover:text-gray-500">
-                      <SelectValue placeholder="Type of employment" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="full-time">Volunteer</SelectItem>
-                      <SelectItem value="part-time">Contract</SelectItem>
-                      <SelectItem value="contract">Part-time</SelectItem>
-                      <SelectItem value="freelance">Full-time</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Select>
-                    <SelectTrigger className="hover:bg-gray-100 hover:text-gray-500">
-                      <SelectValue placeholder="Experience level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="entry">Internship</SelectItem>
-                      <SelectItem value="mid">Entry level</SelectItem>
-                      <SelectItem value="senior">Mid level</SelectItem>
-                      <SelectItem value="senior">Senior level</SelectItem>
-                      <SelectItem value="senior">Director</SelectItem>
-                      <SelectItem value="senior">Executive</SelectItem>
-                      <SelectItem value="senior">Others</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button className="bg-sky-400 hover:bg-[#006699] border-none">
-                  Search Job
-                </Button>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">sort by</span>
-                  <Select defaultValue="relevance">
-                    <SelectTrigger className="w-[130px] hover:bg-gray-100">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="relevance">Relevance</SelectItem>
-                      <SelectItem value="date">Popularity</SelectItem>
-                      <SelectItem value="salary">Recent</SelectItem>
-                      <SelectItem value="salary">Oldest</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            {/* Profile Completion */}
-            <div className="p-4">
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                <div className="px-10 flex items-center justify-between">
-                  <div className="flex-1 min-w-[300px]">
-                    <h2 className="text-xl font-semibold text-gray-800">
-                      Get started by Completing your Profile
-                    </h2>
-                    <p className="text-gray-600 mt-1">
-                      Stand a better chance of being hired by completing your
-                      profile
-                    </p>
-                    <Button className="mt-4 bg-sky-400 hover:bg-[#006699] border-none">
-                      Complete Profile
-                    </Button>
-                  </div>
-                  <div className="min-w-[300px]">
-                    <img
-                      src={kcyimage}
-                      alt="Complete profile illustration"
-                      className="object-contain w-44 h-44"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Recommended Jobs */}
-            <div className="p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
-                  Recommeded Jobs for you
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-500 border-gray-200 ">
-                  View All
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {recommendedJobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    isBookmarked={bookmarkedJobs.includes(job.id)}
-                    onBookmarkToggle={() => toggleBookmark(job.id)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Jobs Near You */}
-            <div className="p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
-                  Jobs Near You
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-500 border-gray-200">
-                  View All
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {nearbyJobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    isBookmarked={bookmarkedJobs.includes(job.id)}
-                    onBookmarkToggle={() => toggleBookmark(job.id)}
-                  />
-                ))}
-              </div>
-            </div>
-          </SidebarInset>
-        </div>
+        <DashboardContent
+          bookmarkedJobs={bookmarkedJobs}
+          toggleBookmark={toggleBookmark}
+        />
       </SidebarProvider>
     </TooltipProvider>
+  );
+}
+
+function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
+  // Now we can safely use useSidebar here
+  const sidebar = useSidebar();
+  const isCollapsed = sidebar.state === "collapsed";
+
+  return (
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar
+        collapsible="icon"
+        className="bg-[#0078B4] text-white">
+        <SidebarHeader className="bg-[#0078B4]">
+          <div>
+            <img
+              src={logo}
+              alt="Next Gen Hub Logo"
+              className="object-contain w-32 h-32 mx-auto"
+            />
+
+            <div className="mt-4 px-4 flex flex-col items-center">
+              <Avatar
+                className={cn(
+                  "border-2 border-white",
+                  isCollapsed ? "h-10 w-10" : "h-20 w-20"
+                )}>
+                <AvatarImage
+                  src={sarahicon}
+                  alt="Sarah"
+                />
+                <AvatarFallback>S</AvatarFallback>
+              </Avatar>
+              {!isCollapsed && (
+                <>
+                  <h3 className="mt-2 font-semibold text-lg">Sarah</h3>
+                  <p className="text-sm text-gray-200">Fashion designer</p>
+                </>
+              )}
+            </div>
+          </div>
+        </SidebarHeader>
+        <SidebarContent
+          className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
+            scrollbar-hidden">
+          <SidebarGroup className="">
+            <SidebarGroupContent className="">
+              <SidebarMenu className="space-y-5">
+                {sidebarItems.map((item) => (
+                  <SidebarMenuItem key={item.label}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={item.active}
+                      tooltip={item.label}
+                      className="text-white hover:bg-white/10 hover:text-white p-5">
+                      <NavLink>
+                        <span>{item.icon}</span>
+                        <span>{item.label}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip="Logout"
+                className="text-sky-700 hover:bg-white/10 hover:text-white border-none">
+                <LogOut className="h-4 w-4" />
+                <span>Logout</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+      </Sidebar>
+
+      {/* Main Content */}
+      <SidebarInset>
+        {/* Header */}
+        <header className="bg-white p-4 flex flex-col items-start border-b">
+          <SidebarTrigger className="mr-2 border-none" />
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center">
+              <h1 className="text-xl font-semibold text-gray-800">
+                Sarah's Dashboard
+              </h1>
+            </div>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative border-none">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                  <span className="sr-only">Notifications</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="p-0 w-[380px]"
+                align="end">
+                <NotificationPanel />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </header>
+
+        {/* Search Section */}
+        <div className="p-4 bg-white border-b">
+          <p className="text-sm text-gray-500 mb-2">Search for Jobs</p>
+          <div className="flex flex-wrap gap-2">
+            <div className="relative flex-1 min-w-[200px]">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+              <Input
+                type="text"
+                placeholder="Product Designer"
+                className="pl-9"
+              />
+            </div>
+
+            <div className="relative flex-1 min-w-[200px]">
+              <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+              <Input
+                type="text"
+                placeholder="Location"
+                className="pl-9"
+              />
+            </div>
+
+            <div className="flex-1 min-w-[200px]">
+              <Select>
+                <SelectTrigger className="hover:bg-gray-100 hover:text-gray-500">
+                  <SelectValue placeholder="Type of employment" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="full-time">Volunteer</SelectItem>
+                  <SelectItem value="part-time">Contract</SelectItem>
+                  <SelectItem value="contract">Part-time</SelectItem>
+                  <SelectItem value="freelance">Full-time</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex-1 min-w-[200px]">
+              <Select>
+                <SelectTrigger className="hover:bg-gray-100 hover:text-gray-500">
+                  <SelectValue placeholder="Experience level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="entry">Internship</SelectItem>
+                  <SelectItem value="mid">Entry level</SelectItem>
+                  <SelectItem value="senior">Mid level</SelectItem>
+                  <SelectItem value="senior">Senior level</SelectItem>
+                  <SelectItem value="senior">Director</SelectItem>
+                  <SelectItem value="senior">Executive</SelectItem>
+                  <SelectItem value="senior">Others</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Button className="bg-sky-400 hover:bg-[#006699] border-none">
+              Search Job
+            </Button>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-500">sort by</span>
+              <Select defaultValue="relevance">
+                <SelectTrigger className="w-[130px] hover:bg-gray-100">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevance">Relevance</SelectItem>
+                  <SelectItem value="date">Popularity</SelectItem>
+                  <SelectItem value="salary">Recent</SelectItem>
+                  <SelectItem value="salary">Oldest</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {/* Profile Completion */}
+        <div className="p-4">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="px-10 flex items-center justify-between">
+              <div className="flex-1 min-w-[300px]">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Get started by Completing your Profile
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Stand a better chance of being hired by completing your
+                  profile
+                </p>
+                <Button className="mt-4 bg-sky-400 hover:bg-[#006699] border-none">
+                  Complete Profile
+                </Button>
+              </div>
+              <div className="min-w-[300px]">
+                <img
+                  src={kcyimage}
+                  alt="Complete profile illustration"
+                  className="object-contain w-44 h-44"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recommended Jobs */}
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
+              Recommeded Jobs for you
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-500 border-gray-200 ">
+              View All
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {recommendedJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                isBookmarked={bookmarkedJobs.includes(job.id)}
+                onBookmarkToggle={() => toggleBookmark(job.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Jobs Near You */}
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
+              Jobs Near You
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-500 border-gray-200">
+              View All
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {nearbyJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                isBookmarked={bookmarkedJobs.includes(job.id)}
+                onBookmarkToggle={() => toggleBookmark(job.id)}
+              />
+            ))}
+          </div>
+        </div>
+      </SidebarInset>
+    </div>
   );
 }
