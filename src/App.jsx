@@ -11,12 +11,11 @@ import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsetti
 import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 // import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
 import JobListings from "./pages/Dashboard/job-listings";
-import Register from "./pages/Register/index.jsx";
 import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import { Otp } from "./pages/Login/Otp.jsx";
-import SelectAccountType from "./components/SelectAccountType/index.jsx";
+import SelectAccountType from "./components/SelectAccountType/selectaccountype.jsx";
 import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
 import NotificationTab from "./components/NotificationTab/index.jsx";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
@@ -43,25 +42,77 @@ import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx
 import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
+import LoginForm from "./pages/Login/Login.jsx";
+import SignupForm from "./pages/Register/SignupPage.jsx";
+import { JobDashboard } from "./pages/job-dashboard.jsx";
+
 function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/post-job-form" element={<PostJobForm />} />
-        <Route path="/findjob" element={<Findjob />} />
-        <Route path="/faqs" element={<Faq />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsAndCondition />} />
-        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        <Route
+          exact
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/services"
+          element={<Services />}
+        />
+        <Route
+          path="/services/job-dashboard"
+          element={
+            <VerificationProvider>
+              <JobDashboard />
+            </VerificationProvider>
+          }
+        />
+        <Route
+          path="/about"
+          element={<About />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+        <Route
+          path="/post-job-form"
+          element={<PostJobForm />}
+        />
+        <Route
+          path="/findjob"
+          element={<Findjob />}
+        />
+        <Route
+          path="/faqs"
+          element={<Faq />}
+        />
+        <Route
+          path="/privacy"
+          element={<PrivacyPolicy />}
+        />
+        <Route
+          path="/terms"
+          element={<TermsAndCondition />}
+        />
+        <Route
+          path="/successfulJobPost"
+          element={<SuccessfulJobPost />}
+        />
         {/* Registration */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/create" element={<SelectAccountType />} />
+        <Route
+          path="/register"
+          element={<SignupForm />}
+        />
+        <Route
+          path="/create"
+          element={<SelectAccountType />}
+        />
         {/* Log in */}
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={<LoginForm />}
+        />
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
@@ -73,10 +124,22 @@ function App() {
                 <EmployerVerificationForm />
               </VerificationProvider>
             }></Route>
-          <Route path="/profilelanding" element={<ProfileLanding />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/techprofileform" element={<DashboardProfileForm />} />
-          <Route path="/employerprofile" element={<EmployerProfileForm />} />
+          <Route
+            path="/profilelanding"
+            element={<ProfileLanding />}
+          />
+          <Route
+            path="/explore"
+            element={<Explore />}
+          />
+          <Route
+            path="/techprofileform"
+            element={<DashboardProfileForm />}
+          />
+          <Route
+            path="/employerprofile"
+            element={<EmployerProfileForm />}
+          />
           <Route
             path="/dashboard"
             element={
@@ -84,49 +147,131 @@ function App() {
                 <Dashboard />
               </VerificationProvider>
             }>
-            <Route path="" element={<Overview />} />
-            <Route path="notifications" element={<NotificationTab />} />
-            <Route path="profile" element={<ProfileController />} />
-            <Route path="featuredTalent" element={<FeaturedTalent />} />
+            <Route
+              path=""
+              element={<Overview />}
+            />
+            <Route
+              path="notifications"
+              element={<NotificationTab />}
+            />
+            <Route
+              path="profile"
+              element={<ProfileController />}
+            />
+            <Route
+              path="featuredTalent"
+              element={<FeaturedTalent />}
+            />
             {/* <Route path="profile" element={<VerificationProvider>
               <ProfileController />
             </VerificationProvider>} /> */}
             <Route path="posts">
-              <Route path="" element={<JobPosts />} />
-              <Route path="create" element={<PostJobs />} />
+              <Route
+                path=""
+                element={<JobPosts />}
+              />
+              <Route
+                path="create"
+                element={<PostJobs />}
+              />
             </Route>
             {/* <Route path="applicants" element={<JobApplicants />} /> */}
             <Route
               path="posts/review-applicants/:id"
               element={<ReviewApplicants />}
             />
-            <Route path="review-appliedtalent/:id" element={<FullReview />} />
-            <Route path="interviews" element={<Interview />} />
-            <Route path="services" element={<CompanyServices />} />
-            <Route path="applications" element={<Applications />} />
-            <Route path="saved" element={<SavedJobs />} />
+            <Route
+              path="review-appliedtalent/:id"
+              element={<FullReview />}
+            />
+            <Route
+              path="interviews"
+              element={<Interview />}
+            />
+            <Route
+              path="services"
+              element={<CompanyServices />}
+            />
+            <Route
+              path="applications"
+              element={<Applications />}
+            />
+            <Route
+              path="saved"
+              element={<SavedJobs />}
+            />
             {/* <Route path="wallet" element={<Wallet />} />W */}
-            <Route path="job-listings" element={<JobListings />} />
-            <Route path="analytics" element={<h2>Analytics </h2>} />
-            <Route path="subscription" element={<SubscriptionController />} />
-            <Route path="profile-details" element={<h2>Profile Details</h2>} />
-            <Route path="password-settings" element={<Passwordsettings />} />
-            <Route path="privacy" element={<PrivacyPolicy />} />
-            <Route path="terms" element={<TermsAndCondition />} />
-            <Route path="help" element={<Help />} />
+            <Route
+              path="job-listings"
+              element={<JobListings />}
+            />
+            <Route
+              path="analytics"
+              element={<h2>Analytics </h2>}
+            />
+            <Route
+              path="subscription"
+              element={<SubscriptionController />}
+            />
+            <Route
+              path="profile-details"
+              element={<h2>Profile Details</h2>}
+            />
+            <Route
+              path="password-settings"
+              element={<Passwordsettings />}
+            />
+            <Route
+              path="privacy"
+              element={<PrivacyPolicy />}
+            />
+            <Route
+              path="terms"
+              element={<TermsAndCondition />}
+            />
+            <Route
+              path="help"
+              element={<Help />}
+            />
           </Route>
-          <Route path="/sub-success" element={<SubSuccess />}>
-            <Route path=":reference" element={<SubSuccess />} />
+          <Route
+            path="/sub-success"
+            element={<SubSuccess />}>
+            <Route
+              path=":reference"
+              element={<SubSuccess />}
+            />
           </Route>
         </Route>
 
         {/* Modals */}
-        <Route path="/forgotpassword" element={<PasswordRecovery />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/otp" element={<Otp />} />
-        <Route path="/auth/reset-password" element={<ResetPassword />} />
-        <Route path="/iso" element={<SavedJobCard />} />
-        {<Route path="job-listings" element={<JobListings />} />}
+        <Route
+          path="/forgotpassword"
+          element={<PasswordRecovery />}
+        />
+        <Route
+          path="/resetpassword"
+          element={<ResetPassword />}
+        />
+        <Route
+          path="/otp"
+          element={<Otp />}
+        />
+        <Route
+          path="/auth/reset-password"
+          element={<ResetPassword />}
+        />
+        <Route
+          path="/iso"
+          element={<SavedJobCard />}
+        />
+        {
+          <Route
+            path="job-listings"
+            element={<JobListings />}
+          />
+        }
       </Routes>
     </>
   );
