@@ -54,13 +54,13 @@
 
 /* Hide thumb by default */
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: white;
+  background-color: transparent;
   border-radius: 4px;
 }
 
 /* Show scrollbar on hover */
 .sidebar:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 100, 100, 0.4);
+  background-color: #0490d6;
 }
 
 /* Optional: show track on hover too */
