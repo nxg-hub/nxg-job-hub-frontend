@@ -307,7 +307,9 @@ function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
       <Sidebar
         collapsible="icon"
         className="bg-[#0078B4] text-white">
-        <SidebarHeader className="bg-[#0078B4]">
+        <SidebarContent
+          className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
+            scrollbar-hidden">
           <div>
             <img
               src={logo}
@@ -335,10 +337,6 @@ function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
               )}
             </div>
           </div>
-        </SidebarHeader>
-        <SidebarContent
-          className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-            scrollbar-hidden">
           <SidebarGroup className="">
             <SidebarGroupContent className="">
               <SidebarMenu className="space-y-5">
