@@ -61,7 +61,11 @@ function App() {
         />
         <Route
           path="/services/job-dashboard"
-          element={<JobDashboard />}
+          element={
+            <VerificationProvider>
+              <JobDashboard />
+            </VerificationProvider>
+          }
         />
         <Route
           path="/about"

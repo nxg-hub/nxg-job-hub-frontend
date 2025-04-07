@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 import {
   Bell,
@@ -60,6 +59,7 @@ import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { NotificationPanel } from "@/components/notification-panel";
 import logo from "@/static/images/logo_colored.png";
+import logomin from "@/static/images/logo_min.png";
 import sarahicon from "@/static/images/admin-sarah.png";
 import kcyimage from "@/static/images/kyc-image.png";
 import { NavLink } from "react-router-dom";
@@ -302,26 +302,27 @@ function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
   const isCollapsed = sidebar.state === "collapsed";
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen ">
       {/* Sidebar */}
-      <Sidebar
-        collapsible="icon"
-        className="bg-[#0078B4] text-white">
+      <Sidebar collapsible="icon">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
             scrollbar-hidden">
           <div>
             <img
-              src={logo}
+              src={isCollapsed ? logomin : logo}
               alt="Next Gen Hub Logo"
-              className="object-contain w-32 h-32 mx-auto"
+              className={cn(
+                "object-contain mx-auto",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-10" : "w-32 h-32"
+              )}
             />
 
             <div className="mt-4 px-4 flex flex-col items-center">
               <Avatar
                 className={cn(
                   "border-2 border-white",
-                  isCollapsed ? "h-10 w-10" : "h-20 w-20"
+                  isCollapsed ? "h-12 w-12" : "h-20 w-20"
                 )}>
                 <AvatarImage
                   src={sarahicon}
@@ -331,15 +332,17 @@ function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
               </Avatar>
               {!isCollapsed && (
                 <>
-                  <h3 className="mt-2 font-semibold text-lg">Sarah</h3>
+                  <h3 className="mt-2 font-semibold text-lg text-gray-100">
+                    Sarah
+                  </h3>
                   <p className="text-sm text-gray-200">Fashion designer</p>
                 </>
               )}
             </div>
           </div>
-          <SidebarGroup className="">
-            <SidebarGroupContent className="">
-              <SidebarMenu className="space-y-5">
+          <SidebarGroup className="p-5 pt-8">
+            <SidebarGroupContent>
+              <SidebarMenu className="gap-5">
                 {sidebarItems.map((item) => (
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton
@@ -347,10 +350,10 @@ function DashboardContent({ bookmarkedJobs, toggleBookmark }) {
                       isActive={item.active}
                       tooltip={item.label}
                       className="text-white hover:bg-white/10 hover:text-white p-5">
-                      <NavLink>
+                      <a>
                         <span>{item.icon}</span>
                         <span>{item.label}</span>
-                      </NavLink>
+                      </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
