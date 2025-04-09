@@ -44,7 +44,10 @@ import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
 import LoginForm from "./pages/Login/Login.jsx";
 import SignupForm from "./pages/Register/SignupPage.jsx";
-import { JobDashboard } from "./pages/job-dashboard.jsx";
+import { ServiceProviderDashboard } from "./pages/job-dashboard.jsx";
+import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
+import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
+import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
 
 function App() {
   return (
@@ -60,13 +63,35 @@ function App() {
           element={<Services />}
         />
         <Route
-          path="/services/job-dashboard"
+          path="/services-provider/complete-profile"
+          element={<ServiceProviderFormCompletion />}
+        />
+
+        <Route
+          path="/services-provider"
           element={
             <VerificationProvider>
-              <JobDashboard />
+              <ServiceProviderDashboard />
             </VerificationProvider>
-          }
-        />
+          }>
+          <Route
+            index
+            element={<ServicesProviderHomePage />}
+          />
+          <Route
+            path="profile"
+            element={<ServiceProviderProfile />}
+          />
+          {/* <Route path="notifications" element={<Notifications />} />
+        <Route path="job-listings" element={<JobListings />} />
+        <Route path="applications" element={<Applications />} />
+        <Route path="saved" element={<SavedJobs />} />
+        <Route path="wallet" element={<Wallet />} />
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="help" element={<Help />} /> */}
+        </Route>
+
         <Route
           path="/about"
           element={<About />}
