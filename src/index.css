@@ -60,7 +60,7 @@
 
 /* Show scrollbar on hover */
 .sidebar:hover::-webkit-scrollbar-thumb {
-  background-color: #0490d6;
+  background-color: #0078B4;
 }
 
 /* Optional: show track on hover too */

@@ -27,7 +27,7 @@ export default function ServiceProviderProfile() {
       <Tabs
         defaultValue="personal"
         className="w-full">
-        <TabsList className="mb-6 border-none">
+        <TabsList className="grid grid-cols-5 w-full bg-[#E6F7FC]">
           <TabsTrigger
             className="hover:bg-sky-600 border-none"
             value="personal">
