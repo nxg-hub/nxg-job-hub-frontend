@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Bookmark, MapPin, Search } from "lucide-react";
 import kcyimage from "@/static/images/kyc-image.png";
+import driver from "@/static/images/driver.png";
 import {
   Card,
   CardContent,
@@ -30,11 +31,11 @@ import { cn } from "@/lib/utils";
 const recommendedJobs = [
   {
     id: 1,
-    company: "Figma",
-    location: "Albany, NY",
-    title: "Product designer",
+    company: "Employer",
+    location: "Lagos, Nigeria",
+    title: "Skilled Driver",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+      "I need a skilled Driver with 3 years of Experience.",
     type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -43,12 +44,12 @@ const recommendedJobs = [
   },
   {
     id: 2,
-    company: "Figma",
+    company: "Agency",
     location: "Albany, NY",
-    title: "Product designer",
+    title: "Housemaid Needed",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Contract", "Hybrid", "On-site"],
+      "Professional Housemaid needed urgently. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+    type: ["Contract", "Full time"],
     salary: "$45k-$80k",
     views: 30,
     applicants: 0,
@@ -56,11 +57,11 @@ const recommendedJobs = [
   },
   {
     id: 3,
-    company: "Figma",
-    location: "Albany, NY",
-    title: "Product designer",
+    company: "Employer",
+    location: "Abuja, Nigeria",
+    title: "Experience Nurse",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+      "I need an experience nurse that can treate. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
     type: ["Full time", "On-site", "Off-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -68,28 +69,28 @@ const recommendedJobs = [
     bookmarked: false,
   },
   {
-    id: 4,
-    company: "Figma",
+    id:4,
+    company: "Agency",
     location: "Albany, NY",
-    title: "Product designer",
+    title: "Housemaid Needed",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Full time"],
-    salary: "$32k-$60k",
+      "Professional Housemaid needed urgently. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+    type: ["Contract", "Full time"],
+    salary: "$45k-$80k",
     views: 30,
-    applicants: 2,
+    applicants: 0,
     bookmarked: false,
   },
 ];
 
 const nearbyJobs = [
   {
-    id: 5,
-    company: "Figma",
-    location: "Albany, NY",
-    title: "Product designer",
+    id:5 ,
+    company: "Employer",
+    location: "Kano, Nigeria",
+    title: "Skilled Driver",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+      "I need a skilled Driver with 3 years of Experience.",
     type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -97,13 +98,13 @@ const nearbyJobs = [
     bookmarked: false,
   },
   {
-    id: 6,
-    company: "Figma",
+    id:6 ,
+    company: "Agency",
     location: "Albany, NY",
-    title: "Product designer",
+    title: "Housemaid Needed",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Contract", "Hybrid", "On-site"],
+      "Professional Housemaid needed urgently. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+    type: ["Contract", "Full time"],
     salary: "$45k-$80k",
     views: 30,
     applicants: 0,
@@ -111,11 +112,11 @@ const nearbyJobs = [
   },
   {
     id: 7,
-    company: "Figma",
-    location: "Albany, NY",
-    title: "Product designer",
+    company: "Employer",
+    location: "Abuja, Nigeria",
+    title: "Experience Nurse",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
+      "I need an experience nurse that can treate. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
     type: ["Full time", "On-site", "Off-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -124,12 +125,12 @@ const nearbyJobs = [
   },
   {
     id: 8,
-    company: "Figma",
-    location: "Albany, NY",
-    title: "Product designer",
+    company: "Employer",
+    location: "Lagos, Nigeria",
+    title: "Skilled Driver",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Full time"],
+      "I need a skilled Driver with 3 years of Experience.",
+    type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
     applicants: 2,
@@ -140,12 +141,12 @@ const nearbyJobs = [
 function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="p-4 pb-0 flex flex-row justify-between items-start">
+      <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
+      <img src={driver} alt="" />
+        {/* Employer/bookmark */}
+      <div className="flex justify-between w-full">
         <div className="flex gap-2">
-          <div className="w-8 h-8 rounded bg-blue-100 flex items-center justify-center text-blue-500">
-            {job.company.charAt(0)}
-          </div>
-          <div>
+          <div className="flex-col">
             <h3 className="font-medium">{job.company}</h3>
             <div className="flex items-center text-xs text-gray-500">
               <MapPin className="h-3 w-3 mr-1" />
@@ -153,7 +154,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
             </div>
           </div>
         </div>
-        <Button
+        <Button 
           variant="ghost"
           size="icon"
           className="h-8 w-8 border-none"
@@ -170,6 +171,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
             </span>
           </div>
         </Button>
+        </div>
       </CardHeader>
       <CardContent className="p-4">
         <h4 className="font-medium mb-2">{job.title}</h4>
