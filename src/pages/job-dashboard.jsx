@@ -11,10 +11,10 @@ import {
   Wallet,
   Send,
   BriefcaseBusiness,
+  MessageSquare,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverContent,
@@ -52,11 +52,12 @@ const sidebarItems = [
   },
   {
     icon: <CircleUser />,
-    label: "My Profile",
+    label: "Profile",
     path: "profile",
   },
-  { icon: <Bell />, label: "Notifications", path: "/notifications" },
-  { icon: <BriefcaseBusiness />, label: "Job Listings", path: "/job-listings" },
+  { icon: <BriefcaseBusiness />, label: "Job Tracker", path: "job-tracker" },
+  { icon: <MessageSquare />, label: "Messages", path: "messages" },
+
   { icon: <Send />, label: "My Applications", path: "/applications" },
   { icon: <Bookmark />, label: "Saved Jobs", path: "/saved" },
   { icon: <Wallet />, label: "My Wallet", path: "/wallet" },

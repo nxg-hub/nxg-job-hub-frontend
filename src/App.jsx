@@ -48,6 +48,8 @@ import { ServiceProviderDashboard } from "./pages/job-dashboard.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
 import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
+import MessagesPage from "./pages/Dashboard/messages.jsx";
 
 function App() {
   return (
@@ -81,6 +83,14 @@ function App() {
           <Route
             path="profile"
             element={<ServiceProviderProfile />}
+          />
+          <Route
+            path="job-tracker"
+            element={<JobTracker />}
+          />
+          <Route
+            path="messages"
+            element={<MessagesPage />}
           />
           {/* <Route path="notifications" element={<Notifications />} />
         <Route path="job-listings" element={<JobListings />} />
