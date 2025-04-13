@@ -40,7 +40,6 @@ import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { NotificationPanel } from "@/components/notification-panel";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
-import sarahicon from "@/static/images/admin-sarah.png";
 
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
@@ -117,7 +116,11 @@ function DashboardContent() {
             <SidebarGroupContent>
               <SidebarMenu className="gap-5">
                 {sidebarItems.map((item) => {
-                  const isActive = location.pathname === item.path;
+                  const isActive =
+                    location.pathname === item.path ||
+                    location.pathname.substring(
+                      location.pathname.lastIndexOf("/") + 1
+                    ) === item.path;
                   return (
                     <SidebarMenuItem key={item.label}>
                       <SidebarMenuButton
