@@ -5,6 +5,7 @@ import { candidatesData } from "@/utils/data/candidates";
 import { CandidateList } from "@/components/Candidates/candidate-list";
 
 export default function CandidatesPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [candidates, setCandidates] = useState(candidatesData);
   const [selectedCandidate, setSelectedCandidate] = useState(candidatesData[0]);
   const [searchParams, setSearchParams] = useState({
