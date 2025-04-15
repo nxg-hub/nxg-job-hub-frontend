@@ -142,7 +142,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
-      <img src={driver} alt="" />
+      <img src={driver} alt="driver-image" />
         {/* Employer/bookmark */}
       <div className="flex justify-between w-full">
         <div className="flex gap-2">
@@ -224,7 +224,7 @@ export function ServicesProviderHomePage() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
               type="text"
-              placeholder="Product Designer"
+              placeholder="Nurse/Driver"
               className="pl-9"
             />
           </div>
