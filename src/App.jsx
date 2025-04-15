@@ -44,12 +44,16 @@ import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
 import LoginForm from "./pages/Login/Login.jsx";
 import SignupForm from "./pages/Register/SignupPage.jsx";
-import { ServiceProviderDashboard } from "./pages/job-dashboard.jsx";
+import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
 import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
+import { AgentDashboard } from "./pages/agent.jsx";
+import AgentHomePage from "./pages/Dashboard/Agent/dashboardhome.jsx";
+import CandidatesPage from "./pages/Dashboard/Agent/Candidates/candidates.jsx";
+import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
 
 function App() {
   return (
@@ -68,6 +72,31 @@ function App() {
           path="/services-provider/complete-profile"
           element={<ServiceProviderFormCompletion />}
         />
+
+        <Route
+          path="/agent/dashboard"
+          element={
+            <VerificationProvider>
+              <AgentDashboard />
+            </VerificationProvider>
+          }>
+          <Route
+            index
+            element={<AgentHomePage />}
+          />
+          <Route
+            path="profile"
+            element={<ServiceProviderProfile />}
+          />
+          <Route
+            path="candidates"
+            element={<CandidatesPage />}
+          />
+          <Route
+            path="jobs"
+            element={<XCandidatesPage />}
+          />
+        </Route>
 
         <Route
           path="/services-provider"
@@ -92,14 +121,6 @@ function App() {
             path="messages"
             element={<MessagesPage />}
           />
-          {/* <Route path="notifications" element={<Notifications />} />
-        <Route path="job-listings" element={<JobListings />} />
-        <Route path="applications" element={<Applications />} />
-        <Route path="saved" element={<SavedJobs />} />
-        <Route path="wallet" element={<Wallet />} />
-        <Route path="analytics" element={<Analytics />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="help" element={<Help />} /> */}
         </Route>
 
         <Route
