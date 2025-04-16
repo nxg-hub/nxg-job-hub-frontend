@@ -129,7 +129,6 @@ export default function XCandidatesPage() {
         setIsLoading(false);
       }, 800);
     };
-
     fetchCandidates();
   }, []);
 

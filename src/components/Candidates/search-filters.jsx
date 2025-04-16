@@ -143,7 +143,9 @@ export function SearchFilters({ onSearch, searchParams }) {
               <Select
                 value={experience}
                 onValueChange={setExperience}>
-                <SelectTrigger id="experience">
+                <SelectTrigger
+                  id="experience"
+                  className="hover:bg-slate-100">
                   <SelectValue placeholder="Any experience" />
                 </SelectTrigger>
                 <SelectContent>
@@ -165,7 +167,9 @@ export function SearchFilters({ onSearch, searchParams }) {
               <Select
                 value={jobType}
                 onValueChange={setJobType}>
-                <SelectTrigger id="jobType">
+                <SelectTrigger
+                  id="jobType"
+                  className="hover:bg-slate-100">
                   <SelectValue placeholder="Any job type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -234,7 +238,11 @@ export function SearchFilters({ onSearch, searchParams }) {
           onClick={handleReset}>
           Reset
         </Button>
-        <Button onClick={handleSearch}>Search Candidates</Button>
+        <Button
+          className="bg-sky-500 border-none"
+          onClick={handleSearch}>
+          Search Candidates
+        </Button>
       </CardFooter>
     </Card>
   );

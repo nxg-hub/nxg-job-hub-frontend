@@ -14,7 +14,7 @@ export function CandidateCard({ candidate, isSelected, onClick }) {
       onClick={onClick}>
       <div className="flex items-start gap-3">
         <div className="relative h-12 w-12 flex-shrink-0">
-          <Avatar className="h-32 w-32 mb-4 border-none">
+          <Avatar className="h-12 w-12 mb-4 border-none">
             <AvatarImage
               src={sarahicon}
               alt="Sarah"
@@ -23,12 +23,6 @@ export function CandidateCard({ candidate, isSelected, onClick }) {
               <CircleUser className="h-12 w-12 border-none" />
             </AvatarFallback>
           </Avatar>
-          {/* <Image
-            src={candidate.avatar || "/placeholder.svg?height=48&width=48"}
-            alt={candidate.name}
-            fill
-            className="rounded-full object-cover"
-          /> */}
         </div>
 
         <div className="flex-1 min-w-0">

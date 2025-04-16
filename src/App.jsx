@@ -52,8 +52,9 @@ import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
 import AgentHomePage from "./pages/Dashboard/Agent/dashboardhome.jsx";
-import CandidatesPage from "./pages/Dashboard/Agent/Candidates/candidates.jsx";
 import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
+import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
+import CandidateManagementPage from "./pages/Dashboard/Agent/candidatesmatches.jsx";
 
 function App() {
   return (
@@ -95,6 +96,14 @@ function App() {
           <Route
             path="jobs"
             element={<XCandidatesPage />}
+          />
+          <Route
+            path="chats"
+            element={<XCandidatesPage />}
+          />
+          <Route
+            path="candidate/matches"
+            element={<CandidateManagementPage />}
           />
         </Route>
 

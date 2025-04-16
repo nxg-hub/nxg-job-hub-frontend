@@ -12,6 +12,7 @@ import {
   Send,
   BriefcaseBusiness,
   MessageSquare,
+  MessageCircle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -57,12 +58,13 @@ const sidebarItems = [
   { icon: <BriefcaseBusiness />, label: "Employers", path: "employers" },
   { icon: <CircleUser />, label: "Candidates", path: "candidates" },
   { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
-  { icon: <LayoutDashboard />, label: "Job Alerts", path: "job-alerts" },
   {
     icon: <LayoutDashboard />,
-    label: "Job Applications",
-    path: "applications",
+    label: "Talent Matches",
+    path: "candidate/matches",
   },
+  { icon: <MessageCircle />, label: "Chats", path: "chats" },
+
   { icon: <LayoutDashboard />, label: "Job Offers", path: "offers" },
   { icon: <LayoutDashboard />, label: "Job Rejections", path: "rejections" },
   { icon: <LayoutDashboard />, label: "Job Interviews", path: "interviews" },
