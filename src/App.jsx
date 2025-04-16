@@ -102,7 +102,7 @@ function App() {
             element={<XCandidatesPage />}
           />
           <Route
-            path="candidate/matches"
+            path="candidate-matches"
             element={<CandidateManagementPage />}
           />
         </Route>

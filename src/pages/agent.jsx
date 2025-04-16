@@ -61,7 +61,7 @@ const sidebarItems = [
   {
     icon: <LayoutDashboard />,
     label: "Talent Matches",
-    path: "candidate/matches",
+    path: "candidate-matches",
   },
   { icon: <MessageCircle />, label: "Chats", path: "chats" },
 
