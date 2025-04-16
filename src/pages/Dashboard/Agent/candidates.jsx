@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { CandidateDetails } from "@/components/candidates/candidate-details";
-import { SearchFilters } from "@/components/candidates/search-filters";
+import { useEffect, useState } from "react";
 import { candidatesData } from "@/utils/data/candidates";
 import { CandidateList } from "@/components/Candidates/candidate-list";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { CandidateDetails } from "@/components/Candidates/candidate-details";
+import { SearchFilters } from "@/components/Candidates/search-filters";
 
 export default function CandidatesPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [candidates, setCandidates] = useState(candidatesData);
-  const [selectedCandidate, setSelectedCandidate] = useState(candidatesData[0]);
+  const [candidates, setCandidates] = useState([]);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [searchParams, setSearchParams] = useState({
     query: "",
     skills: [],
@@ -73,6 +74,19 @@ export default function CandidatesPage() {
     setSelectedCandidate(candidate);
   };
 
+  useEffect(() => {
+    // Simulate API fetch for candidates
+    const fetchCandidates = async () => {
+      setIsLoading(true);
+      setTimeout(() => {
+        setCandidates(candidatesData);
+        setSelectedCandidate(candidatesData[0]);
+        setIsLoading(false);
+      }, 800);
+    };
+    fetchCandidates();
+  }, []);
+
   return (
     <div className="mx-auto py-6 px-4">
       <h1 className="text-3xl font-bold mb-6">Candidate Search</h1>
@@ -84,11 +98,35 @@ export default function CandidatesPage() {
 
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <CandidateList
-            candidates={candidates}
-            selectedCandidate={selectedCandidate}
-            onSelectCandidate={handleSelectCandidate}
-          />
+          {isLoading ? (
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <Card
+                  key={i}
+                  className="animate-pulse">
+                  <CardHeader>
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {[...Array(3)].map((_, j) => (
+                        <div
+                          key={j}
+                          className="h-6 bg-gray-200 rounded-full w-16"></div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <CandidateList
+              candidates={candidates}
+              selectedCandidate={selectedCandidate}
+              onSelectCandidate={handleSelectCandidate}
+            />
+          )}
         </div>
         <div className="lg:col-span-2">
           {selectedCandidate ? (
