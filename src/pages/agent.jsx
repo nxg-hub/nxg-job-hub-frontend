@@ -40,7 +40,6 @@ import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { NotificationPanel } from "@/components/notification-panel";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
-import sarahicon from "@/static/images/admin-sarah.png";
 
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
@@ -48,14 +47,42 @@ const sidebarItems = [
   {
     icon: <LayoutDashboard />,
     label: "Dashboard",
-    path: "/services-provider",
+    path: "/agent/dashboard",
   },
   {
     icon: <CircleUser />,
     label: "Profile",
     path: "profile",
   },
-  { icon: <BriefcaseBusiness />, label: "Job Tracker", path: "job-tracker" },
+  { icon: <BriefcaseBusiness />, label: "Employers", path: "employers" },
+  { icon: <CircleUser />, label: "Candidates", path: "candidates" },
+  { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
+  { icon: <LayoutDashboard />, label: "Job Alerts", path: "job-alerts" },
+  {
+    icon: <LayoutDashboard />,
+    label: "Job Applications",
+    path: "applications",
+  },
+  { icon: <LayoutDashboard />, label: "Job Offers", path: "offers" },
+  { icon: <LayoutDashboard />, label: "Job Rejections", path: "rejections" },
+  { icon: <LayoutDashboard />, label: "Job Interviews", path: "interviews" },
+  { icon: <LayoutDashboard />, label: "Job Referrals", path: "referrals" },
+  {
+    icon: <LayoutDashboard />,
+    label: "Job Recommendations",
+    path: "recommendations",
+  },
+  { icon: <LayoutDashboard />, label: "Job Matches", path: "matches" },
+  { icon: <LayoutDashboard />, label: "Job Offers", path: "offers" },
+  { icon: <LayoutDashboard />, label: "Job Rejections", path: "rejections" },
+  { icon: <LayoutDashboard />, label: "Job Interviews", path: "interviews" },
+  { icon: <LayoutDashboard />, label: "Job Referrals", path: "referrals" },
+  {
+    icon: <LayoutDashboard />,
+    label: "Job Recommendations",
+    path: "recommendations",
+  },
+  { icon: <LayoutDashboard />, label: "Job Matches", path: "matches" },
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
 
   { icon: <Send />, label: "My Applications", path: "/applications" },
@@ -66,7 +93,7 @@ const sidebarItems = [
   { icon: <CircleHelp />, label: "Help", path: "/help" },
 ];
 
-export function ServiceProviderDashboard() {
+export function AgentDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -117,7 +144,11 @@ function DashboardContent() {
             <SidebarGroupContent>
               <SidebarMenu className="gap-5">
                 {sidebarItems.map((item) => {
-                  const isActive = location.pathname === item.path;
+                  const isActive =
+                    location.pathname === item.path ||
+                    location.pathname.substring(
+                      location.pathname.lastIndexOf("/") + 1
+                    ) === item.path;
                   return (
                     <SidebarMenuItem key={item.label}>
                       <SidebarMenuButton

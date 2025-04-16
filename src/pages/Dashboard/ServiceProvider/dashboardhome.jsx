@@ -20,22 +20,13 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-/**
- * Job Card Component
- * @param {Object} props
- * @param {Object} props.job - Job data
- * @param {boolean} props.isBookmarked - Whether the job is bookmarked
- * @param {Function} props.onBookmarkToggle - Function to toggle bookmark
- */
-
 const recommendedJobs = [
   {
     id: 1,
     company: "Employer",
     location: "Lagos, Nigeria",
     title: "Skilled Driver",
-    description:
-      "I need a skilled Driver with 3 years of Experience.",
+    description: "I need a skilled Driver with 3 years of Experience.",
     type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -69,7 +60,7 @@ const recommendedJobs = [
     bookmarked: false,
   },
   {
-    id:4,
+    id: 4,
     company: "Agency",
     location: "Albany, NY",
     title: "Housemaid Needed",
@@ -85,12 +76,11 @@ const recommendedJobs = [
 
 const nearbyJobs = [
   {
-    id:5 ,
+    id: 5,
     company: "Employer",
     location: "Kano, Nigeria",
     title: "Skilled Driver",
-    description:
-      "I need a skilled Driver with 3 years of Experience.",
+    description: "I need a skilled Driver with 3 years of Experience.",
     type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -98,7 +88,7 @@ const nearbyJobs = [
     bookmarked: false,
   },
   {
-    id:6 ,
+    id: 6,
     company: "Agency",
     location: "Albany, NY",
     title: "Housemaid Needed",
@@ -128,8 +118,7 @@ const nearbyJobs = [
     company: "Employer",
     location: "Lagos, Nigeria",
     title: "Skilled Driver",
-    description:
-      "I need a skilled Driver with 3 years of Experience.",
+    description: "I need a skilled Driver with 3 years of Experience.",
     type: ["Full time", "On-site"],
     salary: "$32k-$60k",
     views: 30,
@@ -138,11 +127,19 @@ const nearbyJobs = [
   },
 ];
 
+/**
+ * Job Card Component
+ * @param {Object} props
+ * @param {Object} props.job - Job data
+ * @param {boolean} props.isBookmarked - Whether the job is bookmarked
+ * @param {Function} props.onBookmarkToggle - Function to toggle bookmark
+ */
+
 function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
-      <img src={driver} alt="driver-image" />
+      <img src={driver} alt="" />
         {/* Employer/bookmark */}
       <div className="flex justify-between w-full">
         <div className="flex gap-2">
@@ -157,7 +154,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
         <Button 
           variant="ghost"
           size="icon"
-          className="h-8 w-8 border-none"
+          className="h-8 w-8 border-none self-end"
           onClick={onBookmarkToggle}>
           <div className="flex flex-col items-center">
             <Bookmark
@@ -171,7 +168,23 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
             </span>
           </div>
         </Button>
+        <img
+          src={driver}
+          alt=""
+        />
+        {/* Employer/bookmark */}
+        <div className="flex justify-between w-full">
+          <div className="flex gap-2">
+            <div className="flex-col">
+              <h3 className="font-medium">{job.company}</h3>
+              <div className="flex items-center text-xs text-gray-500">
+                <MapPin className="h-3 w-3 mr-1" />
+                {job.location}
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
       </CardHeader>
       <CardContent className="p-4">
         <h4 className="font-medium mb-2">{job.title}</h4>

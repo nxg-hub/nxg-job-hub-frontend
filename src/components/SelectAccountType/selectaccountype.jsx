@@ -80,7 +80,7 @@ const SelectAccountType = () => {
     { label: "Tech Talent", value: "techtalent" },
     { label: "Agent", value: "agent" },
     { label: "Employer", value: "employer" },
-    { label: "Non Tech Talent/Service Provider", value: "nttsp" },
+    { label: "Service Provider", value: "nxgsp" },
   ];
 
   const accountTypes = {
@@ -96,84 +96,121 @@ const SelectAccountType = () => {
 
   const setAccountType = async () => {
     setSubmittingLoading(true);
-    // Check if the accountChoice is valid before proceeding
-    if (accountChoice === "nttsp") {
-      toast({
-        className: cn(
-          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Updating account",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-            <code className="text-white">Account update successfully</code>
-          </pre>
-        ),
-        duration: 2500,
-      });
-      // Updated the condition to navigate to the appropriate page based on the accountChoice
-      setTimeout(() => {
-        navigate("/services-provider/complete-profile");
-        setSubmittingLoading(false);
-      }, 3000);
-    } else {
-      try {
-        await axios.post(
-          accountTypes[accountChoice],
-          {},
-          {
-            headers: {
-              authorization: authKey,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+
+    switch (accountChoice) {
+      case "techtalent":
+        try {
+          await axios.post(
+            accountTypes[accountChoice],
+            {},
+            {
+              headers: {
+                authorization: authKey,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          toast({
+            className: cn(
+              "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: "Successful",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+                <code className="text-white">
+                  Created ${accountChoice} account successfully
+                </code>
+              </pre>
+            ),
+            duration: 2500,
+          });
+          // Updated the condition to navigate to the appropriate page based on the accountChoice
+          setTimeout(() => {
+            navigate(
+              accountChoice === "employer"
+                ? "/profilelanding"
+                : "/services/job-dashboard"
+            );
+          }, 3000);
+        } catch (err) {
+          console.log(err);
+          setSubmittingLoading(false);
+          toast({
+            className: cn(
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: "Failed ",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+                <code className="text-white">
+                  Account creation failed. Please try again.
+                </code>
+              </pre>
+            ),
+          });
+          setTimeout(() => {
+            setSubmittingLoading(false);
+            navigate(
+              accountChoice === "nttsp"
+                ? "/profilelanding"
+                : "/services/job-dashboard"
+            );
+          }, 3000);
+        }
+        break;
+      case "agent":
         toast({
           className: cn(
             "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
           ),
-          title: "Successful",
+          title: "Updating account",
           description: (
             <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">
-                Created ${accountChoice} account successfully
-              </code>
+              <code className="text-white">Account update successfully</code>
             </pre>
           ),
           duration: 2500,
         });
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
-          navigate(
-            accountChoice === "employer"
-              ? "/profilelanding"
-              : "/services/job-dashboard"
-          );
+          navigate("/agent/dashboard");
+          setSubmittingLoading(false);
         }, 3000);
-      } catch (err) {
-        console.log(err);
-        setSubmittingLoading(false);
+        break;
+      case "employer":
+        showPopup(
+          <Notice
+            title="Employer"
+            description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
+            onClose={() => showPopup(undefined)}
+          />
+        );
+
+        break;
+      case "nxgsp":
         toast({
           className: cn(
-            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
           ),
-          title: "Failed ",
+          title: "Updating account",
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-              <code className="text-white">
-                Account creation failed. Please try again.
-              </code>
+            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+              <code className="text-white">Account update successfully</code>
             </pre>
           ),
+          duration: 2500,
         });
+        // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
+          navigate("/services-provider/complete-profile");
           setSubmittingLoading(false);
-          navigate(
-            accountChoice === "nttsp"
-              ? "/profilelanding"
-              : "/services/job-dashboard"
-          );
         }, 3000);
-      }
+        break;
+      default:
+        break;
+    }
+    if (accountChoice === "nttsp") {
+    } else {
     }
   };
 
@@ -223,7 +260,7 @@ const SelectAccountType = () => {
               {accountRadios.map((radio) => (
                 <div
                   key={radio.value}
-                  className="flex items-center justify-between space-x-20 space-y-0 border
+                  className="flex items-center justify-between space-x-48 space-y-0 border
                  rounded p-4 text-base ">
                   <Label htmlFor={radio.value}>{radio.label}</Label>
                   <RadioGroupItem
