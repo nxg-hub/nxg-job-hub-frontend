@@ -16,21 +16,57 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import sarahicon from "@/static/images/admin-sarah.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useState } from "react";
 
 export function CandidateDetails({ candidate }) {
+  const [openAssignDialog, setOpenAssignDialog] = useState(false);
+  const [selectedJob, setSelectedJob] = useState("");
+  const [availableJobs, setAvailableJobs] = useState([]);
+
+  const handleAssignCandidate = () => {
+    if (!selectedJob) {
+      toast({
+        title: "Error",
+        description: "Please select a job first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // In a real app, you would make an API call here to assign the candidate
+    const selectedJobData = availableJobs.find((job) => job.id === selectedJob);
+
+    toast({
+      title: "Candidate Assigned",
+      description: `${selectedCandidate.name} has been assigned to ${selectedJobData.title} at ${selectedJobData.company}`,
+    });
+
+    setOpenAssignDialog(false);
+    setSelectedJob("");
+  };
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader className="pb-4">
           <div className="flex flex-col md:flex-row md:items-start gap-4">
             <div className="relative h-24 w-24 flex-shrink-0">
-              {/* <Image
-                src={candidate.avatar || "/placeholder.svg?height=96&width=96"}
-                alt={candidate.name}
-                fill
-                className="rounded-full object-cover"
-              /> */}
-              <Avatar className="h-32 w-32 mb-4 border-none">
+              <Avatar className="h-24 w-24 mb-4 border-none">
                 <AvatarImage
                   src={sarahicon}
                   alt="Sarah"
@@ -50,16 +86,26 @@ export function CandidateDetails({ candidate }) {
                   </p>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2">
+                  <div className="space-x-4">
+                    <Button
+                      variant="outline"
+                      size="sm">
+                      <Mail className="mr-2 h-4 w-4" />
+                      Contact
+                    </Button>
+                    <Button
+                      className="border-none bg-green-500 hover:bg-sky-700"
+                      size="sm">
+                      <Download className="mr-2 h-4 w-4" />
+                      Download CV
+                    </Button>
+                  </div>
                   <Button
-                    variant="outline"
+                    onClick={() => setOpenAssignDialog(true)}
+                    className="border-none bg-sky-500 hover:bg-sky-700"
                     size="sm">
-                    <Mail className="mr-2 h-4 w-4" />
-                    Contact
-                  </Button>
-                  <Button size="sm">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download CV
+                    Assign to Job
                   </Button>
                 </div>
               </div>
@@ -85,9 +131,21 @@ export function CandidateDetails({ candidate }) {
 
       <Tabs defaultValue="profile">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="education">Education</TabsTrigger>
+          <TabsTrigger
+            className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
+            value="profile">
+            Profile
+          </TabsTrigger>
+          <TabsTrigger
+            className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
+            value="experience">
+            Experience
+          </TabsTrigger>
+          <TabsTrigger
+            className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
+            value="education">
+            Education
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent
@@ -111,7 +169,7 @@ export function CandidateDetails({ candidate }) {
                 {candidate.skills.map((skill) => (
                   <Badge
                     key={skill}
-                    className="px-2.5 py-1">
+                    className="px-2.5 py-1 rounded-md ">
                     {skill}
                   </Badge>
                 ))}
@@ -233,6 +291,76 @@ export function CandidateDetails({ candidate }) {
           </Card>
         </TabsContent>
       </Tabs>
+      {/* Assign Candidate Dialog */}
+      <Dialog
+        open={openAssignDialog}
+        onOpenChange={setOpenAssignDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Assign Candidate to Job</DialogTitle>
+            <DialogDescription>
+              Assign {candidate?.name} to an available job position.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Select Job Position
+              </label>
+              <Select
+                onValueChange={setSelectedJob}
+                value={selectedJob}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a job" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableJobs.map((job) => (
+                    <SelectItem
+                      key={job.id}
+                      value={job.id}>
+                      {job.title} - {job.company}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {selectedJob && (
+              <div className="p-4 bg-gray-50 rounded-md">
+                <h4 className="font-medium mb-2">Assignment Details</h4>
+                <p className="text-sm text-gray-600">
+                  <span className="font-medium">Candidate:</span>{" "}
+                  {selectedCandidate?.name}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-medium">Job:</span>{" "}
+                  {availableJobs.find((job) => job.id === selectedJob)?.title}{" "}
+                  at{" "}
+                  {availableJobs.find((job) => job.id === selectedJob)?.company}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setOpenAssignDialog(false);
+                setSelectedJob("");
+              }}>
+              Cancel
+            </Button>
+            <Button
+              variant="default"
+              onClick={handleAssignCandidate}
+              disabled={!selectedJob}>
+              Confirm Assignment
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { CandidateCard } from "./candidate-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CandidateCard } from "./candidate-card";
 
 export function CandidateList({
   candidates,
