@@ -95,7 +95,7 @@ export function CandidateDetails({ candidate }) {
                       Contact
                     </Button>
                     <Button
-                      className="border-none bg-green-500 hover:bg-sky-700"
+                      className="border-none bg-green-500 hover:bg-green-700"
                       size="sm">
                       <Download className="mr-2 h-4 w-4" />
                       Download CV
