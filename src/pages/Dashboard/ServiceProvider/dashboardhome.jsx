@@ -139,7 +139,19 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
-        <Button
+      <img src={driver} alt="" />
+        {/* Employer/bookmark */}
+      <div className="flex justify-between w-full">
+        <div className="flex gap-2">
+          <div className="flex-col">
+            <h3 className="font-medium">{job.company}</h3>
+            <div className="flex items-center text-xs text-gray-500">
+              <MapPin className="h-3 w-3 mr-1" />
+              {job.location}
+            </div>
+          </div>
+        </div>
+        <Button 
           variant="ghost"
           size="icon"
           className="h-8 w-8 border-none self-end"
@@ -172,6 +184,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
             </div>
           </div>
         </div>
+      </div>
       </CardHeader>
       <CardContent className="p-4">
         <h4 className="font-medium mb-2">{job.title}</h4>
@@ -224,7 +237,7 @@ export function ServicesProviderHomePage() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
               type="text"
-              placeholder="Product Designer"
+              placeholder="Nurse/Driver"
               className="pl-9"
             />
           </div>

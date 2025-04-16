@@ -671,7 +671,7 @@ export function JobTracker() {
         <Dialog
           open={chatDialogOpen}
           onOpenChange={setChatDialogOpen}>
-          <DialogContent className="sm:max-w-[500px] p-0 h-[600px] flex flex-col">
+          <DialogContent className="sm:max-w-[500px] p-0 h-[550px] flex flex-col">
             <DialogHeader className="brand-gradient text-white p-4 rounded-t-lg">
               <DialogTitle>Chat with {currentChatService.client}</DialogTitle>
               <DialogDescription className="text-white/80">
