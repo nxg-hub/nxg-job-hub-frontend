@@ -56,6 +56,7 @@ import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
 import Agentchart from "./pages/Dashboard/Agent/Agentchart.jsx";
 import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
 import CandidateManagementPage from "./pages/Dashboard/Agent/candidatesmatches.jsx";
+import AgentProfilePage from "./pages/Dashboard/Agent/agentprofile.jsx";
 
 function App() {
   return (
@@ -88,7 +89,7 @@ function App() {
           />
           <Route
             path="profile"
-            element={<ServiceProviderProfile />}
+            element={<AgentProfilePage />}
           />
           <Route
             path="candidates"

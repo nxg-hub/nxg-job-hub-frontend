@@ -32,11 +32,11 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
-export function CandidateDetails({ candidate }) {
+export function CandidateDetails({ candidate, availableJobs }) {
   const [openAssignDialog, setOpenAssignDialog] = useState(false);
   const [selectedJob, setSelectedJob] = useState("");
-  const [availableJobs, setAvailableJobs] = useState([]);
 
   const handleAssignCandidate = () => {
     if (!selectedJob) {
@@ -311,7 +311,7 @@ export function CandidateDetails({ candidate }) {
               <Select
                 onValueChange={setSelectedJob}
                 value={selectedJob}>
-                <SelectTrigger>
+                <SelectTrigger className="hover:bg-slate-100 hover:text-slate-600">
                   <SelectValue placeholder="Select a job" />
                 </SelectTrigger>
                 <SelectContent>
@@ -331,7 +331,7 @@ export function CandidateDetails({ candidate }) {
                 <h4 className="font-medium mb-2">Assignment Details</h4>
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">Candidate:</span>{" "}
-                  {selectedCandidate?.name}
+                  {candidate?.name}
                 </p>
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">Job:</span>{" "}
@@ -353,7 +353,12 @@ export function CandidateDetails({ candidate }) {
               Cancel
             </Button>
             <Button
-              variant="default"
+              className={cn(
+                "border-none hover:bg-sky-600",
+                !selectedJob
+                  ? "bg-slate-200 text-slate-800 hover:cursor-grab"
+                  : "bg-sky-500"
+              )}
               onClick={handleAssignCandidate}
               disabled={!selectedJob}>
               Confirm Assignment
