@@ -9,6 +9,7 @@ export default function CandidatesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [candidates, setCandidates] = useState([]);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [availableJobs, setAvailableJobs] = useState([]);
   const [searchParams, setSearchParams] = useState({
     query: "",
     skills: [],
@@ -75,12 +76,24 @@ export default function CandidatesPage() {
   };
 
   useEffect(() => {
+    // Simulate API fetch for available jobs
+    const mockJobs = [
+      {
+        id: "j1",
+        title: "Frontend Developer",
+        company: "Tech Solutions Inc.",
+      },
+      { id: "j2", title: "UX Designer", company: "Creative Minds LLC" },
+      { id: "j3", title: "Full Stack Engineer", company: "WebBuild Co." },
+      { id: "j4", title: "Furniture Making (Carpentry)", company: "Zompa Co." },
+    ];
     // Simulate API fetch for candidates
     const fetchCandidates = async () => {
       setIsLoading(true);
       setTimeout(() => {
         setCandidates(candidatesData);
         setSelectedCandidate(candidatesData[0]);
+        setAvailableJobs(mockJobs);
         setIsLoading(false);
       }, 800);
     };
@@ -130,7 +143,10 @@ export default function CandidatesPage() {
         </div>
         <div className="lg:col-span-2">
           {selectedCandidate ? (
-            <CandidateDetails candidate={selectedCandidate} />
+            <CandidateDetails
+              candidate={selectedCandidate}
+              availableJobs={availableJobs}
+            />
           ) : (
             <div className="bg-muted rounded-lg p-6 text-center">
               <p className="text-muted-foreground">
