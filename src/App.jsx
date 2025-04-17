@@ -53,6 +53,7 @@ import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
 import AgentHomePage from "./pages/Dashboard/Agent/dashboardhome.jsx";
 import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
+import Agentchart from "./pages/Dashboard/Agent/Agentchart.jsx";
 import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
 import CandidateManagementPage from "./pages/Dashboard/Agent/candidatesmatches.jsx";
 
@@ -99,7 +100,7 @@ function App() {
           />
           <Route
             path="chats"
-            element={<XCandidatesPage />}
+            element={<Agentchart />}
           />
           <Route
             path="candidate-matches"
