@@ -51,7 +51,7 @@ import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompletef
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
-import AgentHomePage from "./pages/Dashboard/Agent/dashboardhome.jsx";
+import AgentHomePage from "./pages/Dashboard/Agent/Dashboardhome.jsx";
 import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
 import Agentchart from "./pages/Dashboard/Agent/Agentchart.jsx";
 import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
