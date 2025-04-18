@@ -68,8 +68,8 @@ export default function CandidateDetailSheet({
       onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] overflow-y-auto">
-        <SheetHeader className="text-left">
+        className="mx-10 mb-1 h-[90vh] overflow-y-auto rounded-t-md">
+        <SheetHeader className="mt-10 text-left">
           <div className="flex items-center gap-4">
             <Avatar className="h-16 w-16">
               <AvatarImage src={displayCandidate.avatar} />
