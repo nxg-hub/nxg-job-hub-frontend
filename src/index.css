@@ -68,6 +68,22 @@
   opacity: 1;
 }
 
+/* Hide thumb by default */
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 4px;
+}
+
+/* Show scrollbar on hover */
+.scrollbar-custom:hover::-webkit-scrollbar-thumb {
+  background-color: #e1e8eb;
+}
+
+/* Optional: show track on hover too */
+.scrollbar-custom:hover::-webkit-scrollbar {
+  opacity: 1;
+}
+
 
 @layer base {
   :root {

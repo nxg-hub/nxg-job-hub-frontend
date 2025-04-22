@@ -48,7 +48,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import CandidateDetailsPage from "./agentprofile";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import CandidateDetailSheet from "@/components/candidatedetailsheet";
+import CandidateDetailSheet from "@/components/agent/candidatedetailsheet";
 
 // Mock data for demonstration
 const mockCandidates = [
