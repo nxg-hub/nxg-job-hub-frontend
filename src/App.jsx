@@ -56,7 +56,6 @@ import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
 
 import EmployersAgent from "./pages/Dashboard/Agent/EmployersAgent.jsx";
 import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
-import CandidateManagementPage from "./pages/Dashboard/Agent/candidatesmatches.jsx";
 import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
 import MatchesTab from "./pages/Dashboard/Agent/matches-tab.jsx";
 import JobsTab from "./pages/Dashboard/Agent/jobs-tab.jsx";
@@ -132,10 +131,6 @@ function App() {
             path="candidate-matches"
             element={<MatchesTab />}
             // element={<CandidateManagementPage />}
-          />
-          <Route
-            path="candidate-matches2"
-            element={<CandidateManagementPage />}
           />
           <Route
             path="employers"

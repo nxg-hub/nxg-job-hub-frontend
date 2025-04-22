@@ -11,6 +11,7 @@ import {
   Users,
   MessageSquare,
   User,
+  CircleUser,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -71,11 +72,7 @@ const sidebarItems = [
     label: "Matches",
     path: "candidate-matches",
   },
-  {
-    icon: <Link2 />,
-    label: "Matches2",
-    path: "candidate-matches2",
-  },
+
   { icon: <BriefcaseIcon />, label: "Jobs", path: "jobs" },
   { icon: <BriefcaseIcon />, label: "Jobs2", path: "jobs2" },
   { icon: <Users />, label: "Candidates", path: "candidates" },
