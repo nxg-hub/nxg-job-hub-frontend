@@ -53,6 +53,8 @@ import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
 import AgentHomePage from "./pages/Dashboard/Agent/Dashboardhome.jsx";
 import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
+
+import EmployersAgent from "./pages/Dashboard/Agent/EmployersAgent.jsx";
 import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
 import CandidateManagementPage from "./pages/Dashboard/Agent/candidatesmatches.jsx";
 import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
@@ -101,6 +103,10 @@ function App() {
           <Route
             path="profile"
             element={<ProfileTab />}
+          />
+          <Route
+            path="employers2"
+            element={<EmployersAgent />}
           />
           <Route
             path="candidates"

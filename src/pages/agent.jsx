@@ -62,6 +62,10 @@ const sidebarItems = [
     label: "Profile",
     path: "profile",
   },
+
+  { icon: <BriefcaseBusiness />, label: "Employers2", path: "employers2" },
+  { icon: <CircleUser />, label: "Candidates", path: "candidates" },
+  { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
   {
     icon: <Link2 />,
     label: "Matches",
