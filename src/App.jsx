@@ -72,11 +72,13 @@ function App() {
           path="/services"
           element={<Services />}
         />
+        {/* service provider form after choosen a profession */}
         <Route
           path="/services-provider/complete-profile"
           element={<ServiceProviderFormCompletion />}
         />
 
+        {/* agent user routes */}
         <Route
           path="/agent/dashboard"
           element={
@@ -116,6 +118,7 @@ function App() {
           />
         </Route>
 
+        {/* service provider  */}
         <Route
           path="/services-provider"
           element={
