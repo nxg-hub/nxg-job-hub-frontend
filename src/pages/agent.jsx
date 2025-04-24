@@ -11,6 +11,7 @@ import {
   Users,
   MessageSquare,
   User,
+  CircleUser
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
