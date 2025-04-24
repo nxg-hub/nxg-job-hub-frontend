@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { BriefcaseIcon, Link, Link2, Plus, Users } from "lucide-react";
+import {
+  BriefcaseIcon,
+  ChevronDown,
+  Link,
+  Link2,
+  Plus,
+  Users,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,20 +19,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  matchesData,
   messagesData,
   candidatesData,
   employersData,
-  jobsData,
-  industryOptions,
-  locationOptions,
-  typeOptions,
-  agentData,
 } from "@/utils/data/agent-mock-data";
 import CreateMatchDialog from "@/components/agent/create-match-dialog";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { TalentTable } from "@/components/agent/TalentTable";
 import { Progress } from "@/components/ui/progress";
+import { TimeMetrics } from "@/components/TimeMetrics";
 
 export default function DashboardTab() {
   const { setPageTitle } = useOutletContext();
@@ -46,14 +48,6 @@ export default function DashboardTab() {
 
   return (
     <div className=" p-8 space-y-10">
-      <div className="flex justify-end ">
-        <Button
-          className="border-none bg-sky-500 hover:bg-sky-600 text-white"
-          onClick={() => setMatchDialogOpen(true)}>
-          <Plus className="h-4 w-4" />
-          Create Match
-        </Button>
-      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -98,6 +92,19 @@ export default function DashboardTab() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="col-span-2">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>Response Time Metrics</CardTitle>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-500">This Year</span>
+            <ChevronDown className="h-4 w-4 text-gray-500" />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <TimeMetrics />
+        </CardContent>
+      </Card>
       <div className="flex flex-col space-y-5">
         <Card className="lg:col-span-4">
           <CardHeader>

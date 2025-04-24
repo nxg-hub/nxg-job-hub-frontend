@@ -51,18 +51,13 @@ import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompletef
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
-import AgentHomePage from "./pages/Dashboard/Agent/Dashboardhome.jsx";
-import XCandidatesPage from "./pages/Dashboard/Agent/newcandidate.jsx";
-
-import EmployersAgent from "./pages/Dashboard/Agent/EmployersAgent.jsx";
-import CandidatesPage from "./pages/Dashboard/Agent/candidates.jsx";
 import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
 import MatchesTab from "./pages/Dashboard/Agent/matches-tab.jsx";
 import JobsTab from "./pages/Dashboard/Agent/jobs-tab.jsx";
 import CandidatesTab from "./pages/Dashboard/Agent/candidates-tabs.jsx";
-import EmployersTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
 import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
+import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 
 function App() {
   return (
@@ -93,35 +88,22 @@ function App() {
           <Route
             index
             element={<DashboardTab />}
-            // element={<AgentHomePage />}
-          />
-          <Route
-            path="dashboard2"
-            element={<AgentHomePage />}
           />
           <Route
             path="profile"
             element={<ProfileTab />}
           />
           <Route
-            path="employers2"
-            element={<EmployersAgent />}
+            path="employers"
+            element={<EmployerTab />}
           />
           <Route
             path="candidates"
             element={<CandidatesTab />}
           />
           <Route
-            path="candidates2"
-            element={<CandidatesPage />}
-          />
-          <Route
             path="jobs"
             element={<JobsTab />}
-          />
-          <Route
-            path="jobs2"
-            element={<XCandidatesPage />}
           />
           <Route
             path="chats"
@@ -131,10 +113,6 @@ function App() {
             path="candidate-matches"
             element={<MatchesTab />}
             // element={<CandidateManagementPage />}
-          />
-          <Route
-            path="employers"
-            element={<EmployersTab />}
           />
         </Route>
 
