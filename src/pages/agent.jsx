@@ -3,12 +3,9 @@ import {
   Bell,
   LayoutDashboard,
   LogOut,
-  Settings,
   CircleHelp,
   BriefcaseBusiness,
   Link2,
-  BriefcaseIcon,
-  Users,
   MessageSquare,
   User,
   CircleUser
@@ -54,17 +51,11 @@ const sidebarItems = [
     path: "/agent/dashboard",
   },
   {
-    icon: <LayoutDashboard />,
-    label: "Dashboard2",
-    path: "dashboard2",
-  },
-  {
     icon: <User />,
     label: "Profile",
     path: "profile",
   },
-
-  { icon: <BriefcaseBusiness />, label: "Employers2", path: "employers2" },
+  { icon: <BriefcaseBusiness />, label: "Employers", path: "employers" },
   { icon: <CircleUser />, label: "Candidates", path: "candidates" },
   { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
   {
@@ -72,20 +63,7 @@ const sidebarItems = [
     label: "Matches",
     path: "candidate-matches",
   },
-  {
-    icon: <Link2 />,
-    label: "Matches2",
-    path: "candidate-matches2",
-  },
-  { icon: <BriefcaseIcon />, label: "Jobs", path: "jobs" },
-  { icon: <BriefcaseIcon />, label: "Jobs2", path: "jobs2" },
-  { icon: <Users />, label: "Candidates", path: "candidates" },
-  { icon: <Users />, label: "Candidates2", path: "candidates2" },
-  { icon: <BriefcaseBusiness />, label: "Employers", path: "employers" },
   { icon: <MessageSquare />, label: "Messages", path: "chats" },
-
-  // { icon: <ChartLine />, label: "Analytics", path: "/analytics" },
-  { icon: <Settings />, label: "Settings", path: "/settings" },
   { icon: <CircleHelp />, label: "Help", path: "/help" },
 ];
 
