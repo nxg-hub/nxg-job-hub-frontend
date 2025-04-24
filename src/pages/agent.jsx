@@ -8,7 +8,7 @@ import {
   Link2,
   MessageSquare,
   User,
-  CircleUser
+  CircleUser,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
