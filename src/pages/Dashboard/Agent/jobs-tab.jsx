@@ -4,18 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  matchesData,
-  messagesData,
   candidatesData,
-  employersData,
   jobsData,
   industryOptions,
   locationOptions,
   typeOptions,
-  agentData,
-  newCandidateRequests,
-  employerRequests,
-  notificationsData,
 } from "@/utils/data/agent-mock-data";
 import {
   Select,

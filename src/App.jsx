@@ -58,6 +58,21 @@ import CandidatesTab from "./pages/Dashboard/Agent/candidates-tabs.jsx";
 import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
 import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
 import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
+import { EmployerDashboard } from "./pages/employer.jsx";
+import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx.jsx";
+import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
+import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-company-profile-tab.jsx";
+import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
+
+import EmployerSettingTab from "./pages/Dashboard/Employer2/employer-setting-tab.jsx";
+import EmployerMessageTab from "./pages/Dashboard/Employer2/Employer-message-tab.jsx";
+import EmployerMessagesTab from "./pages/Dashboard/Employer2/Employer-message-tab.jsx";
+import { TalentDashboard } from "./pages/talent.jsx";
+import TalentDashboardTab from "./pages/Dashboard/Talent/Talent-Dashboard-Tab.jsx";
+import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
+import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
+import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
+
 
 function App() {
   return (
@@ -76,6 +91,41 @@ function App() {
           path="/services-provider/complete-profile"
           element={<ServiceProviderFormCompletion />}
         />
+
+        <Route
+          path="/employer/dashboard"
+          element={
+            <VerificationProvider>
+              <EmployerDashboard />
+            </VerificationProvider>
+           
+          }>
+          <Route
+            index
+            element={<EmployerDashboardTab />}
+          />
+          <Route
+            path="jobs"
+            element={<EmployerJobTab />}
+          />
+          <Route
+            path="companyprofile"
+            element={<EmployerCompanyProfileTab />}
+          />
+          <Route
+            path="applicants"
+            element={<EmployerApplicantsTab />}
+          />
+          <Route
+            path="messages"
+            element={<EmployerMessagesTab />}
+          />
+          
+          <Route
+            path="setting"
+            element={<EmployerSettingTab />}
+          />
+          </Route>
 
         <Route
           path="/agent/dashboard"
@@ -115,6 +165,38 @@ function App() {
             // element={<CandidateManagementPage />}
           />
         </Route>
+
+
+        <Route
+          path="/talent/dashboard"
+          element={
+            <VerificationProvider>
+              <TalentDashboard/>
+            </VerificationProvider>
+            // <DashboardForAgent />
+          }>
+          <Route
+            index
+            element={<TalentDashboardTab/>}
+          />
+          <Route
+            path="profile"
+            element={<TalentProfileTab />}
+          />
+      
+          <Route
+            path="jobs"
+            element={<TalentJobsTab />}
+          />
+          <Route
+            path="messages"
+            element={<TalentMessageTab />}
+          />
+          
+        </Route>
+
+
+        
 
         <Route
           path="/services-provider"
