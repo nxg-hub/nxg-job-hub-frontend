@@ -5,13 +5,13 @@ import { Bell, Briefcase, Calendar } from "lucide-react"
 
 export default function TalentDashboardTab() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-6 ">
       <h1 className="text-3xl font-bold">Welcome back, John!</h1>
       <p className="text-muted-foreground">Here's an overview of your dashboard</p>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 bg-500-red ">
         <Card>
-          <CardHeader className="pb-2">
+          <CardHeader className="pb-2 ">
             <CardTitle className="text-sm font-medium">Profile Completion</CardTitle>
           </CardHeader>
           <CardContent>
@@ -33,7 +33,7 @@ export default function TalentDashboardTab() {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Job Requests</CardTitle>
+            <CardTitle className="text-sm font-medium ">Job Requests</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">2</div>
@@ -53,10 +53,10 @@ export default function TalentDashboardTab() {
       </div>
 
       <Tabs defaultValue="matches">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="matches">Job Matches</TabsTrigger>
-          <TabsTrigger value="requests">Recent Requests</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 border-none">
+          <TabsTrigger value="matches" className="border-none bg-sky-500 hover:bg-sky-600">Job Matches</TabsTrigger>
+          <TabsTrigger value="requests" className="border-none bg-sky-500 hover:bg-sky-600">Recent Requests</TabsTrigger>
+          {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="matches" className="space-y-4 mt-4">
@@ -98,10 +98,10 @@ export default function TalentDashboardTab() {
                       <p className="text-sm text-muted-foreground">InnovateTech • 2 days ago</p>
                     </div>
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 text-xs bg-primary text-primary-foreground rounded-md">
+                      <button className="px-3 py-1 text-xs bg-primary text-primary-foreground rounded-md border-none">
                         Accept
                       </button>
-                      <button className="px-3 py-1 text-xs bg-destructive text-destructive-foreground rounded-md">
+                      <button className="px-3 py-1 text-xs bg-destructive text-destructive-foreground rounded-md border-none">
                         Decline
                       </button>
                     </div>

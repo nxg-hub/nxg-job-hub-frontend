@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LinkIcon, Trash2, Upload, X, Plus, Calendar, Briefcase, GraduationCap, Award, FolderPlus } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 
-export default function ProfilePage() {
+export default function TalentProfileTab() {
   // Personal information state
   const [firstName, setFirstName] = useState("John")
   const [lastName, setLastName] = useState("Doe")
@@ -253,9 +253,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Profile</h1>
+    <div className="space-y-6 mx-6" >
+      <div className="flex items-center justify-between ">
+        <h1 className="text-3xl font-bold ">Profile</h1>
         <Button onClick={handleSaveProfile}>Save Changes</Button>
       </div>
 
@@ -267,13 +267,13 @@ export default function ProfilePage() {
         </TabsList>
 
         {/* Personal Information Tab */}
-        <TabsContent value="personal" className="space-y-4 mt-4">
+        <TabsContent value="personal" className=" mt-4 px-6">
           <Card>
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
               <CardDescription>Update your personal details</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 ">
               <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
                 <Avatar className="h-24 w-24">
                   <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Profile" />
