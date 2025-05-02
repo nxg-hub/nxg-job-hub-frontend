@@ -32,6 +32,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Progress } from "@/components/ui/progress"
 
 export default function TalentJobsTab() {
+  
   // Main tab state (Job Listings, Job Requests, Jobs Applied)
   const [mainTab, setMainTab] = useState("listings")
 
@@ -583,6 +584,7 @@ export default function TalentJobsTab() {
     // For available jobs
     if (mainTab === "listings") {
       return (
+        
         <Card className="sticky top-20">
           <CardHeader
             className={`h-1 p-0 ${selectedJob.match >= 90 ? "bg-green-500" : selectedJob.match >= 80 ? "bg-yellow-500" : "bg-blue-500"}`}
@@ -660,7 +662,7 @@ export default function TalentJobsTab() {
                   <p className="text-sm text-muted-foreground">{selectedJob.contact.position}</p>
                 </div>
               </div>
-              <Button className="w-full mt-4" onClick={() => handleApply(selectedJob.id)}>
+              <Button className="w-full mt-4 border-none bg-sky-500 hover:bg-sky-600" onClick={() => handleApply(selectedJob.id)} >
                 Apply Now
               </Button>
             </div>
@@ -672,7 +674,7 @@ export default function TalentJobsTab() {
     // For job requests
     if (mainTab === "requests") {
       return (
-        <Card className="sticky top-20">
+        <Card className="sticky top-20 ">
           <CardHeader
             className={`h-1 p-0 ${selectedJob.match >= 90 ? "bg-green-500" : selectedJob.match >= 80 ? "bg-yellow-500" : "bg-blue-500"}`}
           />
@@ -870,7 +872,7 @@ export default function TalentJobsTab() {
                   <p className="text-sm text-muted-foreground">{selectedJob.recruiter.position}</p>
                 </div>
               </div>
-              <Button className="w-full mt-4">Contact Recruiter</Button>
+              <Button className="w-full mt-4 border-none bg-sky-500 hover:bg-sky-600">Contact Recruiter</Button>
             </div>
           </CardContent>
         </Card>
@@ -881,11 +883,11 @@ export default function TalentJobsTab() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Jobs</h1>
+    <div className="space-y-6 ">
+      <h1 className="text-3xl font-bold mx-12">Jobs</h1>
 
       {/* Main tabs for Job Listings, Job Requests, Jobs Applied */}
-      <Tabs defaultValue="listings" onValueChange={setMainTab}>
+      <Tabs defaultValue="listings" onValueChange={setMainTab} className="mx-8">
         <TabsList className="grid grid-cols-3 w-full">
           <TabsTrigger value="listings">
             <Briefcase className="h-4 w-4 mr-2" />
@@ -931,7 +933,7 @@ export default function TalentJobsTab() {
                         <SelectItem value="match">Best Match</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Button onClick={handleSearch}>Search</Button>
+                    <Button onClick={handleSearch} className="border-none bg-sky-500 hover:bg-sky-600">Search</Button>
                   </div>
 
                   {/* Horizontal filters */}
@@ -1068,7 +1070,7 @@ export default function TalentJobsTab() {
                     </div>
 
                     {/* Apply Filters Button */}
-                    <Button onClick={handleFilterChange}>Apply Filters</Button>
+                    <Button onClick={handleFilterChange} className="border-none bg-sky-500 hover:bg-sky-600">Apply Filters</Button>
                   </div>
                 </div>
               </CardContent>
@@ -1162,7 +1164,7 @@ export default function TalentJobsTab() {
                                       onClick={(e) => {
                                         e.stopPropagation()
                                       }}
-                                    >
+                                     className="border-none bg-sky-500 hover:bg-sky-600">
                                       Apply Now
                                     </Button>
                                   </DialogTrigger>
@@ -1188,7 +1190,7 @@ export default function TalentJobsTab() {
                                         below.
                                       </p>
                                       <Button
-                                        className="w-full"
+                                        className="w-full border-none bg-sky-500 hover:bg-sky-600"
                                         onClick={(e) => {
                                           e.stopPropagation()
                                           handleApply(job.id)
@@ -1321,7 +1323,7 @@ export default function TalentJobsTab() {
                                       e.stopPropagation()
                                       handleApply(job.id)
                                     }}
-                                  >
+                                  className="border-none bg-sky-500 hover:bg-sky-600">
                                     Apply Now
                                   </Button>
                                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -1445,7 +1447,7 @@ export default function TalentJobsTab() {
                                       e.stopPropagation()
                                       handleApply(job.id)
                                     }}
-                                  >
+                                   className="border-none bg-sky-500 hover:bg-sky-600">
                                     Apply Now
                                   </Button>
                                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -1525,7 +1527,7 @@ export default function TalentJobsTab() {
                       <SelectItem value="salary-high">Highest Salary</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button onClick={handleSearch}>Search</Button>
+                  <Button onClick={handleSearch} className="border-none bg-sky-500 hover:bg-sky-600">Search</Button>
                 </div>
               </CardContent>
             </Card>
@@ -1631,7 +1633,7 @@ export default function TalentJobsTab() {
                                         e.stopPropagation()
                                         handleAcceptRequest(request.id)
                                       }}
-                                    >
+                                    className="border-none bg-sky-500 hover:bg-sky-600">
                                       Accept
                                     </Button>
                                     <Button
@@ -1641,7 +1643,7 @@ export default function TalentJobsTab() {
                                         e.stopPropagation()
                                         handleDeclineRequest(request.id)
                                       }}
-                                    >
+                                    className="border-none hover:bg-red-600">
                                       Decline
                                     </Button>
                                   </div>
@@ -1762,7 +1764,7 @@ export default function TalentJobsTab() {
                                           e.stopPropagation()
                                           handleAcceptRequest(request.id)
                                         }}
-                                      >
+                                       className="border-none bg-sky-500 hover:bg-sky-600">
                                         Accept
                                       </Button>
                                       <Button
@@ -1772,7 +1774,7 @@ export default function TalentJobsTab() {
                                           e.stopPropagation()
                                           handleDeclineRequest(request.id)
                                         }}
-                                      >
+                                      className="border-none hover:bg-sky-600">
                                         Decline
                                       </Button>
                                     </div>
@@ -1966,7 +1968,7 @@ export default function TalentJobsTab() {
                       <SelectItem value="status">Application Status</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button onClick={handleSearch}>Search</Button>
+                  <Button onClick={handleSearch} className="border-none bg-sky-500 hover:bg-sky-600">Search</Button>
                 </div>
               </CardContent>
             </Card>

@@ -256,14 +256,14 @@ export default function TalentProfileTab() {
     <div className="space-y-6 mx-6" >
       <div className="flex items-center justify-between ">
         <h1 className="text-3xl font-bold ">Profile</h1>
-        <Button onClick={handleSaveProfile}>Save Changes</Button>
+        {/* <Button onClick={handleSaveProfile}>Save Changes</Button> */}
       </div>
 
       <Tabs defaultValue="personal">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="personal">Personal Information</TabsTrigger>
-          <TabsTrigger value="skills">Skills & Experience</TabsTrigger>
-          <TabsTrigger value="portfolio">Certifications & Portfolio</TabsTrigger>
+          <TabsTrigger value="personal" className="border-none">Personal Information</TabsTrigger>
+          <TabsTrigger value="skills" className="border-none">Skills & Experience</TabsTrigger>
+          <TabsTrigger value="portfolio" className="border-none">Certifications & Portfolio</TabsTrigger>
         </TabsList>
 
         {/* Personal Information Tab */}
@@ -350,7 +350,11 @@ export default function TalentProfileTab() {
               </div>
             </CardContent>
           </Card>
+          <div className=" flex justify-center my-4 ">
+        <Button onClick={handleSaveProfile} className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button> 
+        </div>
         </TabsContent>
+        
 
         {/* Skills & Experience Tab */}
         <TabsContent value="skills" className="space-y-4 mt-4">
@@ -378,7 +382,7 @@ export default function TalentProfileTab() {
                   onChange={(e) => setNewSkill(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addSkill()}
                 />
-                <Button onClick={addSkill}>Add</Button>
+                <Button onClick={addSkill} className="border-none bg-sky-500 hover:bg-sky-600">Add</Button>
               </div>
             </CardContent>
           </Card>
@@ -390,15 +394,15 @@ export default function TalentProfileTab() {
                 <CardDescription>Add your previous work experience</CardDescription>
               </div>
               <Dialog open={showWorkDialog} onOpenChange={setShowWorkDialog}>
-                <DialogTrigger asChild>
-                  <Button size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
+                  <Button size="sm border-none bg-sky-500 hover:bg-sky-600 ">
+                    <Plus className="h-4 w-4 mr-2 " />
                     Add Experience
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Work Experience</DialogTitle>
+                    <DialogTitle className="border-none bg-sky-500 hover:bg-sky-600">Add Work Experience</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -463,7 +467,7 @@ export default function TalentProfileTab() {
                       />
                     </div>
 
-                    <Button className="w-full" onClick={addWorkExperience}>
+                    <Button className="w-full " onClick={addWorkExperience}>
                       Add Work Experience
                     </Button>
                   </div>
@@ -518,7 +522,7 @@ export default function TalentProfileTab() {
                 <CardDescription>Add your educational background</CardDescription>
               </div>
               <Dialog open={showEducationDialog} onOpenChange={setShowEducationDialog}>
-                <DialogTrigger asChild>
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Education
@@ -526,7 +530,7 @@ export default function TalentProfileTab() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Education</DialogTitle>
+                    <DialogTitle >Add Education</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -637,7 +641,7 @@ export default function TalentProfileTab() {
                 <CardDescription>Upload and manage your professional certifications</CardDescription>
               </div>
               <Dialog open={showCertificationDialog} onOpenChange={setShowCertificationDialog}>
-                <DialogTrigger asChild>
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Certification
@@ -750,7 +754,7 @@ export default function TalentProfileTab() {
                         <Button variant="outline" size="sm">
                           View
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={() => removeCertification(cert.id)}>
+                        <Button variant="destructive" size="sm" onClick={() => removeCertification(cert.id)} className="border-none">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -778,7 +782,7 @@ export default function TalentProfileTab() {
                     <Input type="file" className="hidden" id="certification-upload" />
                     <Label
                       htmlFor="certification-upload"
-                      className="cursor-pointer bg-primary text-primary-foreground px-4 py-2 rounded-md"
+                      className="border-none bg-sky-500 hover:bg-sky-600 cursor-pointer  text-primary-foreground px-4 py-2 rounded-md"
                     >
                       Select File
                     </Label>
@@ -795,12 +799,12 @@ export default function TalentProfileTab() {
                 <CardDescription>Showcase your projects and work</CardDescription>
               </div>
               <Dialog open={showPortfolioDialog} onOpenChange={setShowPortfolioDialog}>
-                <DialogTrigger asChild>
+                {/* <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Project
                   </Button>
-                </DialogTrigger>
+                </DialogTrigger> */}
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Portfolio Project</DialogTitle>
@@ -844,7 +848,7 @@ export default function TalentProfileTab() {
                         <Input type="file" className="hidden" id="project-image-upload" accept="image/*" />
                         <Label
                           htmlFor="project-image-upload"
-                          className="cursor-pointer bg-primary text-primary-foreground px-4 py-2 rounded-md mt-4"
+                          className="border-none bg-sky-500 hover:bg-sky-600 cursor-pointer text-primary-foreground px-4 py-2 rounded-md mt-4"
                         >
                           Select Image
                         </Label>
@@ -877,7 +881,7 @@ export default function TalentProfileTab() {
                           <LinkIcon className="h-4 w-4 mr-2" />
                           View Project
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={() => removePortfolioItem(item.id)}>
+                        <Button variant="destructive" size="sm" onClick={() => removePortfolioItem(item.id)} className="border-none">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -902,7 +906,7 @@ export default function TalentProfileTab() {
                       <h3 className="font-medium">Add a new portfolio item</h3>
                       <p className="text-sm text-muted-foreground">Showcase your best work to potential employers</p>
                     </div>
-                    <Button onClick={() => setShowPortfolioDialog(true)}>Add Project</Button>
+                    <Button onClick={() => setShowPortfolioDialog(true)} className="border-none bg-sky-500 hover:bg-sky-600">Add Project</Button>
                   </div>
                 </CardContent>
               </Card>
