@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LinkIcon, Trash2, Upload, X, Plus, Calendar, Briefcase, GraduationCap, Award, FolderPlus } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useOutletContext } from "react-router-dom";
 
 export default function TalentProfileTab() {
   // Personal information state
@@ -27,6 +28,18 @@ export default function TalentProfileTab() {
   const [linkedin, setLinkedin] = useState("https://linkedin.com/in/johndoe")
   const [github, setGithub] = useState("https://github.com/johndoe")
   const [portfolio, setPortfolio] = useState("https://johndoe.dev")
+
+
+    // Work availability state
+  const [availability, setAvailability] = useState({
+    status: "Full-time",
+    weeklyHours: "40",
+    startDate: "",
+    workType: "Remote",
+    location: "",
+    willingToRelocate: false,
+    travelPreference: "No travel",
+  })
 
   // Skills state
   const [skills, setSkills] = useState(["React", "JavaScript", "TypeScript", "Node.js", "CSS", "HTML"])
@@ -252,18 +265,23 @@ export default function TalentProfileTab() {
     alert("Profile saved successfully!")
   }
 
+
+
+
+
+
   return (
     <div className="space-y-6 mx-6" >
-      <div className="flex items-center justify-between ">
-        <h1 className="text-3xl font-bold ">Profile</h1>
-        <Button onClick={handleSaveProfile}>Save Changes</Button>
-      </div>
+       <div className="flex items-center justify-between "> 
+         <h1 className="text-3xl font-bold ">My Profile</h1> 
+        {/* <Button onClick={handleSaveProfile}>Save Changes</Button> */}
+       </div> 
 
       <Tabs defaultValue="personal">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="personal">Personal Information</TabsTrigger>
-          <TabsTrigger value="skills">Skills & Experience</TabsTrigger>
-          <TabsTrigger value="portfolio">Certifications & Portfolio</TabsTrigger>
+          <TabsTrigger value="personal" className="border-none hover:bg-white hover:text-black">Personal Information</TabsTrigger>
+          <TabsTrigger value="skills" className="border-none hover:bg-white hover:text-black">Skills & Experience</TabsTrigger>
+          <TabsTrigger value="portfolio" className="border-none hover:bg-white hover:text-black">Certifications & Portfolio</TabsTrigger>
         </TabsList>
 
         {/* Personal Information Tab */}
@@ -350,7 +368,11 @@ export default function TalentProfileTab() {
               </div>
             </CardContent>
           </Card>
+          <div className=" flex justify-center my-4 ">
+        <Button onClick={handleSaveProfile} className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button> 
+        </div>
         </TabsContent>
+        
 
         {/* Skills & Experience Tab */}
         <TabsContent value="skills" className="space-y-4 mt-4">
@@ -364,8 +386,8 @@ export default function TalentProfileTab() {
                 {skills.map((skill) => (
                   <Badge key={skill} variant="secondary" className="px-3 py-1">
                     {skill}
-                    <button className="ml-2" onClick={() => removeSkill(skill)}>
-                      <X className="h-3 w-3" />
+                    <button className="ml-2 bg-sky-500 hover:bg-red-500 border-none " onClick={() => removeSkill(skill)}>
+                      <X className="h-3 w-3 text-white" />
                     </button>
                   </Badge>
                 ))}
@@ -378,7 +400,7 @@ export default function TalentProfileTab() {
                   onChange={(e) => setNewSkill(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addSkill()}
                 />
-                <Button onClick={addSkill}>Add</Button>
+                <Button onClick={addSkill} className="border-none bg-sky-500 hover:bg-sky-600">Add</Button>
               </div>
             </CardContent>
           </Card>
@@ -390,15 +412,15 @@ export default function TalentProfileTab() {
                 <CardDescription>Add your previous work experience</CardDescription>
               </div>
               <Dialog open={showWorkDialog} onOpenChange={setShowWorkDialog}>
-                <DialogTrigger asChild>
-                  <Button size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
+                  <Button size="sm border-none bg-sky-500 hover:bg-sky-600 ">
+                    <Plus className="h-4 w-4 mr-2 " />
                     Add Experience
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Work Experience</DialogTitle>
+                    <DialogTitle className="border-none bg-sky-500 hover:bg-sky-600">Add Work Experience</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -463,7 +485,7 @@ export default function TalentProfileTab() {
                       />
                     </div>
 
-                    <Button className="w-full" onClick={addWorkExperience}>
+                    <Button className="w-full " onClick={addWorkExperience}>
                       Add Work Experience
                     </Button>
                   </div>
@@ -518,7 +540,7 @@ export default function TalentProfileTab() {
                 <CardDescription>Add your educational background</CardDescription>
               </div>
               <Dialog open={showEducationDialog} onOpenChange={setShowEducationDialog}>
-                <DialogTrigger asChild>
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Education
@@ -526,7 +548,7 @@ export default function TalentProfileTab() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Education</DialogTitle>
+                    <DialogTitle >Add Education</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -626,6 +648,86 @@ export default function TalentProfileTab() {
               )}
             </CardContent>
           </Card>
+           {/* WORK AVAILABILITY */}
+
+        <Card className=" my-8">
+            <CardHeader>
+              <CardTitle>Work Availability & Preferences</CardTitle>
+              {/* <CardDescription>Set your work preferences and availability</CardDescription> */}
+            </CardHeader>
+            <CardContent className="space-y-6">
+
+              <div className="border-t pt-4">
+                <h3 className="text-sm font-medium mb-4">Preferred Work Type</h3>
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Remote" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Remote" })}
+                  >
+                    Remote
+                  </div>
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Hybrid" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Hybrid" })}
+                  >
+                    Hybrid
+                  </div>
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Onsite" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Onsite" })}
+                  >
+                    Onsite
+                  </div>
+                </div>
+
+                {(availability.workType === "Hybrid" || availability.workType === "Onsite") && (
+                  <div className="space-y-2 mb-4">
+                    <Label htmlFor="preferredLocation">Preferred Location</Label>
+                    <Input
+                      id="preferredLocation"
+                      placeholder="e.g. New York, NY"
+                      value={availability.location}
+                      onChange={(e) => setAvailability({ ...availability, location: e.target.value })}
+                    />
+                  </div>
+                )}
+
+                <div className="flex items-center space-x-2 mb-4">
+                  <input
+                    type="checkbox"
+                    id="relocate"
+                    className="rounded border-gray-300"
+                    checked={availability.willingToRelocate}
+                    onChange={(e) => setAvailability({ ...availability, willingToRelocate: e.target.checked })}
+                  />
+                  <Label htmlFor="relocate" className="cursor-pointer">
+                    Willing to relocate
+                  </Label>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="travelPreference">Travel Preference</Label>
+                  <select
+                    id="travelPreference"
+                    className="w-full p-2 border rounded-md"
+                    value={availability.travelPreference}
+                    onChange={(e) => setAvailability({ ...availability, travelPreference: e.target.value })}
+                  >
+                    <option value="No travel">No travel</option>
+                    <option value="Occasional travel">Occasional travel (few times per year)</option>
+                    <option value="Regular travel">Regular travel (few times per month)</option>
+                    <option value="Frequent travel">Frequent travel (weekly)</option>
+                  </select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Certifications & Portfolio Tab */}
@@ -637,7 +739,7 @@ export default function TalentProfileTab() {
                 <CardDescription>Upload and manage your professional certifications</CardDescription>
               </div>
               <Dialog open={showCertificationDialog} onOpenChange={setShowCertificationDialog}>
-                <DialogTrigger asChild>
+                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Certification
@@ -746,11 +848,11 @@ export default function TalentProfileTab() {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                      <div className="flex gap-2 ">
+                        <Button variant="outline" size="sm" className="hover:bg-sky-600 hover:text-white">
                           View
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={() => removeCertification(cert.id)}>
+                        <Button variant="destructive" size="sm" onClick={() => removeCertification(cert.id)} className="border-none">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -778,7 +880,7 @@ export default function TalentProfileTab() {
                     <Input type="file" className="hidden" id="certification-upload" />
                     <Label
                       htmlFor="certification-upload"
-                      className="cursor-pointer bg-primary text-primary-foreground px-4 py-2 rounded-md"
+                      className="border-none bg-sky-500 hover:bg-sky-600 cursor-pointer  text-primary-foreground px-4 py-2 rounded-md"
                     >
                       Select File
                     </Label>
@@ -795,12 +897,12 @@ export default function TalentProfileTab() {
                 <CardDescription>Showcase your projects and work</CardDescription>
               </div>
               <Dialog open={showPortfolioDialog} onOpenChange={setShowPortfolioDialog}>
-                <DialogTrigger asChild>
+                {/* <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
                   <Button size="sm">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Project
                   </Button>
-                </DialogTrigger>
+                </DialogTrigger> */}
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Portfolio Project</DialogTitle>
@@ -844,7 +946,7 @@ export default function TalentProfileTab() {
                         <Input type="file" className="hidden" id="project-image-upload" accept="image/*" />
                         <Label
                           htmlFor="project-image-upload"
-                          className="cursor-pointer bg-primary text-primary-foreground px-4 py-2 rounded-md mt-4"
+                          className="border-none bg-sky-500 hover:bg-sky-600 cursor-pointer text-primary-foreground px-4 py-2 rounded-md mt-4"
                         >
                           Select Image
                         </Label>
@@ -877,7 +979,7 @@ export default function TalentProfileTab() {
                           <LinkIcon className="h-4 w-4 mr-2" />
                           View Project
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={() => removePortfolioItem(item.id)}>
+                        <Button variant="destructive" size="sm" onClick={() => removePortfolioItem(item.id)} className="border-none">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -902,13 +1004,22 @@ export default function TalentProfileTab() {
                       <h3 className="font-medium">Add a new portfolio item</h3>
                       <p className="text-sm text-muted-foreground">Showcase your best work to potential employers</p>
                     </div>
-                    <Button onClick={() => setShowPortfolioDialog(true)}>Add Project</Button>
+                    <Button onClick={() => setShowPortfolioDialog(true)} className="border-none bg-sky-500 hover:bg-sky-600">Add Project</Button>
                   </div>
                 </CardContent>
               </Card>
             </CardContent>
           </Card>
         </TabsContent>
+
+       
+
+
+
+
+
+
+
       </Tabs>
     </div>
   )

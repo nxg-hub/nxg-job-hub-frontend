@@ -163,25 +163,25 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
                 isBookmarked ? "fill-[#0078B4] text-[#0078B4]" : "text-gray-400"
               )}
             />
-            <span className="text-xs text-gray-300">
+            {/* <span className="text-xs text-gray-300">
               {isBookmarked ? "saved" : "save"}
-            </span>
+            </span> */}
           </div>
         </Button>
-        <img
+        {/* <img
           src={driver}
           alt=""
-        />
+        /> */}
         {/* Employer/bookmark */}
         <div className="flex justify-between w-full">
           <div className="flex gap-2">
-            <div className="flex-col">
+            {/* <div className="flex-col">
               <h3 className="font-medium">{job.company}</h3>
               <div className="flex items-center text-xs text-gray-500">
                 <MapPin className="h-3 w-3 mr-1" />
                 {job.location}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -356,17 +356,17 @@ export function ServicesProviderHomePage() {
       </div>
 
       {/* Jobs Near You */}
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
+       <div className="p-4"> 
+         <div className="flex justify-between items-center mb-4">
+          {/* <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
             Jobs Near You
-          </h2>
-          <Button
+          </h2> */}
+          {/* <Button
             variant="ghost"
             size="sm"
             className="text-gray-500 border-gray-200">
             View All
-          </Button>
+          </Button> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -378,8 +378,8 @@ export function ServicesProviderHomePage() {
               onBookmarkToggle={() => toggleBookmark(job.id)}
             />
           ))}
-        </div>
-      </div>
+        </div> 
+       </div> 
     </div>
   );
 }

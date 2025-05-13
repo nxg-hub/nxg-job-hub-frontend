@@ -224,13 +224,13 @@ export default function TalentMessageTab() {
   const activeContact = contacts.find((contact) => contact.id === activeChat)
 
   return (
-    <div className="h-[calc(100vh-9rem)] flex flex-col">
+    <div className="h-[calc(100vh-9rem)] flex flex-col mx-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Messages</h1>
         <Dialog open={showNewMessageDialog} onOpenChange={setShowNewMessageDialog}>
           <DialogTrigger asChild>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
+            <Button className="border-none bg-sky-500 hover:bg-sky-600">
+              <Plus className="h-4 w-4 mr-2 " />
               New Message
             </Button>
           </DialogTrigger>
