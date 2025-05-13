@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
+
   Briefcase,
   Clock,
   DollarSign,
@@ -617,7 +618,7 @@ export default function TalentJobsTab() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
                 <span>{selectedJob.salary}</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <Briefcase className="h-4 w-4 text-muted-foreground" />
                 <span>{selectedJob.type}</span>
               </div>
@@ -752,10 +753,10 @@ export default function TalentJobsTab() {
 
               {selectedJob.status === "Pending Review" && (
                 <div className="flex gap-2 mt-4">
-                  <Button className="flex-1" onClick={() => handleAcceptRequest(selectedJob.id)}>
+                  <Button className="flex-1 border-none bg-sky-500 hover:bg-sky-500 " onClick={() => handleAcceptRequest(selectedJob.id)}>
                     Accept Request
                   </Button>
-                  <Button variant="outline" className="flex-1" onClick={() => handleDeclineRequest(selectedJob.id)}>
+                  <Button variant="outline" className="flex-1 hover:bg-red-500" onClick={() => handleDeclineRequest(selectedJob.id)}>
                     Decline
                   </Button>
                 </div>
@@ -888,8 +889,8 @@ export default function TalentJobsTab() {
 
       {/* Main tabs for Job Listings, Job Requests, Jobs Applied */}
       <Tabs defaultValue="listings" onValueChange={setMainTab} className="mx-8">
-        <TabsList className="grid grid-cols-3 w-full">
-          <TabsTrigger value="listings">
+        <TabsList className="grid grid-cols-3 w-full hover:bg-white-500 ">
+          <TabsTrigger value="listings" >
             <Briefcase className="h-4 w-4 mr-2" />
             Job Listings
           </TabsTrigger>
@@ -940,15 +941,15 @@ export default function TalentJobsTab() {
                   <div className="flex flex-col md:flex-row gap-4 items-end">
                     {/* Job Type Dropdown */}
                     <div className="w-full md:w-auto">
-                      <Label htmlFor="job-type" className="text-sm mb-2 block">
+                      <Label htmlFor="job-type" className="text-sm mb-2 block ">
                         Job Type
                       </Label>
-                      <Select>
-                        <SelectTrigger id="job-type" className="w-full md:w-[180px]">
+                      <Select >
+                        <SelectTrigger id="job-type" className="w-full md:w-[180px] bg-white-500 ">
                           <SelectValue placeholder="Select job types" />
                         </SelectTrigger>
-                        <SelectContent>
-                          <div className="p-2 space-y-2">
+                        <SelectContent >
+                          <div className="p-2 space-y-2 ">
                             <div className="flex items-center space-x-2">
                               <Checkbox
                                 id="filter-full-time"
@@ -1774,7 +1775,7 @@ export default function TalentJobsTab() {
                                           e.stopPropagation()
                                           handleDeclineRequest(request.id)
                                         }}
-                                      className="border-none hover:bg-sky-600">
+                                      className="border-none bg-white hover:bg-red-600">
                                         Decline
                                       </Button>
                                     </div>
@@ -1895,7 +1896,7 @@ export default function TalentJobsTab() {
                                           e.stopPropagation()
                                           handleAcceptRequest(request.id)
                                         }}
-                                      >
+                                      className="border-none bg-sky-500 hover:bg-sky-500">
                                         Accept
                                       </Button>
                                       <Button
@@ -1905,7 +1906,7 @@ export default function TalentJobsTab() {
                                           e.stopPropagation()
                                           handleDeclineRequest(request.id)
                                         }}
-                                      >
+                                      className="border-none hover:bg-red-500">
                                         Decline
                                       </Button>
                                     </div>

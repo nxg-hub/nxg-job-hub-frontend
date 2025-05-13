@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LinkIcon, Trash2, Upload, X, Plus, Calendar, Briefcase, GraduationCap, Award, FolderPlus } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useOutletContext } from "react-router-dom";
 
 export default function TalentProfileTab() {
   // Personal information state
@@ -27,6 +28,18 @@ export default function TalentProfileTab() {
   const [linkedin, setLinkedin] = useState("https://linkedin.com/in/johndoe")
   const [github, setGithub] = useState("https://github.com/johndoe")
   const [portfolio, setPortfolio] = useState("https://johndoe.dev")
+
+
+    // Work availability state
+  const [availability, setAvailability] = useState({
+    status: "Full-time",
+    weeklyHours: "40",
+    startDate: "",
+    workType: "Remote",
+    location: "",
+    willingToRelocate: false,
+    travelPreference: "No travel",
+  })
 
   // Skills state
   const [skills, setSkills] = useState(["React", "JavaScript", "TypeScript", "Node.js", "CSS", "HTML"])
@@ -252,18 +265,23 @@ export default function TalentProfileTab() {
     alert("Profile saved successfully!")
   }
 
+
+
+
+
+
   return (
     <div className="space-y-6 mx-6" >
-      <div className="flex items-center justify-between ">
-        <h1 className="text-3xl font-bold ">Profile</h1>
+       <div className="flex items-center justify-between "> 
+         <h1 className="text-3xl font-bold ">My Profile</h1> 
         {/* <Button onClick={handleSaveProfile}>Save Changes</Button> */}
-      </div>
+       </div> 
 
       <Tabs defaultValue="personal">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="personal" className="border-none">Personal Information</TabsTrigger>
-          <TabsTrigger value="skills" className="border-none">Skills & Experience</TabsTrigger>
-          <TabsTrigger value="portfolio" className="border-none">Certifications & Portfolio</TabsTrigger>
+          <TabsTrigger value="personal" className="border-none hover:bg-white hover:text-black">Personal Information</TabsTrigger>
+          <TabsTrigger value="skills" className="border-none hover:bg-white hover:text-black">Skills & Experience</TabsTrigger>
+          <TabsTrigger value="portfolio" className="border-none hover:bg-white hover:text-black">Certifications & Portfolio</TabsTrigger>
         </TabsList>
 
         {/* Personal Information Tab */}
@@ -368,8 +386,8 @@ export default function TalentProfileTab() {
                 {skills.map((skill) => (
                   <Badge key={skill} variant="secondary" className="px-3 py-1">
                     {skill}
-                    <button className="ml-2" onClick={() => removeSkill(skill)}>
-                      <X className="h-3 w-3" />
+                    <button className="ml-2 bg-sky-500 hover:bg-red-500 border-none " onClick={() => removeSkill(skill)}>
+                      <X className="h-3 w-3 text-white" />
                     </button>
                   </Badge>
                 ))}
@@ -630,6 +648,86 @@ export default function TalentProfileTab() {
               )}
             </CardContent>
           </Card>
+           {/* WORK AVAILABILITY */}
+
+        <Card className=" my-8">
+            <CardHeader>
+              <CardTitle>Work Availability & Preferences</CardTitle>
+              {/* <CardDescription>Set your work preferences and availability</CardDescription> */}
+            </CardHeader>
+            <CardContent className="space-y-6">
+
+              <div className="border-t pt-4">
+                <h3 className="text-sm font-medium mb-4">Preferred Work Type</h3>
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Remote" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Remote" })}
+                  >
+                    Remote
+                  </div>
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Hybrid" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Hybrid" })}
+                  >
+                    Hybrid
+                  </div>
+                  <div
+                    className={`border rounded-md p-3 text-center cursor-pointer transition-colors ${
+                      availability.workType === "Onsite" ? "bg-sky-500 text-primary-foreground" : "hover:bg-muted"
+                    }`}
+                    onClick={() => setAvailability({ ...availability, workType: "Onsite" })}
+                  >
+                    Onsite
+                  </div>
+                </div>
+
+                {(availability.workType === "Hybrid" || availability.workType === "Onsite") && (
+                  <div className="space-y-2 mb-4">
+                    <Label htmlFor="preferredLocation">Preferred Location</Label>
+                    <Input
+                      id="preferredLocation"
+                      placeholder="e.g. New York, NY"
+                      value={availability.location}
+                      onChange={(e) => setAvailability({ ...availability, location: e.target.value })}
+                    />
+                  </div>
+                )}
+
+                <div className="flex items-center space-x-2 mb-4">
+                  <input
+                    type="checkbox"
+                    id="relocate"
+                    className="rounded border-gray-300"
+                    checked={availability.willingToRelocate}
+                    onChange={(e) => setAvailability({ ...availability, willingToRelocate: e.target.checked })}
+                  />
+                  <Label htmlFor="relocate" className="cursor-pointer">
+                    Willing to relocate
+                  </Label>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="travelPreference">Travel Preference</Label>
+                  <select
+                    id="travelPreference"
+                    className="w-full p-2 border rounded-md"
+                    value={availability.travelPreference}
+                    onChange={(e) => setAvailability({ ...availability, travelPreference: e.target.value })}
+                  >
+                    <option value="No travel">No travel</option>
+                    <option value="Occasional travel">Occasional travel (few times per year)</option>
+                    <option value="Regular travel">Regular travel (few times per month)</option>
+                    <option value="Frequent travel">Frequent travel (weekly)</option>
+                  </select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Certifications & Portfolio Tab */}
@@ -750,8 +848,8 @@ export default function TalentProfileTab() {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                      <div className="flex gap-2 ">
+                        <Button variant="outline" size="sm" className="hover:bg-sky-600 hover:text-white">
                           View
                         </Button>
                         <Button variant="destructive" size="sm" onClick={() => removeCertification(cert.id)} className="border-none">
@@ -913,6 +1011,15 @@ export default function TalentProfileTab() {
             </CardContent>
           </Card>
         </TabsContent>
+
+       
+
+
+
+
+
+
+
       </Tabs>
     </div>
   )

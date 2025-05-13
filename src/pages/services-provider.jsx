@@ -56,12 +56,7 @@ const sidebarItems = [
   },
   { icon: <BriefcaseBusiness />, label: "Job Tracker", path: "job-tracker" },
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
-
-  { icon: <Send />, label: "My Applications", path: "/applications" },
-  { icon: <Bookmark />, label: "Saved Jobs", path: "/saved" },
-  { icon: <Wallet />, label: "My Wallet", path: "/wallet" },
-  { icon: <ChartLine />, label: "Analytics", path: "/analytics" },
-  { icon: <Settings />, label: "Settings", path: "/settings" },
+ 
   { icon: <CircleHelp />, label: "Help", path: "/help" },
 ];
 

@@ -54,8 +54,8 @@ export default function TalentDashboardTab() {
 
       <Tabs defaultValue="matches">
         <TabsList className="grid w-full grid-cols-2 border-none">
-          <TabsTrigger value="matches" className="border-none bg-sky-500 hover:bg-sky-600">Job Matches</TabsTrigger>
-          <TabsTrigger value="requests" className="border-none bg-sky-500 hover:bg-sky-600">Recent Requests</TabsTrigger>
+          <TabsTrigger value="matches" className="border-none  hover:bg-white hover:text-black">Job Matches</TabsTrigger>
+          <TabsTrigger value="requests" className="border-none  hover:bg-white hover:text-black">Recent Requests</TabsTrigger>
           {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
         </TabsList>
 
@@ -98,7 +98,7 @@ export default function TalentDashboardTab() {
                       <p className="text-sm text-muted-foreground">InnovateTech • 2 days ago</p>
                     </div>
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 text-xs bg-primary text-primary-foreground rounded-md border-none">
+                      <button className="px-3 py-1 text-xs bg-sky-500 hover:bg-sky-500 text-primary-foreground rounded-md border-none">
                         Accept
                       </button>
                       <button className="px-3 py-1 text-xs bg-destructive text-destructive-foreground rounded-md border-none">

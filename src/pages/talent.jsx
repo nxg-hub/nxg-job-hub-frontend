@@ -62,8 +62,8 @@ const sidebarItems = [
   { icon: <Briefcase />, label: "Jobs", path: "jobs" },
 
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
-  // { icon: <BarChart />, label: "Analytics", path: "analytics" },
-  { icon: <Settings />, label: "Setting", path: "setting" },
+ 
+  // { icon: <Settings />, label: "Setting", path: "setting" },
   
 ];
 
