@@ -62,17 +62,17 @@ const SelectAccountType = () => {
     }
   };
 
-  // if (authKey) {
-  //   localStore = { ...localStore, authKey };
-  //   // store in session to prevent expiry
-  //   window.sessionStorage.setItem(
-  //     "NXGJOBHUBLOGINKEYV1",
-  //     JSON.stringify(localStore)
-  //   );
-  //   checkForUserTypeAndRedirect(authKey);
-  // } else {
-  //   navigate("/login");
-  // }
+  if (authKey) {
+    localStore = { ...localStore, authKey };
+    // store in session to prevent expiry
+    window.sessionStorage.setItem(
+      "NXGJOBHUBLOGINKEYV1",
+      JSON.stringify(localStore)
+    );
+    checkForUserTypeAndRedirect(authKey);
+  } else {
+    navigate("/login");
+  }
 
   const [accountChoice, setAccountChoice] = useState("");
 
