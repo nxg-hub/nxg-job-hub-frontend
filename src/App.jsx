@@ -66,7 +66,7 @@ import EmployerApplicantsTab from "@/pages/Dashboard/Employer2/employer-applican
 
 import EmployerSettingTab from "@/pages/Dashboard/Employer2/employer-setting-tab.jsx";
 import EmployerMessageTab from "./pages/Dashboard/Employer2/Employer-message-tab.jsx";
-import EmployerMessagesTab from "@/pages/Dashboard/Employer2/employer-message-tab.jsx";
+import EmployerMessagesTab from "/src/pages/Dashboard/Employer2/employer-message-tab.jsx";
 import { TalentDashboard } from "@/pages/talent";
 import TalentDashboardTab from "@/pages/Dashboard/Talent/Talent-Dashboard-Tab.jsx";
 import TalentProfileTab from "@/pages/Dashboard/Talent/talent-profile-tab.jsx";
