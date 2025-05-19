@@ -65,10 +65,10 @@ import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-comp
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
 
 import EmployerSettingTab from "./pages/Dashboard/Employer2/employer-setting-tab.jsx";
-// import EmployerMessageTab from "./pages/Dashboard/Employer2/Employer-message-tab.jsx";
-// import EmployerMessagesTab from "./pages/Dashboard/Employer2/Employer-message-tab.jsx";
+import EmployerMessageTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
+import EmployerMessagesTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
 import { TalentDashboard } from "./pages/talent.jsx";
-import TalentDashboardTab from "./pages/Dashboard/Talent/Talent-Dashboard-Tab.jsx";
+import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.jsx";
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
@@ -116,10 +116,10 @@ function App() {
             path="applicants"
             element={<EmployerApplicantsTab />}
           />
-          {/*<Route*/}
-          {/*  path="messages"*/}
-          {/*  element={<EmployerMessagesTab />}*/}
-          {/*/>*/}
+          <Route
+            path="messages"
+            element={<EmployerMessagesTab />}
+          />
           
           <Route
             path="setting"
