@@ -197,13 +197,13 @@ const SelectAccountType = () => {
           navigate("/employer/dashboard");
           setSubmittingLoading(false);
         }, 3000);
-        showPopup(
-          <Notice
-            title="Employer"
-            description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
-            onClose={() => showPopup(undefined)}
-          />
-        );
+        // showPopup(
+        //   <Notice
+        //     title="Employer"
+        //     description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
+        //     onClose={() => showPopup(undefined)}
+        //   />
+        // );
 
         break;
       case "talent":
