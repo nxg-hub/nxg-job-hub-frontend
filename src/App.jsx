@@ -168,9 +168,7 @@ function App() {
           />
         </Route>
 
-<<<<<<< HEAD
         {/* service provider  */}
-=======
 
         <Route
           path="/talent/dashboard"
@@ -203,7 +201,6 @@ function App() {
 
         
 
->>>>>>> devUpdate
         <Route
           path="/services-provider"
           element={
