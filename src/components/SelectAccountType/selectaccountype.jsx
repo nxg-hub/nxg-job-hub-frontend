@@ -78,16 +78,18 @@ const SelectAccountType = () => {
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
+    { label: "Talent", value: "talent" },
     { label: "Agent", value: "agent" },
     { label: "Employer", value: "employer" },
-    { label: "Service Provider", value: "nxgsp" },
+    { label: "Service Provider", value: "serviceprovider" },
   ];
 
   const accountTypes = {
     techtalent: `${API_HOST_URL}/api/v1/tech-talent/register/`,
     agent: `${API_HOST_URL}/api/agents/createAgent`,
     employer: `${API_HOST_URL}/api/employers/createEmployer`,
-    nttsp: `${API_HOST_URL}/api/v1/nttsp/register`,
+    serviceprovider: `${API_HOST_URL}/api/v1/serviceprovider/register`,
+    talent: `${API_HOST_URL}/api/v1/talent/register`,
   };
 
   const handleChange = (value) => {
@@ -178,16 +180,52 @@ const SelectAccountType = () => {
         }, 3000);
         break;
       case "employer":
-        showPopup(
-          <Notice
-            title="Employer"
-            description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
-            onClose={() => showPopup(undefined)}
-          />
-        );
+        toast({
+          className: cn(
+            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: "Updating account",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+              <code className="text-white">Account update successfully</code>
+            </pre>
+          ),
+          duration: 2500,
+        });
+        // Updated the condition to navigate to the appropriate page based on the accountChoice
+        setTimeout(() => {
+          navigate("/employer/dashboard");
+          setSubmittingLoading(false);
+        }, 3000);
+        // showPopup(
+        //   <Notice
+        //     title="Employer"
+        //     description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
+        //     onClose={() => showPopup(undefined)}
+        //   />
+        // );
 
         break;
-      case "nxgsp":
+      case "talent":
+        toast({
+          className: cn(
+            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: "Updating account",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+              <code className="text-white">Account update successfully</code>
+            </pre>
+          ),
+          duration: 2500,
+        });
+        // Updated the condition to navigate to the appropriate page based on the accountChoice
+        setTimeout(() => {
+          navigate("/talent/dashboard");
+          setSubmittingLoading(false);
+        }, 3000);
+        break;
+        case "serviceprovider":
         toast({
           className: cn(
             "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
@@ -208,9 +246,6 @@ const SelectAccountType = () => {
         break;
       default:
         break;
-    }
-    if (accountChoice === "nttsp") {
-    } else {
     }
   };
 
