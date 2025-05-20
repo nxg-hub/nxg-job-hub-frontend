@@ -87,11 +87,13 @@ function App() {
           path="/services"
           element={<Services />}
         />
+        {/* service provider form after choosen a profession */}
         <Route
           path="/services-provider/complete-profile"
           element={<ServiceProviderFormCompletion />}
         />
 
+        {/* agent user routes */}
         <Route
           path="/employer/dashboard"
           element={
@@ -164,8 +166,9 @@ function App() {
             element={<MatchesTab />}
             // element={<CandidateManagementPage />}
           />
-        </Route>
+        </Route
 
+        {/* service provider  */}
 
         <Route
           path="/talent/dashboard"
@@ -196,8 +199,7 @@ function App() {
         </Route>
 
 
-        
-
+   
         <Route
           path="/services-provider"
           element={
