@@ -91,36 +91,6 @@ function App() {
         <Route path="/create" element={<SelectAccountType />} />
 
         {/* agent user routes */}
-        <Route path="/agent/" element={<AgentDashboard />}>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        {/* service provider form after choosen a profession */}
-        <Route
-          path="/services-provider/complete-profile"
-          element={<ServiceProviderFormCompletion />}
-        />
-
-        {/* agent user routes */}
-        <Route
-          path="/employer/dashboard"
-          element={
-            <VerificationProvider>
-              <EmployerDashboard />
-            </VerificationProvider>
-          }
-        >
-          <Route index element={<EmployerDashboardTab />} />
-          <Route path="jobs" element={<EmployerJobTab />} />
-          <Route
-            path="companyprofile"
-            element={<EmployerCompanyProfileTab />}
-          />
-          <Route path="applicants" element={<EmployerApplicantsTab />} />
-          <Route path="messages" element={<EmployerMessagesTab />} />
-
-          <Route path="setting" element={<EmployerSettingTab />} />
-        </Route>
-
         <Route
           path="/agent/dashboard"
           element={
@@ -130,7 +100,6 @@ function App() {
             // <DashboardForAgent />
           }
         >
-
           <Route index element={<DashboardTab />} />
           <Route path="profile" element={<ProfileTab />} />
           <Route path="employers" element={<EmployerTab />} />
@@ -144,7 +113,6 @@ function App() {
           />
         </Route>
         {/* end agent user routes */}
-
 
         {/* service provider user routes */}
         <Route
@@ -168,11 +136,6 @@ function App() {
 
         {/* talent user routes */}
         <Route path="/talent" element={<TalentDashboard />}>
-              <TalentDashboard />
-            </VerificationProvider>
-            // <DashboardForAgent />
-          }
-        >
           <Route index element={<TalentDashboardTab />} />
           <Route path="profile" element={<TalentProfileTab />} />
 
@@ -206,12 +169,11 @@ function App() {
           path="/employer/complete-profile"
           element={<EmployerProfileCompletionForm />}
         />
-        {/* end talent user routes */}
-          <Route index element={<ServicesProviderHomePage />} />
-          <Route path="profile" element={<ServiceProviderProfile />} />
-          <Route path="job-tracker" element={<JobTracker />} />
-          <Route path="messages" element={<MessagesPage />} />
-        </Route>
+        {/* end employer user routes */}
+        <Route index element={<ServicesProviderHomePage />} />
+        <Route path="profile" element={<ServiceProviderProfile />} />
+        <Route path="job-tracker" element={<JobTracker />} />
+        <Route path="messages" element={<MessagesPage />} />
 
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

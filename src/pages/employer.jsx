@@ -174,7 +174,7 @@ function DashboardContent({ notifications = [] }) {
       </Sidebar>
 
       {/* Main Content */}
-      <SidebarInset className="flex flex-col w-full bg-sky-50">
+      <SidebarInset className="flex flex-col w-full">
         {/* Header */}
         <header className="p-4 flex border-b justify-between w-full">
           <div className="flex items-center space-x-2">

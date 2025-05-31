@@ -1,29 +1,21 @@
 import { useEffect, useState } from "react";
 import { agentData } from "@/utils/data/agent-mock-data";
-import AgentProfileHeader from "../../../components/agent/agent-profile-header";
 import {
-  AgentPersonInfoCard,
-  EditAgentPersonInfoCard,
   AgentBioCard,
   EditAgentBioCard,
-  AgentExpertisePreferencesCard,
-  EditAgentExpertisePreferencesCard,
   AgentAddressCard,
   EditAgentAddressCard,
 } from "@/components/agent/agent-personal-info";
+import ProfilePhotoCard from "@/components/Profile/ProfilePhotoCard";
+import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 
 export default function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
-  const [isEditPersonalInfo, setEditPersonalInfo] = useState(false);
   const [isEditAddress, setEditAddress] = useState(false);
   const [isEditExpertisePreferences, setEditExpertisePreferences] =
     useState(false);
   const [isEditBio, setEditBio] = useState(false);
   const [profileData, setProfileData] = useState(agentData);
-
-  const toggleEditPersonalInfo = () => {
-    setEditPersonalInfo((prev) => !prev);
-  };
 
   const toggleEditAddress = () => {
     setEditAddress((prev) => !prev);
@@ -57,19 +49,9 @@ export default function ProfileTab() {
   return (
     <div className="flex flex-col p-10 gap-10">
       <div className="text-lg text-sky-600 font-medium">My Profile</div>
-      <AgentProfileHeader profileData={profileData} />
-      {isEditPersonalInfo ? (
-        <EditAgentPersonInfoCard
-          onCancleClick={toggleEditPersonalInfo}
-          profileData={profileData}
-          onSave={handleSaveProfile}
-        />
-      ) : (
-        <AgentPersonInfoCard
-          profileData={profileData}
-          onEditClick={toggleEditPersonalInfo}
-        />
-      )}
+      <ProfilePhotoCard profileData={profileData} />
+      <ProfilePersonInfoCard profileData={profileData} />
+
       {profileData.location ? (
         isEditAddress ? (
           <EditAgentAddressCard
