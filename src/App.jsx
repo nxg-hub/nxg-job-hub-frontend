@@ -72,206 +72,102 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
-
+import { EmployerProfileCompletionForm } from "./pages/employercompleteform.jsx";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route
-          exact
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/services"
-          element={<Services />}
-        />
-        {/* service provider form after choosen a profession */}
-        <Route
-          path="/services-provider/complete-profile"
-          element={<ServiceProviderFormCompletion />}
-        />
+        {/* Routes for pages that are not dashboard related */}
+        <Route exact path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/post-job-form" element={<PostJobForm />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<SignupForm />} />
+
+        {/* create userType route */}
+        <Route path="/create" element={<SelectAccountType />} />
 
         {/* agent user routes */}
-        <Route
-          path="/employer/dashboard"
-          element={
-            <VerificationProvider>
-              <EmployerDashboard />
-            </VerificationProvider>
-           
-          }>
-          <Route
-            index
-            element={<EmployerDashboardTab />}
-          />
-          <Route
-            path="jobs"
-            element={<EmployerJobTab />}
-          />
-          <Route
-            path="companyprofile"
-            element={<EmployerCompanyProfileTab />}
-          />
-          <Route
-            path="applicants"
-            element={<EmployerApplicantsTab />}
-          />
-          <Route
-            path="messages"
-            element={<EmployerMessagesTab />}
-          />
-          
-          <Route
-            path="setting"
-            element={<EmployerSettingTab />}
-          />
-          </Route>
-
-        <Route
-          path="/agent/dashboard"
-          element={
-            <VerificationProvider>
-              <AgentDashboard />
-            </VerificationProvider>
-            // <DashboardForAgent />
-          }>
-          <Route
-            index
-            element={<DashboardTab />}
-          />
-          <Route
-            path="profile"
-            element={<ProfileTab />}
-          />
-          <Route
-            path="employers"
-            element={<EmployerTab />}
-          />
-          <Route
-            path="candidates"
-            element={<CandidatesTab />}
-          />
-          <Route
-            path="jobs"
-            element={<JobsTab />}
-          />
-          <Route
-            path="chats"
-            element={<MessagesTab />}
-          />
+        <Route path="/agent/" element={<AgentDashboard />}>
+          <Route index element={<DashboardTab />} />
+          <Route path="profile" element={<ProfileTab />} />
+          <Route path="employers" element={<EmployerTab />} />
+          <Route path="candidates" element={<CandidatesTab />} />
+          <Route path="jobs" element={<JobsTab />} />
+          <Route path="chats" element={<MessagesTab />} />
           <Route
             path="candidate-matches"
             element={<MatchesTab />}
             // element={<CandidateManagementPage />}
           />
         </Route>
+        {/* end agent user routes */}
 
-        {/* service provider  */}
-
-        <Route
-          path="/talent/dashboard"
-          element={
-            <VerificationProvider>
-              <TalentDashboard/>
-            </VerificationProvider>
-            // <DashboardForAgent />
-          }>
-          <Route
-            index
-            element={<TalentDashboardTab/>}
-          />
-          <Route
-            path="profile"
-            element={<TalentProfileTab />}
-          />
-      
-          <Route
-            path="jobs"
-            element={<TalentJobsTab />}
-          />
-          <Route
-            path="messages"
-            element={<TalentMessageTab />}
-          />
-          
-        </Route>
-
-
-        
-
+        {/* service provider user routes */}
         <Route
           path="/services-provider"
           element={
             <VerificationProvider>
               <ServiceProviderDashboard />
             </VerificationProvider>
-          }>
-          <Route
-            index
-            element={<ServicesProviderHomePage />}
-          />
-          <Route
-            path="profile"
-            element={<ServiceProviderProfile />}
-          />
-          <Route
-            path="job-tracker"
-            element={<JobTracker />}
-          />
-          <Route
-            path="messages"
-            element={<MessagesPage />}
-          />
+          }
+        >
+          <Route index element={<ServicesProviderHomePage />} />
+          <Route path="profile" element={<ServiceProviderProfile />} />
+          <Route path="job-tracker" element={<JobTracker />} />
+          <Route path="messages" element={<MessagesPage />} />
         </Route>
+        <Route
+          path="/services-provider/complete-profile"
+          element={<ServiceProviderFormCompletion />}
+        />
+        {/* end service provider user routes */}
 
+        {/* talent user routes */}
+        <Route path="/talent" element={<TalentDashboard />}>
+          <Route index element={<TalentDashboardTab />} />
+          <Route path="profile" element={<TalentProfileTab />} />
+
+          <Route path="jobs" element={<TalentJobsTab />} />
+          <Route path="messages" element={<TalentMessageTab />} />
+        </Route>
+        {/* end talent user routes */}
+
+        {/* employer's user routes */}
         <Route
-          path="/about"
-          element={<About />}
-        />
+          path="/employer/dashboard"
+          element={
+            <VerificationProvider>
+              <EmployerDashboard />
+            </VerificationProvider>
+          }
+        >
+          <Route index element={<EmployerDashboardTab />} />
+          <Route path="jobs" element={<EmployerJobTab />} />
+          <Route
+            path="companyprofile"
+            element={<EmployerCompanyProfileTab />}
+          />
+          <Route path="applicants" element={<EmployerApplicantsTab />} />
+          <Route path="messages" element={<EmployerMessagesTab />} />
+
+          <Route path="setting" element={<EmployerSettingTab />} />
+        </Route>
         <Route
-          path="/contact"
-          element={<Contact />}
+          path="/employer/complete-profile"
+          element={<EmployerProfileCompletionForm />}
         />
-        <Route
-          path="/post-job-form"
-          element={<PostJobForm />}
-        />
-        <Route
-          path="/findjob"
-          element={<Findjob />}
-        />
-        <Route
-          path="/faqs"
-          element={<Faq />}
-        />
-        <Route
-          path="/privacy"
-          element={<PrivacyPolicy />}
-        />
-        <Route
-          path="/terms"
-          element={<TermsAndCondition />}
-        />
-        <Route
-          path="/successfulJobPost"
-          element={<SuccessfulJobPost />}
-        />
-        {/* Registration */}
-        <Route
-          path="/register"
-          element={<SignupForm />}
-        />
-        <Route
-          path="/create"
-          element={<SelectAccountType />}
-        />
-        {/* Log in */}
-        <Route
-          path="/login"
-          element={<LoginForm />}
-        />
+        {/* end talent user routes */}
+
+        <Route path="/findjob" element={<Findjob />} />
+        <Route path="/faqs" element={<Faq />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
+        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
@@ -282,155 +178,63 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
-          <Route
-            path="/profilelanding"
-            element={<ProfileLanding />}
-          />
-          <Route
-            path="/explore"
-            element={<Explore />}
-          />
-          <Route
-            path="/techprofileform"
-            element={<DashboardProfileForm />}
-          />
-          <Route
-            path="/employerprofile"
-            element={<EmployerProfileForm />}
-          />
+            }
+          ></Route>
+          <Route path="/profilelanding" element={<ProfileLanding />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/techprofileform" element={<DashboardProfileForm />} />
+          <Route path="/employerprofile" element={<EmployerProfileForm />} />
           <Route
             path="/dashboard"
             element={
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
-            <Route
-              path=""
-              element={<Overview />}
-            />
-            <Route
-              path="notifications"
-              element={<NotificationTab />}
-            />
-            <Route
-              path="profile"
-              element={<ProfileController />}
-            />
-            <Route
-              path="featuredTalent"
-              element={<FeaturedTalent />}
-            />
+            }
+          >
+            <Route path="" element={<Overview />} />
+            <Route path="notifications" element={<NotificationTab />} />
+            <Route path="profile" element={<ProfileController />} />
+            <Route path="featuredTalent" element={<FeaturedTalent />} />
             {/* <Route path="profile" element={<VerificationProvider>
               <ProfileController />
             </VerificationProvider>} /> */}
             <Route path="posts">
-              <Route
-                path=""
-                element={<JobPosts />}
-              />
-              <Route
-                path="create"
-                element={<PostJobs />}
-              />
+              <Route path="" element={<JobPosts />} />
+              <Route path="create" element={<PostJobs />} />
             </Route>
             {/* <Route path="applicants" element={<JobApplicants />} /> */}
             <Route
               path="posts/review-applicants/:id"
               element={<ReviewApplicants />}
             />
-            <Route
-              path="review-appliedtalent/:id"
-              element={<FullReview />}
-            />
-            <Route
-              path="interviews"
-              element={<Interview />}
-            />
-            <Route
-              path="services"
-              element={<CompanyServices />}
-            />
-            <Route
-              path="applications"
-              element={<Applications />}
-            />
-            <Route
-              path="saved"
-              element={<SavedJobs />}
-            />
+            <Route path="review-appliedtalent/:id" element={<FullReview />} />
+            <Route path="interviews" element={<Interview />} />
+            <Route path="services" element={<CompanyServices />} />
+            <Route path="applications" element={<Applications />} />
+            <Route path="saved" element={<SavedJobs />} />
             {/* <Route path="wallet" element={<Wallet />} />W */}
-            <Route
-              path="job-listings"
-              element={<JobListings />}
-            />
-            <Route
-              path="analytics"
-              element={<h2>Analytics </h2>}
-            />
-            <Route
-              path="subscription"
-              element={<SubscriptionController />}
-            />
-            <Route
-              path="profile-details"
-              element={<h2>Profile Details</h2>}
-            />
-            <Route
-              path="password-settings"
-              element={<Passwordsettings />}
-            />
-            <Route
-              path="privacy"
-              element={<PrivacyPolicy />}
-            />
-            <Route
-              path="terms"
-              element={<TermsAndCondition />}
-            />
-            <Route
-              path="help"
-              element={<Help />}
-            />
+            <Route path="job-listings" element={<JobListings />} />
+            <Route path="analytics" element={<h2>Analytics </h2>} />
+            <Route path="subscription" element={<SubscriptionController />} />
+            <Route path="profile-details" element={<h2>Profile Details</h2>} />
+            <Route path="password-settings" element={<Passwordsettings />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsAndCondition />} />
+            <Route path="help" element={<Help />} />
           </Route>
-          <Route
-            path="/sub-success"
-            element={<SubSuccess />}>
-            <Route
-              path=":reference"
-              element={<SubSuccess />}
-            />
+          <Route path="/sub-success" element={<SubSuccess />}>
+            <Route path=":reference" element={<SubSuccess />} />
           </Route>
         </Route>
 
         {/* Modals */}
-        <Route
-          path="/forgotpassword"
-          element={<PasswordRecovery />}
-        />
-        <Route
-          path="/resetpassword"
-          element={<ResetPassword />}
-        />
-        <Route
-          path="/otp"
-          element={<Otp />}
-        />
-        <Route
-          path="/auth/reset-password"
-          element={<ResetPassword />}
-        />
-        <Route
-          path="/iso"
-          element={<SavedJobCard />}
-        />
-        {
-          <Route
-            path="job-listings"
-            element={<JobListings />}
-          />
-        }
+        <Route path="/forgotpassword" element={<PasswordRecovery />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/auth/reset-password" element={<ResetPassword />} />
+        <Route path="/iso" element={<SavedJobCard />} />
+        {<Route path="job-listings" element={<JobListings />} />}
       </Routes>
     </>
   );

@@ -7,20 +7,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   matchesData,
-  messagesData,
   candidatesData,
   employersData,
-  jobsData,
-  industryOptions,
-  locationOptions,
-  typeOptions,
-  agentData,
 } from "@/utils/data/agent-mock-data";
 import { Progress } from "@/components/ui/progress";
 import { getStatusColor } from "@/utils/data/agent-mock-data";
@@ -136,17 +128,15 @@ export default function MatchesTab() {
         <div className="flex items-center gap-2">
           <Button
             className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={() => setMatchDialogOpen(true)}>
+            onClick={() => setMatchDialogOpen(true)}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Create Match
           </Button>
           <div className="flex items-center space-x-2">
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9">
+                <Button variant="outline" size="sm" className="h-9">
                   <Filter className="mr-2 h-4 w-4" />
                   Filter
                 </Button>
@@ -163,7 +153,8 @@ export default function MatchesTab() {
                     <h4 className="font-medium">Employer</h4>
                     <Select
                       value={filterEmployer}
-                      onValueChange={setFilterEmployer}>
+                      onValueChange={setFilterEmployer}
+                    >
                       <SelectTrigger className="hover:bg-slate-100">
                         <SelectValue placeholder="Select employer" />
                       </SelectTrigger>
@@ -172,7 +163,8 @@ export default function MatchesTab() {
                         {matchesData.map((match) => (
                           <SelectItem
                             key={match.id}
-                            value={match.employer.name}>
+                            value={match.employer.name}
+                          >
                             {match.employer.name}
                           </SelectItem>
                         ))}
@@ -183,7 +175,8 @@ export default function MatchesTab() {
                     <h4 className="font-medium">Status</h4>
                     <Select
                       value={filterStatus}
-                      onValueChange={setFilterStatus}>
+                      onValueChange={setFilterStatus}
+                    >
                       <SelectTrigger className="hover:bg-slate-100 hover:text-slate-600">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
@@ -204,7 +197,8 @@ export default function MatchesTab() {
                   <Button
                     onClick={resetFilters}
                     variant="outline"
-                    className="mt-4 bg-sky-500 text-slate-100 hover:bg-sky-600 hover:text-white">
+                    className="mt-4 bg-sky-500 text-slate-100 hover:bg-sky-600 hover:text-white"
+                  >
                     Reset Filters
                   </Button>
                 </div>
@@ -215,7 +209,8 @@ export default function MatchesTab() {
               <Button
                 className="border-none bg-red-500 hover:bg-red-600"
                 size="sm"
-                onClick={resetFilters}>
+                onClick={resetFilters}
+              >
                 Clear Filters
               </Button>
             )}
@@ -255,7 +250,8 @@ export default function MatchesTab() {
                 filteredCandidates.map((match) => (
                   <TableRow
                     key={match.id}
-                    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  >
                     <TableCell className="p-4 align-middle">
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
@@ -293,13 +289,12 @@ export default function MatchesTab() {
                       {match.job}
                     </TableCell>
                     <TableCell className="p-4 align-middle">
-                      <Badge
-                        variant="outline"
-                        className="font-normal">
+                      <Badge variant="outline" className="font-normal">
                         <span
                           className={`mr-1 h-2 w-2 rounded-full ${getStatusColor(
                             match.status
-                          )}`}></span>
+                          )}`}
+                        ></span>
                         {match.status}
                       </Badge>
                     </TableCell>
@@ -323,7 +318,8 @@ export default function MatchesTab() {
                           <Button
                             className="border-none"
                             variant="ghost"
-                            size="icon">
+                            size="icon"
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -333,7 +329,8 @@ export default function MatchesTab() {
                           <DropdownMenuItem
                             onClick={() => {
                               navigate("/agent/dashboard/chats");
-                            }}>
+                            }}
+                          >
                             Send Message
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
@@ -342,7 +339,8 @@ export default function MatchesTab() {
                               setSelectedCandidate(match);
                               setReleaseDialogOpen(true);
                             }}
-                            className="text-red-500">
+                            className="text-red-500"
+                          >
                             Release from Employer
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -352,9 +350,7 @@ export default function MatchesTab() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="h-24 text-center">
+                  <TableCell colSpan={6} className="h-24 text-center">
                     No candidates found.
                   </TableCell>
                 </TableRow>
@@ -370,9 +366,7 @@ export default function MatchesTab() {
         employersData={employersData}
       />
       {/* Release Candidate Dialog */}
-      <Dialog
-        open={releaseDialogOpen}
-        onOpenChange={setReleaseDialogOpen}>
+      <Dialog open={releaseDialogOpen} onOpenChange={setReleaseDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Release Candidate</DialogTitle>
@@ -387,13 +381,15 @@ export default function MatchesTab() {
             <Button
               className=""
               variant="outline"
-              onClick={() => setReleaseDialogOpen(false)}>
+              onClick={() => setReleaseDialogOpen(false)}
+            >
               Cancel
             </Button>
             <Button
               className="border-none"
               variant="destructive"
-              onClick={handleReleaseCandidate}>
+              onClick={handleReleaseCandidate}
+            >
               Release Candidate
             </Button>
           </DialogFooter>

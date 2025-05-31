@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Eye, MoreHorizontal } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Eye, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useOutletContext } from "react-router-dom"
+} from "@/components/ui/dropdown-menu";
 
 export default function EmployerApplicantsTab() {
-     const { setPageTitle } = useOutletContext();
-        useEffect(() => {
-            setPageTitle("All Applicants");
-          }, []);
-
-  const [filter, setFilter] = useState("all")
+  const [filter, setFilter] = useState("all");
 
   const applicants = [
     {
@@ -73,45 +74,64 @@ export default function EmployerApplicantsTab() {
       status: "hired",
       rating: 5,
     },
-  ]
+  ];
 
   const filteredApplicants =
-    filter === "all" ? applicants : applicants.filter((applicant) => applicant.status === filter)
+    filter === "all"
+      ? applicants
+      : applicants.filter((applicant) => applicant.status === filter);
 
   const getStatusBadge = (status) => {
     switch (status) {
       case "review":
-        return <Badge variant="outline">Review</Badge>
+        return <Badge variant="outline">Review</Badge>;
       case "interview":
-        return <Badge className="bg-blue-500 hover:bg-blue-600">Interview</Badge>
+        return (
+          <Badge className="bg-blue-500 hover:bg-blue-600">Interview</Badge>
+        );
       case "rejected":
-        return <Badge variant="destructive">Rejected</Badge>
+        return <Badge variant="destructive">Rejected</Badge>;
       case "hired":
-        return <Badge className="bg-green-500 hover:bg-green-600">Hired</Badge>
+        return <Badge className="bg-green-500 hover:bg-green-600">Hired</Badge>;
       default:
-        return <Badge variant="outline">New</Badge>
+        return <Badge variant="outline">New</Badge>;
     }
-  }
+  };
 
   return (
     <div className="p-8">
       <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-start md:items-center">
         <div className="flex gap-2">
-          <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")}>
+          <Button
+            variant={filter === "all" ? "default" : "outline"}
+            onClick={() => setFilter("all")}
+          >
             All Applicants
           </Button>
-          <Button variant={filter === "review" ? "default" : "outline"} onClick={() => setFilter("review")}>
+          <Button
+            variant={filter === "review" ? "default" : "outline"}
+            onClick={() => setFilter("review")}
+          >
             In Review
           </Button>
-          <Button variant={filter === "interview" ? "default" : "outline"} onClick={() => setFilter("interview")}>
+          <Button
+            variant={filter === "interview" ? "default" : "outline"}
+            onClick={() => setFilter("interview")}
+          >
             Interview
           </Button>
-          <Button variant={filter === "hired" ? "default" : "outline"} onClick={() => setFilter("hired")}>
+          <Button
+            variant={filter === "hired" ? "default" : "outline"}
+            onClick={() => setFilter("hired")}
+          >
             Hired
           </Button>
         </div>
         <div className="flex gap-2 w-full md:w-auto">
-          <Input placeholder="Search applicants..." className="flex-1 md:w-[250px]" />
+          <Input
+            placeholder="Search applicants..."
+            className="flex-1 md:w-[250px]"
+          />
           <Button variant="outline">Filter</Button>
         </div>
       </div>
@@ -144,7 +164,9 @@ export default function EmployerApplicantsTab() {
                       </Avatar>
                       <div>
                         <div className="font-medium">{applicant.name}</div>
-                        <div className="text-sm text-muted-foreground">{applicant.email}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {applicant.email}
+                        </div>
                       </div>
                     </div>
                   </TableCell>
@@ -159,8 +181,14 @@ export default function EmployerApplicantsTab() {
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill={i < applicant.rating ? "currentColor" : "none"}
-                          stroke={i < applicant.rating ? "none" : "currentColor"}
-                          className={`h-4 w-4 ${i < applicant.rating ? "text-yellow-400" : "text-muted-foreground"}`}
+                          stroke={
+                            i < applicant.rating ? "none" : "currentColor"
+                          }
+                          className={`h-4 w-4 ${
+                            i < applicant.rating
+                              ? "text-yellow-400"
+                              : "text-muted-foreground"
+                          }`}
                         >
                           <path
                             fillRule="evenodd"
@@ -179,7 +207,11 @@ export default function EmployerApplicantsTab() {
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                             <span className="sr-only">More</span>
                           </Button>
@@ -188,9 +220,13 @@ export default function EmployerApplicantsTab() {
                           <DropdownMenuItem>View Profile</DropdownMenuItem>
                           <DropdownMenuItem>View Resume</DropdownMenuItem>
                           <DropdownMenuItem>Send Email</DropdownMenuItem>
-                          <DropdownMenuItem>Schedule Interview</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            Schedule Interview
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-destructive">Reject</DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive">
+                            Reject
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
@@ -202,5 +238,5 @@ export default function EmployerApplicantsTab() {
         </div>
       </div>
     </div>
-  )
+  );
 }
