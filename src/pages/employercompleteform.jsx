@@ -576,7 +576,7 @@ export function EmployerProfileCompletionForm() {
       <div className="max-w-4xl mx-auto px-4">
         <Card>
           <CardHeader>
-            <CardTitle>Employer Registration</CardTitle>
+            <CardTitle>Employer Profile Complete Form</CardTitle>
             <CardDescription>
               Complete all steps to register your company and post job
               opportunities
