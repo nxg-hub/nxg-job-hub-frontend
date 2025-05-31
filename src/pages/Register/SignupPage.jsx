@@ -111,7 +111,7 @@ export default function SignupForm() {
             description: (
               <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
                 <code className="text-white">
-                  Your account have been successful registered
+                  Your account have been successfully registered. Kindly proceed to verify your account!
                 </code>
               </pre>
             ),

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,6 +33,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { useState } from "react";
 
 // Form schemas for each step
 const skillsSchema = z.object({
@@ -133,9 +134,9 @@ const subSkillsOptions = {
 };
 
 export function ServiceProviderFormCompletion() {
-  const [step, setStep] = React.useState(1);
+  const [step, setStep] = useState(1);
   const totalSteps = 5; // Now we have 5 steps
-  const [selectedMainSkill, setSelectedMainSkill] = React.useState(undefined);
+  const [selectedMainSkill, setSelectedMainSkill] = useState(undefined);
   const navigate = useNavigate();
 
   // Initialize form with default values
@@ -159,7 +160,7 @@ export function ServiceProviderFormCompletion() {
   });
 
   // Watch for main skill changes to update sub-skills options
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = form.watch((value, { name }) => {
       if (name === "mainSkill") {
         setSelectedMainSkill(value.mainSkill);
@@ -228,7 +229,8 @@ export function ServiceProviderFormCompletion() {
             navigate("/services-provider");
           }}
           altText="Skip action"
-          className="border-none bg-red-500 hover:bg-red-700">
+          className="border-none bg-red-500 hover:bg-red-700"
+        >
           Skip
         </ToastAction>
       ),
@@ -245,15 +247,12 @@ export function ServiceProviderFormCompletion() {
   return (
     <div>
       <nav className="flex justify-between items-center w-full bg-sky-600 p-4 mb-16">
-        <img
-          className="w-20 sm:w-24"
-          src={Logo}
-          alt=""
-        />
+        <img className="w-20 sm:w-24" src={Logo} alt="" />
         <Link
           className="self-end sm:hidden text-white sm:mr-5 sm:mt-5"
           to="/login"
-          title="Close">
+          title="Close"
+        >
           {" "}
           <X />{" "}
         </Link>
@@ -291,11 +290,13 @@ export function ServiceProviderFormCompletion() {
                               setSelectedMainSkill(value);
                             }}
                             value={field.value}
-                            className="grid grid-cols-2 gap-4">
+                            className="grid grid-cols-2 gap-4"
+                          >
                             {mainSkillOptions.map((option) => (
                               <FormItem
                                 key={option.value}
-                                className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 hover:cursor-pointer">
+                                className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-muted/50 hover:cursor-pointer"
+                              >
                                 <FormControl>
                                   <RadioGroupItem
                                     className="p-0 hover:cursor-pointer"
@@ -339,7 +340,8 @@ export function ServiceProviderFormCompletion() {
                                     return (
                                       <FormItem
                                         key={item.id}
-                                        className="flex flex-row items-start space-x-3 space-y-0">
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      >
                                         <FormControl>
                                           <Checkbox
                                             className="p-0"
@@ -388,10 +390,7 @@ export function ServiceProviderFormCompletion() {
                       <FormItem>
                         <FormLabel>First Name</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="John"
-                            {...field}
-                          />
+                          <Input placeholder="John" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -404,10 +403,7 @@ export function ServiceProviderFormCompletion() {
                       <FormItem>
                         <FormLabel>Last Name</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Doe"
-                            {...field}
-                          />
+                          <Input placeholder="Doe" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -442,10 +438,7 @@ export function ServiceProviderFormCompletion() {
                       <FormItem>
                         <FormLabel>Address</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="123 Main St"
-                            {...field}
-                          />
+                          <Input placeholder="123 Main St" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -459,10 +452,7 @@ export function ServiceProviderFormCompletion() {
                         <FormItem>
                           <FormLabel>City</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="New York"
-                              {...field}
-                            />
+                            <Input placeholder="New York" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -475,10 +465,7 @@ export function ServiceProviderFormCompletion() {
                         <FormItem>
                           <FormLabel>State</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="NY"
-                              {...field}
-                            />
+                            <Input placeholder="NY" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -492,10 +479,7 @@ export function ServiceProviderFormCompletion() {
                       <FormItem>
                         <FormLabel>Zip Code</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="10001"
-                            {...field}
-                          />
+                          <Input placeholder="10001" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -516,13 +500,11 @@ export function ServiceProviderFormCompletion() {
                           <RadioGroup
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            className="flex flex-col space-y-1">
+                            className="flex flex-col space-y-1"
+                          >
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
-                                <RadioGroupItem
-                                  className="p-0"
-                                  value="email"
-                                />
+                                <RadioGroupItem className="p-0" value="email" />
                               </FormControl>
                               <FormLabel className="font-normal">
                                 Email
@@ -530,10 +512,7 @@ export function ServiceProviderFormCompletion() {
                             </FormItem>
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
-                                <RadioGroupItem
-                                  className="p-0"
-                                  value="phone"
-                                />
+                                <RadioGroupItem className="p-0" value="phone" />
                               </FormControl>
                               <FormLabel className="font-normal">
                                 Phone
@@ -541,10 +520,7 @@ export function ServiceProviderFormCompletion() {
                             </FormItem>
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
-                                <RadioGroupItem
-                                  className="p-0"
-                                  value="mail"
-                                />
+                                <RadioGroupItem className="p-0" value="mail" />
                               </FormControl>
                               <FormLabel className="font-normal">
                                 Mail
@@ -652,14 +628,16 @@ export function ServiceProviderFormCompletion() {
                   type="button"
                   variant="outline"
                   onClick={handlePrevious}
-                  disabled={step === 1}>
+                  disabled={step === 1}
+                >
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
                 {step < totalSteps && (
                   <Button
                     className="bg-sky-500 border-none hover:bg-sky-600"
                     type="button"
-                    onClick={handleNext}>
+                    onClick={handleNext}
+                  >
                     Next <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 )}
@@ -673,7 +651,8 @@ export function ServiceProviderFormCompletion() {
                   className="border-none bg-red-600 text-gray-50 hover:bg-red-700"
                   type="button"
                   variant="secondary"
-                  onClick={handleSkip}>
+                  onClick={handleSkip}
+                >
                   Skip <SkipForward className="ml-2 h-4 w-4" />
                 </Button>
               )}

@@ -1,25 +1,29 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Upload } from "lucide-react"
-import { useOutletContext } from "react-router-dom"
-import { useEffect } from "react"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Upload } from "lucide-react";
+import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function EmployerCompanyProfileTab() {
-     const { setPageTitle } = useOutletContext();
-        useEffect(() => {
-            setPageTitle("Company Profile");
-          }, []);
   return (
     <div className="p-8">
-     
       <Card>
         <CardHeader>
           <CardTitle>Company Information</CardTitle>
-          <CardDescription>Update your company details and information</CardDescription>
+          <CardDescription>
+            Update your company details and information
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col gap-6 md:flex-row">
@@ -66,7 +70,9 @@ export default function EmployerCompanyProfileTab() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button  className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button>
+          <Button className="border-none bg-sky-500 hover:bg-sky-600">
+            Save Changes
+          </Button>
         </CardFooter>
       </Card>
 
@@ -79,7 +85,11 @@ export default function EmployerCompanyProfileTab() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" defaultValue="contact@acmecorp.com" />
+              <Input
+                id="email"
+                type="email"
+                defaultValue="contact@acmecorp.com"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
@@ -88,7 +98,10 @@ export default function EmployerCompanyProfileTab() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="address">Address</Label>
-            <Input id="address" defaultValue="123 Tech Street, San Francisco, CA 94105" />
+            <Input
+              id="address"
+              defaultValue="123 Tech Street, San Francisco, CA 94105"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
@@ -96,9 +109,11 @@ export default function EmployerCompanyProfileTab() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button>
+          <Button className="border-none bg-sky-500 hover:bg-sky-600">
+            Save Changes
+          </Button>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

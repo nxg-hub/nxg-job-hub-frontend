@@ -5,6 +5,7 @@ import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',  // Add this line
   plugins: [react({ include: "**/*.jsx"}), svgr()],
   resolve: {
     alias: {
