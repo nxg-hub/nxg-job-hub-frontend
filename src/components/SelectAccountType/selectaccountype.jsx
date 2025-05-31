@@ -173,6 +173,7 @@ const SelectAccountType = () => {
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
           navigate("/techtalent/complete-profile");
+
           setSubmittingLoading(false);
         }, 3000);
         break;
@@ -215,6 +216,8 @@ const SelectAccountType = () => {
           navigate("/employer/complete-profile");
           setSubmittingLoading(false);
         }, 3000);
+
+
         break;
       case "talent":
         toast({
