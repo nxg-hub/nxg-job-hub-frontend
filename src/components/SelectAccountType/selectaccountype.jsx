@@ -62,17 +62,17 @@ const SelectAccountType = () => {
     }
   };
 
-  if (authKey) {
-    localStore = { ...localStore, authKey };
-    // store in session to prevent expiry
-    window.sessionStorage.setItem(
-      "NXGJOBHUBLOGINKEYV1",
-      JSON.stringify(localStore)
-    );
-    checkForUserTypeAndRedirect(authKey);
-  } else {
-    navigate("/login");
-  }
+  // if (authKey) {
+  //   localStore = { ...localStore, authKey };
+  //   // store in session to prevent expiry
+  //   window.sessionStorage.setItem(
+  //     "NXGJOBHUBLOGINKEYV1",
+  //     JSON.stringify(localStore)
+  //   );
+  //   checkForUserTypeAndRedirect(authKey);
+  // } else {
+  //   navigate("/login");
+  // }
 
   const [accountChoice, setAccountChoice] = useState("");
 
@@ -131,7 +131,7 @@ const SelectAccountType = () => {
             navigate(
               accountChoice === "employer"
                 ? "/profilelanding"
-                : "/services/job-dashboard"
+                : "/dashboard"
             );
           }, 3000);
         } catch (err) {
@@ -197,13 +197,13 @@ const SelectAccountType = () => {
           navigate("/employer/dashboard");
           setSubmittingLoading(false);
         }, 3000);
-        // showPopup(
-        //   <Notice
-        //     title="Employer"
-        //     description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
-        //     onClose={() => showPopup(undefined)}
-        //   />
-        // );
+        showPopup(
+          <Notice
+            title="Employer"
+            description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
+            onClose={() => showPopup(undefined)}
+          />
+        );
 
         break;
       case "talent":
