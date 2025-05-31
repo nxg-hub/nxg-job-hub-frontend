@@ -62,26 +62,26 @@ const SelectAccountType = () => {
     }
   };
 
-  if (authKey) {
-    localStore = { ...localStore, authKey };
-    // store in session to prevent expiry
-    window.sessionStorage.setItem(
-      "NXGJOBHUBLOGINKEYV1",
-      JSON.stringify(localStore)
-    );
-    checkForUserTypeAndRedirect(authKey);
-  } else {
-    navigate("/login");
-  }
+  // if (authKey) {
+  //   localStore = { ...localStore, authKey };
+  //   // store in session to prevent expiry
+  //   window.sessionStorage.setItem(
+  //     "NXGJOBHUBLOGINKEYV1",
+  //     JSON.stringify(localStore)
+  //   );
+  //   checkForUserTypeAndRedirect(authKey);
+  // } else {
+  //   navigate("/login");
+  // }
 
   const [accountChoice, setAccountChoice] = useState("");
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
-    { label: "Talent", value: "talent" },
+    // { label: "Talent", value: "talent" },
     { label: "Agent", value: "agent" },
     { label: "Employer", value: "employer" },
-    { label: "Service Provider", value: "serviceprovider" },
+    // { label: "Service Provider", value: "serviceprovider" },
   ];
 
   const accountTypes = {
@@ -99,66 +99,82 @@ const SelectAccountType = () => {
   const setAccountType = async () => {
     setSubmittingLoading(true);
 
+    // try {
+    //   await axios.post(
+    //     accountTypes[accountChoice],
+    //     {},
+    //     {
+    //       headers: {
+    //         authorization: authKey,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   toast({
+    //     className: cn(
+    //       "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //     ),
+    //     title: "Successful",
+    //     description: (
+    //       <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //         <code className="text-white">
+    //           Created ${accountChoice} account successfully
+    //         </code>
+    //       </pre>
+    //     ),
+    //     duration: 2500,
+    //   });
+    //   // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //   setTimeout(() => {
+    //     navigate(
+    //       accountChoice === "employer"
+    //         ? "employer/complete-profile"
+    //         : accountChoice === "agent"
+    //         ? "agent/complete-profile"
+    //         : accountChoice === "techtalent"
+    //         ? "techtalent/complete-profile"
+    //         : null
+    //     );
+    //   }, 3000);
+    // } catch (err) {
+    //   console.log(err);
+    //   setSubmittingLoading(false);
+    //   toast({
+    //     className: cn(
+    //       "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //     ),
+    //     title: "Failed ",
+    //     description: (
+    //       <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+    //         <code className="text-white">
+    //           Account creation failed. Please try again.
+    //         </code>
+    //       </pre>
+    //     ),
+    //   });
+    // }
+
     switch (accountChoice) {
       case "techtalent":
-        try {
-          await axios.post(
-            accountTypes[accountChoice],
-            {},
-            {
-              headers: {
-                authorization: authKey,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          toast({
-            className: cn(
-              "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-            ),
-            title: "Successful",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-                <code className="text-white">
-                  Created ${accountChoice} account successfully
-                </code>
-              </pre>
-            ),
-            duration: 2500,
-          });
-          // Updated the condition to navigate to the appropriate page based on the accountChoice
-          setTimeout(() => {
-            navigate(
-              accountChoice === "employer"
-                ? "/profilelanding"
-                : "/services/job-dashboard"
-            );
-          }, 3000);
-        } catch (err) {
-          console.log(err);
+        toast({
+          className: cn(
+            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: "Successful",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+              <code className="text-white">
+                Created ${accountChoice} account successfully
+              </code>
+            </pre>
+          ),
+          duration: 2500,
+        });
+        // Updated the condition to navigate to the appropriate page based on the accountChoice
+        setTimeout(() => {
+          navigate("/techtalent/complete-profile");
           setSubmittingLoading(false);
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-            ),
-            title: "Failed ",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-                <code className="text-white">
-                  Account creation failed. Please try again.
-                </code>
-              </pre>
-            ),
-          });
-          setTimeout(() => {
-            setSubmittingLoading(false);
-            navigate(
-              accountChoice === "nttsp"
-                ? "/profilelanding"
-                : "/services/job-dashboard"
-            );
-          }, 3000);
-        }
+        }, 3000);
         break;
       case "agent":
         toast({
@@ -175,7 +191,7 @@ const SelectAccountType = () => {
         });
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
-          navigate("/agent/dashboard");
+          navigate("/agent/complete-profile");
           setSubmittingLoading(false);
         }, 3000);
         break;
@@ -184,27 +200,21 @@ const SelectAccountType = () => {
           className: cn(
             "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
           ),
-          title: "Updating account",
+          title: "Successful",
           description: (
             <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">Account update successfully</code>
+              <code className="text-white">
+                Created ${accountChoice} account successfully
+              </code>
             </pre>
           ),
           duration: 2500,
         });
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
-          navigate("/employer/dashboard");
+          navigate("/employer/complete-profile");
           setSubmittingLoading(false);
         }, 3000);
-        // showPopup(
-        //   <Notice
-        //     title="Employer"
-        //     description="You are about to create an Employer account. Please ensure you have the necessary documents ready."
-        //     onClose={() => showPopup(undefined)}
-        //   />
-        // );
-
         break;
       case "talent":
         toast({
@@ -221,11 +231,11 @@ const SelectAccountType = () => {
         });
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
-          navigate("/talent/dashboard");
+          navigate("/talent/complete-profile");
           setSubmittingLoading(false);
         }, 3000);
         break;
-        case "serviceprovider":
+      case "serviceprovider":
         toast({
           className: cn(
             "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
@@ -256,15 +266,12 @@ const SelectAccountType = () => {
   return (
     <div className="flex flex-col space-y-10">
       <nav className="flex justify-between items-center w-full bg-sky-600 p-4">
-        <img
-          className="w-20 sm:w-24"
-          src={Logo}
-          alt=""
-        />
+        <img className="w-20 sm:w-24" src={Logo} alt="" />
         <Link
           className="self-end sm:hidden text-white sm:mr-5 sm:mt-5"
           to="/login"
-          title="Close">
+          title="Close"
+        >
           {" "}
           <AiOutlineClose />{" "}
         </Link>
@@ -274,13 +281,15 @@ const SelectAccountType = () => {
           <Link
             className="hidden self-end sm:block sm:mr-5 sm:mt-5"
             to="/login"
-            title="Close">
+            title="Close"
+          >
             {" "}
             <AiOutlineClose />{" "}
           </Link>
           <div
             className="flex flex-col items-center w-full sm:w-10/12 sm:p-6 sm:border sm:border-sky-400 
-              sm:rounded-md">
+              sm:rounded-md"
+          >
             <div className="flex flex-col items-center mb-20 sm:mb-10">
               <h1 className="font-semibold text-2xl">
                 Join our community of professionals
@@ -291,12 +300,14 @@ const SelectAccountType = () => {
             </div>
             <RadioGroup
               className="flex flex-col space-y-1 mb-6"
-              onValueChange={handleChange}>
+              onValueChange={handleChange}
+            >
               {accountRadios.map((radio) => (
                 <div
                   key={radio.value}
                   className="flex items-center justify-between space-x-48 space-y-0 border
-                 rounded p-4 text-base ">
+                 rounded p-4 text-base "
+                >
                   <Label htmlFor={radio.value}>{radio.label}</Label>
                   <RadioGroupItem
                     className="p-0 "
@@ -316,7 +327,8 @@ const SelectAccountType = () => {
               onClick={setAccountType}
               aria-disabled={!accountChoice}
               disabled={!accountChoice || submittingLoading}
-              to={`./${accountChoice}`}>
+              to={`./${accountChoice}`}
+            >
               {submittingLoading ? (
                 <div className="flex items-center space-x-1">
                   <Loader2 className="animate-spin" />
@@ -329,9 +341,7 @@ const SelectAccountType = () => {
 
             <p>
               Already have an account?{" "}
-              <Link
-                className="text-sky-600"
-                to={"/login"}>
+              <Link className="text-sky-600" to={"/login"}>
                 {" "}
                 Log in{" "}
               </Link>

@@ -3,7 +3,12 @@
 export const matchesData = [
   {
     id: 1,
-    candidate: { name: "John Doe", avatar: "/placeholder.svg", type: "Tech Talent", skills: ["React", "Node.js"] },
+    candidate: {
+      name: "John Doe",
+      avatar: "/placeholder.svg",
+      type: "Tech Talent",
+      skills: ["React", "Node.js"],
+    },
     employer: { name: "Acme Inc", avatar: "/placeholder.svg" },
     job: "Senior Frontend Developer",
     status: "In Progress",
@@ -12,7 +17,12 @@ export const matchesData = [
   },
   {
     id: 2,
-    candidate: { name: "Jane Smith", avatar: "/placeholder.svg", type: "Artisan", skills: ["Carpentry", "Woodwork"] },
+    candidate: {
+      name: "Jane Smith",
+      avatar: "/placeholder.svg",
+      type: "Artisan",
+      skills: ["Carpentry", "Woodwork"],
+    },
     employer: { name: "BuildRight Co", avatar: "/placeholder.svg" },
     job: "Master Carpenter",
     status: "Matched",
@@ -35,14 +45,19 @@ export const matchesData = [
   },
   {
     id: 4,
-    candidate: { name: "Sarah Williams", avatar: "/placeholder.svg", type: "Tech Talent", skills: ["UI/UX", "Figma"] },
+    candidate: {
+      name: "Sarah Williams",
+      avatar: "/placeholder.svg",
+      type: "Tech Talent",
+      skills: ["UI/UX", "Figma"],
+    },
     employer: { name: "DesignHub", avatar: "/placeholder.svg" },
     job: "UI/UX Designer",
     status: "In Progress",
     progress: 45,
     date: "2023-04-20",
   },
-]
+];
 
 export const messagesData = [
   {
@@ -55,18 +70,23 @@ export const messagesData = [
   {
     id: 2,
     from: { name: "John Doe", avatar: "/placeholder.svg", type: "Candidate" },
-    preview: "Thank you for matching me with Acme Inc! I had my interview yesterday...",
+    preview:
+      "Thank you for matching me with Acme Inc! I had my interview yesterday...",
     time: "Yesterday",
     unread: false,
   },
   {
     id: 3,
-    from: { name: "BuildRight Co", avatar: "/placeholder.svg", type: "Employer" },
+    from: {
+      name: "BuildRight Co",
+      avatar: "/placeholder.svg",
+      type: "Employer",
+    },
     preview: "Do you have any carpenters available for a 3-month project?",
     time: "Yesterday",
     unread: true,
   },
-]
+];
 
 export const candidatesData = [
   {
@@ -98,13 +118,15 @@ export const candidatesData = [
         title: "Senior Data Scientist",
         company: "TechCorp",
         period: "2020 - Present",
-        description: "Leading data science initiatives and machine learning projects.",
+        description:
+          "Leading data science initiatives and machine learning projects.",
       },
       {
         title: "Data Analyst",
         company: "DataInsights",
         period: "2018 - 2020",
-        description: "Analyzed large datasets to provide business insights and recommendations.",
+        description:
+          "Analyzed large datasets to provide business insights and recommendations.",
       },
     ],
     education: [
@@ -129,14 +151,16 @@ export const candidatesData = [
         company: "AI Solutions Inc.",
         status: "Hired",
         date: "Jan 15, 2023",
-        feedback: "Perfect match for our team. Alex has been an excellent addition.",
+        feedback:
+          "Perfect match for our team. Alex has been an excellent addition.",
       },
       {
         jobTitle: "ML Engineer",
         company: "TechStart",
         status: "Rejected",
         date: "Nov 10, 2022",
-        feedback: "Good technical skills but not enough experience with our specific tech stack.",
+        feedback:
+          "Good technical skills but not enough experience with our specific tech stack.",
       },
     ],
   },
@@ -179,7 +203,7 @@ export const candidatesData = [
     phone: "+1 (555) 456-7890",
     bio: "Backend developer with expertise in Java and cloud technologies. Looking for remote opportunities.",
   },
-]
+];
 
 export const newCandidateRequests = [
   {
@@ -212,7 +236,7 @@ export const newCandidateRequests = [
     isNewRequest: true,
     requestDate: "2023-05-02",
   },
-]
+];
 
 export const employersData = [
   {
@@ -221,7 +245,8 @@ export const employersData = [
     avatar: "/placeholder.svg",
     industry: "Technology",
     location: "San Francisco, CA",
-    description: "Leading technology company specializing in AI and machine learning solutions.",
+    description:
+      "Leading technology company specializing in AI and machine learning solutions.",
     contactPerson: "Sarah Johnson (HR Director)",
     website: "https://techcorp-example.com",
     previousPlacements: [
@@ -235,7 +260,8 @@ export const employersData = [
     avatar: "/placeholder.svg",
     industry: "Construction",
     location: "Portland, OR",
-    description: "Construction company focused on residential and commercial building projects.",
+    description:
+      "Construction company focused on residential and commercial building projects.",
     contactPerson: "Mike Peterson (Talent Acquisition)",
   },
   {
@@ -244,7 +270,8 @@ export const employersData = [
     avatar: "/placeholder.svg",
     industry: "Services",
     location: "Chicago, IL",
-    description: "Professional services firm providing consulting and business solutions.",
+    description:
+      "Professional services firm providing consulting and business solutions.",
     contactPerson: "Jennifer Adams (Recruiting Manager)",
   },
   {
@@ -253,10 +280,11 @@ export const employersData = [
     avatar: "/placeholder.svg",
     industry: "Design",
     location: "Remote",
-    description: "Creative design agency working with clients worldwide on branding and digital design.",
+    description:
+      "Creative design agency working with clients worldwide on branding and digital design.",
     contactPerson: "Michael Chen (Creative Director)",
   },
-]
+];
 
 export const employerRequests = [
   {
@@ -265,7 +293,8 @@ export const employerRequests = [
       id: 1,
       name: "TechCorp",
       avatar: "/placeholder.svg",
-      description: "Leading technology company specializing in AI and machine learning solutions.",
+      description:
+        "Leading technology company specializing in AI and machine learning solutions.",
     },
     jobTitle: "Senior Machine Learning Engineer",
     industry: "Technology",
@@ -279,11 +308,19 @@ export const employerRequests = [
     positions: 2,
     description:
       "We're looking for an experienced Machine Learning Engineer to join our AI team. The ideal candidate will have strong experience in developing and deploying machine learning models at scale.",
-    requiredSkills: ["Python", "TensorFlow", "PyTorch", "ML Ops", "Cloud Platforms"],
+    requiredSkills: [
+      "Python",
+      "TensorFlow",
+      "PyTorch",
+      "ML Ops",
+      "Cloud Platforms",
+    ],
     preferredSkills: ["Kubernetes", "MLflow", "Computer Vision"],
     experience: "5+ years of experience in machine learning engineering",
-    education: "Master's or PhD in Computer Science, Machine Learning, or related field",
-    additionalRequirements: "Experience with large language models and generative AI is a plus.",
+    education:
+      "Master's or PhD in Computer Science, Machine Learning, or related field",
+    additionalRequirements:
+      "Experience with large language models and generative AI is a plus.",
     contactPerson: {
       name: "Sarah Johnson",
       position: "HR Director",
@@ -297,7 +334,8 @@ export const employerRequests = [
       id: 4,
       name: "DesignWorks",
       avatar: "/placeholder.svg",
-      description: "Creative design agency working with clients worldwide on branding and digital design.",
+      description:
+        "Creative design agency working with clients worldwide on branding and digital design.",
     },
     jobTitle: "Senior UI/UX Designer",
     industry: "Design",
@@ -311,7 +349,11 @@ export const employerRequests = [
     description:
       "We're seeking a talented UI/UX Designer to create beautiful and functional interfaces for our clients. The ideal candidate will have a strong portfolio showcasing their design process and outcomes.",
     requiredSkills: ["Figma", "UI Design", "User Research", "Prototyping"],
-    preferredSkills: ["Motion Design", "Design Systems", "Front-end Development"],
+    preferredSkills: [
+      "Motion Design",
+      "Design Systems",
+      "Front-end Development",
+    ],
     experience: "4+ years of experience in UI/UX design",
     education: "Bachelor's degree in Design, HCI, or related field",
     contactPerson: {
@@ -327,7 +369,8 @@ export const employerRequests = [
       id: 2,
       name: "BuildMaster",
       avatar: "/placeholder.svg",
-      description: "Construction company focused on residential and commercial building projects.",
+      description:
+        "Construction company focused on residential and commercial building projects.",
     },
     jobTitle: "Senior Carpenter",
     industry: "Construction",
@@ -340,8 +383,17 @@ export const employerRequests = [
     positions: 3,
     description:
       "We're looking for experienced carpenters to join our team for upcoming residential projects. Must have experience with finish carpentry and custom installations.",
-    requiredSkills: ["Carpentry", "Woodworking", "Blueprint Reading", "Finishing"],
-    preferredSkills: ["Cabinet Making", "Custom Furniture", "Project Management"],
+    requiredSkills: [
+      "Carpentry",
+      "Woodworking",
+      "Blueprint Reading",
+      "Finishing",
+    ],
+    preferredSkills: [
+      "Cabinet Making",
+      "Custom Furniture",
+      "Project Management",
+    ],
     experience: "5+ years of professional carpentry experience",
     education: "Vocational training in carpentry or related field",
     contactPerson: {
@@ -357,7 +409,8 @@ export const employerRequests = [
       id: 3,
       name: "ServiceNow",
       avatar: "/placeholder.svg",
-      description: "Professional services firm providing consulting and business solutions.",
+      description:
+        "Professional services firm providing consulting and business solutions.",
     },
     jobTitle: "Business Analyst",
     industry: "Services",
@@ -370,7 +423,12 @@ export const employerRequests = [
     positions: 1,
     description:
       "We're seeking a detail-oriented Business Analyst to help our clients optimize their operations and implement new business solutions.",
-    requiredSkills: ["Business Analysis", "Requirements Gathering", "Process Mapping", "Documentation"],
+    requiredSkills: [
+      "Business Analysis",
+      "Requirements Gathering",
+      "Process Mapping",
+      "Documentation",
+    ],
     preferredSkills: ["SQL", "Agile Methodologies", "BPMN"],
     experience: "3+ years of business analysis experience",
     education: "Bachelor's degree in Business, IT, or related field",
@@ -381,7 +439,7 @@ export const employerRequests = [
       phone: "+1 (555) 345-6789",
     },
   },
-]
+];
 
 export const jobsData = [
   {
@@ -394,7 +452,8 @@ export const jobsData = [
     salary: "$120,000 - $150,000",
     industry: "Technology",
     postedDate: "2023-04-10",
-    description: "We're looking for a senior frontend developer with React experience to join our team.",
+    description:
+      "We're looking for a senior frontend developer with React experience to join our team.",
     skills: ["React", "TypeScript", "CSS"],
   },
   {
@@ -407,7 +466,8 @@ export const jobsData = [
     salary: "$45 - $60 per hour",
     industry: "Construction",
     postedDate: "2023-04-12",
-    description: "Experienced carpenter needed for high-end residential projects.",
+    description:
+      "Experienced carpenter needed for high-end residential projects.",
     skills: ["Carpentry", "Woodworking", "Blueprint Reading"],
   },
   {
@@ -420,7 +480,8 @@ export const jobsData = [
     salary: "$60,000 - $75,000",
     industry: "Services",
     postedDate: "2023-04-15",
-    description: "Looking for a maintenance specialist with plumbing and electrical experience.",
+    description:
+      "Looking for a maintenance specialist with plumbing and electrical experience.",
     skills: ["Plumbing", "Electrical", "HVAC"],
   },
   {
@@ -433,7 +494,8 @@ export const jobsData = [
     salary: "$90,000 - $110,000",
     industry: "Design",
     postedDate: "2023-04-18",
-    description: "Join our team as a UI/UX designer to create beautiful and functional interfaces.",
+    description:
+      "Join our team as a UI/UX designer to create beautiful and functional interfaces.",
     skills: ["Figma", "UI Design", "User Research"],
   },
   {
@@ -446,7 +508,8 @@ export const jobsData = [
     salary: "$130,000 - $160,000",
     industry: "Technology",
     postedDate: "2023-04-05",
-    description: "Seeking a data scientist with machine learning experience to join our AI team.",
+    description:
+      "Seeking a data scientist with machine learning experience to join our AI team.",
     skills: ["Python", "Machine Learning", "SQL"],
   },
   {
@@ -459,7 +522,8 @@ export const jobsData = [
     salary: "$85,000 - $105,000",
     industry: "Marketing",
     postedDate: "2023-04-08",
-    description: "Lead our marketing efforts and drive growth for our B2B SaaS product.",
+    description:
+      "Lead our marketing efforts and drive growth for our B2B SaaS product.",
     skills: ["Digital Marketing", "Content Strategy", "Analytics"],
   },
   {
@@ -472,7 +536,8 @@ export const jobsData = [
     salary: "$40 - $55 per hour",
     industry: "Construction",
     postedDate: "2023-04-14",
-    description: "Licensed electrician needed for commercial and residential projects.",
+    description:
+      "Licensed electrician needed for commercial and residential projects.",
     skills: ["Electrical Systems", "Wiring", "Troubleshooting"],
   },
   {
@@ -485,10 +550,11 @@ export const jobsData = [
     salary: "$70,000 - $90,000",
     industry: "Customer Service",
     postedDate: "2023-04-17",
-    description: "Help our customers succeed with our product and drive retention.",
+    description:
+      "Help our customers succeed with our product and drive retention.",
     skills: ["Customer Support", "Account Management", "Communication"],
   },
-]
+];
 
 export const employerRequestsData = [
   {
@@ -561,11 +627,17 @@ export const employerRequestsData = [
     date: "2023-04-14",
     status: "Open",
   },
-]
+];
 
 export const jobRequirementsData = {
   1: {
-    essentialSkills: ["React", "TypeScript", "CSS", "State Management", "API Integration"],
+    essentialSkills: [
+      "React",
+      "TypeScript",
+      "CSS",
+      "State Management",
+      "API Integration",
+    ],
     desirableSkills: ["Next.js", "GraphQL", "Testing (Jest/RTL)", "CI/CD"],
     experience: "5+ years of frontend development experience",
     education: "Bachelor's degree in Computer Science or equivalent experience",
@@ -573,8 +645,17 @@ export const jobRequirementsData = {
       "This role will involve mentoring junior developers and collaborating closely with the design team.",
   },
   2: {
-    essentialSkills: ["Carpentry", "Woodworking", "Blueprint Reading", "Finishing Techniques"],
-    desirableSkills: ["CAD Software", "Project Management", "Custom Furniture Design"],
+    essentialSkills: [
+      "Carpentry",
+      "Woodworking",
+      "Blueprint Reading",
+      "Finishing Techniques",
+    ],
+    desirableSkills: [
+      "CAD Software",
+      "Project Management",
+      "Custom Furniture Design",
+    ],
     experience: "7+ years of professional carpentry experience",
     education: "Vocational training in carpentry or related field",
     additionalInfo:
@@ -582,49 +663,101 @@ export const jobRequirementsData = {
   },
   3: {
     essentialSkills: ["Plumbing", "Electrical", "HVAC", "Troubleshooting"],
-    desirableSkills: ["Building Codes Knowledge", "Preventative Maintenance", "Smart Home Systems"],
+    desirableSkills: [
+      "Building Codes Knowledge",
+      "Preventative Maintenance",
+      "Smart Home Systems",
+    ],
     experience: "3+ years in maintenance or related field",
     education: "Technical certification in plumbing and electrical systems",
-    additionalInfo: "Must have own tools and reliable transportation. On-call rotation required.",
+    additionalInfo:
+      "Must have own tools and reliable transportation. On-call rotation required.",
   },
   4: {
     essentialSkills: ["Figma", "UI Design", "User Research", "Prototyping"],
-    desirableSkills: ["Motion Design", "Design Systems", "Accessibility", "Front-end Development"],
+    desirableSkills: [
+      "Motion Design",
+      "Design Systems",
+      "Accessibility",
+      "Front-end Development",
+    ],
     experience: "3+ years in UI/UX design",
     education: "Degree in Design, HCI, or related field",
     additionalInfo:
       "Portfolio showcasing end-to-end design process is required. Must be comfortable presenting work to stakeholders.",
   },
   5: {
-    essentialSkills: ["Python", "Machine Learning", "SQL", "Data Visualization"],
-    desirableSkills: ["Cloud Platforms (AWS/GCP)", "Big Data Technologies", "Deep Learning"],
+    essentialSkills: [
+      "Python",
+      "Machine Learning",
+      "SQL",
+      "Data Visualization",
+    ],
+    desirableSkills: [
+      "Cloud Platforms (AWS/GCP)",
+      "Big Data Technologies",
+      "Deep Learning",
+    ],
     experience: "4+ years in data science or related field",
-    education: "Master's or PhD in Computer Science, Statistics, or related field",
-    additionalInfo: "Experience with NLP and computer vision projects preferred. Publication history is a plus.",
+    education:
+      "Master's or PhD in Computer Science, Statistics, or related field",
+    additionalInfo:
+      "Experience with NLP and computer vision projects preferred. Publication history is a plus.",
   },
   6: {
-    essentialSkills: ["Digital Marketing", "Content Strategy", "Analytics", "Campaign Management"],
-    desirableSkills: ["SEO/SEM", "Marketing Automation", "CRM Experience", "B2B Marketing"],
+    essentialSkills: [
+      "Digital Marketing",
+      "Content Strategy",
+      "Analytics",
+      "Campaign Management",
+    ],
+    desirableSkills: [
+      "SEO/SEM",
+      "Marketing Automation",
+      "CRM Experience",
+      "B2B Marketing",
+    ],
     experience: "5+ years in marketing roles",
     education: "Bachelor's degree in Marketing, Business, or related field",
-    additionalInfo: "Experience with SaaS products and technical audiences is highly desired.",
+    additionalInfo:
+      "Experience with SaaS products and technical audiences is highly desired.",
   },
   7: {
-    essentialSkills: ["Electrical Systems", "Wiring", "Troubleshooting", "Code Compliance"],
-    desirableSkills: ["Commercial Experience", "Low Voltage Systems", "Solar Installation"],
+    essentialSkills: [
+      "Electrical Systems",
+      "Wiring",
+      "Troubleshooting",
+      "Code Compliance",
+    ],
+    desirableSkills: [
+      "Commercial Experience",
+      "Low Voltage Systems",
+      "Solar Installation",
+    ],
     experience: "5+ years as a licensed electrician",
     education: "Journeyman or Master Electrician license",
-    additionalInfo: "Must be comfortable working in various environments and weather conditions.",
+    additionalInfo:
+      "Must be comfortable working in various environments and weather conditions.",
   },
   8: {
-    essentialSkills: ["Customer Support", "Account Management", "Communication", "Problem Solving"],
-    desirableSkills: ["SaaS Experience", "Technical Background", "CRM Software", "Data Analysis"],
+    essentialSkills: [
+      "Customer Support",
+      "Account Management",
+      "Communication",
+      "Problem Solving",
+    ],
+    desirableSkills: [
+      "SaaS Experience",
+      "Technical Background",
+      "CRM Software",
+      "Data Analysis",
+    ],
     experience: "3+ years in customer success or account management",
     education: "Bachelor's degree preferred but not required",
     additionalInfo:
       "Strong communication skills and ability to translate technical concepts to non-technical users is essential.",
   },
-}
+};
 
 export const industryOptions = [
   "All Industries",
@@ -634,7 +767,7 @@ export const industryOptions = [
   "Design",
   "Marketing",
   "Customer Service",
-]
+];
 
 export const locationOptions = [
   "All Locations",
@@ -645,9 +778,15 @@ export const locationOptions = [
   "Boston, MA",
   "New York, NY",
   "Denver, CO",
-]
+];
 
-export const typeOptions = ["All Types", "Full-time", "Part-time", "Contract", "Internship"]
+export const typeOptions = [
+  "All Types",
+  "Full-time",
+  "Part-time",
+  "Contract",
+  "Internship",
+];
 
 export const notificationsData = [
   {
@@ -679,7 +818,8 @@ export const notificationsData = [
     id: 303,
     type: "match_confirmed",
     title: "Match Confirmed",
-    message: "John Doe has been hired by Acme Inc for the Senior Frontend Developer position.",
+    message:
+      "John Doe has been hired by Acme Inc for the Senior Frontend Developer position.",
     timestamp: "2023-04-25T09:15:00Z",
     read: true,
     data: {
@@ -713,138 +853,244 @@ export const notificationsData = [
       employerName: "DesignWorks",
     },
   },
-]
+];
 
 // Helper functions
 export const getEmployerRequestsForJob = (jobId) => {
-  return employerRequestsData.filter((request) => request.jobId === jobId)
-}
+  return employerRequestsData.filter((request) => request.jobId === jobId);
+};
 
 export const getJobRequirements = (jobId) => {
-  return jobRequirementsData[jobId] || null
-}
+  return jobRequirementsData[jobId] || null;
+};
 
 export const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "short", day: "numeric" }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 export const getStatusColor = (status) => {
   switch (status) {
     case "Matched":
-      return "bg-blue-500"
+      return "bg-blue-500";
     case "In Progress":
-      return "bg-yellow-500"
+      return "bg-yellow-500";
     case "Completed":
-      return "bg-green-500"
+      return "bg-green-500";
     default:
-      return "bg-gray-500"
+      return "bg-gray-500";
   }
-}
+};
 
 export const agentData = {
-  name: "Alex Morgan",
-  avatar: "/placeholder.svg",
-  role: "Senior Recruitment Agent",
-  location: "San Francisco, CA",
-  email: "alex.morgan@example.com",
-  phone: "+1 (555) 123-4567",
-  status: "Active",
-  availableForNewClients: true,
-  socialLinks: {
-    linkedin: "https://linkedin.com/in/alexmorgan",
-    twitter: "https://twitter.com/alexmorgan",
-    website: "https://alexmorgan.example.com",
+  firstName: "Oluwaseun",
+  lastName: "Opeyemi",
+  profilePicture: "/placeholder.svg",
+  gender: "Male",
+  phoneNumber: "+449050015079",
+  email: "interchisety02@gmail.com",
+  dateOfBirth: "24 January 2000",
+  userType: "Agent",
+  location: {
+    address: "3 Malas Street off Liasu road Idimu, Lagos",
+    city: "Lagos",
+    capital: "Lagos",
+    postalCode: "237891",
+    nationality: "Nigeria",
   },
-  bio: "Experienced recruitment agent with over 8 years of experience connecting top talent with leading companies. Specializing in tech and creative industries, I pride myself on understanding both client needs and candidate aspirations to create lasting professional relationships.",
-  expertiseAreas: [
-    "Technical Recruitment",
-    "Executive Search",
-    "Creative Talent",
-    "Remote Work Placement",
-    "Diversity Hiring",
-  ],
-  preferredIndustries: ["Technology", "Design", "Marketing", "Finance", "Healthcare"],
-  skills: [
-    "Candidate Screening",
-    "Negotiation",
-    "Market Research",
-    "Relationship Building",
-    "Talent Assessment",
-    "Interview Techniques",
-  ],
-  languages: [
-    { language: "English", proficiency: "Native" },
-    { language: "Spanish", proficiency: "Fluent" },
-    { language: "French", proficiency: "Intermediate" },
-  ],
-  experience: [
-    {
-      title: "Senior Recruitment Agent",
-      company: "TalentMatch Inc.",
-      period: "2020 - Present",
-      description:
-        "Leading a team of 5 recruiters specializing in tech placements with a 95% client satisfaction rate.",
+  agentUser: {
+    bio: "Experienced recruitment agent with over 8 years of experience connecting top talent with leading companies. Specializing in tech and creative industries, I pride myself on understanding both client needs and candidate aspirations to create lasting professional relationships.",
+    status: "Active",
+    availableForNewClients: true,
+    role: "Senior Recruitment Agent",
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/alexmorgan",
+      twitter: "https://twitter.com/alexmorgan",
+      website: "https://alexmorgan.example.com",
     },
-    {
-      title: "Recruitment Specialist",
-      company: "Global Staffing Solutions",
-      period: "2017 - 2020",
-      description: "Focused on creative industry placements, exceeding placement targets by 30% year-over-year.",
-    },
-    {
-      title: "Junior Recruiter",
-      company: "First Hire Agency",
-      period: "2015 - 2017",
-      description:
-        "Started as an assistant and was promoted within 6 months due to exceptional candidate sourcing abilities.",
-    },
-  ],
-  education: [
-    {
-      degree: "Bachelor of Business Administration",
-      institution: "University of California, Berkeley",
-      year: "2015",
-    },
-    {
-      degree: "Certified Professional Recruiter (CPR)",
-      institution: "American Staffing Association",
-      year: "2016",
-    },
-  ],
-  certifications: [
-    { name: "Professional in Human Resources (PHR)", year: "2018" },
-    { name: "Certified Diversity Recruiter", year: "2019" },
-    { name: "Advanced LinkedIn Recruiter Certification", year: "2020" },
-  ],
-  metrics: {
-    successfulMatches: 187,
-    successRate: 92,
-    rating: 4.8,
-    activeClients: 14,
-    totalMatches: 203,
+    expertiseAreas: [
+      "Technical Recruitment",
+      "Executive Search",
+      "Creative Talent",
+      "Remote Work Placement",
+      "Diversity Hiring",
+    ],
+    preferredIndustries: [
+      "Technology",
+      "Design",
+      "Marketing",
+      "Finance",
+      "Healthcare",
+    ],
+    skills: [
+      "Candidate Screening",
+      "Negotiation",
+      "Market Research",
+      "Relationship Building",
+      "Talent Assessment",
+      "Interview Techniques",
+    ],
+    languages: [
+      { language: "English", proficiency: "Native" },
+      { language: "Spanish", proficiency: "Fluent" },
+      { language: "French", proficiency: "Intermediate" },
+    ],
+    experience: [
+      {
+        title: "Senior Recruitment Agent",
+        company: "TalentMatch Inc.",
+        period: "2020 - Present",
+        description:
+          "Leading a team of 5 recruiters specializing in tech placements with a 95% client satisfaction rate.",
+      },
+      {
+        title: "Recruitment Specialist",
+        company: "Global Staffing Solutions",
+        period: "2017 - 2020",
+        description:
+          "Focused on creative industry placements, exceeding placement targets by 30% year-over-year.",
+      },
+      {
+        title: "Junior Recruiter",
+        company: "First Hire Agency",
+        period: "2015 - 2017",
+        description:
+          "Started as an assistant and was promoted within 6 months due to exceptional candidate sourcing abilities.",
+      },
+    ],
+    education: [
+      {
+        degree: "Bachelor of Business Administration",
+        institution: "University of California, Berkeley",
+        year: "2015",
+      },
+      {
+        degree: "Certified Professional Recruiter (CPR)",
+        institution: "American Staffing Association",
+        year: "2016",
+      },
+    ],
+    certifications: [
+      { name: "Professional in Human Resources (PHR)", year: "2018" },
+      { name: "Certified Diversity Recruiter", year: "2019" },
+      { name: "Advanced LinkedIn Recruiter Certification", year: "2020" },
+    ],
   },
-  testimonials: [
-    {
-      name: "Sarah Johnson",
-      company: "TechCorp",
-      avatar: "/placeholder.svg",
-      text: "Alex found us the perfect developer in just two weeks when we had been searching for months. Incredible understanding of our needs.",
-    },
-    {
-      name: "Michael Chen",
-      company: "DesignWorks",
-      avatar: "/placeholder.svg",
-      text: "Working with Alex was a game-changer for our hiring process. The candidates were perfectly pre-screened and matched to our culture.",
-    },
-    {
-      name: "Jessica Williams",
-      company: "HealthInnovate",
-      avatar: "/placeholder.svg",
-      text: "Alex has an uncanny ability to match not just skills but personalities. Our new hires have integrated seamlessly.",
-    },
-  ],
-}
+};
+
+// export const agentData = {
+//   firstName: "Alex",
+//   lastName: "Morgan",
+//   avatar: "/placeholder.svg",
+//   role: "Senior Recruitment Agent",
+//   nationality: "America",
+//   dateOfBirth: "24 January 2000",
+//   location: "San Francisco, CA",
+//   email: "alex.morgan@example.com",
+//   phone: "+1 (555) 123-4567",
+//   status: "Active",
+//   availableForNewClients: true,
+//   socialLinks: {
+//     linkedin: "https://linkedin.com/in/alexmorgan",
+//     twitter: "https://twitter.com/alexmorgan",
+//     website: "https://alexmorgan.example.com",
+//   },
+//   bio: "Experienced recruitment agent with over 8 years of experience connecting top talent with leading companies. Specializing in tech and creative industries, I pride myself on understanding both client needs and candidate aspirations to create lasting professional relationships.",
+//   expertiseAreas: [
+//     "Technical Recruitment",
+//     "Executive Search",
+//     "Creative Talent",
+//     "Remote Work Placement",
+//     "Diversity Hiring",
+//   ],
+//   preferredIndustries: [
+//     "Technology",
+//     "Design",
+//     "Marketing",
+//     "Finance",
+//     "Healthcare",
+//   ],
+//   skills: [
+//     "Candidate Screening",
+//     "Negotiation",
+//     "Market Research",
+//     "Relationship Building",
+//     "Talent Assessment",
+//     "Interview Techniques",
+//   ],
+//   languages: [
+//     { language: "English", proficiency: "Native" },
+//     { language: "Spanish", proficiency: "Fluent" },
+//     { language: "French", proficiency: "Intermediate" },
+//   ],
+//   experience: [
+//     {
+//       title: "Senior Recruitment Agent",
+//       company: "TalentMatch Inc.",
+//       period: "2020 - Present",
+//       description:
+//         "Leading a team of 5 recruiters specializing in tech placements with a 95% client satisfaction rate.",
+//     },
+//     {
+//       title: "Recruitment Specialist",
+//       company: "Global Staffing Solutions",
+//       period: "2017 - 2020",
+//       description:
+//         "Focused on creative industry placements, exceeding placement targets by 30% year-over-year.",
+//     },
+//     {
+//       title: "Junior Recruiter",
+//       company: "First Hire Agency",
+//       period: "2015 - 2017",
+//       description:
+//         "Started as an assistant and was promoted within 6 months due to exceptional candidate sourcing abilities.",
+//     },
+//   ],
+//   education: [
+//     {
+//       degree: "Bachelor of Business Administration",
+//       institution: "University of California, Berkeley",
+//       year: "2015",
+//     },
+//     {
+//       degree: "Certified Professional Recruiter (CPR)",
+//       institution: "American Staffing Association",
+//       year: "2016",
+//     },
+//   ],
+//   certifications: [
+//     { name: "Professional in Human Resources (PHR)", year: "2018" },
+//     { name: "Certified Diversity Recruiter", year: "2019" },
+//     { name: "Advanced LinkedIn Recruiter Certification", year: "2020" },
+//   ],
+//   metrics: {
+//     successfulMatches: 187,
+//     successRate: 92,
+//     rating: 4.8,
+//     activeClients: 14,
+//     totalMatches: 203,
+//   },
+//   testimonials: [
+//     {
+//       name: "Sarah Johnson",
+//       company: "TechCorp",
+//       avatar: "/placeholder.svg",
+//       text: "Alex found us the perfect developer in just two weeks when we had been searching for months. Incredible understanding of our needs.",
+//     },
+//     {
+//       name: "Michael Chen",
+//       company: "DesignWorks",
+//       avatar: "/placeholder.svg",
+//       text: "Working with Alex was a game-changer for our hiring process. The candidates were perfectly pre-screened and matched to our culture.",
+//     },
+//     {
+//       name: "Jessica Williams",
+//       company: "HealthInnovate",
+//       avatar: "/placeholder.svg",
+//       text: "Alex has an uncanny ability to match not just skills but personalities. Our new hires have integrated seamlessly.",
+//     },
+//   ],
+// };
 
 // Sample data - in a real app, this would come from an API
 export const employerRequestsNew = [
