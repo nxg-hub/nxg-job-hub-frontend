@@ -184,11 +184,6 @@ function App() {
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
 
-        {/* Registration */}
-        <Route path="/register" element={<SignupForm />} />
-        <Route path="/create" element={<SelectAccountType />} />
-        {/* Log in */}
-        <Route path="/login" element={<LoginForm />} />
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
