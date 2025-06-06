@@ -8,11 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { Building2 } from "lucide-react";
 import { useState } from "react";
 
-const EditCompanyInfoCard = () => {
+export default function CompanyInfo() {
   const [formData, setFormData] = useState({
     companyName: "",
     companyDescription: "",
@@ -39,36 +37,16 @@ const EditCompanyInfoCard = () => {
 
   return (
     <div>
-      {/* <div className="flex flex-col">
-        <div className="flex items-center gap-2">
-          <Building2 className="h-5 w-5" />
-          Company Information
-        </div>
-        <p>Basic information about your company</p>
-      </div> */}
-
       <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="companyName">Company Name *</Label>
-            <Input
-              id="companyName"
-              value={formData.companyName}
-              onChange={(e) => handleInputChange("companyName", e.target.value)}
-              placeholder="Enter company name"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="position">Your Position *</Label>
-            <Input
-              id="position"
-              value={formData.position}
-              onChange={(e) => handleInputChange("position", e.target.value)}
-              placeholder="e.g., HR Manager, CEO"
-              required
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="companyName">Company Name *</Label>
+          <Input
+            id="companyName"
+            value={formData.companyName}
+            onChange={(e) => handleInputChange("companyName", e.target.value)}
+            placeholder="Enter company name"
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="companyDescription">Company Description</Label>
@@ -81,6 +59,47 @@ const EditCompanyInfoCard = () => {
             placeholder="Describe your company, its mission, and values..."
             className="min-h-[120px]"
           />
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="space-y-2">
+            <Label htmlFor="country">Country</Label>
+            <Select
+              onValueChange={(value) => handleInputChange("country", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="us">United States</SelectItem>
+                <SelectItem value="uk">United Kingdom</SelectItem>
+                <SelectItem value="ca">Canada</SelectItem>
+                <SelectItem value="au">Australia</SelectItem>
+                <SelectItem value="ng">Nigeria</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="state">State/Province</Label>
+            <Input
+              id="state"
+              value={formData.state}
+              onChange={(e) => handleInputChange("state", e.target.value)}
+              placeholder="Enter state/province"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="companyZipCode">Company Zip Code</Label>
+            <Input
+              id="companyZipCode"
+              value={formData.companyZipCode}
+              onChange={(e) =>
+                handleInputChange("companyZipCode", e.target.value)
+              }
+              placeholder="12345"
+            />
+          </div>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
@@ -127,47 +146,4 @@ const EditCompanyInfoCard = () => {
       </div>
     </div>
   );
-};
-
-const CompanyInfoCard = () => {
-  const tittleStyle = cn("text-gray-800 text-sm font-medium");
-  const infoStyle = cn(
-    "text-gray-400 text-sm rounded border-[1px] border-gray-200 p-2"
-  );
-  return (
-    <div className="space-y-8">
-      <div className="w-full flex items-center justify-evenly gap-7">
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Company Name:</p>
-          <p className={infoStyle}>Adewaleking academy</p>
-        </div>
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Your Position:</p>
-          <p className={infoStyle}>Adewaleking</p>
-        </div>
-      </div>
-      <div className="space-y-3">
-        <p className={tittleStyle}>Company Description:</p>
-        <p className={cn(infoStyle, "h-36 leading-relaxed p-4")}>
-          Experienced recruitment agent with over 8 years of experience
-          connecting top talent with leading companies. Specializing in tech and
-          creative industries, I pride myself on understanding both client needs
-          and candidate aspirations to create lasting professional
-          relationships.
-        </p>
-      </div>
-      <div className="w-full flex items-center justify-evenly gap-7">
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Industry Type:</p>
-          <p className={infoStyle}>Adewaleking academy</p>
-        </div>
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Company Size:</p>
-          <p className={infoStyle}>Adewaleking</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export { CompanyInfoCard, EditCompanyInfoCard };
+}

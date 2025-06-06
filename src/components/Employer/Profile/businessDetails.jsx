@@ -5,45 +5,7 @@ import { cn } from "@/lib/utils";
 import { Upload } from "lucide-react";
 import { useState } from "react";
 
-const BusinessDetails = () => {
-  const tittleStyle = cn("text-gray-800 text-sm font-medium");
-  const infoStyle = cn(
-    "text-gray-400 text-sm rounded border-[1px] border-gray-200 p-2"
-  );
-  return (
-    <div className="space-y-8">
-      <div className="w-full flex items-center justify-evenly gap-7">
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Tax Identification Number (TIN):</p>
-          <p className={infoStyle}>Adewaleking academy</p>
-        </div>
-        <div className="w-1/2 space-y-3">
-          <p className={tittleStyle}>Tax Clearance Certificate Number:</p>
-          <p className={infoStyle}>Adewaleking</p>
-        </div>
-      </div>
-      <div className="w-1/2 space-y-3">
-        <p className={tittleStyle}>Tax Clearance Certificate File:</p>
-        <p className={cn(infoStyle, "h-36 leading-relaxed p-4")}>
-          Experienced recruitment agent with over 8 years of experience
-          connecting top talent with leading companies. Specializing in tech and
-          creative industries, I pride myself on understanding both client needs
-          and candidate aspirations to create lasting professional
-          relationships.
-        </p>
-      </div>
-
-      <div className="w-full space-y-3">
-        <p className={tittleStyle}>Names of Directors:</p>
-        <p className={cn(infoStyle, "h-36 leading-relaxed p-4")}>
-          Adewaleking academy
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const EditBusinessDetails = () => {
+export default function BusinessDetails() {
   const [formData, setFormData] = useState({
     companyName: "",
     companyDescription: "",
@@ -111,15 +73,6 @@ const EditBusinessDetails = () => {
 
   return (
     <div>
-      {/* <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5" />
-                    Business Details
-                  </CardTitle>
-                  <CardDescription>
-                    Business registration and tax information
-                  </CardDescription>
-                </CardHeader> */}
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
@@ -198,6 +151,4 @@ const EditBusinessDetails = () => {
       </div>
     </div>
   );
-};
-
-export { BusinessDetails, EditBusinessDetails };
+}

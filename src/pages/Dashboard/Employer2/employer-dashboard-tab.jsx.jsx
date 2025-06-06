@@ -3,54 +3,21 @@ import {
   Briefcase,
   BookmarkCheck,
   Eye,
-  PenLine,
   Heart,
   MessageCircle,
   Clock,
-  FileText,
-  Ellipsis,
-  BookUser,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import sarahicon from "@/static/images/john.png";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  matchesData,
-  candidatesData,
-  employersData,
-} from "@/utils/data/agent-mock-data";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+
+import { matchesData } from "@/utils/data/agent-mock-data";
+import CreateNewJob from "@/components/Employer/createNewJob";
+import RecentPostedJobs from "@/components/Employer/recentPostedJobs";
+import NewApplicants from "@/components/Employer/newApplicants";
+import SuggestedCandidates from "@/components/Employer/suggestedCandidate";
 
 export default function EmployerDashboardTab() {
   const [candidates, setCandidates] = useState(matchesData);
@@ -231,336 +198,67 @@ export default function EmployerDashboardTab() {
     },
   ];
   return (
-    <div className=" p-8">
-      <div className="flex">
-        <h1 className="text-2xl text-sky-600 font-medium">Dashboard</h1>
-        <div className="ml-auto flex gap-4">
-          <div className="flex items-center justify-end">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="border-none bg-sky-500 hover:bg-sky-600">
-                  <FileText className="mr-2 h-4 w-4" />
-                  Create New Job
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Create New Job</DialogTitle>
-                </DialogHeader>
-
-                <Card>
-                  <CardContent className="p-6 space-y-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="title">Job Title</Label>
-                      <Input
-                        id="title"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleInputChange}
-                        placeholder="e.g. Senior Frontend Developer"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="description">Job Description</Label>
-                      <Textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        className="min-h-[150px]"
-                        placeholder="Describe the responsibilities, requirements, and benefits of the position..."
-                      />
-                    </div>
-
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="location">Location</Label>
-                        <Input
-                          id="location"
-                          name="location"
-                          value={formData.location}
-                          onChange={handleInputChange}
-                          placeholder="e.g. San Francisco, CA or Remote"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="jobType">Job Type</Label>
-                        <Select
-                          value={formData.jobType}
-                          onValueChange={(value) =>
-                            handleSelectChange("jobType", value)
-                          }
-                        >
-                          <SelectTrigger id="jobType">
-                            <SelectValue placeholder="Select job type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Full-time">Full-time</SelectItem>
-                            <SelectItem value="Part-time">Part-time</SelectItem>
-                            <SelectItem value="Contract">Contract</SelectItem>
-                            <SelectItem value="Internship">
-                              Internship
-                            </SelectItem>
-                            <SelectItem value="Temporary">Temporary</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="salaryMin">
-                          Salary Range (Minimum)
-                        </Label>
-                        <Input
-                          id="salaryMin"
-                          name="salaryMin"
-                          type="number"
-                          value={formData.salaryMin}
-                          onChange={handleInputChange}
-                          placeholder="e.g. 50000"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="salaryMax">
-                          Salary Range (Maximum)
-                        </Label>
-                        <Input
-                          id="salaryMax"
-                          name="salaryMax"
-                          type="number"
-                          value={formData.salaryMax}
-                          onChange={handleInputChange}
-                          placeholder="e.g. 80000"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="deadline">Application Deadline</Label>
-                      <Input
-                        id="deadline"
-                        name="deadline"
-                        type="date"
-                        value={formData.deadline}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="skills">Required Skills</Label>
-                      <Input
-                        id="skills"
-                        name="skills"
-                        value={formData.skills}
-                        onChange={handleInputChange}
-                        placeholder="e.g. React, JavaScript, CSS"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Separate skills with commas
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="experienceLevel">Experience Level</Label>
-                      <Select
-                        value={formData.experienceLevel}
-                        onValueChange={(value) =>
-                          handleSelectChange("experienceLevel", value)
-                        }
-                      >
-                        <SelectTrigger id="experienceLevel">
-                          <SelectValue placeholder="Select experience level" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Entry Level">
-                            Entry Level
-                          </SelectItem>
-                          <SelectItem value="Mid Level">Mid Level</SelectItem>
-                          <SelectItem value="Senior Level">
-                            Senior Level
-                          </SelectItem>
-                          <SelectItem value="Executive">Executive</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </CardContent>
-                </Card>
-                <DialogFooter className="flex justify-end gap-2">
-                  <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-
-                  <Button
-                    className="border-none bg-sky-500 hover:bg-sky-600"
-                    onClick={handlePublishJob}
-                  >
-                    Publish Job
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+    <div className="p-8">
+      <div className="flex gap-8">
+        <div className="">
+          <div className="flex justify-between">
+            <h1 className="text-lg text-sky-600 font-medium">Dashboard</h1>
+            <CreateNewJob />
           </div>
-          <div className="flex items-center space-x-2">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline">
-                  New Applicants
-                  <Badge variant="secondary" className="ml-2">
-                    2
-                  </Badge>
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>New Applicants</SheetTitle>
-                </SheetHeader>
-                <Separator className="my-8" />
-                <div className="flex flex-col gap-4">
-                  <div className="flex justify-between">
-                    <h1>Designer</h1>
-                    <Badge
-                      variant="secondary"
-                      className="ml-2 bg-sky-500 text-white"
-                    >
-                      4
-                    </Badge>
+          <div className="flex flex-col gap-8 mt-10">
+            <div className="flex justify-between">
+              <KpiCard
+                title="Posted Job"
+                value="07"
+                icon={
+                  <div className="bg-orange-100 p-3 rounded-full">
+                    <Briefcase className="h-5 w-5 text-orange-400" />
                   </div>
-                  <div className="flex flex-col">
-                    {[1, 2, 3, 4].map(() => (
-                      <div className="flex items-center gap-2 p-3 rounded hover:bg-sky-50 hover:cursor-pointer">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage src={sarahicon} alt="Sarah" />
-                          <AvatarFallback className="text-2xl">
-                            AC
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <p className="text-slate-900 font-medium text-sm">
-                            Oluwaseun
-                          </p>
-                          <p className="text-slate-500 text-xs">Opeyemi</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <Separator className="my-8" />
-                <div className="flex flex-col gap-4">
-                  <div className="flex justify-between">
-                    <h1>Web developer</h1>
-                    <Badge
-                      variant="secondary"
-                      className="ml-2 bg-sky-500 text-white"
-                    >
-                      2
-                    </Badge>
-                  </div>
-                  <div className="flex flex-col">
-                    {[1, 2].map(() => (
-                      <div className="flex items-center gap-2 p-3 rounded hover:bg-sky-50 hover:cursor-pointer">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage src={sarahicon} alt="Sarah" />
-                          <AvatarFallback className="text-2xl">
-                            AC
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <p className="text-slate-900 font-medium text-sm">
-                            Oluwaseun
-                          </p>
-                          <p className="text-slate-500 text-xs">Opeyemi</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-
-            {(filterEmployer || filterStatus) && (
-              <Button
-                className="border-none bg-red-500 hover:bg-red-600"
-                size="sm"
-                onClick={resetFilters}
-              >
-                Clear Filters
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-8 mt-10">
-        <div className="flex justify-between">
-          <KpiCard
-            title="Posted Job"
-            value="07"
-            icon={
-              <div className="bg-orange-100 p-3 rounded-full">
-                <Briefcase className="h-5 w-5 text-orange-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Shortlisted"
-            value="24"
-            icon={
-              <div className="bg-sky-100 p-3 rounded-full">
-                <BookmarkCheck className="h-5 w-5 text-sky-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Application"
-            value="1.4k"
-            icon={
-              <div className="bg-cyan-100 p-3 rounded-full">
-                <Eye className="h-5 w-5 text-cyan-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Save Candidate"
-            value="04"
-            icon={
-              <div className="bg-green-100 p-3 rounded-full">
-                <PenLine className="h-5 w-5 text-green-400" />
-              </div>
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-7">
-          <p className="text-sky-600 font-medium text-lg">
-            Suggested Candidates
-          </p>
-          <div className="flex gap-8">
-            {suggestedCandidates.map((candidate) => (
-              <CandidateCard
-                candidateImage={candidate.candidateImage}
-                candidateFullname={candidate.candidateFullname}
-                candidateRole={candidate.candidateRole}
-                candidateAvalability={candidate.candidateAvalability}
-                candidateTitle={candidate.candidateTitle}
+                }
               />
-            ))}
+              <KpiCard
+                title="Shortlisted"
+                value="24"
+                icon={
+                  <div className="bg-sky-100 p-3 rounded-full">
+                    <BookmarkCheck className="h-5 w-5 text-sky-400" />
+                  </div>
+                }
+              />
+              <KpiCard
+                title="Application"
+                value="1.4k"
+                icon={
+                  <div className="bg-cyan-100 p-3 rounded-full">
+                    <Eye className="h-5 w-5 text-cyan-400" />
+                  </div>
+                }
+              />
+              {/* <KpiCard
+              title="Save Candidate"
+              value="04"
+              icon={
+                <div className="bg-green-100 p-3 rounded-full">
+                  <PenLine className="h-5 w-5 text-green-400" />
+                </div>
+              }
+            /> */}
+            </div>
+
+            <div className="flex flex-col gap-7">
+              <p className="text-sky-600 font-medium text-lg">
+                Recent job Posts
+              </p>
+              <div className="flex gap-8">
+                {/* recent posted jobs table here */}
+                <RecentPostedJobs />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-7">
-          <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
-          <div className="flex gap-8">
-            {recentJobs.map((job) => (
-              <JobCard
-                jobTitle={job.jobTitle}
-                jobLocation={job.jobLocation}
-                timePosted={job.timePosted}
-                experienced={job.experienced}
-                seasonal={job.seasonal}
-                numverOfApplicant={job.numverOfApplicant}
-                aboutJob={job.aboutJob}
-              />
-            ))}
-          </div>
+        <div className="w-1/4 space-y-10">
+          <NewApplicants />
+          <SuggestedCandidates />
         </div>
       </div>
     </div>
@@ -621,160 +319,3 @@ const CandidateCard = ({
     </div>
   );
 };
-
-const JobCard = ({
-  jobTitle,
-  jobLocation,
-  timePosted,
-  experienced,
-  seasonal,
-  numverOfApplicant,
-  aboutJob,
-}) => {
-  return (
-    <div className="flex flex-col bg-white rounded-2xl py-4 px-8 gap-3">
-      <div className="flex justify-between">
-        <div>
-          <h1 className="text-slate-800 font-bold">{jobTitle}</h1>
-          <p className="text-slate-500">{jobLocation}</p>
-        </div>
-        <div className="flex flex-col items-end text-slate-500">
-          <Ellipsis />
-          <p>{timePosted}</p>
-        </div>
-      </div>
-      <p>220 VND</p>
-      <div className="flex gap-8">
-        <div className="flex items-center gap-2">
-          <Briefcase className="w-5 h-5" />
-          {experienced}
-        </div>
-        <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5" />
-          {seasonal}
-        </div>
-        <div className="flex items-center gap-2">
-          <BookUser className="w-5 h-5" />
-          {numverOfApplicant} Applicants
-        </div>
-      </div>
-      <p>{aboutJob}</p>
-    </div>
-  );
-};
-
-// const JobView = () => {
-//   const [selectedIndustry, setSelectedIndustry] = useState("All Industries");
-//   const [selectedHeader, setSelectedHeader] = useState("1h");
-//   const chartData = [
-//     { day: "Mon.", value: 50 },
-//     { day: "Tue.", value: 150 },
-//     { day: "Wed.", value: 500 },
-//     { day: "Thur.", value: 200 },
-//     { day: "Fri.", value: 10 },
-//     { day: "Sat.", value: 220 },
-//     { day: "Sun", value: 100 },
-//   ];
-//   return (
-//     <div className="w-7/12 flex flex-col bg-white rounded-2xl gap-10 p-6">
-//       <p className="font-semibold text-lg text-sky-600">Job Views</p>
-//       <div className="flex gap-5">
-//         <Label className="font-medium text-slate-700 mt-3" htmlFor="select-job">
-//           Jobs:
-//         </Label>
-//         <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
-//           <SelectTrigger className="font-medium" id="select-job">
-//             <SelectValue placeholder="Select job posted" />
-//           </SelectTrigger>
-//           <SelectContent>
-//             {industryOptions.map((industry) => (
-//               <SelectItem key={industry} value={industry}>
-//                 {industry}
-//               </SelectItem>
-//             ))}
-//           </SelectContent>
-//         </Select>
-//       </div>
-//       <div>
-//         <div className="ml-10 flex gap-10">
-//           <Button
-//             className={cn(
-//               selectedHeader === "1h"
-//                 ? "bg-sky-600 border-none hover:bg-sky-500"
-//                 : "text-sky-600",
-//               "h-9 rounded-full px-6"
-//             )}
-//             variant={selectedHeader === "1h" ? "default" : "outline"}
-//             onClick={() => setSelectedHeader("1h")}
-//           >
-//             1h
-//           </Button>
-//           <Button
-//             className={cn(
-//               selectedHeader === "Day"
-//                 ? "bg-sky-600 border-none hover:bg-sky-500"
-//                 : "text-sky-600",
-//               "h-9 rounded-full px-6"
-//             )}
-//             variant={selectedHeader === "Day" ? "default" : "outline"}
-//             onClick={() => setSelectedHeader("Day")}
-//           >
-//             Day
-//           </Button>
-//           <Button
-//             className={cn(
-//               selectedHeader === "Week"
-//                 ? "bg-sky-600 border-none hover:bg-sky-500"
-//                 : "text-sky-600",
-//               "h-9 rounded-full px-6"
-//             )}
-//             variant={selectedHeader === "Week" ? "default" : "outline"}
-//             onClick={() => setSelectedHeader("Week")}
-//           >
-//             Week
-//           </Button>
-//           <Button
-//             className={cn(
-//               selectedHeader === "Month"
-//                 ? "bg-sky-600 border-none hover:bg-sky-500"
-//                 : "text-sky-600",
-//               "h-9 rounded-full px-6"
-//             )}
-//             variant={selectedHeader === "Month" ? "default" : "outline"}
-//             onClick={() => setSelectedHeader("Month")}
-//           >
-//             Month
-//           </Button>
-//           <Button
-//             className={cn(
-//               selectedHeader === "Year"
-//                 ? "bg-sky-600 border-none hover:bg-sky-500"
-//                 : "text-sky-600",
-//               "h-9 rounded-full px-6"
-//             )}
-//             variant={selectedHeader === "Year" ? "default" : "outline"}
-//             onClick={() => setSelectedHeader("Year")}
-//           >
-//             Year
-//           </Button>
-//         </div>
-//       </div>
-//       <AreaChart width={730} height={250} data={chartData}>
-//         <defs>
-//           <linearGradient id="colorUv" x1={0} y1={0} y2={1}>
-//             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-//             <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-//           </linearGradient>
-//           <XAxis dataKey="day" />
-//           <YAxis />
-//           <Area
-//             type="monotone"
-//             dataKey="day"
-//             stroke="#8884d8"
-//             fillOpacity="url(#colorUv)"
-//           />
-//         </defs>
-//       </AreaChart>
-//     </div>
-//   );
-// };
