@@ -50,7 +50,7 @@ const sidebarItems = [
   {
     icon: <LayoutDashboard />,
     label: "Dashboard",
-    path: "/employer/dashboard",
+    path: "/employer",
   },
   {
     icon: <Building />,

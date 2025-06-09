@@ -22,7 +22,6 @@
   object-fit: contain;
 }
 .swiperr {
-  
 }
 
 .swiperr .swiper-pagination {
@@ -60,7 +59,7 @@
 
 /* Show scrollbar on hover */
 .sidebar:hover::-webkit-scrollbar-thumb {
-  background-color: #0078B4;
+  background-color: #0078b4;
 }
 
 /* Optional: show track on hover too */
@@ -83,7 +82,6 @@
 .scrollbar-custom:hover::-webkit-scrollbar {
   opacity: 1;
 }
-
 
 @layer base {
   :root {

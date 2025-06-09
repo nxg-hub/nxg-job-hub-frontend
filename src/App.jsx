@@ -65,7 +65,6 @@ import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-comp
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
 
 import EmployerSettingTab from "./pages/Dashboard/Employer2/employer-setting-tab.jsx";
-import EmployerMessageTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
 import EmployerMessagesTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
 import { TalentDashboard } from "./pages/talent.jsx";
 import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.jsx";
@@ -147,7 +146,7 @@ function App() {
         {/* employer's user routes */}
 
         <Route
-          path="/employer/dashboard"
+          path="/employer"
           element={
             <VerificationProvider>
               <EmployerDashboard />
@@ -184,11 +183,6 @@ function App() {
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
 
-        {/* Registration */}
-        <Route path="/register" element={<SignupForm />} />
-        <Route path="/create" element={<SelectAccountType />} />
-        {/* Log in */}
-        <Route path="/login" element={<LoginForm />} />
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />

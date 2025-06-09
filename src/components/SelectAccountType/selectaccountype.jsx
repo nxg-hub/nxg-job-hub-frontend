@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
-  const [popup, showPopup] = useState(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [submittingLoading, setSubmittingLoading] = useState(false);
