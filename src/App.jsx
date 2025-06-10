@@ -77,7 +77,6 @@ function App() {
   return (
     <>
       <Routes>
-        {/* Routes for pages that are not dashboard related */}
         <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
@@ -85,43 +84,30 @@ function App() {
         <Route path="/post-job-form" element={<PostJobForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<SignupForm />} />
-
-        {/* create userType route */}
         <Route path="/create" element={<SelectAccountType />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/post-job-form" element={<PostJobForm />} />
+        <Route path="/findjob" element={<Findjob />} />
+        <Route path="/faqs" element={<Faq />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
+        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
 
         {/* agent user routes */}
-        <Route
-          path="/agent/dashboard"
-          element={
-            <VerificationProvider>
-              <AgentDashboard />
-            </VerificationProvider>
-            // <DashboardForAgent />
-          }
-        >
+        <Route path="/agent/dashboard" element={<AgentDashboard />}>
           <Route index element={<DashboardTab />} />
           <Route path="profile" element={<ProfileTab />} />
           <Route path="employers" element={<EmployerTab />} />
           <Route path="candidates" element={<CandidatesTab />} />
           <Route path="jobs" element={<JobsTab />} />
           <Route path="chats" element={<MessagesTab />} />
-          <Route
-            path="candidate-matches"
-            element={<MatchesTab />}
-            // element={<CandidateManagementPage />}
-          />
+          <Route path="candidate-matches" element={<MatchesTab />} />
         </Route>
         {/* end agent user routes */}
 
         {/* service provider user routes */}
-        <Route
-          path="/services-provider"
-          element={
-            <VerificationProvider>
-              <ServiceProviderDashboard />
-            </VerificationProvider>
-          }
-        >
+        <Route path="/services-provider" element={<ServiceProviderDashboard />}>
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -137,22 +123,13 @@ function App() {
         <Route path="/talent" element={<TalentDashboard />}>
           <Route index element={<TalentDashboardTab />} />
           <Route path="profile" element={<TalentProfileTab />} />
-
           <Route path="jobs" element={<TalentJobsTab />} />
           <Route path="messages" element={<TalentMessageTab />} />
         </Route>
         {/* end talent user routes */}
 
         {/* employer's user routes */}
-
-        <Route
-          path="/employer"
-          element={
-            <VerificationProvider>
-              <EmployerDashboard />
-            </VerificationProvider>
-          }
-        >
+        <Route path="/employer" element={<EmployerDashboard />}>
           <Route index element={<EmployerDashboardTab />} />
           <Route path="jobs" element={<EmployerJobTab />} />
           <Route
@@ -161,7 +138,6 @@ function App() {
           />
           <Route path="applicants" element={<EmployerApplicantsTab />} />
           <Route path="messages" element={<EmployerMessagesTab />} />
-
           <Route path="setting" element={<EmployerSettingTab />} />
         </Route>
         <Route
@@ -169,19 +145,6 @@ function App() {
           element={<EmployerProfileCompletionForm />}
         />
         {/* end employer user routes */}
-        <Route index element={<ServicesProviderHomePage />} />
-        <Route path="profile" element={<ServiceProviderProfile />} />
-        <Route path="job-tracker" element={<JobTracker />} />
-        <Route path="messages" element={<MessagesPage />} />
-
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/post-job-form" element={<PostJobForm />} />
-        <Route path="/findjob" element={<Findjob />} />
-        <Route path="/faqs" element={<Faq />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsAndCondition />} />
-        <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
 
         <Route element={<ProtectedRoute />}>
           {/* <Route element={<VerificationProvider/>}>
@@ -195,10 +158,12 @@ function App() {
               </VerificationProvider>
             }
           ></Route>
+
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/techprofileform" element={<DashboardProfileForm />} />
           <Route path="/employerprofile" element={<EmployerProfileForm />} />
+
           <Route
             path="/dashboard"
             element={
@@ -238,6 +203,7 @@ function App() {
             <Route path="terms" element={<TermsAndCondition />} />
             <Route path="help" element={<Help />} />
           </Route>
+
           <Route path="/sub-success" element={<SubSuccess />}>
             <Route path=":reference" element={<SubSuccess />} />
           </Route>

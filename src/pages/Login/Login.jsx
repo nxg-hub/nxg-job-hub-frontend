@@ -105,9 +105,13 @@ export default function LoginForm() {
         });
         setTimeout(() => {
           navigate(
-            userRes.data.userType === "employer"
-              ? "/profilelanding"
-              : "/dashboard"
+            userRes.data.userType === "EMPLOYER"
+              ? "/employer"
+              : accountChoice === "AGENT"
+              ? "/agent"
+              : accountChoice === "TALENT"
+              ? "/talent"
+              : null
           );
         }, 3000);
       }
@@ -154,7 +158,8 @@ export default function LoginForm() {
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
               className="hover:text-sky-900"
-              altText="Try again">
+              altText="Try again"
+            >
               Try again
             </ToastAction>
           ),
@@ -181,7 +186,15 @@ export default function LoginForm() {
       if (!userRes.data.userType) {
         navigate("/create");
       } else {
-        navigate("/dashboard");
+        navigate(
+          userRes.data.userType === "EMPLOYER"
+            ? "/employer"
+            : accountChoice === "AGENT"
+            ? "/agent"
+            : accountChoice === "TALENT"
+            ? "/talent"
+            : null
+        );
       }
     }
   };
@@ -200,11 +213,7 @@ export default function LoginForm() {
       <Card>
         <CardContent className="flex rounded-b-lg  p-0 sm:w-[1000px]">
           <section className="hidden sm:inline-block sm:w-1/2">
-            <img
-              src={LoginBG}
-              alt=""
-              className="rounded-l-lg h-full"
-            />
+            <img src={LoginBG} alt="" className="rounded-l-lg h-full" />
           </section>
           <section className="px-10 sm:w-1/2 sm:px-10 py-14">
             <div>
@@ -216,7 +225,8 @@ export default function LoginForm() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-10">
+                className="space-y-8 max-w-3xl mx-auto py-10"
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -253,9 +263,7 @@ export default function LoginForm() {
                   )}
                 />
                 <div>
-                  <Link
-                    to="/forgotpassword"
-                    className="underline text-sm">
+                  <Link to="/forgotpassword" className="underline text-sm">
                     Forget Passoword?
                   </Link>
                 </div>
@@ -283,7 +291,8 @@ export default function LoginForm() {
                 <Button
                   disabled={loginLoading}
                   className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                  type="submit">
+                  type="submit"
+                >
                   {loginLoading ? (
                     <div className="flex items-center space-x-1">
                       <Loader2 className="animate-spin" />
@@ -334,9 +343,7 @@ export default function LoginForm() {
             <div className="text-center">
               <p>
                 Don't have an account?{" "}
-                <Link
-                  to="/register"
-                  className="underline text-sm text-sky-600">
+                <Link to="/register" className="underline text-sm text-sky-600">
                   Sign up
                 </Link>
               </p>
