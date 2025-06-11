@@ -107,9 +107,9 @@ export default function LoginForm() {
           navigate(
             userRes.data.userType === "EMPLOYER"
               ? "/employer"
-              : accountChoice === "AGENT"
+              : userRes.data.userType === "AGENT"
               ? "/agent"
-              : accountChoice === "TALENT"
+              : userRes.data.userType === "TALENT"
               ? "/talent"
               : null
           );

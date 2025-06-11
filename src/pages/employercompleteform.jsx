@@ -25,9 +25,9 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Logo from "@/static/images/logo_colored.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
+import { cn, getUserUsingAuthKey } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useState } from "react";
@@ -36,6 +36,7 @@ import CompanyInfo from "@/components/Employer/Profile/companyInfo";
 import ContactInfo from "@/components/Employer/Profile/contactInfo";
 import LegalDocument from "@/components/Employer/Profile/legalDocument";
 import Jobs from "@/components/Employer/Profile/jobs";
+import userAuthRedirect from "@/hooks/useAuthRedirect";
 
 // Form schemas for each step
 const skillsSchema = z.object({
@@ -87,23 +88,8 @@ const formSchema = z.object({
 });
 
 export function EmployerProfileCompletionForm() {
-  // Get authkey from sources
-  const authKey =
-    // authkey from url
-    (searchParams.get("authKey")
-      ? "Bearer " + searchParams.get("authKey")
-      : null) ||
-    // authkey from sessionstorage
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
-    // authkey from localstorage
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
-
-  let localStore =
-    // retrieve already stored data from localstorage
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    {};
-
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Basic Company Information
@@ -138,6 +124,34 @@ export function EmployerProfileCompletionForm() {
 
   const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
+
+  const isAuthenticated = userAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
+
+  if (!isAuthenticated) {
+    return null;
+  }
+  if (isAuthenticated) {
+    getUserUsingAuthKey(isAuthenticated.authKey)
+      .then((data) => {
+        if (!data.userType) {
+          return;
+        } else {
+          navigate(
+            data.userType === "EMPLOYER"
+              ? "/employer"
+              : accountChoice === "AGENT"
+              ? "/agent"
+              : accountChoice === "TALENT"
+              ? "/talent"
+              : null
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        naviage("/login");
+      });
+  }
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -177,7 +191,7 @@ export function EmployerProfileCompletionForm() {
         <ToastAction
           onClick={() => {
             // Handle skip action here, e.g., navigate to another page or show a message
-            navigate("/services-provider");
+            navigate("/employer");
           }}
           altText="Skip action"
           className="border-none bg-red-500 hover:bg-red-700"
