@@ -36,7 +36,7 @@ import CompanyInfo from "@/components/Employer/Profile/companyInfo";
 import ContactInfo from "@/components/Employer/Profile/contactInfo";
 import LegalDocument from "@/components/Employer/Profile/legalDocument";
 import Jobs from "@/components/Employer/Profile/jobs";
-import userAuthRedirect from "@/hooks/useAuthRedirect";
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 // Form schemas for each step
 const skillsSchema = z.object({
@@ -125,13 +125,12 @@ export function EmployerProfileCompletionForm() {
   const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
 
-  const isAuthenticated = userAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
+  const isAuthenticated = useAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
 
   if (!isAuthenticated) {
     return null;
-  }
-  if (isAuthenticated) {
-    getUserUsingAuthKey(isAuthenticated.authKey)
+  } else {
+    getUserUsingAuthKey(JSON.parse(isAuthenticated).authKey)
       .then((data) => {
         if (!data.userType) {
           return;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const userAuthRedirect = (storeKey, redirectPath) => {
+const useAuthRedirect = (storeKey, redirectPath) => {
   const localStorageValue = localStorage.getItem(storeKey);
   const sessionStorageValue = sessionStorage.getItem(storeKey);
   const value = localStorageValue || sessionStorageValue;
@@ -16,4 +16,4 @@ const userAuthRedirect = (storeKey, redirectPath) => {
   return value;
 };
 
-export default userAuthRedirect;
+export default useAuthRedirect;

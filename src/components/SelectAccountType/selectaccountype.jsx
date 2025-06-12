@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "../ui/toaster";
 import { cn, getUserUsingAuthKey } from "@/lib/utils";
-import userAuthRedirect from "@/hooks/useAuthRedirect";
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
@@ -21,15 +21,12 @@ const SelectAccountType = () => {
   const [submittingLoading, setSubmittingLoading] = useState(false);
   const { toast } = useToast();
 
-  const isAuthenticated = userAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
+  const isAuthenticated = useAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
 
   if (!isAuthenticated) {
     return null;
   } else {
-    if (isAuthenticated.authKey) {
-      console.log("exist");
-    }
-    getUserUsingAuthKey(isAuthenticated.authKey)
+    getUserUsingAuthKey(JSON.parse(isAuthenticated).authKey)
       .then((data) => {
         if (!data.userType) {
           return;
