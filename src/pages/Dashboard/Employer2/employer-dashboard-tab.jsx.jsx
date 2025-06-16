@@ -6,6 +6,8 @@ import {
   Heart,
   MessageCircle,
   Clock,
+  PenLine,
+  FileText,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -18,6 +20,9 @@ import CreateNewJob from "@/components/Employer/createNewJob";
 import RecentPostedJobs from "@/components/Employer/recentPostedJobs";
 import NewApplicants from "@/components/Employer/newApplicants";
 import SuggestedCandidates from "@/components/Employer/suggestedCandidate";
+import { Separator } from "@radix-ui/react-context-menu";
+import emptySuggestedImage from "@/static/images/empty-suggest.svg";
+import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
 
 export default function EmployerDashboardTab() {
   const [candidates, setCandidates] = useState(matchesData);
@@ -27,7 +32,8 @@ export default function EmployerDashboardTab() {
   const [filterStatus, setFilterStatus] = useState("");
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [releaseDialogOpen, setReleaseDialogOpen] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isCreateJobDialogOpen, setIsCreateJobDialogOpen] = useState(false);
+  const [isProfileNotComplete, setIsProfileNotNotComplete] = useState(true);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,6 +46,15 @@ export default function EmployerDashboardTab() {
     skills: "",
     experienceLevel: "Mid Level",
   });
+
+  //function to open the create job dialog
+  const openCreateJobDialog = () => {
+    setIsCreateJobDialogOpen(true);
+  };
+  //function to close the create job dialog
+  const closeCreateJobDialog = () => {
+    setIsCreateJobDialogOpen(false);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -149,20 +164,20 @@ export default function EmployerDashboardTab() {
       candidateAvalability: "Full Time",
       candidateTitle: "Junior Dev",
     },
-    {
-      candidateImage: sarahicon,
-      candidateFullname: "Oluwasun Opeyemi",
-      candidateRole: "React Developer",
-      candidateAvalability: "Full Time",
-      candidateTitle: "Junior Dev",
-    },
-    {
-      candidateImage: sarahicon,
-      candidateFullname: "Oluwasun Opeyemi",
-      candidateRole: "React Developer",
-      candidateAvalability: "Full Time",
-      candidateTitle: "Junior Dev",
-    },
+    // {
+    //   candidateImage: sarahicon,
+    //   candidateFullname: "Oluwasun Opeyemi",
+    //   candidateRole: "React Developer",
+    //   candidateAvalability: "Full Time",
+    //   candidateTitle: "Junior Dev",
+    // },
+    // {
+    //   candidateImage: sarahicon,
+    //   candidateFullname: "Oluwasun Opeyemi",
+    //   candidateRole: "React Developer",
+    //   candidateAvalability: "Full Time",
+    //   candidateTitle: "Junior Dev",
+    // },
   ];
 
   const recentJobs = [
@@ -199,67 +214,119 @@ export default function EmployerDashboardTab() {
   ];
   return (
     <div className="p-8">
-      <div className="flex gap-8">
-        <div className="">
-          <div className="flex justify-between">
-            <h1 className="text-lg text-sky-600 font-medium">Dashboard</h1>
-            <CreateNewJob />
-          </div>
-          <div className="flex flex-col gap-8 mt-10">
-            <div className="flex justify-between">
-              <KpiCard
-                title="Posted Job"
-                value="07"
-                icon={
-                  <div className="bg-orange-100 p-3 rounded-full">
-                    <Briefcase className="h-5 w-5 text-orange-400" />
-                  </div>
-                }
+      <div className="flex flex-col gap-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-lg text-sky-600 font-medium">Dashboard</h1>
+          <Button
+            onClick={openCreateJobDialog}
+            className="border-none bg-sky-500 hover:bg-sky-600"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            Create New Job
+          </Button>
+          <CreateNewJob
+            isOpenDialog={isCreateJobDialogOpen}
+            openChange={setIsCreateJobDialogOpen}
+            isCloseDialog={closeCreateJobDialog}
+          />
+        </div>
+        <div className="flex justify-between">
+          <KpiCard
+            title="Posted Job"
+            value="07"
+            icon={
+              <div className="bg-orange-100 p-3 rounded-full">
+                <Briefcase className="h-5 w-5 text-orange-400" />
+              </div>
+            }
+          />
+          <KpiCard
+            title="Shortlisted"
+            value="24"
+            icon={
+              <div className="bg-sky-100 p-3 rounded-full">
+                <BookmarkCheck className="h-5 w-5 text-sky-400" />
+              </div>
+            }
+          />
+          <KpiCard
+            title="Application"
+            value="1.4k"
+            icon={
+              <div className="bg-cyan-100 p-3 rounded-full">
+                <Eye className="h-5 w-5 text-cyan-400" />
+              </div>
+            }
+          />
+          <KpiCard
+            title="Save Candidate"
+            value="04"
+            icon={
+              <div className="bg-green-100 p-3 rounded-full">
+                <PenLine className="h-5 w-5 text-green-400" />
+              </div>
+            }
+          />
+        </div>
+        <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
+        {isProfileNotComplete ? (
+          <div className="flex  gap-16">
+            <div className="w-2/3 flex flex-col gap-3 justify-center items-center border rounded-lg">
+              <img
+                className="w-40"
+                src={emptyRecentPostImage}
+                alt="no suggested "
               />
-              <KpiCard
-                title="Shortlisted"
-                value="24"
-                icon={
-                  <div className="bg-sky-100 p-3 rounded-full">
-                    <BookmarkCheck className="h-5 w-5 text-sky-400" />
-                  </div>
-                }
-              />
-              <KpiCard
-                title="Application"
-                value="1.4k"
-                icon={
-                  <div className="bg-cyan-100 p-3 rounded-full">
-                    <Eye className="h-5 w-5 text-cyan-400" />
-                  </div>
-                }
-              />
-              {/* <KpiCard
-              title="Save Candidate"
-              value="04"
-              icon={
-                <div className="bg-green-100 p-3 rounded-full">
-                  <PenLine className="h-5 w-5 text-green-400" />
-                </div>
-              }
-            /> */}
+              <div className="text-sm italic text-center text-gray-400">
+                <p>It looks a little empty here...</p>
+                <p>
+                  Start{" "}
+                  <span
+                    onClick={openCreateJobDialog}
+                    className="text-primary underline hover:cursor-pointer"
+                  >
+                    posting jobs
+                  </span>{" "}
+                  to see them appear here
+                </p>
+              </div>
             </div>
-
-            <div className="flex flex-col gap-7">
-              <p className="text-sky-600 font-medium text-lg">
-                Recent job Posts
-              </p>
-              <div className="flex gap-8">
-                {/* recent posted jobs table here */}
-                <RecentPostedJobs />
+            <div className="w-1/4 bg-white shadow-md flex flex-col  py-4 border rounded-lg">
+              <h1 className="text-gray-500 text-sm px-5 border-b-[1px] pb-5">
+                Suggested Candidates
+              </h1>
+              <div className="h-72 flex flex-col gap-3 items-center justify-center">
+                <img
+                  className="w-28"
+                  src={emptySuggestedImage}
+                  alt="no suggested "
+                />
+                <div className="text-sm italic text-center text-gray-400">
+                  <p>
+                    <span
+                      onClick={openCreateJobDialog}
+                      className="text-primary underline hover:cursor-pointer"
+                    >
+                      create a job now
+                    </span>{" "}
+                    <span className="block">
+                      and get the best candidate's that suit your requirement
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-1/4 space-y-10">
-          <NewApplicants />
-          <SuggestedCandidates />
-        </div>
+        ) : (
+          <>
+            <div className="flex  gap-16">
+              {/* recent posted jobs table here */}
+              <RecentPostedJobs />
+              {/* <NewApplicants /> */}
+              <SuggestedCandidates />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

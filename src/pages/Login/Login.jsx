@@ -116,8 +116,6 @@ export default function LoginForm() {
         }, 3000);
       }
     } catch (error) {
-      console.error("Form login error", error);
-
       if (error.response) {
         if (error.response.status === 401 || error.response.status === 404) {
           toast({

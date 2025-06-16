@@ -29,27 +29,31 @@ export default function EmployerCompanyProfileTab() {
 
   const [profileData, setProfileData] = useState(employerData);
   const [formData, setFormData] = useState({
+    // Basic Company Information
     companyName: "",
     companyDescription: "",
-    position: "",
+    country: "",
+    state: "",
+    companyZipCode: "",
+    industryType: "",
+    companySize: "",
+
+    // Company Contact
     companyAddress: "",
     companyPhone: "",
     companyWebsite: "",
-    country: "",
-    industryType: "",
-    companySize: "",
-    jobBoard: "",
-    address: "",
-    nationality: "",
-    state: "",
-    zipCode: "",
-    companyZipCode: "",
+
+    // Job Information
     vacancies: "",
+    position: "",
+    jobBoard: "",
+
+    // Legal & Compliance
+    tin: "",
     taxClearanceCertificate: "",
+    caccertificate: "",
     namesOfDirectors: "",
     companyMemorandum: "",
-    caccertificate: "",
-    tin: "",
   });
 
   const toggleEditCompanyInfo = () => {

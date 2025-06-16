@@ -23,7 +23,11 @@ import {
 } from "../ui/select";
 import { matchesData } from "@/utils/data/agent-mock-data";
 
-export default function CreateNewJob() {
+export default function CreateNewJob({
+  isOpenDialog,
+  openChange,
+  isCloseDialog,
+}) {
   // new
   const [tags, setTags] = useState([]);
   const [requirements, setRequirements] = useState([""]);
@@ -178,13 +182,13 @@ export default function CreateNewJob() {
     setFilterStatus("");
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={isOpenDialog} onOpenChange={openChange}>
+      {/* <DialogTrigger asChild>
         <Button className="border-none bg-sky-500 hover:bg-sky-600">
           <FileText className="mr-2 h-4 w-4" />
           Create New Job
         </Button>
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Create New Job</DialogTitle>

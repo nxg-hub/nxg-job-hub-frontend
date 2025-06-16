@@ -8,54 +8,77 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
 
-export default function CompanyInfo() {
-  const [formData, setFormData] = useState({
-    companyName: "",
-    companyDescription: "",
-    position: "",
-    companyAddress: "",
-    companyPhone: "",
-    companyWebsite: "",
-    country: "",
-    industryType: "",
-    companySize: "",
-    jobBoard: "",
-    address: "",
-    nationality: "",
-    state: "",
-    zipCode: "",
-    companyZipCode: "",
-    vacancies: "",
-    taxClearanceCertificate: "",
-    namesOfDirectors: "",
-    companyMemorandum: "",
-    caccertificate: "",
-    tin: "",
-  });
+const nigerianStates = [
+  { value: "Abia", label: "Abia" },
+  { value: "Adamawa", label: "Adamawa" },
+  { value: "Akwa Ibom", label: "Akwa Ibom" },
+  { value: "Anambra", label: "Anambra" },
+  { value: "Bauchi", label: "Bauchi" },
+  { value: "Bayelsa", label: "Bayelsa" },
+  { value: "Benue", label: "Benue" },
+  { value: "Borno", label: "Borno" },
+  { value: "Cross River", label: "Cross River" },
+  { value: "Delta", label: "Delta" },
+  { value: "Ebonyi", label: "Ebonyi" },
+  { value: "Edo", label: "Edo" },
+  { value: "Ekiti", label: "Ekiti" },
+  { value: "Enugu", label: "Enugu" },
+  { value: "Gombe", label: "Gombe" },
+  { value: "Imo", label: "Imo" },
+  { value: "Jigawa", label: "Jigawa" },
+  { value: "Kaduna", label: "Kaduna" },
+  { value: "Kano", label: "Kano" },
+  { value: "Katsina", label: "Katsina" },
+  { value: "Kebbi", label: "Kebbi" },
+  { value: "Kogi", label: "Kogi" },
+  { value: "Kwara", label: "Kwara" },
+  { value: "Lagos", label: "Lagos" },
+  { value: "Nasarawa", label: "Nasarawa" },
+  { value: "Niger", label: "Niger" },
+  { value: "Ogun", label: "Ogun" },
+  { value: "Ondo", label: "Ondo" },
+  { value: "Osun", label: "Osun" },
+  { value: "Oyo", label: "Oyo" },
+  { value: "Plateau", label: "Plateau" },
+  { value: "Rivers", label: "Rivers" },
+  { value: "Sokoto", label: "Sokoto" },
+  { value: "Taraba", label: "Taraba" },
+  { value: "Yobe", label: "Yobe" },
+  { value: "Zamfara", label: "Zamfara" },
+  { value: "FCT", label: "Abuja" },
+];
 
+export default function CompanyInfo({ formData, updateFormData }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    updateFormData({ [name]: value });
+  };
+
+  const handleSelectedChange = (name, value) => {
+    updateFormData({ [name]: value });
+  };
   return (
     <div>
       <div className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="companyName">Company Name *</Label>
+          <Label htmlFor="companyName">Company Name:</Label>
           <Input
             id="companyName"
+            name="companyName"
             value={formData.companyName}
-            onChange={(e) => handleInputChange("companyName", e.target.value)}
+            onChange={handleInputChange}
             placeholder="Enter company name"
             required
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="companyDescription">Company Description</Label>
+          <Label htmlFor="companyDescription">Company Description:</Label>
           <Textarea
             id="companyDescription"
+            name="companyDescription"
             value={formData.companyDescription}
-            onChange={(e) =>
-              handleInputChange("companyDescription", e.target.value)
-            }
+            onChange={handleInputChange}
             placeholder="Describe your company, its mission, and values..."
             className="min-h-[120px]"
           />
@@ -63,53 +86,59 @@ export default function CompanyInfo() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="space-y-2">
-            <Label htmlFor="country">Country</Label>
+            <Label htmlFor="country">Country:</Label>
             <Select
-              onValueChange={(value) => handleInputChange("country", value)}
+              value={formData.country}
+              onValueChange={(value) => handleSelectedChange("country", value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select country" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="us">United States</SelectItem>
-                <SelectItem value="uk">United Kingdom</SelectItem>
-                <SelectItem value="ca">Canada</SelectItem>
-                <SelectItem value="au">Australia</SelectItem>
                 <SelectItem value="ng">Nigeria</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="state">State/Province</Label>
-            <Input
-              id="state"
+            <Label htmlFor="state">State:</Label>
+            <Select
               value={formData.state}
-              onChange={(e) => handleInputChange("state", e.target.value)}
-              placeholder="Enter state/province"
-            />
+              onValueChange={(value) => handleSelectedChange("state", value)}
+            >
+              <SelectTrigger className="font-normal">
+                <SelectValue placeholder="Select state" />
+              </SelectTrigger>
+              <SelectContent>
+                {nigerianStates.map((state) => (
+                  <SelectItem key={state.value} value={state.value}>
+                    {state.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="companyZipCode">Company Zip Code</Label>
+            <Label htmlFor="companyZipCode">Company Zip Code:</Label>
             <Input
               id="companyZipCode"
+              name="companyZipCode"
               value={formData.companyZipCode}
-              onChange={(e) =>
-                handleInputChange("companyZipCode", e.target.value)
-              }
+              onChange={handleInputChange}
               placeholder="12345"
             />
           </div>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="industryType">Industry Type</Label>
+            <Label htmlFor="industryType">Industry Type:</Label>
             <Select
+              value={formData.industryType}
               onValueChange={(value) =>
-                handleInputChange("industryType", value)
+                handleSelectedChange("industryType", value)
               }
             >
-              <SelectTrigger>
+              <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select industry" />
               </SelectTrigger>
               <SelectContent>
@@ -125,11 +154,14 @@ export default function CompanyInfo() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="companySize">Company Size</Label>
+            <Label htmlFor="companySize">Company Size:</Label>
             <Select
-              onValueChange={(value) => handleInputChange("companySize", value)}
+              value={formData.companySize}
+              onValueChange={(value) =>
+                handleSelectedChange("companySize", value)
+              }
             >
-              <SelectTrigger>
+              <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select company size" />
               </SelectTrigger>
               <SelectContent>

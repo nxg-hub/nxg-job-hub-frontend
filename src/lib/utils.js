@@ -21,3 +21,16 @@ export function getUserUsingAuthKey(authKey) {
       throw error;
     });
 }
+
+export async function updateUserProfile(url, userId, payload) {
+  try {
+    const response = await axios.post(`${url}/${userId}`, payload);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.error("Error update user profile", error);
+    if (error.response) {
+      return { data: error.response.data, status: error.response.status };
+    }
+    throw error;
+  }
+}
