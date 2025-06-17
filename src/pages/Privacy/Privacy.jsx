@@ -337,7 +337,7 @@ const PrivacyPolicy = () => {
                 or our data practices, please contact us at:
               </p>
               <p className="section-body">
-                NXG Job Hub Email: info@nxgjobhub.com
+                NXG Job Hub Email: info@nextgenhub.com.ng
               </p>
             </li>
           </ol>
