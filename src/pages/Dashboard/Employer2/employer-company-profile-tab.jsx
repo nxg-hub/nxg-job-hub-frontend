@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-import ProfilePhotoCard from "@/components/Profile/ProfilePhotoCard";
+import ProfilePhotoCard from "@/components/Profile/profilePhotoCard";
 import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 import { employerData } from "@/utils/data/employer-mock-data";
 import { cn } from "@/lib/utils";
