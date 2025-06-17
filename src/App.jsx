@@ -59,7 +59,7 @@ import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
 import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
 import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 import { EmployerDashboard } from "./pages/employer.jsx";
-import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx.jsx";
+import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx";
 import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
 import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-company-profile-tab.jsx";
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
