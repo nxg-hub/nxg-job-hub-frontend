@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Upload, Trash, Camera, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import sarahicon from "@/static/images/john.png";
 
 export default function ProfilePhotoCard({ profileData }) {
   const { firstName, lastName, userType, location, profilePicture } =

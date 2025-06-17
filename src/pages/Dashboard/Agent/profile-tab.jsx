@@ -6,7 +6,7 @@ import {
   AgentAddressCard,
   EditAgentAddressCard,
 } from "@/components/agent/agent-personal-info";
-import ProfilePhotoCard from "@/components/Profile/ProfilePhotoCard";
+import ProfilePhotoCard from "@/components/Profile/profilePhotoCard";
 import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 
 export default function ProfileTab() {

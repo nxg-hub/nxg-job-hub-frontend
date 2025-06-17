@@ -95,7 +95,7 @@ function App() {
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
 
         {/* agent user routes */}
-        <Route path="/agent/dashboard" element={<AgentDashboard />}>
+        <Route path="/agent" element={<AgentDashboard />}>
           <Route index element={<DashboardTab />} />
           <Route path="profile" element={<ProfileTab />} />
           <Route path="employers" element={<EmployerTab />} />
