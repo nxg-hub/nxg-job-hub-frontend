@@ -3,17 +3,16 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../../static/images/logo_colored.png";
 import axios from "axios";
-import Notice from "../Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Button } from "@/components/ui/button";
 import { RadioGroupItem } from "../ui/radio-group";
-
 import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "../ui/toaster";
-import { cn } from "@/lib/utils";
+import { cn, getUserUsingAuthKey } from "@/lib/utils";
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
@@ -22,56 +21,32 @@ const SelectAccountType = () => {
   const [submittingLoading, setSubmittingLoading] = useState(false);
   const { toast } = useToast();
 
-  // Get authkey from sources
-  const authKey =
-    // authkey from url
-    (searchParams.get("authKey")
-      ? "Bearer " + searchParams.get("authKey")
-      : null) ||
-    // authkey from sessionstorage
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
-    // authkey from localstorage
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
+  const isAuthenticated = useAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
 
-  let localStore =
-    // retrieve already stored data from localstorage
-    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
-    {};
-
-  const checkForUserTypeAndRedirect = async (auth) => {
-    if (localStore) {
-      try {
-        const res = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: auth,
-          },
-        });
-
-        if (!res.data.userType) {
+  if (!isAuthenticated) {
+    return null;
+  } else {
+    getUserUsingAuthKey(JSON.parse(isAuthenticated).authKey)
+      .then((data) => {
+        if (!data.userType) {
           return;
         } else {
-          navigate("/dashboard");
+          navigate(
+            data.userType === "EMPLOYER"
+              ? "/employer"
+              : accountChoice === "AGENT"
+              ? "/agent"
+              : accountChoice === "TALENT"
+              ? "/talent"
+              : null
+          );
         }
-      } catch (error) {
-        console.log(error.data);
+      })
+      .catch((error) => {
+        console.log(error);
         navigate("/login");
-      }
-    }
-  };
-
-  // if (authKey) {
-  //   localStore = { ...localStore, authKey };
-  //   // store in session to prevent expiry
-  //   window.sessionStorage.setItem(
-  //     "NXGJOBHUBLOGINKEYV1",
-  //     JSON.stringify(localStore)
-  //   );
-  //   checkForUserTypeAndRedirect(authKey);
-  // } else {
-  //   navigate("/login");
-  // }
+      });
+  }
 
   const [accountChoice, setAccountChoice] = useState("");
 
@@ -98,167 +73,164 @@ const SelectAccountType = () => {
   const setAccountType = async () => {
     setSubmittingLoading(true);
 
-    // try {
-    //   await axios.post(
-    //     accountTypes[accountChoice],
-    //     {},
-    //     {
-    //       headers: {
-    //         authorization: authKey,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   toast({
-    //     className: cn(
-    //       "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-    //     ),
-    //     title: "Successful",
-    //     description: (
-    //       <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-    //         <code className="text-white">
-    //           Created ${accountChoice} account successfully
-    //         </code>
-    //       </pre>
-    //     ),
-    //     duration: 2500,
-    //   });
-    //   // Updated the condition to navigate to the appropriate page based on the accountChoice
-    //   setTimeout(() => {
-    //     navigate(
-    //       accountChoice === "employer"
-    //         ? "employer/complete-profile"
-    //         : accountChoice === "agent"
-    //         ? "agent/complete-profile"
-    //         : accountChoice === "techtalent"
-    //         ? "techtalent/complete-profile"
-    //         : null
-    //     );
-    //   }, 3000);
-    // } catch (err) {
-    //   console.log(err);
-    //   setSubmittingLoading(false);
-    //   toast({
-    //     className: cn(
-    //       "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-    //     ),
-    //     title: "Failed ",
-    //     description: (
-    //       <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-    //         <code className="text-white">
-    //           Account creation failed. Please try again.
-    //         </code>
-    //       </pre>
-    //     ),
-    //   });
-    // }
-
-    switch (accountChoice) {
-      case "techtalent":
-        toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Successful",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">
-                Created ${accountChoice} account successfully
-              </code>
-            </pre>
-          ),
-          duration: 2500,
-        });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
-        setTimeout(() => {
-          navigate("/techtalent/complete-profile");
-
-          setSubmittingLoading(false);
-        }, 3000);
-        break;
-      case "agent":
-        toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Updating account",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">Account update successfully</code>
-            </pre>
-          ),
-          duration: 2500,
-        });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
-        setTimeout(() => {
-          navigate("/agent/complete-profile");
-          setSubmittingLoading(false);
-        }, 3000);
-        break;
-      case "employer":
-        toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Successful",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">
-                Created ${accountChoice} account successfully
-              </code>
-            </pre>
-          ),
-          duration: 2500,
-        });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
-        setTimeout(() => {
-          navigate("/employer/complete-profile");
-          setSubmittingLoading(false);
-        }, 3000);
-
-
-        break;
-      case "talent":
-        toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Updating account",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">Account update successfully</code>
-            </pre>
-          ),
-          duration: 2500,
-        });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
-        setTimeout(() => {
-          navigate("/talent/complete-profile");
-          setSubmittingLoading(false);
-        }, 3000);
-        break;
-      case "serviceprovider":
-        toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Updating account",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">Account update successfully</code>
-            </pre>
-          ),
-          duration: 2500,
-        });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
-        setTimeout(() => {
-          navigate("/services-provider/complete-profile");
-          setSubmittingLoading(false);
-        }, 3000);
-        break;
-      default:
-        break;
+    try {
+      await axios.post(
+        accountTypes[accountChoice],
+        {},
+        {
+          headers: {
+            authorization: authKey,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast({
+        className: cn(
+          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: "Successful",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+            <code className="text-white">
+              Created {accountChoice} account successfully
+            </code>
+          </pre>
+        ),
+        duration: 2500,
+      });
+      // Updated the condition to navigate to the appropriate page based on the accountChoice
+      setTimeout(() => {
+        navigate(
+          accountChoice === "employer"
+            ? "/employer/complete-profile"
+            : accountChoice === "agent"
+            ? "/agent/complete-profile"
+            : accountChoice === "techtalent"
+            ? "/techtalent/complete-profile"
+            : null
+        );
+      }, 3000);
+    } catch (err) {
+      console.log(err);
+      setSubmittingLoading(false);
+      toast({
+        className: cn(
+          "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: "Failed ",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+            <code className="text-white">
+              Account creation failed. Please try again.
+            </code>
+          </pre>
+        ),
+      });
     }
+
+    // switch (accountChoice) {
+    //   case "techtalent":
+    //     toast({
+    //       className: cn(
+    //         "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //       ),
+    //       title: "Successful",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //           <code className="text-white">
+    //             Created {accountChoice} account successfully
+    //           </code>
+    //         </pre>
+    //       ),
+    //       duration: 2500,
+    //     });
+    //     // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //     setTimeout(() => {
+    //       navigate("/techtalent/complete-profile");
+    //       setSubmittingLoading(false);
+    //     }, 3000);
+    //     break;
+    //   case "agent":
+    //     toast({
+    //       className: cn(
+    //         "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //       ),
+    //       title: "Updating account",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //           <code className="text-white">Account update successfully</code>
+    //         </pre>
+    //       ),
+    //       duration: 2500,
+    //     });
+    //     // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //     setTimeout(() => {
+    //       navigate("/agent/complete-profile");
+    //       setSubmittingLoading(false);
+    //     }, 3000);
+    //     break;
+    //   case "employer":
+    //     toast({
+    //       className: cn(
+    //         "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //       ),
+    //       title: "Successful",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //           <code className="text-white">
+    //             Created {accountChoice} account successfully
+    //           </code>
+    //         </pre>
+    //       ),
+    //       duration: 2500,
+    //     });
+    //     // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //     setTimeout(() => {
+    //       navigate("/employer/complete-profile");
+    //       setSubmittingLoading(false);
+    //     }, 3000);
+    //     break;
+    //   case "talent":
+    //     toast({
+    //       className: cn(
+    //         "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //       ),
+    //       title: "Updating account",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //           <code className="text-white">Account update successfully</code>
+    //         </pre>
+    //       ),
+    //       duration: 2500,
+    //     });
+    //     // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //     setTimeout(() => {
+    //       navigate("/talent/complete-profile");
+    //       setSubmittingLoading(false);
+    //     }, 3000);
+    //     break;
+    //   case "serviceprovider":
+    //     toast({
+    //       className: cn(
+    //         "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+    //       ),
+    //       title: "Updating account",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+    //           <code className="text-white">Account update successfully</code>
+    //         </pre>
+    //       ),
+    //       duration: 2500,
+    //     });
+    //     // Updated the condition to navigate to the appropriate page based on the accountChoice
+    //     setTimeout(() => {
+    //       navigate("/services-provider/complete-profile");
+    //       setSubmittingLoading(false);
+    //     }, 3000);
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
   useEffect(() => {

@@ -82,7 +82,7 @@ const formatDate = (dateString) => {
 
 export default function RecentPostedJobs() {
   return (
-    <div className="w-full  mx-auto p-6 space-y-6">
+    <div className="w-2/3  space-y-6">
       <div className="border rounded-lg">
         <Table>
           <TableHeader>

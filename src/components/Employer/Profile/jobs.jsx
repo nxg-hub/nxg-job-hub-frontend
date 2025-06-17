@@ -1,13 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-export default function Jobs() {
+export default function Jobs({ formData, updateFormData }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    updateFormData({ [name]: value });
+  };
+
   return (
     <div>
       <div className="space-y-6">
@@ -15,8 +13,9 @@ export default function Jobs() {
           <Label htmlFor="vacancies">Number of Vacancies</Label>
           <Input
             id="vacancies"
-            // value={formData.vacancies}
-            // onChange={(e) => handleInputChange("vacancies", e.target.value)}
+            name="vacancies"
+            value={formData.vacancies}
+            onChange={handleInputChange}
             placeholder="e.g., 5"
             type="number"
             min="1"
@@ -27,18 +26,20 @@ export default function Jobs() {
             <Label htmlFor="position">Position *</Label>
             <Input
               id="position"
-              // value={formData.position}
-              // onChange={(e) => handleInputChange("position", e.target.value)}
+              name="position"
+              value={formData.position}
+              onChange={handleInputChange}
               placeholder="Enter position/job title"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="position">Preferred Job Board</Label>
+            <Label htmlFor="jobBoard">Preferred Job Board</Label>
             <Input
-              id="position"
-              // value={formData.position}
-              // onChange={(e) => handleInputChange("position", e.target.value)}
+              id="jobBoard"
+              name="jobBoard"
+              value={formData.jobBoard}
+              onChange={handleInputChange}
               placeholder="Enter position/job title"
               required
             />
