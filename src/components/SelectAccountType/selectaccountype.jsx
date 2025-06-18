@@ -79,7 +79,7 @@ const SelectAccountType = () => {
         {},
         {
           headers: {
-            authorization: authKey,
+            authorization: JSON.parse(isAuthenticated).authKey,
             "Content-Type": "application/json",
           },
         }
@@ -284,7 +284,7 @@ const SelectAccountType = () => {
                 >
                   <Label htmlFor={radio.value}>{radio.label}</Label>
                   <RadioGroupItem
-                    className="p-0 "
+                    className="p-0  border-black hover:border-transparent hover:bg-secondary"
                     value={radio.value}
                     id={radio.value}
                   />

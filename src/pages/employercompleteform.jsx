@@ -88,18 +88,8 @@ export function EmployerProfileCompletionForm() {
   } else {
     getUserUsingAuthKey(JSON.parse(isAuthenticated).authKey)
       .then((data) => {
-        if (!data.userType) {
+        if (data.userType && data.userType === "EMPLOYER") {
           return;
-        } else {
-          navigate(
-            data.userType === "EMPLOYER"
-              ? "/employer"
-              : accountChoice === "AGENT"
-              ? "/agent"
-              : accountChoice === "TALENT"
-              ? "/talent"
-              : null
-          );
         }
       })
       .catch((error) => {

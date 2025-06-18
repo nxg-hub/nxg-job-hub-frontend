@@ -72,10 +72,13 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompletionForm } from "./pages/employercompleteform.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -217,7 +220,7 @@ function App() {
         <Route path="/iso" element={<SavedJobCard />} />
         {<Route path="job-listings" element={<JobListings />} />}
       </Routes>
-    </>
+    </QueryClientProvider>
   );
 }
 
