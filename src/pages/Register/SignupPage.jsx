@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { parsePhoneNumberWithError } from "libphonenumber-js";
+import {
+  isValidPhoneNumber,
+  parsePhoneNumberWithError,
+} from "libphonenumber-js";
 import { z } from "zod";
 import {
   Form,
@@ -34,35 +37,42 @@ import { Button } from "@/components/ui/button";
 
 const formSchema = z
   .object({
-    first_name: z
+    firstName: z
       .string()
       .min(3, "Name cannot be less than 3 characters")
       .nonempty()
-      .regex(/^[A-Za-z]+$/i, "Name can only contain letter"),
+      .regex(/^[A-Za-z-]+$/, "Name can only contain letter"),
 
-    last_name: z
+    lastName: z
       .string()
       .min(3, "Name cannot be less than 3 characters")
       .nonempty()
-      .regex(/^[A-Za-z]+$/i, "Name can only contain letter"),
+      .regex(/^[A-Za-z-]+$/, "Name can only contain letter"),
 
-    phone_num: z.string().transform((value, ctx) => {
-      const phone_num = parsePhoneNumberWithError(value, {
-        defaultCountry: "NG",
-      });
-      if (!phone_num?.isValid()) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
+    phoneNumber: z
+      .string()
+      .refine((val) => isValidPhoneNumber(val), {
+        message: "Invalid phone number",
+      })
+      .transform((value, ctx) => {
+        const phone_num = parsePhoneNumberWithError(value, {
+          defaultCountry: "NG",
         });
-        return z.NEVER;
-      }
-      return phone_num.formatInternational();
-    }),
+        if (!phone_num?.isValid()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid phone number",
+          });
+          return z.NEVER;
+        }
+        return phone_num.formatInternational();
+      }),
 
     email: z.string().email(),
 
-    gender: z.string(),
+    gender: z.enum(["MALE", "FEMALE"], {
+      errorMap: () => ({ message: "Please select a gender" }),
+    }),
     password: z
       .string()
       .min(8, "Password must contain at least 8 character(s)")
@@ -90,6 +100,15 @@ export default function SignupForm() {
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      email: "",
+      gender: "",
+      password: "",
+      re_password: "",
+    },
   });
 
   const closeModal = (e) => {
@@ -98,9 +117,16 @@ export default function SignupForm() {
 
   function onSubmit(values) {
     setSubmitLoading(true);
-    const user = new User(values);
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+      gender: values.gender,
+      password: values.password,
+    };
     axios
-      .post(`${API_HOST_URL}/api/v1/auth/register/`, user)
+      .post(`${API_HOST_URL}/api/v1/auth/register/`, payload)
       .then((res) => {
         if (res.status) {
           toast({
@@ -111,7 +137,8 @@ export default function SignupForm() {
             description: (
               <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
                 <code className="text-white">
-                  Your account have been successfully registered. Kindly proceed to verify your account!
+                  Your account have been successfully registered. Kindly proceed
+                  to verify your account!
                 </code>
               </pre>
             ),
@@ -145,12 +172,12 @@ export default function SignupForm() {
         if (!error.response) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
             ),
-            title: "Network error",
+            title: <p className="text-red-700">Network error</p>,
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-sky-700 p-4">
-                <code className="text-white">
+              <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
+                <code>
                   Failed to submit your form, please check <br />
                   your internet connection.
                 </code>
@@ -159,8 +186,9 @@ export default function SignupForm() {
             action: (
               <ToastAction
                 onClick={form.handleSubmit(onSubmit)}
-                className="hover:text-sky-900"
-                altText="Try again">
+                className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+                altText="Try again"
+              >
                 Try again
               </ToastAction>
             ),
@@ -175,7 +203,8 @@ export default function SignupForm() {
   return (
     <Card
       className="sm:bg-[url('/images/signup-bg.jpg')] sm:bg-cover sm:bg-center sm:bg-no-repeat 
-        sm:min-h-screen sm:w-full sm:grid sm:place-items-center">
+        sm:min-h-screen sm:w-full sm:grid sm:place-items-center"
+    >
       <CardContent className="bg-white rounded-lg shadow-lg p-10 sm:w-[60%] sm:my-12 sm:px-20 sm:py-10">
         <div>
           <h1 className="text-3xl font-semibold">Let's get you started</h1>
@@ -186,12 +215,13 @@ export default function SignupForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10">
+            className="space-y-8 max-w-3xl mx-auto py-10"
+          >
             <div className="space-y-7 sm:flex sm:space-x-6 sm:space-y-0">
               <div className="sm:w-1/2">
                 <FormField
                   control={form.control}
-                  name="first_name"
+                  name="firstName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>First name</FormLabel>
@@ -211,7 +241,7 @@ export default function SignupForm() {
               <div className="sm:w-1/2">
                 <FormField
                   control={form.control}
-                  name="last_name"
+                  name="lastName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Last name</FormLabel>
@@ -231,7 +261,7 @@ export default function SignupForm() {
 
             <FormField
               control={form.control}
-              name="phone_num"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Phone number</FormLabel>
@@ -274,25 +304,26 @@ export default function SignupForm() {
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      className="flex space-x-10 ">
-                      {[
-                        ["Male", "male"],
-                        ["Female", "female"],
-                      ].map((option, index) => (
-                        <FormItem
-                          className="flex space-x-2 space-y-0"
-                          key={index}>
-                          <FormControl>
-                            <RadioGroupItem
-                              className="p-0"
-                              value={option[1]}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {option[0]}
-                          </FormLabel>
-                        </FormItem>
-                      ))}
+                      className="flex space-x-10 "
+                    >
+                      <FormItem className="flex space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                            value="MALE"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Male</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                            value="FEMALE"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Female</FormLabel>
+                      </FormItem>
                     </RadioGroup>
                   </FormControl>
 
@@ -343,7 +374,7 @@ export default function SignupForm() {
                   <div className="flex items-center space-x-3 space-y-0 rounded-md p-4">
                     <FormControl>
                       <Checkbox
-                        className="p-0"
+                        className="p-0 border-black hover:border-transparent hover:bg-secondary"
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
@@ -368,7 +399,8 @@ export default function SignupForm() {
             <Button
               disabled={submitLoading}
               className="w-full bg-sky-600 border-none hover:bg-sky-700"
-              type="submit">
+              type="submit"
+            >
               {submitLoading ? (
                 <div className="flex items-center space-x-1">
                   <Loader2 className="animate-spin" />
@@ -381,15 +413,14 @@ export default function SignupForm() {
           </form>
           <p className="text-sm text-center text-gray-500">
             Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-sky-600">
+            <Link to="/login" className="text-sky-600">
               Log in
             </Link>
           </p>
           <Link
             to={"/"}
-            className="flex items-center space-x-2 text-gray-500 mt-5">
+            className="flex items-center space-x-2 text-gray-500 mt-5"
+          >
             <ArrowLeft />
             <span className="text-sm">Go back to</span>
             <span className="text-sky-600">Home</span>

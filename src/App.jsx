@@ -59,7 +59,7 @@ import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
 import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
 import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 import { EmployerDashboard } from "./pages/employer.jsx";
-import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx.jsx";
+import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx";
 import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
 import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-company-profile-tab.jsx";
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
@@ -71,11 +71,14 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
-import { EmployerProfileCompletionForm } from "./pages/employercompleteform.jsx";
+import { EmployerProfileCompletionForm } from "./pages/employerCompleteForm.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -217,7 +220,7 @@ function App() {
         <Route path="/iso" element={<SavedJobCard />} />
         {<Route path="job-listings" element={<JobListings />} />}
       </Routes>
-    </>
+    </QueryClientProvider>
   );
 }
 

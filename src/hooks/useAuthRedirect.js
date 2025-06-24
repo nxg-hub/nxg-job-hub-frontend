@@ -1,15 +1,18 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useAuthRedirect = (storeKey, redirectPath) => {
-  const localStorageValue = localStorage.getItem(storeKey);
-  const sessionStorageValue = sessionStorage.getItem(storeKey);
-  const value = localStorageValue || sessionStorageValue;
+  const [value, setValue] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!value) {
+    const storeValueObj =
+      localStorage.getItem(storeKey) || sessionStorage.getItem(storeKey);
+    if (!storeValueObj) {
       navigate(redirectPath, { replace: true });
+    } else {
+      setValue(storeValueObj);
     }
   }, [storeKey, redirectPath, navigate]);
 

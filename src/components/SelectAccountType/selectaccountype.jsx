@@ -72,7 +72,13 @@ const SelectAccountType = () => {
 
   const setAccountType = async () => {
     setSubmittingLoading(true);
-
+    const authKey =
+      (searchParams.get("authKey")
+        ? "Bearer " + searchParams.get("authKey")
+        : null) ||
+      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))
+        ?.authKey ||
+      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
     try {
       await axios.post(
         accountTypes[accountChoice],
@@ -284,7 +290,7 @@ const SelectAccountType = () => {
                 >
                   <Label htmlFor={radio.value}>{radio.label}</Label>
                   <RadioGroupItem
-                    className="p-0 "
+                    className="p-0  border-black hover:border-transparent hover:bg-secondary"
                     value={radio.value}
                     id={radio.value}
                   />

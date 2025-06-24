@@ -11,15 +11,17 @@ import {
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-import ProfilePhotoCard from "@/components/Profile/ProfilePhotoCard";
+import ProfilePhotoCard from "@/components/Profile/profilePhotoCard";
 import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 import { employerData } from "@/utils/data/employer-mock-data";
 import { cn } from "@/lib/utils";
-import EmployerCompanyInfoCard from "./employerCompanyInfoCard";
-import EmployerContactInfoCard from "./employerContactInfoCard";
+import EmployerCompanyInfoCard from "../../../components/Employer/Profile/employerCompanyInfoCard";
+import EmployerContactInfoCard from "../../../components/Employer/Profile/employerContactInfoCard";
 import EmployerBusinessDetailsCard from "./employerBusinessDetails";
-import EmployerProfileJobsTabCard from "./employerProfileJobsTabCard";
-import EmployerLegalDocumentCard from "./employerLegalDocumentCard";
+import EmployerProfileJobsTabCard from "../../../components/Employer/Profile/employerProfileJobsTabCard";
+import EmployerLegalDocumentCard from "../../../components/Employer/Profile/employerLegalDocumentCard";
+import axios from "axios";
+import { API_HOST_URL } from "@/utils/api/API_HOST";
 
 export default function EmployerCompanyProfileTab() {
   const [isEditCompanyInfo, setEditCompanyInfo] = useState(false);
@@ -51,9 +53,12 @@ export default function EmployerCompanyProfileTab() {
     // Legal & Compliance
     tin: "",
     taxClearanceCertificate: "",
+    taxClearanceCertificateFileName: "",
     caccertificate: "",
+    caccertificateFileName: "",
     namesOfDirectors: "",
     companyMemorandum: "",
+    companyMemorandumFileName: "",
   });
 
   const toggleEditCompanyInfo = () => {
@@ -123,6 +128,34 @@ export default function EmployerCompanyProfileTab() {
     "data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-sky-600 ",
     "data-[state=active]:!border-b-4 data-[state=active]:!border-b-sky-600  transition"
   );
+
+  const fetchEmployer = async () => {
+    const token =
+      localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+      sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+    const response = await axios
+      .get(`${API_HOST_URL}/api/v1/auth/get-user`)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Error getting user data", error);
+        throw error;
+      });
+    return response.data;
+  };
+
+  const updataEmployerProfileDetails = async (updateData) => {
+    const token =
+      localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+      sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+    const response = await axios
+      .put(`${API_HOST_URL}/api/v1/auth/get-user`, updateData)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Error getting user data", error);
+        throw error;
+      });
+    return response.data;
+  };
 
   return (
     <div className="flex flex-col p-10 gap-10">

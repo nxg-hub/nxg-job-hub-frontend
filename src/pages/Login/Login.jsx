@@ -21,7 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { cn, getUserUsingAuthKey } from "@/lib/utils";
 import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
@@ -42,6 +42,11 @@ export default function LoginForm() {
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      keep_loggin: false,
+    },
   });
 
   async function onSubmit(values) {
@@ -140,12 +145,12 @@ export default function LoginForm() {
       if (!error.response) {
         toast({
           className: cn(
-            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
           ),
-          title: "Network error",
+          title: <p className="text-red-700">Network error</p>,
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-sky-700 p-4">
-              <code className="text-white">
+            <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
+              <code>
                 Failed to login, please check your
                 <br />
                 internet connection.
@@ -155,7 +160,7 @@ export default function LoginForm() {
           action: (
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
-              className="hover:text-sky-900"
+              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
               altText="Try again"
             >
               Try again
@@ -175,25 +180,21 @@ export default function LoginForm() {
       window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
     );
     if (storedData) {
-      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: storedData.authKey,
-        },
+      getUserUsingAuthKey(storedData.authKey).then((data) => {
+        if (!data.userType) {
+          navigate("/create");
+        } else {
+          navigate(
+            userRes.data.userType === "EMPLOYER"
+              ? "/employer"
+              : accountChoice === "AGENT"
+              ? "/agent"
+              : accountChoice === "TALENT"
+              ? "/talent"
+              : null
+          );
+        }
       });
-      if (!userRes.data.userType) {
-        navigate("/create");
-      } else {
-        navigate(
-          userRes.data.userType === "EMPLOYER"
-            ? "/employer"
-            : accountChoice === "AGENT"
-            ? "/agent"
-            : accountChoice === "TALENT"
-            ? "/talent"
-            : null
-        );
-      }
     }
   };
   useEffect(() => {
@@ -273,7 +274,7 @@ export default function LoginForm() {
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                       <FormControl>
                         <Checkbox
-                          className="p-0"
+                          className="p-0  border-black hover:border-transparent hover:bg-secondary"
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
