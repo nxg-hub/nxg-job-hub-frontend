@@ -265,7 +265,7 @@ const Privacy = () => {
           <p className="pb-3">
             If you have any questions or concerns about this Privacy Policy or
             our data practices, please contact us at:NXG Job
-            Hub Email: info@nxgjobhub.com Thank you for trusting NXG Job Hub
+            Hub Email: info@nextgenhub.com.ng Thank you for trusting NXG Job Hub
             with your information. We are committed to ensuring your privacy and
             security while providing a seamless job search and hiring
             experience.

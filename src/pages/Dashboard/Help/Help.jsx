@@ -23,7 +23,7 @@ const Help = () => {
                 <p>Learn more about our subscription plans, payment methods, and how to upgrade or cancel your plan.</p>
 
                 <h2>Contact Information</h2>
-                <p>Need help? Reach out to our customer support for assistance with any issue at <a href="mailto:info@nxgjobhub.com">info@nxgjobhub.com</a>.</p>
+                <p>Need help? Reach out to our customer support for assistance with any issue at <a href="mailto:info@nextgenhub.com.ng">info@nextgenhub.com.ng</a>.</p>
 
                 <h2>Frequently Asked Questions (FAQs)</h2>
 
