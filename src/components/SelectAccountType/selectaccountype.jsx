@@ -72,14 +72,20 @@ const SelectAccountType = () => {
 
   const setAccountType = async () => {
     setSubmittingLoading(true);
-
+    const authKey =
+      (searchParams.get("authKey")
+        ? "Bearer " + searchParams.get("authKey")
+        : null) ||
+      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))
+        ?.authKey ||
+      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
     try {
       await axios.post(
         accountTypes[accountChoice],
         {},
         {
           headers: {
-            authorization: JSON.parse(isAuthenticated).authKey,
+            authorization: authKey,
             "Content-Type": "application/json",
           },
         }

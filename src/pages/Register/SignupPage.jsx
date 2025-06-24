@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { parsePhoneNumberWithError } from "libphonenumber-js";
+import {
+  isValidPhoneNumber,
+  parsePhoneNumberWithError,
+} from "libphonenumber-js";
 import { z } from "zod";
 import {
   Form,
@@ -34,35 +37,42 @@ import { Button } from "@/components/ui/button";
 
 const formSchema = z
   .object({
-    first_name: z
+    firstName: z
       .string()
       .min(3, "Name cannot be less than 3 characters")
       .nonempty()
-      .regex(/^[A-Za-z]+$/i, "Name can only contain letter"),
+      .regex(/^[A-Za-z-]+$/, "Name can only contain letter"),
 
-    last_name: z
+    lastName: z
       .string()
       .min(3, "Name cannot be less than 3 characters")
       .nonempty()
-      .regex(/^[A-Za-z]+$/i, "Name can only contain letter"),
+      .regex(/^[A-Za-z-]+$/, "Name can only contain letter"),
 
-    phone_num: z.string().transform((value, ctx) => {
-      const phone_num = parsePhoneNumberWithError(value, {
-        defaultCountry: "NG",
-      });
-      if (!phone_num?.isValid()) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
+    phoneNumber: z
+      .string()
+      .refine((val) => isValidPhoneNumber(val), {
+        message: "Invalid phone number",
+      })
+      .transform((value, ctx) => {
+        const phone_num = parsePhoneNumberWithError(value, {
+          defaultCountry: "NG",
         });
-        return z.NEVER;
-      }
-      return phone_num.formatInternational();
-    }),
+        if (!phone_num?.isValid()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid phone number",
+          });
+          return z.NEVER;
+        }
+        return phone_num.formatInternational();
+      }),
 
     email: z.string().email(),
 
-    gender: z.string(),
+    gender: z.enum(["MALE", "FEMALE"], {
+      errorMap: () => ({ message: "Please select a gender" }),
+    }),
     password: z
       .string()
       .min(8, "Password must contain at least 8 character(s)")
@@ -91,9 +101,9 @@ export default function SignupForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      phone_num: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
       email: "",
       gender: "",
       password: "",
@@ -107,9 +117,16 @@ export default function SignupForm() {
 
   function onSubmit(values) {
     setSubmitLoading(true);
-    const user = new User(values);
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+      gender: values.gender,
+      password: values.password,
+    };
     axios
-      .post(`${API_HOST_URL}/api/v1/auth/register/`, user)
+      .post(`${API_HOST_URL}/api/v1/auth/register/`, payload)
       .then((res) => {
         if (res.status) {
           toast({
@@ -204,7 +221,7 @@ export default function SignupForm() {
               <div className="sm:w-1/2">
                 <FormField
                   control={form.control}
-                  name="first_name"
+                  name="firstName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>First name</FormLabel>
@@ -224,7 +241,7 @@ export default function SignupForm() {
               <div className="sm:w-1/2">
                 <FormField
                   control={form.control}
-                  name="last_name"
+                  name="lastName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Last name</FormLabel>
@@ -244,7 +261,7 @@ export default function SignupForm() {
 
             <FormField
               control={form.control}
-              name="phone_num"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Phone number</FormLabel>
@@ -289,25 +306,24 @@ export default function SignupForm() {
                       onValueChange={field.onChange}
                       className="flex space-x-10 "
                     >
-                      {[
-                        ["Male", "male"],
-                        ["Female", "female"],
-                      ].map((option, index) => (
-                        <FormItem
-                          className="flex space-x-2 space-y-0"
-                          key={index}
-                        >
-                          <FormControl>
-                            <RadioGroupItem
-                              className="p-0 border-black hover:border-transparent hover:bg-secondary"
-                              value={option[1]}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {option[0]}
-                          </FormLabel>
-                        </FormItem>
-                      ))}
+                      <FormItem className="flex space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                            value="MALE"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Male</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                            value="FEMALE"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Female</FormLabel>
+                      </FormItem>
                     </RadioGroup>
                   </FormControl>
 

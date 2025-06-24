@@ -15,11 +15,11 @@ import ProfilePhotoCard from "@/components/Profile/profilePhotoCard";
 import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 import { employerData } from "@/utils/data/employer-mock-data";
 import { cn } from "@/lib/utils";
-import EmployerCompanyInfoCard from "./employerCompanyInfoCard";
-import EmployerContactInfoCard from "./employerContactInfoCard";
+import EmployerCompanyInfoCard from "../../../components/Employer/Profile/employerCompanyInfoCard";
+import EmployerContactInfoCard from "../../../components/Employer/Profile/employerContactInfoCard";
 import EmployerBusinessDetailsCard from "./employerBusinessDetails";
-import EmployerProfileJobsTabCard from "./employerProfileJobsTabCard";
-import EmployerLegalDocumentCard from "./employerLegalDocumentCard";
+import EmployerProfileJobsTabCard from "../../../components/Employer/Profile/employerProfileJobsTabCard";
+import EmployerLegalDocumentCard from "../../../components/Employer/Profile/employerLegalDocumentCard";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 
