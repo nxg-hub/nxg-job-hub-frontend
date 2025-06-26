@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import sarahicon from "@/static/images/john.png";
+import sarahicon from "@/static/images/John.png";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
