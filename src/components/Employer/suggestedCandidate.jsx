@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import sarahicon from "@/static/images/john.png";
+import sarahicon from "@/static/images/John.png";
 import { Separator } from "../ui/separator";
 import { Link } from "react-router-dom";
 
