@@ -17,6 +17,7 @@ const SelectAccountType = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const [accountChoice, setAccountChoice] = useState("");
   //a state that disabled login button when trying to log user in
   const [submittingLoading, setSubmittingLoading] = useState(false);
 
@@ -84,8 +85,6 @@ const SelectAccountType = () => {
     isFetched,
     navigate,
   ]);
-
-  const [accountChoice, setAccountChoice] = useState("");
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
@@ -254,7 +253,6 @@ const SelectAccountType = () => {
           onClick={setAccountType}
           aria-disabled={!accountChoice}
           disabled={!accountChoice || submittingLoading}
-          to={`./${accountChoice}`}
         >
           {submittingLoading ? (
             <div className="flex items-center space-x-1">
