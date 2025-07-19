@@ -2,10 +2,14 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 
-export default function ProfilePersonInfoCard({ profileData }) {
-  const { firstName, lastName, email, phoneNumber, dateOfBirth, userType } =
-    profileData;
-
+export default function ProfilePersonInfoCard({
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  dateOfBirth,
+  userType,
+}) {
   return (
     <div className="p-8 bg-white shadow rounded-md">
       <div className="flex flex-col gap-10 mb-10">

@@ -1,11 +1,17 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useEmployerData } from "@/store/employer/employerStore";
 
-export default function ContactInfo({ formData, updateFormData }) {
+export default function ContactInfo() {
+  const employer = useEmployerData((state) => state.employerData);
+  const updateEmployerField = useEmployerData(
+    (state) => state.updateEmployerField
+  );
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateFormData({ [name]: value });
+    updateEmployerField(name, value);
   };
 
   return (
@@ -16,7 +22,7 @@ export default function ContactInfo({ formData, updateFormData }) {
           <Textarea
             id="companyAddress"
             name="companyAddress"
-            value={formData.companyAddress}
+            value={employer?.companyAddress || ""}
             onChange={handleInputChange}
             placeholder="Enter complete company address"
             className="min-h-[80px]"
@@ -28,7 +34,7 @@ export default function ContactInfo({ formData, updateFormData }) {
             <Input
               id="companyPhone"
               name="companyPhone"
-              value={formData.companyPhone}
+              value={employer?.companyPhone || ""}
               onChange={handleInputChange}
               placeholder="+1 (555) 123-4567"
               type="tel"
@@ -39,7 +45,7 @@ export default function ContactInfo({ formData, updateFormData }) {
             <Input
               id="companyWebsite"
               name="companyWebsite"
-              value={formData.companyWebsite}
+              value={employer?.companyWebsite || ""}
               onChange={handleInputChange}
               placeholder="https://www.company.com"
               type="url"

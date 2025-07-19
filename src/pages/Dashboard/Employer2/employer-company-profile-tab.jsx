@@ -6,24 +6,23 @@ import {
   FileText,
   Phone,
   User,
-  Users,
   Save,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
-import ProfilePhotoCard from "@/components/Profile/profilePhotoCard";
-import ProfilePersonInfoCard from "@/components/Profile/profilePersonalInfoCard";
 import { employerData } from "@/utils/data/employer-mock-data";
 import { cn } from "@/lib/utils";
 import EmployerCompanyInfoCard from "../../../components/Employer/Profile/employerCompanyInfoCard";
 import EmployerContactInfoCard from "../../../components/Employer/Profile/employerContactInfoCard";
-import EmployerBusinessDetailsCard from "./employerBusinessDetails";
 import EmployerProfileJobsTabCard from "../../../components/Employer/Profile/employerProfileJobsTabCard";
 import EmployerLegalDocumentCard from "../../../components/Employer/Profile/employerLegalDocumentCard";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
+import { useEmployerData } from "@/store/employer/employerStore";
+import EmployerProfilePhotoCard from "@/components/Employer/Profile/employerProfilePhotoCard";
+import EmployerProfilePersonInfoCard from "@/components/Employer/Profile/employerProfilePersonalInfoCard";
 
 export default function EmployerCompanyProfileTab() {
+  const employer = useEmployerData((state) => state.employerData);
   const [isEditCompanyInfo, setEditCompanyInfo] = useState(false);
   const [isEditContactInfo, setEditContactInfo] = useState(false);
   const [isEditBusinessDetails, setEditBusinessDetails] = useState(false);
@@ -187,22 +186,23 @@ export default function EmployerCompanyProfileTab() {
             </TabsList>
 
             <TabsContent value="profile" className="flex flex-col gap-8">
-              <ProfilePhotoCard profileData={profileData} />
-              <ProfilePersonInfoCard profileData={profileData} />
+              <EmployerProfilePhotoCard
+                userId={employer?.user?.id}
+                firstName={employer?.user?.firstName}
+                lastName={employer?.user?.lastName}
+                userType={employer?.user?.userType}
+                country={employer?.country}
+                profilePicture={employer?.user?.profilePicture}
+              />
+              <EmployerProfilePersonInfoCard />
             </TabsContent>
 
             <TabsContent value="company">
-              <EmployerCompanyInfoCard
-                isEditing={isEditCompanyInfo}
-                onEditClick={toggleEditCompanyInfo}
-              />
+              <EmployerCompanyInfoCard />
             </TabsContent>
 
             <TabsContent value="contact">
-              <EmployerContactInfoCard
-                isEditing={isEditContactInfo}
-                onEditClick={toggleEditContactInfo}
-              />
+              <EmployerContactInfoCard />
             </TabsContent>
 
             <TabsContent value="documents">
@@ -210,10 +210,7 @@ export default function EmployerCompanyProfileTab() {
             </TabsContent>
 
             <TabsContent value="jobs">
-              <EmployerProfileJobsTabCard
-                isEditing={isEditJobs}
-                onEditClick={toggleEditJobs}
-              />
+              <EmployerProfileJobsTabCard />
             </TabsContent>
           </Tabs>
 

@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 const nigerianStates = [
   { value: "Abia", label: "Abia" },
@@ -49,15 +50,17 @@ const nigerianStates = [
   { value: "FCT", label: "Abuja" },
 ];
 
-export default function CompanyInfo({ formData, updateFormData }) {
+export default function CompanyInfo() {
+  const employer = useEmployerData((state) => state.employerData);
+  const updateEmployerField = useEmployerData(
+    (state) => state.updateEmployerField
+  );
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateFormData({ [name]: value });
+    updateEmployerField(name, value);
   };
 
-  const handleSelectedChange = (name, value) => {
-    updateFormData({ [name]: value });
-  };
   return (
     <div>
       <div className="space-y-6">
@@ -66,7 +69,7 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <Input
             id="companyName"
             name="companyName"
-            value={formData.companyName}
+            value={employer?.companyName || ""}
             onChange={handleInputChange}
             placeholder="Enter company name"
             required
@@ -77,7 +80,7 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <Textarea
             id="companyDescription"
             name="companyDescription"
-            value={formData.companyDescription}
+            value={employer?.companyDescription || ""}
             onChange={handleInputChange}
             placeholder="Describe your company, its mission, and values..."
             className="min-h-[120px]"
@@ -88,8 +91,9 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <div className="space-y-2">
             <Label htmlFor="country">Country:</Label>
             <Select
-              value={formData.country}
-              onValueChange={(value) => handleSelectedChange("country", value)}
+              name="country"
+              value={employer?.country || ""}
+              onValueChange={(value) => handleInputChange("country", value)}
             >
               <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select country" />
@@ -103,8 +107,9 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <div className="space-y-2">
             <Label htmlFor="state">State:</Label>
             <Select
-              value={formData.state}
-              onValueChange={(value) => handleSelectedChange("state", value)}
+              name="state"
+              value={employer?.state || ""}
+              onValueChange={(value) => handleInputChange("state", value)}
             >
               <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select state" />
@@ -123,7 +128,7 @@ export default function CompanyInfo({ formData, updateFormData }) {
             <Input
               id="companyZipCode"
               name="companyZipCode"
-              value={formData.companyZipCode}
+              value={employer?.companyZipCode || ""}
               onChange={handleInputChange}
               placeholder="12345"
             />
@@ -133,9 +138,10 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <div className="space-y-2">
             <Label htmlFor="industryType">Industry Type:</Label>
             <Select
-              value={formData.industryType}
+              name="industryType"
+              value={employer?.industryType || ""}
               onValueChange={(value) =>
-                handleSelectedChange("industryType", value)
+                handleInputChange("industryType", value)
               }
             >
               <SelectTrigger className="font-normal">
@@ -156,10 +162,9 @@ export default function CompanyInfo({ formData, updateFormData }) {
           <div className="space-y-2">
             <Label htmlFor="companySize">Company Size:</Label>
             <Select
-              value={formData.companySize}
-              onValueChange={(value) =>
-                handleSelectedChange("companySize", value)
-              }
+              name="companySize"
+              value={employer?.companySize || ""}
+              onValueChange={(value) => handleInputChange("companySize", value)}
             >
               <SelectTrigger className="font-normal">
                 <SelectValue placeholder="Select company size" />
