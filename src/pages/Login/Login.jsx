@@ -21,11 +21,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
-import { cn, getUserUsingAuthKey } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -34,11 +35,37 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  //a state that disabled login button when trying to log user in
   const [loginLoading, setLoginLoading] = useState(false);
 
-  const navigate = useNavigate();
+  const { data, fetchStatus, isError, isSuccess, error } = useAutoLogin();
 
-  const { toast } = useToast();
+  //if auto-login check has completed(either success or failed)
+  const isAutoLoginChecking = fetchStatus === "fatching";
+
+  useEffect(() => {
+    if (!isAutoLoginChecking) {
+      if (isSuccess && data?.userType) {
+        //redirect user to their dashboard based on thier type
+        if (data.userType === "EMPLOYER") {
+          navigate("/employer", { replace: true });
+        } else if (data.userType === "AGENT") {
+          navigate("/agent", { replace: true });
+        } else if (data.userType === "TALENT") {
+          navigate("/talent", { replace: true });
+        } else if (data.userType === "TECHTALENT") {
+          navigate("/talent", { replace: true });
+        } else {
+          console.warn("Unknown user type:", data.userType);
+        }
+      } else if (isError) {
+        console.error("Auto-login failed:", error.message);
+      }
+    }
+  }, [isAutoLoginChecking, isSuccess, isError, data, error, navigate]);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -97,14 +124,12 @@ export default function LoginForm() {
         navigate("/create");
       } else {
         toast({
-          className: cn(
-            "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: "Successful",
+          className: cn("top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"),
+          title: <span className="text-green-800">Successful:</span>,
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-              <code className="text-white">Logging in...</code>
-            </pre>
+            <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+              Logging in...
+            </p>
           ),
           duration: 2500,
         });
@@ -114,6 +139,8 @@ export default function LoginForm() {
               ? "/employer"
               : userRes.data.userType === "AGENT"
               ? "/agent"
+              : userRes.data.userType === "TECHTALENT"
+              ? "/talent"
               : userRes.data.userType === "TALENT"
               ? "/talent"
               : null
@@ -125,17 +152,16 @@ export default function LoginForm() {
         if (error.response.status === 401 || error.response.status === 404) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
             ),
-            title: "Failed to login",
+            title: <span className="text-red-900">Failed to login:</span>,
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-                <code className="text-white">
-                  Wrong email or password combination
-                </code>
-              </pre>
+              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                Wrong email or password combination
+              </p>
             ),
           });
+
           setTimeout(() => {
             setLoginLoading(false);
           }, 3000);
@@ -175,37 +201,9 @@ export default function LoginForm() {
     }
   }
 
-  const AutoLoginUser = async () => {
-    const storedData = JSON.parse(
-      window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")
-    );
-    if (storedData) {
-      getUserUsingAuthKey(storedData.authKey).then((data) => {
-        if (!data.userType) {
-          navigate("/create");
-        } else {
-          navigate(
-            userRes.data.userType === "EMPLOYER"
-              ? "/employer"
-              : accountChoice === "AGENT"
-              ? "/agent"
-              : accountChoice === "TALENT"
-              ? "/talent"
-              : null
-          );
-        }
-      });
-    }
-  };
-  useEffect(() => {
-    AutoLoginUser();
-    // .then(() => {
-    //   // Handle successful login if needed
-    // })
-    // .catch((error) => {
-    //   console.error("Auto login failed:", error);
-    // });
-  });
+  if (isAutoLoginChecking || (isSuccess && data?.userType)) {
+    return <div>logging you in</div>;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen py-14">

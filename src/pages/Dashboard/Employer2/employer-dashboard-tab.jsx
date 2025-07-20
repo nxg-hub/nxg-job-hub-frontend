@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Briefcase,
   BookmarkCheck,
@@ -23,6 +23,7 @@ import SuggestedCandidates from "@/components/Employer/suggestedCandidate";
 import { Separator } from "@radix-ui/react-context-menu";
 import emptySuggestedImage from "@/static/images/empty-suggest.svg";
 import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
+import UserGuard from "@/components/Employer/employerUserGuard";
 
 export default function EmployerDashboardTab() {
   const [candidates, setCandidates] = useState(matchesData);
@@ -34,6 +35,7 @@ export default function EmployerDashboardTab() {
   const [releaseDialogOpen, setReleaseDialogOpen] = useState(false);
   const [isCreateJobDialogOpen, setIsCreateJobDialogOpen] = useState(false);
   const [isProfileNotComplete, setIsProfileNotNotComplete] = useState(true);
+  const [showGuard, setShowGuard] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -139,6 +141,19 @@ export default function EmployerDashboardTab() {
     setFilteredCandidates(result);
   }, [searchTerm, filterEmployer, filterStatus, candidates]);
 
+  useEffect(() => {
+    // Check if user is new (you can replace this with actual logic)
+    const isNewUser = !localStorage.getItem("user-onboarded");
+    if (isNewUser) {
+      setShowGuard(true);
+    }
+  }, []);
+
+  const handleGuardComplete = () => {
+    localStorage.setItem("user-onboarded", "true");
+    setShowGuard(false);
+  };
+
   // Handle releasing a candidate from an employer
   const handleReleaseCandidate = () => {
     if (selectedCandidate) {
@@ -213,84 +228,67 @@ export default function EmployerDashboardTab() {
     },
   ];
   return (
-    <div className="p-8">
-      <div className="flex flex-col gap-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-lg text-sky-600 font-medium">Dashboard</h1>
-          <Button
-            onClick={openCreateJobDialog}
-            className="border-none bg-sky-500 hover:bg-sky-600"
-          >
-            <FileText className="mr-2 h-4 w-4" />
-            Create New Job
-          </Button>
-          <CreateNewJob
-            isOpenDialog={isCreateJobDialogOpen}
-            openChange={setIsCreateJobDialogOpen}
-            isCloseDialog={closeCreateJobDialog}
-          />
-        </div>
-        <div className="flex justify-between">
-          <KpiCard
-            title="Posted Job"
-            value="07"
-            icon={
-              <div className="bg-orange-100 p-3 rounded-full">
-                <Briefcase className="h-5 w-5 text-orange-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Shortlisted"
-            value="24"
-            icon={
-              <div className="bg-sky-100 p-3 rounded-full">
-                <BookmarkCheck className="h-5 w-5 text-sky-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Application"
-            value="1.4k"
-            icon={
-              <div className="bg-cyan-100 p-3 rounded-full">
-                <Eye className="h-5 w-5 text-cyan-400" />
-              </div>
-            }
-          />
-          <KpiCard
-            title="Save Candidate"
-            value="04"
-            icon={
-              <div className="bg-green-100 p-3 rounded-full">
-                <PenLine className="h-5 w-5 text-green-400" />
-              </div>
-            }
-          />
-        </div>
-        <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
-        {isProfileNotComplete ? (
-          <div className="flex  gap-16">
-            <div className="w-2/3 flex flex-col gap-3 justify-center items-center border rounded-lg">
-              <img
-                className="w-40"
-                src={emptyRecentPostImage}
-                alt="no suggested "
-              />
-              <div className="text-sm italic text-center text-gray-400">
-                <p>It looks a little empty here...</p>
-                <p>
-                  Start{" "}
-                  <span
-                    onClick={openCreateJobDialog}
-                    className="text-primary underline hover:cursor-pointer"
-                  >
-                    posting jobs
-                  </span>{" "}
-                  to see them appear here
-                </p>
-              </div>
+    <div className="flex flex-col gap-8">
+      <div className="md:w-[200px]">
+        <Button
+          onClick={openCreateJobDialog}
+          className="border-transparent bg-primary hover:bg-secondary"
+        >
+          <FileText className="mr-1 h-4 w-4" />
+          Create New Job
+        </Button>
+        <CreateNewJob
+          isOpenDialog={isCreateJobDialogOpen}
+          openChange={setIsCreateJobDialogOpen}
+          isCloseDialog={closeCreateJobDialog}
+        />
+      </div>
+      <div className="flex justify-between">
+        <KpiCard
+          title="Posted Job"
+          value="07"
+          icon={
+            <div className="bg-orange-100 p-3 rounded-full">
+              <Briefcase className="h-5 w-5 text-orange-400" />
             </div>
+          }
+        />
+        <KpiCard
+          title="Shortlisted"
+          value="24"
+          icon={
+            <div className="bg-sky-100 p-3 rounded-full">
+              <BookmarkCheck className="h-5 w-5 text-sky-400" />
+            </div>
+          }
+        />
+        <KpiCard
+          title="Application"
+          value="1.4k"
+          icon={
+            <div className="bg-cyan-100 p-3 rounded-full">
+              <Eye className="h-5 w-5 text-cyan-400" />
+            </div>
+          }
+        />
+        <KpiCard
+          title="Save Candidate"
+          value="04"
+          icon={
+            <div className="bg-green-100 p-3 rounded-full">
+              <PenLine className="h-5 w-5 text-green-400" />
+            </div>
+          }
+        />
+      </div>
+      <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
+      <div className="w-full flex gap-16">
+        {/* recent posted jobs table here */}
+        <RecentPostedJobs setOpenCreateJobDialog={openCreateJobDialog} />
+        {/* <NewApplicants /> */}
+        {/* <SuggestedCandidates /> */}
+      </div>
+      {/* <div className="flex  gap-16">
             <div className="w-1/4 bg-white shadow-md flex flex-col  py-4 border rounded-lg">
               <h1 className="text-gray-500 text-sm px-5 border-b-[1px] pb-5">
                 Suggested Candidates
@@ -316,18 +314,8 @@ export default function EmployerDashboardTab() {
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <div className="flex  gap-16">
-              {/* recent posted jobs table here */}
-              <RecentPostedJobs />
-              {/* <NewApplicants /> */}
-              <SuggestedCandidates />
-            </div>
-          </>
-        )}
-      </div>
+          </div> */}
+      {/* {showGuard && <UserGuard onComplete={handleGuardComplete} />} */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FileText, X, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -22,12 +22,15 @@ import {
   SelectValue,
 } from "../ui/select";
 import { matchesData } from "@/utils/data/agent-mock-data";
+import { NavLink } from "react-router-dom";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 export default function CreateNewJob({
   isOpenDialog,
   openChange,
   isCloseDialog,
 }) {
+  const employer = useEmployerData((state) => state.employerData);
   // new
   const [tags, setTags] = useState([]);
   const [requirements, setRequirements] = useState([""]);
@@ -181,216 +184,209 @@ export default function CreateNewJob({
     setFilterEmployer("");
     setFilterStatus("");
   };
+
   return (
     <Dialog open={isOpenDialog} onOpenChange={openChange}>
       {/* <DialogTrigger asChild>
-        <Button className="border-none bg-sky-500 hover:bg-sky-600">
-          <FileText className="mr-2 h-4 w-4" />
+        <Button className="border-transparent bg-primary hover:bg-secondary">
+          <FileText className="mr-1 h-4 w-4" />
           Create New Job
         </Button>
       </DialogTrigger> */}
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Create New Job</DialogTitle>
-        </DialogHeader>
-
-        <form className="space-y-8">
-          {/* Basic Information */}
-          <Card>
-            <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="job_title">Job Title *</Label>
-                  <Input
-                    id="job_title"
-                    placeholder="e.g. Senior Frontend Developer"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="job_location">Location *</Label>
-                  <Input
-                    id="job_location"
-                    placeholder="e.g. San Francisco, CA or Remote"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="job_type">Job Type *</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select job type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="full-time">Full-time</SelectItem>
-                      <SelectItem value="part-time">Part-time</SelectItem>
-                      <SelectItem value="contract">Contract</SelectItem>
-                      <SelectItem value="internship">Internship</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="salary">Salary Range</Label>
-                  <Input id="salary" placeholder="e.g. $80,000 - $120,000" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="deadline">Application Deadline</Label>
-                <Input id="deadline" type="date" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Job Description */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Job Description</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="job_description">Job Description *</Label>
-                <Textarea
-                  id="job_description"
-                  placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
-                  className="min-h-[120px]"
-                  required
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Requirements */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {requirements.map((requirement, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={requirement}
-                      onChange={(e) => updateRequirement(index, e.target.value)}
-                      placeholder={`Requirement ${index + 1}`}
-                      className="flex-1"
-                    />
-                    {requirements.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => removeRequirement(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={addRequirement}
-                  className="w-full"
+      <form className="space-y-8">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Create New Job</DialogTitle>
+          </DialogHeader>
+          {!employer?.user?.profileVerified ? (
+            <div>
+              <p className="border p-3 rounded-lg text-base text-red-500 text-center ">
+                Your account is yet to be verified, please head on to your{" "}
+                <NavLink
+                  className="italic underline text-primary "
+                  to={"companyprofile"}
                 >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Requirement
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+                  {" "}
+                  profile to complete
+                </NavLink>{" "}
+                it in order to be able to create job
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              <Card>
+                <CardContent className="space-y-4 pt-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="job_title">Job Title *</Label>
+                      <Input
+                        id="job_title"
+                        placeholder="e.g. Senior Frontend Developer"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="job_location">Location *</Label>
+                      <Input
+                        id="job_location"
+                        placeholder="e.g. San Francisco, CA or Remote"
+                        required
+                      />
+                    </div>
+                  </div>
 
-          {/* Tags */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Skills & Tags</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-2">
-                <Input
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  placeholder="Add a skill or tag"
-                  onKeyPress={(e) =>
-                    e.key === "Enter" && (e.preventDefault(), addTag())
-                  }
-                />
-                <Button type="button" onClick={addTag}>
-                  Add
-                </Button>
-              </div>
-              {tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="flex items-center gap-1"
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="job_type">Job Type *</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select job type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="on-site">On-site</SelectItem>
+                          <SelectItem value="remote">Remote</SelectItem>
+                          <SelectItem value="hybrid">Hybrid</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="salary">Salary Range</Label>
+                      <Input
+                        id="salary"
+                        placeholder="e.g. $80,000 - $120,000"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="deadline">Application Deadline</Label>
+                    <Input id="deadline" type="date" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="job_description">Job Description *</Label>
+                    <Textarea
+                      id="job_description"
+                      placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
+                      className="min-h-[120px]"
+                      required
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Requirements */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Requirements</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    {requirements.map((requirement, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Input
+                          value={requirement}
+                          onChange={(e) =>
+                            updateRequirement(index, e.target.value)
+                          }
+                          placeholder={`Requirement ${index + 1}`}
+                          className="flex-1"
+                        />
+                        {requirements.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            onClick={() => removeRequirement(index)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={addRequirement}
+                      className="w-full"
                     >
-                      {tag}
-                      <button
-                        type="button"
-                        onClick={() => removeTag(tag)}
-                        className="ml-1 hover:text-destructive"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Requirement
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Company Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Company Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="employer_name">Company Name *</Label>
-                <Input
-                  id="employer_name"
-                  placeholder="Your company name"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="company_bio">Company Description</Label>
-                <Textarea
-                  id="company_bio"
-                  placeholder="Tell candidates about your company, culture, and mission..."
-                  className="min-h-[100px]"
-                />
-              </div>
-            </CardContent>
-          </Card>
+              {/* Tags */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Tags</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex gap-2">
+                    <Input
+                      value={newTag}
+                      onChange={(e) => setNewTag(e.target.value)}
+                      placeholder="Add a skill or tag"
+                      onKeyPress={(e) =>
+                        e.key === "Enter" && (e.preventDefault(), addTag())
+                      }
+                    />
+                    <Button
+                      className="border-transparent bg-secondary"
+                      type="button"
+                      onClick={addTag}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                  {tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="flex items-center gap-1"
+                        >
+                          {tag}
+                          <button
+                            type="button"
+                            onClick={() => removeTag(tag)}
+                            className="ml-1 hover:text-destructive"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
-          {/* Submit */}
-          <div className="flex gap-4 justify-end">
-            <Button type="button" variant="outline">
-              Save as Draft
+              {/* Company Information */}
+
+              {/* Submit */}
+              <div className="flex gap-4 justify-end">
+                <Button type="button" variant="outline">
+                  Save as Draft
+                </Button>
+                <Button type="submit">Post Job</Button>
+              </div>
+            </div>
+          )}
+          <DialogFooter className="flex justify-end gap-2">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+
+            <Button
+              className="border-none bg-sky-500 hover:bg-sky-600"
+              onClick={handlePublishJob}
+            >
+              Publish Job
             </Button>
-            <Button type="submit">Post Job</Button>
-          </div>
-        </form>
-        <DialogFooter className="flex justify-end gap-2">
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-
-          <Button
-            className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={handlePublishJob}
-          >
-            Publish Job
-          </Button>
-        </DialogFooter>
-      </DialogContent>
+          </DialogFooter>
+        </DialogContent>
+      </form>
     </Dialog>
   );
 }

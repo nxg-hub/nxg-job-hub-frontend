@@ -1,7 +1,7 @@
 import CompanyInfo from "@/components/Employer/Profile/companyInfo";
 import { Separator } from "@/components/ui/separator";
 
-export default function EmployerCompanyInfoCard({ isEditing, onEditClick }) {
+export default function EmployerCompanyInfoCard() {
   return (
     <div className=" p-8 bg-white shadow rounded-md">
       <div className="flex flex-col gap-10 mb-10">
