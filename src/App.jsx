@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home.jsx";
 import ProfileLanding from "./pages/ProfileLanding.jsx";
 import Services from "./pages/Services.jsx";
@@ -72,8 +73,7 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { EmployerProfileCompletionForm } from "./pages/employerCompleteForm.jsx";
+import EmployerProfileCompletionForm from "@/pages/employerCompleteForm.jsx";
 
 const queryClient = new QueryClient();
 
