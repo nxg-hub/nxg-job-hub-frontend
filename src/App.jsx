@@ -73,7 +73,7 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 
-import EmployerProfileCompleteForm from "@/pages/employerCompleteForm.jsx";
+import EmployerProfileCompleteForm from "./pages/employercompleteform.jsx";
 
 const queryClient = new QueryClient();
 
