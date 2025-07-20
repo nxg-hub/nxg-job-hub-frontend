@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
 
-export function EmployerProfileCompletionForm() {
+export function EmployerProfileCompleteForm() {
   const navigate = useNavigate();
   const [isSkipButtonClick, setIsSkipButtonClick] = useState(false);
   const [formData, setFormData] = useState({
