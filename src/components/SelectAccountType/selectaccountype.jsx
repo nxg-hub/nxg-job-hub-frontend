@@ -21,7 +21,7 @@ const SelectAccountType = () => {
   const [submittingLoading, setSubmittingLoading] = useState(false);
 
   const { data, fetchStatus, isError, isSuccess, error, isFetched } = useAutoLogin();
-  const isAutoLoginChecking = fetchStatus === "fetching"; // ✅ Fixed typo here
+  const isAutoLoginChecking = fetchStatus === "fetching"; 
 
   const storedToken = (() => {
     let key =
