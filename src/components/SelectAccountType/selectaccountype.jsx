@@ -73,6 +73,8 @@ const SelectAccountType = () => {
     }
   }, [isAutoLoginChecking, isSuccess, isError, data, error, storedToken, isFetched, navigate]);
 
+  if (isAutoLoginChecking || (!isFetched && !storedToken)) return <div>Loading...</div>;
+  
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
     { label: "Agent", value: "agent" },
@@ -176,7 +178,7 @@ const SelectAccountType = () => {
     }
   };
 
-  if (isAutoLoginChecking || (!isFetched && !storedToken)) return <div>Loading...</div>;
+  
 
   return (
     <div className="space-y-10">
@@ -214,8 +216,6 @@ const SelectAccountType = () => {
           }
           type="button"
           onClick={setAccountType}
-          aria-disabled={!accountChoice}
-          disabled={!accountChoice || submittingLoading}
         >
           {submittingLoading ? (
             <div className="flex items-center space-x-1">
