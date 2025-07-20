@@ -255,7 +255,6 @@ const SelectAccountType = () => {
           onClick={setAccountType}
           aria-disabled={!accountChoice}
           disabled={!accountChoice || submittingLoading}
-          to={`./${accountChoice}`}
         >
           {submittingLoading ? (
             <div className="flex items-center space-x-1">
