@@ -73,7 +73,7 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 
-import EmployerProfileCompleteForm from "@/pages/employerCompleteForm.jsx";
+// import EmployerProfileCompleteForm from "@/pages/employerCompleteForm.jsx";
 
 const queryClient = new QueryClient();
 
@@ -144,10 +144,10 @@ function App() {
           <Route path="messages" element={<EmployerMessagesTab />} />
           <Route path="setting" element={<EmployerSettingTab />} />
         </Route>
-        <Route
+        {/* <Route
           path="/employer/complete-profile"
           element={<EmployerProfileCompleteForm />}
-        />
+        /> */}
         {/* end employer user routes */}
 
         <Route element={<ProtectedRoute />}>
