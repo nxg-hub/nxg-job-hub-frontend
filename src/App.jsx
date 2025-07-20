@@ -73,6 +73,11 @@ import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompletionForm } from "./pages/employercompleteform.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx"
+import PersonalInfoPage from "./pages/CompleteYourProfile/personalInfo.jsx";
+import SkillsExperiencePage from "./pages/CompleteYourProfile/skillsAndExperiences.jsx"
+import CertificationsPage from "./pages/CompleteYourProfile/certificationAndPortfolioPage.jsx"
+import { ProfileFormProvider } from "./pages/CompleteYourProfile/ProfileFormContent.jsx"
 
 const queryClient = new QueryClient();
 
@@ -96,6 +101,13 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        {/* <Route path="/completeProfile" element={<CompleteYourProfile/>} /> */}
+
+        {/* Complete Profile with Form Provider */}
+        {/* <Route path="/completeProfile" element={<ProfileFormProvider><CompleteYourProfile /></ProfileFormProvider>} /> */}
+        <Route path="/personalInfo" element={<ProfileFormProvider><PersonalInfoPage /></ProfileFormProvider>} />
+        <Route path="/skills" element={<ProfileFormProvider><SkillsExperiencePage /></ProfileFormProvider>} />
+        <Route path="/certifications" element={<ProfileFormProvider><CertificationsPage /></ProfileFormProvider>} />
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>

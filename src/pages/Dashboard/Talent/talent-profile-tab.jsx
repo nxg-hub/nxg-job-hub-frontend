@@ -270,385 +270,385 @@ export default function TalentProfileTab() {
 
 
 
-  return (
-    <div className="space-y-6 mx-6" >
-       <div className="flex items-center justify-between "> 
-         <h1 className="text-3xl font-bold ">My Profile</h1> 
-        {/* <Button onClick={handleSaveProfile}>Save Changes</Button> */}
-       </div> 
+    return (
+      <div className="space-y-6 mx-6" >
+        <div className="flex items-center justify-between "> 
+          <h1 className="text-3xl font-bold ">My Profile</h1> 
+          {/* <Button onClick={handleSaveProfile}>Save Changes</Button> */}
+        </div> 
 
-      <Tabs defaultValue="personal">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="personal" className="border-none hover:bg-white hover:text-black">Personal Information</TabsTrigger>
-          <TabsTrigger value="skills" className="border-none hover:bg-white hover:text-black">Skills & Experience</TabsTrigger>
-          <TabsTrigger value="portfolio" className="border-none hover:bg-white hover:text-black">Certifications & Portfolio</TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="personal">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="personal" className="border-none hover:bg-white hover:text-black">Personal Information</TabsTrigger>
+            <TabsTrigger value="skills" className="border-none hover:bg-white hover:text-black">Skills & Experience</TabsTrigger>
+            <TabsTrigger value="portfolio" className="border-none hover:bg-white hover:text-black">Certifications & Portfolio</TabsTrigger>
+          </TabsList>
 
-        {/* Personal Information Tab */}
-        <TabsContent value="personal" className=" mt-4 px-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
-              <CardDescription>Update your personal details</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 ">
-              <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
-                <Avatar className="h-24 w-24">
-                  <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Profile" />
-                  <AvatarFallback>JD</AvatarFallback>
-                </Avatar>
-                <div className="space-y-2 flex-1">
-                  <h3 className="font-medium">Profile Picture</h3>
-                  <p className="text-sm text-muted-foreground">Upload a professional photo for your profile</p>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload
-                    </Button>
-                    <Button variant="outline" size="sm" className="text-destructive hover:text-destructive">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Remove
-                    </Button>
+          {/* Personal Information Tab */}
+          <TabsContent value="personal" className=" mt-4 px-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Personal Information</CardTitle>
+                <CardDescription>Update your personal details</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 ">
+                <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
+                  <Avatar className="h-24 w-24">
+                    <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Profile" />
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  <div className="space-y-2 flex-1">
+                    <h3 className="font-medium">Profile Picture</h3>
+                    <p className="text-sm text-muted-foreground">Upload a professional photo for your profile</p>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">
+                        <Upload className="h-4 w-4 mr-2" />
+                        Upload
+                      </Button>
+                      <Button variant="outline" size="sm" className="text-destructive hover:text-destructive">
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Remove
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea id="bio" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Social Profiles</CardTitle>
-              <CardDescription>Connect your social media accounts</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="linkedin">LinkedIn</Label>
-                <Input id="linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="github">GitHub</Label>
-                <Input id="github" value={github} onChange={(e) => setGithub(e.target.value)} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="portfolio">Portfolio Website</Label>
-                <Input id="portfolio" value={portfolio} onChange={(e) => setPortfolio(e.target.value)} />
-              </div>
-            </CardContent>
-          </Card>
-          <div className=" flex justify-center my-4 ">
-        <Button onClick={handleSaveProfile} className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button> 
-        </div>
-        </TabsContent>
-        
-
-        {/* Skills & Experience Tab */}
-        <TabsContent value="skills" className="space-y-4 mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Skills</CardTitle>
-              <CardDescription>Add your technical and professional skills</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex flex-wrap gap-2 mb-4">
-                {skills.map((skill) => (
-                  <Badge key={skill} variant="secondary" className="px-3 py-1">
-                    {skill}
-                    <button className="ml-2 bg-sky-500 hover:bg-red-500 border-none " onClick={() => removeSkill(skill)}>
-                      <X className="h-3 w-3 text-white" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Add a skill"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && addSkill()}
-                />
-                <Button onClick={addSkill} className="border-none bg-sky-500 hover:bg-sky-600">Add</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle>Work Experience</CardTitle>
-                <CardDescription>Add your previous work experience</CardDescription>
-              </div>
-              <Dialog open={showWorkDialog} onOpenChange={setShowWorkDialog}>
-                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
-                  <Button size="sm border-none bg-sky-500 hover:bg-sky-600 ">
-                    <Plus className="h-4 w-4 mr-2 " />
-                    Add Experience
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="border-none bg-sky-500 hover:bg-sky-600">Add Work Experience</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="jobTitle">Job Title</Label>
-                      <Input
-                        id="jobTitle"
-                        placeholder="e.g. Senior Frontend Developer"
-                        value={newWorkExperience.title}
-                        onChange={(e) => setNewWorkExperience({ ...newWorkExperience, title: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="company">Company</Label>
-                      <Input
-                        id="company"
-                        placeholder="e.g. TechCorp Inc."
-                        value={newWorkExperience.company}
-                        onChange={(e) => setNewWorkExperience({ ...newWorkExperience, company: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="workLocation">Location</Label>
-                      <Input
-                        id="workLocation"
-                        placeholder="e.g. Remote, New York, NY"
-                        value={newWorkExperience.location}
-                        onChange={(e) => setNewWorkExperience({ ...newWorkExperience, location: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="startDate">Start Date</Label>
-                        <Input
-                          id="startDate"
-                          type="date"
-                          value={newWorkExperience.startDate}
-                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, startDate: e.target.value })}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="endDate">End Date</Label>
-                        <Input
-                          id="endDate"
-                          type="date"
-                          value={newWorkExperience.endDate}
-                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, endDate: e.target.value })}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="description">Description</Label>
-                      <Textarea
-                        id="description"
-                        rows={3}
-                        placeholder="Describe your responsibilities and achievements"
-                        value={newWorkExperience.description}
-                        onChange={(e) => setNewWorkExperience({ ...newWorkExperience, description: e.target.value })}
-                      />
-                    </div>
-
-                    <Button className="w-full " onClick={addWorkExperience}>
-                      Add Work Experience
-                    </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                   </div>
-                </DialogContent>
-              </Dialog>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {workExperiences.length > 0 ? (
-                <div className="space-y-4">
-                  {workExperiences.map((experience) => (
-                    <div key={experience.id} className="border rounded-lg p-4 space-y-3">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <Briefcase className="h-4 w-4 text-primary" />
-                            <h3 className="font-medium">{experience.title}</h3>
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            {experience.company} • {experience.location}
-                          </p>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                          onClick={() => removeWorkExperience(experience.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {new Date(experience.startDate).toLocaleDateString()} -
-                        {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : "Present"}
-                      </div>
-                      {experience.description && <p className="text-sm">{experience.description}</p>}
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+                  <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea id="bio" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Social Profiles</CardTitle>
+                <CardDescription>Connect your social media accounts</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="linkedin">LinkedIn</Label>
+                  <Input id="linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="github">GitHub</Label>
+                  <Input id="github" value={github} onChange={(e) => setGithub(e.target.value)} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="portfolio">Portfolio Website</Label>
+                  <Input id="portfolio" value={portfolio} onChange={(e) => setPortfolio(e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+            <div className=" flex justify-center my-4 ">
+          <Button onClick={handleSaveProfile} className="border-none bg-sky-500 hover:bg-sky-600">Save Changes</Button> 
+          </div>
+          </TabsContent>
+          
+
+          {/* Skills & Experience Tab */}
+          <TabsContent value="skills" className="space-y-4 mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Skills</CardTitle>
+                <CardDescription>Add your technical and professional skills</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {skills.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="px-3 py-1">
+                      {skill}
+                      <button className="ml-2 bg-sky-500 hover:bg-red-500 border-none " onClick={() => removeSkill(skill)}>
+                        <X className="h-3 w-3 text-white" />
+                      </button>
+                    </Badge>
                   ))}
                 </div>
-              ) : (
-                <div className="text-center py-6 text-muted-foreground">
-                  No work experience added yet. Click the button above to add your work history.
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Add a skill"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && addSkill()}
+                  />
+                  <Button onClick={addSkill} className="border-none bg-sky-500 hover:bg-sky-600">Add</Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle>Education</CardTitle>
-                <CardDescription>Add your educational background</CardDescription>
-              </div>
-              <Dialog open={showEducationDialog} onOpenChange={setShowEducationDialog}>
-                <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
-                  <Button size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Education
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle >Add Education</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="degree">Degree</Label>
-                      <Input
-                        id="degree"
-                        placeholder="e.g. Bachelor of Science in Computer Science"
-                        value={newEducation.degree}
-                        onChange={(e) => setNewEducation({ ...newEducation, degree: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="institution">Institution</Label>
-                      <Input
-                        id="institution"
-                        placeholder="e.g. University of Technology"
-                        value={newEducation.institution}
-                        onChange={(e) => setNewEducation({ ...newEducation, institution: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="eduLocation">Location</Label>
-                      <Input
-                        id="eduLocation"
-                        placeholder="e.g. New York, NY"
-                        value={newEducation.location}
-                        onChange={(e) => setNewEducation({ ...newEducation, location: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Work Experience</CardTitle>
+                  <CardDescription>Add your previous work experience</CardDescription>
+                </div>
+                <Dialog open={showWorkDialog} onOpenChange={setShowWorkDialog}>
+                  <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
+                    <Button size="sm border-none bg-sky-500 hover:bg-sky-600 ">
+                      <Plus className="h-4 w-4 mr-2 " />
+                      Add Experience
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className="border-none bg-sky-500 hover:bg-sky-600">Add Work Experience</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
                       <div className="space-y-2">
-                        <Label htmlFor="eduStartDate">Start Date</Label>
+                        <Label htmlFor="jobTitle">Job Title</Label>
                         <Input
-                          id="eduStartDate"
-                          type="date"
-                          value={newEducation.startDate}
-                          onChange={(e) => setNewEducation({ ...newEducation, startDate: e.target.value })}
+                          id="jobTitle"
+                          placeholder="e.g. Senior Frontend Developer"
+                          value={newWorkExperience.title}
+                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, title: e.target.value })}
                         />
                       </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="eduEndDate">End Date</Label>
+                        <Label htmlFor="company">Company</Label>
                         <Input
-                          id="eduEndDate"
-                          type="date"
-                          value={newEducation.endDate}
-                          onChange={(e) => setNewEducation({ ...newEducation, endDate: e.target.value })}
+                          id="company"
+                          placeholder="e.g. TechCorp Inc."
+                          value={newWorkExperience.company}
+                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, company: e.target.value })}
                         />
                       </div>
-                    </div>
 
-                    <Button className="w-full" onClick={addEducation}>
+                      <div className="space-y-2">
+                        <Label htmlFor="workLocation">Location</Label>
+                        <Input
+                          id="workLocation"
+                          placeholder="e.g. Remote, New York, NY"
+                          value={newWorkExperience.location}
+                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, location: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="startDate">Start Date</Label>
+                          <Input
+                            id="startDate"
+                            type="date"
+                            value={newWorkExperience.startDate}
+                            onChange={(e) => setNewWorkExperience({ ...newWorkExperience, startDate: e.target.value })}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="endDate">End Date</Label>
+                          <Input
+                            id="endDate"
+                            type="date"
+                            value={newWorkExperience.endDate}
+                            onChange={(e) => setNewWorkExperience({ ...newWorkExperience, endDate: e.target.value })}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea
+                          id="description"
+                          rows={3}
+                          placeholder="Describe your responsibilities and achievements"
+                          value={newWorkExperience.description}
+                          onChange={(e) => setNewWorkExperience({ ...newWorkExperience, description: e.target.value })}
+                        />
+                      </div>
+
+                      <Button className="w-full " onClick={addWorkExperience}>
+                        Add Work Experience
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {workExperiences.length > 0 ? (
+                  <div className="space-y-4">
+                    {workExperiences.map((experience) => (
+                      <div key={experience.id} className="border rounded-lg p-4 space-y-3">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <Briefcase className="h-4 w-4 text-primary" />
+                              <h3 className="font-medium">{experience.title}</h3>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {experience.company} • {experience.location}
+                            </p>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeWorkExperience(experience.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {new Date(experience.startDate).toLocaleDateString()} -
+                          {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : "Present"}
+                        </div>
+                        {experience.description && <p className="text-sm">{experience.description}</p>}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-6 text-muted-foreground">
+                    No work experience added yet. Click the button above to add your work history.
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Education</CardTitle>
+                  <CardDescription>Add your educational background</CardDescription>
+                </div>
+                <Dialog open={showEducationDialog} onOpenChange={setShowEducationDialog}>
+                  <DialogTrigger asChild className="border-none bg-sky-500 hover:bg-sky-600">
+                    <Button size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
                       Add Education
                     </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {educations.length > 0 ? (
-                <div className="space-y-4">
-                  {educations.map((education) => (
-                    <div key={education.id} className="border rounded-lg p-4 space-y-3">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <GraduationCap className="h-4 w-4 text-primary" />
-                            <h3 className="font-medium">{education.degree}</h3>
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            {education.institution} • {education.location}
-                          </p>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle >Add Education</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="degree">Degree</Label>
+                        <Input
+                          id="degree"
+                          placeholder="e.g. Bachelor of Science in Computer Science"
+                          value={newEducation.degree}
+                          onChange={(e) => setNewEducation({ ...newEducation, degree: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="institution">Institution</Label>
+                        <Input
+                          id="institution"
+                          placeholder="e.g. University of Technology"
+                          value={newEducation.institution}
+                          onChange={(e) => setNewEducation({ ...newEducation, institution: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="eduLocation">Location</Label>
+                        <Input
+                          id="eduLocation"
+                          placeholder="e.g. New York, NY"
+                          value={newEducation.location}
+                          onChange={(e) => setNewEducation({ ...newEducation, location: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="eduStartDate">Start Date</Label>
+                          <Input
+                            id="eduStartDate"
+                            type="date"
+                            value={newEducation.startDate}
+                            onChange={(e) => setNewEducation({ ...newEducation, startDate: e.target.value })}
+                          />
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                          onClick={() => removeEducation(education.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <div className="space-y-2">
+                          <Label htmlFor="eduEndDate">End Date</Label>
+                          <Input
+                            id="eduEndDate"
+                            type="date"
+                            value={newEducation.endDate}
+                            onChange={(e) => setNewEducation({ ...newEducation, endDate: e.target.value })}
+                          />
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {new Date(education.startDate).toLocaleDateString()} -
-                        {education.endDate ? new Date(education.endDate).toLocaleDateString() : "Present"}
-                      </div>
+
+                      <Button className="w-full" onClick={addEducation}>
+                        Add Education
+                      </Button>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-6 text-muted-foreground">
-                  No education added yet. Click the button above to add your educational background.
-                </div>
-              )}
-            </CardContent>
-          </Card>
-           {/* WORK AVAILABILITY */}
+                  </DialogContent>
+                </Dialog>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {educations.length > 0 ? (
+                  <div className="space-y-4">
+                    {educations.map((education) => (
+                      <div key={education.id} className="border rounded-lg p-4 space-y-3">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <GraduationCap className="h-4 w-4 text-primary" />
+                              <h3 className="font-medium">{education.degree}</h3>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {education.institution} • {education.location}
+                            </p>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeEducation(education.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {new Date(education.startDate).toLocaleDateString()} -
+                          {education.endDate ? new Date(education.endDate).toLocaleDateString() : "Present"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-6 text-muted-foreground">
+                    No education added yet. Click the button above to add your educational background.
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            {/* WORK AVAILABILITY */}
 
         <Card className=" my-8">
             <CardHeader>
