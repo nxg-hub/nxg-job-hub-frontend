@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAutoLogin } from "@/hooks/autoLogin";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

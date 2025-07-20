@@ -38,7 +38,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useAutoLogin } from "@/hooks/autoLogin";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 export function EmployerProfileCompleteForm() {
   const navigate = useNavigate();
