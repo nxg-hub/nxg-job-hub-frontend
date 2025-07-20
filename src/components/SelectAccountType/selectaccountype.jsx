@@ -14,15 +14,18 @@ import { cn } from "@/lib/utils";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 const SelectAccountType = () => {
+  // All hooks must be declared at the top level, unconditionally
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const [accountChoice, setAccountChoice] = useState("");
   const [submittingLoading, setSubmittingLoading] = useState(false);
 
+  // This hook is fine where it is
   const { data, fetchStatus, isError, isSuccess, error, isFetched } = useAutoLogin();
-  const isAutoLoginChecking = fetchStatus === "fetching"; 
+  const isAutoLoginChecking = fetchStatus === "fetching";
 
+  // This derived state (not a hook) is also fine
   const storedToken = (() => {
     let key =
       localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
@@ -35,6 +38,7 @@ const SelectAccountType = () => {
     }
   })();
 
+  // All useEffects must also be unconditional
   useEffect(() => {
     setSearchParams("");
   }, [setSearchParams]);
@@ -73,8 +77,13 @@ const SelectAccountType = () => {
     }
   }, [isAutoLoginChecking, isSuccess, isError, data, error, storedToken, isFetched, navigate]);
 
-  if (isAutoLoginChecking || (!isFetched && !storedToken)) return <div>Loading...</div>;
-  
+
+  // Only after ALL hooks have been called, can you conditionally return JSX.
+  if (isAutoLoginChecking || (!isFetched && !storedToken)) {
+      return <div>Loading...</div>;
+  }
+  // The rest of your component's render logic will only execute if the above condition is false.
+
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
     { label: "Agent", value: "agent" },
@@ -178,7 +187,6 @@ const SelectAccountType = () => {
     }
   };
 
-  
 
   return (
     <div className="space-y-10">
