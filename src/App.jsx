@@ -71,6 +71,7 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { EmployerProfileCompletionForm } from "./pages/employerCompleteForm.jsx";
 
