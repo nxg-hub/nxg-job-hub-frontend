@@ -11,7 +11,7 @@ import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "../ui/toaster";
 import { cn } from "@/lib/utils";
-import { useAutoLogin } from "@/hooks/useAutoLogin";
+import { useAutoLogin } from "@/hooks/autoLogin";
 
 const SelectAccountType = () => {
   const navigate = useNavigate();
