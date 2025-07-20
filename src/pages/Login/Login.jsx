@@ -35,11 +35,13 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+   //a state that disabled login button when trying to log user in
+  const [loginLoading, setLoginLoading] = useState(false);
+  
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  //a state that disabled login button when trying to log user in
-  const [loginLoading, setLoginLoading] = useState(false);
+ 
 
   const { data, fetchStatus, isError, isSuccess, error } = useAutoLogin();
 
@@ -134,17 +136,15 @@ export default function LoginForm() {
           duration: 2500,
         });
         setTimeout(() => {
-          navigate(
-            userRes.data.userType === "EMPLOYER"
-              ? "/employer"
-              : userRes.data.userType === "AGENT"
-              ? "/agent"
-              : userRes.data.userType === "TECHTALENT"
-              ? "/talent"
-              : userRes.data.userType === "TALENT"
-              ? "/talent"
-              : null
-          );
+          if(userRes.data.userType === "EMPLOYER"){
+             navigate("/employer");
+          }else if(userRes.data.userType === "AGENT"){
+            navigate("/agent");
+          }else if(userRes.data.userType === "TECHTALENT"){
+            navigate("/talent");
+          }else{
+            return;
+          }
         }, 3000);
       }
     } catch (error) {
