@@ -17,6 +17,7 @@ const SelectAccountType = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const [accountChoice, setAccountChoice] = useState("");
   //a state that disabled login button when trying to log user in
   const [submittingLoading, setSubmittingLoading] = useState(false);
 
@@ -85,7 +86,7 @@ const SelectAccountType = () => {
     navigate,
   ]);
 
-  const [accountChoice, setAccountChoice] = useState("");
+  
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
