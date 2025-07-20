@@ -5,7 +5,7 @@ import "swiper/css/bundle";
 import "./slide.scss";
 import Analysis from "../../../src/static/icons/Data analysis.png";
 import Machine from "../../../src/static/icons/icon _Computer Process_.png";
-import Project from "../../../src/static/icons/icon-browser_.png";
+import Project from "../../../src/static/icons/icon_browser_.png";
 import UI from "../../../src/static/icons/ux design.png";
 import Cyber from "../../../src/static/icons/Cybersecurity.svg";
 import Web from "../../../src/static/icons/web-development.svg";

@@ -16,7 +16,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import Notification from "../../../../static/icons/notification-new.svg?react";
 import Services from "../../../../static/icons/Company_services.svg?react";
 import Contract from "../../../../static/icons/clarity_contract-line.svg?react";
-import Interviews from "../../../../static/icons/tdesign_system-application.svg?react";
+import Interviews from "../../../../static/icons/tdesign_system_application.svg?react";
 import JobPosts from "../../../../static/icons/eos-icons_cronjob.svg?react";
 import PostJobs from "../../../../static/icons/map_general-contractor.svg?react";
 import Applicants from "../../../../static/icons/carbon_load-balancer-application.svg?react";

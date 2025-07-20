@@ -1,7 +1,5 @@
-import ChevronUp from './chevron-up.svg'
-import ChevronDown from './chevron-down.svg'
-const Icons = (
-    ChevronUp, ChevronDown
-)
+import ChevronUp from "./chevron-up.svg?react";
+import ChevronDown from "./chevron-down.svg?react";
+const Icons = (ChevronUp, ChevronDown);
 
 export default Icons;
