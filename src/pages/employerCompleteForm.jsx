@@ -76,7 +76,7 @@ export function EmployerProfileCompleteForm() {
   const { updateUserProfile, isLoading } = useUserProfileUpdate();
 
   //if auto-login check has completed(either success or failed)
-  const isAutoLoginChecking = fetchStatus === "fatching";
+  const isAutoLoginChecking = fetchStatus === "fetching";
 
   const storedToken = (function () {
     let key =
