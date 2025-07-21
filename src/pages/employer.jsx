@@ -39,7 +39,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
-import useAuthRedirect from "@/hooks/useAuthRedirect";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
