@@ -1,6 +1,6 @@
-import EmployImg from "../../static/images/choose-img1.png";
-import HelpImg from "../../static/images/help-employ-img.png";
-import BeImg from "../../static/images/be-employed-img.png";
+import EmployImg from "@/static/images/choose-img1.png";
+import HelpImg from "@/static/images/help-employ-img.png";
+import BeImg from "@/static/images/be-employed-img.png";
 
 const jobsDetails = [
   {
