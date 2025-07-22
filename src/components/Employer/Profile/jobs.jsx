@@ -1,9 +1,15 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-export default function Jobs({ formData, updateFormData }) {
+import { useEmployerData } from "@/store/employer/employerStore";
+export default function Jobs() {
+  const employer = useEmployerData((state) => state.employerData);
+  const updateEmployerField = useEmployerData(
+    (state) => state.updateEmployerField
+  );
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateFormData({ [name]: value });
+    updateEmployerField(name, value);
   };
 
   return (

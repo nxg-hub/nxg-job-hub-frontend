@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  BriefcaseIcon,
-  ChevronDown,
-  Link,
-  Link2,
-  Plus,
-  Users,
-} from "lucide-react";
+import { BriefcaseIcon, ChevronDown, Link, Link2, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -119,7 +112,8 @@ export default function DashboardTab() {
         </Card>
         <Button
           className="w-1/6 self-end border-none bg-sky-500 hover:bg-sky-600"
-          onClick={() => goToAllMatch()}>
+          onClick={() => goToAllMatch()}
+        >
           View All Matches
         </Button>
       </div>
@@ -149,7 +143,8 @@ export default function DashboardTab() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="flex items-start gap-3 rounded-lg bg-gray-50 p-3">
+                className="flex items-start gap-3 rounded-lg bg-gray-50 p-3"
+              >
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 text-xl">
                   {item.icon}
                 </div>
@@ -169,9 +164,7 @@ export default function DashboardTab() {
           <CardContent>
             <div className="space-y-4">
               {messagesData.map((message) => (
-                <div
-                  key={message.id}
-                  className="flex w-full border-b-2 pb-4">
+                <div key={message.id} className="flex w-full border-b-2 pb-4">
                   <div className="pr-3 w-[10%]">
                     <Avatar className="h-9 w-9">
                       <AvatarImage
@@ -189,9 +182,7 @@ export default function DashboardTab() {
                       <p className="text-sm font-medium leading-none">
                         {message.from.name}
                       </p>
-                      <Badge
-                        variant="outline"
-                        className="ml-4">
+                      <Badge variant="outline" className="ml-4">
                         {message.from.type}
                       </Badge>
                     </div>
@@ -214,7 +205,8 @@ export default function DashboardTab() {
           <CardFooter>
             <Button
               className="w-full border-none bg-sky-500 hover:bg-sky-600"
-              onClick={() => goToAllMessages()}>
+              onClick={() => goToAllMessages()}
+            >
               View All Messages
             </Button>
           </CardFooter>
@@ -248,9 +240,7 @@ export default function DashboardTab() {
               tasks: "5/11 placed",
             },
           ].map((item, index) => (
-            <div
-              key={index}
-              className="space-y-2">
+            <div key={index} className="space-y-2">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-medium">{item.title}</h3>
@@ -258,10 +248,7 @@ export default function DashboardTab() {
                 </div>
                 <span className="text-sm font-medium">{item.progress}%</span>
               </div>
-              <Progress
-                value={item.progress}
-                className="h-2"
-              />
+              <Progress value={item.progress} className="h-2" />
             </div>
           ))}
         </CardContent>

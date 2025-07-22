@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Upload, Trash, Camera, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,9 +11,8 @@ import {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_UPLOAD_PRESET,
 } from "@/lib/CLOUDINARY_API";
-import { useQueryClient } from "@tanstack/react-query";
 
-export default function ProfilePhotoCard({
+export default function EmployerProfilePhotoCard({
   userId,
   firstName,
   lastName,
@@ -54,55 +55,50 @@ export default function ProfilePhotoCard({
     }
   };
 
-  // const handleSaveProfileImage = async () => {
-  //   if (!selectedImage) {
-  //     return;
-  //   }
+  const handleSaveProfileImage = async () => {
+    if (!selectedImage) {
+      return;
+    }
 
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("file", selectedImage);
-  //     formData.append("upload_preset", cloudinary_preset);
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedImage);
+      formData.append("upload_preset", cloudinary_preset);
 
-  //     //storing profile image into cloudinary and get the file url path
-  //     const response = await axios.post(
-  //       `https://api.cloudinary.com/v1_1/${cloudinary_name}/raw/upload`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/formdata",
-  //         },
-  //       }
-  //     );
+      //storing profile image into cloudinary and get the file url path
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudinary_name}/image/upload`,
+        formData
+      );
 
-  //     const { secure_url } = response.data;
-  //     console.log(`Cloudinary upload successful for profile image`, secure_url);
-  //     if (secure_url) {
-  //       const payload = {
-  //         profilePicture: secure_url,
-  //       };
-  //       //update employer profile by adding the cloudinary url path
-  //       const { data, status } = await updateUserProfile(
-  //         `${API_HOST_URL}/api/employers`,
-  //         userId,
-  //         JSON.stringify(payload)
-  //       );
-  //       queryClient.invalidateQueries({ queryKey: ["employerData"] });
-  //       if (status === 200) {
-  //         toast({
-  //           className: cn(
-  //             "bg-gray-100 top-1/2 left-1/2 fixed max-w-[100px] md:max-w-[280px]"
-  //           ),
+      const { secure_url } = response.data;
+      console.log(`Cloudinary upload successful for profile image`, secure_url);
+      if (secure_url) {
+        const payload = {
+          profilePicture: secure_url,
+        };
+        //update employer profile by adding the cloudinary url path
+        const { data, status } = await updateUserProfile(
+          `${API_HOST_URL}/api/employers`,
+          userId,
+          JSON.stringify(payload)
+        );
+        queryClient.invalidateQueries({ queryKey: ["employerData"] });
+        if (status === 200) {
+          toast({
+            className: cn(
+              "bg-gray-100 top-1/2 left-1/2 fixed max-w-[100px] md:max-w-[280px]"
+            ),
 
-  //           description: "Profile picture saved successfully",
-  //           duration: 2500,
-  //         });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("failed to save image url", error);
-  //   }
-  // };
+            description: "Profile picture saved successfully",
+            duration: 2500,
+          });
+        }
+      }
+    } catch (error) {
+      console.log("failed to save image url", error);
+    }
+  };
 
   return (
     <div className="flex gap-10 item-center bg-white shadow rounded-md p-5">
@@ -149,10 +145,11 @@ export default function ProfilePhotoCard({
       <div className="flex flex-col gap-4 justify-end">
         <div className="flex gap-5">
           <Button
+            type="button"
             className="text-sky-600 hover:text-sky-700"
             variant="outline"
             size="sm"
-            // onClick={handleSaveProfileImage}
+            onClick={handleSaveProfileImage}
           >
             <Upload className="h-4 w-4" />
             Upload picture

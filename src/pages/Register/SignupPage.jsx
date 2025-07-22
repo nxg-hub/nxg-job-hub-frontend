@@ -30,7 +30,6 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { cn } from "@/lib/utils";
-import User from "@/utils/classes/User";
 import EmailVerificationNotice from "@/components/EmailVerificationNotice";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -124,6 +123,7 @@ export default function SignupForm() {
       phoneNumber: values.phoneNumber,
       gender: values.gender,
       password: values.password,
+      deviceType: "WEB",
     };
     axios
       .post(`${API_HOST_URL}/api/v1/auth/register/`, payload)

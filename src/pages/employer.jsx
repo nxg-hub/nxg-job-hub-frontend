@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Bell,
   LayoutDashboard,
@@ -6,11 +6,11 @@ import {
   CircleHelp,
   Link2,
   MessageSquare,
-  User,
+  X,
   Building,
   Settings,
-  BarChart,
   Users,
+  OctagonAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,7 +25,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -33,18 +32,29 @@ import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { notificationsData } from "@/utils/data/agent-mock-data";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { API_HOST_URL } from "@/utils/api/API_HOST";
+import kcyimage from "@/static/images/kyc-image.png";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 const sidebarItems = [
   {
@@ -72,21 +82,28 @@ const sidebarItems = [
 ];
 
 export function EmployerDashboard() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [pageTitle, setPageTitle] = useState("Dashboard");
+  // const isAuthenticated = useAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
 
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  const employer = useEmployerData((state) => state.employerData);
+  const { isLoading, isError } = useEmployerDataQuery();
 
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   // Simulate loading delay
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
+
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   if (isLoading) {
     return <DashboardSkeleton />;
   }
+  if (isError) return <p>Erorr:</p>;
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -98,10 +115,12 @@ export function EmployerDashboard() {
 }
 
 function DashboardContent({ notifications = [] }) {
+  const employer = useEmployerData((state) => state.employerData);
+  const [showLogoutNotice, setShowLogoutNotice] = useState(false);
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
-  const [pageTitle, setPageTitle] = useState("");
+  const navigate = useNavigate();
 
   const [notificationDropdownOpen, setNotificationDropdownOpen] =
     useState(false);
@@ -110,8 +129,12 @@ function DashboardContent({ notifications = [] }) {
     (notification) => !notification.read
   ).length;
 
+  const closeModal = (e) => {
+    if (e.target === e.currentTarget) setShowLogoutNotice(false);
+  };
+
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-screen w-full p-8">
       {/* Sidebar */}
       <Sidebar collapsible="icon">
         <SidebarContent
@@ -159,27 +182,24 @@ function DashboardContent({ notifications = [] }) {
         </SidebarContent>
 
         <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                tooltip="Logout"
-                className="text-sky-700 hover:bg-white/10 hover:text-white border-none"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Logout</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <SidebarMenuButton
+            tooltip="Logout"
+            className="text-primary border-transparent hover:text-red-400"
+            onClick={() => setShowLogoutNotice(true)}
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Logout</span>
+          </SidebarMenuButton>
         </SidebarFooter>
       </Sidebar>
 
       {/* Main Content */}
-      <SidebarInset className="flex flex-col w-full">
+      <SidebarInset className="flex flex-col w-full gap-5">
         {/* Header */}
-        <header className="p-4 flex border-b justify-between w-full">
-          <div className="flex items-center space-x-2">
-            <SidebarTrigger className="mr-2 border-none" />
-          </div>
+        <div className="w-full flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          {/* <SidebarTrigger className="m-0 p-0 border-transparent" /> */}
+
           <DropdownMenu
             open={notificationDropdownOpen}
             onOpenChange={setNotificationDropdownOpen}
@@ -203,11 +223,92 @@ function DashboardContent({ notifications = [] }) {
             </DropdownMenuTrigger>
             <NotificationDropdown notifications={notifications} />
           </DropdownMenu>
-        </header>
+        </div>
+        {!employer?.user?.profileVerified && (
+          <div className="w-full bg-secondary flex text-yellow-700 border p-3 px-5 rounded italic font-medium text-sm items-center justify-between ">
+            <div className="w-9/12 flex items-center justify-between">
+              <div className="flex gap-3 items-center">
+                <span className="bg-black p-1 rounded text-white">
+                  Action required:
+                </span>
+                <span className="text-white">
+                  Your account is not yet verified,{" "}
+                  <NavLink
+                    className="underline hover:cursor-pointer hover:text-sky-300 "
+                    to={"companyprofile"}
+                  >
+                    {" "}
+                    complete your profile
+                  </NavLink>{" "}
+                  to continue using all features
+                </span>
+              </div>
+              {/* <Button className="border-transparent bg-gray-950 hover:underline hover:bg-black">
+              Complete Profile
+            </Button> */}
+            </div>
+            <div className="absolute right-10 w-[200px]">
+              <img
+                src={kcyimage}
+                alt="Complete profile illustration"
+                className="object-contain w-44 h-44"
+              />
+            </div>
+            <X className="relative bottom-3 left-3 text-white w-4 h-4" />
+          </div>
+        )}
         <div className="h-full">
           <Outlet />
         </div>
       </SidebarInset>
+      {showLogoutNotice && (
+        <ShowLogOutDialogue isOpen={showLogoutNotice} onClose={closeModal} />
+      )}
     </div>
   );
 }
+
+const ShowLogOutDialogue = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
+  const handleCancelClick = () => {
+    sessionStorage.clear();
+    navigate("/login");
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+      <AlertDialogContent className="flex flex-col items-center">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex flex-col items-center" asChild>
+            <div className="flex flex-col gap-5">
+              <OctagonAlert size={60} className="text-gray-400" />
+              <h1 className="text-2xl">Are you sure you want to logout?</h1>
+            </div>
+          </AlertDialogTitle>
+          <AlertDialogDescription
+            asChild
+            className="flex flex-col items-center py-6 space-y-8"
+          >
+            <div>
+              <p className="text-center text-sm px-5">
+                You'll need to log in again to access your account. Make sure
+                you've saved your work before proceeding.
+              </p>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="w-full">
+          <AlertDialogCancel onClick={onClose} className="sm:w-1/2">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleCancelClick}
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
+          >
+            Logout
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};

@@ -71,13 +71,13 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
-import { EmployerProfileCompletionForm } from "./pages/employercompleteform.jsx";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import CompleteYourProfile from "./pages/CompleteYourProfile/Agent/index.jsx"
+import { EmployerProfileCompletionForm } from "./pages/employerCompleteForm.jsx";
+import { ProfileFormProvider } from "./pages/CompleteYourProfile/ProfileFormContent.jsx";
 import PersonalInfoPage from "./pages/CompleteYourProfile/personalInfo.jsx";
 import SkillsExperiencePage from "./pages/CompleteYourProfile/skillsAndExperiences.jsx"
 import CertificationsPage from "./pages/CompleteYourProfile/certificationAndPortfolioPage.jsx"
-import { ProfileFormProvider } from "./pages/CompleteYourProfile/ProfileFormContent.jsx"
 
 const queryClient = new QueryClient();
 

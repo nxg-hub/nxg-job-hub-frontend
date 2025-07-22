@@ -10,8 +10,8 @@ export default function SuggestedCandidates() {
       <Separator className="mt-5" />
       <div className="flex flex-col">
         {[1, 2, 3].map((id) => (
-          <div className="hover:bg-sky-50 hover:cursor-pointer py-5">
-            <div key={id} className="flex items-center gap-2 px-5 rounded ">
+          <div key={id} className="hover:bg-sky-50 hover:cursor-pointer py-5">
+            <div className="flex items-center gap-2 px-5 rounded ">
               <Avatar className="h-12 w-12">
                 <AvatarImage src={sarahicon} alt="Sarah" />
                 <AvatarFallback className="text-2xl">AC</AvatarFallback>

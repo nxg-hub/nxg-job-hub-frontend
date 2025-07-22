@@ -21,22 +21,53 @@ import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
-import { cn, getUserUsingAuthKey } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 const formSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(1, "Password is required"),
+  password: z.string(),
   keep_loggin: z.boolean().optional(),
 });
 
 export default function LoginForm() {
+   //a state that disabled login button when trying to log user in
   const [loginLoading, setLoginLoading] = useState(false);
+  
   const navigate = useNavigate();
   const { toast } = useToast();
+
+ 
+
+  const { data, fetchStatus, isError, isSuccess, error } = useAutoLogin();
+
+  //if auto-login check has completed(either success or failed)
+  const isAutoLoginChecking = fetchStatus === "fatching";
+
+  useEffect(() => {
+    if (!isAutoLoginChecking) {
+      if (isSuccess && data?.userType) {
+        //redirect user to their dashboard based on thier type
+        if (data.userType === "EMPLOYER") {
+          navigate("/employer", { replace: true });
+        } else if (data.userType === "AGENT") {
+          navigate("/agent", { replace: true });
+        } else if (data.userType === "TALENT") {
+          navigate("/talent", { replace: true });
+        } else if (data.userType === "TECHTALENT") {
+          navigate("/talent", { replace: true });
+        } else {
+          console.warn("Unknown user type:", data.userType);
+        }
+      } else if (isError) {
+        console.error("Auto-login failed:", error.message);
+      }
+    }
+  }, [isAutoLoginChecking, isSuccess, isError, data, error, navigate]);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -47,246 +78,137 @@ export default function LoginForm() {
     },
   });
 
-  // Improved onSubmit function with better error handling
-async function onSubmit(values) {
-  setLoginLoading(true);
-  
-  try {
-    // Login request
-    const res = await axios.post(
-      `${API_HOST_URL}/api/v1/auth/login`,
-      {
+  async function onSubmit(values) {
+    setLoginLoading(true);
+    try {
+      const res = await axios.post(`${API_HOST_URL}/api/v1/auth/login`, {
         email: values.email,
         password: values.password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: false, // Explicitly set to false for now
-      }
-    );
-
-    // Extract and format auth token
-    const rawAuthKey = res.headers.authorization || res.headers.Authorization;
-    console.log("Raw Auth Header:", rawAuthKey);
-
-    if (!rawAuthKey) {
-      throw new Error("No authorization header received from server");
-    }
-
-    const authKey = rawAuthKey.startsWith("Bearer ")
-      ? rawAuthKey
-      : `Bearer ${rawAuthKey}`;
-
-    if (authKey === "Bearer undefined" || authKey === "Bearer null") {
-      throw new Error("Invalid authorization token received");
-    }
-
-    console.log("Auth Key Being Sent:", authKey);
-
-    // Get user data
-    const userRes = await axios.get(
-      `${API_HOST_URL}/api/v1/auth/get-user`,
-      {
-        headers: {
-          "Authorization": authKey,
-          "Content-Type": "application/json",
-        },
-        withCredentials: false, // Match the login request
-      }
-    );
-
-    const { id, userType } = userRes.data;
-    const userData = { 
-      authKey, 
-      email: values.email, 
-      id, 
-      userType 
-    };
-
-    // Store user data based on "keep logged in" preference
-    if (values.keep_loggin) {
-      window.localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(userData));
-      // Clear session storage to avoid conflicts
-      window.sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-    } else {
-      window.sessionStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(userData));
-      // Clear local storage to avoid conflicts
-      window.localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-    }
-
-    // Navigate based on user type
-    if (!userType) {
-      navigate("/create");
-    } else {
-      toast({
-        className: cn(
-          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Success",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-            <code className="text-white">Logging in...</code>
-          </pre>
-        ),
-        duration: 2500,
       });
 
-      setTimeout(() => {
-        navigate(
-          userType === "EMPLOYER"
-            ? "/employer"
-            : userType === "AGENT"
-            ? "/agent"
-            : userType === "TALENT"
-            ? "/talent"
-            : "/create"
+      const authKey = res.headers.authorization;
+
+      if (!authKey) {
+        navigate("/login");
+        return;
+      }
+
+      const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authKey,
+        },
+      });
+
+      const id = userRes.data.id; // Assuming the user ID is returned in the response
+
+      if (values.keep_loggin && authKey) {
+        // if "remember me" is set, Save authentication key to local storage
+        window.localStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email, id })
         );
-      }, 2500); // Reduced timeout to match toast duration
-    }
-  } catch (error) {
-    console.error("Login error:", error);
-    
-    // Enhanced error handling
-    if (error.response) {
-      const status = error.response.status;
-      const errorMessage = error.response.data?.message || "Login failed";
-      
-      let title = "Login Failed";
-      let description = errorMessage;
-      
-      if (status === 401) {
-        title = "Invalid Credentials";
-        description = "Please check your email and password";
-      } else if (status === 403) {
-        title = "Access Denied";
-        description = "Your account may be suspended or you don't have permission";
-      } else if (status === 404) {
-        title = "Account Not Found";
-        description = "No account found with this email address";
-      } else if (status === 429) {
-        title = "Too Many Attempts";
-        description = "Please wait before trying again";
+      } else if (!values.keep_loggin && authKey) {
+        // if login without "remember me", start a session
+        window.sessionStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email, id })
+        );
+      } else if (authKey) {
+        // if login without "remember me", start a session
+        window.localStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify(authKey)
+        );
       }
-      
-      toast({
-        className: cn(
-          "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title,
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-            <code className="text-white">{description}</code>
-          </pre>
-        ),
-      });
-    } else if (error.request) {
-      // Network error
-      toast({
-        className: cn(
-          "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Network Error",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
-            <code>
-              Failed to connect to server.
-              Please check your internet connection.
-            </code>
-          </pre>
-        ),
-        action: (
-          <ToastAction
-            onClick={() => form.handleSubmit(onSubmit)()}
-            className="bg-primary text-white hover:bg-sky-700 hover:text-white self-start border-transparent"
-            altText="Try again"
-          >
-            Try again
-          </ToastAction>
-        ),
-      });
-    } else {
-      // Other errors (including our custom errors)
-      toast({
-        className: cn(
-          "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Error",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-            <code className="text-white">
-              {error.message || "An unexpected error occurred"}
-            </code>
-          </pre>
-        ),
-      });
-    }
-  } finally {
-    setLoginLoading(false);
-  }
-}
 
-  // Fixed AutoLoginUser function
-  const AutoLoginUser = async () => {
-    try {
-      const storedData = JSON.parse(
-        window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-        window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-        "null"
-      );
-  
-      if (storedData?.authKey) {
-        try {
-          const userData = await getUserUsingAuthKey(storedData.authKey);
-
-          if (!userData?.userType) {
-            navigate("/create");
-          } else {
-            navigate(
-              userData.userType === "EMPLOYER"
-                ? "/employer"
-                : userData.userType === "AGENT"
-                ? "/agent"
-                : userData.userType === "TALENT"
-                ? "/talent"
-                : "/create"
-            );
+      if (!userRes.data.userType) {
+        navigate("/create");
+      } else {
+        toast({
+          className: cn("top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"),
+          title: <span className="text-green-800">Successful:</span>,
+          description: (
+            <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+              Logging in...
+            </p>
+          ),
+          duration: 2500,
+        });
+        setTimeout(() => {
+          if(userRes.data.userType === "EMPLOYER"){
+             navigate("/employer");
+          }else if(userRes.data.userType === "AGENT"){
+            navigate("/agent");
+          }else if(userRes.data.userType === "TECHTALENT"){
+            navigate("/talent");
+          }else{
+            return;
           }
-        } catch (authError) {
-          console.error("Authentication failed:", authError);
-         // Clear invalid stored data on auth failure
-          window.localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-          window.sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-        
-          // Don't navigate to login if already on login page
-          if (window.location.pathname !== "/login") {
-            navigate("/login");
-          }
-        }
+        }, 3000);
       }
     } catch (error) {
-      console.error("Auto login failed:", error);
-      // Clear invalid stored data
-      window.localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-      window.sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-    }
-  };
+      if (error.response) {
+        if (error.response.status === 401 || error.response.status === 404) {
+          toast({
+            className: cn(
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+            ),
+            title: <span className="text-red-900">Failed to login:</span>,
+            description: (
+              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                Wrong email or password combination
+              </p>
+            ),
+          });
 
-  // Add a flag to prevent multiple calls
-  const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
+          setTimeout(() => {
+            setLoginLoading(false);
+          }, 3000);
+        }
+      }
 
-  useEffect(() => {
-    if (!autoLoginAttempted) {
-      setAutoLoginAttempted(true);
-      AutoLoginUser();
+      if (!error.response) {
+        toast({
+          className: cn(
+            "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: <p className="text-red-700">Network error</p>,
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
+              <code>
+                Failed to login, please check your
+                <br />
+                internet connection.
+              </code>
+            </pre>
+          ),
+          action: (
+            <ToastAction
+              onClick={form.handleSubmit(onSubmit)}
+              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+              altText="Try again"
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+
+        setTimeout(() => {
+          setLoginLoading(false);
+        }, 3000);
+      }
     }
-  }, [autoLoginAttempted]); // Add autoLoginAttempted to dependency array
+  }
+
+  if (isAutoLoginChecking || (isSuccess && data?.userType)) {
+    return <div>logging you in</div>;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen py-14">
       <Card>
-        <CardContent className="flex rounded-b-lg p-0 sm:w-[1000px]">
+        <CardContent className="flex rounded-b-lg  p-0 sm:w-[1000px]">
           <section className="hidden sm:inline-block sm:w-1/2">
             <img src={LoginBG} alt="" className="rounded-l-lg h-full" />
           </section>
@@ -311,7 +233,7 @@ async function onSubmit(values) {
                       <FormControl>
                         <Input
                           placeholder="example@gmail.com"
-                          type="email"
+                          type="text"
                           {...field}
                         />
                       </FormControl>
@@ -332,14 +254,14 @@ async function onSubmit(values) {
                           {...field}
                         />
                       </FormControl>
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
                 <div>
                   <Link to="/forgotpassword" className="underline text-sm">
-                    Forgot Password?
+                    Forget Passoword?
                   </Link>
                 </div>
 
@@ -350,19 +272,19 @@ async function onSubmit(values) {
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                       <FormControl>
                         <Checkbox
-                          className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                          className="p-0  border-black hover:border-transparent hover:bg-secondary"
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>Keep me logged in</FormLabel>
+                        <FormLabel>Keep me logged In</FormLabel>
+
                         <FormMessage />
                       </div>
                     </FormItem>
                   )}
                 />
-                
                 <Button
                   disabled={loginLoading}
                   className="w-full bg-sky-600 border-none hover:bg-sky-700"
@@ -379,7 +301,42 @@ async function onSubmit(values) {
                 </Button>
               </form>
             </Form>
-            
+            {/* Logging using third party vendor  /> */}
+            {/* <div>
+              <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="px-4">or</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+              </section>
+              <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  type="submit">
+                  <img
+                    className="w-5 h-5"
+                    src={Googleicon}
+                    alt=""
+                  />
+                  <span className="hidden sm:inline-block">
+                    Sign In with Google
+                  </span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  type="submit">
+                  <img
+                    className="w-5 h-5"
+                    src={Linkedinicon}
+                    alt=""
+                  />
+                  <span className="hidden sm:inline-block">
+                    Sign In with LinkedIn
+                  </span>
+                </Button>
+              </section>
+            </div> */}
             <div className="text-center">
               <p>
                 Don't have an account?{" "}
