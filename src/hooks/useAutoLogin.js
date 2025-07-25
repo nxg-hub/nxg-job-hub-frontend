@@ -2,7 +2,7 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const useAutoLogin = () => {
+export const useAutoLogin = ({ enabled = true } = {}) => {
   //retrieve stored key
   const getStoredKey = () => {
     let key =
@@ -40,7 +40,7 @@ export const useAutoLogin = () => {
       });
       return response.data;
     },
-    enabled: !!storeJwtToken,
+    enabled: enabled && !!storeJwtToken,
     retry: false,
   });
 };

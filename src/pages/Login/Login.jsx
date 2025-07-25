@@ -108,16 +108,13 @@ export default function LoginForm() {
         );
       } else if (!values.keep_loggin && authKey) {
         // if login without "remember me", start a session
-        window.sessionStorage.setItem(
+        sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
       } else if (authKey) {
         // if login without "remember me", start a session
-        window.localStorage.setItem(
-          "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify(authKey)
-        );
+        localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(authKey));
       }
 
       if (!userRes.data.userType) {
@@ -133,7 +130,12 @@ export default function LoginForm() {
           ),
           duration: 2500,
         });
+
+        //user is using new system, save their complete profile
+        localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
+
         setTimeout(() => {
+          //navigate to existing user dashboard
           navigate(
             userRes.data.userType === "EMPLOYER"
               ? "/employer"

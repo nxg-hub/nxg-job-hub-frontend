@@ -24,10 +24,10 @@ import { ToastAction } from "@/components/ui/toast";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
 import { Separator } from "@/components/ui/separator";
-import RenderStepOne from "@/components/Employer/Profile/renderStepOne";
-import RenderStepTwo from "@/components/Employer/Profile/renderStepTwo";
-import RenderStepThree from "@/components/Employer/Profile/renderStepThree";
-import RenderStepFour from "@/components/Employer/Profile/renderStepFour";
+import RenderStepOne from "@/components/Employer/CompleteForm/renderStepOne";
+import RenderStepTwo from "@/components/Employer/CompleteForm/renderStepTwo";
+import RenderStepThree from "@/components/Employer/CompleteForm/renderStepThree";
+import RenderStepFour from "@/components/Employer/CompleteForm/renderStepFour";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,6 +39,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
+import { useCheckCompleteProfileFlag } from "@/hooks/useCheckCompleteProfileFlag";
 
 export function EmployerProfileCompleteForm() {
   const navigate = useNavigate();
@@ -70,94 +71,115 @@ export function EmployerProfileCompleteForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formError, setFormError] = useState(false);
 
-  const { data, fetchStatus, isError, isSuccess, error, isFetched } =
-    useAutoLogin();
+  //Check the local storage flag
+  const {
+    data: completeProfileFlag,
+    isPending: isFlagPending,
+    isFetched: isFlagFetched,
+  } = useCheckCompleteProfileFlag();
 
-  const { updateUserProfile, isLoading } = useUserProfileUpdate();
-
-  //if auto-login check has completed(either success or failed)
-  const isAutoLoginChecking = fetchStatus === "fetching";
+  //Fetch user type from backend, ONLY if completeProfileFlag is true
+  const {
+    data: userData,
+    isPending: isUserTypePending,
+    isSuccess: isUserTypeSuccess,
+    isError: isUserTypeError,
+    isFetched: isUserTypeFetched,
+    error: userTypeError,
+  } = useAutoLogin({
+    enabled: completeProfileFlag === true,
+  });
 
   const storedToken = (function () {
     let key =
       localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
       sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
-
     try {
-      const tokenParsed = key ? JSON.parse(key) : null;
-      return tokenParsed;
+      const parsed = key ? JSON.parse(key) : null;
+      return parsed?.token || parsed;
     } catch (e) {
       return null;
     }
   })();
 
-  useEffect(() => {
-    if (isAllCurrentStepFieldFilled()) {
-      setFormError(false);
-    }
-  }, [formData]);
+  const { updateUserProfile, isLoading } = useUserProfileUpdate();
 
   useEffect(() => {
-    //if no token found redirect to login page
-    if (!storedToken && !isAutoLoginChecking && !isFetched) {
+    if (!storedToken) {
+      console.log("CP: No login token found, redirecting to login.");
       navigate("/login", { replace: true });
+      return;
     }
 
-    //if token exist and request to an endpoin is successful/failed
-    if (isFetched && !isAutoLoginChecking) {
-      //request failed
-      if (isError) {
-        console.error(
-          "Employer complete profile form: Auto-login failed while checking:",
-          error.message
+    if (isFlagFetched && !isFlagPending) {
+      // 2a. If `complete-profile` is NULL (not found in localStorage)
+      if (completeProfileFlag === null) {
+        console.log(
+          "CP: 'complete-profile' flag not found, redirecting to login."
         );
         navigate("/login", { replace: true });
         return;
       }
 
-      //request successful
-      if (isSuccess) {
-        const { userType, employer } = data;
+      // 2b. If `complete-profile` is TRUE
+      if (completeProfileFlag === true) {
+        // Now, we need the userType from the backend.
+        // We wait until this query is finished fetching.
+        if (isUserTypeFetched && !isUserTypePending) {
+          // If userType fetch failed (e.g., network error, invalid token)
+          if (isUserTypeError) {
+            console.error(
+              "CP: UserType fetch failed for completed profile, redirecting to login:",
+              userTypeError.message
+            );
+            // Clear invalid token if this error occurred
+            localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+            sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+            navigate("/login", { replace: true });
+            return;
+          }
 
-        const empCPValue = JSON.parse(localStorage.getItem("NXGJOBHUBEmpCP"));
-
-        if (
-          userType === "EMPLOYER" &&
-          employer.verified === false &&
-          empCPValue === false
-        ) {
-          console.log("Employer complete profile form render");
-        } else if (
-          userType === "EMPLOYER" &&
-          employer.verified === false &&
-          empCPValue
-        ) {
-          navigate("/employer", { replace: true });
-        } else if (userType === "EMPLOYER" && employer.verified) {
-          navigate("/employer", { replace: true });
-        } else {
-          console.log("User not an employer");
-          if (userType === "TECHTALENT" || userType === "TALENT") {
-            navigate("/talent", { replace: true });
-          } else if (userType === "AGENT") {
-            navigate("/agent", { replace: true });
-          } else if (userType === "SERVICES-PROVIDER") {
-            navigate("/services-provider", { replace: true });
-          } else if (userType === null) {
-            navigate("/create", { replace: true });
+          // If userType fetch succeeded
+          if (isUserTypeSuccess && userData?.userType) {
+            console.log(
+              "CP: Profile complete, userType found. Redirecting to dashboard:",
+              userData.userType
+            );
+            // Redirect based on user type
+            if (userData.userType === "admin") {
+              navigate("/dashboard/admin", { replace: true });
+            } else if (
+              userData.userType === "user" ||
+              userData.userType === "employer"
+            ) {
+              // Assuming employer also goes to a general dashboard
+              navigate("/dashboard/user", { replace: true }); // Or /dashboard/employer
+            } else {
+              console.warn(
+                "CP: Unknown user type, redirecting to general dashboard:",
+                userData.userType
+              );
+              navigate("/dashboard", { replace: true });
+            }
+            return;
           }
         }
       }
+      // 2c. If `complete-profile` is FALSE
+      // No redirection here. Allow the component to render the profile completion form.
     }
   }, [
-    isAutoLoginChecking,
-    isSuccess,
-    isError,
-    data,
-    error,
-    storedToken,
-    isFetched,
     navigate,
+    storedToken,
+    completeProfileFlag,
+    isFlagPending,
+    isFlagFetched,
+    userData,
+    isUserTypePending,
+    isUserTypeSuccess,
+    isUserTypeError,
+    isUserTypeFetched,
+    userTypeError,
   ]);
 
   const stepFields = {
@@ -212,6 +234,12 @@ export function EmployerProfileCompleteForm() {
   const handleSkip = () => {
     setIsSkipButtonClick(true);
   };
+
+  useEffect(() => {
+    if (isAllCurrentStepFieldFilled()) {
+      setFormError(false);
+    }
+  }, [formData]);
 
   const handleSubmit = async () => {
     const payload = {
@@ -377,388 +405,405 @@ export function EmployerProfileCompleteForm() {
     }
   };
 
-  if (isAutoLoginChecking || (!isFetched && !storedToken))
-    return <div>Loading...</div>;
+  if (
+    isFlagPending ||
+    (completeProfileFlag === true && isUserTypePending) ||
+    (isUserTypeSuccess && userData?.userType)
+  ) {
+    return (
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <p>Checking profile status...</p>
+        <div className="spinner"></div> {/* Your spinner */}
+      </div>
+    );
+  }
 
-  return (
-    <div>
-      <nav className="flex justify-between items-center w-full bg-sky-600 p-4 fixed top-0 left-0 z-50 sm:static">
-        <span
-          onClick={prevStep}
-          className="inline-flex sm:hidden text-white cursor-pointer"
-        >
-          <ArrowLeft /> Back
-        </span>
-        <img className="w-20 sm:w-24" src={Logo} alt="" />
-      </nav>
-      <div className="flex items-center justify-center pt-20 sm:pt-0">
-        <div className="w-full border-transparent px-4 py-3 sm:w-1/2 sm:my-10 sm:p-8 sm:border-[1px] sm:border-gray-300 sm:rounded-md">
-          <div className="">
-            <h1 className="font-semibold text-2xl"> Profile Complete</h1>
-            <p className="text-gray-500 text-base">
-              Complete all steps to register your company and post job
-              opportunities
-            </p>
-          </div>
-          <RenderStepIndicator activeTab={currentStep} />
+  if (completeProfileFlag === false && storedToken) {
+    return (
+      <div>
+        <nav className="flex justify-between items-center w-full bg-sky-600 p-4 fixed top-0 left-0 z-50 sm:static">
+          <span
+            onClick={prevStep}
+            className="inline-flex sm:hidden text-white cursor-pointer"
+          >
+            <ArrowLeft /> Back
+          </span>
+          <img className="w-20 sm:w-24" src={Logo} alt="" />
+        </nav>
+        <div className="flex items-center justify-center pt-20 sm:pt-0">
+          <div className="w-full border-transparent px-4 py-3 sm:w-1/2 sm:my-10 sm:p-8 sm:border-[1px] sm:border-gray-300 sm:rounded-md">
+            <div className="">
+              <h1 className="font-semibold text-2xl"> Profile Complete</h1>
+              <p className="text-gray-500 text-base">
+                Complete all steps to register your company and post job
+                opportunities
+              </p>
+            </div>
+            <RenderStepIndicator activeTab={currentStep} />
 
-          <div className="space-y-5">
-            <div>
+            <div className="space-y-5">
               <div>
-                <div className="mb-8">
-                  <h3 className="text-lg font-semibold mb-4">
-                    Step {currentStep}: {stepTitles[currentStep - 1].title}
-                  </h3>
+                <div>
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold mb-4">
+                      Step {currentStep}: {stepTitles[currentStep - 1].title}
+                    </h3>
 
-                  {renderCurrentStep()}
+                    {renderCurrentStep()}
+                  </div>
                 </div>
-              </div>
-              <div className="hidden sm:flex sm:justify-between">
-                <div className="flex gap-2">
-                  {currentStep > 1 && (
+                <div className="hidden sm:flex sm:justify-between">
+                  <div className="flex gap-2">
+                    {currentStep > 1 && (
+                      <Button
+                        className="hover:bg-gray-200 "
+                        type="button"
+                        variant="outline"
+                        onClick={prevStep}
+                        disabled={currentStep === 1}
+                      >
+                        <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                      </Button>
+                    )}
+
+                    {currentStep < totalSteps && (
+                      <Button
+                        className="bg-sky-500 border-none hover:bg-sky-600"
+                        type="button"
+                        onClick={nextStep}
+                      >
+                        Next <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                  {currentStep === totalSteps ? (
                     <Button
-                      className="hover:bg-gray-200 "
+                      disabled={isLoading}
+                      className="border-transparent bg-green-500 text-gray-50
+                  hover:bg-green-600"
                       type="button"
-                      variant="outline"
-                      onClick={prevStep}
-                      disabled={currentStep === 1}
+                      onClick={handleSubmit}
                     >
-                      <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                      {isLoading ? (
+                        <div className="flex items-center space-x-1">
+                          <Loader2 className="animate-spin" />
+                          <span>Profile form submitting...</span>
+                        </div>
+                      ) : (
+                        <span className="flex">
+                          {" "}
+                          Submit <Check className="ml-2 h-4 w-4" />
+                        </span>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="border-transparent bg-red-600 text-gray-50 hover:bg-red-700"
+                      type="button"
+                      variant="secondary"
+                      onClick={handleSkip}
+                    >
+                      Skip <SkipForward className="ml-2 h-4 w-4" />
                     </Button>
                   )}
+                </div>
 
-                  {currentStep < totalSteps && (
+                {/* mobile form navigator */}
+
+                <div className="flex flex-col gap-3 sm:hidden">
+                  {currentStep < 4 ? (
                     <Button
                       className="bg-sky-500 border-none hover:bg-sky-600"
                       type="button"
                       onClick={nextStep}
                     >
-                      Next <ChevronRight className="ml-2 h-4 w-4" />
+                      Next
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled={isLoading}
+                      type="button"
+                      className="border-transparent bg-green-500 text-gray-50
+                  hover:bg-green-600"
+                      onClick={handleSubmit}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center space-x-1">
+                          <Loader2 className="animate-spin" />
+                          <span>Profile form submitting...</span>
+                        </div>
+                      ) : (
+                        <span>Submit</span>
+                      )}
                     </Button>
                   )}
-                </div>
-                {currentStep === totalSteps ? (
+
                   <Button
-                    disabled={isLoading}
-                    className="border-transparent bg-green-500 text-gray-50
-                  hover:bg-green-600"
-                    type="button"
-                    onClick={handleSubmit}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center space-x-1">
-                        <Loader2 className="animate-spin" />
-                        <span>Profile form submitting...</span>
-                      </div>
-                    ) : (
-                      <span className="flex">
-                        {" "}
-                        Submit <Check className="ml-2 h-4 w-4" />
-                      </span>
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    className="border-transparent bg-red-600 text-gray-50 hover:bg-red-700"
+                    className="border-transparent bg-red-100 text-red-900"
                     type="button"
                     variant="secondary"
                     onClick={handleSkip}
                   >
-                    Skip <SkipForward className="ml-2 h-4 w-4" />
+                    Skip
                   </Button>
-                )}
-              </div>
-
-              {/* mobile form navigator */}
-
-              <div className="flex flex-col gap-3 sm:hidden">
-                {currentStep < 4 ? (
-                  <Button
-                    className="bg-sky-500 border-none hover:bg-sky-600"
-                    type="button"
-                    onClick={nextStep}
-                  >
-                    Next
-                  </Button>
-                ) : (
-                  <Button
-                    disabled={isLoading}
-                    type="button"
-                    className="border-transparent bg-green-500 text-gray-50
-                  hover:bg-green-600"
-                    onClick={handleSubmit}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center space-x-1">
-                        <Loader2 className="animate-spin" />
-                        <span>Profile form submitting...</span>
-                      </div>
-                    ) : (
-                      <span>Submit</span>
-                    )}
-                  </Button>
-                )}
-
-                <Button
-                  className="border-transparent bg-red-100 text-red-900"
-                  type="button"
-                  variant="secondary"
-                  onClick={handleSkip}
-                >
-                  Skip
-                </Button>
+                </div>
               </div>
             </div>
+            {isSkipButtonClick && (
+              <SkipFormDialog isOpen={isSkipButtonClick} onClose={closeModal} />
+            )}
+            <Toaster />
           </div>
-          {isSkipButtonClick && (
-            <SkipFormDialog isOpen={isSkipButtonClick} onClose={closeModal} />
-          )}
-          <Toaster />
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const RenderStepIndicator = ({ activeTab }) => {
+    return (
+      <div className="max-w-full overflow-x-hidden my-5">
+        <div className="sm:hidden">
+          <div className="flex items-center justify-center">
+            <div
+              className={cn(
+                `${
+                  activeTab === 1
+                    ? "bg-primary text-white p-1"
+                    : activeTab > 1
+                    ? "bg-secondary text-white p-1"
+                    : "bg-secondary text-primary p-1"
+                }`,
+                "rounded-full"
+              )}
+            >
+              {activeTab === 1 ? (
+                <CircleDashed className="w-5 h-5" />
+              ) : activeTab > 1 ? (
+                <Circle className="w-3 h-3" />
+              ) : null}
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab >= 2 ? "bg-primary" : "bg-gray-300"}`,
+                "w-14 mx-1 h-[2px]"
+              )}
+            />
+            <div
+              className={cn(
+                `${
+                  activeTab === 2
+                    ? "bg-primary text-white p-1"
+                    : activeTab > 2
+                    ? "bg-secondary text-white p-1"
+                    : "bg-gray-100 text-gray-400 p-2"
+                }`,
+                "rounded-full"
+              )}
+            >
+              {activeTab === 2 ? (
+                <CircleDashed className="w-5 h-5" />
+              ) : activeTab > 2 ? (
+                <Circle className="w-3 h-3" />
+              ) : null}
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab >= 3 ? "bg-primary" : "bg-gray-300"}`,
+                "w-14 mx-1 h-[2px]"
+              )}
+            />
+            <div
+              className={cn(
+                `${
+                  activeTab === 3
+                    ? "bg-primary text-white p-1"
+                    : activeTab > 3
+                    ? "bg-secondary text-white p-1"
+                    : "bg-gray-100 text-gray-400 p-2"
+                }`,
+                "rounded-full"
+              )}
+            >
+              {activeTab === 3 ? (
+                <CircleDashed className="w-5 h-5" />
+              ) : activeTab > 3 ? (
+                <Circle className="w-3 h-3" />
+              ) : null}
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab >= 4 ? "bg-primary" : "bg-gray-300"}`,
+                "w-14 mx-1 h-[2px]"
+              )}
+            />
+
+            <div
+              className={cn(
+                `${
+                  activeTab === 4
+                    ? "bg-primary text-white p-1"
+                    : activeTab > 4
+                    ? "bg-secondary text-white p-1"
+                    : "bg-gray-100 text-gray-400 p-2"
+                }`,
+                "p-2 rounded-full"
+              )}
+            >
+              {activeTab === 4 ? (
+                <CircleDashed className="w-5 h-5" />
+              ) : activeTab > 4 ? (
+                <Circle className="w-3 h-3" />
+              ) : null}
+            </div>
+          </div>
+        </div>
+        {/* indicator for desktop view */}
+        <div className="hidden sm:block space-y-2">
+          <div className=" flex items-center justify-center">
+            <div
+              className={cn(
+                `${
+                  activeTab === 1
+                    ? "bg-primary text-white"
+                    : activeTab > 1
+                    ? "bg-secondary text-white"
+                    : ""
+                }`,
+                "p-2 rounded-full"
+              )}
+            >
+              <Building2 className="w-5 h-5" />
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab > 1 ? "bg-primary" : "bg-gray-300"}`,
+                "w-32 h-[2px]  mx-3  "
+              )}
+            />
+            <div
+              className={cn(
+                `${
+                  activeTab === 2
+                    ? "bg-primary text-white"
+                    : activeTab > 2
+                    ? "bg-secondary text-white"
+                    : ""
+                }`,
+                "p-2 rounded-full"
+              )}
+            >
+              <MapPin className="w-5 h-5" />
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab > 2 ? "bg-primary" : "bg-gray-300"}`,
+                "w-32 h-[2px]  mx-3  "
+              )}
+            />
+            <div
+              className={cn(
+                `${
+                  activeTab === 3
+                    ? "bg-primary text-white"
+                    : activeTab > 3
+                    ? "bg-secondary text-white"
+                    : ""
+                }`,
+                "p-2 rounded-full"
+              )}
+            >
+              <User className="w-5 h-5" />
+            </div>
+            <Separator
+              className={cn(
+                `${activeTab > 3 ? "bg-primary" : "bg-gray-300"}`,
+                "w-32 h-[2px]  mx-3  "
+              )}
+            />
+
+            <div
+              className={cn(
+                `${
+                  activeTab === 4
+                    ? "bg-primary text-white"
+                    : activeTab > 4
+                    ? "bg-secondary text-white"
+                    : ""
+                }`,
+                "p-2 rounded-full"
+              )}
+            >
+              <Briefcase className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="flex justify-center gap-14">
+            <p
+              className={cn(
+                `${
+                  activeTab === 1
+                    ? "text-primary"
+                    : activeTab > 1
+                    ? "text-secondary"
+                    : "text-gray-400"
+                }`,
+                "text-sm"
+              )}
+            >
+              Company Information
+            </p>
+            <p
+              className={cn(
+                `${
+                  activeTab === 2
+                    ? "text-primary"
+                    : activeTab > 2
+                    ? "text-secondary"
+                    : "text-gray-400"
+                }`,
+                "text-sm"
+              )}
+            >
+              Company Location
+            </p>
+            <p
+              className={cn(
+                `${
+                  activeTab === 3
+                    ? "text-primary"
+                    : activeTab > 3
+                    ? "text-secondary"
+                    : "text-gray-400"
+                }`,
+                "text-sm"
+              )}
+            >
+              Management Details
+            </p>
+            <p
+              className={cn(
+                `${activeTab === 4 ? "text-primary" : "text-gray-400"}`,
+                "text-sm"
+              )}
+            >
+              Job Details
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Fallback: This should ideally not be reached if all conditions are handled.
+  // If it is, it indicates an unexpected state, so redirect to login.
+  console.warn("CP: Unexpected state reached in render. Redirecting to login.");
+  navigate("/login", { replace: true });
+  return null;
 }
-
-const RenderStepIndicator = ({ activeTab }) => {
-  return (
-    <div className="max-w-full overflow-x-hidden my-5">
-      <div className="sm:hidden">
-        <div className="flex items-center justify-center">
-          <div
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 1
-                  ? "bg-secondary text-white p-1"
-                  : "bg-secondary text-primary p-1"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 1 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 1 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 2 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 2
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 2 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 2 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 3 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 3
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 3 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 3 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 4 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-
-          <div
-            className={cn(
-              `${
-                activeTab === 4
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 4
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            {activeTab === 4 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 4 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-        </div>
-      </div>
-      {/* indicator for desktop view */}
-      <div className="hidden sm:block space-y-2">
-        <div className=" flex items-center justify-center">
-          <div
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "bg-primary text-white"
-                  : activeTab > 1
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <Building2 className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 1 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "bg-primary text-white"
-                  : activeTab > 2
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <MapPin className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 2 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "bg-primary text-white"
-                  : activeTab > 3
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <User className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 3 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-
-          <div
-            className={cn(
-              `${
-                activeTab === 4
-                  ? "bg-primary text-white"
-                  : activeTab > 4
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <Briefcase className="w-5 h-5" />
-          </div>
-        </div>
-        <div className="flex justify-center gap-14">
-          <p
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "text-primary"
-                  : activeTab > 1
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Company Information
-          </p>
-          <p
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "text-primary"
-                  : activeTab > 2
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Company Location
-          </p>
-          <p
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "text-primary"
-                  : activeTab > 3
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Management Details
-          </p>
-          <p
-            className={cn(
-              `${activeTab === 4 ? "text-primary" : "text-gray-400"}`,
-              "text-sm"
-            )}
-          >
-            Job Details
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const SkipFormDialog = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const handleSkipClick = () => {
-    // Handle skip action here, e.g., navigate to another page or show a message
-    window.localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
+    localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
     navigate("/employer");
   };
 
