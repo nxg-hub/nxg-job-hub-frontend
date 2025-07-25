@@ -4,7 +4,7 @@ export const useCheckCompleteProfileFlag = () => {
   return useQuery({
     queryKey: ["completeProfileFlag"],
     queryFn: () => {
-      const flag = localStorage.getItem("complete-profile");
+      const flag = localStorage.getItem("NXGJOBHUBComPro");
       if (flag === null) {
         // null means key not found
         return null;

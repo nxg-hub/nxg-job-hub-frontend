@@ -98,7 +98,7 @@ const SelectAccountType = () => {
     techtalent: `${API_HOST_URL}/api/v1/tech-talent/register/`,
     agent: `${API_HOST_URL}/api/agents/createAgent`,
     employer: `${API_HOST_URL}/api/employers/createEmployer`,
-    serviceprovider: `${API_HOST_URL}/api/v1/serviceprovider/register`,
+    serviceprovider: `${API_HOST_URL}/api/service-providers`,
     talent: `${API_HOST_URL}/api/v1/talent/register`,
   };
 
@@ -110,7 +110,7 @@ const SelectAccountType = () => {
     setSubmittingLoading(true);
 
     //new user: account profile not complete
-    localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(false));
+    localStorage.setItem("NXGJOBHUBComPro", JSON.stringify(false));
 
     const authKey =
       (searchParams.get("authKey")
@@ -120,23 +120,7 @@ const SelectAccountType = () => {
         ?.authKey ||
       JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
 
-    if (accountChoice === "serviceprovider") {
-      toast({
-        className: cn("top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"),
-        title: <span className="text-green-800">Successful:</span>,
-        description: (
-          <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono">
-            Created {accountChoice} account successfully.
-          </p>
-        ),
-        duration: 2500,
-      });
-      // Updated the condition to navigate to the appropriate page based on the accountChoice
-      setTimeout(() => {
-        navigate("/services-provider/complete-profile");
-        setSubmittingLoading(false);
-      }, 3000);
-    } else if (accountChoice === "agent") {
+    if (accountChoice === "agent") {
       toast({
         className: cn("top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"),
         title: <span className="text-green-800">Successful:</span>,
@@ -177,21 +161,17 @@ const SelectAccountType = () => {
         // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
           if (accountChoice === "employer") {
-            localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
             navigate("/employer/complete-profile", { replace: true });
-          } else if (accountChoice === "techtalent") {
-            localStorage.setItem("NXGJOBHUBTCP", JSON.stringify(true));
+          }
+          if (accountChoice === "techtalent") {
             navigate("/techtalent/complete-profile", { replace: true });
           }
-          // navigate(
-          //   accountChoice === "employer"
-          //     ? "/employer/complete-profile"
-          //     : // : accountChoice === "agent"
-          //     // ? "/agent/complete-profile"
-          //     accountChoice === "techtalent"
-          //     ? "/techtalent/complete-profile"
-          //     : null
-          // );
+          if (accountChoice === "serviceprovider") {
+            navigate("/services-provider/complete-profile", { replace: true });
+          }
+          if (accountChoice === "agent") {
+            navigate("/agent/complete-profile", { replace: true });
+          }
         }, 3000);
       } catch (err) {
         console.log(err);

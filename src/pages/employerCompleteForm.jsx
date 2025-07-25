@@ -146,20 +146,21 @@ export function EmployerProfileCompleteForm() {
               userData.userType
             );
             // Redirect based on user type
-            if (userData.userType === "admin") {
-              navigate("/dashboard/admin", { replace: true });
-            } else if (
-              userData.userType === "user" ||
-              userData.userType === "employer"
-            ) {
-              // Assuming employer also goes to a general dashboard
-              navigate("/dashboard/user", { replace: true }); // Or /dashboard/employer
+            if (userData.userType === "EMPLOYER") {
+              navigate("/employer", { replace: true });
+            } else if (userData.userType === "AGENT") {
+              navigate("/agent", { replace: true });
+            } else if (userData.userType === "TALENT") {
+              navigate("/talent", { replace: true });
+            } else if (userData.userType === "TECHTALENT") {
+              navigate("/talent", { replace: true });
+            } else if (data.userType === "SERVICE_PROVIDER") {
+              navigate("/services-provider", { replace: true });
             } else {
               console.warn(
                 "CP: Unknown user type, redirecting to general dashboard:",
                 userData.userType
               );
-              navigate("/dashboard", { replace: true });
             }
             return;
           }
