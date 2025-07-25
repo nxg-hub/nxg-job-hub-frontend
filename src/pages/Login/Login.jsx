@@ -35,13 +35,11 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-   //a state that disabled login button when trying to log user in
-  const [loginLoading, setLoginLoading] = useState(false);
-  
   const navigate = useNavigate();
   const { toast } = useToast();
 
- 
+  //a state that disabled login button when trying to log user in
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const { data, fetchStatus, isError, isSuccess, error } = useAutoLogin();
 
@@ -110,16 +108,13 @@ export default function LoginForm() {
         );
       } else if (!values.keep_loggin && authKey) {
         // if login without "remember me", start a session
-        window.sessionStorage.setItem(
+        sessionStorage.setItem(
           "NXGJOBHUBLOGINKEYV1",
           JSON.stringify({ authKey, email, id })
         );
       } else if (authKey) {
         // if login without "remember me", start a session
-        window.localStorage.setItem(
-          "NXGJOBHUBLOGINKEYV1",
-          JSON.stringify(authKey)
-        );
+        localStorage.setItem("NXGJOBHUBLOGINKEYV1", JSON.stringify(authKey));
       }
 
       if (!userRes.data.userType) {
@@ -135,16 +130,23 @@ export default function LoginForm() {
           ),
           duration: 2500,
         });
+
+        //user is using new system, save their complete profile
+        localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
+
         setTimeout(() => {
-          if(userRes.data.userType === "EMPLOYER"){
-             navigate("/employer");
-          }else if(userRes.data.userType === "AGENT"){
-            navigate("/agent");
-          }else if(userRes.data.userType === "TECHTALENT"){
-            navigate("/talent");
-          }else{
-            return;
-          }
+          //navigate to existing user dashboard
+          navigate(
+            userRes.data.userType === "EMPLOYER"
+              ? "/employer"
+              : userRes.data.userType === "AGENT"
+              ? "/agent"
+              : userRes.data.userType === "TECHTALENT"
+              ? "/talent"
+              : userRes.data.userType === "TALENT"
+              ? "/talent"
+              : null
+          );
         }, 3000);
       }
     } catch (error) {

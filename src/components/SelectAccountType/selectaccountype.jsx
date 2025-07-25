@@ -108,6 +108,10 @@ const SelectAccountType = () => {
 
   const setAccountType = async () => {
     setSubmittingLoading(true);
+
+    //new user: account profile not complete
+    localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(false));
+
     const authKey =
       (searchParams.get("authKey")
         ? "Bearer " + searchParams.get("authKey")

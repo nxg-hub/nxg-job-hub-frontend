@@ -24,10 +24,10 @@ import { ToastAction } from "@/components/ui/toast";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
 import { Separator } from "@/components/ui/separator";
-import RenderStepOne from "@/components/Employer/Profile/renderStepOne";
-import RenderStepTwo from "@/components/Employer/Profile/renderStepTwo";
-import RenderStepThree from "@/components/Employer/Profile/renderStepThree";
-import RenderStepFour from "@/components/Employer/Profile/renderStepFour";
+import RenderStepOne from "@/components/Employer/CompleteForm/renderStepOne";
+import RenderStepTwo from "@/components/Employer/CompleteForm/renderStepTwo";
+import RenderStepThree from "@/components/Employer/CompleteForm/renderStepThree";
+import RenderStepFour from "@/components/Employer/CompleteForm/renderStepFour";
 import {
   AlertDialog,
   AlertDialogAction,
