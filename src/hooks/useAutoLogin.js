@@ -19,18 +19,17 @@ export const useAutoLogin = ({ enabled = true } = {}) => {
       return null;
     }
   };
-
-  const jwt = getStoredKey();
-  setToken(jwt);
+  const storeJwtToken = getStoredKey();
 
   return useQuery({
-    queryKey: ["userType", token],
-    queryFn: async () => {
-      if (!token) throw new Error("No valid login token found");
+    queryKey: ["userType", storeJwtToken],
+    queryFn: async ({ queryKey }) => {
+      const [_key, tokenFrmQueryKey] = queryKey;
+      if (!tokenFrmQueryKey) throw new Error("No valid login token found");
 
       const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
-          authorization: token,
+          authorization: tokenFrmQueryKey,
         },
       });
 

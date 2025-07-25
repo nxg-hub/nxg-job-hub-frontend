@@ -44,7 +44,7 @@ export default function LoginForm() {
   const { data, fetchStatus, isError, isSuccess, error } = useAutoLogin();
 
   //if auto-login check has completed(either success or failed)
-  const isAutoLoginChecking = fetchStatus === "fatching";
+  const isAutoLoginChecking = fetchStatus === "fetching";
 
   useEffect(() => {
     if (!isAutoLoginChecking) {
@@ -58,6 +58,8 @@ export default function LoginForm() {
           navigate("/talent", { replace: true });
         } else if (data.userType === "TECHTALENT") {
           navigate("/talent", { replace: true });
+        } else if (data.userType === "SERVICE_PROVIDER") {
+          navigate("/services-provider", { replace: true });
         } else {
           console.warn("Unknown user type:", data.userType);
         }
@@ -131,10 +133,10 @@ export default function LoginForm() {
           duration: 2500,
         });
 
-        //user is using new system, save their complete profile
-        localStorage.setItem("NXGJOBHUBEmpCP", JSON.stringify(true));
-
         setTimeout(() => {
+          //user is using new system, save their complete profile
+          localStorage.setItem("NXGJOBHUBComPro", JSON.stringify(true));
+
           //navigate to existing user dashboard
           navigate(
             userRes.data.userType === "EMPLOYER"
