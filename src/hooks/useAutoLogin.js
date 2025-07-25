@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
@@ -10,20 +9,19 @@ export const useAutoLogin = ({ enabled = true } = {}) => {
       localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
       sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
 
-      if (!key) return null;
+    if (!key) return null;
 
-      try {
-        const parsedKey = JSON.parse(key);
-        return parsedKey?.authKey || parsedKey;
-      } catch (e) {
-        console.error("Failed to parse login key from storage:", e);
-        return null;
-      }
-    };
+    try {
+      const parsedKey = JSON.parse(key);
+      return parsedKey?.authKey || parsedKey;
+    } catch (e) {
+      console.error("Failed to parse login key from storage:", e);
+      return null;
+    }
+  };
 
-    const jwt = getStoredKey();
-    setToken(jwt);
-  }, []);
+  const jwt = getStoredKey();
+  setToken(jwt);
 
   return useQuery({
     queryKey: ["userType", token],
