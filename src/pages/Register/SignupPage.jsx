@@ -131,16 +131,16 @@ export default function SignupForm() {
         if (res.status) {
           toast({
             className: cn(
-              "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              "top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
             ),
-            title: "Registration Successful",
+            title: (
+              <span className="text-green-800">Registration Successful:</span>
+            ),
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-                <code className="text-white">
-                  Your account have been successfully registered. Kindly proceed
-                  to verify your account!
-                </code>
-              </pre>
+              <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+                Your account have been successfully registered. Kindly proceed
+                to verify your account!
+              </p>
             ),
             duration: 2500,
           });
