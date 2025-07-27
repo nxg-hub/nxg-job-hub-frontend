@@ -1,4 +1,39 @@
+// Add this at the very top of your main.jsx or App.jsx
+import React from 'react';
+
+// Store original createElement
+const originalCreateElement = React.createElement;
+
+// Override React.createElement to catch all li elements
+React.createElement = function(type, props, ...children) {
+  if (type === 'li' && props) {
+    const invalidProps = {};
+    const validProps = {};
+    
+    Object.keys(props).forEach(key => {
+      if (!isNaN(key) && key !== 'key') {
+        invalidProps[key] = props[key];
+        console.error(`🚨 FOUND IT! Invalid numeric attribute: "${key}"`, props[key]);
+        console.error('Full props object:', props);
+        console.error('Component that created this li:');
+        console.trace(); // This will show you the exact component stack
+        debugger; // This will pause execution so you can inspect
+      } else {
+        validProps[key] = props[key];
+      }
+    });
+    
+    // Use validProps instead of original props
+    return originalCreateElement.apply(this, [type, validProps, ...children]);
+  }
+  
+  return originalCreateElement.apply(this, [type, props, ...children]);
+};
+
+// Rest of your imports and code...
+
 import { Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home.jsx";
 import ProfileLanding from "./pages/ProfileLanding.jsx";
 import Services from "./pages/Services.jsx";
@@ -71,13 +106,8 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
-
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { EmployerProfileCompletionForm } from "./pages/employerCompleteForm.jsx";
-import { ProfileFormProvider } from "./pages/CompleteYourProfile/ProfileFormContent.jsx";
-import PersonalInfoPage from "./pages/CompleteYourProfile/personalInfo.jsx";
-import SkillsExperiencePage from "./pages/CompleteYourProfile/skillsAndExperiences.jsx"
-import CertificationsPage from "./pages/CompleteYourProfile/certificationAndPortfolioPage.jsx"
+import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
+import { TechTalentProfileCompleteForm } from "./pages/talentCompletForm.jsx";
 
 const queryClient = new QueryClient();
 
@@ -101,13 +131,14 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        <Route path="/techtalent/complete-profile" element={<TechTalentProfileCompleteForm/>} />
         {/* <Route path="/completeProfile" element={<CompleteYourProfile/>} /> */}
 
         {/* Complete Profile with Form Provider */}
         {/* <Route path="/completeProfile" element={<ProfileFormProvider><CompleteYourProfile /></ProfileFormProvider>} /> */}
-        <Route path="/personalInfo" element={<ProfileFormProvider><PersonalInfoPage /></ProfileFormProvider>} />
+        {/* <Route path="/personalInfo" element={<ProfileFormProvider><PersonalInfoPage /></ProfileFormProvider>} />
         <Route path="/skills" element={<ProfileFormProvider><SkillsExperiencePage /></ProfileFormProvider>} />
-        <Route path="/certifications" element={<ProfileFormProvider><CertificationsPage /></ProfileFormProvider>} />
+        <Route path="/certifications" element={<ProfileFormProvider><CertificationsPage /></ProfileFormProvider>} /> */}
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>
@@ -157,7 +188,7 @@ function App() {
         </Route>
         <Route
           path="/employer/complete-profile"
-          element={<EmployerProfileCompletionForm />}
+          element={<EmployerProfileCompleteForm />}
         />
         {/* end employer user routes */}
 

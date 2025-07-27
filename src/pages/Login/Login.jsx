@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -26,7 +27,6 @@ import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
-import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 const formSchema = z.object({
   email: z.string().email(),

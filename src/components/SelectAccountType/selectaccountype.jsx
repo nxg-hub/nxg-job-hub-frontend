@@ -61,7 +61,7 @@ const SelectAccountType = () => {
         } else if (data.userType === "TALENT") {
           navigate("/talent", { replace: true });
         } else if (data.userType === "TECHTALENT") {
-          navigate("/talent", { replace: true });
+          navigate("/techtalent/complete-profile", { replace: true });
         } else {
           console.warn("Unknown user type:", data.userType);
         }
