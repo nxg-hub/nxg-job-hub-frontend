@@ -1,33 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Building2,
-  Briefcase,
-  Check,
-  SkipForward,
-  ArrowLeft,
-  User,
-  MapPin,
+  UserCog,
+  BriefcaseBusiness,
+  Contact,
   CircleDashed,
   Circle,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
   Loader2,
+  Check,
+  SkipForward,
 } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import Logo from "@/static/images/logo_colored.png";
-import { useNavigate } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
-import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
 import { Separator } from "@/components/ui/separator";
-import RenderStepOne from "@/components/Employer/CompleteForm/renderStepOne";
-import RenderStepTwo from "@/components/Employer/CompleteForm/renderStepTwo";
-import RenderStepThree from "@/components/Employer/CompleteForm/renderStepThree";
-import RenderStepFour from "@/components/Employer/CompleteForm/renderStepFour";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,268 +26,42 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useAutoLogin } from "@/hooks/useAutoLogin";
+import { Toaster } from "@/components/ui/toaster";
 import { useCheckCompleteProfileFlag } from "@/hooks/useCheckCompleteProfileFlag";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
+import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
+import { toast } from "@/hooks/use-toast";
+import Logo from "@/static/images/logo_colored.png";
+import RenderStepOne from "@/components/agent/CompleteForm/renderStepOne";
+import RenderStepTwo from "@/components/agent/CompleteForm/renderStepTwo";
+import RenderStepThree from "@/components/agent/CompleteForm/renderStepThree";
 
-const RenderStepIndicator = ({ activeTab }) => {
-  return (
-    <div className="max-w-full overflow-x-hidden my-5">
-      <div className="sm:hidden">
-        <div className="flex items-center justify-center">
-          <div
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 1
-                  ? "bg-secondary text-white p-1"
-                  : "bg-secondary text-primary p-1"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 1 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 1 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 2 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 2
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 2 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 2 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 3 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 3
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "rounded-full"
-            )}
-          >
-            {activeTab === 3 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 3 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab >= 4 ? "bg-primary" : "bg-gray-300"}`,
-              "w-14 mx-1 h-[2px]"
-            )}
-          />
-
-          <div
-            className={cn(
-              `${
-                activeTab === 4
-                  ? "bg-primary text-white p-1"
-                  : activeTab > 4
-                  ? "bg-secondary text-white p-1"
-                  : "bg-gray-100 text-gray-400 p-2"
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            {activeTab === 4 ? (
-              <CircleDashed className="w-5 h-5" />
-            ) : activeTab > 4 ? (
-              <Circle className="w-3 h-3" />
-            ) : null}
-          </div>
-        </div>
-      </div>
-      {/* indicator for desktop view */}
-      <div className="hidden sm:block space-y-2">
-        <div className=" flex items-center justify-center">
-          <div
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "bg-primary text-white"
-                  : activeTab > 1
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <Building2 className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 1 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "bg-primary text-white"
-                  : activeTab > 2
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <MapPin className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 2 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-          <div
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "bg-primary text-white"
-                  : activeTab > 3
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <User className="w-5 h-5" />
-          </div>
-          <Separator
-            className={cn(
-              `${activeTab > 3 ? "bg-primary" : "bg-gray-300"}`,
-              "w-32 h-[2px]  mx-3  "
-            )}
-          />
-
-          <div
-            className={cn(
-              `${
-                activeTab === 4
-                  ? "bg-primary text-white"
-                  : activeTab > 4
-                  ? "bg-secondary text-white"
-                  : ""
-              }`,
-              "p-2 rounded-full"
-            )}
-          >
-            <Briefcase className="w-5 h-5" />
-          </div>
-        </div>
-        <div className="flex justify-center gap-14">
-          <p
-            className={cn(
-              `${
-                activeTab === 1
-                  ? "text-primary"
-                  : activeTab > 1
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Company Information
-          </p>
-          <p
-            className={cn(
-              `${
-                activeTab === 2
-                  ? "text-primary"
-                  : activeTab > 2
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Company Location
-          </p>
-          <p
-            className={cn(
-              `${
-                activeTab === 3
-                  ? "text-primary"
-                  : activeTab > 3
-                  ? "text-secondary"
-                  : "text-gray-400"
-              }`,
-              "text-sm"
-            )}
-          >
-            Management Details
-          </p>
-          <p
-            className={cn(
-              `${activeTab === 4 ? "text-primary" : "text-gray-400"}`,
-              "text-sm"
-            )}
-          >
-            Job Details
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export function EmployerProfileCompleteForm() {
+export default function AgentCompleteProfileForm() {
   const navigate = useNavigate();
   const [isSkipButtonClick, setIsSkipButtonClick] = useState(false);
   const [formData, setFormData] = useState({
-    // Basic Company Information
-    companyName: "",
-    companyDescription: "",
-    industryType: "",
-    companySize: "",
-    companyWebsite: "",
+    // Agency Information
+    agencyName: "",
+    agentTitle: "",
+    yearOfExperience: "",
+    agencyBio: "",
+    agencySize: "",
+    areaOfSpecialization: [],
+    preferredIndustry: [],
 
-    // Company Location
+    // Contact information
     country: "",
     state: "",
-    companyZipCode: "",
-    companyAddress: "",
-    companyPhone: "",
+    city: "",
+    postalCode: "",
+    email: "",
+    phoneNumber: "",
+    agencyAddress: "",
+    agencyWebsite: "",
+    // socialMedia: [],
 
-    //Management details
-    namesOfDirectors: [],
-
-    // Job Information
-    vacancies: [],
-    position: "",
-    jobBoard: "",
+    //Agency Portfolio
+    agencyPortfolio: [],
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -413,18 +175,28 @@ export function EmployerProfileCompleteForm() {
 
   const stepFields = {
     1: [
-      "companyName",
-      "companyDescription",
-      "industryType",
-      "companySize",
-      "companyWebsite",
+      "agencyName",
+      "agentTitle",
+      "yearOfExperience",
+      "agencyBio",
+      "agencySize",
+      "areaOfSpecialization",
+      "preferredIndustry",
     ],
-    2: ["country", "state", "companyZipCode", "companyAddress", "companyPhone"],
-    3: ["namesOfDirectors"],
-    4: ["vacancies", "position", "jobBoard"],
+    2: [
+      "country",
+      "state",
+      "city",
+      "postalCode",
+      "email",
+      "phoneNumber",
+      "agencyAddress",
+      "agencyWebsite",
+    ],
+    3: [" agencyPortfolio"],
   };
 
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setIsSkipButtonClick(false);
@@ -446,6 +218,7 @@ export function EmployerProfileCompleteForm() {
     });
 
   const nextStep = () => {
+    console.log(formData);
     if (isAllCurrentStepFieldFilled()) {
       setFormError(false);
       setCurrentStep((prev) => prev + 1);
@@ -472,20 +245,23 @@ export function EmployerProfileCompleteForm() {
 
   const handleSubmit = async () => {
     const payload = {
-      companyName: formData.companyName,
-      companyDescription: formData.companyDescription,
+      agencyName: formData.agencyName,
+      agentTitle: formData.agentTitle,
+      yearOfExperience: formData.yearOfExperience,
+      agencyBio: formData.agencyBio,
+      agencySize: formData.agencySize,
+      areaOfSpecialization: formData.areaOfSpecialization,
+      preferredIndustry: formData.preferredIndustry,
       country: formData.country,
       state: formData.state,
-      companyZipCode: formData.companyZipCode,
-      industryType: formData.industryType,
-      companySize: formData.companySize,
-      companyAddress: formData.companyAddress,
-      companyPhone: formData.companyPhone,
-      companyWebsite: formData.companyWebsite,
-      vacancies: formData.vacancies,
-      position: formData.position,
-      jobBoard: formData.jobBoard,
-      namesOfDirectors: formData.namesOfDirectors,
+      city: formData.city,
+      postalCode: formData.postalCode,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      agencyAddres: formData.agencyAddress,
+      agencyWebsite: formData.agencyWebsite,
+      socialMedia: formData.socialMedia,
+      agencyPortfolio: formData.agencyPortfolio,
     };
 
     const storeValueObj =
@@ -571,10 +347,9 @@ export function EmployerProfileCompleteForm() {
   };
 
   const stepTitles = [
-    { title: "Company Information", icon: Building2 },
-    { title: "Company Location", icon: MapPin },
-    { title: "Management Details", icon: User },
-    { title: "Job Posting Details", icon: Briefcase },
+    { title: "Agency Information", icon: UserCog },
+    { title: "Contact Information", icon: Contact },
+    { title: "Agency Portfolio", icon: BriefcaseBusiness },
   ];
 
   const renderCurrentStep = () => {
@@ -598,7 +373,9 @@ export function EmployerProfileCompleteForm() {
                 Please fill the various field below before proceeding
               </p>
             )}
-            <RenderStepTwo formData={formData} setFormData={setFormData} />
+            <div>
+              <RenderStepTwo formData={formData} setFormData={setFormData} />
+            </div>
           </div>
         );
       case 3:
@@ -610,17 +387,6 @@ export function EmployerProfileCompleteForm() {
               </p>
             )}
             <RenderStepThree formData={formData} setFormData={setFormData} />
-          </div>
-        );
-      case 4:
-        return (
-          <div>
-            {formError && (
-              <p className="w-full rounded p-3 text-red-500 border border-red-500 mb-5">
-                Please fill the various field below before proceeding
-              </p>
-            )}
-            <RenderStepFour formData={formData} setFormData={setFormData} />
           </div>
         );
       default:
@@ -788,6 +554,211 @@ export function EmployerProfileCompleteForm() {
   navigate("/login", { replace: true });
   // return null;
 }
+
+const RenderStepIndicator = ({ activeTab }) => {
+  return (
+    <div className="max-w-full overflow-x-hidden my-5">
+      <div className="sm:hidden">
+        <div className="flex items-center justify-center">
+          <div
+            className={cn(
+              `${
+                activeTab === 1
+                  ? "bg-primary text-white p-1"
+                  : activeTab > 1
+                  ? "bg-secondary text-white p-1"
+                  : "bg-secondary text-primary p-1"
+              }`,
+              "rounded-full"
+            )}
+          >
+            {activeTab === 1 ? (
+              <CircleDashed className="w-5 h-5" />
+            ) : activeTab > 1 ? (
+              <Circle className="w-3 h-3" />
+            ) : null}
+          </div>
+          <Separator
+            className={cn(
+              `${activeTab >= 2 ? "bg-primary" : "bg-gray-300"}`,
+              "w-14 mx-1 h-[2px]"
+            )}
+          />
+          <div
+            className={cn(
+              `${
+                activeTab === 2
+                  ? "bg-primary text-white p-1"
+                  : activeTab > 2
+                  ? "bg-secondary text-white p-1"
+                  : "bg-gray-100 text-gray-400 p-2"
+              }`,
+              "rounded-full"
+            )}
+          >
+            {activeTab === 2 ? (
+              <CircleDashed className="w-5 h-5" />
+            ) : activeTab > 2 ? (
+              <Circle className="w-3 h-3" />
+            ) : null}
+          </div>
+          <Separator
+            className={cn(
+              `${activeTab >= 3 ? "bg-primary" : "bg-gray-300"}`,
+              "w-14 mx-1 h-[2px]"
+            )}
+          />
+          <div
+            className={cn(
+              `${
+                activeTab === 3
+                  ? "bg-primary text-white p-1"
+                  : activeTab > 3
+                  ? "bg-secondary text-white p-1"
+                  : "bg-gray-100 text-gray-400 p-2"
+              }`,
+              "rounded-full"
+            )}
+          >
+            {activeTab === 3 ? (
+              <CircleDashed className="w-5 h-5" />
+            ) : activeTab > 3 ? (
+              <Circle className="w-3 h-3" />
+            ) : null}
+          </div>
+          <Separator
+            className={cn(
+              `${activeTab >= 4 ? "bg-primary" : "bg-gray-300"}`,
+              "w-14 mx-1 h-[2px]"
+            )}
+          />
+
+          <div
+            className={cn(
+              `${
+                activeTab === 4
+                  ? "bg-primary text-white p-1"
+                  : activeTab > 4
+                  ? "bg-secondary text-white p-1"
+                  : "bg-gray-100 text-gray-400 p-2"
+              }`,
+              "p-2 rounded-full"
+            )}
+          >
+            {activeTab === 4 ? (
+              <CircleDashed className="w-5 h-5" />
+            ) : activeTab > 4 ? (
+              <Circle className="w-3 h-3" />
+            ) : null}
+          </div>
+        </div>
+      </div>
+      {/* indicator for desktop view */}
+      <div className="hidden sm:block space-y-2">
+        <div className=" flex items-center justify-center">
+          <div
+            className={cn(
+              `${
+                activeTab === 1
+                  ? "bg-primary text-white"
+                  : activeTab > 1
+                  ? "bg-secondary text-white"
+                  : ""
+              }`,
+              "p-2 rounded-full"
+            )}
+          >
+            <UserCog className="w-5 h-5" />
+          </div>
+          <Separator
+            className={cn(
+              `${activeTab > 1 ? "bg-primary" : "bg-gray-300"}`,
+              "w-32 h-[2px]  mx-3  "
+            )}
+          />
+          <div
+            className={cn(
+              `${
+                activeTab === 2
+                  ? "bg-primary text-white"
+                  : activeTab > 2
+                  ? "bg-secondary text-white"
+                  : ""
+              }`,
+              "p-2 rounded-full"
+            )}
+          >
+            <Contact className="w-5 h-5" />
+          </div>
+          <Separator
+            className={cn(
+              `${activeTab > 2 ? "bg-primary" : "bg-gray-300"}`,
+              "w-32 h-[2px]  mx-3  "
+            )}
+          />
+          <div
+            className={cn(
+              `${
+                activeTab === 3
+                  ? "bg-primary text-white"
+                  : activeTab > 3
+                  ? "bg-secondary text-white"
+                  : ""
+              }`,
+              "p-2 rounded-full"
+            )}
+          >
+            <BriefcaseBusiness className="w-5 h-5" />
+          </div>
+        </div>
+        <div className="flex justify-center gap-14">
+          <p
+            className={cn(
+              `${
+                activeTab === 1
+                  ? "text-primary"
+                  : activeTab > 1
+                  ? "text-secondary"
+                  : "text-gray-400"
+              }`,
+              "text-sm"
+            )}
+          >
+            Agency Information
+          </p>
+          <p
+            className={cn(
+              `${
+                activeTab === 2
+                  ? "text-primary"
+                  : activeTab > 2
+                  ? "text-secondary"
+                  : "text-gray-400"
+              }`,
+              "text-sm"
+            )}
+          >
+            Contact Information
+          </p>
+          <p
+            className={cn(
+              `${
+                activeTab === 3
+                  ? "text-primary"
+                  : activeTab > 3
+                  ? "text-secondary"
+                  : "text-gray-400"
+              }`,
+              "text-sm"
+            )}
+          >
+            Agency Portfolio
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const SkipFormDialog = ({ isOpen, onClose }) => {
   const navigate = useNavigate();

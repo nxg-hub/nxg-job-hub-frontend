@@ -64,6 +64,9 @@ export default function LoginForm() {
           console.warn("Unknown user type:", data.userType);
         }
       } else if (isError) {
+        // Clear invalid token if this error occurred
+        localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+        sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
         console.error("Auto-login failed:", error.message);
       }
     }
@@ -147,6 +150,8 @@ export default function LoginForm() {
               ? "/talent"
               : userRes.data.userType === "TALENT"
               ? "/talent"
+              : userRes.data.userType === "SERVICE_PROVIDER"
+              ? "/services-provider"
               : null
           );
         }, 3000);

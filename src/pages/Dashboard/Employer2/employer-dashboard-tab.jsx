@@ -24,6 +24,7 @@ import { Separator } from "@radix-ui/react-context-menu";
 import emptySuggestedImage from "@/static/images/empty-suggest.svg";
 import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
 import UserGuard from "@/components/Employer/employerUserGuard";
+import KPIBoard from "@/components/Employer/Dashboard/kpisBoard";
 
 export default function EmployerDashboardTab() {
   const [candidates, setCandidates] = useState(matchesData);
@@ -228,7 +229,8 @@ export default function EmployerDashboardTab() {
     },
   ];
   return (
-    <div className="flex flex-col gap-8">
+    <div className="max-w-full flex flex-col gap-8">
+      <KPIBoard />
       <div className="md:w-[200px]">
         <Button
           onClick={openCreateJobDialog}
@@ -241,44 +243,6 @@ export default function EmployerDashboardTab() {
           isOpenDialog={isCreateJobDialogOpen}
           openChange={setIsCreateJobDialogOpen}
           isCloseDialog={closeCreateJobDialog}
-        />
-      </div>
-      <div className="flex justify-between">
-        <KpiCard
-          title="Posted Job"
-          value="07"
-          icon={
-            <div className="bg-orange-100 p-3 rounded-full">
-              <Briefcase className="h-5 w-5 text-orange-400" />
-            </div>
-          }
-        />
-        <KpiCard
-          title="Shortlisted"
-          value="24"
-          icon={
-            <div className="bg-sky-100 p-3 rounded-full">
-              <BookmarkCheck className="h-5 w-5 text-sky-400" />
-            </div>
-          }
-        />
-        <KpiCard
-          title="Application"
-          value="1.4k"
-          icon={
-            <div className="bg-cyan-100 p-3 rounded-full">
-              <Eye className="h-5 w-5 text-cyan-400" />
-            </div>
-          }
-        />
-        <KpiCard
-          title="Save Candidate"
-          value="04"
-          icon={
-            <div className="bg-green-100 p-3 rounded-full">
-              <PenLine className="h-5 w-5 text-green-400" />
-            </div>
-          }
         />
       </div>
       <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
