@@ -19,6 +19,7 @@ export default function EmployerProfilePhotoCard({
   userType,
   country,
   profilePicture,
+  companyName,
 }) {
   const queryClient = useQueryClient();
   const [selectedImage, setSelectedImage] = useState(profilePicture);
@@ -56,6 +57,7 @@ export default function EmployerProfilePhotoCard({
   };
 
   const handleSaveProfileImage = async () => {
+    // "https://res.cloudinary.com/dildznazt/image/upload/v1753749441/craagzeoi7fkprrvkaeb.jpg"
     if (!selectedImage) {
       return;
     }
@@ -101,68 +103,66 @@ export default function EmployerProfilePhotoCard({
   };
 
   return (
-    <div className="flex gap-10 item-center bg-white shadow rounded-md p-5">
-      <div className="relative">
-        <Avatar
-          onClick={triggerFileInput}
-          className="hover:cursor-pointer w-24 h-24 border-4 border-gray-200"
-        >
-          <AvatarImage
-            src={selectedImage || undefined}
-            alt="Profile picture"
-            className="object-cover"
-          />
-          <AvatarFallback className="bg-gray-100">
-            <User className="w-12 h-12 text-gray-400" />
-          </AvatarFallback>
-        </Avatar>
+    <div className="w-full flex flex-col gap-10 item-center bg-white rounded-md p-5 md:flex-row md:shadow">
+      <div className="flex gap-5">
+        <div className="relative">
+          <Avatar
+            onClick={triggerFileInput}
+            className="hover:cursor-pointer w-24 h-24 border-4 border-gray-200"
+          >
+            <AvatarImage
+              src={selectedImage || undefined}
+              alt="Profile picture"
+              className="object-cover"
+            />
+            <AvatarFallback className="bg-gray-100">
+              <User className="w-12 h-12 text-gray-400" />
+            </AvatarFallback>
+          </Avatar>
 
-        {/* Upload button positioned at bottom right of avatar */}
-        <Button
-          type="button"
-          onClick={triggerFileInput}
-          className="border-none bg-cyan-500 hover:bg-cyan-500 absolute -bottom-1 -right-1 rounded-full w-7 h-7 p-0 shadow-lg"
-        >
-          <Camera className="w-4 h-4" />
-        </Button>
-        {/* Hidden file input */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="hidden"
-        />
-      </div>
-
-      <div className="flex flex-col justify-center font-medium mr-auto">
-        <span className="text-sky-600">
-          {firstName} {lastName}
-        </span>
-        <span className="text-gray-600">{userType}</span>
-        <span className="text-gray-600">{country}</span>
-      </div>
-      <div className="flex flex-col gap-4 justify-end">
-        <div className="flex gap-5">
+          {/* Upload button positioned at bottom right of avatar */}
           <Button
             type="button"
-            className="text-sky-600 hover:text-sky-700"
-            variant="outline"
-            size="sm"
-            onClick={handleSaveProfileImage}
+            onClick={triggerFileInput}
+            className="border-none bg-cyan-500 hover:bg-cyan-500 absolute -bottom-1 -right-1 rounded-full w-7 h-7 p-0 shadow-lg"
           >
-            <Upload className="h-4 w-4" />
-            Upload picture
+            <Camera className="w-4 h-4" />
           </Button>
-          <Button
-            onClick={removeImage}
-            className="bg-red-50 hover:bg-red-400 text-red-500 hover:text-white gap-2 border-none"
-            size="sm"
-          >
-            <Trash className="h-4 w-4" />
-            Remove picture
-          </Button>
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
         </div>
+
+        <div className="flex flex-col justify-center font-medium mr-auto">
+          <span className="text-sky-600">{companyName || ""}</span>
+          <span className="text-gray-600">{userType}</span>
+          <span className="text-gray-600">{country}</span>
+        </div>
+      </div>
+      <div className="flex gap-5 md:self-end md:ml-auto">
+        <Button
+          type="button"
+          className="text-sky-600 hover:text-sky-700"
+          variant="outline"
+          size="sm"
+          onClick={handleSaveProfileImage}
+        >
+          <Upload className="h-4 w-4" />
+          Upload picture
+        </Button>
+        <Button
+          onClick={removeImage}
+          className="bg-red-50 hover:bg-red-400 text-red-500 hover:text-white gap-2 border-none"
+          size="sm"
+        >
+          <Trash className="h-4 w-4" />
+          Remove picture
+        </Button>
       </div>
       <Toaster />
     </div>

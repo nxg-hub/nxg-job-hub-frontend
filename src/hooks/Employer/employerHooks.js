@@ -28,14 +28,11 @@ export const useEmployerDataQuery = () => {
 
       const authKey = JSON.parse(storeKey)?.authKey;
 
-      const response = await axios.get(
-        `${API_HOST_URL}/api/employers/get-employer`,
-        {
-          headers: {
-            authorization: authKey,
-          },
-        }
-      );
+      const response = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: {
+          authorization: authKey,
+        },
+      });
       return response.data;
     },
   });

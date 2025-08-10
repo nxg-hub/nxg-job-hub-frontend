@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   Bell,
   LayoutDashboard,
@@ -11,11 +11,13 @@ import {
   Settings,
   Users,
   OctagonAlert,
+  Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   Sidebar,
+  SidebarTrigger,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
@@ -28,7 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "../lib/utils";
+import { cn, getStoredKey } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
@@ -39,10 +41,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { API_HOST_URL } from "@/utils/api/API_HOST";
-import kcyimage from "@/static/images/kyc-image.png";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import verifiedImageMobile from "@/static/images/verified-mobile.png";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,6 +55,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
 import { useEmployerData } from "@/store/employer/employerStore";
+import { useAutoLogin } from "@/hooks/useAutoLogin";
 
 const sidebarItems = [
   {
@@ -82,28 +83,98 @@ const sidebarItems = [
 ];
 
 export function EmployerDashboard() {
-  // const isAuthenticated = useAuthRedirect("NXGJOBHUBLOGINKEYV1", "/login");
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const employer = useEmployerData((state) => state.employerData);
-  const { isLoading, isError } = useEmployerDataQuery();
+  const storedToken = getStoredKey();
+
+  //Fetch user type from backend, ONLY if key exist
+  const {
+    data: userData,
+    isPending: isUserTypePending,
+    isSuccess: isUserTypeSuccess,
+    isError: isUserTypeError,
+    isFetched: isUserTypeFetched,
+    error: userTypeError,
+  } = useAutoLogin({
+    enabled: !!storedToken,
+  });
 
   // useEffect(() => {
-  //   // Simulate loading delay
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
+  //   if (!storedToken) {
+  //     console.log("ED: 'No key found, redirecting to login.");
+  //     navigate("/login", { replace: true });
+  //     return;
+  //   }
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+  //   if (isUserTypeFetched) {
+  //     if (isUserTypeError) {
+  //       console.error(
+  //         "ED: User type fetch failed. Redirecting to login. Error:",
+  //         userTypeError
+  //       );
+  //       // Clear invalid token if this error occurred
+  //       localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+  //       sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+  //       queryClient.invalidateQueries(["userType"]);
+  //       navigate("/login", { replace: true });
+  //       return;
+  //     }
 
-  // if (!isAuthenticated) {
-  //   return null;
-  // }
+  //     //if user type fetch was successful
+  //     if (isUserTypeSuccess && userData) {
+  //       const userType = userData.userType;
+  //       console.log("ED: UserType found:", userType);
+  //       if (userType !== "EMPLOYER") {
+  //         //redirect user to their dashboard based on thier type
+  //         let redirectPath = "/dashboard";
 
-  if (isLoading) {
+  //         switch (userType) {
+  //           case "AGENT":
+  //             redirectPath = "/agent";
+  //             break;
+
+  //           case "TALENT":
+  //           case "TECHTALENT":
+  //             redirectPath = "/talent";
+  //             break;
+
+  //           case "SERVICE_PROVIDER":
+  //             redirectPath = "/services-provider";
+  //             break;
+
+  //           default:
+  //             console.warn("Unknown user type:", data.userType);
+  //         }
+  //         navigate(redirectPath, { replace: true });
+  //         return;
+  //       }
+  //     }
+  //   }
+  // }, [
+  //   storedToken,
+  //   isUserTypeFetched,
+  //   isUserTypeError,
+  //   isUserTypeSuccess,
+  //   userData,
+  //   navigate,
+  //   queryClient,
+  // ]);
+
+  //rendering loading state
+  if (storedToken && !isUserTypeFetched) {
     return <DashboardSkeleton />;
   }
-  if (isError) return <p>Erorr:</p>;
+
+  if (storedToken && isUserTypeSuccess && userData?.userType === "EMPLOYER") {
+    return (
+      <TooltipProvider delayDuration={0}>
+        <SidebarProvider>
+          <DashboardContent notifications={notificationsData} />
+        </SidebarProvider>
+      </TooltipProvider>
+    );
+  }
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -112,10 +183,22 @@ export function EmployerDashboard() {
       </SidebarProvider>
     </TooltipProvider>
   );
+
+  // return null;
 }
 
 function DashboardContent({ notifications = [] }) {
+  const {
+    data: userData,
+    isPending: isUserTypePending,
+    isSuccess: isUserTypeSuccess,
+    isError: isUserTypeError,
+    isFetched: isUserTypeFetched,
+    error: userTypeError,
+  } = useEmployerDataQuery();
+
   const employer = useEmployerData((state) => state.employerData);
+
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
@@ -134,7 +217,7 @@ function DashboardContent({ notifications = [] }) {
   };
 
   return (
-    <div className="flex h-screen w-full p-8">
+    <div className="flex h-screen w-full md:p-8">
       {/* Sidebar */}
       <Sidebar collapsible="icon">
         <SidebarContent
@@ -184,7 +267,7 @@ function DashboardContent({ notifications = [] }) {
         <SidebarFooter>
           <SidebarMenuButton
             tooltip="Logout"
-            className="text-primary border-transparent hover:text-red-400"
+            className="text-secondary border-transparent hover:text-red-400"
             onClick={() => setShowLogoutNotice(true)}
           >
             <LogOut className="h-4 w-4" />
@@ -196,11 +279,14 @@ function DashboardContent({ notifications = [] }) {
       {/* Main Content */}
       <SidebarInset className="flex flex-col w-full gap-5">
         {/* Header */}
-        <div className="w-full flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          {/* <SidebarTrigger className="m-0 p-0 border-transparent" /> */}
+        <div className="w-full flex items-center justify-between md:justify-end">
+          {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
+          <SidebarTrigger
+            icon={<Menu className="h-6 w-6" />}
+            className="mr-2 border-transparent md:hidden"
+          />
 
-          <DropdownMenu
+          {/* <DropdownMenu
             open={notificationDropdownOpen}
             onOpenChange={setNotificationDropdownOpen}
           >
@@ -222,40 +308,52 @@ function DashboardContent({ notifications = [] }) {
               </Button>
             </DropdownMenuTrigger>
             <NotificationDropdown notifications={notifications} />
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
-        {!employer?.user?.profileVerified && (
-          <div className="w-full bg-secondary flex text-yellow-700 border p-3 px-5 rounded italic font-medium text-sm items-center justify-between ">
-            <div className="w-9/12 flex items-center justify-between">
-              <div className="flex gap-3 items-center">
-                <span className="bg-black p-1 rounded text-white">
-                  Action required:
-                </span>
-                <span className="text-white">
-                  Your account is not yet verified,{" "}
-                  <NavLink
-                    className="underline hover:cursor-pointer hover:text-sky-300 "
-                    to={"companyprofile"}
-                  >
-                    {" "}
-                    complete your profile
-                  </NavLink>{" "}
-                  to continue using all features
-                </span>
-              </div>
-              {/* <Button className="border-transparent bg-gray-950 hover:underline hover:bg-black">
-              Complete Profile
-            </Button> */}
-            </div>
-            <div className="absolute right-10 w-[200px]">
+        {!employer?.employer?.verified && (
+          <>
+            <div className="flex bg-sky-100 rounded-sm p-3 text-base gap-2 item-center mb-3 md:hidden">
               <img
-                src={kcyimage}
+                src={verifiedImageMobile}
                 alt="Complete profile illustration"
-                className="object-contain w-44 h-44"
+                className="object-contain w-10 h-10"
               />
+              <div className="flex flex-col gap-1">
+                <span>Your account is not yet verified</span>
+                <NavLink
+                  className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                  to={"companyprofile"}
+                >
+                  complete your profile
+                </NavLink>
+              </div>
             </div>
-            <X className="relative bottom-3 left-3 text-white w-4 h-4" />
-          </div>
+
+            <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+              <div className="flex items-center gap-8">
+                <img
+                  src={verifiedImageMobile}
+                  alt="Complete profile illustration"
+                  className="object-contain w-10 h-10"
+                />
+                <div className="flex gap-3 items-center">
+                  <span className="bg-secondary p-1 rounded text-white">
+                    Action required:
+                  </span>
+                  <span>
+                    Your account is not yet verified,
+                    <NavLink
+                      className="underline text-secondary w-fit py-1 px-2 "
+                      to={"companyprofile"}
+                    >
+                      complete your profile
+                    </NavLink>
+                    to continue using all features
+                  </span>
+                </div>
+              </div>
+            </div>
+          </>
         )}
         <div className="h-full">
           <Outlet />

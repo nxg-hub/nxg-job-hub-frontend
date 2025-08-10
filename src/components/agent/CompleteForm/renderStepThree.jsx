@@ -1,4 +1,4 @@
-import { DirectorsField } from "@/components/formFields";
+import { PortFolioField } from "@/components/formFields";
 
 export default function RenderStepThree({ formData, setFormData }) {
   const updateFormData = (field, value) => {
@@ -10,12 +10,11 @@ export default function RenderStepThree({ formData, setFormData }) {
 
   return (
     <div>
-      <DirectorsField
-        labelName="Name of Directors"
-        name="namesOfDirectors"
-        value={formData.namesOfDirectors}
+      <PortFolioField
+        labelName="Key Achivement"
+        name="agencyPortfolio"
+        records={formData.agencyPortfolio}
         onChange={updateFormData}
-        placeholder="Enter available vacancy"
       />
     </div>
   );

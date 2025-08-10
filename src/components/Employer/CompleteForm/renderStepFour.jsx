@@ -1,4 +1,4 @@
-import { InputField, VacancyField } from "../formFields";
+import { InputField, VacancyField } from "@/components/formFields";
 
 export default function RenderStepFour({ formData, setFormData }) {
   const updateFormData = (field, value) => {

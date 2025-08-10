@@ -78,30 +78,56 @@ export default function RenderStepTwo({ formData, setFormData }) {
           placeholder="Select state"
         />
       </div>
-      <TextareaField
-        labelName="Company Address:"
-        name="companyAddress"
-        value={formData.companyAddress}
-        onChange={updateFormData}
-        placeholder="company address"
-        className="min-h-[120px]"
-      />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <InputField
+          labelName="City:"
+          name="city"
+          value={formData.city}
+          type="text"
+          onChange={updateFormData}
+          placeholder="Enter the name of your city"
+        />
+        <InputField
           labelName="Company Zip Code:"
-          name="companyZipCode"
-          value={formData.companyZipCode}
+          name="postalCode"
+          value={formData.postalCode}
           type="text"
           onChange={updateFormData}
           placeholder="12345"
         />
+      </div>
+      <TextareaField
+        labelName="Agency Address:"
+        name="agencyAddress"
+        value={formData.agencyAddress}
+        onChange={updateFormData}
+        placeholder="agency address"
+        className="min-h-[120px]"
+      />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <PhoneNumberField
-          name="companyPhone"
-          value={formData.companyPhone}
-          labelName="Company Phone:"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          labelName="Agency Phone Number:"
           defaultCountry="NG"
           placeholder="+1 (555) 123-4567"
           onChange={updateFormData}
+        />
+        <InputField
+          labelName="Agency Email:"
+          name="email"
+          value={formData.email}
+          type="text"
+          onChange={updateFormData}
+          placeholder="(example@gmail.com)"
+        />
+        <InputField
+          labelName="Agency Website:"
+          name="agencyWebsite"
+          value={formData.agencyWebsite}
+          type="text"
+          onChange={updateFormData}
+          placeholder="(www.example.com)"
         />
       </div>
     </div>

@@ -73,6 +73,9 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
+import AgentCompleteProfileForm from "./pages/agentCompleteProfile.jsx";
+import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
+import AgentCompleteProfile from "./pages/agentCP.jsx";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +110,14 @@ function App() {
           <Route path="chats" element={<MessagesTab />} />
           <Route path="candidate-matches" element={<MatchesTab />} />
         </Route>
+        <Route
+          path="/agent/complete-profile"
+          element={<AgentCompleteProfileForm />}
+        />
+        <Route
+          path="/agent/complete-profile-form"
+          element={<AgentCompleteProfile />}
+        />
         {/* end agent user routes */}
 
         {/* service provider user routes */}
@@ -146,6 +157,10 @@ function App() {
         <Route
           path="/employer/complete-profile"
           element={<EmployerProfileCompleteForm />}
+        />
+        <Route
+          path="/employer/verified-document"
+          element={<EmployerVerifiedDocuments />}
         />
         {/* end employer user routes */}
 
