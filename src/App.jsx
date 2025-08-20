@@ -1,34 +1,34 @@
 // Add this at the very top of your main.jsx or App.jsx
-import React from 'react';
+// import React from 'react';
 
-// Store original createElement
-const originalCreateElement = React.createElement;
+// // Store original createElement
+// const originalCreateElement = React.createElement;
 
-// Override React.createElement to catch all li elements
-React.createElement = function(type, props, ...children) {
-  if (type === 'li' && props) {
-    const invalidProps = {};
-    const validProps = {};
+// // Override React.createElement to catch all li elements
+// React.createElement = function(type, props, ...children) {
+//   if (type === 'li' && props) {
+//     const invalidProps = {};
+//     const validProps = {};
     
-    Object.keys(props).forEach(key => {
-      if (!isNaN(key) && key !== 'key') {
-        invalidProps[key] = props[key];
-        console.error(`🚨 FOUND IT! Invalid numeric attribute: "${key}"`, props[key]);
-        console.error('Full props object:', props);
-        console.error('Component that created this li:');
-        console.trace(); // This will show you the exact component stack
-        debugger; // This will pause execution so you can inspect
-      } else {
-        validProps[key] = props[key];
-      }
-    });
+//     Object.keys(props).forEach(key => {
+//       if (!isNaN(key) && key !== 'key') {
+//         invalidProps[key] = props[key];
+//         console.error(`🚨 FOUND IT! Invalid numeric attribute: "${key}"`, props[key]);
+//         console.error('Full props object:', props);
+//         console.error('Component that created this li:');
+//         console.trace(); // This will show you the exact component stack
+//         debugger; // This will pause execution so you can inspect
+//       } else {
+//         validProps[key] = props[key];
+//       }
+//     });
     
-    // Use validProps instead of original props
-    return originalCreateElement.apply(this, [type, validProps, ...children]);
-  }
+//     // Use validProps instead of original props
+//     return originalCreateElement.apply(this, [type, validProps, ...children]);
+//   }
   
-  return originalCreateElement.apply(this, [type, props, ...children]);
-};
+//   return originalCreateElement.apply(this, [type, props, ...children]);
+// };
 
 // Rest of your imports and code...
 
@@ -82,7 +82,7 @@ import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
-import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
@@ -107,7 +107,7 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
-import { TechTalentProfileCompleteForm } from "./pages/talentCompletForm.jsx";
+import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 
 const queryClient = new QueryClient();
 
@@ -161,7 +161,7 @@ function App() {
         </Route>
         <Route
           path="/services-provider/complete-profile"
-          element={<ServiceProviderFormCompletion />}
+          element={<ServiceProviderProfileCompleteForm />}
         />
         {/* end service provider user routes */}
 

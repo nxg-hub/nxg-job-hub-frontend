@@ -17,7 +17,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
   const [newSkill, setNewSkill] = useState("");
 
   // Experience level options
-  const experienceLevels = [
+  const experienceLevel = [
     "Entry Level (0-2 years)",
     "Junior (2-4 years)",
     "Mid-Level (4-7 years)",
@@ -27,7 +27,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
   ];
 
   // Job interest options
-  const jobInterests = [
+  const jobInterest = [
     "Frontend Development",
     "Backend Development",
     "Full Stack Development",
@@ -158,7 +158,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
             <SelectValue placeholder="Select your primary area of interest" />
           </SelectTrigger>
           <SelectContent>
-            {jobInterests.map((interest) => (
+            {jobInterest.map((interest) => (
               <SelectItem key={interest} value={interest}>
                 {interest}
               </SelectItem>
@@ -211,7 +211,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
             <SelectValue placeholder="Select your experience level" />
           </SelectTrigger>
           <SelectContent>
-            {experienceLevels.map((level) => (
+            {experienceLevel.map((level) => (
               <SelectItem key={level} value={level}>
                 {level}
               </SelectItem>
