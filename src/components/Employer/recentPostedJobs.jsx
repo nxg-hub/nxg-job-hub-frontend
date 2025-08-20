@@ -95,7 +95,7 @@ export default function RecentPostedJobs({ setOpenCreateJobDialog }) {
   return (
     <div className="w-2/3  space-y-6">
       <div className="">
-        {data.length > 0 ? (
+        {data?.length > 0 ? (
           <Table>
             <TableHeader>
               <TableRow>

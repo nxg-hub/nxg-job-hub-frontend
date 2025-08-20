@@ -61,7 +61,9 @@ const SelectAccountType = () => {
         } else if (data.userType === "TALENT") {
           navigate("/talent", { replace: true });
         } else if (data.userType === "TECHTALENT") {
-          navigate("/techtalent/complete-profile", { replace: true });
+          navigate("/talent", { replace: true });
+        } else if (data.userType === "SERVICE_PROVIDER") {
+          navigate("/services-provider", { replace: true });
         } else {
           console.warn("Unknown user type:", data.userType);
         }
@@ -71,6 +73,9 @@ const SelectAccountType = () => {
           (!data?.userType === null || data?.userType === undefined))
       ) {
         if (isError) {
+          // Clear invalid token if this error occurred
+          localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+          sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
           console.error("Auto-login failed:", error.message);
         }
       }
@@ -133,7 +138,7 @@ const SelectAccountType = () => {
       });
       // Updated the condition to navigate to the appropriate page based on the accountChoice
       setTimeout(() => {
-        navigate("/agent");
+        navigate("/agent/complete-profile");
         setSubmittingLoading(false);
       }, 3000);
     } else {
