@@ -6,7 +6,7 @@ import path from "path"
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',  // Add this line
-  plugins: [react({ include: "**/*.jsx"}), svgr()],
+  plugins: [react({ include: "**/*.{js,jsx}" }), svgr()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

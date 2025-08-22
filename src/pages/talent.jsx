@@ -51,7 +51,7 @@ const sidebarItems = [
   {
     icon: <LayoutDashboard />,
     label: "Dashboard",
-    path: "/talent/dashboard",
+    path: "/talent",
   },
   {
     icon: <Building />,
