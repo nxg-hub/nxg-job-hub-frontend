@@ -110,6 +110,7 @@ import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
 import AgentCompleteProfileForm from "./pages/agentCompleteProfile.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
 import AgentCompleteProfile from "./pages/agentCP.jsx";
+import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 
 const queryClient = new QueryClient();
 
