@@ -20,13 +20,15 @@ export function ServiceProviderProfileCompleteForm() {
     firstName: "",
     lastName: "",
     email: "",
-    mainSkill: "",
+    mainSkill: "", // required
     subSkills: [],
-    highestQualification: "",
-    schoolName: "",
-    schoolYear: "",
-    schoolLocation: "",
-    schoolDescription: "",
+    education: {
+      highestQualification: "",
+      schoolName: "",
+      schoolYear: "",
+      schoolLocation: "",
+      schoolDescription: "",
+    },
     workExperiences: [],
     additionalInfo: "",
     preferredContact: "",
@@ -80,11 +82,11 @@ export function ServiceProviderProfileCompleteForm() {
     1: ["mainSkill", "firstName", "lastName", "email", "preferredContact"],
     2: [
       "subSkills",
-      "highestQualification",
-      "schoolName",
-      "schoolYear",
-      "schoolLocation",
-      "schoolDescription",
+      "education.highestQualification",
+      "education.schoolName",
+      "education.schoolYear",
+      "education.schoolLocation",
+      "education.schoolDescription",
       "interests",
       "additionalInfo",
     ],
@@ -184,7 +186,7 @@ export function ServiceProviderProfileCompleteForm() {
         description: "Service Provider profile updated successfully!",
       });
       setFormError(false);
-      setTimeout(() => navigate("/service-provider"), 1500);
+      setTimeout(() => navigate("/services-provider"), 1500);
     } catch (error) {
       // Enhanced error logging for debugging
       console.error("Submission error:", error);

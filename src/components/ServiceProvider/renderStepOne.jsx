@@ -8,20 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
   const mainSkills = [
     "CARPENTRY",
-    "PLUMBING", 
     "ELECTRICAL",
+    "PLUMBING",
     "PAINTING",
-    "CLEANING",
-    "LANDSCAPING",
-    "ROOFING",
-    "FLOORING",
-    "HVAC",
     "MASONRY",
     "WELDING",
-    "APPLIANCE_REPAIR",
-    "PEST_CONTROL",
-    "SECURITY_INSTALLATION",
-    "MOVING_SERVICES"
+    "OTHERS"
   ];
 
   const contactMethods = [
@@ -111,19 +103,26 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
           )}
         </div>
 
-        {/* Main Skill */}
+         {/* Main Skill (changed to dropdown) */}
         <div className="space-y-2">
           <Label htmlFor="mainSkill">
             Primary Skill <span className="text-red-500">*</span>
           </Label>
-          <Input
-            id="mainSkill"
-            type="text"
-            placeholder="Enter your primary skill"
+          <Select
             value={formData.mainSkill}
-            onChange={(e) => handleInputChange("mainSkill", e.target.value)}
-            className={getFieldError("mainSkill") ? "border-red-500" : ""}
-          />
+            onValueChange={(value) => handleInputChange("mainSkill", value)}
+          >
+            <SelectTrigger className={getFieldError("mainSkill") ? "border-red-500" : ""}>
+              <SelectValue placeholder="Select your primary skill" />
+            </SelectTrigger>
+            <SelectContent>
+              {mainSkills.map((skill) => (
+                <SelectItem key={skill} value={skill}>
+                  {skill}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {getFieldError("mainSkill") && (
             <p className="text-sm text-red-500">Primary skill is required</p>
           )}

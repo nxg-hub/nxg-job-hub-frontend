@@ -8,7 +8,7 @@ const getAuthDetails = () => {
     const session = sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
     if (!session) return { id: null, token: null };
     const parsed = JSON.parse(session);
-    return { id: parsed.id, token: parsed.authKey }; // token includes "Bearer "
+    return { id: parsed.id, token: parsed.authKey };
   } catch {
     return { id: null, token: null };
   }
@@ -17,7 +17,7 @@ const getAuthDetails = () => {
 export const useServiceProviderProfileUpdate = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const updateServiceProviderProfile = async (formDataPayload) => {
+  const updateServiceProviderProfile = async (apiPayload) => {
     setIsLoading(true);
 
     const { id, token: authToken } = getAuthDetails();
@@ -27,17 +27,12 @@ export const useServiceProviderProfileUpdate = () => {
     }
 
     try {
-      // Remove serviceProviderId from payload — backend only expects it in URL
-      const payload = { ...formDataPayload };
-      delete payload.serviceProviderId;
-
-      if (import.meta.env.DEV) {
-        console.log("Payload to send:", JSON.stringify(payload, null, 2));
-      }
-
+      // The payload is already cleaned and API-ready from the form component
+      console.log("Sending API payload:", JSON.stringify(apiPayload, null, 2));
+      
       const response = await axios.put(
         `${API_BASE_URL}/api/service-providers/${id}/update-service-provider`,
-        payload,
+        apiPayload,
         {
           headers: {
             Authorization: authToken,
@@ -49,11 +44,17 @@ export const useServiceProviderProfileUpdate = () => {
 
       return response.data;
     } catch (error) {
+      // Enhanced error logging
       if (error.response) {
-        console.error("Backend response status:", error.response.status);
-        console.error("Backend response data:", error.response.data);
+        console.error("API Error Details:");
+        console.error("Status:", error.response.status);
+        console.error("Response Data:", error.response.data);
+        console.error("Request URL:", error.config?.url);
+        console.error("Payload sent:", JSON.stringify(apiPayload, null, 2));
+      } else if (error.request) {
+        console.error("Network Error - No response received:", error.request);
       } else {
-        console.error("Error message:", error.message);
+        console.error("Error:", error.message);
       }
       throw error;
     } finally {
