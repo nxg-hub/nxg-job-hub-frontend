@@ -1,37 +1,3 @@
-// Add this at the very top of your main.jsx or App.jsx
-// import React from 'react';
-
-// // Store original createElement
-// const originalCreateElement = React.createElement;
-
-// // Override React.createElement to catch all li elements
-// React.createElement = function(type, props, ...children) {
-//   if (type === 'li' && props) {
-//     const invalidProps = {};
-//     const validProps = {};
-    
-//     Object.keys(props).forEach(key => {
-//       if (!isNaN(key) && key !== 'key') {
-//         invalidProps[key] = props[key];
-//         console.error(`🚨 FOUND IT! Invalid numeric attribute: "${key}"`, props[key]);
-//         console.error('Full props object:', props);
-//         console.error('Component that created this li:');
-//         console.trace(); // This will show you the exact component stack
-//         debugger; // This will pause execution so you can inspect
-//       } else {
-//         validProps[key] = props[key];
-//       }
-//     });
-    
-//     // Use validProps instead of original props
-//     return originalCreateElement.apply(this, [type, validProps, ...children]);
-//   }
-  
-//   return originalCreateElement.apply(this, [type, props, ...children]);
-// };
-
-// Rest of your imports and code...
-
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home.jsx";
