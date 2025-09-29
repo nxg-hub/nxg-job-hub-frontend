@@ -48,7 +48,7 @@ import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
-import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercompleteform.jsx";
 import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
@@ -80,6 +80,7 @@ import AgentCompleteProfile from "./pages/agentCP.jsx";
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
+import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        <Route path="/techtalent/complete-profile" element={<TechTalentProfileCompleteForm/>} />
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>
@@ -133,7 +135,11 @@ function App() {
         </Route>
         <Route
           path="/services-provider/complete-profile"
-          element={<ServiceProviderFormCompletion />}
+          element={<ServiceProviderProfileCompleteForm />}
+        />
+        <Route
+          path="/services-provider/complete-profile-x"
+          element={<XServiceProviderFormCompletion />}
         />
         <Route
           path="/services-provider/complete-profile-x"

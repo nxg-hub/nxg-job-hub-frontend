@@ -47,14 +47,14 @@ export default function AgentProfileEditForm({ profileData, onSave }) {
   };
 
   const handleAddSkill = () => {
-    if (newSkill.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        skills: [...prev.skills, newSkill.trim()],
-      }));
-      setNewSkill("");
-    }
-  };
+  if (newSkill.trim() && typeof newSkill === "string") {
+    setFormData({
+      ...formData,
+      skills: [...formData.skills, newSkill.trim()],
+    });
+    setNewSkill("");
+  }
+};
 
   const handleRemoveSkill = (skillToRemove) => {
     setFormData((prev) => ({

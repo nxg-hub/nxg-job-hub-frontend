@@ -86,7 +86,9 @@ function DashProfile() {
       setBio(talentData.bio || "");
       setJobInterest(talentData.jobInterest || "");
       setExperienceLevel(talentData.experienceLevel || "");
-      setSkills(talentData.skills || []);
+      setSkills(
+        (talentData.skills || []).map((skill) => skill.toString().trim())
+      );
 
       // Set verification status based on the fetched data
       const updatedVerificationStatus = talentData.verified || false;
@@ -210,18 +212,12 @@ function DashProfile() {
     // setSkills([...filteredSkills, { skill: "" }]);
   };
   const handleSelectSkill = (selectedSkill) => {
-    // Check if the selected skill is not empty
-    if (selectedSkill.trim() !== "") {
-      // Filter out any empty string skills before adding the selected skill
-      // console.log(skills);
-      // const updatedSkills = skills.filter((skill) => {
-      //   console.log(skill);
-      //   return skill && skill.skill.trim() !== "";
-      // });
-      setSkills([...skills, selectedSkill]);
+    const cleanSkill = selectedSkill?.toString().trim();
 
-      // setSkills([...updatedSkills, { skill: selectedSkill }]);
+    if (cleanSkill !== "" && !skills.includes(cleanSkill)) {
+      setSkills([...skills, cleanSkill]);
     }
+
     setShowDropdown(false);
   };
 
