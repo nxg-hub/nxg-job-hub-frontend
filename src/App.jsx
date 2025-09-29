@@ -48,7 +48,8 @@ import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
-import { ServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
+import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
@@ -132,7 +133,7 @@ function App() {
         </Route>
         <Route
           path="/services-provider/complete-profile-x"
-          element={<ServiceProviderFormCompletion />}
+          element={<XServiceProviderFormCompletion />}
         />
         {/* end service provider user routes */}
 

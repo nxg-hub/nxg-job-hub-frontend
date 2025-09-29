@@ -133,7 +133,7 @@ const subSkillsOptions = {
   ],
 };
 
-export function ServiceProviderFormCompletion() {
+export function XServiceProviderFormCompletion() {
   const [step, setStep] = useState(1);
   const totalSteps = 5; // Now we have 5 steps
   const [selectedMainSkill, setSelectedMainSkill] = useState(undefined);
