@@ -49,6 +49,7 @@ import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
 import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercompleteform.jsx";
+import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
@@ -101,13 +102,6 @@ function App() {
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
         <Route path="/techtalent/complete-profile" element={<TechTalentProfileCompleteForm/>} />
-        {/* <Route path="/completeProfile" element={<CompleteYourProfile/>} /> */}
-
-        {/* Complete Profile with Form Provider */}
-        {/* <Route path="/completeProfile" element={<ProfileFormProvider><CompleteYourProfile /></ProfileFormProvider>} /> */}
-        {/* <Route path="/personalInfo" element={<ProfileFormProvider><PersonalInfoPage /></ProfileFormProvider>} />
-        <Route path="/skills" element={<ProfileFormProvider><SkillsExperiencePage /></ProfileFormProvider>} />
-        <Route path="/certifications" element={<ProfileFormProvider><CertificationsPage /></ProfileFormProvider>} /> */}
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>
@@ -139,6 +133,10 @@ function App() {
         <Route
           path="/services-provider/complete-profile"
           element={<ServiceProviderProfileCompleteForm />}
+        />
+        <Route
+          path="/services-provider/complete-profile-x"
+          element={<XServiceProviderFormCompletion />}
         />
         {/* end service provider user routes */}
 
