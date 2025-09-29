@@ -9,8 +9,14 @@ import { Badge } from "../ui/badge";
 import { X, Plus } from "lucide-react";
 
 const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
-  const [newSubSkill, setNewSubSkill] = useState("");
   const [newInterest, setNewInterest] = useState("");
+
+  const contactMethods = [
+    { value: "EMAIL", label: "EMAIL" },
+    { value: "PHONE", label: "PHONE" },
+    { value: "SMS", label: "SMS" },
+    { value: "WHATSAPP", label: "WHATSAPP" },
+  ];
 
   const qualifications = [
     "High School Diploma",
@@ -18,168 +24,93 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
     "Bachelor's Degree",
     "Master's Degree",
     "PhD",
-    "Trade Certificate",
     "Professional Certification",
-    "Apprenticeship Completion",
-    "Other"
+    "Other",
   ];
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
 
-  // const skillSuggestions = {
-  //   CARPENTRY: ["Framing", "Finish Carpentry", "Cabinet Making", "Deck Building", "Furniture Making"],
-  //   PLUMBING: ["Pipe Installation", "Leak Repair", "Drain Cleaning", "Water Heater Installation", "Bathroom Installation"],
-  //   ELECTRICAL: ["Wiring", "Panel Installation", "Lighting", "Outlet Installation", "Smart Home Setup"],
-  //   PAINTING: ["Interior Painting", "Exterior Painting", "Wall Preparation", "Color Consultation", "Decorative Painting"],
-  //   CLEANING: ["Deep Cleaning", "Move-out Cleaning", "Commercial Cleaning", "Carpet Cleaning", "Window Cleaning"],
-  //   LANDSCAPING: ["Lawn Care", "Garden Design", "Tree Trimming", "Irrigation", "Hardscaping"],
-  //   ROOFING: ["Shingle Installation", "Roof Repair", "Gutter Installation", "Roof Inspection", "Emergency Repairs"],
-  //   FLOORING: ["Hardwood Installation", "Tile Installation", "Carpet Installation", "Laminate Installation", "Floor Refinishing"],
-  //   HVAC: ["Installation", "Repair", "Maintenance", "Duct Cleaning", "Energy Efficiency"],
-  //   MASONRY: ["Brickwork", "Stone Work", "Concrete", "Chimney Repair", "Patio Installation"],
-  //   WELDING: ["Arc Welding", "MIG Welding", "TIG Welding", "Fabrication", "Repair Welding"],
-  //   APPLIANCE_REPAIR: ["Refrigerator Repair", "Washer/Dryer Repair", "Dishwasher Repair", "Oven Repair", "HVAC Units"],
-  //   PEST_CONTROL: ["Termite Treatment", "Rodent Control", "Insect Control", "Prevention", "Inspection"],
-  //   SECURITY_INSTALLATION: ["Camera Systems", "Alarm Systems", "Access Control", "Smart Locks", "Monitoring Setup"],
-  //   MOVING_SERVICES: ["Local Moving", "Long Distance", "Packing", "Storage", "Commercial Moving"]
-  // };
-
+  // ✅ Top-level updates (preferredContact, additionalInfo, etc.)
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
-  const addSubSkill = () => {
-    if (newSubSkill.trim() && !formData.subSkills.includes(newSubSkill.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        subSkills: [...prev.subSkills, newSubSkill.trim()]
-      }));
-      setNewSubSkill("");
-    }
-  };
-
-  const removeSubSkill = (skillToRemove) => {
-    setFormData(prev => ({
+  // ✅ Nested education updates
+  const handleEducationChange = (field, value) => {
+    setFormData((prev) => ({
       ...prev,
-      subSkills: prev.subSkills.filter(skill => skill !== skillToRemove)
+      education: {
+        ...prev.education,
+        [field]: value,
+      },
     }));
   };
 
   const addInterest = () => {
     if (newInterest.trim() && !formData.interests.includes(newInterest.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        interests: [...prev.interests, newInterest.trim()]
+        interests: [...prev.interests, newInterest.trim()],
       }));
       setNewInterest("");
     }
   };
 
   const removeInterest = (interestToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      interests: prev.interests.filter(interest => interest !== interestToRemove)
+      interests: prev.interests.filter((interest) => interest !== interestToRemove),
     }));
   };
 
-  const addSuggestedSkill = (skill) => {
-    if (!formData.subSkills.includes(skill)) {
-      setFormData(prev => ({
-        ...prev,
-        subSkills: [...prev.subSkills, skill]
-      }));
-    }
-  };
-
   const isFieldEmpty = (field) => {
-    const value = formData[field];
-    if (Array.isArray(value)) {
-      return value.length === 0;
+    let value;
+    if (field.startsWith("education.")) {
+      const key = field.split(".")[1];
+      value = formData.education?.[key];
+    } else {
+      value = formData[field];
     }
+    if (Array.isArray(value)) return value.length === 0;
     return !value || value.toString().trim() === "";
   };
 
-  const getFieldError = (field) => {
-    return formError && isFieldEmpty(field);
-  };
-
-  // const suggestionsList = formData.mainSkill ? skillSuggestions[formData.mainSkill] || [] : [];
+  const getFieldError = (field) => formError && isFieldEmpty(field);
 
   return (
     <div className="space-y-6">
-      {/* Sub Skills */}
+      {/* Contact Preference */}
       <Card>
         <CardHeader>
-          <CardTitle>Additional Skills</CardTitle>
-          <CardDescription>
-            Add specific skills related to your primary expertise
-          </CardDescription>
+          <CardTitle>Contact Preference</CardTitle>
+          <CardDescription>Select how we can reach you</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="subSkills">
-              Sub Skills <span className="text-red-500">*</span>
-            </Label>
-            <div className="flex gap-2">
-              <Input
-                id="subSkills"
-                type="text"
-                placeholder="Enter a sub skill"
-                value={newSubSkill}
-                onChange={(e) => setNewSubSkill(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSubSkill())}
-                className={getFieldError("subSkills") ? "border-red-500" : ""}
-              />
-              <Button type="button" onClick={addSubSkill} size="sm">
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            
-            {/* Suggested Skills */}
-            {/* {suggestionsList.length > 0 && (
-              <div className="space-y-2">
-                <Label className="text-sm text-muted-foreground">Suggested skills for {formData.mainSkill}:</Label>
-                <div className="flex flex-wrap gap-2">
-                  {suggestionsList
-                    .filter(skill => !formData.subSkills.includes(skill))
-                    .map((skill) => (
-                    <Button
-                      key={skill}
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addSuggestedSkill(skill)}
-                      className="text-xs"
-                    >
-                      + {skill}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )} */}
-            
-            {/* Current Sub Skills */}
-            {formData.subSkills.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {formData.subSkills.map((skill, index) => (
-                  <Badge key={index} variant="secondary" className="flex items-center text-white gap-1">
-                    {skill}
-                    <X 
-                      className="h-3 w-3 text-white cursor-pointer" 
-                      onClick={() => removeSubSkill(skill)}
-                    />
-                  </Badge>
-                ))}
-              </div>
-            )}
-            {getFieldError("subSkills") && (
-              <p className="text-sm text-red-500">At least one sub skill is required</p>
-            )}
-          </div>
+        <CardContent>
+          <Label>
+            Preferred Contact Method <span className="text-red-500">*</span>
+          </Label>
+          <Select
+            value={formData.preferredContact}
+            onValueChange={(v) => handleInputChange("preferredContact", v)}
+          >
+            <SelectTrigger className={getFieldError("preferredContact") ? "border-red-500" : ""}>
+              <SelectValue placeholder="Select contact method" />
+            </SelectTrigger>
+            <SelectContent>
+              {contactMethods.map((m) => (
+                <SelectItem key={m.value} value={m.value}>
+                  {m.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {getFieldError("preferredContact") && (
+            <p className="text-sm text-red-500">Preferred contact method is required</p>
+          )}
         </CardContent>
       </Card>
 
@@ -187,9 +118,7 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
       <Card>
         <CardHeader>
           <CardTitle>Education</CardTitle>
-          <CardDescription>
-            Tell us about your educational background
-          </CardDescription>
+          <CardDescription>Tell us about your educational background</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -197,10 +126,12 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               Highest Qualification <span className="text-red-500">*</span>
             </Label>
             <Select
-              value={formData.highestQualification}
-              onValueChange={(value) => handleInputChange("highestQualification", value)}
+              value={formData.education.highestQualification}
+              onValueChange={(v) => handleEducationChange("highestQualification", v)}
             >
-              <SelectTrigger className={getFieldError("highestQualification") ? "border-red-500" : ""}>
+              <SelectTrigger
+                className={getFieldError("education.highestQualification") ? "border-red-500" : ""}
+              >
                 <SelectValue placeholder="Select your highest qualification" />
               </SelectTrigger>
               <SelectContent>
@@ -211,7 +142,7 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 ))}
               </SelectContent>
             </Select>
-            {getFieldError("highestQualification") && (
+            {getFieldError("education.highestQualification") && (
               <p className="text-sm text-red-500">Highest qualification is required</p>
             )}
           </div>
@@ -225,11 +156,11 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 id="schoolName"
                 type="text"
                 placeholder="Enter school/institution name"
-                value={formData.schoolName}
-                onChange={(e) => handleInputChange("schoolName", e.target.value)}
-                className={getFieldError("schoolName") ? "border-red-500" : ""}
+                value={formData.education.schoolName}
+                onChange={(e) => handleEducationChange("schoolName", e.target.value)}
+                className={getFieldError("education.schoolName") ? "border-red-500" : ""}
               />
-              {getFieldError("schoolName") && (
+              {getFieldError("education.schoolName") && (
                 <p className="text-sm text-red-500">School name is required</p>
               )}
             </div>
@@ -239,21 +170,23 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 Graduation Year <span className="text-red-500">*</span>
               </Label>
               <Select
-                value={formData.schoolYear}
-                onValueChange={(value) => handleInputChange("schoolYear", value)}
+                value={formData.education.schoolYear}
+                onValueChange={(v) => handleEducationChange("schoolYear", v)}
               >
-                <SelectTrigger className={getFieldError("schoolYear") ? "border-red-500" : ""}>
+                <SelectTrigger
+                  className={getFieldError("education.schoolYear") ? "border-red-500" : ""}
+                >
                   <SelectValue placeholder="Select year" />
                 </SelectTrigger>
                 <SelectContent>
                   {years.map((year) => (
-                    <SelectItem key={year} value={year.toString()}>
+                    <SelectItem key={year} value={String(year)}>
                       {year}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {getFieldError("schoolYear") && (
+              {getFieldError("education.schoolYear") && (
                 <p className="text-sm text-red-500">Graduation year is required</p>
               )}
             </div>
@@ -267,11 +200,11 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               id="schoolLocation"
               type="text"
               placeholder="Enter school location (City, State/Country)"
-              value={formData.schoolLocation}
-              onChange={(e) => handleInputChange("schoolLocation", e.target.value)}
-              className={getFieldError("schoolLocation") ? "border-red-500" : ""}
+              value={formData.education.schoolLocation}
+              onChange={(e) => handleEducationChange("schoolLocation", e.target.value)}
+              className={getFieldError("education.schoolLocation") ? "border-red-500" : ""}
             />
-            {getFieldError("schoolLocation") && (
+            {getFieldError("education.schoolLocation") && (
               <p className="text-sm text-red-500">School location is required</p>
             )}
           </div>
@@ -283,12 +216,12 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
             <Textarea
               id="schoolDescription"
               placeholder="Briefly describe your studies, achievements, or relevant coursework"
-              value={formData.schoolDescription}
-              onChange={(e) => handleInputChange("schoolDescription", e.target.value)}
-              className={getFieldError("schoolDescription") ? "border-red-500" : ""}
+              value={formData.education.schoolDescription}
+              onChange={(e) => handleEducationChange("schoolDescription", e.target.value)}
+              className={getFieldError("education.schoolDescription") ? "border-red-500" : ""}
               rows={3}
             />
-            {getFieldError("schoolDescription") && (
+            {getFieldError("education.schoolDescription") && (
               <p className="text-sm text-red-500">Education description is required</p>
             )}
           </div>
@@ -299,9 +232,7 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
       <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
-          <CardDescription>
-            Share your interests and any additional information
-          </CardDescription>
+          <CardDescription>Share your interests and any additional information</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -315,21 +246,21 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 placeholder="Enter an interest"
                 value={newInterest}
                 onChange={(e) => setNewInterest(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addInterest())}
+                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addInterest())}
                 className={getFieldError("interests") ? "border-red-500" : ""}
               />
               <Button type="button" onClick={addInterest} size="sm">
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
-            
+
             {formData.interests.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {formData.interests.map((interest, index) => (
                   <Badge key={index} variant="secondary" className="flex items-center text-white gap-1">
                     {interest}
-                    <X 
-                      className="h-3 w-3 text-white cursor-pointer" 
+                    <X
+                      className="h-3 w-3  text-white cursor-pointer"
                       onClick={() => removeInterest(interest)}
                     />
                   </Badge>

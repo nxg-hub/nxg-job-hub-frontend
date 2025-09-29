@@ -155,8 +155,8 @@ export function TechTalentProfileCompleteForm() {
       return;
     }
 
-    // Remove step 4 fields from payload
-    const { resume, coverletter, profilePicture, ...payload } = formData;
+   
+    const {...payload } = formData;
 
     try {
       await updateTechProfile(payload);

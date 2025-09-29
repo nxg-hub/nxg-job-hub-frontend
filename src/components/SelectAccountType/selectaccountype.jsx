@@ -18,14 +18,12 @@ const SelectAccountType = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const [accountChoice, setAccountChoice] = useState("");
-  //a state that disabled login button when trying to log user in
   const [submittingLoading, setSubmittingLoading] = useState(false);
 
   const { data, fetchStatus, isError, isSuccess, error, isFetched } =
     useAutoLogin();
 
-  //if auto-login check has completed(either success or failed)
-  const isAutoLoginChecking = fetchStatus === "fatching";
+  const isAutoLoginChecking = fetchStatus === "fetching";
 
   const storedToken = (function () {
     let key =
@@ -40,6 +38,16 @@ const SelectAccountType = () => {
     }
   })();
 
+  // Check if profile is complete
+  const isProfileComplete = () => {
+    const profileStatus = localStorage.getItem("NXGJOBHUBComPro");
+    try {
+      return profileStatus ? JSON.parse(profileStatus) : false;
+    } catch (e) {
+      return false;
+    }
+  };
+
   useEffect(() => {
     setSearchParams("");
   }, [setSearchParams]);
@@ -53,31 +61,48 @@ const SelectAccountType = () => {
 
     if (isFetched && !isAutoLoginChecking) {
       if (isSuccess && data?.userType) {
-        //redirect user to their dashboard based on thier type
-        if (data.userType === "EMPLOYER") {
-          navigate("/employer", { replace: true });
-        } else if (data.userType === "AGENT") {
-          navigate("/agent", { replace: true });
-        } else if (data.userType === "TALENT") {
-          navigate("/talent", { replace: true });
-        } else if (data.userType === "TECHTALENT") {
-          navigate("/talent", { replace: true });
-        } else if (data.userType === "SERVICE_PROVIDER") {
-          navigate("/services-provider", { replace: true });
+        // Check if this is a new user or existing user with complete profile
+        const profileComplete = isProfileComplete();
+        
+        if (profileComplete) {
+          // Existing user with complete profile - redirect to dashboard
+          if (data.userType === "EMPLOYER") {
+            navigate("/employer", { replace: true });
+          } else if (data.userType === "AGENT") {
+            navigate("/agent", { replace: true });
+          } else if (data.userType === "TALENT") {
+            navigate("/talent", { replace: true });
+          } else if (data.userType === "TECHTALENT") {
+            navigate("/talent", { replace: true });
+          } else if (data.userType === "SERVICE_PROVIDER") {
+            navigate("/services-provider", { replace: true });
+          } else {
+            console.warn("Unknown user type:", data.userType);
+          }
         } else {
-          console.warn("Unknown user type:", data.userType);
+          // New user or incomplete profile - redirect to complete profile
+          if (data.userType === "EMPLOYER") {
+            navigate("/employer/complete-profile", { replace: true });
+          } else if (data.userType === "AGENT") {
+            navigate("/agent/complete-profile", { replace: true });
+          } else if (data.userType === "TALENT") {
+            navigate("/talent/complete-profile", { replace: true });
+          } else if (data.userType === "TECHTALENT") {
+            navigate("/techtalent/complete-profile", { replace: true });
+          } else if (data.userType === "SERVICE_PROVIDER") {
+            navigate("/services-provider/complete-profile", { replace: true });
+          }
         }
       } else if (
         isError ||
-        (isSuccess &&
-          (!data?.userType === null || data?.userType === undefined))
+        (isSuccess && (!data?.userType || data?.userType === null || data?.userType === undefined))
       ) {
         if (isError) {
-          // Clear invalid token if this error occurred
           localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
           sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
           console.error("Auto-login failed:", error.message);
         }
+        // If no userType, stay on this page to select account type
       }
     }
   }, [
@@ -93,7 +118,6 @@ const SelectAccountType = () => {
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
-    // { label: "Talent", value: "talent" },
     { label: "Agent", value: "agent" },
     { label: "Employer", value: "employer" },
     { label: "Service Provider", value: "serviceprovider" },
@@ -114,7 +138,7 @@ const SelectAccountType = () => {
   const setAccountType = async () => {
     setSubmittingLoading(true);
 
-    //new user: account profile not complete
+    // Mark profile as incomplete for new user
     localStorage.setItem("NXGJOBHUBComPro", JSON.stringify(false));
 
     const authKey =
@@ -136,7 +160,6 @@ const SelectAccountType = () => {
         ),
         duration: 2500,
       });
-      // Updated the condition to navigate to the appropriate page based on the accountChoice
       setTimeout(() => {
         navigate("/agent/complete-profile");
         setSubmittingLoading(false);
@@ -163,7 +186,6 @@ const SelectAccountType = () => {
           ),
           duration: 2500,
         });
-        // Updated the condition to navigate to the appropriate page based on the accountChoice
         setTimeout(() => {
           if (accountChoice === "employer") {
             navigate("/employer/complete-profile", { replace: true });
@@ -177,6 +199,7 @@ const SelectAccountType = () => {
           if (accountChoice === "agent") {
             navigate("/agent/complete-profile", { replace: true });
           }
+          setSubmittingLoading(false);
         }, 3000);
       } catch (err) {
         console.log(err);
