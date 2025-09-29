@@ -132,6 +132,10 @@ function App() {
           <Route path="messages" element={<MessagesPage />} />
         </Route>
         <Route
+          path="/services-provider/complete-profile"
+          element={<ServiceProviderFormCompletion />}
+        />
+        <Route
           path="/services-provider/complete-profile-x"
           element={<XServiceProviderFormCompletion />}
         />
