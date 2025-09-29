@@ -123,13 +123,13 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
                 <Badge
                   key={skill}
                   variant="secondary"
-                  className="flex items-center gap-1 px-2 py-1"
+                  className="flex items-center text-white gap-1 px-2 py-1"
                 >
                   {skill}
                   <button
                     type="button"
                     onClick={() => removeSkill(skill)}
-                    className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                    className="ml-1 hover:bg-gray-300 rounded-full  p-0.5"
                   >
                     <X className="h-3 w-3" />
                   </button>

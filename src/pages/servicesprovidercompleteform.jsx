@@ -16,10 +16,6 @@ import { useServiceProviderProfileUpdate } from "../hooks/Service-provider/servi
 export function ServiceProviderProfileCompleteForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    serviceProviderId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
     mainSkill: "", // required
     subSkills: [],
     education: {
@@ -79,9 +75,9 @@ export function ServiceProviderProfileCompleteForm() {
 
   // Updated stepFields to use flattened education properties
   const stepFields = {
-    1: ["mainSkill", "firstName", "lastName", "email", "preferredContact"],
+    1: ["mainSkill", "subSkills"],
     2: [
-      "subSkills",
+      "preferredContact",
       "education.highestQualification",
       "education.schoolName",
       "education.schoolYear",
@@ -226,25 +222,7 @@ export function ServiceProviderProfileCompleteForm() {
         Please complete all steps to activate your profile.
       </p>
 
-      {/* Debug Mode Toggle */}
-      {debugMode && (
-        <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded-md">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-yellow-800">
-              🚧 Debug Mode: Validation disabled for testing
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setDebugMode(false)}
-              className="text-xs"
-            >
-              Enable Validation
-            </Button>
-          </div>
-        </div>
-      )}
-
+      
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-lg">Step {currentStep} of 3</h2>

@@ -206,8 +206,15 @@ export function ServicesProviderHomePage() {
     const fetchJobs = async () => {
       try {
         const response = await fetch(
-          "https://nxg-job-hub-backend.onrender.com/api/job-postings/recent-job-postings"
-        );
+        `${import.meta.env.VITE_API_HOST_URL}${import.meta.env.VITE_RECENT_JOB}`, {
+           headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!res.ok) throw new Error(`Request failed with ${res.status}`);
+
+
         const data = await response.json();
         setRecommendedJobs(data.content || []);
       } catch (error) {
@@ -221,10 +228,28 @@ export function ServicesProviderHomePage() {
   useEffect(() => {
   const fetchNearbyJobs = async () => {
     try {
+      // ✅ Get session & userId
+      const session = sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+      const parsed = session ? JSON.parse(session) : null;
+      const userId = parsed?.id; // adjust if your session object uses a different key
+
+      if (!userId) {
+        console.error("User ID not found. Please login again.");
+        return;
+      }
+
+      // ✅ Call the user-specific API
       const response = await fetch(
-        `https://nxg-job-hub-backend.onrender.com/api/job-postings/recommend-nearby-jobs`
+        `${import.meta.env.VITE_API_HOST_URL}${import.meta.env.VITE_RECOMMENDED_JOB}/${userId}/recommend`, {
+           headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
+      if (!res.ok) throw new Error(`Request failed with ${res.status}`);
+      
       const data = await response.json();
+
       setNearbyJobs(data.content || []);
     } catch (error) {
       console.error("Error fetching nearby jobs:", error);
@@ -233,6 +258,7 @@ export function ServicesProviderHomePage() {
 
   fetchNearbyJobs();
 }, []);
+
 
 
   const toggleBookmark = (jobId) => {
