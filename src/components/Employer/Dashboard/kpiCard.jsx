@@ -45,8 +45,8 @@ export default function KPICard({
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="p-2 bg-muted rounded-lg">
-              <Icon className="h-6 w-6 text-muted-foreground" />
+            <div className="p-2 bg-sky-100 rounded-lg">
+              <Icon className="h-6 w-6 text-secondary" />
             </div>
             <div className="flex flex-col">
               <p className="text-sm font-medium text-muted-foreground">
@@ -55,7 +55,7 @@ export default function KPICard({
               <p className="text-2xl font-bold">{value}</p>
             </div>
           </div>
-          {change !== undefined && (
+          {/* {change !== undefined && (
             <div className="flex flex-col items-end space-y-1">
               <Badge
                 variant="secondary"
@@ -73,7 +73,7 @@ export default function KPICard({
                 </span>
               )}
             </div>
-          )}
+          )} */}
         </div>
       </CardContent>
     </Card>

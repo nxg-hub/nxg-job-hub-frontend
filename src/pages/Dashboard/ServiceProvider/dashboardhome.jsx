@@ -139,52 +139,55 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
-      <img src={driver} alt="" />
-        {/* Employer/bookmark */}
-      <div className="flex justify-between w-full">
-        <div className="flex gap-2">
-          <div className="flex-col">
-            <h3 className="font-medium">{job.company}</h3>
-            <div className="flex items-center text-xs text-gray-500">
-              <MapPin className="h-3 w-3 mr-1" />
-              {job.location}
-            </div>
-          </div>
-        </div>
-        <Button 
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 border-none self-end"
-          onClick={onBookmarkToggle}>
-          <div className="flex flex-col items-center">
-            <Bookmark
-              className={cn(
-                "h-10 w-",
-                isBookmarked ? "fill-[#0078B4] text-[#0078B4]" : "text-gray-400"
-              )}
-            />
-            {/* <span className="text-xs text-gray-300">
-              {isBookmarked ? "saved" : "save"}
-            </span> */}
-          </div>
-        </Button>
-        {/* <img
-          src={driver}
-          alt=""
-        /> */}
+        <img src={driver} alt="" />
         {/* Employer/bookmark */}
         <div className="flex justify-between w-full">
           <div className="flex gap-2">
-            {/* <div className="flex-col">
+            <div className="flex-col">
+              <h3 className="font-medium">{job.company}</h3>
+              <div className="flex items-center text-xs text-gray-500">
+                <MapPin className="h-3 w-3 mr-1" />
+                {job.location}
+              </div>
+            </div>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 border-none self-end"
+            onClick={onBookmarkToggle}
+          >
+            <div className="flex flex-col items-center">
+              <Bookmark
+                className={cn(
+                  "h-10 w-",
+                  isBookmarked
+                    ? "fill-[#0078B4] text-[#0078B4]"
+                    : "text-gray-400"
+                )}
+              />
+              {/* <span className="text-xs text-gray-300">
+              {isBookmarked ? "saved" : "save"}
+            </span> */}
+            </div>
+          </Button>
+          {/* <img
+          src={driver}
+          alt=""
+        /> */}
+          {/* Employer/bookmark */}
+          <div className="flex justify-between w-full">
+            <div className="flex gap-2">
+              {/* <div className="flex-col">
               <h3 className="font-medium">{job.company}</h3>
               <div className="flex items-center text-xs text-gray-500">
                 <MapPin className="h-3 w-3 mr-1" />
                 {job.location}
               </div>
             </div> */}
+            </div>
           </div>
         </div>
-      </div>
       </CardHeader>
       <CardContent className="p-4">
         <h4 className="font-medium mb-2">{job.title}</h4>
@@ -193,10 +196,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
         </p>
         <div className="flex flex-wrap gap-2 mb-3">
           {job.type.map((type) => (
-            <Badge
-              key={type}
-              variant="outline"
-              className="font-normal">
+            <Badge key={type} variant="outline" className="font-normal">
               {type}
             </Badge>
           ))}
@@ -207,9 +207,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
         <div className="text-xs text-gray-500">
           {job.views} views • {job.applicants} applicants
         </div>
-        <Button
-          size="sm"
-          className="bg-sky-400 border-none hover:bg-[#006699]">
+        <Button size="sm" className="bg-sky-400 border-none hover:bg-[#006699]">
           Apply Now
         </Button>
       </CardFooter>
@@ -235,20 +233,12 @@ export function ServicesProviderHomePage() {
         <div className="flex flex-wrap gap-2">
           <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              type="text"
-              placeholder="Nurse/Driver"
-              className="pl-9"
-            />
+            <Input type="text" placeholder="Nurse/Driver" className="pl-9" />
           </div>
 
           <div className="relative flex-1 min-w-[200px]">
             <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              type="text"
-              placeholder="Location"
-              className="pl-9"
-            />
+            <Input type="text" placeholder="Location" className="pl-9" />
           </div>
 
           <div className="flex-1 min-w-[200px]">
@@ -303,32 +293,7 @@ export function ServicesProviderHomePage() {
         </div>
       </div>
       {/* end of search setion */}
-      {/* Profile Completion */}
-      <div className="p-4">
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-10 flex items-center justify-between">
-            <div className="flex-1 min-w-[300px]">
-              <h2 className="text-xl font-semibold text-gray-800">
-                Get started by Completing your Profile
-              </h2>
-              <p className="text-gray-600 mt-1">
-                Stand a better chance of being hired by completing your profile
-              </p>
-              <Button className="mt-4 bg-sky-400 hover:bg-[#006699] border-none">
-                Complete Profile
-              </Button>
-            </div>
-            <div className="min-w-[300px]">
-              <img
-                src={kcyimage}
-                alt="Complete profile illustration"
-                className="object-contain w-44 h-44"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* end of complete profile */}
+
       {/* Recommended Jobs */}
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
@@ -338,7 +303,8 @@ export function ServicesProviderHomePage() {
           <Button
             variant="ghost"
             size="sm"
-            className="text-gray-500 border-gray-200 ">
+            className="text-gray-500 border-gray-200 "
+          >
             View All
           </Button>
         </div>
@@ -356,8 +322,8 @@ export function ServicesProviderHomePage() {
       </div>
 
       {/* Jobs Near You */}
-       <div className="p-4"> 
-         <div className="flex justify-between items-center mb-4">
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-4">
           {/* <h2 className="text-lg font-semibold text-gray-800 border-b-2 border-sky-400 pb-1">
             Jobs Near You
           </h2> */}
@@ -378,8 +344,8 @@ export function ServicesProviderHomePage() {
               onBookmarkToggle={() => toggleBookmark(job.id)}
             />
           ))}
-        </div> 
-       </div> 
+        </div>
+      </div>
     </div>
   );
 }

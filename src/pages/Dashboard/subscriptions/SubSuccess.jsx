@@ -1,88 +1,97 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '..';
-import { useSearchParams } from 'react-router-dom';
-import { API_HOST_URL } from '../../../utils/api/API_HOST';
-import axios from 'axios';
-import {FaCheckCircle, FaTimesCircle} from "react-icons/fa";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "..";
+import { useSearchParams } from "react-router-dom";
+import { API_HOST_URL } from "../../../utils/api/API_HOST";
+import axios from "axios";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 export const SubSuccess = ({ planType }) => {
-    const user = useContext(UserContext);
-    const [subMessage, setSubMessage] = useState("");
-    const [isSuccess, setIsSuccess] = useState(null);
-    const [searchParams] = useSearchParams();
+  const user = useContext(UserContext);
+  const [subMessage, setSubMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(null);
+  const [searchParams] = useSearchParams();
 
-    useEffect(() => {
-        const verifyTransaction = async () => {
-            if (searchParams.has("reference")) {
-                const transactionReference = searchParams.get("reference");
+  useEffect(() => {
+    const verifyTransaction = async () => {
+      if (searchParams.has("reference")) {
+        const transactionReference = searchParams.get("reference");
 
-                try {
-                    const response = await axios.post(`${API_HOST_URL}/api/subscriptions/verify-transaction`, null, {
-                        params: { reference: transactionReference },
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    });
-                    // console.log(response);
-                    console.log(response.data.data.status);
-
-                    if (response.data.data.status === "success") {
-                        setSubMessage(`subscription is successful!`);
-                        setIsSuccess(true)
-                        // Delay of 5 seconds before redirecting to the dashboard
-                        setTimeout(() => {
-                            // Redirect to the dashboard
-                            window.location.href = "/dashboard";
-
-                            // Clear query parameters from the URL
-                            window.history.replaceState({}, document.title, "/dashboard");
-                        }, 5000); // 5000 milliseconds = 5 seconds
-                    } else {
-                        setSubMessage("There was an issue verifying your subscription. Payment Not Confirmed. Please contact support.");
-                        setIsSuccess(false)
-
-                        // Delay of 5 seconds before redirecting to the dashboard
-                        setTimeout(() => {
-                            // Redirect to the dashboard
-                            window.location.href = "/dashboard";
-
-                            // Clear query parameters from the URL
-                            window.history.replaceState({}, document.title, "/dashboard");
-                        }, 5000); // 5000 milliseconds = 5 seconds
-                    }
-
-                    console.log('Transaction verified successfully.', response.data);
-                } catch (error) {
-                    setSubMessage("Error verifying transaction. Please try again.");
-                    console.error('Error verifying transaction:', error.message);
-                }
+        try {
+          const response = await axios.post(
+            `${API_HOST_URL}/api/subscriptions/verify-transaction`,
+            null,
+            {
+              params: { reference: transactionReference },
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-        };
+          );
+          // console.log(response);
+          console.log(response.data.data.status);
 
-        verifyTransaction().catch(error => {
-            console.error('Error in verifyTransaction:', error);
-        });
-    }, [searchParams]);
+          if (response.data.data.status === "success") {
+            setSubMessage(`subscription is successful!`);
+            setIsSuccess(true);
+            // Delay of 5 seconds before redirecting to the dashboard
+            setTimeout(() => {
+              // Redirect to the dashboard
+              window.location.href = "/dashboard";
 
-    return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            {isSuccess === null ? (
-                <p>Loading...</p> // Show a loading message or spinner while awaiting response
-            ) : isSuccess ? (
-                <>
-                    <div style={{ fontSize: '100px', color: 'green' }}>✔</div>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'green' }}>{subMessage}</p>
-                </>
-            ) : (
-                <>
-                    <div style={{ fontSize: '100px', color: 'red' }}>✘</div>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'red' }}>{subMessage}</p>
-                </>
-            )}
-        </div>
-    );
+              // Clear query parameters from the URL
+              window.history.replaceState({}, document.title, "/dashboard");
+            }, 5000); // 5000 milliseconds = 5 seconds
+          } else {
+            setSubMessage(
+              "There was an issue verifying your subscription. Payment Not Confirmed. Please contact support."
+            );
+            setIsSuccess(false);
+
+            // Delay of 5 seconds before redirecting to the dashboard
+            setTimeout(() => {
+              // Redirect to the dashboard
+              window.location.href = "/dashboard";
+
+              // Clear query parameters from the URL
+              window.history.replaceState({}, document.title, "/dashboard");
+            }, 5000); // 5000 milliseconds = 5 seconds
+          }
+
+          console.log("Transaction verified successfully.", response.data);
+        } catch (error) {
+          setSubMessage("Error verifying transaction. Please try again.");
+          console.error("Error verifying transaction:", error.message);
+        }
+      }
+    };
+
+    verifyTransaction().catch((error) => {
+      console.error("Error in verifyTransaction:", error);
+    });
+  }, [searchParams]);
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      {isSuccess === null ? (
+        <p>Loading...</p> // Show a loading message or spinner while awaiting response
+      ) : isSuccess ? (
+        <>
+          <div style={{ fontSize: "100px", color: "green" }}>✔</div>
+          <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
+            {subMessage}
+          </p>
+        </>
+      ) : (
+        <>
+          <div style={{ fontSize: "100px", color: "red" }}>✘</div>
+          <p style={{ fontSize: "20px", fontWeight: "bold", color: "red" }}>
+            {subMessage}
+          </p>
+        </>
+      )}
+    </div>
+  );
 };
-
 
 // import React, { useEffect, useState,  useContext } from 'react';
 // import { UserContext } from '..'
@@ -133,8 +142,6 @@ export const SubSuccess = ({ planType }) => {
 //         <div>{{sub}`${user.firstName} your ${planType} subscription is successful`}</div>
 //     );
 // }
-
-
 
 // import React, { useEffect, useState } from 'react'
 // import { useContext } from 'react'

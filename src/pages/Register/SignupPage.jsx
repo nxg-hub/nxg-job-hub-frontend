@@ -10,7 +10,6 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,6 +32,7 @@ import { cn } from "@/lib/utils";
 import EmailVerificationNotice from "@/components/EmailVerificationNotice";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z
   .object({
@@ -91,7 +91,6 @@ const formSchema = z
   });
 
 export default function SignupForm() {
-  const [submitLoading, setSubmitLoading] = useState(false);
   const [showEmailVerificationNotice, setShowEmailVerificationNotice] =
     useState(false);
 
@@ -114,9 +113,79 @@ export default function SignupForm() {
     if (e.target === e.currentTarget) setShowEmailVerificationNotice(false);
   };
 
+  const mutation = useMutation({
+    mutationFn: async (dataForm) => {
+      const res = await axios.post(
+        `${API_HOST_URL}/api/v1/auth/register/`,
+        dataForm
+      );
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast({
+        className: cn(
+          "bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+        ),
+        title: <span className="text-green-800">Registration Successful:</span>,
+        description: (
+          <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+            Your account have been successfully registered. Kindly proceed to
+            verify your account!
+          </p>
+        ),
+        duration: 2500,
+      });
+      setTimeout(() => {
+        setShowEmailVerificationNotice(true);
+        form.reset();
+      }, 3000);
+    },
+    onError: (err) => {
+      if (err.response) {
+        if (err.response.status === 400) {
+          toast({
+            className: cn(
+              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: "Registration failed",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+                <code className="text-white">{err.response.data}</code>
+              </pre>
+            ),
+          });
+        }
+      }
+      if (!err.response) {
+        toast({
+          className: cn(
+            "flex flex-col gap-5 bottom-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+          ),
+          title: <p className="text-red-700">Network error</p>,
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
+              <code>
+                Failed to submit your form, please check <br />
+                your internet connection.
+              </code>
+            </pre>
+          ),
+          action: (
+            <ToastAction
+              onClick={form.handleSubmit(onSubmit)}
+              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+              altText="Try again"
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      }
+    },
+  });
+
   function onSubmit(values) {
-    setSubmitLoading(true);
-    const payload = {
+    mutation.mutate({
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
@@ -124,80 +193,7 @@ export default function SignupForm() {
       gender: values.gender,
       password: values.password,
       deviceType: "WEB",
-    };
-    axios
-      .post(`${API_HOST_URL}/api/v1/auth/register/`, payload)
-      .then((res) => {
-        if (res.status) {
-          toast({
-            className: cn(
-              "top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: (
-              <span className="text-green-800">Registration Successful:</span>
-            ),
-            description: (
-              <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
-                Your account have been successfully registered. Kindly proceed
-                to verify your account!
-              </p>
-            ),
-            duration: 2500,
-          });
-          setTimeout(() => {
-            setShowEmailVerificationNotice(true);
-            form.reset();
-            setSubmitLoading(false);
-          }, 3000);
-        }
-      })
-      .catch((error) => {
-        console.log("err", error);
-        if (error.response) {
-          if (error.response.status === 400) {
-            toast({
-              className: cn(
-                "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-              ),
-              title: "Registration failed",
-              description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-                  <code className="text-white">{error.response.data}</code>
-                </pre>
-              ),
-            });
-          }
-        }
-
-        if (!error.response) {
-          toast({
-            className: cn(
-              "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
-            ),
-            title: <p className="text-red-700">Network error</p>,
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
-                <code>
-                  Failed to submit your form, please check <br />
-                  your internet connection.
-                </code>
-              </pre>
-            ),
-            action: (
-              <ToastAction
-                onClick={form.handleSubmit(onSubmit)}
-                className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-                altText="Try again"
-              >
-                Try again
-              </ToastAction>
-            ),
-          });
-        }
-        setTimeout(() => {
-          setSubmitLoading(false);
-        }, 3000);
-      });
+    });
   }
 
   return (
@@ -370,38 +366,44 @@ export default function SignupForm() {
               control={form.control}
               name="terms_condition"
               render={({ field }) => (
-                <FormItem className="">
-                  <div className="flex items-center space-x-3 space-y-0 rounded-md p-4">
-                    <FormControl>
-                      <Checkbox
-                        className="p-0 border-black hover:border-transparent hover:bg-secondary"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <div className="text-xs sm:text-base">
-                      <FormDescription className="inline-block">
-                        {" "}
-                        I agree to the
-                      </FormDescription>
-                      <span className="text-sky-400">
-                        {" "}
-                        Terms of Service{" "}
-                      </span>{" "}
-                      and
-                      <span className="text-sky-400"> Privacy conditions </span>
-                    </div>
-                  </div>
+                <FormItem className="flex gap-3 items-center">
+                  <FormControl>
+                    <Checkbox
+                      className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <p className="text-xs sm:text-base">
+                    I agree to the
+                    <Link
+                      to={"/terms"}
+                      target="_blank"
+                      className="text-primary hover:underline"
+                    >
+                      {" "}
+                      Terms of Service{" "}
+                    </Link>
+                    and
+                    <Link
+                      to={"/privacy"}
+                      target="_blank"
+                      className="text-primary hover:underline"
+                    >
+                      {" "}
+                      Privacy conditions
+                    </Link>
+                  </p>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button
-              disabled={submitLoading}
+              disabled={mutation.isPending}
               className="w-full bg-sky-600 border-none hover:bg-sky-700"
               type="submit"
             >
-              {submitLoading ? (
+              {mutation.isPending ? (
                 <div className="flex items-center space-x-1">
                   <Loader2 className="animate-spin" />
                   <span>Form submitting ....</span>

@@ -9,7 +9,7 @@ export const useAutoLogin = ({ enabled = true } = {}) => {
   const storeJwtToken = getStoredKey();
 
   return useQuery({
-    queryKey: ["userType", storeJwtToken],
+    queryKey: ["userToken", storeJwtToken],
     queryFn: async ({ queryKey }) => {
       const [_key, tokenFrmQueryKey] = queryKey;
       if (!tokenFrmQueryKey) throw new Error("No valid login token found");

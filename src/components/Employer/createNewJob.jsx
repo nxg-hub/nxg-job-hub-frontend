@@ -1,9 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-import { FileText, X, Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { X, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -22,293 +24,371 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { matchesData } from "@/utils/data/agent-mock-data";
-import { NavLink } from "react-router-dom";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useEmployerData } from "@/store/employer/employerStore";
+import { DatePicker } from "../ui/date-picker";
+import { Badge } from "../ui/badge";
+import { usePostJob } from "@/hooks/useJobs";
+import { toast } from "@/hooks/use-toast";
+import { cn, getStoredKey } from "@/lib/utils";
+import { ToastAction } from "../ui/toast";
+import { nigerianStates } from "@/utils/data/location";
+import { isAfter, startOfDay } from "date-fns";
+import { useNavigate } from "react-router-dom";
+
+const formSchema = z.object({
+  title: z.string().min(1, "Job title required"),
+  description: z.string().min(1, "Job description is required"),
+  location: z.string().min(1, "Select job location"),
+  jobType: z.string().min(1, "Select job type"),
+  salary: z.string().min(1, "Salary is required"),
+  deadline: z
+    .date({ required_error: "Deadline is requied" })
+    .refine((d) => d >= startOfDay(new Date()), {
+      message: "Deadline must be in the future",
+    }),
+  requirements: z.array(z.string().min(1, "Job requirement cannot be empty")),
+  tags: z.array(z.string()).min(1, "At least one tag is required"),
+});
 
 export default function CreateNewJob({
+  companyBio,
+  companyName,
+  country,
+  industryType,
+  companySize,
+  employerID,
+  companyLogo,
   isOpenDialog,
   openChange,
   isCloseDialog,
 }) {
-  const employer = useEmployerData((state) => state.employerData);
-  // new
-  const [tags, setTags] = useState([]);
-  const [requirements, setRequirements] = useState([""]);
-  const [newTag, setNewTag] = useState("");
+  const navigate = useNavigate();
+  const { mutate: uploadJob } = usePostJob();
 
-  const addTag = () => {
-    if (newTag.trim() && !tags.includes(newTag.trim())) {
-      setTags([...tags, newTag.trim()]);
-      setNewTag("");
-    }
-  };
-
-  const removeTag = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
-
-  const addRequirement = () => {
-    setRequirements([...requirements, ""]);
-  };
-
-  const updateRequirement = (index, value) => {
-    const updated = [...requirements];
-    updated[index] = value;
-    setRequirements(updated);
-  };
-
-  const removeRequirement = (index) => {
-    if (requirements.length > 1) {
-      setRequirements(requirements.filter((_, i) => i !== index));
-    }
-  };
-
-  // end new
-
-  const [candidates, setCandidates] = useState(matchesData);
-  const [filteredCandidates, setFilteredCandidates] = useState(matchesData);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterEmployer, setFilterEmployer] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
-  const [selectedCandidate, setSelectedCandidate] = useState(null);
-  const [releaseDialogOpen, setReleaseDialogOpen] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    location: "",
-    jobType: "Full-time",
-    salaryMin: "",
-    salaryMax: "",
-    deadline: "",
-    skills: "",
-    experienceLevel: "Mid Level",
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      location: "",
+      jobType: "",
+      salary: "",
+      deadline: new Date(),
+      requirements: [""],
+      tags: [],
+    },
+    mode: "onChange",
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const requirementsArray = useFieldArray({
+    control: form.control,
+    name: "requirements",
+  });
 
-  const handleSelectChange = (name, value) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handlePublishJob = () => {
-    // Validate form
-    if (!formData.title || !formData.description || !formData.location) {
-      toast({
-        title: "Missing information",
-        description: "Please fill in all required fields",
-        variant: "destructive",
-      });
-      return;
+  const combineRequirements = (requirements) => {
+    if (!Array.isArray(requirements)) {
+      return "";
     }
+    return requirements.join("\n");
+  };
 
-    // Create new job object
-    const newJob = {
-      id: Date.now(),
+  const handlePreview = (formData) => {
+    const preview = {
+      companyName: companyName,
+      country: country,
       title: formData.title,
       description: formData.description,
-      location: formData.location,
-      jobType: formData.jobType,
-      salary: `$${formData.salaryMin} - $${formData.salaryMax}`,
-      deadline: formData.deadline,
-      skills: formData.skills.split(",").map((skill) => skill.trim()),
-      experienceLevel: formData.experienceLevel,
-      status: "active",
-      postedDate: new Date().toLocaleDateString(),
-      applicants: [],
+      companyBio: companyBio,
+      salary: formData.salary,
+      job_location: formData.location,
+      job_type: formData.jobType,
+      deadline: formData.deadline.toDateString(),
+      requirements: formData.requirements,
+      tags: formData.tags,
+      industryType: industryType,
+      companySize: companySize,
+      employerID: employerID,
+    };
+    sessionStorage.setItem("jobPreview", JSON.stringify(preview));
+    window.open("/job/preview", "_blank");
+  };
+
+  const handlePostJob = async (formData) => {
+    const storedJwtToken = getStoredKey();
+    //Create new job object
+    const payload = {
+      job_title: formData.title,
+      job_description: formData.description,
+      company_bio: companyBio,
+      salary: formData.salary,
+      job_location: formData.location,
+      job_type: formData.jobType,
+      deadline: new Intl.DateTimeFormat("en-CA").format(formData.deadline),
+      requirements: combineRequirements(formData.requirements),
+      tags: formData.tags,
+      employer_profile_pic: companyLogo,
+      employer_name: companyName,
+      employerID: employerID,
     };
 
-    // In a real app, you would save this to a database
-    // For this demo, we'll use localStorage to persist the job
-    const existingJobs = JSON.parse(localStorage.getItem("jobs") || "[]");
-    localStorage.setItem("jobs", JSON.stringify([...existingJobs, newJob]));
-
-    toast({
-      title: "Job Published",
-      description: "Your job has been successfully published",
-    });
-
-    // Navigate to job listings
-    setActiveMenu("jobs");
-  };
-
-  // Apply filters when search term or filters change
-  useEffect(() => {
-    let result = candidates;
-
-    if (searchTerm) {
-      result = result.filter(
-        (candidate) =>
-          candidate.candidate.name
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          candidate.job.toLowerCase().includes(searchTerm.toLowerCase())
+    if (storedJwtToken) {
+      uploadJob(
+        { payload, storedJwtToken },
+        {
+          onSuccess: (data) => {
+            console.log(data);
+            toast({
+              className: cn(
+                "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              ),
+              title: "Profile completed",
+              description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+                  <p className="text-white">
+                    You have successfully complete your profile
+                  </p>
+                </pre>
+              ),
+              duration: 2500,
+            });
+          },
+          onError: (err) => {
+            console.error("Job posting failed", err);
+            toast({
+              className: cn(
+                "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              ),
+              title: <span className="text-red-900">Failed:</span>,
+              description: (
+                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                  Form unable to submit, failed to update your profile
+                </p>
+              ),
+            });
+            //   if (!err.response) {
+            //   toast({
+            //     className: cn(
+            //       "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+            //     ),
+            //     title: <p className="text-red-900">Network error:</p>,
+            //     description: (
+            //       <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+            //         Failed to submit form, please check your internet connection.
+            //       </p>
+            //     ),
+            //     action: (
+            //       <ToastAction
+            //         // onClick={handlePostJob}
+            //         className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+            //         altText="Try again"
+            //       >
+            //         Try again
+            //       </ToastAction>
+            //     ),
+            //   });
+            // }
+          },
+        }
       );
+    } else {
+      console.log("Login is required");
+      navigate("/login", { replace: true });
     }
-
-    if (filterEmployer) {
-      result = result.filter(
-        (candidate) => candidate.employer.name === filterEmployer
-      );
-    }
-
-    if (filterStatus) {
-      result = result.filter((candidate) => candidate.status === filterStatus);
-    }
-
-    setFilteredCandidates(result);
-  }, [searchTerm, filterEmployer, filterStatus, candidates]);
-
-  // Handle releasing a candidate from an employer
-  const handleReleaseCandidate = () => {
-    if (selectedCandidate) {
-      setCandidates(
-        candidates.filter((candidate) => candidate.id !== selectedCandidate.id)
-      );
-      setReleaseDialogOpen(false);
-    }
-  };
-
-  // Reset all filters
-  const resetFilters = () => {
-    setSearchTerm("");
-    setFilterEmployer("");
-    setFilterStatus("");
   };
 
   return (
     <Dialog open={isOpenDialog} onOpenChange={openChange}>
-      {/* <DialogTrigger asChild>
-        <Button className="border-transparent bg-primary hover:bg-secondary">
-          <FileText className="mr-1 h-4 w-4" />
-          Create New Job
-        </Button>
-      </DialogTrigger> */}
-      <form className="space-y-8">
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Create New Job</DialogTitle>
-            <DialogDescription></DialogDescription>
-          </DialogHeader>
-          {!employer?.user?.profileVerified ? (
-            <div>
-              <p className="border p-3 rounded-lg text-base text-red-500 text-center ">
-                Your account is yet to be verified, please head on to your{" "}
-                <NavLink
-                  className="italic underline text-primary "
-                  to={"companyprofile"}
-                >
-                  {" "}
-                  profile to complete
-                </NavLink>{" "}
-                it in order to be able to create job
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              <Card>
-                <CardContent className="space-y-4 pt-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="job_title">Job Title *</Label>
-                      <Input
-                        id="job_title"
-                        placeholder="e.g. Senior Frontend Developer"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="job_location">Location *</Label>
-                      <Input
-                        id="job_location"
-                        placeholder="e.g. San Francisco, CA or Remote"
-                        required
-                      />
-                    </div>
-                  </div>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handlePostJob)}
+            className="space-y-8 max-w-3xl py-10"
+          >
+            <DialogHeader>
+              <DialogTitle>Create New Job</DialogTitle>
+              <DialogDescription></DialogDescription>
+            </DialogHeader>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="job_type">Job Type *</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select job type" />
-                        </SelectTrigger>
+            <div className="space-y-7 ">
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Job Title</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="e.g. Senior Frontend Developer"
+                          type=""
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="jobType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Job Type</FormLabel>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select job type" />
+                          </SelectTrigger>
+                        </FormControl>
                         <SelectContent>
-                          <SelectItem value="on-site">On-site</SelectItem>
-                          <SelectItem value="remote">Remote</SelectItem>
+                          <SelectItem value="full-time">Full time</SelectItem>
+                          <SelectItem value="part-time">Part time</SelectItem>
+                          <SelectItem value="contract">Contract</SelectItem>
                           <SelectItem value="hybrid">Hybrid</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="salary">Salary Range</Label>
-                      <Input
-                        id="salary"
-                        placeholder="e.g. $80,000 - $120,000"
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Location</FormLabel>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="e.g Lagos or Abuja" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {nigerianStates.map((state) => (
+                            <SelectItem key={state.value} value={state.value}>
+                              {state.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="salary"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Salary Range</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="e.g. #200,000 - #820,000"
+                          type=""
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="deadline"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Application Deadline</FormLabel>
+                    <FormControl>
+                      <DatePicker
+                        date={field.value}
+                        setDate={field.onChange}
+                        placeholder="Choose your date"
                       />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="deadline">Application Deadline</Label>
-                    <Input id="deadline" type="date" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="job_description">Job Description *</Label>
-                    <Textarea
-                      id="job_description"
-                      placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
-                      className="min-h-[120px]"
-                      required
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
+                        className="resize-none maxn-h-[120px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               {/* Requirements */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Requirements</CardTitle>
+                  <CardTitle className="text-lg">Requirements</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
-                    {requirements.map((requirement, index) => (
-                      <div key={index} className="flex gap-2">
-                        <Input
-                          value={requirement}
-                          onChange={(e) =>
-                            updateRequirement(index, e.target.value)
-                          }
-                          placeholder={`Requirement ${index + 1}`}
-                          className="flex-1"
-                        />
-                        {requirements.length > 1 && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="icon"
-                            onClick={() => removeRequirement(index)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                    {form.formState.errors.requirements && (
+                      <p className="text-sm font-medium text-red-500">
+                        {form.formState.errors.requirements?.[0]?.message?.toString()}
+                      </p>
+                    )}
+                    {requirementsArray.fields.map((field, index) => (
+                      <FormField
+                        key={field.id}
+                        control={form.control}
+                        name={`requirements.${index}`}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col gap-2">
+                            <div className="flex justify-center gap-2">
+                              <FormControl>
+                                <Input
+                                  placeholder={`Requirement ${index + 1}`}
+                                  type=""
+                                  {...field}
+                                />
+                              </FormControl>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                onClick={() => requirementsArray.remove(index)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
                         )}
-                      </div>
+                      />
                     ))}
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={addRequirement}
+                      onClick={() => requirementsArray.append("")}
                       className="w-full"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -321,74 +401,106 @@ export default function CreateNewJob({
               {/* Tags */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Tags</CardTitle>
+                  <CardTitle className="text-lg">Tags</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex gap-2">
-                    <Input
-                      value={newTag}
-                      onChange={(e) => setNewTag(e.target.value)}
-                      placeholder="Add a skill or tag"
-                      onKeyPress={(e) =>
-                        e.key === "Enter" && (e.preventDefault(), addTag())
-                      }
-                    />
-                    <Button
-                      className="border-transparent bg-secondary"
-                      type="button"
-                      onClick={addTag}
-                    >
-                      Add
-                    </Button>
-                  </div>
-                  {tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="flex items-center gap-1"
-                        >
-                          {tag}
-                          <button
-                            type="button"
-                            onClick={() => removeTag(tag)}
-                            className="ml-1 hover:text-destructive"
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </Badge>
-                      ))}
-                    </div>
+                  {form.formState.errors.tags && (
+                    <p className="text-sm font-medium text-red-500">
+                      {form.formState.errors.tags.message?.toString()}
+                    </p>
                   )}
+                  <FormField
+                    control={form.control}
+                    name="tags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <TagsInput
+                            tags={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                 </CardContent>
               </Card>
-
-              {/* Company Information */}
-
-              {/* Submit */}
-              <div className="flex gap-4 justify-end">
-                <Button type="button" variant="outline">
-                  Save as Draft
-                </Button>
-                <Button type="submit">Post Job</Button>
-              </div>
             </div>
-          )}
-          <DialogFooter className="flex justify-end gap-2">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
+            <DialogFooter className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={form.handleSubmit(handlePreview)}
+              >
+                Preview
+              </Button>
 
-            <Button
-              className="border-none bg-sky-500 hover:bg-sky-600"
-              onClick={handlePublishJob}
-            >
-              Publish Job
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+              <Button
+                className="border-none bg-sky-500 hover:bg-sky-600"
+                onClick={handlePostJob}
+              >
+                Post Job
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+      {/* <Toaster /> */}
     </Dialog>
   );
 }
+
+const TagsInput = ({ tags, onChange }) => {
+  const [tag, setTag] = useState("");
+
+  const addTag = () => {
+    if (tag.trim() !== "" && !tags.includes(tag.trim())) {
+      onChange([...tags, tag.trim()]);
+      setTag("");
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    onChange(tags.filter((tag) => tag !== tagToRemove));
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex gap-2">
+        <Input
+          value={tag}
+          onChange={(e) => setTag(e.target.value)}
+          placeholder="Add a skill or tag"
+          onKeyPress={(e) =>
+            e.key === "Enter" && (e.preventDefault(), addTag())
+          }
+        />
+        <Button
+          className="border-transparent bg-secondary"
+          type="button"
+          onClick={addTag}
+        >
+          Add
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {tags.map((tag, index) => (
+          <Badge
+            key={index}
+            className="px-3 py-1 text-sm flex items-center gap-2"
+          >
+            {tag}
+            <Button
+              type="button"
+              size="sm"
+              className="border-transparent h-4 w-4 p-0 hover:bg-transparent"
+              onClick={() => removeTag(tag)}
+            >
+              <X className="h-3 w-3" />
+            </Button>
+          </Badge>
+        ))}
+      </div>
+    </div>
+  );
+};

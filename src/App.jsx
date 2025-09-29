@@ -48,7 +48,7 @@ import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
-import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { ServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
 import { AgentDashboard } from "./pages/agent.jsx";
@@ -76,6 +76,9 @@ import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
 import AgentCompleteProfileForm from "./pages/agentCompleteProfile.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
 import AgentCompleteProfile from "./pages/agentCP.jsx";
+import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
+import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
+import { SubscriptionPage } from "./pages/subscribePage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -128,7 +131,7 @@ function App() {
           <Route path="messages" element={<MessagesPage />} />
         </Route>
         <Route
-          path="/services-provider/complete-profile"
+          path="/services-provider/complete-profile-x"
           element={<ServiceProviderFormCompletion />}
         />
         {/* end service provider user routes */}
@@ -153,6 +156,7 @@ function App() {
           <Route path="applicants" element={<EmployerApplicantsTab />} />
           <Route path="messages" element={<EmployerMessagesTab />} />
           <Route path="setting" element={<EmployerSettingTab />} />
+          <Route path="subscription" element={<SubscriptionPage />} />
         </Route>
         <Route
           path="/employer/complete-profile"
@@ -162,6 +166,11 @@ function App() {
           path="/employer/verified-document"
           element={<EmployerVerifiedDocuments />}
         />
+        <Route
+          path="/employer/subscriptions"
+          element={<EmployerSubscription />}
+        />
+        <Route path="/job/preview" element={<JobPreview />} />
         {/* end employer user routes */}
 
         <Route element={<ProtectedRoute />}>

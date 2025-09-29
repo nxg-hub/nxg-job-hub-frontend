@@ -126,7 +126,9 @@ export default function LoginForm() {
         navigate("/create");
       } else {
         toast({
-          className: cn("top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"),
+          className: cn(
+            "bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+          ),
           title: <span className="text-green-800">Successful:</span>,
           description: (
             <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
@@ -161,7 +163,7 @@ export default function LoginForm() {
         if (error.response.status === 401 || error.response.status === 404) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
             ),
             title: <span className="text-red-900">Failed to login:</span>,
             description: (
@@ -180,7 +182,7 @@ export default function LoginForm() {
       if (!error.response) {
         toast({
           className: cn(
-            "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+            "flex flex-col gap-5 bottom-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
           ),
           title: <p className="text-red-700">Network error</p>,
           description: (
@@ -219,7 +221,7 @@ export default function LoginForm() {
       <Card>
         <CardContent className="flex rounded-b-lg  p-0 sm:w-[1000px]">
           <section className="hidden sm:inline-block sm:w-1/2">
-            <img src={LoginBG} alt="" className="rounded-l-lg h-full" />
+            <img src={LoginBG} alt="" className="rounded-l-lg" />
           </section>
           <section className="px-10 sm:w-1/2 sm:px-10 py-14">
             <div>
