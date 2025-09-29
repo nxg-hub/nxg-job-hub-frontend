@@ -48,7 +48,7 @@ import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
 import ServiceProviderProfile from "./pages/Dashboard/ServiceProvider/profile.jsx";
-import { ServiceProviderFormCompletion } from "./pages/servicesprovidercompleteform.jsx";
+import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercompleteform.jsx";
 import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
