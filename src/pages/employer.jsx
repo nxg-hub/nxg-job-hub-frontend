@@ -30,7 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import { cn, getStoredKey } from "../lib/utils";
+import { cn, daysBetween, getStoredKey } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
@@ -43,6 +43,7 @@ import {
 import NotificationDropdown from "@/components/agent/notification-dropdown";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
+import subscriptionIcon from "@/static/icons/diamond.png";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -56,6 +57,7 @@ import {
 import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
 import { useEmployerData } from "@/store/employer/employerStore";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
+import { useMobile } from "@/hooks/use-mobile";
 
 const sidebarItems = [
   {
@@ -200,6 +202,7 @@ function DashboardContent({ notifications = [] }) {
   const employer = useEmployerData((state) => state.employerData);
 
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
+  const isMobile = useMobile();
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
@@ -216,27 +219,32 @@ function DashboardContent({ notifications = [] }) {
     if (e.target === e.currentTarget) setShowLogoutNotice(false);
   };
 
+  const NUMBEROFDAYFORFREESUB = daysBetween(
+    employer?.employer?.accountCreationDate
+  );
+  console.log(NUMBEROFDAYFORFREESUB);
+
   return (
-    <div className="flex h-screen w-full md:p-8">
+    <div className="flex h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
       {/* Sidebar */}
-      <Sidebar collapsible="icon">
+      <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-            scrollbar-hidden"
+            scrollbar-hidden md:rounded-lg  !rounded-b-none"
         >
           <div>
             <img
               src={isCollapsed ? logomin : logo}
               alt="Next Gen Hub Logo"
               className={cn(
-                "object-contain mx-auto",
-                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-10" : "w-32 h-32"
+                "object-contain mx-auto w-32 h-32",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-32 h-32"
               )}
             />
           </div>
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
-              <SidebarMenu className="gap-5">
+              <SidebarMenu className="gap-4">
                 {sidebarItems.map((item) => {
                   const isActive =
                     location.pathname === item.path ||
@@ -263,38 +271,102 @@ function DashboardContent({ notifications = [] }) {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter className="bg-sky-700 rounded-b-md">
+          {/* <SidebarMenuItem className="px-3">
+            <SidebarMenuButton
+              asChild
+              tooltip="Logout"
+              className="bg-primary hover:cursor-pointer border-transparent text-white hover:bg-white/10 hover:text-white p-5"
+            >
+              <NavLink to="/employer/subscription">
+                <img
+                  src={subscriptionIcon}
+                  alt="subscription"
+                  className="object-contain w-7 h-7"
+                />
+                <span>Subscription</span>
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem> */}
+          {!isCollapsed && (
+            <div className="m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
+              <p className="text-sm text-muted-foreground">Current plan:</p>
+              <p
+                className={cn(
+                  `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
+                  "text-sm font-semibold"
+                )}
+              >
+                Free trial
+              </p>
+              {NUMBEROFDAYFORFREESUB < 31 ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Upgrade to any of our latest and exclusive features
+                </p>
+              ) : (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Your 1 Month free trial had expired,Upgrade to any of our
+                  latest and exclusive features
+                </p>
+              )}
 
-        <SidebarFooter>
-          <SidebarMenuButton
-            tooltip="Logout"
-            className="text-secondary border-transparent hover:text-red-400"
-            onClick={() => setShowLogoutNotice(true)}
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Logout</span>
-          </SidebarMenuButton>
+              <NavLink
+                className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
+                to="/employer/subscription"
+              >
+                <img
+                  src={subscriptionIcon}
+                  alt="subscription"
+                  className="object-contain w-6 h-6"
+                />
+                <span> Upgrade now</span>
+              </NavLink>
+            </div>
+          )}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Logout"
+              className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
+              onClick={() => setShowLogoutNotice(true)}
+            >
+              <div>
+                <LogOut className="w-7 h-7" />
+                <span>Logout</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarFooter>
       </Sidebar>
 
       {/* Main Content */}
-      <SidebarInset className="flex flex-col w-full gap-5">
+      <SidebarInset
+        className={cn(
+          "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
+          isCollapsed ? "md:pl-40" : ""
+        )}
+      >
         {/* Header */}
-        <div className="w-full flex items-center justify-between md:justify-end">
+        <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-transparent md:static">
           {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
-          <SidebarTrigger
-            icon={<Menu className="h-6 w-6" />}
-            className="mr-2 border-transparent md:hidden"
-          />
-
-          {/* <DropdownMenu
+          <div className="flex mr-auto">
+            <SidebarTrigger
+              openMenuIcon={<Menu className="w-8 h-8" />}
+              className="my-3 ml-2 border-transparent md:hidden "
+            />
+            <h1 className="font-medium text-3xl">
+              Welcome, {employer?.firstName}
+            </h1>
+          </div>
+          <DropdownMenu
             open={notificationDropdownOpen}
             onOpenChange={setNotificationDropdownOpen}
           >
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger className="hidden md:block" asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative border-none "
+                className="relative border-none bg-slate-200 hover:bg-slate-300"
               >
                 <Bell className="h-5 w-5" />
                 {unreadNotifications > 0 && (
@@ -308,55 +380,92 @@ function DashboardContent({ notifications = [] }) {
               </Button>
             </DropdownMenuTrigger>
             <NotificationDropdown notifications={notifications} />
-          </DropdownMenu> */}
+          </DropdownMenu>
         </div>
-        {!employer?.employer?.verified && (
-          <>
-            <div className="flex bg-sky-100 rounded-sm p-3 text-base gap-2 item-center mb-3 md:hidden">
-              <img
-                src={verifiedImageMobile}
-                alt="Complete profile illustration"
-                className="object-contain w-10 h-10"
-              />
-              <div className="flex flex-col gap-1">
-                <span>Your account is not yet verified</span>
-                <NavLink
-                  className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                  to={"companyprofile"}
-                >
-                  complete your profile
-                </NavLink>
-              </div>
-            </div>
-
-            <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-              <div className="flex items-center gap-8">
+        <div className="px-2 pt-16 md:pt-0">
+          {!employer?.employer?.verified && (
+            <>
+              <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
                 <img
                   src={verifiedImageMobile}
                   alt="Complete profile illustration"
                   className="object-contain w-10 h-10"
                 />
-                <div className="flex gap-3 items-center">
-                  <span className="bg-secondary p-1 rounded text-white">
-                    Action required:
-                  </span>
-                  <span>
-                    Your account is not yet verified,
-                    <NavLink
-                      className="underline text-secondary w-fit py-1 px-2 "
-                      to={"companyprofile"}
-                    >
-                      complete your profile
-                    </NavLink>
-                    to continue using all features
-                  </span>
+                <div className="flex flex-col gap-1">
+                  <span>Your account is not yet verified</span>
+                  <NavLink
+                    className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                    to={"/employer/verified-document"}
+                  >
+                    complete your profile
+                  </NavLink>
                 </div>
               </div>
+
+              <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+                <div className="flex items-center gap-8">
+                  <img
+                    src={verifiedImageMobile}
+                    alt="Complete profile illustration"
+                    className="object-contain w-10 h-10"
+                  />
+                  <div className="flex gap-3 items-center">
+                    <span className="bg-secondary p-1 rounded text-white">
+                      Action required:
+                    </span>
+                    <span>
+                      Your account is not yet verified,
+                      <NavLink
+                        className="underline text-secondary w-fit py-1 px-2 "
+                        to={"/employer/verified-document"}
+                      >
+                        complete your profile
+                      </NavLink>
+                      to continue using all features
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+          {isCollapsed && (
+            <div className="absolute z-50 bottom-10 -left-5 w-[280px] sm:max-w-[420px] m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
+              <p className="text-sm text-muted-foreground">Current plan:</p>
+              <p
+                className={cn(
+                  `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
+                  "text-sm font-semibold"
+                )}
+              >
+                Free trial
+              </p>
+              {NUMBEROFDAYFORFREESUB < 31 ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Upgrade to any of our latest and exclusive features
+                </p>
+              ) : (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Your 1 Month free trial had expired,Upgrade to any of our
+                  latest and exclusive features
+                </p>
+              )}
+
+              <NavLink
+                className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
+                to="/employer/subscription"
+              >
+                <img
+                  src={subscriptionIcon}
+                  alt="subscription"
+                  className="object-contain w-6 h-6"
+                />
+                <span> Upgrade now</span>
+              </NavLink>
             </div>
-          </>
-        )}
-        <div className="h-full">
-          <Outlet />
+          )}
+          <div className="h-full">
+            <Outlet />
+          </div>
         </div>
       </SidebarInset>
       {showLogoutNotice && (

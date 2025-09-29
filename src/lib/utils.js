@@ -38,3 +38,17 @@ export async function updateUserProfile(url, userId, payload) {
     throw error;
   }
 }
+
+export const daysBetween = (dateString) => {
+  const inputDate = new Date(dateString);
+  const now = new Date();
+
+  //calculate the difference in milliseconds
+  const difDateMs = now - inputDate;
+
+  //convert milliseconds => days
+  const difDays = difDateMs / (1000 * 60 * 60 * 24);
+
+  //return the difference
+  return difDays;
+};

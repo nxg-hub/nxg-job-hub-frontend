@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Building2, FileText, Phone, Save } from "lucide-react";
+import {
+  Briefcase,
+  Building2,
+  ChevronRight,
+  ChevronLeft,
+  FileText,
+  Phone,
+  Save,
+} from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import EmployerCompanyInfoCard from "../../../components/Employer/Profile/employerCompanyInfoCard";
@@ -10,6 +18,15 @@ import EmployerLegalDocumentCard from "../../../components/Employer/Profile/empl
 import { useEmployerData } from "@/store/employer/employerStore";
 import EmployerProfilePhotoCard from "@/components/Employer/Profile/employerProfilePhotoCard";
 import EmployerProfilePersonInfoCard from "@/components/Employer/Profile/employerProfilePersonalInfoCard";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import EmployerProfileMobileView from "@/components/Employer/Profile/employerProfileMobileView";
 
 export default function EmployerCompanyProfileTab() {
   const employer = useEmployerData((state) => state.employerData);
@@ -23,19 +40,19 @@ export default function EmployerCompanyProfileTab() {
   );
 
   return (
-    <div className="w-full flex flex-col gap-10 md:p-10">
+    <div className="w-full flex flex-col gap-5 ">
       <h1 className="text-lg text-sky-600 font-medium">Company Profile</h1>
       <div className="flex flex-col md:gap-10">
         <EmployerProfilePhotoCard
-          userId={employer?.id}
+          userId={employer?.employer?.employerID}
           firstName={employer?.firstName}
           lastName={employer?.lastName}
           userType={employer?.userType}
           country={employer?.employer?.country}
-          profilePicture={employer?.profilePicture}
+          profilePicture={employer?.employer?.companyLogo}
           companyName={employer?.employer?.companyName}
         />
-        <form onSubmit={handleSubmit}>
+        <form className="hidden md:block" onSubmit={handleSubmit}>
           <Tabs defaultValue="company" className="space-y-8 w-full">
             <TabsList className="w-full h-14 bg-transparent overflow-x-auto overflow-y-hidden">
               {/* <TabsTrigger value="profile" className={tabCssStyle}>
@@ -113,6 +130,7 @@ export default function EmployerCompanyProfileTab() {
             </Button>
           </div>
         </form>
+        <EmployerProfileMobileView employer={employer} />
       </div>
     </div>
   );

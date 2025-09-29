@@ -260,12 +260,12 @@ export function ServicesProviderHomePage() {
 }, []);
 
 
-
   const toggleBookmark = (jobId) => {
     setBookmarkedJobs((prev) =>
       prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId]
     );
   };
+
 
   const scroll = (ref, direction) => {
     if (!ref.current) return;
@@ -316,7 +316,6 @@ export function ServicesProviderHomePage() {
           <p>No recent jobs found.</p>
         )}
       </div>
-
       {/* ✅ Jobs Near You */}
       <div className="p-4">
         {/* Header row with arrows */}
@@ -342,7 +341,6 @@ export function ServicesProviderHomePage() {
             </Button>
           </div>
         </div>
-
         {/* Scrollable row */}
         <JobCarousel
           innerRef={nearCarouselRef}

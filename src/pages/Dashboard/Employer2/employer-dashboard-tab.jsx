@@ -1,14 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  Briefcase,
-  BookmarkCheck,
-  Eye,
-  Heart,
-  MessageCircle,
-  Clock,
-  PenLine,
-  FileText,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Briefcase, Heart, MessageCircle, Clock, FileText } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import sarahicon from "@/static/images/John.png";
@@ -25,8 +16,10 @@ import emptySuggestedImage from "@/static/images/empty-suggest.svg";
 import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
 import UserGuard from "@/components/Employer/employerUserGuard";
 import KPIBoard from "@/components/Employer/Dashboard/kpisBoard";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 export default function EmployerDashboardTab() {
+  const employer = useEmployerData((state) => state.employerData);
   const [candidates, setCandidates] = useState(matchesData);
   const [filteredCandidates, setFilteredCandidates] = useState(matchesData);
   const [searchTerm, setSearchTerm] = useState("");
@@ -240,6 +233,13 @@ export default function EmployerDashboardTab() {
           Create New Job
         </Button>
         <CreateNewJob
+          companyBio={employer?.employer?.companyDescription}
+          companyName={employer?.employer?.companyName}
+          country={employer?.employer?.country}
+          industryType={employer?.employer?.industryType}
+          companySize={employer?.employer?.companySize}
+          employerID={employer?.employer?.employerID}
+          companyLogo={employer?.employer?.companyLogo}
           isOpenDialog={isCreateJobDialogOpen}
           openChange={setIsCreateJobDialogOpen}
           isCloseDialog={closeCreateJobDialog}
