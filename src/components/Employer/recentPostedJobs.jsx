@@ -20,6 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useEmployerJobsQuery } from "@/hooks/Employer/employerHooks";
+import { useFetchJobs } from "@/hooks/useJobs";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 // Sample job data
 const jobPostings = [
@@ -84,11 +86,14 @@ const formatDate = (dateString) => {
 };
 
 export default function RecentPostedJobs({ setOpenCreateJobDialog }) {
-  const storeValueObj =
-    localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-    sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+  const employer = useEmployerData((state) => state.employerData);
+  // const { data, isLoading, isError } = useEmployerJobsQuery(storeValueObj?.id);
+  const { data, isLoading, isError, error } = useFetchJobs();
 
-  const { data, isLoading, isError } = useEmployerJobsQuery(storeValueObj?.id);
+  const filterJobsByUserId = (jobs, userId) => {
+    if (!jobs || !userId) return [];
+    return jobs.filter((job) => job.employerID === userId);
+  };
   if (isLoading) return <p>Loading..... recentJobs</p>;
   if (isError) return <p>Error: </p>;
 
@@ -108,18 +113,20 @@ export default function RecentPostedJobs({ setOpenCreateJobDialog }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {jobPostings.map((job) => (
-                <TableRow key={job.id}>
-                  <TableCell className="font-medium">{job.title}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{job.type}</Badge>
+              {filterJobsByUserId(data, employer?.id).map((job) => (
+                <TableRow key={job?.jobID}>
+                  <TableCell className="font-medium">
+                    {job?.job_title}
                   </TableCell>
-                  <TableCell>{formatDate(job.postedDate)}</TableCell>
-                  <TableCell>{getStatusBadge(job.status)}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{job?.job_type}</Badge>
+                  </TableCell>
+                  <TableCell>{formatDate(job?.createdAt)}</TableCell>
+                  <TableCell>{getStatusBadge(job?.jobStatus)}</TableCell>
                   <TableCell className="text-center">
                     <div className="flex items-center justify-center space-x-1">
                       <Users className="w-4 h-4 text-muted-foreground" />
-                      <span className="font-medium">{job.applications}</span>
+                      {/* <span className="font-medium">{job.applications}</span> */}
                     </div>
                   </TableCell>
                   <TableCell className="text-right">

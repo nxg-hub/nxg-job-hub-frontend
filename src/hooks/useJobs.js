@@ -1,5 +1,5 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const usePostJob = () => {
@@ -28,4 +28,18 @@ export const usePostJob = () => {
     error: mutation.error,
     data: mutation.data,
   };
+};
+
+export const useFetchJobs = () => {
+  const fetchJobs = async () => {
+    const response = await axios.get(`${API_HOST_URL}/api/job-postings/all`);
+    return response.data;
+  };
+
+  return useQuery({
+    queryKey: ["allJobs"],
+    queryFn: fetchJobs,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+  });
 };
