@@ -81,6 +81,7 @@ import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
+import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
 
 const queryClient = new QueryClient();
 
@@ -104,7 +105,10 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
-        <Route path="/techtalent/complete-profile" element={<TechTalentProfileCompleteForm/>} />
+        <Route
+          path="/techtalent/complete-profile"
+          element={<TechTalentProfileCompleteForm />}
+        />
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>
@@ -146,6 +150,30 @@ function App() {
           element={<XServiceProviderFormCompletion />}
         />
         {/* end service provider user routes */}
+
+        {/* service provider user routes (remove hwen done) */}
+        <Route
+          path="/services-provider-x"
+          element={<ServiceProviderDashboardX />}
+        >
+          <Route index element={<ServicesProviderHomePage />} />
+          <Route path="profile" element={<ServiceProviderProfile />} />
+          <Route path="job-tracker" element={<JobTracker />} />
+          <Route path="messages" element={<MessagesPage />} />
+        </Route>
+        <Route
+          path="/services-provider/complete-profile"
+          element={<ServiceProviderProfileCompleteForm />}
+        />
+        <Route
+          path="/services-provider/complete-profile-x"
+          element={<XServiceProviderFormCompletion />}
+        />
+        <Route
+          path="/services-provider/complete-profile-x"
+          element={<XServiceProviderFormCompletion />}
+        />
+        {/* end service provider user routes (remove hwen done) */}
 
         {/* talent user routes */}
         <Route path="/talent" element={<TalentDashboard />}>

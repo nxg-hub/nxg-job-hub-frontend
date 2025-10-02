@@ -74,7 +74,7 @@ const sidebarItems = [
   { icon: <CircleHelp />, label: "Help", path: "/help" },
 ];
 
-export function ServiceProviderDashboard() {
+export function ServiceProviderDashboardX() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
