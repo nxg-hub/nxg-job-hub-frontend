@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Check,
-  Loader2,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
 import { toast } from "../hooks/use-toast";
 import { Button } from "../components/ui/button";
 import { Toaster } from "../components/ui/toaster";
@@ -13,7 +8,6 @@ import { useTechTalentProfileUpdate } from "../hooks/Talent/talentHooks";
 import RenderStepOneTalent from "../components/Talent/renderStepOneTalent";
 import RenderStepTwoTalent from "../components/Talent/renderStepTwoTalent";
 import RenderStepThreeTalent from "../components/Talent/renderStepThreeTalent";
-// Removed: import RenderStepFourTalent from "../components/Talent/renderStepFourTalent";
 
 export function TechTalentProfileCompleteForm() {
   const navigate = useNavigate();
@@ -81,9 +75,30 @@ export function TechTalentProfileCompleteForm() {
   }, [navigate]);
 
   const stepFields = {
-    1: ["bio", "skills", "jobInterest", "currentJob", "yearsOfExperience", "experienceLevel"],
-    2: ["highestQualification", "professionalCert", "jobType", "workMode", "portfolioLink", "linkedInUrl"],
-    3: ["residentialAddress", "city", "state", "zipCode", "countryCode", "location"],
+    1: [
+      "bio",
+      "skills",
+      "jobInterest",
+      "currentJob",
+      "yearsOfExperience",
+      "experienceLevel",
+    ],
+    2: [
+      "highestQualification",
+      "professionalCert",
+      "jobType",
+      "workMode",
+      "portfolioLink",
+      "linkedInUrl",
+    ],
+    3: [
+      "residentialAddress",
+      "city",
+      "state",
+      "zipCode",
+      "countryCode",
+      "location",
+    ],
   };
 
   const totalSteps = 3;
@@ -137,7 +152,8 @@ export function TechTalentProfileCompleteForm() {
     if (!formData.techId) {
       toast({
         title: "Error",
-        description: "Tech ID is required to submit profile. Please login again.",
+        description:
+          "Tech ID is required to submit profile. Please login again.",
         variant: "destructive",
       });
       return;
@@ -155,8 +171,7 @@ export function TechTalentProfileCompleteForm() {
       return;
     }
 
-   
-    const {...payload } = formData;
+    const { ...payload } = formData;
 
     try {
       await updateTechProfile(payload);
@@ -225,7 +240,11 @@ export function TechTalentProfileCompleteForm() {
 
       <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
         {currentStep > 1 && (
-          <Button variant="outline" onClick={prevStep} className="w-full sm:w-auto">
+          <Button
+            variant="outline"
+            onClick={prevStep}
+            className="w-full sm:w-auto"
+          >
             <ChevronLeft className="mr-2 h-4 w-4" /> Previous
           </Button>
         )}

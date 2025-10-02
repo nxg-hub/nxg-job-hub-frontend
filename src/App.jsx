@@ -105,10 +105,6 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
-        <Route
-          path="/techtalent/complete-profile"
-          element={<TechTalentProfileCompleteForm />}
-        />
 
         {/* agent user routes */}
         <Route path="/agent" element={<AgentDashboard />}>
@@ -182,6 +178,10 @@ function App() {
           <Route path="jobs" element={<TalentJobsTab />} />
           <Route path="messages" element={<TalentMessageTab />} />
         </Route>
+        <Route
+          path="/techtalent/complete-profile"
+          element={<TechTalentProfileCompleteForm />}
+        />
         {/* end talent user routes */}
 
         {/* employer's user routes */}
