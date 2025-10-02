@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { X, Plus } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -23,7 +23,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
     "Mid-Level (4-7 years)",
     "Senior (7-10 years)",
     "Lead/Principal (10+ years)",
-    "Executive/Director (15+ years)"
+    "Executive/Director (15+ years)",
   ];
 
   // Job interest options
@@ -39,14 +39,14 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
     "Product Management",
     "UI/UX Design",
     "Quality Assurance",
-    "System Architecture"
+    "System Architecture",
   ];
 
   // Handle form data updates
   const updateFormData = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -59,7 +59,10 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
   };
 
   const removeSkill = (skillToRemove) => {
-    updateFormData("skills", formData.skills.filter(skill => skill !== skillToRemove));
+    updateFormData(
+      "skills",
+      formData.skills.filter((skill) => skill !== skillToRemove)
+    );
   };
 
   const handleKeyPress = (e) => {
@@ -81,11 +84,15 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
           placeholder="Tell us about yourself, your passion for technology, and what drives you..."
           value={formData.bio}
           onChange={(e) => updateFormData("bio", e.target.value)}
-          className={`min-h-[100px] ${formError && !formData.bio.trim() ? 'border-red-500' : ''}`}
+          className={`min-h-[100px] ${
+            formError && !formData.bio.trim() ? "border-red-500" : ""
+          }`}
           maxLength={500}
         />
         <div className="flex justify-between text-xs text-gray-500">
-          <span>Keep it under 500 characters. This will be visible to employers.</span>
+          <span>
+            Keep it under 500 characters. This will be visible to employers.
+          </span>
           <span>{formData.bio.length}/500</span>
         </div>
       </div>
@@ -115,7 +122,7 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
               <Plus className="h-4 w-4" />
             </Button>
           </div>
-          
+
           {/* Skills Display */}
           <div className="flex flex-wrap gap-2 min-h-[40px] p-3 border rounded-md bg-gray-50">
             {formData.skills.length > 0 ? (
@@ -140,7 +147,9 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
             )}
           </div>
           {formError && formData.skills.length === 0 && (
-            <p className="text-red-500 text-xs">Please add at least one skill</p>
+            <p className="text-red-500 text-xs">
+              Please add at least one skill
+            </p>
           )}
         </div>
       </div>
@@ -154,7 +163,11 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
           value={formData.jobInterest}
           onValueChange={(value) => updateFormData("jobInterest", value)}
         >
-          <SelectTrigger className={formError && !formData.jobInterest ? 'border-red-500' : ''}>
+          <SelectTrigger
+            className={
+              formError && !formData.jobInterest ? "border-red-500" : ""
+            }
+          >
             <SelectValue placeholder="Select your primary area of interest" />
           </SelectTrigger>
           <SelectContent>
@@ -177,7 +190,9 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
           placeholder="e.g., Frontend Developer, Software Engineer"
           value={formData.currentJob}
           onChange={(e) => updateFormData("currentJob", e.target.value)}
-          className={formError && !formData.currentJob.trim() ? 'border-red-500' : ''}
+          className={
+            formError && !formData.currentJob.trim() ? "border-red-500" : ""
+          }
         />
       </div>
 
@@ -193,8 +208,14 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
           max="50"
           placeholder="e.g., 3"
           value={formData.yearsOfExperience}
-          onChange={(e) => updateFormData("yearsOfExperience", parseInt(e.target.value) || 0)}
-          className={formError && formData.yearsOfExperience === 0 ? 'border-red-500' : ''}
+          onChange={(e) =>
+            updateFormData("yearsOfExperience", parseInt(e.target.value) || 0)
+          }
+          className={
+            formError && formData.yearsOfExperience === 0
+              ? "border-red-500"
+              : ""
+          }
         />
       </div>
 
@@ -207,7 +228,11 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
           value={formData.experienceLevel}
           onValueChange={(value) => updateFormData("experienceLevel", value)}
         >
-          <SelectTrigger className={formError && !formData.experienceLevel ? 'border-red-500' : ''}>
+          <SelectTrigger
+            className={
+              formError && !formData.experienceLevel ? "border-red-500" : ""
+            }
+          >
             <SelectValue placeholder="Select your experience level" />
           </SelectTrigger>
           <SelectContent>
@@ -223,8 +248,9 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
       {/* Helper Text */}
       <div className="mt-6 p-4 bg-blue-50 rounded-lg">
         <p className="text-sm text-blue-800">
-          <strong>Tip:</strong> Make sure your bio is engaging and highlights your key strengths. 
-          Add relevant technical skills that match your experience level and job interests.
+          <strong>Tip:</strong> Make sure your bio is engaging and highlights
+          your key strengths. Add relevant technical skills that match your
+          experience level and job interests.
         </p>
       </div>
     </div>
