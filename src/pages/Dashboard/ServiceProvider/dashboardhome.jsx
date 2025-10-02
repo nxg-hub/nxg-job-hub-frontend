@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,7 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Bookmark, MapPin, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Bookmark,
+  MapPin,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import kcyimage from "@/static/images/kyc-image.png";
 import driver from "@/static/images/driver.png";
 import {
@@ -18,7 +25,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 
 const nearbyJobs = [
   {
@@ -153,7 +159,9 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
       </CardHeader>
       <CardContent className="p-4">
         <h4 className="font-medium mb-2">{job.title}</h4>
-        <p className="text-sm text-gray-600 mb-3 line-clamp-3">{job.description}</p>
+        <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+          {job.description}
+        </p>
         <div className="flex flex-wrap gap-2 mb-3">
           {job.type.map((type) => (
             <Badge key={type} variant="outline" className="font-normal">
@@ -206,14 +214,16 @@ export function ServicesProviderHomePage() {
     const fetchJobs = async () => {
       try {
         const response = await fetch(
-        `${import.meta.env.VITE_API_HOST_URL}${import.meta.env.VITE_RECENT_JOB}`, {
-           headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!res.ok) throw new Error(`Request failed with ${res.status}`);
-
+          `${import.meta.env.VITE_API_HOST_URL}${
+            import.meta.env.VITE_RECENT_JOB
+          }`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
         const data = await response.json();
         setRecommendedJobs(data.content || []);
@@ -226,46 +236,49 @@ export function ServicesProviderHomePage() {
   }, []);
 
   useEffect(() => {
-  const fetchNearbyJobs = async () => {
-    try {
-      // ✅ Get session & userId
-      const session = sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
-      const parsed = session ? JSON.parse(session) : null;
-      const userId = parsed?.id; // adjust if your session object uses a different key
+    const fetchNearbyJobs = async () => {
+      try {
+        // ✅ Get session & userId
+        const session = sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+        const parsed = session ? JSON.parse(session) : null;
+        const userId = parsed?.id; // adjust if your session object uses a different key
 
-      if (!userId) {
-        console.error("User ID not found. Please login again.");
-        return;
-      }
-
-      // ✅ Call the user-specific API
-      const response = await fetch(
-        `${import.meta.env.VITE_API_HOST_URL}${import.meta.env.VITE_RECOMMENDED_JOB}/${userId}/recommend`, {
-           headers: {
-            "Content-Type": "application/json",
-          },
+        if (!userId) {
+          console.error("User ID not found. Please login again.");
+          return;
         }
-      );
-      if (!res.ok) throw new Error(`Request failed with ${res.status}`);
-      
-      const data = await response.json();
 
-      setNearbyJobs(data.content || []);
-    } catch (error) {
-      console.error("Error fetching nearby jobs:", error);
-    }
-  };
+        // ✅ Call the user-specific API
+        const response = await fetch(
+          `${import.meta.env.VITE_API_HOST_URL}${
+            import.meta.env.VITE_RECOMMENDED_JOB
+          }/${userId}/recommend`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!res.ok) throw new Error(`Request failed with ${res.status}`);
 
-  fetchNearbyJobs();
-}, []);
+        const data = await response.json();
 
+        setNearbyJobs(data.content || []);
+      } catch (error) {
+        console.error("Error fetching nearby jobs:", error);
+      }
+    };
+
+    fetchNearbyJobs();
+  }, []);
 
   const toggleBookmark = (jobId) => {
     setBookmarkedJobs((prev) =>
-      prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId]
+      prev.includes(jobId)
+        ? prev.filter((id) => id !== jobId)
+        : [...prev, jobId]
     );
   };
-
 
   const scroll = (ref, direction) => {
     if (!ref.current) return;
@@ -298,7 +311,11 @@ export function ServicesProviderHomePage() {
             >
               <ChevronRight className="h-4 w-4 text-gray-600" />
             </button>
-            <Button variant="ghost" size="sm" className="text-gray-500 border-gray-200">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-500 border-gray-200"
+            >
               View All
             </Button>
           </div>
@@ -336,7 +353,11 @@ export function ServicesProviderHomePage() {
             >
               <ChevronRight className="h-4 w-4 text-gray-600" />
             </button>
-            <Button variant="ghost" size="sm" className="text-gray-500 border-gray-200">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-500 border-gray-200"
+            >
               View All
             </Button>
           </div>
