@@ -52,69 +52,69 @@ const SelectAccountType = () => {
     setSearchParams("");
   }, [setSearchParams]);
 
-  useEffect(() => {
-    if (!storedToken && !isAutoLoginChecking && !isFetched) {
-      console.log("No token found");
-      navigate("/login", { replace: true });
-      return;
-    }
+  // useEffect(() => {
+  //   if (!storedToken && !isAutoLoginChecking && !isFetched) {
+  //     console.log("No token found");
+  //     navigate("/login", { replace: true });
+  //     return;
+  //   }
 
-    if (isFetched && !isAutoLoginChecking) {
-      if (isSuccess && data?.userType) {
-        // Check if this is a new user or existing user with complete profile
-        const profileComplete = isProfileComplete();
-        
-        if (profileComplete) {
-          // Existing user with complete profile - redirect to dashboard
-          if (data.userType === "EMPLOYER") {
-            navigate("/employer", { replace: true });
-          } else if (data.userType === "AGENT") {
-            navigate("/agent", { replace: true });
-          } else if (data.userType === "TALENT") {
-            navigate("/talent", { replace: true });
-          } else if (data.userType === "TECHTALENT") {
-            navigate("/talent", { replace: true });
-          } else if (data.userType === "SERVICE_PROVIDER") {
-            navigate("/services-provider", { replace: true });
-          } else {
-            console.warn("Unknown user type:", data.userType);
-          }
-        } else {
-          // New user or incomplete profile - redirect to complete profile
-          if (data.userType === "EMPLOYER") {
-            navigate("/employer/complete-profile", { replace: true });
-          } else if (data.userType === "AGENT") {
-            navigate("/agent/complete-profile", { replace: true });
-          } else if (data.userType === "TALENT") {
-            navigate("/talent/complete-profile", { replace: true });
-          } else if (data.userType === "TECHTALENT") {
-            navigate("/techtalent/complete-profile", { replace: true });
-          } else if (data.userType === "SERVICE_PROVIDER") {
-            navigate("/services-provider/complete-profile", { replace: true });
-          }
-        }
-      } else if (
-        isError ||
-        (isSuccess && (!data?.userType || data?.userType === null || data?.userType === undefined))
-      ) {
-        if (isError) {
-          localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-          sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
-          console.error("Auto-login failed:", error.message);
-        }
-        // If no userType, stay on this page to select account type
-      }
-    }
-  }, [
-    isAutoLoginChecking,
-    isSuccess,
-    isError,
-    data,
-    error,
-    storedToken,
-    isFetched,
-    navigate,
-  ]);
+  //   if (isFetched && !isAutoLoginChecking) {
+  //     if (isSuccess && data?.userType) {
+  //       // Check if this is a new user or existing user with complete profile
+  //       const profileComplete = isProfileComplete();
+
+  //       if (profileComplete) {
+  //         // Existing user with complete profile - redirect to dashboard
+  //         if (data.userType === "EMPLOYER") {
+  //           navigate("/employer", { replace: true });
+  //         } else if (data.userType === "AGENT") {
+  //           navigate("/agent", { replace: true });
+  //         } else if (data.userType === "TALENT") {
+  //           navigate("/talent", { replace: true });
+  //         } else if (data.userType === "TECHTALENT") {
+  //           navigate("/talent", { replace: true });
+  //         } else if (data.userType === "SERVICE_PROVIDER") {
+  //           navigate("/services-provider", { replace: true });
+  //         } else {
+  //           console.warn("Unknown user type:", data.userType);
+  //         }
+  //       } else {
+  //         // New user or incomplete profile - redirect to complete profile
+  //         if (data.userType === "EMPLOYER") {
+  //           navigate("/employer/complete-profile", { replace: true });
+  //         } else if (data.userType === "AGENT") {
+  //           navigate("/agent/complete-profile", { replace: true });
+  //         } else if (data.userType === "TALENT") {
+  //           navigate("/talent/complete-profile", { replace: true });
+  //         } else if (data.userType === "TECHTALENT") {
+  //           navigate("/techtalent/complete-profile", { replace: true });
+  //         } else if (data.userType === "SERVICE_PROVIDER") {
+  //           navigate("/services-provider/complete-profile", { replace: true });
+  //         }
+  //       }
+  //     } else if (
+  //       isError ||
+  //       (isSuccess && (!data?.userType || data?.userType === null || data?.userType === undefined))
+  //     ) {
+  //       if (isError) {
+  //         localStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+  //         sessionStorage.removeItem("NXGJOBHUBLOGINKEYV1");
+  //         console.error("Auto-login failed:", error.message);
+  //       }
+  //       // If no userType, stay on this page to select account type
+  //     }
+  //   }
+  // }, [
+  //   isAutoLoginChecking,
+  //   isSuccess,
+  //   isError,
+  //   data,
+  //   error,
+  //   storedToken,
+  //   isFetched,
+  //   navigate,
+  // ]);
 
   const accountRadios = [
     { label: "Tech Talent", value: "techtalent" },
@@ -219,8 +219,8 @@ const SelectAccountType = () => {
     }
   };
 
-  if (isAutoLoginChecking || (!isFetched && !storedToken))
-    return <div>Loading...</div>;
+  // if (isAutoLoginChecking || (!isFetched && !storedToken))
+  //   return <div>Loading...</div>;
 
   return (
     <div className="space-y-10">

@@ -39,16 +39,46 @@ export async function updateUserProfile(url, userId, payload) {
   }
 }
 
-export const daysBetween = (dateString) => {
+export const getDaysBetween = (dateString) => {
   const inputDate = new Date(dateString);
   const now = new Date();
 
   //calculate the difference in milliseconds
   const difDateMs = now - inputDate;
 
-  //convert milliseconds => days
-  const difDays = difDateMs / (1000 * 60 * 60 * 24);
-
   //return the difference
-  return difDays;
+  return difDateMs;
+};
+
+export const getDateAsTextLabel = (dateString) => {
+  const jobDateInMs = getDaysBetween(dateString);
+  console.log(jobDateInMs);
+
+  const jobPostInSeconds = Math.floor(jobDateInMs / 1000);
+  const jobPostInMinutes = Math.floor(jobPostInSeconds / 60);
+  const jobPostInHours = Math.floor(jobPostInMinutes / 60);
+  const jobPostInDays = Math.floor(jobPostInHours / 24);
+
+  //return seconds , minutes , hours
+  if (jobPostInSeconds < 60) return "Just now";
+  if (jobPostInMinutes < 60)
+    return `${jobPostInMinutes} minutes${jobPostInMinutes > 1 ? "s" : ""} ago`;
+  if (jobPostInHours < 24)
+    return `${jobPostInHours} hours${jobPostInHours > 1 ? "s" : ""} ago`;
+
+  //return days and beyond
+  if (jobPostInDays === 1) return "Yesterday";
+  if (jobPostInDays < 7)
+    return `${jobPostInDays} day${jobPostInDays > 1 ? "s" : ""} ago`;
+
+  const jobPostInWeeks = Math.floor(jobPostInDays / 7);
+  if (jobPostInWeeks < 4)
+    return `${jobPostInWeeks} week${jobPostInWeeks > 1 ? "s" : ""} ago`;
+
+  const jobPostInMonths = Math.floor(jobPostInWeeks / 30);
+  if (jobPostInMonths < 12)
+    return `${jobPostInMonths} month${jobPostInMonths > 1 ? "s" : ""} ago`;
+
+  const jobPostInYears = Math.floor(jobPostInMonths / 365);
+  return `${jobPostInYears} year${jobPostInYears > 1 ? "s" : ""} ago`;
 };

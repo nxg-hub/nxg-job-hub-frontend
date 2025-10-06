@@ -30,7 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import { cn, daysBetween, getStoredKey } from "../lib/utils";
+import { cn, getDaysBetween, getStoredKey } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
@@ -219,10 +219,9 @@ function DashboardContent({ notifications = [] }) {
     if (e.target === e.currentTarget) setShowLogoutNotice(false);
   };
 
-  const NUMBEROFDAYFORFREESUB = daysBetween(
-    employer?.employer?.accountCreationDate
-  );
-  console.log(NUMBEROFDAYFORFREESUB);
+  const NUMBEROFDAYFORFREESUB =
+    getDaysBetween(employer?.employer?.accountCreationDate) /
+    (1000 * 60 * 60 * 24);
 
   return (
     <div className="flex h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">

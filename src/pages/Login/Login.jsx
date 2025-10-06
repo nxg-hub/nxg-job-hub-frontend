@@ -217,18 +217,15 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen py-14">
-      <Card>
+    <div className="flex items-center justify-center min-h-screen sm:py-14">
+      <Card className="border-transparent">
         <CardContent className="flex rounded-b-lg  p-0 sm:w-[1000px]">
           <section className="hidden sm:inline-block sm:w-1/2">
             <img src={LoginBG} alt="" className="rounded-l-lg" />
           </section>
-          <section className="px-10 sm:w-1/2 sm:px-10 py-14">
+          <section className="md:border-[1px] rounded-r-lg px-10 sm:w-1/2 sm:px-10 sm:py-14">
             <div>
-              <h1 className="text-3xl font-semibold">
-                Sign in to your account
-              </h1>
-              <p className="text-base">Login into your account</p>
+              <h1 className="text-3xl font-semibold">Login.</h1>
             </div>
             <Form {...form}>
               <form

@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useEmployerData } from "@/store/employer/employerStore";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-export const useEmployerJobsQuery = (employerID) => {
-  return useQuery({
-    queryKey: ["employerJobs", employerID],
-    queryFn: () =>
-      axios
-        .get(`${API_HOST_URL}/api/employers/postings/${employerID}`)
-        .then((response) => response.data),
-  });
-};
 
 export const useEmployerDataQuery = () => {
   const setEmployerData = useEmployerData((state) => state.setEmployerData);
