@@ -44,8 +44,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CreateNewJob from "@/components/Employer/createNewJob";
+import { cn } from "@/lib/utils";
+import { useFetchJobs } from "@/hooks/useJobs";
+import { useEmployerData } from "@/store/employer/employerStore";
 
 export default function EmployerJobTab() {
+  const [activeTab, setActiveTab] = useState("all");
+
+  const employer = useEmployerData((state) => state.employerData);
+  const { isLoading, isError, data } = useFetchJobs(employer?.id);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -114,8 +122,6 @@ export default function EmployerJobTab() {
     setActiveMenu("jobs");
   };
 
-  const [activeTab, setActiveTab] = useState("all");
-
   const [jobs, setJobs] = useState(sampleJobs);
   const { toast } = useToast();
 
@@ -146,101 +152,114 @@ export default function EmployerJobTab() {
 
   return (
     <div className="p-8 space-y-6">
-      <div className="flex items-center justify-end">
-        <CreateNewJob />
-      </div>
-
-      <div>
-        <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-start md:items-center">
-          <Tabs
-            className="w-full space-y-10"
-            defaultValue="all"
-            value={activeTab}
-            onValueChange={setActiveTab}
+      <div className="flex items-center justify-end"></div>
+      <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-start md:items-center">
+        <div className="flex gap-2">
+          <Button
+            className={cn(
+              `${
+                activeTab === "all"
+                  ? "bg-primary text-white border-transparent"
+                  : "bg-white border border-gray-300 text-gray-800 hover:bg-slate-50 hover:text-gray-800"
+              }`,
+              ""
+            )}
+            onClick={() => setActiveTab("all")}
           >
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger
-                className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
-                value="all"
-              >
-                All Jobs
-                <Badge variant="secondary" className="ml-2">
-                  {jobs.length}
-                </Badge>
-              </TabsTrigger>
-              <TabsTrigger
-                className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
-                value="active"
-              >
-                Active
-                {sampleJobs.length > 0 && (
-                  <Badge variant="destructive" className="ml-2">
-                    {jobs.filter((job) => job.status === "active").length}
-                  </Badge>
-                )}
-              </TabsTrigger>
-
-              <TabsTrigger
-                className="border-none data-[state=active]:bg-sky-500 data-[state=active]:text-sky-50 hover:bg-white hover:text-slate-950"
-                value="closed"
-              >
-                Closed
-                {filterClosed.length > 0 && (
-                  <Badge variant="destructive" className="ml-2">
-                    {jobs.filter((job) => job.status === "closed").length}
-                  </Badge>
-                )}
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="all" className="mt-4">
-              <div className="space-y-8">
-                {sampleJobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    onCloseJob={handleCloseJob}
-                    onDeleteJob={handleDeleteJob}
-                    setJobs={setJobs}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="active" className="mt-4">
-              <div className="space-y-8">
-                {filterActive.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    onCloseJob={handleCloseJob}
-                    onDeleteJob={handleDeleteJob}
-                    setJobs={setJobs}
-                  />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="closed" className="mt-4">
-              {filterClosed.length > 0 ? (
-                filterClosed.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    onCloseJob={handleCloseJob}
-                    onDeleteJob={handleDeleteJob}
-                    setJobs={setJobs}
-                  />
-                ))
-              ) : (
-                <div className="text-center p-8 border rounded-lg">
-                  <p className="text-muted-foreground">
-                    No jobs found. Create your first job posting!
-                  </p>
-                </div>
-              )}
-            </TabsContent>
-            <Toaster />
-          </Tabs>
+            All Jobs
+            <Badge variant="secondary" className="ml-2 text-white">
+              {data?.length || 0}
+            </Badge>
+          </Button>
+          <Button
+            className={cn(
+              `${
+                activeTab === "active"
+                  ? "bg-primary text-white border-transparent"
+                  : "bg-white border border-gray-300 text-gray-800 hover:bg-slate-50 hover:text-gray-800"
+              }`,
+              ""
+            )}
+            onClick={() => setActiveTab("active")}
+          >
+            Active
+            {sampleJobs.length > 0 && (
+              <Badge variant="destructive" className="ml-2">
+                {jobs.filter((job) => job.status === "active").length}
+              </Badge>
+            )}
+          </Button>
+          <Button
+            className={cn(
+              `${
+                activeTab === "close"
+                  ? "bg-primary text-white border-transparent"
+                  : "bg-white border border-gray-300 text-gray-800 hover:bg-slate-50 hover:text-gray-800"
+              }`,
+              ""
+            )}
+            onClick={() => setActiveTab("close")}
+          >
+            Closed
+            {filterClosed.length > 0 && (
+              <Badge variant="destructive" className="ml-2">
+                {jobs.filter((job) => job.status === "closed").length}
+              </Badge>
+            )}
+          </Button>
         </div>
+        <div className="flex gap-2 w-full md:w-auto">
+          <CreateNewJob />
+        </div>
+      </div>
+      <div>
+        {activeTab === "all" && (
+          <div className="space-y-8">
+            {sampleJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                onCloseJob={handleCloseJob}
+                onDeleteJob={handleDeleteJob}
+                setJobs={setJobs}
+              />
+            ))}
+          </div>
+        )}
+        {activeTab === "active" && (
+          <div className="space-y-8">
+            {filterActive.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                onCloseJob={handleCloseJob}
+                onDeleteJob={handleDeleteJob}
+                setJobs={setJobs}
+              />
+            ))}
+          </div>
+        )}
+        {activeTab === "close" && (
+          <div className="space-y-8">
+            {filterClosed.length > 0 ? (
+              filterClosed.map((job) => (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  onCloseJob={handleCloseJob}
+                  onDeleteJob={handleDeleteJob}
+                  setJobs={setJobs}
+                />
+              ))
+            ) : (
+              <div className="text-center p-8 border rounded-lg">
+                <p className="text-muted-foreground">
+                  No jobs found. Create your first job posting!
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

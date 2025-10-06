@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import { Briefcase, Heart, MessageCircle, Clock, FileText } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import sarahicon from "@/static/images/John.png";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { matchesData } from "@/utils/data/agent-mock-data";
 import CreateNewJob from "@/components/Employer/createNewJob";
-import RecentPostedJobs from "@/components/Employer/recentPostedJobs";
 import NewApplicants from "@/components/Employer/newApplicants";
-import SuggestedCandidates from "@/components/Employer/suggestedCandidate";
 import { Separator } from "@radix-ui/react-context-menu";
 import emptySuggestedImage from "@/static/images/empty-suggest.svg";
 import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
 import UserGuard from "@/components/Employer/employerUserGuard";
 import KPIBoard from "@/components/Employer/Dashboard/kpisBoard";
 import { useEmployerData } from "@/store/employer/employerStore";
+import RecentPostedJobs from "@/components/Employer/Dashboard/recentPostedJobs";
 
 export default function EmployerDashboardTab() {
   const employer = useEmployerData((state) => state.employerData);
@@ -50,62 +47,6 @@ export default function EmployerDashboardTab() {
   //function to close the create job dialog
   const closeCreateJobDialog = () => {
     setIsCreateJobDialogOpen(false);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSelectChange = (name, value) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handlePublishJob = () => {
-    // Validate form
-    if (!formData.title || !formData.description || !formData.location) {
-      toast({
-        title: "Missing information",
-        description: "Please fill in all required fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Create new job object
-    const newJob = {
-      id: Date.now(),
-      title: formData.title,
-      description: formData.description,
-      location: formData.location,
-      jobType: formData.jobType,
-      salary: `$${formData.salaryMin} - $${formData.salaryMax}`,
-      deadline: formData.deadline,
-      skills: formData.skills.split(",").map((skill) => skill.trim()),
-      experienceLevel: formData.experienceLevel,
-      status: "active",
-      postedDate: new Date().toLocaleDateString(),
-      applicants: [],
-    };
-
-    // In a real app, you would save this to a database
-    // For this demo, we'll use localStorage to persist the job
-    const existingJobs = JSON.parse(localStorage.getItem("jobs") || "[]");
-    localStorage.setItem("jobs", JSON.stringify([...existingJobs, newJob]));
-
-    toast({
-      title: "Job Published",
-      description: "Your job has been successfully published",
-    });
-
-    // Navigate to job listings
-    setActiveMenu("jobs");
   };
 
   // Apply filters when search term or filters change
@@ -158,13 +99,6 @@ export default function EmployerDashboardTab() {
     }
   };
 
-  // Reset all filters
-  const resetFilters = () => {
-    setSearchTerm("");
-    setFilterEmployer("");
-    setFilterStatus("");
-  };
-
   const suggestedCandidates = [
     {
       candidateImage: sarahicon,
@@ -189,41 +123,9 @@ export default function EmployerDashboardTab() {
     // },
   ];
 
-  const recentJobs = [
-    {
-      jobTitle: "Web developer",
-      jobLocation: "Abuja",
-      timePosted: "6 Days ago",
-      experienced: "Experieced",
-      seasonal: "Seasional",
-      numverOfApplicant: 15,
-      aboutJob: `We're looking for an experienced Machine Learning Engineer to join our AI team. 
-        The ideal candidate will have strong experience in developing and deploying machine learning models at scale.`,
-    },
-    {
-      jobTitle: "Web developer",
-      jobLocation: "Abuja",
-      timePosted: "6 Days ago",
-      experienced: "Experieced",
-      seasonal: "Seasional",
-      numverOfApplicant: 15,
-      aboutJob: `We're looking for an experienced Machine Learning Engineer to join our AI team. 
-        The ideal candidate will have strong experience in developing and deploying machine learning models at scale.`,
-    },
-    {
-      jobTitle: "Web developer",
-      jobLocation: "Abuja",
-      timePosted: "6 Days ago",
-      experienced: "Experieced",
-      seasonal: "Seasional",
-      numverOfApplicant: 15,
-      aboutJob: `We're looking for an experienced Machine Learning Engineer to join our AI team. 
-        The ideal candidate will have strong experience in developing and deploying machine learning models at scale.`,
-    },
-  ];
   return (
     <div className="max-w-full flex flex-col gap-8">
-      <KPIBoard />
+      <KPIBoard employerID={employer?.id} />
       <div className="md:w-[200px]">
         <Button
           onClick={openCreateJobDialog}
@@ -245,10 +147,13 @@ export default function EmployerDashboardTab() {
           isCloseDialog={closeCreateJobDialog}
         />
       </div>
-      <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
-      <div className="w-full flex gap-16">
+      <div className="space-y-4">
         {/* recent posted jobs table here */}
-        <RecentPostedJobs setOpenCreateJobDialog={openCreateJobDialog} />
+        <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
+        <RecentPostedJobs
+          setOpenCreateJobDialog={openCreateJobDialog}
+          employerID={employer?.id}
+        />
         {/* <NewApplicants /> */}
         {/* <SuggestedCandidates /> */}
       </div>

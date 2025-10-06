@@ -1,5 +1,5 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const usePostJob = () => {
@@ -30,16 +30,107 @@ export const usePostJob = () => {
   };
 };
 
-export const useFetchJobs = () => {
+export const useFetchJobs = (employerID) => {
   const fetchJobs = async () => {
-    const response = await axios.get(`${API_HOST_URL}/api/job-postings/all`);
+    const response = await axios.get(
+      `${API_HOST_URL}/api/employers/postings/${employerID}`
+    );
     return response.data;
   };
 
   return useQuery({
-    queryKey: ["allJobs"],
+    queryKey: ["employerJobs", employerID],
     queryFn: fetchJobs,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
+    enabled: !!employerID,
   });
+};
+
+export const useFetchJobApplicants = ({ jobID }) => {
+  const fetchJobApplicants = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/employers/${jobID}/applicants/count`
+    );
+    return response.data;
+  };
+
+  return useQuery({
+    queryKey: ["jobApplicants", jobID],
+    queryFn: fetchJobApplicants,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: !!jobID,
+  });
+};
+
+export const useJobsEngagements = (employerID) => {
+  const fetchJobsEngagements = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/employers/engagements/${employerID}`
+    );
+    return response.data;
+  };
+
+  return useQuery({
+    queryKey: ["jobsEngagements", employerID],
+    queryFn: fetchJobsEngagements,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: !!employerID,
+  });
+};
+
+export const useEmployerJobsKpis = (employerID) => {
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ["totalJobsPost", employerID],
+        queryFn: async () => {
+          const response = await axios.get(
+            `${API_HOST_URL}/api/employers/postings/${employerID}`
+          );
+          return response.data;
+        },
+      },
+      {
+        queryKey: ["jobsEngagements", employerID],
+        queryFn: async () => {
+          const response = await axios.get(
+            `${API_HOST_URL}/api/employers/engagements/${employerID}`
+          );
+          return response.data;
+        },
+      },
+    ],
+  });
+
+  //request states
+  const isLoading = queries.some((q) => q.isLoading);
+  const isError = queries.some((q) => q.isError);
+  const error = queries.find((q) => q.error)?.error || null;
+
+  const jobs = queries[0]?.data || [];
+  const engagements = queries[1]?.data || {};
+
+  const acceptedJobs = jobs.filter(
+    (job) => job.jobStatus?.toLowerCase() === "accepted"
+  );
+  const rejectedJobs = jobs.filter(
+    (job) => job.jobStatus?.toLowerCase() === "rejected"
+  );
+
+  const totalJobsPost = jobs.length;
+  const totalJobsAccepted = acceptedJobs.length;
+  const totalJobsRejected = rejectedJobs.length;
+
+  //return data
+  const data = {
+    totalJobsPost,
+    totalJobsAccepted,
+    totalJobsRejected,
+    engagements,
+  };
+
+  return { isLoading, isError, error, data };
 };
