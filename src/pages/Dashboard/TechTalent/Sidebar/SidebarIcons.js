@@ -2,7 +2,7 @@ import ChangeProfilePicture from "../../../../static/icons/edit_dp.svg";
 import EditProfile from "../../../../static/icons/edit.svg";
 import MyProfile from "../../../../static/icons/profile.svg";
 import Dashboard from "../../../../static/icons/dashboard.svg";
-import Settings from "../../../../static/icons/carbon_settings.svg";
+// import Settings from "../../../../static/icons/carbon_settings.svg";
 import Help from "../../../../static/icons/help.svg";
 import Analytics from "../../../../static/icons/chart-analytics.svg";
 import Notification from "../../../../static/icons/notification-new.svg";
@@ -29,7 +29,7 @@ export {
   Applications,
   Analytics,
   Help,
-  Settings,
+  // Settings,
   SavedJobs,
   Wallet,
   Logout,
