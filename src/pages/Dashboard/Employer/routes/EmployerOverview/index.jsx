@@ -7,7 +7,7 @@ import CompanyProfile, {
 import { UserContext } from "../../..";
 import { Link } from "react-router-dom";
 import EngagementCard from "../../EngagementCard";
-import { Applicants, JobPosts } from "../../Sidebar/SidebarIcons";
+// import { Applicants, JobPosts } from "../../Sidebar/SidebarIcons";
 import JobCard from "../../../../../components/JobCard";
 
 import Swiper, { Swiper2 } from "./Swiper";
@@ -47,22 +47,26 @@ const EmployerOverview = () => {
           <h3>Engagements</h3>
           <span className={s.Engagements}>
             <EngagementCard
-              logo={<JobPosts fill="#006A90" />}
+              // logo={<JobPosts fill="#006A90" />}
+              logo=""
               title={"Jobs Posted"}
               value={posts.length}
             />
             <EngagementCard
-              logo={<Applicants fill="#006A90" />}
+              // logo={<Applicants fill="#006A90" />}
+              logo=""
               title={"Applicants"}
               value={data.applicantCount}
             />
             <EngagementCard
-              logo={<JobPosts fill="#006A90" />}
+              // logo={<JobPosts fill="#006A90" />}
+              logo=""
               title={"Reviewed"}
               value={count.reviewed}
             />
             <EngagementCard
-              logo={<JobPosts fill="#006A90" />}
+              // logo={<JobPosts fill="#006A90" />}
+              logo=""
               title={"Shortlisted"}
               value={count.shortlisted}
             />

@@ -1,24 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import s from "./index.module.scss";
-import {
-  Applicants,
-  ChangeProfilePicture,
-  CiUser,
-  Contract,
-  Dashboard,
-  Help,
-  Interviews,
-  JobPosts,
-  Logout,
-  MyProfile,
-  Notification,
-  Password,
-  PostJobs,
-  Privacy,
-  Services,
-  Settings,
-  Terms,
-} from "./SidebarIcons";
+// import {
+//   Applicants,
+//   ChangeProfilePicture,
+//   CiUser,
+//   Contract,
+//   Dashboard,
+//   Help,
+//   Interviews,
+//   JobPosts,
+//   Logout,
+//   MyProfile,
+//   Notification,
+//   Password,
+//   PostJobs,
+//   Privacy,
+//   Services,
+//   Settings,
+//   Terms,
+// } from "./SidebarIcons";
 import { PiCaretDown, PiSubtitlesBold, PiShieldCheck } from "react-icons/pi";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
@@ -337,12 +337,14 @@ const Sidebar = ({ profilePic, ...props }) => {
         <div>
           <div
             className={s.displayPic}
-            style={profilePicture && { padding: 0 }}>
-            {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
+            style={profilePicture && { padding: 0 }}
+          >
+            {profilePicture ? <img src={profilePicture} alt="" /> : null}
+            {/* {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />} */}
           </div>
           <label className="flex flex-col" htmlFor="profilepic">
             <span className="absolute right-7">
-              <ChangeProfilePicture title="upload company logo" />
+              {/* <ChangeProfilePicture title="upload company logo" /> */}
             </span>
             <span className="relative">Company Logo </span>
           </label>
@@ -367,7 +369,8 @@ const Sidebar = ({ profilePic, ...props }) => {
             maxWidth: "128px",
             color: "#000",
             margin: "0.6rem auto",
-          }}>
+          }}
+        >
           Edit Profile
         </p>
         <div className={s.employerFirm}>
@@ -378,9 +381,7 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Engagements</h2>
         <div className={s.Engagements}>
           <NavLink end to="/dashboard" className={`${s.dashboardItem} `}>
-            <div>
-              <Dashboard />
-            </div>
+            <div>{/* <Dashboard /> */}</div>
             <p>Dashboard</p>
           </NavLink>
 
@@ -395,10 +396,9 @@ const Sidebar = ({ profilePic, ...props }) => {
               notifications.length > 0 && !viewedNotification // Ensure red sign is removed when viewed
                 ? `${s.dashboardItem} ${s.Bell}`
                 : `${s.dashboardItem}`
-            }>
-            <div>
-              <Notification />
-            </div>
+            }
+          >
+            <div>{/* <Notification /> */}</div>
             <p>Notifications</p>
           </NavLink>
 
@@ -441,15 +441,11 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Manage Hiring</h2>
         <div className={s.Engagements}>
           <NavLink end to="posts/create" className={`${s.dashboardItem} `}>
-            <div>
-              <PostJobs />
-            </div>
+            <div>{/* <PostJobs /> */}</div>
             <p>Post Jobs</p>
           </NavLink>
           <NavLink end to="posts" className={`${s.dashboardItem} `}>
-            <div>
-              <JobPosts />
-            </div>
+            <div>{/* <JobPosts /> */}</div>
             <p>Job Posts</p>
           </NavLink>
           {/* <NavLink end to="applicants" className={`${s.dashboardItem} `}>
@@ -459,9 +455,7 @@ const Sidebar = ({ profilePic, ...props }) => {
             <p>Job Applicants</p>
           </NavLink> */}
           <NavLink end to="interviews" className={`${s.dashboardItem} `}>
-            <div>
-              <Interviews />
-            </div>
+            <div>{/* <Interviews /> */}</div>
             <p>Interviews</p>
           </NavLink>
           {/* <NavLink end to="services" className={`${s.dashboardItem} `}>
@@ -474,22 +468,16 @@ const Sidebar = ({ profilePic, ...props }) => {
         <h2>Settings</h2>
         <div className={s.Settings}>
           <NavLink end to="profile" className={`${s.dashboardItem} `}>
-            <div>
-              <MyProfile />
-            </div>
+            <div>{/* <MyProfile /> */}</div>
             <p>My Profile</p>
           </NavLink>
           <NavLink end to="terms" className={`${s.dashboardItem} `}>
-            <div>
-              <Contract />
-            </div>
+            <div>{/* <Contract /> */}</div>
             <p>Contract</p>
           </NavLink>
           <li className={`${s.dashboardItem} `}>
             <div className={s.dropdownTitle}>
-              <div>
-                <Settings />
-              </div>
+              <div>{/* <Settings /> */}</div>
               <span>
                 <p>Settings</p>
                 <PiCaretDown />
@@ -499,31 +487,23 @@ const Sidebar = ({ profilePic, ...props }) => {
               <NavLink
                 end
                 to="password-settings"
-                className={`${s.dashboardItem} `}>
+                className={`${s.dashboardItem} `}
+              >
                 {" "}
-                <div>
-                  <Password />{" "}
-                </div>
+                <div>{/* <Password />{" "} */}</div>
                 <p>Password Settings</p>
               </NavLink>
               <NavLink end to="privacy" className={`${s.dashboardItem} `}>
                 {" "}
-                <div>
-                  <Privacy />
-                </div>
+                <div>{/* <Privacy /> */}</div>
                 <p>Privacy</p>
               </NavLink>
               <NavLink end to="terms" className={`${s.dashboardItem} `}>
                 {" "}
-                <div>
-                  <Terms />
-                </div>{" "}
-                <p>Terms and conditions</p>
+                <div>{/* <Terms /> */}</div> <p>Terms and conditions</p>
               </NavLink>
               <NavLink end to="help" className={`${s.dashboardItem} `}>
-                <div>
-                  <Help />
-                </div>
+                <div>{/* <Help /> */}</div>
                 <p>Help</p>
               </NavLink>
             </ul>
@@ -532,10 +512,9 @@ const Sidebar = ({ profilePic, ...props }) => {
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}>
-        <div>
-          <Logout />
-        </div>
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div>{/* <Logout /> */}</div>
         <p>Logout</p>
       </NavLink>
       {/* Render the LogoutModal component if showLogoutModal is true */}
@@ -543,7 +522,8 @@ const Sidebar = ({ profilePic, ...props }) => {
         <Dialog
           className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[60%] flex justify-center items-center bg-white border-none rounded-[24px] py-8 px-4 z-[100]"
           open={isOpen}
-          onClose={() => setIsOpen(false)}>
+          onClose={() => setIsOpen(false)}
+        >
           <Dialog.Backdrop className="fixed inset-0 bg-black/30" />
           <div className="w-full">
             <Dialog.Panel>
@@ -556,7 +536,8 @@ const Sidebar = ({ profilePic, ...props }) => {
                       // fontWeight: "600",
                       // textAlign: "center",
                     }
-                  }>
+                  }
+                >
                   Are you sure you want to logout?
                 </p>
                 <div
@@ -567,15 +548,18 @@ const Sidebar = ({ profilePic, ...props }) => {
                     alignItems: "center",
                     gap: "8px",
                     margin: "3rem auto",
-                  }}>
+                  }}
+                >
                   <button
                     onClick={moveToDashboard}
-                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10">
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                  >
                     Back To Dashboard
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10">
+                    className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
+                  >
                     {loading ? "Logging out..." : "Continue To Logout"}
                   </button>
                 </div>

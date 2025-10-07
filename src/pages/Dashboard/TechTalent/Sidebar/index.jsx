@@ -8,7 +8,7 @@ import {
   Applications,
   Analytics,
   Help,
-  Settings,
+  // Settings,
   Notification,
   Wallet,
   SavedJobs,
@@ -299,16 +299,15 @@ const Sidebar = () => {
             end
             to={item.path}
             key={index}
-            className={`${s.dashboardItem} `}>
+            className={`${s.dashboardItem} `}
+          >
             <div>{item.icon}</div>
             <p>{item.name}</p>
           </NavLink>
         ))}
         <li className={`${s.dashboardItem} `}>
           <div className={s.dropdownTitle}>
-            <div>
-              <Settings />
-            </div>
+            <div>{/* <Settings /> */}</div>
             <span>
               <p> Settings</p>
               <PiCaretDown />
@@ -318,7 +317,8 @@ const Sidebar = () => {
             <NavLink
               end
               to="password-settings"
-              className={`${s.dashboardItem} `}>
+              className={`${s.dashboardItem} `}
+            >
               {" "}
               <Password /> <p>Password Settings</p>
             </NavLink>
@@ -341,7 +341,8 @@ const Sidebar = () => {
       </ul>
       <NavLink
         className={`${s.dashboardItem} ${s.Logout}  `}
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div>
           <Logout />
         </div>
@@ -371,7 +372,8 @@ const Sidebar = () => {
               // padding: "2rem 1rem",
               // zIndex: "100",
             }
-          }>
+          }
+        >
           <Dialog.Backdrop className="fixed inset-0 bg-black/30" />
           <div className="w-full">
             <Dialog.Panel>
@@ -384,7 +386,8 @@ const Sidebar = () => {
                       // fontWeight: "600",
                       // textAlign: "center",
                     }
-                  }>
+                  }
+                >
                   Are you sure you want to logout?
                 </p>
                 <div
@@ -395,7 +398,8 @@ const Sidebar = () => {
                     alignItems: "center",
                     gap: "8px",
                     margin: "3rem auto",
-                  }}>
+                  }}
+                >
                   <button
                     onClick={moveToDashboard}
                     className="w-[80%]  p-[8px] bg-[#006A90] border-none rounded-[10px] text-white text-[14px] sm:text-[24px] font-[500px] my-10"
@@ -412,7 +416,8 @@ const Sidebar = () => {
                         // fontWeight: "500",
                         // margin: "2.5rem 0",
                       }
-                    }>
+                    }
+                  >
                     Back To Dashboard
                   </button>
                   <button
@@ -430,7 +435,8 @@ const Sidebar = () => {
                         // fontSize: "25px",
                         // fontWeight: "500",
                       }
-                    }>
+                    }
+                  >
                     {loading ? "Logging Out..." : "Continue To Logout"}
                   </button>
                 </div>
