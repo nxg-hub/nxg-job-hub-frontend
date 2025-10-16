@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { JobsCard } from "@/components/jobs-card";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllJobs } from "@/redux/ServiceProviderJobSlice";
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
 
 // Sample service data for an artisan
 const initialServices = [
@@ -254,7 +257,15 @@ const serviceTypes = [
 ];
 
 export function JobTracker() {
-  const [services, setServices] = useState(initialServices);
+  const dispatch = useDispatch();
+  const allJobs = useSelector(
+    (state) => state.ServiceProviderJobReducer.allJobs
+  );
+  const loading = useSelector(
+    (state) => state.ServiceProviderJobReducer.loading
+  );
+  const error = useSelector((state) => state.ServiceProviderJobReducer.error);
+  const [services, setServices] = useState(allJobs);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({
     priority: [],
@@ -270,36 +281,46 @@ export function JobTracker() {
   const [chatDialogOpen, setChatDialogOpen] = useState(false);
   const [currentChatService, setCurrentChatService] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  useEffect(() => {
+    dispatch(fetchAllJobs({ token: token.authKey }));
+  }, []);
+
+  const acceptedJobs = allJobs.filter((job) => {
+    return job.jobStatus === "ACCEPTED";
+  });
 
   // Filter services based on search query and active filters
-  const filteredServices = services.filter((service) => {
+  const filteredServices = acceptedJobs.filter((service) => {
     // Search filter
     const matchesSearch =
-      service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.location.toLowerCase().includes(searchQuery.toLowerCase());
+      service.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.employer_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.job_description
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service.job_location.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Priority filter
     const matchesPriority =
       activeFilters.priority.length === 0 ||
-      activeFilters.priority.includes(service.priority);
+      activeFilters.priority.includes(service.job_type);
 
     // Service type filter
-    const matchesServiceType =
-      activeFilters.serviceType.length === 0 ||
-      activeFilters.serviceType.includes(service.serviceType);
+    // const matchesServiceType =
+    //   activeFilters.serviceType.length === 0 ||
+    //   activeFilters.serviceType.includes(service.serviceType);
 
     // Client filter
-    const matchesClient =
-      activeFilters.client.length === 0 ||
-      activeFilters.client.includes(service.client);
+    // const matchesClient =
+    //   activeFilters.client.length === 0 ||
+    //   activeFilters.client.includes(service.client);
 
-    return (
-      matchesSearch && matchesPriority && matchesServiceType && matchesClient
-    );
+    return matchesSearch && matchesPriority;
+    //  && matchesPriority && matchesServiceType && matchesClient
   });
-
   const newServices = filteredServices.filter(
     (service) => service.status === "new"
   );
@@ -448,6 +469,16 @@ export function JobTracker() {
   // Get unique clients for filter
   const uniqueClients = [...new Set(services.map((service) => service.client))];
 
+  if (loading) {
+    return <JobCardSkeleton />;
+  }
+
+  if (!loading && error) {
+    return (
+      <p className="text-center text-red-500 mt-6">Failed to fetch jobs</p>
+    );
+  }
+
   return (
     <div className="mx-auto px-6 py-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
@@ -457,7 +488,7 @@ export function JobTracker() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search services, clients, or locations..."
+                placeholder="Search Jobs..."
                 className="pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -465,21 +496,15 @@ export function JobTracker() {
             </div>
           </div>
 
-          <Tabs
-            defaultValue="all"
-            className="w-full">
+          <Tabs defaultValue="all" className="w-full">
             <TabsList className="grid grid-cols-5 w-full bg-[#E6F7FC]">
-              <TabsTrigger
-                value="all"
-                className="hover:bg-sky-600 border-none">
+              <TabsTrigger value="all" className="hover:bg-sky-600 border-none">
                 All ({filteredServices.length})
               </TabsTrigger>
-              <TabsTrigger
-                value="new"
-                className="hover:bg-sky-600 border-none">
-                New ({newServices.length})
+              <TabsTrigger value="new" className="hover:bg-sky-600 border-none">
+                Saved ({newServices.length})
               </TabsTrigger>
-              <TabsTrigger
+              {/* <TabsTrigger
                 value="ongoing"
                 className="hover:bg-sky-600 border-none">
                 Ongoing ({ongoingServices.length})
@@ -493,11 +518,9 @@ export function JobTracker() {
                 value="declined"
                 className="hover:bg-sky-600 border-none">
                 Declined ({declinedServices.length})
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
-            <TabsContent
-              value="all"
-              className="space-y-4 mt-6">
+            <TabsContent value="all" className="space-y-4 mt-6">
               {filteredServices.length > 0 ? (
                 filteredServices.map((service) => (
                   <JobsCard
@@ -516,9 +539,7 @@ export function JobTracker() {
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="new"
-              className="space-y-4 mt-6">
+            <TabsContent value="new" className="space-y-4 mt-6">
               {newServices.length > 0 ? (
                 newServices.map((service) => (
                   <JobsCard
@@ -537,9 +558,7 @@ export function JobTracker() {
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="ongoing"
-              className="space-y-4 mt-6">
+            <TabsContent value="ongoing" className="space-y-4 mt-6">
               {ongoingServices.length > 0 ? (
                 ongoingServices.map((service) => (
                   <JobsCard
@@ -558,9 +577,7 @@ export function JobTracker() {
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="completed"
-              className="space-y-4 mt-6">
+            <TabsContent value="completed" className="space-y-4 mt-6">
               {completedServices.length > 0 ? (
                 completedServices.map((service) => (
                   <JobsCard
@@ -579,9 +596,7 @@ export function JobTracker() {
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="declined"
-              className="space-y-4 mt-6">
+            <TabsContent value="declined" className="space-y-4 mt-6">
               {declinedServices.length > 0 ? (
                 declinedServices.map((service) => (
                   <JobsCard
@@ -624,9 +639,7 @@ export function JobTracker() {
         />
       )}
 
-      <Dialog
-        open={declineDialogOpen}
-        onOpenChange={setDeclineDialogOpen}>
+      <Dialog open={declineDialogOpen} onOpenChange={setDeclineDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Decline Service</DialogTitle>
@@ -636,9 +649,7 @@ export function JobTracker() {
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label
-                htmlFor="decline-reason"
-                className="text-sm font-medium">
+              <label htmlFor="decline-reason" className="text-sm font-medium">
                 Reason
               </label>
               <Textarea
@@ -668,9 +679,7 @@ export function JobTracker() {
 
       {/* Chat Dialog */}
       {currentChatService && (
-        <Dialog
-          open={chatDialogOpen}
-          onOpenChange={setChatDialogOpen}>
+        <Dialog open={chatDialogOpen} onOpenChange={setChatDialogOpen}>
           <DialogContent className="sm:max-w-[500px] p-0 h-[550px] flex flex-col">
             <DialogHeader className="brand-gradient text-white p-4 rounded-t-lg">
               <DialogTitle>Chat with {currentChatService.client}</DialogTitle>
@@ -723,9 +732,7 @@ export function JobTracker() {
             </div>
 
             <div className="p-4 border-t mt-auto">
-              <form
-                onSubmit={sendMessage}
-                className="flex gap-2">
+              <form onSubmit={sendMessage} className="flex gap-2">
                 <Input
                   placeholder="Type your message..."
                   value={newMessage}

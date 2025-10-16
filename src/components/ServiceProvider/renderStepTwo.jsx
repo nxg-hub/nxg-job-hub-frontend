@@ -3,10 +3,23 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Badge } from "../ui/badge";
 import { X, Plus } from "lucide-react";
+import InstitutionAutocomplete from "./InstitutionAutocomplete";
 
 const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
   const [newInterest, setNewInterest] = useState("");
@@ -31,7 +44,7 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
 
-  // ✅ Top-level updates (preferredContact, additionalInfo, etc.)
+  // ✅ Top-level updates (preferredContactMethod, additionalInfo, etc.)
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -51,7 +64,10 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
   };
 
   const addInterest = () => {
-    if (newInterest.trim() && !formData.interests.includes(newInterest.trim())) {
+    if (
+      newInterest.trim() &&
+      !formData.interests.includes(newInterest.trim())
+    ) {
       setFormData((prev) => ({
         ...prev,
         interests: [...prev.interests, newInterest.trim()],
@@ -63,7 +79,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
   const removeInterest = (interestToRemove) => {
     setFormData((prev) => ({
       ...prev,
-      interests: prev.interests.filter((interest) => interest !== interestToRemove),
+      interests: prev.interests.filter(
+        (interest) => interest !== interestToRemove
+      ),
     }));
   };
 
@@ -94,10 +112,14 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
             Preferred Contact Method <span className="text-red-500">*</span>
           </Label>
           <Select
-            value={formData.preferredContact}
-            onValueChange={(v) => handleInputChange("preferredContact", v)}
-          >
-            <SelectTrigger className={getFieldError("preferredContact") ? "border-red-500" : ""}>
+            value={formData.preferredContactMethod}
+            onValueChange={(v) =>
+              handleInputChange("preferredContactMethod", v)
+            }>
+            <SelectTrigger
+              className={
+                getFieldError("preferredContactMethod") ? "border-red-500" : ""
+              }>
               <SelectValue placeholder="Select contact method" />
             </SelectTrigger>
             <SelectContent>
@@ -108,8 +130,10 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               ))}
             </SelectContent>
           </Select>
-          {getFieldError("preferredContact") && (
-            <p className="text-sm text-red-500">Preferred contact method is required</p>
+          {getFieldError("preferredContactMethod") && (
+            <p className="text-sm text-red-500">
+              Preferred contact method is required
+            </p>
           )}
         </CardContent>
       </Card>
@@ -118,7 +142,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
       <Card>
         <CardHeader>
           <CardTitle>Education</CardTitle>
-          <CardDescription>Tell us about your educational background</CardDescription>
+          <CardDescription>
+            Tell us about your educational background
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -127,11 +153,15 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
             </Label>
             <Select
               value={formData.education.highestQualification}
-              onValueChange={(v) => handleEducationChange("highestQualification", v)}
-            >
+              onValueChange={(v) =>
+                handleEducationChange("highestQualification", v)
+              }>
               <SelectTrigger
-                className={getFieldError("education.highestQualification") ? "border-red-500" : ""}
-              >
+                className={
+                  getFieldError("education.highestQualification")
+                    ? "border-red-500"
+                    : ""
+                }>
                 <SelectValue placeholder="Select your highest qualification" />
               </SelectTrigger>
               <SelectContent>
@@ -143,7 +173,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               </SelectContent>
             </Select>
             {getFieldError("education.highestQualification") && (
-              <p className="text-sm text-red-500">Highest qualification is required</p>
+              <p className="text-sm text-red-500">
+                Highest qualification is required
+              </p>
             )}
           </div>
 
@@ -152,13 +184,21 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               <Label htmlFor="schoolName">
                 School/Institution Name <span className="text-red-500">*</span>
               </Label>
-              <Input
+              {/* <Input
                 id="schoolName"
                 type="text"
                 placeholder="Enter school/institution name"
                 value={formData.education.schoolName}
-                onChange={(e) => handleEducationChange("schoolName", e.target.value)}
-                className={getFieldError("education.schoolName") ? "border-red-500" : ""}
+                onChange={(e) =>
+                  handleEducationChange("schoolName", e.target.value)
+                }
+                className={
+                  getFieldError("education.schoolName") ? "border-red-500" : ""
+                }
+              /> */}
+              <InstitutionAutocomplete
+                value={formData.education.schoolName}
+                onChange={(val) => handleEducationChange("schoolName", val)}
               />
               {getFieldError("education.schoolName") && (
                 <p className="text-sm text-red-500">School name is required</p>
@@ -171,11 +211,13 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               </Label>
               <Select
                 value={formData.education.schoolYear}
-                onValueChange={(v) => handleEducationChange("schoolYear", v)}
-              >
+                onValueChange={(v) => handleEducationChange("schoolYear", v)}>
                 <SelectTrigger
-                  className={getFieldError("education.schoolYear") ? "border-red-500" : ""}
-                >
+                  className={
+                    getFieldError("education.schoolYear")
+                      ? "border-red-500"
+                      : ""
+                  }>
                   <SelectValue placeholder="Select year" />
                 </SelectTrigger>
                 <SelectContent>
@@ -187,7 +229,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 </SelectContent>
               </Select>
               {getFieldError("education.schoolYear") && (
-                <p className="text-sm text-red-500">Graduation year is required</p>
+                <p className="text-sm text-red-500">
+                  Graduation year is required
+                </p>
               )}
             </div>
           </div>
@@ -201,11 +245,19 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               type="text"
               placeholder="Enter school location (City, State/Country)"
               value={formData.education.schoolLocation}
-              onChange={(e) => handleEducationChange("schoolLocation", e.target.value)}
-              className={getFieldError("education.schoolLocation") ? "border-red-500" : ""}
+              onChange={(e) =>
+                handleEducationChange("schoolLocation", e.target.value)
+              }
+              className={
+                getFieldError("education.schoolLocation")
+                  ? "border-red-500"
+                  : ""
+              }
             />
             {getFieldError("education.schoolLocation") && (
-              <p className="text-sm text-red-500">School location is required</p>
+              <p className="text-sm text-red-500">
+                School location is required
+              </p>
             )}
           </div>
 
@@ -217,12 +269,20 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               id="schoolDescription"
               placeholder="Briefly describe your studies, achievements, or relevant coursework"
               value={formData.education.schoolDescription}
-              onChange={(e) => handleEducationChange("schoolDescription", e.target.value)}
-              className={getFieldError("education.schoolDescription") ? "border-red-500" : ""}
+              onChange={(e) =>
+                handleEducationChange("schoolDescription", e.target.value)
+              }
+              className={
+                getFieldError("education.schoolDescription")
+                  ? "border-red-500"
+                  : ""
+              }
               rows={3}
             />
             {getFieldError("education.schoolDescription") && (
-              <p className="text-sm text-red-500">Education description is required</p>
+              <p className="text-sm text-red-500">
+                Education description is required
+              </p>
             )}
           </div>
         </CardContent>
@@ -232,7 +292,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
       <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
-          <CardDescription>Share your interests and any additional information</CardDescription>
+          <CardDescription>
+            Share your interests and any additional information
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -246,18 +308,24 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
                 placeholder="Enter an interest"
                 value={newInterest}
                 onChange={(e) => setNewInterest(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addInterest())}
+                onKeyPress={(e) =>
+                  e.key === "Enter" && (e.preventDefault(), addInterest())
+                }
                 className={getFieldError("interests") ? "border-red-500" : ""}
               />
               <Button type="button" onClick={addInterest} size="sm">
                 <Plus className="h-4 w-4" />
+                Add
               </Button>
             </div>
 
             {formData.interests.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {formData.interests.map((interest, index) => (
-                  <Badge key={index} variant="secondary" className="flex items-center text-white gap-1">
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="flex items-center text-white gap-1">
                     {interest}
                     <X
                       className="h-3 w-3  text-white cursor-pointer"
@@ -268,7 +336,9 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               </div>
             )}
             {getFieldError("interests") && (
-              <p className="text-sm text-red-500">At least one interest is required</p>
+              <p className="text-sm text-red-500">
+                At least one interest is required
+              </p>
             )}
           </div>
 
@@ -280,12 +350,18 @@ const ServiceProviderStepTwo = ({ formData, setFormData, formError }) => {
               id="additionalInfo"
               placeholder="Tell us anything else about yourself, your experience, or what makes you unique"
               value={formData.additionalInfo}
-              onChange={(e) => handleInputChange("additionalInfo", e.target.value)}
-              className={getFieldError("additionalInfo") ? "border-red-500" : ""}
+              onChange={(e) =>
+                handleInputChange("additionalInfo", e.target.value)
+              }
+              className={
+                getFieldError("additionalInfo") ? "border-red-500" : ""
+              }
               rows={4}
             />
             {getFieldError("additionalInfo") && (
-              <p className="text-sm text-red-500">Additional information is required</p>
+              <p className="text-sm text-red-500">
+                Additional information is required
+              </p>
             )}
           </div>
         </CardContent>

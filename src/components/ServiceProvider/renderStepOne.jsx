@@ -2,8 +2,20 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
   const mainSkills = [
@@ -13,7 +25,7 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
     "PAINTING",
     "MASONRY",
     "WELDING",
-    "OTHERS"
+    "OTHERS",
   ];
 
   const subSkillsOptions = {
@@ -27,9 +39,9 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
   };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -50,7 +62,7 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
           Choose your main skill and related sub-skills
         </CardDescription>
       </CardHeader>
-    
+
       <CardContent className="space-y-6">
         {/* Main Skill */}
         <div className="space-y-2">
@@ -62,10 +74,13 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
             onValueChange={(value) => {
               handleInputChange("mainSkill", value);
               // reset sub-skills when main skill changes
-              setFormData((prev) => ({ ...prev, subSkills: [] }));
-            }}
-          >
-            <SelectTrigger className={getFieldError("mainSkill") ? "border-red-500" : ""}>
+              setFormData((prev) => ({
+                ...prev,
+                subSkills: [],
+              }));
+            }}>
+            <SelectTrigger
+              className={getFieldError("mainSkill") ? "border-red-500" : ""}>
               <SelectValue placeholder="Select your primary skill" />
             </SelectTrigger>
             <SelectContent>
@@ -81,7 +96,7 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
           )}
         </div>
 
-{/* Dynamic Sub-Skills */}
+        {/* Dynamic Sub-Skills */}
         {formData.mainSkill && (
           <div className="space-y-2">
             <Label>
@@ -107,7 +122,9 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
               ))}
             </div>
             {getFieldError("subSkills") && (
-              <p className="text-sm text-red-500">At least one sub-skill is required</p>
+              <p className="text-sm text-red-500">
+                At least one sub-skill is required
+              </p>
             )}
           </div>
         )}
@@ -121,14 +138,18 @@ const ServiceProviderStepOne = ({ formData, setFormData, formError }) => {
             <Input
               placeholder="Describe your skill"
               value={formData.customSubSkill || ""}
-              onChange={(e) => handleInputChange("customSubSkill", e.target.value)}
-              className={getFieldError("customSubSkill") ? "border-red-500" : ""}
+              onChange={(e) =>
+                handleInputChange("customSubSkill", e.target.value)
+              }
+              className={
+                getFieldError("customSubSkill") ? "border-red-500" : ""
+              }
             />
             {getFieldError("customSubSkill") && (
               <p className="text-sm text-red-500">Please enter your skill</p>
             )}
           </div>
-        )}  
+        )}
       </CardContent>
     </Card>
   );

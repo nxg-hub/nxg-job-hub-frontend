@@ -27,6 +27,8 @@ import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
+import { useDispatch } from "react-redux";
+import { storeUserData } from "@/redux/UserDataSlice";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -36,6 +38,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { toast } = useToast();
 
   //a state that disabled login button when trying to log user in
@@ -105,6 +108,7 @@ export default function LoginForm() {
 
       const id = userRes.data.id; // Assuming the user ID is returned in the response
 
+      dispatch(storeUserData(userRes.data));
       if (values.keep_loggin && authKey) {
         // if "remember me" is set, Save authentication key to local storage
         window.localStorage.setItem(
@@ -198,8 +202,7 @@ export default function LoginForm() {
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
               className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again"
-            >
+              altText="Try again">
               Try again
             </ToastAction>
           ),
@@ -230,8 +233,7 @@ export default function LoginForm() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-10"
-              >
+                className="space-y-8 max-w-3xl mx-auto py-10">
                 <FormField
                   control={form.control}
                   name="email"
@@ -296,8 +298,7 @@ export default function LoginForm() {
                 <Button
                   disabled={loginLoading}
                   className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                  type="submit"
-                >
+                  type="submit">
                   {loginLoading ? (
                     <div className="flex items-center space-x-1">
                       <Loader2 className="animate-spin" />

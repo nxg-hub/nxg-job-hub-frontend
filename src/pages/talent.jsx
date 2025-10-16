@@ -60,6 +60,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useDispatch } from "react-redux";
+import { resetUserData } from "@/redux/UserDataSlice";
+import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
 
 const sidebarItems = [
   {
@@ -77,14 +80,15 @@ const sidebarItems = [
 
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
 
-  // { icon: <Settings />, label: "Setting", path: "setting" },
+  { icon: <Settings />, label: "Setting", path: "subscriptions" },
 ];
 
 export function TalentDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [pageTitle, setPageTitle] = useState("Dashboard");
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(fetchLoggedInUser(`/api/v1/tech-talent/get-user`));
     // Simulate loading delay
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -130,8 +134,7 @@ function DashboardContent({ notifications = [] }) {
       <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-                      scrollbar-hidden md:rounded-lg"
-        >
+                      scrollbar-hidden md:rounded-lg">
           <div>
             <img
               src={isCollapsed ? logomin : logo}
@@ -157,8 +160,7 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5"
-                      >
+                        className="text-white hover:bg-white/10 hover:text-white p-5">
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
@@ -172,8 +174,7 @@ function DashboardContent({ notifications = [] }) {
                     asChild
                     tooltip="Logout"
                     className="hover:cursor-pointer border-transparent text-white hover:bg-white/10 hover:text-white p-5"
-                    onClick={() => setShowLogoutNotice(true)}
-                  >
+                    onClick={() => setShowLogoutNotice(true)}>
                     <div>
                       <LogOut className="w-7 h-7" />
                       <span>Logout</span>
@@ -191,8 +192,7 @@ function DashboardContent({ notifications = [] }) {
         className={cn(
           "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
           isCollapsed ? "md:pl-40" : ""
-        )}
-      >
+        )}>
         {/* Header */}
         <header className="bg-white p-4 flex border-b md:justify-end md:rounded-md">
           <SidebarTrigger
@@ -201,20 +201,17 @@ function DashboardContent({ notifications = [] }) {
           />
           <DropdownMenu
             open={notificationDropdownOpen}
-            onOpenChange={setNotificationDropdownOpen}
-          >
+            onOpenChange={setNotificationDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative border-none "
-              >
+                className="relative border-none ">
                 <Bell className="h-5 w-5" />
                 {unreadNotifications > 0 && (
                   <Badge
                     variant="destructive"
-                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
-                  >
+                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
                     {unreadNotifications}
                   </Badge>
                 )}
@@ -235,8 +232,7 @@ function DashboardContent({ notifications = [] }) {
                 <span>Your account is not yet verified</span>
                 <NavLink
                   className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                  to={"companyprofile"}
-                >
+                  to={"companyprofile"}>
                   complete your profile
                 </NavLink>
               </div>
@@ -257,8 +253,7 @@ function DashboardContent({ notifications = [] }) {
                     Get started by
                     <NavLink
                       className="underline text-secondary w-fit py-1 px-2 "
-                      to={"profile"}
-                    >
+                      to={"profile"}>
                       completing your Profile
                     </NavLink>
                     , stand a better chance of being hired by completing your
@@ -282,8 +277,11 @@ function DashboardContent({ notifications = [] }) {
 
 const ShowLogOutDialogue = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleCancelClick = () => {
     sessionStorage.clear();
+    localStorage.clear();
+    dispatch(resetUserData());
     navigate("/login");
   };
 
@@ -299,8 +297,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8"
-          >
+            className="flex flex-col items-center py-6 space-y-8">
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -315,8 +312,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleCancelClick}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
-          >
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

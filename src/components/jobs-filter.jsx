@@ -96,12 +96,10 @@ export function JobsFilter({
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <div className="font-medium text-[#0AACDC]">Priority</div>
+          <div className="font-medium text-[#0AACDC]">Job types</div>
           <div className="space-y-2">
-            {["high", "medium", "low"].map((priority) => (
-              <div
-                key={priority}
-                className="flex items-center space-x-2">
+            {["contract", "part-time", "full-time"].map((priority) => (
+              <div key={priority} className="flex items-center space-x-2">
                 <Checkbox
                   id={`priority-${priority}`}
                   checked={activeFilters.priority.includes(priority)}
@@ -124,9 +122,7 @@ export function JobsFilter({
           <div className="font-medium text-[#0AACDC]">Service Type</div>
           <div className="space-y-2">
             {serviceTypes.map((type) => (
-              <div
-                key={type}
-                className="flex items-center space-x-2">
+              <div key={type} className="flex items-center space-x-2">
                 <Checkbox
                   id={`type-${type}`}
                   checked={activeFilters.serviceType.includes(type)}

@@ -10,7 +10,9 @@ import { API_HOST_URL } from "../../../utils/api/API_HOST";
 export const EmployerSubscription = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [country, setCountry] = useState("");
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
+
   const fetchEmployerData = useCallback(async () => {
     try {
       const loginKey =
@@ -39,7 +41,7 @@ export const EmployerSubscription = () => {
       );
 
       const employerData = response.data; // Assuming the response is an object with employer data
-
+      setUser(employerData.user);
       // Update state with fetched data
       setCountry(employerData.country || "");
     } catch (error) {
@@ -63,11 +65,12 @@ export const EmployerSubscription = () => {
             <img src={logo} alt="logo" />
           </div>
           <div className="sub-cards">
-            <SubCards onSubscribe={handleSubscribe} country={country} />
+            <SubCards
+              onSubscribe={handleSubscribe}
+              country={country}
+              user={user}
+            />
           </div>
-          <button className="sub-btn" onClick={() => navigate("/dashboard")}>
-            Back To Dashboard
-          </button>
         </div>
       )}
       {/* {isSubscribed && <SubPayment />}   */}

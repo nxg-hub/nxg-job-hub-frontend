@@ -82,6 +82,7 @@ import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSu
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
+import TechTalentSubscription from "./pages/Dashboard/subscriptions/techSubscription/TechTalentSubscription.jsx";
 
 const queryClient = new QueryClient();
 
@@ -132,6 +133,7 @@ function App() {
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
           <Route path="messages" element={<MessagesPage />} />
+          <Route path="setting" element={<Passwordsettings />} />
         </Route>
         <Route
           path="/services-provider/complete-profile"
@@ -150,8 +152,7 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}
-        >
+          element={<ServiceProviderDashboardX />}>
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -177,6 +178,7 @@ function App() {
           <Route path="profile" element={<TalentProfileTab />} />
           <Route path="jobs" element={<TalentJobsTab />} />
           <Route path="messages" element={<TalentMessageTab />} />
+          <Route path="subscriptions" element={<TechTalentSubscription />} />
         </Route>
         <Route
           path="/techtalent/complete-profile"
@@ -195,7 +197,7 @@ function App() {
           <Route path="applicants" element={<EmployerApplicantsTab />} />
           <Route path="messages" element={<EmployerMessagesTab />} />
           <Route path="setting" element={<EmployerSettingTab />} />
-          <Route path="subscription" element={<SubscriptionPage />} />
+          <Route path="subscription" element={<EmployerSubscription />} />
         </Route>
         <Route
           path="/employer/complete-profile"
@@ -222,8 +224,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -236,8 +237,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
