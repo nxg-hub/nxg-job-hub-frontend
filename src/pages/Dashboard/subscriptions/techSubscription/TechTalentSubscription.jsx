@@ -9,13 +9,10 @@ import axios from "axios";
 function TechTalentSubscription() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [countryCode, setCountryCode] = useState("");
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
   const fetchTalentData = useCallback(async () => {
-    if (!token.authKey) {
-      navigate("/login");
-      return;
-    }
     try {
       const loginKey =
         window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
@@ -44,6 +41,7 @@ function TechTalentSubscription() {
 
       const talentData = response.data; // Assuming the response is an object with employer data
       // console.log(talentData);
+      setUser(talentData);
 
       // Update state with fetched data
       setCountryCode(talentData.countryCode || "");
@@ -69,6 +67,7 @@ function TechTalentSubscription() {
             <TechSubCards
               onSubscribe={handleSubscribe}
               countryCode={countryCode}
+              user={user}
             />
           </div>
           <button className="sub-btn" onClick={() => navigate("/dashboard")}>

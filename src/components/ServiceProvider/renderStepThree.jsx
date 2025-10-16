@@ -3,41 +3,54 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { StateSelect } from "./StateSelect";
 
 const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
   const employmentTypes = [
     "Full-time",
-    "Part-time", 
+    "Part-time",
     "Contract",
     "Freelance",
     "Internship",
     "Apprenticeship",
     "Temporary",
-    "Self-employed"
+    "Self-employed",
   ];
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleWorkExperienceChange = (index, field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      workExperiences: prev.workExperiences.map((exp, i) => 
+      workExperiences: prev.workExperiences.map((exp, i) =>
         i === index ? { ...exp, [field]: value } : exp
-      )
+      ),
     }));
   };
 
   const addWorkExperience = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       workExperiences: [
         ...prev.workExperiences,
@@ -48,16 +61,16 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
           startDate: "",
           endDate: "",
           location: "",
-          description: ""
-        }
-      ]
+          description: "",
+        },
+      ],
     }));
   };
 
   const removeWorkExperience = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      workExperiences: prev.workExperiences.filter((_, i) => i !== index)
+      workExperiences: prev.workExperiences.filter((_, i) => i !== index),
     }));
   };
 
@@ -74,12 +87,14 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
   };
 
   const isWorkExperienceValid = (experience) => {
-    return experience.jobTitle && 
-           experience.companyName && 
-           experience.employmentType && 
-           experience.startDate && 
-           experience.location && 
-           experience.description;
+    return (
+      experience.jobTitle &&
+      experience.companyName &&
+      experience.employmentType &&
+      experience.startDate &&
+      experience.location &&
+      experience.description
+    );
   };
 
   return (
@@ -94,7 +109,8 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
             </Button>
           </CardTitle>
           <CardDescription>
-            Add your work history and professional experience <span className="text-red-500">*</span>
+            Add your work history and professional experience{" "}
+            <span className="text-red-500">*</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -105,7 +121,9 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
             </div>
           ) : (
             formData.workExperiences.map((experience, index) => (
-              <div key={index} className="border rounded-lg p-4 space-y-4 relative">
+              <div
+                key={index}
+                className="border rounded-lg p-4 space-y-4 relative">
                 <div className="flex items-center justify-between">
                   <Badge variant="outline">Experience {index + 1}</Badge>
                   <Button
@@ -113,8 +131,7 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                     variant="ghost"
                     size="sm"
                     onClick={() => removeWorkExperience(index)}
-                    className="text-red-500 hover:text-red-700"
-                  >
+                    className="text-red-500 hover:text-red-700">
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -129,7 +146,13 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                       type="text"
                       placeholder="e.g., Senior Carpenter"
                       value={experience.jobTitle}
-                      onChange={(e) => handleWorkExperienceChange(index, "jobTitle", e.target.value)}
+                      onChange={(e) =>
+                        handleWorkExperienceChange(
+                          index,
+                          "jobTitle",
+                          e.target.value
+                        )
+                      }
                     />
                   </div>
 
@@ -142,7 +165,13 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                       type="text"
                       placeholder="e.g., ABC Construction"
                       value={experience.companyName}
-                      onChange={(e) => handleWorkExperienceChange(index, "companyName", e.target.value)}
+                      onChange={(e) =>
+                        handleWorkExperienceChange(
+                          index,
+                          "companyName",
+                          e.target.value
+                        )
+                      }
                     />
                   </div>
                 </div>
@@ -154,8 +183,13 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                     </Label>
                     <Select
                       value={experience.employmentType}
-                      onValueChange={(value) => handleWorkExperienceChange(index, "employmentType", value)}
-                    >
+                      onValueChange={(value) =>
+                        handleWorkExperienceChange(
+                          index,
+                          "employmentType",
+                          value
+                        )
+                      }>
                       <SelectTrigger>
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
@@ -177,21 +211,33 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                       id={`startDate-${index}`}
                       type="date"
                       value={experience.startDate}
-                      onChange={(e) => handleWorkExperienceChange(index, "startDate", e.target.value)}
+                      onChange={(e) =>
+                        handleWorkExperienceChange(
+                          index,
+                          "startDate",
+                          e.target.value
+                        )
+                      }
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor={`endDate-${index}`}>
-                      End Date
-                    </Label>
+                    <Label htmlFor={`endDate-${index}`}>End Date</Label>
                     <Input
                       id={`endDate-${index}`}
                       type="date"
                       value={experience.endDate}
-                      onChange={(e) => handleWorkExperienceChange(index, "endDate", e.target.value)}
+                      onChange={(e) =>
+                        handleWorkExperienceChange(
+                          index,
+                          "endDate",
+                          e.target.value
+                        )
+                      }
                     />
-                    <p className="text-xs text-muted-foreground">Leave blank if this is your current position</p>
+                    <p className="text-xs text-muted-foreground">
+                      Leave blank if this is your current position
+                    </p>
                   </div>
                 </div>
 
@@ -204,7 +250,13 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                     type="text"
                     placeholder="e.g., Lagos, Nigeria"
                     value={experience.location}
-                    onChange={(e) => handleWorkExperienceChange(index, "location", e.target.value)}
+                    onChange={(e) =>
+                      handleWorkExperienceChange(
+                        index,
+                        "location",
+                        e.target.value
+                      )
+                    }
                   />
                 </div>
 
@@ -216,16 +268,24 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                     id={`description-${index}`}
                     placeholder="Describe your responsibilities, achievements, and key projects..."
                     value={experience.description}
-                    onChange={(e) => handleWorkExperienceChange(index, "description", e.target.value)}
+                    onChange={(e) =>
+                      handleWorkExperienceChange(
+                        index,
+                        "description",
+                        e.target.value
+                      )
+                    }
                     rows={3}
                   />
                 </div>
               </div>
             ))
           )}
-          
+
           {getFieldError("workExperiences") && (
-            <p className="text-sm text-red-500">At least one complete work experience is required</p>
+            <p className="text-sm text-red-500">
+              At least one complete work experience is required
+            </p>
           )}
         </CardContent>
       </Card>
@@ -274,7 +334,7 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
               )}
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="state">
                 State/Province <span className="text-red-500">*</span>
               </Label>
@@ -287,9 +347,16 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
                 className={getFieldError("state") ? "border-red-500" : ""}
               />
               {getFieldError("state") && (
-                <p className="text-sm text-red-500">State/Province is required</p>
+                <p className="text-sm text-red-500">
+                  State/Province is required
+                </p>
               )}
-            </div>
+            </div> */}
+            <StateSelect
+              value={formData.state}
+              onChange={(val) => handleInputChange("state", val)}
+              error={getFieldError("state")}
+            />
           </div>
 
           <div className="space-y-2">
@@ -305,7 +372,9 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
               className={getFieldError("zipCode") ? "border-red-500" : ""}
             />
             {getFieldError("zipCode") && (
-              <p className="text-sm text-red-500">ZIP/Postal code is required</p>
+              <p className="text-sm text-red-500">
+                ZIP/Postal code is required
+              </p>
             )}
           </div>
         </CardContent>
@@ -322,22 +391,41 @@ const ServiceProviderStepThree = ({ formData, setFormData, formError }) => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
-              <p><strong>Name:</strong> {formData.firstName} {formData.lastName}</p>
-              <p><strong>Email:</strong> {formData.email}</p>
-              <p><strong>Primary Skill:</strong> {formData.mainSkill}</p>
-              <p><strong>Sub Skills:</strong> {formData.subSkills.length} added</p>
+              <p>
+                <strong>Name:</strong> {formData.firstName} {formData.lastName}
+              </p>
+              <p>
+                <strong>Email:</strong> {formData.email}
+              </p>
+              <p>
+                <strong>Primary Skill:</strong> {formData.mainSkill}
+              </p>
+              <p>
+                <strong>Sub Skills:</strong> {formData.subSkills.length} added
+              </p>
             </div>
             <div className="space-y-2">
-              <p><strong>Work Experience:</strong> {formData.workExperiences.length} entries</p>
-              <p><strong>Education:</strong> {formData.highestQualification}</p>
-              <p><strong>Address:</strong> {formData.city}, {formData.state}</p>
-              <p><strong>Interests:</strong> {formData.interests.length} listed</p>
+              <p>
+                <strong>Work Experience:</strong>
+                {formData.workExperiences.length} entries
+              </p>
+              <p>
+                <strong>Education:</strong>
+                {`${formData.education.highestQualification} at ${formData.education.schoolName}`}
+              </p>
+              <p>
+                <strong>Address:</strong> {formData.city}, {formData.state}
+              </p>
+              <p>
+                <strong>Interests:</strong> {formData.interests.length} listed
+              </p>
             </div>
           </div>
-          
+
           <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
             <p className="text-sm text-blue-800">
-              <strong>Ready to submit!</strong> Your profile will be reviewed by our team before activation.
+              <strong>Ready to submit!</strong> Your profile will be reviewed by
+              our team before activation.
             </p>
           </div>
         </CardContent>

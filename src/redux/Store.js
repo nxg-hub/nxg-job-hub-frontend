@@ -11,11 +11,14 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { version } from "react";
 import InterviewSlice from "./InterviewSlice";
 import LoggedInEmployerSlice from "./LoggedInEmployerSlice";
+import UserDataReducer from "./UserDataSlice";
+import ServiceProviderJobReducer from "./ServiceProviderJobSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whitelist: ["UserDataReducer"],
 };
 
 const reducer = combineReducers({
@@ -27,6 +30,8 @@ const reducer = combineReducers({
   SearchJobSlice,
   InterviewSlice,
   LoggedInEmployerSlice,
+  UserDataReducer,
+  ServiceProviderJobReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -26,25 +26,25 @@ function Passwordsettings() {
     e.preventDefault();
     try {
       setLoading(true);
-      const isValidPassword =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-          newPassword
-        );
+      // const isValidPassword =
+      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+      //     newPassword
+      //   );
 
-      if (!isValidPassword) {
-        setPasswordError(
-          "Password should be a minimum of 8 characters and should include at least 1 special character, numbers, and letters!"
-        );
-        setTimeout(() => {
-          setPasswordError("");
-        }, 2000);
-        return;
-      }
+      // if (!isValidPassword) {
+      //   setPasswordError(
+      //     "Password should be a minimum of 8 characters and should include at least 1 special character, numbers, and letters!"
+      //   );
+      //   setTimeout(() => {
+      //     setPasswordError("");
+      //   }, 5000);
+      //   return;
+      // }
       if (newPassword !== confirmPassword) {
         setPasswordError("New password and confirm password do not match!");
         setTimeout(() => {
           setPasswordError("");
-        }, 2000);
+        }, 5000);
         return;
       }
 
@@ -80,12 +80,10 @@ function Passwordsettings() {
       }
     } catch (err) {
       if (err.response.status === 400) {
-        setPasswordError(
-          "Incorrect Password, please input your current password correctly"
-        );
+        setPasswordError(err.response.data);
         setTimeout(() => {
           setPasswordError("");
-        }, 2000);
+        }, 5000);
       } else {
         console.log(err);
         setPasswordError("An error occurred. Please try again.");
