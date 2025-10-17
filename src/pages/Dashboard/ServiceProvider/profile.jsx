@@ -419,6 +419,7 @@ export default function ServiceProviderProfile() {
                 <ProfilePhotoUploader
                   userId={userData.serviceProviderId}
                   token={token.authKey}
+                  userData={userData}
                 />
 
                 <div className="flex-1 grid gap-4">
