@@ -91,7 +91,7 @@ import { toast } from "@/hooks/use-toast";
 import { useDispatch } from "react-redux";
 import { getUserData } from "@/redux/UserDataSlice";
 
-export default function ProfilePhotoUploader({ userId, token, onUpdate }) {
+export default function ProfilePhotoUploader({ userId, token, userData }) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -170,7 +170,7 @@ export default function ProfilePhotoUploader({ userId, token, onUpdate }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <Avatar className="h-32 w-32 mb-2 border-none">
-        <AvatarImage src={url || sarahicon} alt="Profile" />
+        <AvatarImage src={userData.profilePicture || sarahicon} alt="Profile" />
         <AvatarFallback>
           <CircleUser className="h-12 w-12 border-none" />
         </AvatarFallback>

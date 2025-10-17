@@ -70,11 +70,10 @@ const JobCards = () => {
                 slidesPerView: 3,
                 spaceBetween: 70,
               },
-            }}
-          >
+            }}>
             {jobs.length > 0 &&
               jobs.map((job) => (
-                <SwiperSlide key={job.jobID || job.job_title}>
+                <SwiperSlide key={job?.jobID || job?.job_title}>
                   <div className="detail-holder">
                     <div className="price-shadow">
                       <div className="p-shadows"></div>
@@ -94,8 +93,7 @@ const JobCards = () => {
                             fontSize: "20px",
                             fontWeight: "700",
                             marginLeft: ".6rem",
-                          }}
-                        >
+                          }}>
                           {job.job_location}
                         </p>
                       </div>
@@ -103,7 +101,12 @@ const JobCards = () => {
                         <h3>{job.job_title}</h3>
                         <div className="card-detail-texts capitalize">
                           {job.job_title}
-                          <p>{job.job_description.slice(0, 310)}...</p>
+                          <p>
+                            {job?.job_description
+                              ? job?.job_description?.slice(0, 310)
+                              : ""}
+                            ...
+                          </p>
                         </div>
                         <div className="read" style={{ marginTop: "1rem" }}>
                           <Link
@@ -112,8 +115,7 @@ const JobCards = () => {
                               color: "#2596BE",
                               fontSize: "18px",
                               fontWeight: "400",
-                            }}
-                          >
+                            }}>
                             Read More
                           </Link>
                         </div>
@@ -134,8 +136,7 @@ const JobCards = () => {
             margin: "1rem 0",
             color: "#2596BE",
             textAlign: "center",
-          }}
-        >
+          }}>
           Why Choose Us ?
         </h3>
         <div className="choose-content">
@@ -144,8 +145,7 @@ const JobCards = () => {
               <div
                 className={
                   data.group === "help" ? "help-details" : "choose-details"
-                }
-              >
+                }>
                 <div className="choose-text">
                   <h4>{data.title}</h4>
                   <div className="title-line"></div>
