@@ -65,6 +65,7 @@ export function JobsCard({
   onOpenRatingDialog,
   onDeclineService,
   onMessageClient,
+  tab,
 }) {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const daysRemaining = getDaysRemaining(service.deadline);
@@ -285,32 +286,10 @@ export function JobsCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-between pt-2">
-        {/* <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleViewDetails(service)}>
-            View Details
-          </Button>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            className="border-none gap-1 bg-sky-500 text-white hover:bg-sky-600"
-            onClick={handleMessageClient}>
-            <MessageCircle className="h-4 w-4" />
-            Save
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleViewDetails(service)}>
-            Apply
-          </Button>
-        </div> */}
         <JobCardFooter
           service={service}
           handleViewDetails={handleViewDetails}
+          tab={tab}
         />
       </CardFooter>
       <JobDetailsModal

@@ -16,53 +16,37 @@ import {
 } from "@/components/ui/dialog";
 import { JobsCard } from "@/components/jobs-card";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllJobs,
-  fetchMyJobs,
-  fetchSavedJobs,
-} from "@/redux/ServiceProviderJobSlice";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
-import AppliedJobs from "./AppliedJobs";
+import {
+  fetchAllTalentJobs,
+  fetchMyTalentJobs,
+  fetchTalentSavedJobs,
+} from "@/redux/TalentJobSlice";
+import AppliedJobs from "../ServiceProvider/AppliedJobs";
 
 // Service types for an artisan
 const serviceTypes = [
-  "carpentry",
-  "plumbing",
-  "electrical",
-  "painting",
-  "roofing",
-  "masonry",
-  "flooring",
-  "landscaping",
+  //   "carpentry",
+  //   "plumbing",
+  //   "electrical",
+  //   "painting",
+  //   "roofing",
+  //   "masonry",
+  //   "flooring",
+  //   "landscaping",
 ];
 
-export function JobTracker() {
+export function TalentJobTracker() {
   const dispatch = useDispatch();
-  const allJobs = useSelector(
-    (state) => state.ServiceProviderJobReducer.allJobs
-  );
-  const loading = useSelector(
-    (state) => state.ServiceProviderJobReducer.loading
-  );
-  const error = useSelector((state) => state.ServiceProviderJobReducer.error);
-  const savedJobs = useSelector(
-    (state) => state.ServiceProviderJobReducer.savedJobs
-  );
-  const savedLoading = useSelector(
-    (state) => state.ServiceProviderJobReducer.savedLoading
-  );
-
-  const savedError = useSelector(
-    (state) => state.ServiceProviderJobReducer.savedError
-  );
-  const myJobs = useSelector((state) => state.ServiceProviderJobReducer.myJobs);
-  const myLoading = useSelector(
-    (state) => state.ServiceProviderJobReducer.myLoading
-  );
-
-  const myError = useSelector(
-    (state) => state.ServiceProviderJobReducer.myError
-  );
+  const allJobs = useSelector((state) => state.TalentReducer.allJobs);
+  const loading = useSelector((state) => state.TalentReducer.loading);
+  const error = useSelector((state) => state.TalentReducer.error);
+  const savedJobs = useSelector((state) => state.TalentReducer.savedJobs);
+  const savedLoading = useSelector((state) => state.TalentReducer.savedLoading);
+  const savedError = useSelector((state) => state.TalentReducer.savedError);
+  const myJob = useSelector((state) => state.TalentReducer.myJobs);
+  const myLoading = useSelector((state) => state.TalentReducer.myLoading);
+  const myError = useSelector((state) => state.TalentReducer.myError);
   const [services, setServices] = useState(allJobs);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({
@@ -83,9 +67,9 @@ export function JobTracker() {
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   useEffect(() => {
-    dispatch(fetchAllJobs({ token: token.authKey }));
-    dispatch(fetchSavedJobs({ token: token.authKey }));
-    dispatch(fetchMyJobs({ token: token.authKey }));
+    dispatch(fetchAllTalentJobs({ token: token.authKey }));
+    dispatch(fetchTalentSavedJobs({ token: token.authKey }));
+    dispatch(fetchMyTalentJobs({ token: token.authKey }));
   }, []);
 
   const acceptedJobs = allJobs.filter((job) => {
@@ -345,7 +329,7 @@ export function JobTracker() {
               <TabsTrigger
                 value="applied"
                 className="hover:bg-sky-600 border-none">
-                Applied ({myJobs.length})
+                Applied ({filteredSaved.length})
               </TabsTrigger>
             </TabsList>
             <TabsContent value="all" className="space-y-4 mt-6">
@@ -393,7 +377,7 @@ export function JobTracker() {
               )}
             </TabsContent>
             <TabsContent value="applied" className="space-y-4 mt-6">
-              <AppliedJobs applications={myJobs} />
+              <AppliedJobs applications={myJob} />
             </TabsContent>
             <TabsContent value="completed" className="space-y-4 mt-6">
               {completedServices.length > 0 ? (

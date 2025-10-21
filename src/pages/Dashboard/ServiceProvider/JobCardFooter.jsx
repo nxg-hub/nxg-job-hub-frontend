@@ -5,8 +5,12 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
+import { useDispatch } from "react-redux";
+import { fetchMyJobs, fetchSavedJobs } from "@/redux/ServiceProviderJobSlice";
+import { fetchMyTalentJobs } from "@/redux/TalentJobSlice";
 
-const JobCardFooter = ({ service, handleViewDetails }) => {
+const JobCardFooter = ({ service, handleViewDetails, tab }) => {
+  const dispatch = useDispatch();
   const [loadingStates, setLoadingStates] = useState({}); // e.g. { jobId: { applying: false, saving: false } }
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -45,6 +49,9 @@ const JobCardFooter = ({ service, handleViewDetails }) => {
         title: "Application Successful 🎉",
         description: `You have successfully applied for ${job.job_title}.`,
       });
+
+      dispatch(fetchMyTalentJobs({ token: token.authKey }));
+      dispatch(fetchMyJobs({ token: token.authKey }));
     } catch (error) {
       toast({
         variant: "destructive",
@@ -92,10 +99,62 @@ const JobCardFooter = ({ service, handleViewDetails }) => {
       if (contentType && contentType.includes("application/json")) {
         await response.json();
       }
-
+      dispatch(fetchSavedJobs({ token: token.authKey }));
       toast({
         title: "Job Saved",
         description: `${job.job_title} has been added to your saved jobs.`,
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Save Failed",
+        description: error.message || "An error occurred while saving job.",
+      });
+    } finally {
+      setJobLoading(job.jobID, "saving", false);
+    }
+  };
+
+  const handleUnSave = async (job) => {
+    try {
+      setJobLoading(job.jobID, "saving", true);
+
+      const response = await fetch(
+        `${API_HOST_URL}/api/job-postings/${job.jobID}/unsave`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token.authKey}`,
+          },
+        }
+      );
+      console.log(response);
+      // ✅ Handle error responses safely
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        let errorData = null;
+
+        if (contentType && contentType.includes("application/json")) {
+          errorData = await response.json();
+        } else {
+          errorData = await response.text();
+        }
+
+        throw new Error(
+          errorData?.message || errorData || "Failed to save job"
+        );
+      }
+
+      // ✅ Handle success (JSON or empty response)
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        await response.json();
+      }
+      dispatch(fetchSavedJobs({ token: token.authKey }));
+      toast({
+        title: "Job Unsaved",
+        description: `${job.job_title} has been removed to your saved jobs.`,
       });
     } catch (error) {
       toast({
@@ -122,15 +181,17 @@ const JobCardFooter = ({ service, handleViewDetails }) => {
           View Details
         </Button>
 
-        {/* Save */}
+        {/* Save/Unsave */}
         <Button
           variant="secondary"
           size="sm"
           className="border-none gap-1 bg-sky-500 text-white hover:bg-sky-600"
-          onClick={() => handleSave(service)}
+          onClick={() =>
+            tab === "all" ? handleSave(service) : handleUnSave(service)
+          }
           disabled={isSaving}>
           <MessageCircle className="h-4 w-4" />
-          {isSaving ? "Saving..." : "Save"}
+          {isSaving ? "Processing..." : tab === "all" ? "Save" : "Unsave"}
         </Button>
 
         {/* Apply */}

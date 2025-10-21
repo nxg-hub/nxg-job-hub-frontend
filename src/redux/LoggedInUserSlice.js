@@ -8,6 +8,7 @@ const initialState = {
   userData: [],
   loading: false,
   error: false,
+  success: false,
 };
 
 const token =
@@ -24,6 +25,7 @@ export const fetchLoggedInUser = createAsyncThunk(
       },
     })
       .then((res) => {
+        console.log(res);
         return res.json();
       })
       .then((data) => {
@@ -45,10 +47,12 @@ const loggedInUserSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.loggedInUser = action.payload;
+        state.success = true;
       })
       .addCase(fetchLoggedInUser.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
+        state.success = false;
       });
   },
 });

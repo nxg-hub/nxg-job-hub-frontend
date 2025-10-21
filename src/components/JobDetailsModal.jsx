@@ -65,7 +65,7 @@ const JobDetailsModal = ({ job, open, onClose }) => {
             <div className="flex items-center gap-3">
               <img
                 src={job.employer_profile_pic}
-                alt={job.employer_name}
+                alt={"logo"}
                 className="w-12 h-12 rounded-full object-cover border"
               />
               <div>

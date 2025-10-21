@@ -2,8 +2,8 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Async thunks to fetch transactions
-export const fetchAllJobs = createAsyncThunk(
-  "serviceProviderjobs/fetchAllJobs",
+export const fetchAllTalentJobs = createAsyncThunk(
+  "TalentJobS/fetchAllTalentJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
       const response = await fetch(
@@ -28,12 +28,12 @@ export const fetchAllJobs = createAsyncThunk(
   }
 );
 
-export const fetchSavedJobs = createAsyncThunk(
-  "serviceProviderSavedjobs/fetchSavedJobs",
+export const fetchTalentSavedJobs = createAsyncThunk(
+  "TalentJobs/fetchTalentSavedJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API_HOST_URL}/api/service-providers/my-jobs?page=0&size=100&sort=string`,
+        `${API_HOST_URL}/api/v1/tech-talent/my-jobs?page=0&size=100&sort=string`,
         {
           method: "GET",
           headers: {
@@ -54,12 +54,12 @@ export const fetchSavedJobs = createAsyncThunk(
   }
 );
 
-export const fetchMyJobs = createAsyncThunk(
+export const fetchMyTalentJobs = createAsyncThunk(
   "serviceProviderMyjobs/fetchMyJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API_HOST_URL}/api/service-providers/my-application?page=0&size=100&sort=string`,
+        `${API_HOST_URL}/api/v1/tech-talent/my-applications?page=0&size=100&sort=string`,
         {
           method: "GET",
           headers: {
@@ -79,62 +79,62 @@ export const fetchMyJobs = createAsyncThunk(
     }
   }
 );
-const ServiceProviderJobSlice = createSlice({
-  name: "serviceProviderjobs",
+
+const TalentJobSlice = createSlice({
+  name: "TalentJobS",
   initialState: {
     allJobs: [],
     savedJobs: [],
     myJobs: [],
     loading: false,
-    savedLoading: false,
     myLoading: false,
+    savedLoading: false,
     savedError: false,
-    myError: false,
     error: null,
+    myError: false,
   },
   reducers: {
-    resetAllJobs(state) {
+    resetTalentJobs(state) {
       state.allJobs = null;
       state.savedJobs = null;
-      state.myJobs = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllJobs.pending, (state) => {
+      .addCase(fetchAllTalentJobs.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchAllJobs.fulfilled, (state, action) => {
+      .addCase(fetchAllTalentJobs.fulfilled, (state, action) => {
         state.loading = false;
         state.allJobs = action.payload;
       })
-      .addCase(fetchAllJobs.rejected, (state, action) => {
+      .addCase(fetchAllTalentJobs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(fetchSavedJobs.pending, (state) => {
+      .addCase(fetchTalentSavedJobs.pending, (state) => {
         state.savedLoading = true;
       })
-      .addCase(fetchSavedJobs.fulfilled, (state, action) => {
+      .addCase(fetchTalentSavedJobs.fulfilled, (state, action) => {
         state.savedLoading = false;
         state.savedJobs = action.payload;
       })
-      .addCase(fetchSavedJobs.rejected, (state, action) => {
+      .addCase(fetchTalentSavedJobs.rejected, (state, action) => {
         state.savedLoading = false;
         state.savedError = action.payload;
       })
-      .addCase(fetchMyJobs.pending, (state) => {
+      .addCase(fetchMyTalentJobs.pending, (state) => {
         state.myLoading = true;
       })
-      .addCase(fetchMyJobs.fulfilled, (state, action) => {
+      .addCase(fetchMyTalentJobs.fulfilled, (state, action) => {
         state.myLoading = false;
         state.myJobs = action.payload;
       })
-      .addCase(fetchMyJobs.rejected, (state, action) => {
+      .addCase(fetchMyTalentJobs.rejected, (state, action) => {
         state.myLoading = false;
         state.myError = action.payload;
       });
   },
 });
-export const { resetAllJobs } = ServiceProviderJobSlice.actions;
-export default ServiceProviderJobSlice.reducer;
+export const { resetTalentJobs } = TalentJobSlice.actions;
+export default TalentJobSlice.reducer;
