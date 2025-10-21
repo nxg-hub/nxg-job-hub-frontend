@@ -83,6 +83,7 @@ import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
 import TechTalentSubscription from "./pages/Dashboard/subscriptions/techSubscription/TechTalentSubscription.jsx";
+import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 
 const queryClient = new QueryClient();
 
@@ -176,7 +177,8 @@ function App() {
         <Route path="/talent" element={<TalentDashboard />}>
           <Route index element={<TalentDashboardTab />} />
           <Route path="profile" element={<TalentProfileTab />} />
-          <Route path="jobs" element={<TalentJobsTab />} />
+          {/* <Route path="jobs" element={<TalentJobsTab />} /> */}
+          <Route path="jobs" element={<TalentJobTracker />} />
           <Route path="messages" element={<TalentMessageTab />} />
           <Route path="subscriptions" element={<TechTalentSubscription />} />
         </Route>

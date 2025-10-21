@@ -12,6 +12,7 @@ import { version } from "react";
 import InterviewSlice from "./InterviewSlice";
 import LoggedInEmployerSlice from "./LoggedInEmployerSlice";
 import UserDataReducer from "./UserDataSlice";
+import TalentReducer from "./TalentJobSlice";
 import ServiceProviderJobReducer from "./ServiceProviderJobSlice";
 
 const persistConfig = {
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   LoggedInEmployerSlice,
   UserDataReducer,
   ServiceProviderJobReducer,
+  TalentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
