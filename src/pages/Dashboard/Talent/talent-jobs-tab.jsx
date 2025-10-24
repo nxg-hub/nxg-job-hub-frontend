@@ -50,7 +50,7 @@ export default function TalentJobsTab() {
   const [mainTab, setMainTab] = useState("listings");
   const dispatch = useDispatch();
   const allJobs = useSelector((state) => state.TalentReducer.allJobs);
-  console.log(allJobs);
+  // console.log(allJobs);
 
   // States for different job types
   const [availableJobs, setAvailableJobs] = useState([]);

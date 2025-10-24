@@ -5,7 +5,6 @@ import { API_HOST_URL } from "../utils/api/API_HOST";
 // const navigate = useNavigate();
 const initialState = {
   loggedInUser: [],
-  userData: [],
   loading: false,
   error: false,
   success: false,
@@ -25,7 +24,6 @@ export const fetchLoggedInUser = createAsyncThunk(
       },
     })
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((data) => {
@@ -36,7 +34,11 @@ export const fetchLoggedInUser = createAsyncThunk(
 const loggedInUserSlice = createSlice({
   name: "loggedInUser",
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoggedInData: (state, action) => {
+      state.loggedInUser = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUser.pending, (state) => {
@@ -56,6 +58,6 @@ const loggedInUserSlice = createSlice({
       });
   },
 });
-export const {} = loggedInUserSlice.actions;
+export const { resetLoggedInData } = loggedInUserSlice.actions;
 
 export default loggedInUserSlice.reducer;

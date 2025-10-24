@@ -304,7 +304,7 @@ import ServiceProviderStepThree from "../components/ServiceProvider/renderStepTh
 
 import { useServiceProviderProfileUpdate } from "../hooks/Service-provider/serviceProviderHook";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "@/redux/UserDataSlice";
+import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
 
 export function ServiceProviderProfileCompleteForm() {
   const userData = useSelector((state) => state.UserDataReducer.data);

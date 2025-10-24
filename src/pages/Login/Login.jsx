@@ -27,8 +27,9 @@ import axios from "axios";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
+import { getLoggedInServiceProviderData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch } from "react-redux";
-import { storeUserData } from "@/redux/UserDataSlice";
+import { setUserData } from "@/redux/AllUsersSlice";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -37,8 +38,8 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   //a state that disabled login button when trying to log user in
@@ -98,17 +99,16 @@ export default function LoginForm() {
         navigate("/login");
         return;
       }
-
+      dispatch(getLoggedInServiceProviderData({ token: authKey }));
       const userRes = await axios.get(`${API_HOST_URL}/api/v1/auth/get-user`, {
         headers: {
           "Content-Type": "application/json",
           authorization: authKey,
         },
       });
-
+      dispatch(setUserData(userRes.data));
       const id = userRes.data.id; // Assuming the user ID is returned in the response
 
-      dispatch(storeUserData(userRes.data));
       if (values.keep_loggin && authKey) {
         // if "remember me" is set, Save authentication key to local storage
         window.localStorage.setItem(

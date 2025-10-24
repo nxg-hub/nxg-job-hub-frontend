@@ -60,9 +60,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useDispatch } from "react-redux";
-import { resetUserData } from "@/redux/UserDataSlice";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
+import {
+  fetchLoggedInUser,
+  resetLoggedInData,
+} from "@/redux/LoggedInUserSlice";
+import { resetTalentJobs } from "@/redux/TalentJobSlice";
+import {
+  fetchLoggedInTalent,
+  fetchTalentData,
+  resetTalentData,
+} from "@/redux/TalentUserDataSlice";
+import { resetAllUserData } from "@/redux/AllUsersSlice";
 
 const sidebarItems = [
   {
@@ -80,15 +90,19 @@ const sidebarItems = [
 
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
 
-  { icon: <Settings />, label: "Setting", path: "subscriptions" },
+  { icon: <Settings />, label: "Setting", path: "setting" },
 ];
 
 export function TalentDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [pageTitle, setPageTitle] = useState("Dashboard");
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchLoggedInUser(`/api/v1/tech-talent/get-user`));
+    dispatch(fetchLoggedInTalent({ token: token.authKey }));
+    dispatch(fetchTalentData({ token: token.authKey }));
     // Simulate loading delay
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -116,6 +130,11 @@ function DashboardContent({ notifications = [] }) {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("");
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
+  const userData = useSelector((state) => state.TalentUserReducer.talentData);
+  const isProfileComplete =
+    userData?.techTalentUser?.resume &&
+    userData?.techTalentUser?.profilePicture;
+  const isVerified = userData?.techTalentUser?.verified;
 
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setShowLogoutNotice(false);
@@ -195,6 +214,14 @@ function DashboardContent({ notifications = [] }) {
         )}>
         {/* Header */}
         <header className="bg-white p-4 flex border-b md:justify-end md:rounded-md">
+          <div className="flex justify-start w-full">
+            <h1 className="text-2xl">
+              Welcome! 👋
+              <span className="capitalize font-bold">
+                {userData?.firstName || ""}
+              </span>
+            </h1>
+          </div>
           <SidebarTrigger
             openMenuIcon={<Menu className="w-8 h-8" />}
             className="my-3 ml-2 border-transparent md:hidden "
@@ -238,30 +265,53 @@ function DashboardContent({ notifications = [] }) {
               </div>
             </div>
 
-            <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-              <div className="flex items-center gap-8">
-                <img
-                  src={verifiedImageMobile}
-                  alt="Complete profile illustration"
-                  className="object-contain w-10 h-10"
-                />
-                <div className="flex gap-3 items-center">
-                  <span className="bg-secondary p-1 rounded text-white">
-                    Action required:
-                  </span>
-                  <span>
-                    Get started by
-                    <NavLink
-                      className="underline text-secondary w-fit py-1 px-2 "
-                      to={"profile"}>
-                      completing your Profile
-                    </NavLink>
-                    , stand a better chance of being hired by completing your
-                    profile
-                  </span>
-                </div>
-              </div>
-            </div>
+            {!isVerified && (
+              <>
+                {isProfileComplete ? (
+                  <div className=" md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+                    <div className="flex items-center gap-8">
+                      <img
+                        src={verifiedImageMobile}
+                        alt="Complete profile illustration"
+                        className="object-contain w-10 h-10"
+                      />
+                      <div className="flex gap-3 items-center">
+                        <span>
+                          🎉 Thank you for completing your profile! Your details
+                          are under review. You’ll get a notification once an
+                          admin verifies your account.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+                    <div className="flex items-center gap-8">
+                      <img
+                        src={verifiedImageMobile}
+                        alt="Complete profile illustration"
+                        className="object-contain w-10 h-10"
+                      />
+                      <div className="flex gap-3 items-center">
+                        <span className="bg-secondary p-1 rounded text-white">
+                          Action required:
+                        </span>
+                        <span>
+                          Get started by
+                          <NavLink
+                            className="underline text-secondary w-fit py-1 px-2 "
+                            to={"profile"}>
+                            completing your Profile
+                          </NavLink>
+                          , stand a better chance of getting verified being
+                          hired by completing your profile
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </>
         </div>
         <div className="h-full">
@@ -282,6 +332,10 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     sessionStorage.clear();
     localStorage.clear();
     dispatch(resetUserData());
+    dispatch(resetLoggedInData());
+    dispatch(resetTalentJobs());
+    dispatch(resetTalentData());
+    dispatch(resetAllUserData());
     navigate("/login");
   };
 

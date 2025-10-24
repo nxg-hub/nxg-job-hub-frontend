@@ -58,7 +58,7 @@ import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
 import { useEmployerData } from "@/store/employer/employerStore";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
 import { useMobile } from "@/hooks/use-mobile";
-import { resetUserData } from "@/redux/UserDataSlice";
+import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch } from "react-redux";
 
 const sidebarItems = [

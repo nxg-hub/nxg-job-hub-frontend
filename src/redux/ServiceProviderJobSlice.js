@@ -54,6 +54,41 @@ export const fetchSavedJobs = createAsyncThunk(
   }
 );
 
+export const fetchProviderRecentJobs = createAsyncThunk(
+  "TalentJobs/fetchTalentRecentJobs",
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      return await fetchJSON(
+        `${API_HOST_URL}/api/job-postings/recent-job-postings?page=0&size=10`,
+        token
+      );
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const fetchProviderNearByJobs = createAsyncThunk(
+  "TalentJobs/fetchTalentNearByJobs",
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${API_HOST_URL}/api/job-postings/recommend-nearby-jobs`,
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 export const fetchMyJobs = createAsyncThunk(
   "serviceProviderMyjobs/fetchMyJobs",
   async ({ token }, { rejectWithValue }) => {
@@ -91,12 +126,17 @@ const ServiceProviderJobSlice = createSlice({
     savedError: false,
     myError: false,
     error: null,
+    recentJobs: [],
+    nearByJobs: [],
+    nearError: null,
   },
   reducers: {
     resetAllJobs(state) {
-      state.allJobs = null;
-      state.savedJobs = null;
-      state.myJobs = null;
+      state.allJobs = [];
+      state.savedJobs = [];
+      state.myJobs = [];
+      state.recentJobs = [];
+      state.nearByJobs = [];
     },
   },
   extraReducers: (builder) => {
@@ -133,6 +173,33 @@ const ServiceProviderJobSlice = createSlice({
       .addCase(fetchMyJobs.rejected, (state, action) => {
         state.myLoading = false;
         state.myError = action.payload;
+      })
+      // RECENT JOBS
+      .addCase(fetchProviderRecentJobs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProviderRecentJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.recentJobs = action.payload;
+      })
+      .addCase(fetchProviderRecentJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // NEARBY JOBS
+      .addCase(fetchProviderNearByJobs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProviderNearByJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.nearError = null;
+        state.nearByJobs = action.payload;
+      })
+      .addCase(fetchProviderNearByJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.nearError = action.payload;
       });
   },
 });

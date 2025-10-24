@@ -1,3 +1,5 @@
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,188 +7,234 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
-import { Bell, Briefcase, Calendar } from "lucide-react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { Briefcase, MapPin, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+  fetchMyTalentJobs,
+  fetchTalentNearByJobs,
+  fetchTalentRecentJobs,
+} from "@/redux/TalentJobSlice";
+import { toast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { API_HOST_URL } from "@/utils/api/API_HOST";
+import { Link } from "react-router-dom";
 
 export default function TalentDashboardTab() {
+  const loading = useSelector((state) => state.TalentReducer.loading);
+  const error = useSelector((state) => state.TalentReducer.error);
+  const nearError = useSelector((state) => state.TalentReducer.nearError);
+  const recentJobs = useSelector((state) => state.TalentReducer.recentJobs);
+  const nearByJobs = useSelector((state) => state.TalentReducer.nearByJobs);
+
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
   const dispatch = useDispatch();
+  const [loadingJobId, setLoadingJobId] = useState(null);
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+
   useEffect(() => {
-    dispatch(fetchLoggedInUser(`/api/v1/tech-talent/get-user`));
+    dispatch(fetchTalentRecentJobs({ token: token.authKey }));
+    dispatch(fetchTalentNearByJobs({ token: token.authKey }));
   }, []);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+    }).format(amount);
+  };
+
+  // 🔹 Handle Apply Button
+  const handleApply = async (job) => {
+    if (loadingJobId === job.jobID || appliedJobs.has(job.jobID)) return;
+
+    setLoadingJobId(job.jobID);
+    try {
+      const res = await axios.post(
+        `${API_HOST_URL}/api/job-postings/${job.jobID}/apply`,
+        { jobPostingId: job.jobID },
+        {
+          headers: {
+            Authorization: ` ${token.authKey}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to apply for job");
+      }
+
+      toast({
+        title: "Application Successful 🎉",
+        description: `You have successfully applied for ${job.job_title}.`,
+      });
+
+      dispatch(fetchMyTalentJobs({ token: token.authKey }));
+    } catch (error) {
+      console.error("Error applying:", error);
+      toast({
+        variant: "destructive",
+        title: "Application Failed",
+        description: error.response.data || "An error occurred while applying.",
+      });
+    } finally {
+      setLoadingJobId(null);
+    }
+  };
+
+  if (loading) return <JobCardSkeleton />;
+
   return (
-    <div className="space-y-6 px-6 ">
-      <h1 className="text-3xl font-bold">Welcome back, John!</h1>
-      <p className="text-muted-foreground">
-        Here's an overview of your dashboard
-      </p>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 bg-500-red ">
-        <Card>
-          <CardHeader className="pb-2 ">
-            <CardTitle className="text-sm font-medium">
-              Profile Completion
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">85%</div>
-            <Progress value={85} className="mt-2" />
-            <p className="text-xs text-muted-foreground mt-2">
-              Complete your profile to increase visibility
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">
-              Job Applications
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground mt-2">
-              4 pending, 3 interviews, 5 rejected
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium ">Job Requests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2</div>
-            <p className="text-xs text-muted-foreground mt-2">
-              New requests from employers
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">
-              Unread Messages
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">5</div>
-            <p className="text-xs text-muted-foreground mt-2">
-              From 3 different conversations
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
+    <div className="space-y-6 px-6">
       <Tabs defaultValue="matches">
         <TabsList className="grid w-full grid-cols-2 border-none">
           <TabsTrigger
             value="matches"
-            className="border-none  hover:bg-white hover:text-black">
+            className="border-none hover:bg-white hover:text-black">
             Job Matches
           </TabsTrigger>
           <TabsTrigger
-            value="requests"
-            className="border-none  hover:bg-white hover:text-black">
-            Recent Requests
+            value="near"
+            className="border-none hover:bg-white hover:text-black">
+            Nearby Jobs
           </TabsTrigger>
-          {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="matches" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>Recent Job Matches</CardTitle>
+              <CardTitle>Recent Posted Jobs</CardTitle>
               <CardDescription>
-                Jobs that match your skills and preferences
+                <Link to={"/talent/jobs"}>View All</Link>
               </CardDescription>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
-                {[1, 2, 3].map((job) => (
-                  <div
-                    key={job}
-                    className="flex items-center gap-4 p-3 border rounded-lg">
-                    <Briefcase className="h-10 w-10 text-primary" />
-                    <div className="flex-1">
-                      <h3 className="font-medium">Senior React Developer</h3>
-                      <p className="text-sm text-muted-foreground">
-                        TechCorp Inc. • Remote • $120k-$150k
-                      </p>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      95% match
-                    </div>
-                  </div>
-                ))}
+                {!loading && error ? (
+                  <p className="text-red-500">Failed to fetch</p>
+                ) : recentJobs.length > 0 ? (
+                  recentJobs.map((job) => {
+                    const isLoading = loadingJobId === job.jobID;
+                    const isApplied = appliedJobs.has(job.jobID);
+
+                    return (
+                      <div
+                        key={job.jobID}
+                        className="flex items-center gap-4 p-3 border rounded-lg">
+                        <Briefcase className="h-10 w-10 text-primary" />
+                        <div className="flex-1">
+                          <h3 className="font-medium">{job.job_title}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {`${job.employer_name} • ${job.job_type}`}
+                          </p>
+                        </div>
+
+                        <div className="text-sm text-muted-foreground grid grid-col-2 text-right">
+                          <span>{formatCurrency(job.salary)}</span>
+                          <span className="flex justify-end items-center">
+                            <MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
+                            {job.job_location}
+                          </span>
+                        </div>
+
+                        <Button
+                          className="text-sm flex items-center gap-2"
+                          onClick={() => handleApply(job)}
+                          disabled={isLoading || isApplied}>
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Applying...
+                            </>
+                          ) : isApplied ? (
+                            "Applied"
+                          ) : (
+                            "Apply"
+                          )}
+                        </Button>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p>No recent jobs</p>
+                )}
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="requests" className="space-y-4 mt-4">
+        <TabsContent value="near" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>Job Requests</CardTitle>
+              <CardTitle>Nearby Jobs</CardTitle>
               <CardDescription>
-                Employers who have requested your profile
+                <Link to={"/talent/jobs"}>View All</Link>
               </CardDescription>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
-                {[1, 2].map((request) => (
-                  <div
-                    key={request}
-                    className="flex items-center gap-4 p-3 border rounded-lg">
-                    <Calendar className="h-10 w-10 text-primary" />
-                    <div className="flex-1">
-                      <h3 className="font-medium">
-                        Frontend Developer Interview Request
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        InnovateTech • 2 days ago
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 text-xs bg-sky-500 hover:bg-sky-500 text-primary-foreground rounded-md border-none">
-                        Accept
-                      </button>
-                      <button className="px-3 py-1 text-xs bg-destructive text-destructive-foreground rounded-md border-none">
-                        Decline
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                {!loading && nearError ? (
+                  <p className="text-red-500">Failed to fetch</p>
+                ) : nearByJobs.length > 0 ? (
+                  nearByJobs.map((job) => {
+                    const isLoading = loadingJobId === job.jobID;
+                    const isApplied = appliedJobs.has(job.jobID);
+
+                    return (
+                      <div
+                        key={job.jobID}
+                        className="flex items-center gap-4 p-3 border rounded-lg">
+                        <Briefcase className="h-10 w-10 text-primary" />
+                        <div className="flex-1">
+                          <h3 className="font-medium">{job.job_title}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {`${job.employer_name} • ${job.job_type}`}
+                          </p>
+                        </div>
+
+                        <div className="text-sm text-muted-foreground grid grid-col-2 text-right">
+                          <span>{formatCurrency(job.salary)}</span>
+                          <span className="flex justify-end items-center">
+                            <MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
+                            {job.job_location}
+                          </span>
+                        </div>
+
+                        <Button
+                          className="text-sm flex items-center gap-2"
+                          onClick={() => handleApply(job)}
+                          disabled={isLoading || isApplied}>
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Applying...
+                            </>
+                          ) : isApplied ? (
+                            "Applied"
+                          ) : (
+                            "Apply"
+                          )}
+                        </Button>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p>No nearby jobs at the moment</p>
+                )}
               </div>
             </CardContent>
           </Card>
         </TabsContent>
-
-        {/* <TabsContent value="notifications" className="space-y-4 mt-4"> */}
-        {/* <Card>
-            <CardHeader>
-              <CardTitle>Recent Notifications</CardTitle>
-              <CardDescription>Your latest updates and alerts</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[1, 2, 3].map((notification) => (
-                  <div key={notification} className="flex items-center gap-4 p-3 border rounded-lg">
-                    <Bell className="h-10 w-10 text-primary" />
-                    <div className="flex-1">
-                      <h3 className="font-medium">Your application has been shortlisted</h3>
-                      <p className="text-sm text-muted-foreground">TechCorp Inc. • 3 hours ago</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card> */}
-        {/* </TabsContent> */}
       </Tabs>
+      <Toaster />
     </div>
   );
 }

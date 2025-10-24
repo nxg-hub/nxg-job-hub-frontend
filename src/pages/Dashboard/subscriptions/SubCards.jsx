@@ -7,13 +7,10 @@ import "./subscription.scss";
 import { BsCheck } from "react-icons/bs";
 import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
-import { UserContext } from "..";
-import { Button } from "@/components/ui/button";
-import { CheckCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 const SubCards = ({ country, verifyTransaction, user }) => {
-  // const user = useContext(UserContext);
+  const [loadingIndex, setLoadingIndex] = useState(null);
+  const [error, setError] = useState("");
 
   const [exchangeRate, setExchangeRate] = useState(null);
   // Function to fetch and convert prices to Naira
@@ -90,9 +87,23 @@ const SubCards = ({ country, verifyTransaction, user }) => {
       ],
       planType: "Recommended",
     },
+
+    {
+      subId: 5,
+      subLogo: platinum,
+      subTitle: "TEST",
+      subPrice: "₦100/Yearly",
+      subBenefit: [
+        "The Platinum plan caters to users seeking an even longer commitment with added features.",
+        "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
+      ],
+      planType: "TEST",
+    },
   ];
 
-  const handlePayment = async (subscription) => {
+  const handlePayment = async (subscription, index) => {
+    setLoadingIndex(index);
+    setError("");
     try {
       // Convert planType to string and uppercase
       const planType = String(subscription.subTitle).toUpperCase();
@@ -141,7 +152,10 @@ const SubCards = ({ country, verifyTransaction, user }) => {
         await verifyTransaction();
       }
     } catch (error) {
-      console.error("Error posting user data:", error.response.message);
+      console.error("Error posting user data:", error.response.data);
+      setError("Subscription failed");
+    } finally {
+      setLoadingIndex(null);
     }
     // onSubscribe(true);
   };
@@ -244,9 +258,10 @@ const SubCards = ({ country, verifyTransaction, user }) => {
                       : ""
                   }
                   // onClick={() => {handlePayment(subscription);}}>
-                  onClick={() => handlePayment(subscription)}>
-                  Subscribe
+                  onClick={() => handlePayment(subscription, index)}>
+                  {loadingIndex === index ? "Processing..." : "Subscribe"}
                 </button>
+                {error && <p className="text-red-500">{error}</p>}
               </div>
             )}
           </div>

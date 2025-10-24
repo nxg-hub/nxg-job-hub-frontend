@@ -6,8 +6,9 @@ import { CircleUser } from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import { useDispatch } from "react-redux";
-import { getUserData } from "@/redux/UserDataSlice";
+import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
+import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 export default function ProfilePhotoUploader({ userId, token, userData }) {
   const [url, setUrl] = useState("");
@@ -62,7 +63,7 @@ export default function ProfilePhotoUploader({ userId, token, userData }) {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `${token.authKey}`,
           },
         }
       );
@@ -72,7 +73,7 @@ export default function ProfilePhotoUploader({ userId, token, userData }) {
         description: "Your profile picture has been updated successfully!",
       });
       userData.techId
-        ? dispatch(fetchLoggedInUser("/api/v1/tech-talent/get-user"))
+        ? dispatch(fetchTalentData({ token: token.authKey }))
         : dispatch(getUserData({ token: token.authKey, id: userId }));
     } catch (error) {
       console.error("❌ Backend update failed:", error.message);

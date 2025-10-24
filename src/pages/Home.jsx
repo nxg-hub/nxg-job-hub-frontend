@@ -11,7 +11,8 @@ const titles = [
   {
     title1: "",
     span: "Connect",
-    title: "with Employers, Tech Talents and Agents",
+    title:
+      "with Employers, Tech Talents, Service Providers, Artisans and Agents",
   },
   {
     title1: "Enjoy",
@@ -54,8 +55,7 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-        }}
-      >
+        }}>
         <Header />
         <div className="landing-content !w-auto md:!w-1/2 !pt-36 md:!p-4">
           <h1 className="land-title">
@@ -64,8 +64,8 @@ const Home = () => {
             {heroTitle.title}
           </h1>
           <p className="land-text">
-            Get access and connect with Professionals, Tech talents, and agents
-            in just a few clicks.
+            Get access and connect with Professionals, Employers, Talents,
+            Service Providers, Artisans and Agents in just a few clicks.
           </p>
           <div className="land-btns">
             <Link to={"/register"} className="join-btn">
@@ -85,8 +85,7 @@ const Home = () => {
       <Explore />
       <div
         className="jobs-slider"
-        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}
-      >
+        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}>
         <JobCards />
       </div>
       <Testimony />

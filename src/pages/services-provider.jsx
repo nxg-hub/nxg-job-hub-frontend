@@ -57,7 +57,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useDispatch, useSelector } from "react-redux";
-import { resetUserData } from "@/redux/UserDataSlice";
+import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
+import { resetAllUserData } from "@/redux/AllUsersSlice";
 
 const sidebarItems = [
   {
@@ -310,6 +311,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     sessionStorage.clear();
     localStorage.clear();
     dispatch(resetUserData());
+    dispatch(resetAllUserData());
     navigate("/login");
   };
 
