@@ -275,6 +275,7 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useDispatch } from "react-redux";
 import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
 import { toast } from "@/hooks/use-toast";
+import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 const PortfolioTab = ({ userData, token }) => {
   const dispatch = useDispatch();
@@ -345,14 +346,14 @@ const PortfolioTab = ({ userData, token }) => {
           coverletter: formData.coverletter,
         },
         {
-          headers: { Authorization: ` ${token}` },
+          headers: { Authorization: ` ${token.authKey}` },
         }
       );
       toast({
         title: "Profile Updated",
         description: "Portfolio and certifications updated successfully.",
       });
-      dispatch(fetchLoggedInUser("/api/v1/tech-talent/get-user"));
+      dispatch(fetchTalentData({ token: token.authKey }));
       setIsEditing(false);
     } catch (error) {
       console.error("Update failed:", error);

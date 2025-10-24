@@ -8,11 +8,67 @@ import { BsCheck } from "react-icons/bs";
 import axios from "axios";
 import { API_HOST_URL } from "../../../../utils/api/API_HOST";
 
+const monthlySubscriptions = [
+  {
+    subId: 1,
+    subLogo: basic,
+    subTitle: "Free",
+    subPrice: "₦0",
+    subBenefit: [
+      "Access to all basic features",
+      // "Use the website for one month only, completely free",
+    ],
+    planType: "Free",
+  },
+  {
+    subId: 2,
+    subLogo: silver,
+    subTitle: "Silver",
+    subPrice: "₦25,000/3months",
+    subBenefit: [
+      "Access to all basic features",
+      "Solid foundation for limited job posting and searching.",
+      "10 vetted job posting throughout the entire 3 months period.",
+    ],
+    planType: "Silver",
+  },
+  {
+    subId: 3,
+    subLogo: gold,
+    subTitle: "Gold",
+    subPrice: "₦70,000/6months",
+    subBenefit: [
+      "Access to all basic features",
+      "Solid foundation for limited searching.",
+      "Unlimited vetted job listing, posting and tech talent search.",
+    ],
+    planType: "Most Popular",
+  },
+  {
+    subId: 4,
+    subLogo: platinum,
+    subTitle: "Platinum",
+    subPrice: "₦90,000/Yearly",
+    subBenefit: [
+      "Access to all basic features",
+      "Solid foundation for unlimited job posting and searching.",
+      "Profile is featured to vetted employers",
+      "Resume review",
+      "Unlimited vetted job search",
+      "Fast job application, tech talent profile matching mechanism and customer support.",
+    ],
+    planType: "Recommended",
+  },
+];
 
-const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
+const TechSubCards = ({
+  countryCode,
+  // verifyTransaction,
+  user,
+}) => {
   // const user = useContext(UserContext);
   const [exchangeRate, setExchangeRate] = useState(null);
-  // const [subChosen, setSubChosen] = useState("");
+  const [loadingIndex, setLoadingIndex] = useState(null);
   // Function to fetch and convert prices to NGN
 
   useEffect(() => {
@@ -51,60 +107,8 @@ const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
     }
   };
 
-  const monthlySubscriptions = [
-    {
-      subId: 1,
-      subLogo: basic,
-      subTitle: "Free",
-      subPrice: "₦0",
-      subBenefit: [
-        "Access to all basic features",
-        // "Use the website for one month only, completely free",
-      ],
-      planType: "Free",
-    },
-    {
-      subId: 2,
-      subLogo: silver,
-      subTitle: "Silver",
-      subPrice: "₦25,000/3months",
-      subBenefit: [
-        "Access to all basic features",
-        "Solid foundation for limited job posting and searching.",
-        "10 vetted job posting throughout the entire 3 months period.",
-      ],
-      planType: "Silver",
-    },
-    {
-      subId: 3,
-      subLogo: gold,
-      subTitle: "Gold",
-      subPrice: "₦70,000/6months",
-      subBenefit: [
-        "Access to all basic features",
-        "Solid foundation for limited searching.",
-        "Unlimited vetted job listing, posting and tech talent search.",
-      ],
-      planType: "Most Popular",
-    },
-    {
-      subId: 4,
-      subLogo: platinum,
-      subTitle: "Platinum",
-      subPrice: "₦90,000/Yearly",
-      subBenefit: [
-        "Access to all basic features",
-        "Solid foundation for unlimited job posting and searching.",
-        "Profile is featured to vetted employers",
-        "Resume review",
-        "Unlimited vetted job search",
-        "Fast job application, tech talent profile matching mechanism and customer support.",
-      ],
-      planType: "Recommended",
-    },
-  ];
-
-  const handlePayment = async (subscription) => {
+  const handlePayment = async (subscription, index) => {
+    setLoadingIndex(index);
     try {
       // Convert planType to string and uppercase
       const planType = String(subscription.subTitle).toUpperCase();
@@ -123,7 +127,6 @@ const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
           },
         }
       );
-      console.log(userData);
 
       if (userData) {
         const subscribeResponse = await axios.post(
@@ -135,7 +138,6 @@ const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
         );
         console.log(subscribeResponse);
         console.log(`${window.location.origin}/sub-success`);
-        // console.log('User subscribed successfully:', subscribeResponse.data);
 
         // Check if subscribeResponse.data and authorization_url are available
         if (
@@ -151,191 +153,13 @@ const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
         }
 
         // Verify customer after successful subscription
-        await verifyTransaction();
+        // await verifyTransaction();
       }
     } catch (error) {
-      console.error("Error posting user data:", error.response.message);
+      console.error("Error posting user data:", error);
     }
     // onSubscribe(true);
   };
-
-  // import React, { useContext, useEffect, useState } from "react";
-  // import basic from "../../../../static/icons/free-icon.svg?react";
-  // import silver from "../../../../static/icons/silver-icon.svg?react";
-  // import gold from "../../../../static/icons/gold-icon.svg?react";
-  // import platinum from "../../../../static/icons/platinum-icon.svg?react";
-  // import "../../subscriptions/subscription.scss";
-  // import { BsCheck } from "react-icons/bs";
-  // import axios from "axios";
-  // import { API_HOST_URL } from "../../../../utils/api/API_HOST";
-  // import { UserContext } from "../..";
-  //
-  // const TechSubCards = ({ countryCode, verifyCustomer }) => {
-  //   const user = useContext(UserContext);
-  //   const [exchangeRate, setExchangeRate] = useState(null);
-  //   // const [subChosen, setSubChosen] = useState("");
-  //   // Function to fetch and convert prices to NGN
-  //
-  //   useEffect(() => {
-  //     fetchExchangeRate();
-  //   }, []);
-  //
-  //   const fetchExchangeRate = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json"
-  //       );
-  //       const data = await response.json();
-  //       setExchangeRate(data.usd["ngn"]); // Assuming NGN is the target currency
-  //     } catch (error) {
-  //       console.error("Error fetching exchange rate:", error);
-  //     }
-  //   };
-  //
-  //   // const convertToNGN = (price) => {
-  //   //   if (exchangeRate) {
-  //   //     const priceInUSD = parseFloat(price.replace("$", ""));
-  //   //     const priceInNGN = priceInUSD * exchangeRate;
-  //   //     return " ₦" + priceInNGN.toFixed(2);
-  //   //   } else {
-  //   //     return price;
-  //   //   }
-  //   // };
-  //   const convertToDollar = (price) => {
-  //     if (exchangeRate) {
-  //       const priceInNGN = parseFloat(price.replace("₦", "")) * 1000;
-  //
-  //       const priceInDollar = priceInNGN / exchangeRate;
-  //       return " $" + priceInDollar.toFixed(2);
-  //     } else {
-  //       return price;
-  //     }
-  //   };
-  //
-  //   const monthlySubscriptions = [
-  //     {
-  //       subId: 1,
-  //       subLogo: basic,
-  //       subTitle: "Free",
-  //       subPrice: "₦0",
-  //       subBenefit: [
-  //         "Access to all basic features",
-  //         // "Use the website for one month only, completely free",
-  //       ],
-  //       planType: "Free",
-  //     },
-  //     {
-  //       subId: 2,
-  //       subLogo: silver,
-  //       subTitle: "Silver",
-  //       subPrice: "₦25,000/3months",
-  //       subBenefit: [
-  //         "Access to all basic features",
-  //         "Solid foundation for limited job posting and searching.",
-  //         "10 vetted job posting throughout the entire 3 months period.",
-  //       ],
-  //       planType: "Silver",
-  //     },
-  //     {
-  //       subId: 3,
-  //       subLogo: gold,
-  //       subTitle: "Gold",
-  //       subPrice: "₦70,000/6months",
-  //       subBenefit: [
-  //         "Access to all basic features",
-  //         "Solid foundation for limited job posting and searching.",
-  //         "Unlimited vetted job listing, posting and tech talent search.",
-  //       ],
-  //       planType: "Most Popular",
-  //     },
-  //     {
-  //       subId: 4,
-  //       subLogo: platinum,
-  //       subTitle: "Platinum",
-  //       subPrice: "₦90,000/Yearly",
-  //       subBenefit: [
-  //         "Access to all basic features",
-  //         "Solid foundation for limited job posting and searching.",
-  //         "Unlimited vetted job listing, posting and tech talent search.",
-  //         "Fast job application, tech talent profile matching mechanism and customer support.",
-  //       ],
-  //       planType: "Recommended",
-  //     },
-  //   ];
-  //
-  //   const handlePayment = async (subscription) => {
-  //     try {
-  //       // Convert planType to string and uppercase
-  //       const planType = String(subscription.subTitle).toUpperCase();
-  //
-  //       const userData = {
-  //         firstName: user.firstName,
-  //         lastName: user.lastName,
-  //         email: user.email,
-  //         phone: user.phoneNumber,
-  //         planType: planType,
-  //       };
-  //
-  //       await axios.post(
-  //         `${API_HOST_URL}/api/subscriptions/create-account`,
-  //         userData,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       console.log(userData);
-  //
-  //       if (userData) {
-  //         const subscribeResponse = await axios.post(
-  //           `${API_HOST_URL}/api/subscriptions/subscribe`,
-  //           {
-  //             email: user.email,
-  //             callback_url: `${window.location.origin}/sub-success`,
-  //           }
-  //         );
-  //         console.log(subscribeResponse);
-  //         console.log(`${window.location.origin}/sub-success`);
-  //         // console.log('User subscribed successfully:', subscribeResponse.data);
-  //
-  //         // Check if subscribeResponse.data and authorization_url are available
-  //         if (
-  //           subscribeResponse.data &&
-  //           subscribeResponse.data.data &&
-  //           subscribeResponse.data.data.authorization_url
-  //         ) {
-  //           // Redirect user to the authorization_url
-  //           window.location.href = subscribeResponse.data.data.authorization_url;
-  //         } else {
-  //           console.error("Authorization URL is missing.");
-  //           // Handle the scenario where authorization_url is missing
-  //         }
-  //
-  //         // Verify customer after successful subscription
-  //         await verifyCustomer();
-  //       }
-  //     } catch (error) {
-  //       console.error("Error posting user data:", error.response.message);
-  //     }
-  //     // onSubscribe(true);
-  //   };
-
-  // const verifyCustomer = async (subscriptionData) => {
-  //     try {
-  //         const { email, accountNumber, bvn, bankCode, customerCode } = subscriptionData;
-  //         await axios.post(`${API_HOST_URL}/api/subscriptions/verify-customer`, {
-  //             email,
-  //             account_number: accountNumber,
-  //             bvn,
-  //             bank_code: bankCode,
-  //             customer_code: customerCode
-  //         });
-  //         console.log('Customer verified successfully.');
-  //     } catch (error) {
-  //         console.error('Error verifying customer:', error.message);
-  //     }
-  // };
 
   return (
     <>
@@ -414,8 +238,8 @@ const TechSubCards = ({ countryCode, verifyTransaction,user }) => {
                       ? "recommended-btn"
                       : ""
                   }
-                  onClick={() => handlePayment(subscription)}>
-                  Subscribe
+                  onClick={() => handlePayment(subscription, index)}>
+                  {loadingIndex === index ? "Processing..." : "Subscribe"}
                 </button>
               </div>
             )}

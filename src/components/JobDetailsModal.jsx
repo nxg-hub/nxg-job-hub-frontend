@@ -11,9 +11,15 @@ import { toast } from "@/hooks/use-toast";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
 import { Toaster } from "./ui/toaster";
+import { useSelector } from "react-redux";
+import { fetchMyTalentJobs } from "@/redux/TalentJobSlice";
+import { fetchMyJobs } from "@/redux/ServiceProviderJobSlice";
 
 const JobDetailsModal = ({ job, open, onClose }) => {
   const [isApplying, setIsApplying] = useState(false);
+  const userType = useSelector(
+    (state) => state.AllUserReducer.userData.userType
+  );
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -39,6 +45,9 @@ const JobDetailsModal = ({ job, open, onClose }) => {
         const error = await response.json();
         throw new Error(error.message || "Failed to apply for job");
       }
+      userType === "TECHTALENT"
+        ? dispatch(fetchMyTalentJobs({ token: token.authKey }))
+        : dispatch(fetchMyJobs({ token: token.authKey }));
 
       toast({
         title: "Application Successful 🎉",

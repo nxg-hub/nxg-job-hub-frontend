@@ -26,116 +26,16 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "@/redux/UserDataSlice";
+import {
+  getLoggedInServiceProviderData,
+  getUserData,
+} from "@/redux/ServiceProviderUserDataSlice";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
 import { Link } from "react-router-dom";
-
-const nearbyJobs = [
-  {
-    id: 5,
-    company: "Employer",
-    location: "Kano, Nigeria",
-    title: "Skilled Driver",
-    description: "I need a skilled Driver with 3 years of Experience.",
-    type: ["Full time", "On-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-  {
-    id: 6,
-    company: "Agency",
-    location: "Albany, NY",
-    title: "Housemaid Needed",
-    description:
-      "Professional Housemaid needed urgently. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Contract", "Full time"],
-    salary: "$45k-$80k",
-    views: 30,
-    applicants: 0,
-    bookmarked: false,
-  },
-  {
-    id: 7,
-    company: "Employer",
-    location: "Abuja, Nigeria",
-    title: "Experience Nurse",
-    description:
-      "I need an experience nurse that can treate. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Full time", "On-site", "Off-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-  {
-    id: 8,
-    company: "Employer",
-    location: "Lagos, Nigeria",
-    title: "Skilled Driver",
-    description: "I need a skilled Driver with 3 years of Experience.",
-    type: ["Full time", "On-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-  {
-    id: 9,
-    company: "Employer",
-    location: "Kano, Nigeria",
-    title: "Skilled Driver",
-    description: "I need a skilled Driver with 3 years of Experience.",
-    type: ["Full time", "On-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-  {
-    id: 10,
-    company: "Agency",
-    location: "Albany, NY",
-    title: "Housemaid Needed",
-    description:
-      "Professional Housemaid needed urgently. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Contract", "Full time"],
-    salary: "$45k-$80k",
-    views: 30,
-    applicants: 0,
-    bookmarked: false,
-  },
-  {
-    id: 11,
-    company: "Employer",
-    location: "Abuja, Nigeria",
-    title: "Experience Nurse",
-    description:
-      "I need an experience nurse that can treate. Lorem interdum euis ut turpis lorem. An interdum nisl interdum euis ut turpis lorem.",
-    type: ["Full time", "On-site", "Off-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-  {
-    id: 12,
-    company: "Employer",
-    location: "Lagos, Nigeria",
-    title: "Skilled Driver",
-    description: "I need a skilled Driver with 3 years of Experience.",
-    type: ["Full time", "On-site"],
-    salary: "$32k-$60k",
-    views: 30,
-    applicants: 2,
-    bookmarked: false,
-  },
-];
 
 function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   const [loadingStates, setLoadingStates] = useState({});
@@ -326,7 +226,7 @@ function JobCarousel({
 
 export function ServicesProviderHomePage() {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.UserDataReducer.data);
+  const userData = useSelector((state) => state.AllUserReducer.userData);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -352,7 +252,7 @@ export function ServicesProviderHomePage() {
         );
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data = await res.json();
-        setRecommendedJobs(data.content || []);
+        setRecommendedJobs(data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {

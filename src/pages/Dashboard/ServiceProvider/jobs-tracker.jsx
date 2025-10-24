@@ -26,14 +26,14 @@ import AppliedJobs from "./AppliedJobs";
 
 // Service types for an artisan
 const serviceTypes = [
-  "carpentry",
-  "plumbing",
-  "electrical",
-  "painting",
-  "roofing",
-  "masonry",
-  "flooring",
-  "landscaping",
+  // "carpentry",
+  // "plumbing",
+  // "electrical",
+  // "painting",
+  // "roofing",
+  // "masonry",
+  // "flooring",
+  // "landscaping",
 ];
 
 export function JobTracker() {
@@ -67,7 +67,7 @@ export function JobTracker() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({
     priority: [],
-    serviceType: [],
+    state: [],
     client: [],
   });
 
@@ -109,17 +109,17 @@ export function JobTracker() {
       activeFilters.priority.includes(service.job_type);
 
     // Service type filter
-    // const matchesServiceType =
-    //   activeFilters.serviceType.length === 0 ||
-    //   activeFilters.serviceType.includes(service.serviceType);
+    const matchesState =
+      activeFilters.state.length === 0 ||
+      activeFilters.state.includes(service.job_location);
 
     // Client filter
     // const matchesClient =
     //   activeFilters.client.length === 0 ||
     //   activeFilters.client.includes(service.client);
 
-    return matchesSearch && matchesPriority;
-    //  && matchesPriority && matchesServiceType && matchesClient
+    return matchesSearch && matchesPriority && matchesState;
+    //  && matchesPriority  && matchesClient
   });
 
   const filteredSaved = savedJobs.filter((service) => {

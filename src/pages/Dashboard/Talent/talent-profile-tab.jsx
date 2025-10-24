@@ -2,31 +2,26 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
+import { useSelector } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
-import SkillsExperienceTab from "./SkillsExperienceTab";
-import PortfolioTab from "./PortfolioTab";
+import SkillsExperienceTab from "./components/SkillsExperienceTab";
+import PortfolioTab from "./components/PortfolioTab";
 import ProfilePhotoUploader from "@/components/ServiceProvider/ProfilePhotoUploader";
-import PersonalInfoTab from "./PersonalInfoTab";
+import PersonalInfoTab from "./components/PersonalInfoTab";
+import CompleteYourProfile from "@/pages/CompleteYourProfile/Agent";
 
 export default function TalentProfileTab() {
-  const dispatch = useDispatch();
-  const userData = useSelector((state) => state.LoggedInUserSlice.loggedInUser);
-  const success = useSelector((state) => state.LoggedInUserSlice.success);
-  // const loading = useSelector((state) => state.LoggedInUserSlice.loading);
-  const error = useSelector((state) => state.LoggedInUserSlice.error);
+  const userData = useSelector(
+    (state) => state.TalentUserReducer.LoggedIntalentData
+  );
+  const isProfileComplete = userData?.resume && userData?.profilePicture;
+  // const loading = useSelector((state) => state.TalentUserReducer.loading);
+  const error = useSelector((state) => state.TalentUserReducer.error);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [skills, setSkills] = useState([]);
-  useEffect(() => {
-    if (success) {
-      return;
-    }
-    dispatch(fetchLoggedInUser("/api/v1/tech-talent/get-user"));
-  }, []);
 
   useEffect(() => {
     if (userData?.skills) {
@@ -39,16 +34,25 @@ export default function TalentProfileTab() {
 
   return (
     <div className="space-y-6 m-10">
-      <Card className="p-6 shadow-sm rounded-2xl">
+      <Card className="p-6 shadow-sm rounded-2xl md:w-[60%]">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <ProfilePhotoUploader
             userId={userData.techId}
-            token={token.authKey}
+            token={token}
             userData={userData}
           />
+          {!isProfileComplete && (
+            <p className="bg-blue-50 text-blue-900 border border-blue-200 rounded-xl p-4 text-sm md:text-base leading-relaxed shadow-sm">
+              <span className="font-semibold">🔒 Verify Your Account</span> —
+              Upload your
+              <span className="font-medium"> profile photo 📸</span> and
+              <span className="font-medium"> updated resume 📄</span> to
+              complete your verification. This helps us confirm your identity
+              and connect you with top job opportunities faster 🚀
+            </p>
+          )}
         </div>
       </Card>
-
       <Tabs defaultValue="personal" className="w-full space-y-4">
         <TabsList className="grid grid-cols-2 md:grid-cols-3 w-full rounded-lg bg-muted mb-10 md:mb-0 md:p-1">
           <TabsTrigger value="personal">Personal Info</TabsTrigger>
@@ -58,13 +62,13 @@ export default function TalentProfileTab() {
           </TabsTrigger>
         </TabsList>
         {/* personal info */}
-        <PersonalInfoTab userData={userData} token={token.authKey} />
+        <PersonalInfoTab userData={userData} token={token} />
 
         {/* Skills & Experience */}
-        <SkillsExperienceTab userData={userData} token={token.authKey} />
+        <SkillsExperienceTab userData={userData} token={token} />
 
         {/* Portfolio & Certifications */}
-        <PortfolioTab userData={userData} token={token.authKey} />
+        <PortfolioTab userData={userData} token={token} />
       </Tabs>
       <Toaster />
     </div>

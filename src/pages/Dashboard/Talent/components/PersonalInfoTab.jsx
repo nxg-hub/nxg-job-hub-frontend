@@ -16,6 +16,7 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { useDispatch } from "react-redux";
+import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 const PersonalInfoTab = ({ userData, token }) => {
   const [formData, setFormData] = useState(userData || {});
@@ -49,7 +50,7 @@ const PersonalInfoTab = ({ userData, token }) => {
         `${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
         payload,
         {
-          headers: { Authorization: `${token}` },
+          headers: { Authorization: `${token.authKey}` },
         }
       );
 
@@ -57,7 +58,7 @@ const PersonalInfoTab = ({ userData, token }) => {
         title: "Success",
         description: "  Profile updated successfully!",
       });
-      dispatch(fetchLoggedInUser("/api/v1/tech-talent/get-user"));
+      dispatch(fetchTalentData({ token: token.authKey }));
       setIsEditing(false);
     } catch (error) {
       console.error("Update failed:", error);

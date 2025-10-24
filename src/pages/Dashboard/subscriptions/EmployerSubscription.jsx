@@ -6,14 +6,18 @@ import SubCards from "./SubCards";
 // import { SubPayment } from './subpayments/SubPayment';
 import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
 
 export const EmployerSubscription = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [country, setCountry] = useState("");
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchEmployerData = useCallback(async () => {
+    setLoading(true);
     try {
       const loginKey =
         window.localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
@@ -46,6 +50,9 @@ export const EmployerSubscription = () => {
       setCountry(employerData.country || "");
     } catch (error) {
       console.error("Error fetching employer data:", error.message);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   }, []);
   useEffect(() => {
@@ -56,7 +63,8 @@ export const EmployerSubscription = () => {
   const handleSubscribe = (isSubscribed) => {
     setIsSubscribed(isSubscribed);
   };
-
+  if (loading) return <JobCardSkeleton />;
+  if (error) return <p>Failed to load subcription data</p>;
   return (
     <div className="subscriptions-container">
       {!isSubscribed && (
@@ -73,7 +81,7 @@ export const EmployerSubscription = () => {
           </div>
         </div>
       )}
-      {/* {isSubscribed && <SubPayment />}   */}
+      {/* {isSubscribed && <SubPayment />} */}
     </div>
   );
 };

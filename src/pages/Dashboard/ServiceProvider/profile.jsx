@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { useServiceProviderProfileUpdate } from "@/hooks/Service-provider/serviceProviderHook";
 import { useEffect, useState } from "react";
-import { getUserData } from "@/redux/UserDataSlice";
+import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { Toaster } from "@/components/ui/toaster";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -60,9 +60,8 @@ export default function ServiceProviderProfile() {
     useServiceProviderProfileUpdate();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.UserDataReducer.serviceData);
-  // console.log(userData);
+  const id = useSelector((state) => state.UserDataReducer.data.id);
   const isProfileComplete = userData.subSkills;
-
   const phone = useSelector((state) => state.UserDataReducer.data.phoneNumber);
 
   const [formData, setFormData] = useState({
@@ -145,10 +144,16 @@ export default function ServiceProviderProfile() {
 
   //SKILL UPDATE LOGIC
   // ✅ Determine available skills based on job title
-  useEffect(() => {
-    const title = userData?.mainSkills[0]?.toUpperCase();
-    setAvailableSkills(subSkillsOptions[title] || subSkillsOptions.OTHERS);
-  }, [userData?.jobTitle]);
+  useEffect(
+    () => {
+      const title =
+        userData?.mainSkills && userData?.mainSkills[0]?.toUpperCase();
+      setAvailableSkills(subSkillsOptions[title] || subSkillsOptions.OTHERS);
+    },
+    [
+      // userData?.jobTitle
+    ]
+  );
 
   // ✅ Toggle select/remove skill
   const toggleSkill = (skill) => {
@@ -418,7 +423,7 @@ export default function ServiceProviderProfile() {
               <div className="flex flex-col md:flex-row gap-8">
                 <ProfilePhotoUploader
                   userId={userData.serviceProviderId}
-                  token={token.authKey}
+                  token={token}
                   userData={userData}
                 />
 

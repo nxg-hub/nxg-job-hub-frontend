@@ -5,12 +5,18 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchMyJobs, fetchSavedJobs } from "@/redux/ServiceProviderJobSlice";
-import { fetchMyTalentJobs } from "@/redux/TalentJobSlice";
+import {
+  fetchMyTalentJobs,
+  fetchTalentSavedJobs,
+} from "@/redux/TalentJobSlice";
 
 const JobCardFooter = ({ service, handleViewDetails, tab }) => {
   const dispatch = useDispatch();
+  const userType = useSelector(
+    (state) => state.AllUserReducer.userData.userType
+  );
   const [loadingStates, setLoadingStates] = useState({}); // e.g. { jobId: { applying: false, saving: false } }
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -49,9 +55,9 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
         title: "Application Successful 🎉",
         description: `You have successfully applied for ${job.job_title}.`,
       });
-
-      dispatch(fetchMyTalentJobs({ token: token.authKey }));
-      dispatch(fetchMyJobs({ token: token.authKey }));
+      userType === "TECHTALENT"
+        ? dispatch(fetchMyTalentJobs({ token: token.authKey }))
+        : dispatch(fetchMyJobs({ token: token.authKey }));
     } catch (error) {
       toast({
         variant: "destructive",
@@ -99,7 +105,10 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
       if (contentType && contentType.includes("application/json")) {
         await response.json();
       }
-      dispatch(fetchSavedJobs({ token: token.authKey }));
+      userType === "TECHTALENT"
+        ? dispatch(fetchTalentSavedJobs({ token: token.authKey }))
+        : dispatch(fetchSavedJobs({ token: token.authKey }));
+
       toast({
         title: "Job Saved",
         description: `${job.job_title} has been added to your saved jobs.`,
@@ -129,7 +138,6 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
           },
         }
       );
-      console.log(response);
       // ✅ Handle error responses safely
       if (!response.ok) {
         const contentType = response.headers.get("content-type");
@@ -151,7 +159,10 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
       if (contentType && contentType.includes("application/json")) {
         await response.json();
       }
-      dispatch(fetchSavedJobs({ token: token.authKey }));
+      userType === "TECHTALENT"
+        ? dispatch(fetchTalentSavedJobs({ token: token.authKey }))
+        : dispatch(fetchSavedJobs({ token: token.authKey }));
+
       toast({
         title: "Job Unsaved",
         description: `${job.job_title} has been removed to your saved jobs.`,

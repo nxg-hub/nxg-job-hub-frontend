@@ -57,7 +57,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useDispatch } from "react-redux";
-import { resetUserData } from "@/redux/UserDataSlice";
+import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 
 const sidebarItems = [
   {

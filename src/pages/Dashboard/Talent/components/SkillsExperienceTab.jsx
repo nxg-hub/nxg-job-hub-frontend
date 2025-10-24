@@ -22,6 +22,7 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
 import { useDispatch } from "react-redux";
+import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 const SkillsExperienceTab = ({ userData, token }) => {
   const dispatch = useDispatch();
@@ -112,14 +113,14 @@ const SkillsExperienceTab = ({ userData, token }) => {
         `   ${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
         payload,
         {
-          headers: { Authorization: `${token}` },
+          headers: { Authorization: `${token.authKey}` },
         }
       );
       toast({
         title: "Success",
         description: "  Profile updated successfully!",
       });
-      dispatch(fetchLoggedInUser("/api/v1/tech-talent/get-user"));
+      dispatch(fetchTalentData({ token: token.authKey }));
       setIsEditing(false);
     } catch (error) {
       console.error("Update failed:", error);

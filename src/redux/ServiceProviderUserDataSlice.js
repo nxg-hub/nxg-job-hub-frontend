@@ -32,6 +32,28 @@ export const getUserData = createAsyncThunk(
   }
 );
 
+export const getLoggedInServiceProviderData = createAsyncThunk(
+  "UserDataSlice/getLoggedInServiceProviderData",
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `${API_HOST_URL}/api/v1/auth/get-user`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const UserDataSlice = createSlice({
   name: "UserDataSlice",
   initialState,
@@ -58,6 +80,19 @@ const UserDataSlice = createSlice({
         state.serviceData = action.payload;
       })
       .addCase(getUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(getLoggedInServiceProviderData.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getLoggedInServiceProviderData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.data = action.payload;
+      })
+      .addCase(getLoggedInServiceProviderData.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
       });

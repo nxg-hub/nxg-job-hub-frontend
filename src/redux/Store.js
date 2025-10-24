@@ -8,18 +8,19 @@ import SearchJobSlice from "./SearchJobSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
-import { version } from "react";
 import InterviewSlice from "./InterviewSlice";
 import LoggedInEmployerSlice from "./LoggedInEmployerSlice";
-import UserDataReducer from "./UserDataSlice";
+import UserDataReducer from "./ServiceProviderUserDataSlice";
 import TalentReducer from "./TalentJobSlice";
+import TalentUserReducer from "./TalentUserDataSlice";
 import ServiceProviderJobReducer from "./ServiceProviderJobSlice";
+import AllUserReducer from "./AllUsersSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["UserDataReducer"],
+  whitelist: ["AllUserReducer"],
 };
 
 const reducer = combineReducers({
@@ -34,6 +35,8 @@ const reducer = combineReducers({
   UserDataReducer,
   ServiceProviderJobReducer,
   TalentReducer,
+  TalentUserReducer,
+  AllUserReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
