@@ -89,7 +89,7 @@ export function JobTracker() {
   }, []);
 
   const acceptedJobs = allJobs.filter((job) => {
-    return job.jobStatus === "ACCEPTED";
+    return job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE";
   });
 
   // Filter services based on search query and active filters

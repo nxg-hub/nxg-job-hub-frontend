@@ -50,6 +50,13 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
     }));
   };
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "NGN",
+    }).format(amount);
+  };
+
   // 🔹 Handle Apply
   const handleApply = async (job) => {
     try {
@@ -141,7 +148,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   const isApplying = loadingStates[job.jobID]?.applying;
   const isSaving = loadingStates[job.jobID]?.saving;
   return (
-    <Card className="overflow-hidden">
+    <Card className="">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
         <img src={job.employer_profile_pic || driver} alt="" />
         <div className="flex justify-between w-full">
@@ -178,7 +185,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
             </Badge>
           }
         </div>
-        <div className="font-medium">{job.salary}</div>
+        <div className="font-medium">{formatCurrency(job.salary)}</div>
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
         <div className="text-xs text-gray-500">
@@ -210,7 +217,7 @@ function JobCarousel({
   return (
     <div
       ref={innerRef}
-      className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth">
+      className="flex gap-4 overflow-x-auto w-full scrollbar-hide scroll-smooth">
       {jobs.map((job) => (
         <div key={job.jobID} className="flex-none w-80 sm:w-72 md:w-80">
           <JobCard
@@ -252,7 +259,13 @@ export function ServicesProviderHomePage() {
         );
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data = await res.json();
-        setRecommendedJobs(data);
+        const acceptedJobs = data.filter((job) => {
+          return (
+            job.jobStatus === "ACCEPTED" &&
+            job.jobClassification === "SERVICE"
+          );
+        });
+        setRecommendedJobs(acceptedJobs);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -264,6 +277,7 @@ export function ServicesProviderHomePage() {
 
   useEffect(() => {
     const fetchNearbyJobs = async () => {
+      setLoading(true);
       try {
         // ✅ Get session & userId
         const session =
@@ -287,10 +301,17 @@ export function ServicesProviderHomePage() {
         );
         if (!res.ok) throw new Error(`Request failed with ${res.status}`);
         const data = await res.json();
-
-        setNearbyJobs(data || []);
+        const acceptedJobs = data.filter((job) => {
+          return (
+            job.jobStatus === "ACCEPTED" &&
+            job.jobClassification === "SERVICE"
+          );
+        });
+        setNearbyJobs(acceptedJobs || []);
       } catch (error) {
         console.error("Error fetching nearby jobs:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchNearbyJobs();
@@ -314,7 +335,7 @@ export function ServicesProviderHomePage() {
   };
 
   return (
-    <div className="max-w-full overflow-hidden space-y-10">
+    <div className="max-w-full overflow-x-hidden overflow-y-auto relative space-y-10 ">
       {/* ✅ Recent Jobs */}
       <div className="p-4">
         {/* Header row with arrows */}
@@ -349,6 +370,7 @@ export function ServicesProviderHomePage() {
             jobs={recommendedJobs}
             bookmarkedJobs={bookmarkedJobs}
             toggleBookmark={toggleBookmark}
+            loading={loading}
           />
         ) : (
           <p>No recent jobs found.</p>
