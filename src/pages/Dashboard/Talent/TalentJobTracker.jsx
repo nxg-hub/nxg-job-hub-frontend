@@ -58,7 +58,9 @@ export function TalentJobTracker() {
   }, []);
 
   const acceptedJobs = allJobs.filter((job) => {
-    return job.jobStatus === "ACCEPTED";
+    return (
+      job.jobStatus === "ACCEPTED" && job.jobClassification === "PROFESSIONAL"
+    );
   });
 
   // Filter services based on search query and active filters

@@ -62,10 +62,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
-import {
-  fetchLoggedInUser,
-  resetLoggedInData,
-} from "@/redux/LoggedInUserSlice";
+import { resetLoggedInData } from "@/redux/LoggedInUserSlice";
 import { resetTalentJobs } from "@/redux/TalentJobSlice";
 import {
   fetchLoggedInTalent,
@@ -249,21 +246,44 @@ function DashboardContent({ notifications = [] }) {
         </header>
         <div className=" pt-16 md:pt-0">
           <>
-            <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
-              <img
-                src={verifiedImageMobile}
-                alt="Complete profile illustration"
-                className="object-contain w-10 h-10"
-              />
-              <div className="flex flex-col gap-1">
-                <span>Your account is not yet verified</span>
-                <NavLink
-                  className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                  to={"companyprofile"}>
-                  complete your profile
-                </NavLink>
-              </div>
-            </div>
+            {!isVerified && (
+              <>
+                {isProfileComplete ? (
+                  <div className=" md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+                    <div className="flex items-center gap-8">
+                      <img
+                        src={verifiedImageMobile}
+                        alt="Complete profile illustration"
+                        className="object-contain w-10 h-10"
+                      />
+                      <div className="flex gap-3 items-center">
+                        <span>
+                          🎉 Thank you for completing your profile! Your details
+                          are under review. You’ll get a notification once an
+                          admin verifies your account.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
+                    <img
+                      src={verifiedImageMobile}
+                      alt="Complete profile illustration"
+                      className="object-contain w-10 h-10"
+                    />
+                    <div className="flex flex-col gap-1">
+                      <span>Your account is not yet verified</span>
+                      <NavLink
+                        className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                        to={"profile"}>
+                        complete your profile
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
 
             {!isVerified && (
               <>

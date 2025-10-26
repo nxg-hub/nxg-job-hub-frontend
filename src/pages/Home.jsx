@@ -60,7 +60,7 @@ const Home = () => {
         <div className="landing-content !w-auto md:!w-1/2 !pt-36 md:!p-4">
           <h1 className="land-title">
             {heroTitle.title1} {""}
-            <span>{heroTitle.span}</span> {""}
+            <span>{heroTitle.span}</span>
             {heroTitle.title}
           </h1>
           <p className="land-text">

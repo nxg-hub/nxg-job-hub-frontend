@@ -116,7 +116,7 @@ function DashboardContent() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
+    <div className="flex min-h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
       {/* Sidebar */}
       <Sidebar className="" collapsible="icons" variant="floating">
         <SidebarContent
@@ -197,7 +197,7 @@ function DashboardContent() {
       </Sidebar>
 
       {/* Main Content */}
-      <SidebarInset className="bg-transparent w-full md:rounded-md space-y-5">
+      <SidebarInset className="bg-transparent w-full md:rounded-md space-y-5 overflow-hidden ">
         {/* Header */}
         <header className="bg-white p-4 flex border-b md:justify-end md:rounded-md">
           <div className="w-full ">
@@ -293,7 +293,7 @@ function DashboardContent() {
           )}
         </div>
 
-        <div className="h-full">
+        <div className="h-full ">
           <Outlet />
         </div>
       </SidebarInset>

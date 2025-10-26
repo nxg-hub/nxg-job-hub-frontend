@@ -29,6 +29,17 @@ export default function TalentDashboardTab() {
   const recentJobs = useSelector((state) => state.TalentReducer.recentJobs);
   const nearByJobs = useSelector((state) => state.TalentReducer.nearByJobs);
 
+  const acceptedRecentJobs = recentJobs.filter((job) => {
+    return (
+      job.jobStatus === "ACCEPTED" && job.jobClassification === "PROFESSIONAL"
+    );
+  });
+
+  const acceptedNearJobs = nearByJobs.filter((job) => {
+    return (
+      job.jobStatus === "ACCEPTED" && job.jobClassification === "PROFESSIONAL"
+    );
+  });
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -119,8 +130,8 @@ export default function TalentDashboardTab() {
               <div className="space-y-4">
                 {!loading && error ? (
                   <p className="text-red-500">Failed to fetch</p>
-                ) : recentJobs.length > 0 ? (
-                  recentJobs.map((job) => {
+                ) : acceptedRecentJobs.length > 0 ? (
+                  acceptedRecentJobs.map((job) => {
                     const isLoading = loadingJobId === job.jobID;
                     const isApplied = appliedJobs.has(job.jobID);
 
@@ -183,8 +194,8 @@ export default function TalentDashboardTab() {
               <div className="space-y-4">
                 {!loading && nearError ? (
                   <p className="text-red-500">Failed to fetch</p>
-                ) : nearByJobs.length > 0 ? (
-                  nearByJobs.map((job) => {
+                ) : acceptedNearJobs.length > 0 ? (
+                  acceptedNearJobs.map((job) => {
                     const isLoading = loadingJobId === job.jobID;
                     const isApplied = appliedJobs.has(job.jobID);
 
