@@ -17,13 +17,12 @@ import {
   employersData,
 } from "@/utils/data/agent-mock-data";
 import CreateMatchDialog from "@/components/agent/create-match-dialog";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TalentTable } from "@/components/agent/TalentTable";
 import { Progress } from "@/components/ui/progress";
 import { TimeMetrics } from "@/components/TimeMetrics";
 
 export default function DashboardTab() {
-  const { setPageTitle } = useOutletContext();
   const navigate = useNavigate();
   const [matchDialogOpen, setMatchDialogOpen] = React.useState(false);
 
@@ -35,13 +34,9 @@ export default function DashboardTab() {
     navigate("/agent/dashboard/candidate-matches");
   };
 
-  useEffect(() => {
-    setPageTitle("Dashboard");
-  }, []);
-
   return (
-    <div className=" p-8 space-y-10">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="bg-slate-100 p-8 space-y-10">
+      {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Matches</CardTitle>
@@ -84,9 +79,9 @@ export default function DashboardTab() {
             <p className="text-xs text-muted-foreground">+3 new this month</p>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
-      <Card className="col-span-2">
+      {/* <Card className="col-span-2">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Response Time Metrics</CardTitle>
           <div className="flex items-center gap-2">
@@ -97,8 +92,8 @@ export default function DashboardTab() {
         <CardContent>
           <TimeMetrics />
         </CardContent>
-      </Card>
-      <div className="flex flex-col space-y-5">
+      </Card> */}
+      {/* <div className="flex flex-col space-y-5">
         <Card className="lg:col-span-4">
           <CardHeader>
             <CardTitle>Recent Matches</CardTitle>
@@ -116,9 +111,9 @@ export default function DashboardTab() {
         >
           View All Matches
         </Button>
-      </div>
+      </div> */}
 
-      <div className="flex space-x-10">
+      {/* <div className="flex space-x-10">
         <Card className="w-2/5">
           <CardHeader>
             <CardTitle>Upcoming Interviews</CardTitle>
@@ -211,9 +206,9 @@ export default function DashboardTab() {
             </Button>
           </CardFooter>
         </Card>
-      </div>
+      </div> */}
       {/* Task progress */}
-      <Card className="col-span-2">
+      {/* <Card className="col-span-2">
         <CardHeader>
           <CardTitle>Talent Placement Progress</CardTitle>
         </CardHeader>
@@ -252,13 +247,13 @@ export default function DashboardTab() {
             </div>
           ))}
         </CardContent>
-      </Card>
-      <CreateMatchDialog
+      </Card> */}
+      {/* <CreateMatchDialog
         open={matchDialogOpen}
         onOpenChange={setMatchDialogOpen}
         candidatesData={candidatesData}
         employersData={employersData}
-      />
+      /> */}
     </div>
   );
 }

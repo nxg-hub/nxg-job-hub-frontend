@@ -11,35 +11,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { nigerianStates } from "@/lib/utils";
 
 const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
-  const [newSkill, setNewSkill] = useState("");
+  // Common countries for country code
+  const countryCodes = [
+    { code: "NG", name: "Nigeria" },
+    { code: "OT", name: "Others" },
 
-  // Experience level options
-  const experienceLevel = [
-    "Entry Level (0-2 years)",
-    "Junior (2-4 years)",
-    "Mid-Level (4-7 years)",
-    "Senior (7-10 years)",
-    "Lead/Principal (10+ years)",
-    "Executive/Director (15+ years)",
-  ];
-
-  // Job interest options
-  const jobInterest = [
-    "Frontend Development",
-    "Backend Development",
-    "Full Stack Development",
-    "Mobile Development",
-    "DevOps/Cloud Engineering",
-    "Data Science/Analytics",
-    "Machine Learning/AI",
-    "Cybersecurity",
-    "Product Management",
-    "UI/UX Design",
-    "Quality Assurance",
-    "System Architecture",
+    // { code: "US", name: "United States" },
+    // { code: "UK", name: "United Kingdom" },
+    // { code: "CA", name: "Canada" },
+    // { code: "GH", name: "Ghana" },
+    // { code: "KE", name: "Kenya" },
+    // { code: "ZA", name: "South Africa" },
+    // { code: "DE", name: "Germany" },
+    // { code: "FR", name: "France" },
+    // { code: "AU", name: "Australia" },
   ];
 
   // Handle form data updates
@@ -48,28 +36,6 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
       ...prev,
       [field]: value,
     }));
-  };
-
-  // Skills management
-  const addSkill = () => {
-    if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
-      updateFormData("skills", [...formData.skills, newSkill.trim()]);
-      setNewSkill("");
-    }
-  };
-
-  const removeSkill = (skillToRemove) => {
-    updateFormData(
-      "skills",
-      formData.skills.filter((skill) => skill !== skillToRemove)
-    );
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addSkill();
-    }
   };
 
   return (
@@ -97,162 +63,181 @@ const RenderStepOneTalent = ({ formData, setFormData, formError }) => {
         </div>
       </div>
 
-      {/* Skills Section */}
-      <div className="space-y-2">
-        <Label htmlFor="skills" className="text-sm font-medium">
-          Technical Skills *
-        </Label>
-        <div className="space-y-3">
-          <div className="flex gap-2">
-            <Input
-              id="skills"
-              placeholder="Add a skill (e.g., React, Python, AWS)"
-              value={newSkill}
-              onChange={(e) => setNewSkill(e.target.value)}
-              onKeyPress={handleKeyPress}
-              className="flex-1"
-            />
-            <Button
-              type="button"
-              onClick={addSkill}
-              variant="outline"
-              size="sm"
-              disabled={!newSkill.trim()}
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* Portfolio Link */}
+        <div className="space-y-2">
+          <Label htmlFor="portfolioLink" className="text-sm font-medium">
+            Portfolio Link *
+          </Label>
+          <Input
+            id="portfolioLink"
+            type="url"
+            placeholder="https://yourportfolio.com"
+            value={formData.portfolioLink}
+            onChange={(e) => updateFormData("portfolioLink", e.target.value)}
+            className={
+              formError && !formData.portfolioLink.trim()
+                ? "border-red-500"
+                : ""
+            }
+          />
+          <p className="text-xs text-gray-500">
+            Share your portfolio, GitHub, or personal website
+          </p>
+        </div>
 
-          {/* Skills Display */}
-          <div className="flex flex-wrap gap-2 min-h-[40px] p-3 border rounded-md bg-gray-50">
-            {formData.skills.length > 0 ? (
-              formData.skills.map((skill) => (
-                <Badge
-                  key={skill}
-                  variant="secondary"
-                  className="flex items-center text-white gap-1 px-2 py-1"
-                >
-                  {skill}
-                  <button
-                    type="button"
-                    onClick={() => removeSkill(skill)}
-                    className="ml-1 hover:bg-gray-300 rounded-full  p-0.5"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
-              ))
-            ) : (
-              <span className="text-gray-400 text-sm">No skills added yet</span>
-            )}
-          </div>
-          {formError && formData.skills.length === 0 && (
-            <p className="text-red-500 text-xs">
-              Please add at least one skill
-            </p>
-          )}
+        {/* LinkedIn URL */}
+        <div className="space-y-2">
+          <Label htmlFor="linkedInUrl" className="text-sm font-medium">
+            LinkedIn Profile URL *
+          </Label>
+          <Input
+            id="linkedInUrl"
+            type="url"
+            placeholder="https://linkedin.com/in/yourprofile"
+            value={formData.linkedInUrl}
+            onChange={(e) => updateFormData("linkedInUrl", e.target.value)}
+            className={
+              formError && !formData.linkedInUrl.trim() ? "border-red-500" : ""
+            }
+          />
+          <p className="text-xs text-gray-500">
+            Your professional LinkedIn profile URL
+          </p>
         </div>
       </div>
 
-      {/* Job Interest Section */}
+      {/* Residential Address */}
       <div className="space-y-2">
-        <Label htmlFor="jobInterest" className="text-sm font-medium">
-          Primary Job Interest *
-        </Label>
-        <Select
-          value={formData.jobInterest}
-          onValueChange={(value) => updateFormData("jobInterest", value)}
-        >
-          <SelectTrigger
-            className={
-              formError && !formData.jobInterest ? "border-red-500" : ""
-            }
-          >
-            <SelectValue placeholder="Select your primary area of interest" />
-          </SelectTrigger>
-          <SelectContent>
-            {jobInterest.map((interest) => (
-              <SelectItem key={interest} value={interest}>
-                {interest}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Current Job Section */}
-      <div className="space-y-2">
-        <Label htmlFor="currentJob" className="text-sm font-medium">
-          Current Job Title *
+        <Label htmlFor="residentialAddress" className="text-sm font-medium">
+          Residential Address *
         </Label>
         <Input
-          id="currentJob"
-          placeholder="e.g., Frontend Developer, Software Engineer"
-          value={formData.currentJob}
-          onChange={(e) => updateFormData("currentJob", e.target.value)}
+          id="residentialAddress"
+          placeholder="e.g. No5 Olaniyi Street, Surulere"
+          value={formData.residentialAddress}
+          onChange={(e) => updateFormData("residentialAddress", e.target.value)}
           className={
-            formError && !formData.currentJob.trim() ? "border-red-500" : ""
-          }
-        />
-      </div>
-
-      {/* Years of Experience Section */}
-      <div className="space-y-2">
-        <Label htmlFor="yearsOfExperience" className="text-sm font-medium">
-          Years of Experience *
-        </Label>
-        <Input
-          id="yearsOfExperience"
-          type="number"
-          min="0"
-          max="50"
-          placeholder="e.g., 3"
-          value={formData.yearsOfExperience}
-          onChange={(e) =>
-            updateFormData("yearsOfExperience", parseInt(e.target.value) || 0)
-          }
-          className={
-            formError && formData.yearsOfExperience === 0
+            formError && !formData.residentialAddress.trim()
               ? "border-red-500"
               : ""
           }
         />
       </div>
 
-      {/* Experience Level Section */}
-      <div className="space-y-2">
-        <Label htmlFor="experienceLevel" className="text-sm font-medium">
-          Experience Level *
-        </Label>
-        <Select
-          value={formData.experienceLevel}
-          onValueChange={(value) => updateFormData("experienceLevel", value)}
-        >
-          <SelectTrigger
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* Location (General) */}
+        <div className="space-y-2">
+          <Label htmlFor="location" className="text-sm font-medium">
+            Location Summary *
+          </Label>
+          <Input
+            id="location"
+            placeholder="e.g. Lagos, Nigeria"
+            value={formData.location}
+            onChange={(e) => updateFormData("location", e.target.value)}
             className={
-              formError && !formData.experienceLevel ? "border-red-500" : ""
+              formError && !formData.location.trim() ? "border-red-500" : ""
             }
+          />
+          <p className="text-xs text-gray-500">
+            A brief location description (e.g., "Lagos, Nigeria" or "Remote")
+          </p>
+        </div>
+
+        {/* Country Code */}
+        <div className="space-y-2">
+          <Label htmlFor="countryCode" className="text-sm font-medium">
+            Country *
+          </Label>
+          <Select
+            value={formData.countryCode}
+            onValueChange={(value) => updateFormData("countryCode", value)}
           >
-            <SelectValue placeholder="Select your experience level" />
-          </SelectTrigger>
-          <SelectContent>
-            {experienceLevel.map((level) => (
-              <SelectItem key={level} value={level}>
-                {level}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+            <SelectTrigger
+              className={
+                formError && !formData.countryCode ? "border-red-500" : ""
+              }
+            >
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countryCodes.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  {country.name} ({country.code})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* City */}
+        <div className="space-y-2">
+          <Label htmlFor="city" className="text-sm font-medium">
+            City *
+          </Label>
+          <Input
+            id="city"
+            placeholder="e.g. Ikeja"
+            value={formData.city}
+            onChange={(e) => updateFormData("city", e.target.value)}
+            className={
+              formError && !formData.city.trim() ? "border-red-500" : ""
+            }
+          />
+        </div>
+
+        {/* State */}
+        <div className="space-y-2">
+          <Label htmlFor="state" className="text-sm font-medium">
+            State *
+          </Label>
+          <Select
+            value={formData.state}
+            onValueChange={(value) => updateFormData("state", value)}
+          >
+            <SelectTrigger
+              className={formError && !formData.state ? "border-red-500" : ""}
+            >
+              <SelectValue placeholder="Select state" />
+            </SelectTrigger>
+            <SelectContent>
+              {nigerianStates.map((state) => (
+                <SelectItem key={state.value} value={state.value}>
+                  {state.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Zip Code */}
+      <div className="space-y-2">
+        <Label htmlFor="zipCode" className="text-sm font-medium">
+          Zip/Postal Code *
+        </Label>
+        <Input
+          id="zipCode"
+          placeholder="e.g. 100123"
+          value={formData.zipCode}
+          onChange={(e) => updateFormData("zipCode", e.target.value)}
+          className={
+            formError && !formData.zipCode.trim() ? "border-red-500" : ""
+          }
+        />
       </div>
 
       {/* Helper Text */}
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+      {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg">
         <p className="text-sm text-blue-800">
           <strong>Tip:</strong> Make sure your bio is engaging and highlights
           your key strengths. Add relevant technical skills that match your
           experience level and job interests.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

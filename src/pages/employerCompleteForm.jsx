@@ -654,7 +654,7 @@ export function EmployerProfileCompleteForm() {
         <img className="w-20 sm:w-24" src={Logo} alt="" />
       </nav>
       <div className="flex items-center justify-center pt-20 sm:pt-0">
-        <div className="w-full border-transparent px-4 py-3 sm:w-1/2 sm:my-10 sm:p-8 sm:border-[1px] sm:border-gray-300 sm:rounded-md">
+        {/* <div className="w-full border-transparent px-4 py-3 sm:w-1/2 sm:my-10 sm:p-8 sm:border-[1px] sm:border-gray-300 sm:rounded-md">
           <div className="">
             <h1 className="font-semibold text-2xl"> Profile Complete</h1>
             <p className="text-gray-500 text-base">
@@ -731,8 +731,6 @@ export function EmployerProfileCompleteForm() {
                 )}
               </div>
 
-              {/* mobile form navigator */}
-
               <div className="flex flex-col gap-3 sm:hidden">
                 {currentStep < 4 ? (
                   <Button
@@ -776,7 +774,7 @@ export function EmployerProfileCompleteForm() {
             <SkipFormDialog isOpen={isSkipButtonClick} onClose={closeModal} />
           )}
           <Toaster />
-        </div>
+        </div> */}
       </div>
     </div>
   );

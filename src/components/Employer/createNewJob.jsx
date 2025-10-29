@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -33,16 +33,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEmployerData } from "@/store/employer/employerStore";
 import { DatePicker } from "../ui/date-picker";
 import { Badge } from "../ui/badge";
 import { usePostJob } from "@/hooks/useJobs";
 import { toast } from "@/hooks/use-toast";
 import { cn, getStoredKey } from "@/lib/utils";
-import { ToastAction } from "../ui/toast";
 import { nigerianStates } from "@/utils/data/location";
 import { isAfter, startOfDay } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   title: z.string().min(1, "Job title required"),
@@ -68,11 +67,12 @@ export default function CreateNewJob({
   employerID,
   companyLogo,
   isOpenDialog,
-  openChange,
-  isCloseDialog,
+  openDialog,
+  closeDialog,
 }) {
   const navigate = useNavigate();
-  const { mutate: uploadJob } = usePostJob();
+  const queryClient = useQueryClient();
+  const { mutate: uploadJob, isLoading } = usePostJob();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -148,18 +148,21 @@ export default function CreateNewJob({
             console.log(data);
             toast({
               className: cn(
-                "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+                "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
               ),
-              title: "Profile completed",
+              title: "Job Post",
               description: (
                 <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
                   <p className="text-white">
-                    You have successfully complete your profile
+                    Your job have been posted successfully
                   </p>
                 </pre>
               ),
-              duration: 2500,
             });
+            queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
+            queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
+            form.reset();
+            closeDialog();
           },
           onError: (err) => {
             console.error("Job posting failed", err);
@@ -206,13 +209,13 @@ export default function CreateNewJob({
   };
 
   return (
-    <Dialog open={isOpenDialog} onOpenChange={openChange}>
+    <Dialog
+      open={isOpenDialog}
+      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}
+    >
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handlePostJob)}
-            className="space-y-8 max-w-3xl py-10"
-          >
+          <form className="space-y-8 max-w-3xl py-10">
             <DialogHeader>
               <DialogTitle>Create New Job</DialogTitle>
               <DialogDescription></DialogDescription>
@@ -435,16 +438,24 @@ export default function CreateNewJob({
               </Button>
 
               <Button
+                type="button"
                 className="border-none bg-sky-500 hover:bg-sky-600"
-                onClick={handlePostJob}
+                onClick={form.handleSubmit(handlePostJob)}
+                disabled={isLoading}
               >
-                Post Job
+                {isLoading ? (
+                  <div className="flex items-center space-x-1">
+                    <Loader2 className="animate-spin" />
+                    <span>Please wait</span>
+                  </div>
+                ) : (
+                  <span>Post Job</span>
+                )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
-      {/* <Toaster /> */}
     </Dialog>
   );
 }

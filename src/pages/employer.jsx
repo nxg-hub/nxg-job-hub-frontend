@@ -54,10 +54,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
-import { useEmployerData } from "@/store/employer/employerStore";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
 import { useMobile } from "@/hooks/use-mobile";
+import { Toaster } from "@/components/ui/toaster";
+import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserDataQuery } from "@/hooks/useAllUsers";
 import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch } from "react-redux";
 
@@ -199,9 +200,9 @@ function DashboardContent({ notifications = [] }) {
     isError: isUserTypeError,
     isFetched: isUserTypeFetched,
     error: userTypeError,
-  } = useEmployerDataQuery();
+  } = useUserDataQuery();
 
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
 
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
   const isMobile = useMobile();
@@ -453,6 +454,7 @@ function DashboardContent({ notifications = [] }) {
           )}
           <div className="h-full">
             <Outlet />
+            <Toaster />
           </div>
         </div>
       </SidebarInset>

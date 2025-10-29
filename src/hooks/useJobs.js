@@ -1,5 +1,10 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 
 export const usePostJob = () => {
@@ -133,4 +138,26 @@ export const useEmployerJobsKpis = (employerID) => {
   };
 
   return { isLoading, isError, error, data };
+};
+
+export const useDeletePostedJob = () => {
+  const deleteJob = async (jobID) => {
+    const response = await axios.delete(
+      `${API_HOST_URL}/api/job-postings/delete/${jobID}`
+    );
+    return response.data;
+  };
+
+  const mutation = useMutation({
+    mutationFn: (jobID) => deleteJob(jobID),
+  });
+
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    error: mutation.error,
+    data: mutation.data,
+  };
 };
