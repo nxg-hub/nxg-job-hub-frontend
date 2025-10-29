@@ -1,12 +1,4 @@
-import { useState } from "react";
-import {
-  Eye,
-  MoreHorizontal,
-  Plus,
-  RefreshCw,
-  Search,
-  Users,
-} from "lucide-react";
+import { Eye, MoreHorizontal, RefreshCw, Users } from "lucide-react";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import emptySuggestedImage from "@/static/images/empty-suggest.svg";
@@ -27,10 +19,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { useFetchJobs, useFetchJobApplicants } from "@/hooks/useJobs";
+import {
+  useFetchJobs,
+  useFetchJobApplicants,
+  useDeletePostedJob,
+} from "@/hooks/useJobs";
 import { Skeleton } from "../../ui/skeleton";
-import { getDateAsTextLabel } from "@/lib/utils";
+import { cn, getDateAsTextLabel } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
 
 const getJobTypeBadge = (status) => {
   switch (status) {
@@ -71,7 +69,7 @@ const getStatusBadge = (status) => {
     case "ACCEPTED":
       return (
         <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-          ACCEPTED
+          {status}
         </Badge>
       );
     case "PENDING":
@@ -80,11 +78,11 @@ const getStatusBadge = (status) => {
           variant="secondary"
           className="bg-secondary text-white hover:bg-secondary"
         >
-          PENDING
+          {status}
         </Badge>
       );
-    case "REJECT":
-      return <Badge variant="destructive">Closed</Badge>;
+    case "REJECTED":
+      return <Badge variant="destructive">{status}</Badge>;
     default:
       return <Badge variant="outline">{status}</Badge>;
   }
@@ -178,6 +176,31 @@ export default function RecentPostedJobs({
 const JobRow = ({ job }) => {
   const jobID = job?.jobID;
   const { data, isLoading, isError, error } = useFetchJobApplicants({ jobID });
+  const queryClient = useQueryClient();
+  const { mutate: deleteJob } = useDeletePostedJob();
+
+  const handleDeleteJob = (jobId) => {
+    if (jobId) {
+      deleteJob(jobId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
+          queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
+          toast({
+            className: cn(
+              "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: <p className="text-red-800">Job Deleted</p>,
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-red-200 p-4">
+                <p>The job has been permanently deleted</p>
+              </pre>
+            ),
+          });
+        },
+      });
+    }
+  };
+
   return (
     <TableRow className="odd:bg-white even:bg-gray-50" key={job?.jobID}>
       <TableCell className="font-medium">{job?.job_title}</TableCell>
@@ -213,9 +236,12 @@ const JobRow = ({ job }) => {
             </DropdownMenuItem>
             <DropdownMenuItem>Edit Job</DropdownMenuItem>
             <DropdownMenuItem>View Applications</DropdownMenuItem>
-            <DropdownMenuItem>Duplicate Job</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              Close Job
+            <DropdownMenuItem>Tag agent</DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-red-600"
+              onClick={() => handleDeleteJob(jobID)}
+            >
+              Delete Job
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

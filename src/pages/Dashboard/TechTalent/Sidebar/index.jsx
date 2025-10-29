@@ -1,23 +1,23 @@
 import { useContext, useState, useEffect } from "react";
 import s from "./index.module.scss";
-import {
-  CiUser,
-  ChangeProfilePicture,
-  MyProfile,
-  Dashboard,
-  Applications,
-  Analytics,
-  Help,
-  // Settings,
-  Notification,
-  Wallet,
-  SavedJobs,
-  Logout,
-  Password,
-  Terms,
-  Privacy,
-  JobListings,
-} from "./SidebarIcons";
+// import {
+//   CiUser,
+//   ChangeProfilePicture,
+//   MyProfile,
+//   Dashboard,
+//   Applications,
+//   Analytics,
+//   Help,
+//   // Settings,
+//   Notification,
+//   Wallet,
+//   SavedJobs,
+//   Logout,
+//   Password,
+//   Terms,
+//   Privacy,
+//   JobListings,
+// } from "./SidebarIcons";
 import { PiCaretDown, PiSubtitlesBold } from "react-icons/pi";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../..";
@@ -45,17 +45,20 @@ const Sidebar = () => {
     {
       path: "/dashboard",
       name: "Dashboard",
-      icon: <Dashboard />,
+      // icon: <Dashboard />,
+      icon: "",
     },
     {
       path: "notifications",
       name: "Notifications",
-      icon: <Notification />,
+      // icon: <Notification />,
+      icon: "",
     },
     {
       path: "job-listings",
       name: "Job Listings",
-      icon: <JobListings />,
+      // icon: <JobListings />,
+      icon: "",
     },
     // {
     //   path: "wallet",
@@ -65,17 +68,20 @@ const Sidebar = () => {
     {
       path: "profile",
       name: " My Profile",
-      icon: <MyProfile />,
+      // icon: <MyProfile />,
+      icon: "",
     },
     {
       path: "applications",
       name: "Applications",
-      icon: <Applications />,
+      // icon: <Applications />,
+      icon: "",
     },
     {
       path: "saved",
       name: "Saved Jobs",
-      icon: <SavedJobs fill="white" />,
+      // icon: <SavedJobs fill="white" />,
+      icon: "",
     },
     // {
     //   path: "analytics",
@@ -85,7 +91,8 @@ const Sidebar = () => {
     {
       path: "subscription",
       name: "Subscription",
-      icon: <PiSubtitlesBold />,
+      // icon: <PiSubtitlesBold />,
+      icon: "",
     },
   ];
 
@@ -277,10 +284,11 @@ const Sidebar = () => {
       <div className={s.Profile}>
         <div>
           <div className={s.displayPic} style={{ padding: 0 }}>
-            {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />}
+            {/* {profilePicture ? <img src={profilePicture} alt="" /> : <CiUser />} */}
+            {profilePicture ? <img src={profilePicture} alt="" /> : ""}
           </div>
           <label htmlFor="profilePicture">
-            <ChangeProfilePicture title="upload profile picture" />
+            {/* <ChangeProfilePicture title="upload profile picture" /> */}
           </label>
           <input
             id="profilePicture"
@@ -320,15 +328,18 @@ const Sidebar = () => {
               className={`${s.dashboardItem} `}
             >
               {" "}
-              <Password /> <p>Password Settings</p>
+              {/* <Password />  */}
+              <p>Password Settings</p>
             </NavLink>
             <NavLink end to="privacy" className={`${s.dashboardItem} `}>
               {" "}
-              <Privacy /> <p>Privacy</p>
+              {/* <Privacy />  */}
+              <p>Privacy</p>
             </NavLink>
             <NavLink end to="terms" className={`${s.dashboardItem} `}>
               {" "}
-              <Terms /> <p>Terms and conditions</p>
+              {/* <Terms />  */}
+              <p>Terms and conditions</p>
             </NavLink>
           </ul>
         </li>
@@ -343,9 +354,7 @@ const Sidebar = () => {
         className={`${s.dashboardItem} ${s.Logout}  `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div>
-          <Logout />
-        </div>
+        <div>{/* <Logout /> */}</div>
         <p> Logout </p>
       </NavLink>
       {message && <Notice type={message.type} message={message.content} />}

@@ -28,13 +28,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import AchivementIcon from "@/static/icons/archive.png";
 
 const InputField = ({ labelName, name, value, type, onChange, ...props }) => {
   const handleInputChange = (event) => {
@@ -42,7 +43,12 @@ const InputField = ({ labelName, name, value, type, onChange, ...props }) => {
   };
   return (
     <div className="space-y-2">
-      <Label htmlFor={name}>{labelName}</Label>
+      <Label
+        className={cn(`${props.disabled ? "text-gray-500" : ""}`)}
+        htmlFor={name}
+      >
+        {labelName}
+      </Label>
       <Input
         id={name}
         name={name}
@@ -150,6 +156,7 @@ const MultiSelectField = ({
                         className="h-3 w-3 cursor-pointer text-muted-foreground hover:text-foreground"
                         onClick={(e) => {
                           e.stopPropagation();
+                          e.preventDefault();
                           onValueChange(
                             name,
                             selected.filter((item) => item !== value)
@@ -206,7 +213,14 @@ const PhoneNumberField = ({ labelName, value, name, onChange, ...props }) => {
   };
   return (
     <div className="space-y-2">
-      {labelName && <Label htmlFor={name}>{labelName}</Label>}
+      {labelName && (
+        <Label
+          className={cn(`${props.disabled ? "text-gray-500" : ""}`)}
+          htmlFor={name}
+        >
+          {labelName}
+        </Label>
+      )}
       <PhoneInput value={value} onChange={handleInputChange} {...props} />
     </div>
   );
@@ -369,15 +383,13 @@ const PortFolioField = ({ labelName, name, records = [], onChange }) => {
   const [jobRoleInput, setJobRoleInput] = useState("");
   const [successStoryInput, setSuccessStoryInput] = useState("");
 
-  const handleAddRecord = () => {
+  const handleAddAchivement = () => {
     if (
-      !pastClientInput === "" &&
-      !jobRoleInput === "" &&
-      !successStoryInput === ""
+      pastClientInput !== "" &&
+      !jobRoleInput !== "" &&
+      !successStoryInput !== ""
     ) {
-      let id = `Key achivement ${records.length + 1}`;
       const record = {
-        portfolioId: id,
         pastClient: pastClientInput,
         jobRole: jobRoleInput,
         successStory: successStoryInput,
@@ -424,21 +436,23 @@ const PortFolioField = ({ labelName, name, records = [], onChange }) => {
 
           <Button
             type="button"
-            className="w-full border-gray-200 bg-gray-100 text-primary hover:bg-slate-100 hover:text-secondary"
-            onClick={handleAddRecord}
+            className="w-full border-transparent bg-secondary text-white hover:bg-primary "
+            onClick={handleAddAchivement}
           >
-            Add <Plus className="h-4 w-4" />
+            Add achivement <Plus className="h-4 w-4" />
           </Button>
         </CardContent>
       </Card>
       {records?.length > 0 ? (
         <Accordion collapsible className="w-full">
-          {records.map((record) => (
-            <AccordionItem key={record.portfolioId} value={record.portfolioId}>
+          {records.map((record, index) => (
+            <AccordionItem key={index} value={index + 1}>
               <AccordionTrigger className="border-transparent hover:bg-gray-50 hover:text-black">
-                <div className="flex items-center gap-1 text-lg font-medium text-secondary no-underline">
-                  <Award className="w-5 h-5" />
-                  {record.portfolioId}
+                <div className="flex gap-2">
+                  <img className="h-5 w-5" src={AchivementIcon} alt="" />
+                  <div className="flex flex-col text-sm font-medium  no-underline">
+                    <span>{record.jobRole}</span>
+                  </div>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="flex flex-col gap-4 text-balance px-3">
@@ -453,7 +467,7 @@ const PortFolioField = ({ labelName, name, records = [], onChange }) => {
         </Accordion>
       ) : (
         <div className="border-[1px] p-8 rounded text-center text-sm text-gray-400 italic">
-          No record added yet
+          No achivement added yet
         </div>
       )}
     </div>

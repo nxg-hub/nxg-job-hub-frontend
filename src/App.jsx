@@ -141,10 +141,6 @@ function App() {
           path="/services-provider/complete-profile-x"
           element={<XServiceProviderFormCompletion />}
         />
-        <Route
-          path="/services-provider/complete-profile-x"
-          element={<XServiceProviderFormCompletion />}
-        />
         {/* end service provider user routes */}
 
         {/* service provider user routes (remove hwen done) */}

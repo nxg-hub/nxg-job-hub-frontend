@@ -143,8 +143,8 @@ export default function EmployerDashboardTab() {
           employerID={employer?.employer?.employerID}
           companyLogo={employer?.employer?.companyLogo}
           isOpenDialog={isCreateJobDialogOpen}
-          openChange={setIsCreateJobDialogOpen}
-          isCloseDialog={closeCreateJobDialog}
+          openDialog={openCreateJobDialog}
+          closeDialog={closeCreateJobDialog}
         />
       </div>
       <div className="space-y-4">

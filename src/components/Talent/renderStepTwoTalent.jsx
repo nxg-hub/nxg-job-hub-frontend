@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import {
@@ -8,195 +8,186 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "../ui/badge";
+import { Plus, X } from "lucide-react";
+import { Button } from "../ui/button";
 
 const RenderStepTwoTalent = ({ formData, setFormData, formError }) => {
-  // Education/Qualification options
-  const qualificationOptions = [
-    "High School Diploma",
-    "Associate Degree",
-    "Bachelor's Degree",
-    "Master's Degree",
-    "PhD/Doctorate",
-    "Professional Certificate",
-    "Bootcamp Graduate",
-    "Self-Taught"
-  ];
+  const [newSkill, setNewSkill] = useState("");
 
-  // Job type options
-  const jobTypeOptions = [
-    "Full-time",
-    "Part-time",
-    "Contract",
-    "Freelance",
-    "Internship",
-    "Temporary"
-  ];
-
-  // Work mode options
-  const workModeOptions = [
-    "Remote",
-    "On-site",
-    "Hybrid"
-  ];
-
-  // Professional certifications (common tech certs)
-  const certificationOptions = [
-    "None",
-    "AWS Certified Solutions Architect",
-    "AWS Certified Developer",
-    "Google Cloud Professional",
-    "Microsoft Azure Certified",
-    "Cisco Certified Network Associate (CCNA)",
-    "CompTIA Security+",
-    "Certified ScrumMaster (CSM)",
-    "Project Management Professional (PMP)",
-    "Certified Kubernetes Administrator (CKA)",
-    "Oracle Certified Professional",
-    "Salesforce Certified",
-    "Other"
+  // Experience level options
+  const experienceLevel = [
+    "Entry Level (0-2 years)",
+    "Junior (2-4 years)",
+    "Mid-Level (4-7 years)",
+    "Senior (7-10 years)",
+    "Lead/Principal (10+ years)",
+    "Executive/Director (15+ years)",
   ];
 
   // Handle form data updates
   const updateFormData = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
+  };
+
+  // Skills management
+  const addSkill = () => {
+    if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
+      updateFormData("skills", [...formData.skills, newSkill.trim()]);
+      setNewSkill("");
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    updateFormData(
+      "skills",
+      formData.skills.filter((skill) => skill !== skillToRemove)
+    );
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
   };
 
   return (
     <div className="space-y-6">
-      {/* Highest Qualification */}
+      {/* Skills Section */}
       <div className="space-y-2">
-        <Label htmlFor="highestQualification" className="text-sm font-medium">
-          Highest Educational Qualification *
+        <Label htmlFor="skills" className="text-sm font-medium">
+          Technical Skills *
         </Label>
-        <Select
-          value={formData.highestQualification}
-          onValueChange={(value) => updateFormData("highestQualification", value)}
-        >
-          <SelectTrigger className={formError && !formData.highestQualification ? 'border-red-500' : ''}>
-            <SelectValue placeholder="Select your highest qualification" />
-          </SelectTrigger>
-          <SelectContent>
-            {qualificationOptions.map((qualification) => (
-              <SelectItem key={qualification} value={qualification}>
-                {qualification}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="space-y-3">
+          <div className="flex gap-2">
+            <Input
+              id="skills"
+              placeholder="Add a skill (e.g., React, Python, AWS)"
+              value={newSkill}
+              onChange={(e) => setNewSkill(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="flex-1"
+            />
+            <Button
+              type="button"
+              onClick={addSkill}
+              variant="outline"
+              size="sm"
+              disabled={!newSkill.trim()}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Skills Display */}
+          <div className="flex flex-wrap gap-2 min-h-[40px] p-3 border rounded-md bg-gray-50">
+            {formData.skills.length > 0 ? (
+              formData.skills.map((skill) => (
+                <Badge
+                  key={skill}
+                  variant="secondary"
+                  className="flex items-center text-white gap-1 px-2 py-1"
+                >
+                  {skill}
+                  <button
+                    type="button"
+                    onClick={() => removeSkill(skill)}
+                    className="ml-1 hover:bg-gray-300 rounded-full  p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))
+            ) : (
+              <span className="text-gray-400 text-sm">No skills added yet</span>
+            )}
+          </div>
+          {formError && formData.skills.length === 0 && (
+            <p className="text-red-500 text-xs">
+              Please add at least one skill
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* Professional Certification */}
-      <div className="space-y-2">
-        <Label htmlFor="professionalCert" className="text-sm font-medium">
-          Professional Certification *
-        </Label>
-        <Select
-          value={formData.professionalCert}
-          onValueChange={(value) => updateFormData("professionalCert", value)}
-        >
-          <SelectTrigger className={formError && !formData.professionalCert ? 'border-red-500' : ''}>
-            <SelectValue placeholder="Select your certification (or None)" />
-          </SelectTrigger>
-          <SelectContent>
-            {certificationOptions.map((cert) => (
-              <SelectItem key={cert} value={cert}>
-                {cert}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {/* Experience Level Section */}
+        <div className="space-y-2">
+          <Label htmlFor="experienceLevel" className="text-sm font-medium">
+            Experience Level *
+          </Label>
+          <Select
+            value={formData.experienceLevel}
+            onValueChange={(value) => updateFormData("experienceLevel", value)}
+          >
+            <SelectTrigger
+              className={
+                formError && !formData.experienceLevel ? "border-red-500" : ""
+              }
+            >
+              <SelectValue placeholder="Select your experience level" />
+            </SelectTrigger>
+            <SelectContent>
+              {experienceLevel.map((level) => (
+                <SelectItem key={level} value={level}>
+                  {level}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        {/* Years of Experience Section */}
+        <div className="space-y-2">
+          <Label htmlFor="yearsOfExperience" className="text-sm font-medium">
+            Years of Experience *
+          </Label>
+          <Input
+            id="yearsOfExperience"
+            type="number"
+            min="0"
+            max="50"
+            placeholder="e.g., 3"
+            value={formData.yearsOfExperience}
+            onChange={(e) =>
+              updateFormData("yearsOfExperience", parseInt(e.target.value) || 0)
+            }
+            className={
+              formError && formData.yearsOfExperience === 0
+                ? "border-red-500"
+                : ""
+            }
+          />
+        </div>
 
-      {/* Job Type */}
-      <div className="space-y-2">
-        <Label htmlFor="jobType" className="text-sm font-medium">
-          Preferred Job Type *
-        </Label>
-        <Select
-          value={formData.jobType}
-          onValueChange={(value) => updateFormData("jobType", value)}
-        >
-          <SelectTrigger className={formError && !formData.jobType ? 'border-red-500' : ''}>
-            <SelectValue placeholder="Select your preferred job type" />
-          </SelectTrigger>
-          <SelectContent>
-            {jobTypeOptions.map((type) => (
-              <SelectItem key={type} value={type}>
-                {type}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Work Mode */}
-      <div className="space-y-2">
-        <Label htmlFor="workMode" className="text-sm font-medium">
-          Preferred Work Mode *
-        </Label>
-        <Select
-          value={formData.workMode}
-          onValueChange={(value) => updateFormData("workMode", value)}
-        >
-          <SelectTrigger className={formError && !formData.workMode ? 'border-red-500' : ''}>
-            <SelectValue placeholder="Select your preferred work mode" />
-          </SelectTrigger>
-          <SelectContent>
-            {workModeOptions.map((mode) => (
-              <SelectItem key={mode} value={mode}>
-                {mode}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Portfolio Link */}
-      <div className="space-y-2">
-        <Label htmlFor="portfolioLink" className="text-sm font-medium">
-          Portfolio Link *
-        </Label>
-        <Input
-          id="portfolioLink"
-          type="url"
-          placeholder="https://yourportfolio.com"
-          value={formData.portfolioLink}
-          onChange={(e) => updateFormData("portfolioLink", e.target.value)}
-          className={formError && !formData.portfolioLink.trim() ? 'border-red-500' : ''}
-        />
-        <p className="text-xs text-gray-500">
-          Share your portfolio, GitHub, or personal website
-        </p>
-      </div>
-
-      {/* LinkedIn URL */}
-      <div className="space-y-2">
-        <Label htmlFor="linkedInUrl" className="text-sm font-medium">
-          LinkedIn Profile URL *
-        </Label>
-        <Input
-          id="linkedInUrl"
-          type="url"
-          placeholder="https://linkedin.com/in/yourprofile"
-          value={formData.linkedInUrl}
-          onChange={(e) => updateFormData("linkedInUrl", e.target.value)}
-          className={formError && !formData.linkedInUrl.trim() ? 'border-red-500' : ''}
-        />
-        <p className="text-xs text-gray-500">
-          Your professional LinkedIn profile URL
-        </p>
+        {/* Current Job Section */}
+        <div className="space-y-2">
+          <Label htmlFor="currentJob" className="text-sm font-medium">
+            Current Job Title *
+          </Label>
+          <Input
+            id="currentJob"
+            placeholder="e.g., Frontend Developer, Software Engineer"
+            value={formData.currentJob}
+            onChange={(e) => updateFormData("currentJob", e.target.value)}
+            className={
+              formError && !formData.currentJob.trim() ? "border-red-500" : ""
+            }
+          />
+        </div>
       </div>
 
       {/* Helper Text */}
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+      {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg">
         <p className="text-sm text-blue-800">
-          <strong>Tip:</strong> Make sure your portfolio showcases your best work and your LinkedIn profile is up-to-date. 
-          These links help employers understand your background and see examples of your work.
+          <strong>Tip:</strong> Make sure your portfolio showcases your best
+          work and your LinkedIn profile is up-to-date. These links help
+          employers understand your background and see examples of your work.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
+  PackagePlus,
+  MapPin,
   UserCog,
   BriefcaseBusiness,
-  Contact,
   CircleDashed,
   Circle,
   ArrowLeft,
@@ -29,49 +30,137 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import { useCheckCompleteProfileFlag } from "@/hooks/useCheckCompleteProfileFlag";
 import { useAutoLogin } from "@/hooks/useAutoLogin";
-import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
+import { useUserProfileUpdate } from "@/hooks/useUserProfileUpdate";
 import { toast } from "@/hooks/use-toast";
 import Logo from "@/static/images/logo_colored.png";
 import RenderStepOne from "@/components/agent/CompleteForm/renderStepOne";
 import RenderStepTwo from "@/components/agent/CompleteForm/renderStepTwo";
 import RenderStepThree from "@/components/agent/CompleteForm/renderStepThree";
+import RenderStepFour from "@/components/agent/CompleteForm/renderStepFour";
+import { API_HOST_URL } from "@/utils/api/API_HOST";
+import axios from "axios";
+import {
+  isValidPhoneNumber,
+  parsePhoneNumberWithError,
+} from "libphonenumber-js";
+
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Form } from "@/components/ui/form";
+
+// Form schemas for each step
+const agentInfoSchema = z.object({
+  agencyName: z.string({
+    required_error: "Provide your agency name.",
+  }),
+  agencySize: z.string({
+    required_error: "Agency size missing.",
+  }),
+  agencyAddress: z
+    .string()
+    .min(5, { message: "Address must be at least 5 characters." }),
+  agencyPhoneNumber: z
+    .string()
+    .refine((val) => isValidPhoneNumber(val), {
+      message: "Invalid phone number",
+    })
+    .transform((value, ctx) => {
+      const phone_num = parsePhoneNumberWithError(value, {
+        defaultCountry: "NG",
+      });
+      if (!phone_num?.isValid()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid phone number",
+        });
+        return z.NEVER;
+      }
+      return phone_num.formatInternational();
+    }),
+  agencyEmail: z.string().email(),
+  agencyWebsite: z.preprocess((val) => {
+    if (typeof val === "string") {
+      if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(val)) return val;
+      return `https://${val}`;
+    }
+    return val;
+  }, z.string().url()),
+  bio: z.string(),
+});
+
+const locationSchema = z.object({
+  //Location details
+  country: z.string({
+    required_error: "Select your agency country.",
+  }),
+  state: z.string({
+    required_error: "Select your agency state.",
+  }),
+  city: z.string().min(2, { message: "City must be at least 2 characters." }),
+  zipCode: z
+    .string()
+    .min(5, { message: "Zip code must be at least 5 characters." }),
+});
+
+const professionalDetailsSchema = z.object({
+  //Professional Details
+  jobType: z.string({
+    required_error: "Select your agency job type.",
+  }),
+  industryType: z.string({
+    required_error: "Select your agency industry type.",
+  }),
+  preferredIndustries: z
+    .array(z.string())
+    .min(1, { message: "Please select at least one preferred industry." }),
+  areaOfSpecialization: z
+    .array(z.string())
+    .min(1, { message: "Please select at least one area of specialization." }),
+});
+
+const achivementSchema = z.object({
+  client: z
+    .string()
+    .min(2, { message: "Client/Company name must be at least 2 characters." }),
+  jobRole: z.string().min(2, { message: "Job role be at least 2 characters." }),
+  successStory: z
+    .string()
+    .min(10, { message: "Success story must be at least 10 characters long." }),
+});
+
+const achievementsSchema = z.object({
+  //Expertise & Achievements
+  experienceLevel: z.string().optional(),
+  achievements: z.array(achivementSchema).min(1, {
+    message: "Please enter at least one success achievement record.",
+  }),
+});
+
+// Combined schema for the entire form
+const formSchema = z.object({
+  ...agentInfoSchema.shape,
+  ...locationSchema.shape,
+  ...professionalDetailsSchema.shape,
+  ...achievementsSchema.shape,
+});
 
 export default function AgentCompleteProfileForm() {
-  const navigate = useNavigate();
-  const [isSkipButtonClick, setIsSkipButtonClick] = useState(false);
-  const [formData, setFormData] = useState({
-    // Agency Information
-    agencyName: "",
-    agentTitle: "",
-    yearOfExperience: "",
-    agencyBio: "",
-    agencySize: "",
-    areaOfSpecialization: [],
-    preferredIndustry: [],
-
-    // Contact information
-    country: "",
-    state: "",
-    city: "",
-    postalCode: "",
-    email: "",
-    phoneNumber: "",
-    agencyAddress: "",
-    agencyWebsite: "",
-    // socialMedia: [],
-
-    //Agency Portfolio
-    agencyPortfolio: [],
-  });
-
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formError, setFormError] = useState(false);
-
   //Check the local storage flag
   const {
     data: completeProfileFlag,
     isPending: isFlagPending,
     isFetched: isFlagFetched,
+    isSuccess: isFlagCheck,
   } = useCheckCompleteProfileFlag();
 
   //Fetch user type from backend, ONLY if completeProfileFlag is true
@@ -86,6 +175,15 @@ export default function AgentCompleteProfileForm() {
     enabled: completeProfileFlag === true,
   });
 
+  const [step, setStep] = useState(1);
+  const totalStep = 5;
+
+  const navigate = useNavigate();
+  const [isSkipButtonClick, setIsSkipButtonClick] = useState(false);
+
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formError, setFormError] = useState(false);
+
   const storedToken = (function () {
     let key =
       localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
@@ -98,7 +196,109 @@ export default function AgentCompleteProfileForm() {
     }
   })();
 
-  const { updateUserProfile, isLoading } = useUserProfileUpdate();
+  // Initialize form with default values
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      // Agency Information
+      agencyName: "",
+      agencySize: "",
+      agencyAddress: "",
+      agencyPhoneNumber: "",
+      agencyEmail: "",
+      agencyWebsite: "",
+      bio: "",
+
+      //Location details
+      country: "",
+      state: "",
+      city: "",
+      zipCode: "",
+
+      //Professional Details
+      jobType: "",
+      industryType: "",
+      preferredIndustries: [],
+      areaOfSpecialization: [],
+
+      //Expertise & Achievements
+      experienceLevel: "",
+      achievements: [
+        {
+          client: "",
+          jobRole: "",
+          successStory: "",
+        },
+      ],
+    },
+    mode: "onChange",
+  });
+
+  // Get current schema based on step
+  const getCurrentSchema = () => {
+    switch (step) {
+      case 1:
+        return agentInfoSchema;
+      case 2:
+        return locationSchema;
+      case 3:
+        return professionalDetailsSchema;
+      case 4:
+        return achievementsSchema;
+      default:
+        return formSchema;
+    }
+  };
+
+  // Handle next step
+  const handleNext = async () => {
+    const currentSchema = getCurrentSchema();
+
+    // Get only the fields for the current step
+    const fieldsToValidate = Object.keys(currentSchema.shape);
+
+    // Validate only the current step fields
+    const result = await form.trigger(fieldsToValidate);
+
+    if (result) {
+      setStep((prev) => Math.min(prev + 1, totalStep));
+    }
+  };
+
+  // Handle previous step
+  const handlePrevious = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const [formData, setFormData] = useState({
+    // Agency Information
+    agencyName: "",
+    agencySize: "",
+    agencyAddress: "",
+    agencyPhoneNumber: "",
+    agencyEmail: "",
+    agencyWebsite: "",
+    bio: "",
+
+    //Location details
+    country: "",
+    state: "",
+    city: "",
+    zipCode: "",
+
+    //Professional Details
+    jobType: "",
+    industryType: "",
+    preferredIndustries: [],
+    areaOfSpecialization: [],
+
+    //Expertise & Achievements
+    experienceLevel: "",
+    achievements: [],
+  });
+
+  const { mutate: updateAgentProfile, isPending: isSubmittingProfile } =
+    useUserProfileUpdate();
 
   // useEffect(() => {
   //   if (!storedToken) {
@@ -174,29 +374,33 @@ export default function AgentCompleteProfileForm() {
   // ]);
 
   const stepFields = {
+    // Agency Information
     1: [
       "agencyName",
-      "agentTitle",
-      "yearOfExperience",
-      "agencyBio",
       "agencySize",
-      "areaOfSpecialization",
-      "preferredIndustry",
-    ],
-    2: [
-      "country",
-      "state",
-      "city",
-      "postalCode",
-      "email",
-      "phoneNumber",
       "agencyAddress",
+      "agencyPhoneNumber",
+      "agencyEmail",
       "agencyWebsite",
+      "bio",
     ],
-    3: [" agencyPortfolio"],
+
+    //Location details
+    2: ["country", "state", "city", "zipCode"],
+
+    //Professional Details
+    3: [
+      "jobType",
+      "industryType",
+      "preferredIndustries",
+      "areaOfSpecialization",
+    ],
+
+    //Expertise & Achievements
+    4: ["experienceLevel", "certifications", "achievements"],
   };
 
-  const totalSteps = 3;
+  const totalSteps = 4;
 
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setIsSkipButtonClick(false);
@@ -218,7 +422,6 @@ export default function AgentCompleteProfileForm() {
     });
 
   const nextStep = () => {
-    console.log(formData);
     if (isAllCurrentStepFieldFilled()) {
       setFormError(false);
       setCurrentStep((prev) => prev + 1);
@@ -245,23 +448,31 @@ export default function AgentCompleteProfileForm() {
 
   const handleSubmit = async () => {
     const payload = {
+      // Agency Information
       agencyName: formData.agencyName,
-      agentTitle: formData.agentTitle,
-      yearOfExperience: formData.yearOfExperience,
-      agencyBio: formData.agencyBio,
       agencySize: formData.agencySize,
-      areaOfSpecialization: formData.areaOfSpecialization,
-      preferredIndustry: formData.preferredIndustry,
-      country: formData.country,
-      state: formData.state,
-      city: formData.city,
-      postalCode: formData.postalCode,
-      email: formData.email,
-      phoneNumber: formData.phoneNumber,
-      agencyAddres: formData.agencyAddress,
+      agencyAddress: formData.agencyAddress,
+      agencyPhoneNumber: formData.agencyPhoneNumber,
+      agencyEmail: formData.agencyEmail,
       agencyWebsite: formData.agencyWebsite,
-      socialMedia: formData.socialMedia,
-      agencyPortfolio: formData.agencyPortfolio,
+      bio: formData.bio,
+
+      //Location details
+      country: formData.agencyName,
+      state: formData.agencyName,
+      city: formData.agencyName,
+      zipCode: formData.agencyName,
+
+      //Professional Details
+      jobType: formData.jobType,
+      industryType: formData.industryType,
+      preferredIndustries: formData.preferredIndustries,
+      areaOfSpecialization: formData.areaOfSpecialization,
+
+      //Expertise & Achievements
+      experienceLevel: formData.experienceLevel,
+      certifications: formData.certifications,
+      achievements: formData.achievements,
     };
 
     const storeValueObj =
@@ -270,86 +481,87 @@ export default function AgentCompleteProfileForm() {
 
     const userId = storeValueObj ? JSON.parse(storeValueObj).id : null;
 
-    try {
-      const data = await updateUserProfile({
-        url: `${API_HOST_URL}/api/employers`,
-        userId,
-        payload,
-      });
+    if (userId) {
+      updateAgentProfile(
+        {
+          url: `${API_HOST_URL}/api/v1/agents`,
+          userId,
+          payload: payload,
+        },
+        {
+          onSuccess: (data) => {
+            window.localStorage.setItem(
+              "NXGJOBHUBComPro",
+              JSON.stringify(true)
+            );
+            toast({
+              className: cn(
+                "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              ),
+              title: <p className="tex-green-700">Profile setup</p>,
+              description: (
+                <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono">
+                  Your have successfully setup your agent profile
+                </p>
+              ),
+            });
 
-      toast({
-        className: cn(
-          "top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Profile completed",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-            <p className="text-white">
-              You have successfully complete your profile
-            </p>
-          </pre>
-        ),
-        duration: 2500,
-      });
-      window.localStorage.setItem("NXGJOBHUBComPro", JSON.stringify(true));
-
-      setTimeout(() => {
-        navigate("/employer");
-      }, 3000);
-      console.log("Form submitted successfully");
-    } catch (err) {
-      if (err.response) {
-        toast({
-          className: cn(
-            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: <span className="text-red-900">Failed:</span>,
-          description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-              Form unable to submit, failed to update your profile
-            </p>
-          ),
-        });
-      }
-
-      if (!err.response) {
-        toast({
-          className: cn(
-            "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
-          ),
-          title: <p className="text-red-900">Network error:</p>,
-          description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-              Failed to submit form, please check your internet connection.
-            </p>
-          ),
-          action: (
-            <ToastAction
-              onClick={handleSubmit}
-              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again"
-            >
-              Try again
-            </ToastAction>
-          ),
-        });
-
-        setTimeout(() => {
-          setLoginLoading(false);
-          setIs;
-        }, 3000);
-      }
-      console.error(
-        "Profile update error",
-        err?.response?.data?.message || err.message
+            navigate("/agent", { replace: true });
+          },
+          onError: (err) => {
+            if (axios.isAxiosError(err)) {
+              if (err.response) {
+                toast({
+                  className: cn(
+                    "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                  ),
+                  title: <span className="text-red-900">Server error:</span>,
+                  description: (
+                    <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                      {err.response.data}
+                    </p>
+                  ),
+                });
+              } else if (err.request) {
+                toast({
+                  className: cn(
+                    "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                  ),
+                  title: <span className="text-red-900">Network error:</span>,
+                  description: (
+                    <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                      Account creation failed, please check your internet
+                      connection.
+                    </p>
+                  ),
+                });
+              }
+            } else {
+              toast({
+                className: cn(
+                  "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+                ),
+                title: <p className="text-red-700">Profile setup failed</p>,
+                description: (
+                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                    Failed to upload your file
+                  </p>
+                ),
+              });
+            }
+          },
+        }
       );
+    } else {
+      navigate("/login", { replace: true });
     }
   };
 
   const stepTitles = [
     { title: "Agency Information", icon: UserCog },
-    { title: "Contact Information", icon: Contact },
-    { title: "Agency Portfolio", icon: BriefcaseBusiness },
+    { title: "Location Details", icon: MapPin },
+    { title: "Professional Details", icon: BriefcaseBusiness },
+    { title: "Expertise & Achievements", icon: PackagePlus },
   ];
 
   const renderCurrentStep = () => {
@@ -362,7 +574,11 @@ export default function AgentCompleteProfileForm() {
                 Please fill the various field below before proceeding
               </p>
             )}
-            <RenderStepOne formData={formData} setFormData={setFormData} />
+            {/* <RenderStepOne
+              form={form}
+              formData={formData}
+              setFormData={setFormData}
+            /> */}
           </div>
         );
       case 2:
@@ -374,7 +590,7 @@ export default function AgentCompleteProfileForm() {
               </p>
             )}
             <div>
-              <RenderStepTwo formData={formData} setFormData={setFormData} />
+              {/* <RenderStepTwo formData={formData} setFormData={setFormData} /> */}
             </div>
           </div>
         );
@@ -387,6 +603,17 @@ export default function AgentCompleteProfileForm() {
               </p>
             )}
             <RenderStepThree formData={formData} setFormData={setFormData} />
+          </div>
+        );
+      case 4:
+        return (
+          <div>
+            {formError && (
+              <p className="w-full rounded p-3 text-red-500 border border-red-500 mb-5">
+                Please fill the various field below before proceeding
+              </p>
+            )}
+            <RenderStepFour formData={formData} setFormData={setFormData} />
           </div>
         );
       default:
@@ -420,21 +647,73 @@ export default function AgentCompleteProfileForm() {
         <img className="w-20 sm:w-24" src={Logo} alt="" />
       </nav>
       <div className="flex items-center justify-center pt-20 sm:pt-0">
-        <div className="w-full border-transparent px-4 py-3 sm:w-1/2 sm:my-10 sm:p-8 sm:border-[1px] sm:border-gray-300 sm:rounded-md">
-          <div className="">
-            <h1 className="font-semibold text-2xl"> Profile Complete</h1>
-            <p className="text-gray-500 text-base">
-              Complete all steps to register your company and post job
-              opportunities
-            </p>
-          </div>
-          <RenderStepIndicator activeTab={currentStep} />
+        <Card className="w-full max-w-2xl mx-auto">
+          <CardHeader>
+            <CardTitle>Complete agent profile</CardTitle>
+            <CardDescription>
+              Complete your profile helps build trust, improves your visibility,
+              and unlocks access to employer's and talents. Step {step} of{" "}
+              {totalStep}
+            </CardDescription>
+            <Progress
+              value={(step / totalStep) * 100}
+              className="bg-sky-500 h-2 mt-2"
+            />
+          </CardHeader>
+          <Form {...form}>
+            <form>
+              <CardContent>
+                {step === 1 && <RenderStepOne form={form} />}
+                {step === 2 && <RenderStepTwo form={form} />}
+                {step === 3 && <RenderStepThree form={form} />}
+                {step === 4 && <RenderStepFour form={form} />}
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handlePrevious}
+                    disabled={step === 1}
+                  >
+                    <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                  </Button>
+                  {step < totalSteps && (
+                    <Button
+                      className="bg-sky-500 border-none hover:bg-sky-600"
+                      type="button"
+                      onClick={handleNext}
+                    >
+                      Next <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+                {step === totalSteps ? (
+                  <Button type="submit">
+                    Submit <Check className="ml-2 h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    className="border-none bg-red-600 text-gray-50 hover:bg-red-700"
+                    type="button"
+                    variant="secondary"
+                    onClick={handleSkip}
+                  >
+                    Skip <SkipForward className="ml-2 h-4 w-4" />
+                  </Button>
+                )}
+              </CardFooter>
+            </form>
+          </Form>
+        </Card>
 
-          <div className="space-y-5">
+        {/* <RenderStepIndicator activeTab={currentStep} /> */}
+
+        {/* <div className="space-y-5">
             <div>
               <div>
                 <div className="mb-8">
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-gray-800 text-lg font-semibold mb-4">
                     Step {currentStep}: {stepTitles[currentStep - 1].title}
                   </h3>
 
@@ -467,13 +746,13 @@ export default function AgentCompleteProfileForm() {
                 </div>
                 {currentStep === totalSteps ? (
                   <Button
-                    disabled={isLoading}
+                    disabled={isSubmittingProfile}
                     className="border-transparent bg-green-500 text-gray-50
                   hover:bg-green-600"
                     type="button"
                     onClick={handleSubmit}
                   >
-                    {isLoading ? (
+                    {isSubmittingProfile ? (
                       <div className="flex items-center space-x-1">
                         <Loader2 className="animate-spin" />
                         <span>Profile form submitting...</span>
@@ -497,7 +776,7 @@ export default function AgentCompleteProfileForm() {
                 )}
               </div>
 
-              {/* mobile form navigator */}
+             
 
               <div className="flex flex-col gap-3 sm:hidden">
                 {currentStep < 4 ? (
@@ -510,13 +789,13 @@ export default function AgentCompleteProfileForm() {
                   </Button>
                 ) : (
                   <Button
-                    disabled={isLoading}
+                    disabled={isSubmittingProfile}
                     type="button"
                     className="border-transparent bg-green-500 text-gray-50
                   hover:bg-green-600"
                     onClick={handleSubmit}
                   >
-                    {isLoading ? (
+                    {isSubmittingProfile ? (
                       <div className="flex items-center space-x-1">
                         <Loader2 className="animate-spin" />
                         <span>Profile form submitting...</span>
@@ -537,12 +816,11 @@ export default function AgentCompleteProfileForm() {
                 </Button>
               </div>
             </div>
-          </div>
-          {isSkipButtonClick && (
-            <SkipFormDialog isOpen={isSkipButtonClick} onClose={closeModal} />
-          )}
-          <Toaster />
-        </div>
+          </div> */}
+        {isSkipButtonClick && (
+          <SkipFormDialog isOpen={isSkipButtonClick} onClose={closeModal} />
+        )}
+        <Toaster />
       </div>
     </div>
   );
@@ -688,7 +966,7 @@ const RenderStepIndicator = ({ activeTab }) => {
               "p-2 rounded-full"
             )}
           >
-            <Contact className="w-5 h-5" />
+            <MapPin className="w-5 h-5" />
           </div>
           <Separator
             className={cn(
@@ -710,8 +988,28 @@ const RenderStepIndicator = ({ activeTab }) => {
           >
             <BriefcaseBusiness className="w-5 h-5" />
           </div>
+          <Separator
+            className={cn(
+              `${activeTab > 3 ? "bg-primary" : "bg-gray-300"}`,
+              "w-32 h-[2px]  mx-3  "
+            )}
+          />
+          <div
+            className={cn(
+              `${
+                activeTab === 4
+                  ? "bg-primary text-white"
+                  : activeTab > 4
+                  ? "bg-secondary text-white"
+                  : ""
+              }`,
+              "p-2 rounded-full"
+            )}
+          >
+            <PackagePlus className="w-5 h-5" />
+          </div>
         </div>
-        <div className="flex justify-center gap-14">
+        <div className="flex justify-center gap-12">
           <p
             className={cn(
               `${
@@ -738,7 +1036,7 @@ const RenderStepIndicator = ({ activeTab }) => {
               "text-sm"
             )}
           >
-            Contact Information
+            Location Details
           </p>
           <p
             className={cn(
@@ -752,7 +1050,21 @@ const RenderStepIndicator = ({ activeTab }) => {
               "text-sm"
             )}
           >
-            Agency Portfolio
+            Professional Details
+          </p>
+          <p
+            className={cn(
+              `${
+                activeTab === 4
+                  ? "text-primary"
+                  : activeTab > 4
+                  ? "text-secondary"
+                  : "text-gray-400"
+              }`,
+              "text-sm"
+            )}
+          >
+            Expertise & Achivements
           </p>
         </div>
       </div>

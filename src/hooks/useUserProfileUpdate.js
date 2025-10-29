@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-export const useUserProfileUpdate = () => {
+export const useUserProfileUpdate = (options = {}) => {
   const updateUserProfile = async ({ url, userId, payload }) => {
     const response = await axios.patch(`${url}/${userId}`, payload, {
       headers: {
@@ -13,6 +13,7 @@ export const useUserProfileUpdate = () => {
 
   const mutation = useMutation({
     mutationFn: updateUserProfile,
+    ...options,
   });
 
   return {
