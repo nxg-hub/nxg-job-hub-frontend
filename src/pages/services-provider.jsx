@@ -59,6 +59,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { resetAllUserData } from "@/redux/AllUsersSlice";
+import { resetAllJobs } from "@/redux/ServiceProviderJobSlice";
 
 const sidebarItems = [
   {
@@ -312,6 +313,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     localStorage.clear();
     dispatch(resetUserData());
     dispatch(resetAllUserData());
+    dispatch(resetAllJobs());
     navigate("/login");
   };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
@@ -21,6 +21,18 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const myJob = useSelector((state) => state.TalentReducer.myJobs);
+  const myJobs = useSelector((state) => state.ServiceProviderJobReducer.myJobs);
+
+  useEffect(() => {
+    const jobIDs =
+      userType === "TECHTALENT"
+        ? new Set(myJob.map((job) => job.jobPosting.jobID))
+        : new Set(myJobs.map((job) => job.jobPosting.jobID));
+    setAppliedJobs(jobIDs);
+  }, [myJob, myJobs]);
   // 🔹 Helper to update specific job's loading state
   const setJobLoading = (jobId, field, value) => {
     setLoadingStates((prev) => ({
@@ -31,6 +43,7 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
 
   // 🔹 Handle Apply
   const handleApply = async (job) => {
+    if (appliedJobs.has(job.jobID)) return;
     try {
       setJobLoading(job.jobID, "applying", true);
 
@@ -45,10 +58,8 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
           },
         }
       );
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to apply for job");
+      if (response.status !== 200) {
+        throw new Error("Failed to apply for job");
       }
 
       toast({
@@ -62,7 +73,8 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
       toast({
         variant: "destructive",
         title: "Application Failed",
-        description: error.response.data || "An error occurred while applying.",
+        description:
+          error?.response?.data || "An error occurred while applying.",
       });
     } finally {
       setJobLoading(job.jobID, "applying", false);
@@ -105,14 +117,14 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
       if (contentType && contentType.includes("application/json")) {
         await response.json();
       }
-      userType === "TECHTALENT"
-        ? dispatch(fetchTalentSavedJobs({ token: token.authKey }))
-        : dispatch(fetchSavedJobs({ token: token.authKey }));
 
       toast({
         title: "Job Saved",
         description: `${job.job_title} has been added to your saved jobs.`,
       });
+      userType === "TECHTALENT"
+        ? dispatch(fetchTalentSavedJobs({ token: token.authKey }))
+        : dispatch(fetchSavedJobs({ token: token.authKey }));
     } catch (error) {
       toast({
         variant: "destructive",
@@ -180,6 +192,7 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
 
   const isApplying = loadingStates[service.jobID]?.applying;
   const isSaving = loadingStates[service.jobID]?.saving;
+  const isApplied = appliedJobs.has(service.jobID);
 
   return (
     <div className="flex justify-between pt-2">
@@ -209,9 +222,14 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
         <Button
           variant="outline"
           size="sm"
+          className={`${
+            isApplied
+              ? "bg-sky-500 text-white cursor-not-allowed opacity-50"
+              : ""
+          } `}
           onClick={() => handleApply(service)}
-          disabled={isApplying}>
-          {isApplying ? "Applying..." : "Apply"}
+          disabled={isApplying || isApplied}>
+          {isApplying ? "Applying..." : !isApplied ? "Apply" : "Applied"}
         </Button>
       </div>
       <Toaster />
