@@ -218,15 +218,19 @@ function JobCarousel({
     <div
       ref={innerRef}
       className="flex gap-4 overflow-x-auto w-full scrollbar-hide scroll-smooth">
-      {jobs.map((job) => (
-        <div key={job.jobID} className="flex-none w-80 sm:w-72 md:w-80">
-          <JobCard
-            job={job}
-            isBookmarked={bookmarkedJobs.includes(job.jobID)}
-            onBookmarkToggle={() => toggleBookmark(job.jobID)}
-          />
-        </div>
-      ))}
+      {jobs.length === 0 ? (
+        <p>No job post at the moment</p>
+      ) : (
+        jobs.map((job) => (
+          <div key={job.jobID} className="flex-none w-80 sm:w-72 md:w-80">
+            <JobCard
+              job={job}
+              isBookmarked={bookmarkedJobs.includes(job.jobID)}
+              onBookmarkToggle={() => toggleBookmark(job.jobID)}
+            />
+          </div>
+        ))
+      )}
     </div>
   );
 }
@@ -261,8 +265,7 @@ export function ServicesProviderHomePage() {
         const data = await res.json();
         const acceptedJobs = data.filter((job) => {
           return (
-            job.jobStatus === "ACCEPTED" &&
-            job.jobClassification === "SERVICE"
+            job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE"
           );
         });
         setRecommendedJobs(acceptedJobs);
@@ -303,10 +306,10 @@ export function ServicesProviderHomePage() {
         const data = await res.json();
         const acceptedJobs = data.filter((job) => {
           return (
-            job.jobStatus === "ACCEPTED" &&
-            job.jobClassification === "SERVICE"
+            job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE"
           );
         });
+        console.log(acceptedJobs);
         setNearbyJobs(acceptedJobs || []);
       } catch (error) {
         console.error("Error fetching nearby jobs:", error);
@@ -316,7 +319,6 @@ export function ServicesProviderHomePage() {
     };
     fetchNearbyJobs();
   }, []);
-
   const toggleBookmark = (jobId) => {
     setBookmarkedJobs((prev) =>
       prev.includes(jobId)
@@ -364,17 +366,14 @@ export function ServicesProviderHomePage() {
         </div>
 
         {/* Scrollable row */}
-        {recommendedJobs.length > 0 ? (
-          <JobCarousel
-            innerRef={recCarouselRef}
-            jobs={recommendedJobs}
-            bookmarkedJobs={bookmarkedJobs}
-            toggleBookmark={toggleBookmark}
-            loading={loading}
-          />
-        ) : (
-          <p>No recent jobs found.</p>
-        )}
+
+        <JobCarousel
+          innerRef={recCarouselRef}
+          jobs={recommendedJobs}
+          bookmarkedJobs={bookmarkedJobs}
+          toggleBookmark={toggleBookmark}
+          loading={loading}
+        />
       </div>
       {/* ✅ Jobs Near You */}
       <div className="p-4">
@@ -403,6 +402,7 @@ export function ServicesProviderHomePage() {
           </div>
         </div>
         {/* Scrollable row */}
+
         <JobCarousel
           innerRef={nearCarouselRef}
           jobs={nearbyJobs}

@@ -28,17 +28,17 @@ export default function TalentDashboardTab() {
   const nearError = useSelector((state) => state.TalentReducer.nearError);
   const recentJobs = useSelector((state) => state.TalentReducer.recentJobs);
   const nearByJobs = useSelector((state) => state.TalentReducer.nearByJobs);
+  const myJob = useSelector((state) => state.TalentReducer.myJobs);
+  const userType = useSelector(
+    (state) => state.AllUserReducer.userData.userType
+  );
 
   const acceptedRecentJobs = recentJobs.filter((job) => {
-    return (
-      job.jobStatus === "ACCEPTED" && job.jobClassification === "PROFESSIONAL"
-    );
+    return job.jobStatus === "ACCEPTED";
   });
 
   const acceptedNearJobs = nearByJobs.filter((job) => {
-    return (
-      job.jobStatus === "ACCEPTED" && job.jobClassification === "PROFESSIONAL"
-    );
+    return job.jobStatus === "ACCEPTED";
   });
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -47,10 +47,15 @@ export default function TalentDashboardTab() {
   const dispatch = useDispatch();
   const [loadingJobId, setLoadingJobId] = useState(null);
   const [appliedJobs, setAppliedJobs] = useState(new Set());
+  useEffect(() => {
+    const jobIDs = new Set(myJob.map((job) => job.jobPosting.jobID));
+    setAppliedJobs(jobIDs);
+  }, [myJob]);
 
   useEffect(() => {
     dispatch(fetchTalentRecentJobs({ token: token.authKey }));
     dispatch(fetchTalentNearByJobs({ token: token.authKey }));
+    dispatch(fetchMyTalentJobs({ token: token.authKey }));
   }, []);
 
   const formatCurrency = (amount) => {
@@ -66,7 +71,7 @@ export default function TalentDashboardTab() {
 
     setLoadingJobId(job.jobID);
     try {
-      const res = await axios.post(
+      const response = await axios.post(
         `${API_HOST_URL}/api/job-postings/${job.jobID}/apply`,
         { jobPostingId: job.jobID },
         {
@@ -128,7 +133,7 @@ export default function TalentDashboardTab() {
 
             <CardContent>
               <div className="space-y-4">
-                {!loading && error ? (
+                {!loading && nearError ? (
                   <p className="text-red-500">Failed to fetch</p>
                 ) : acceptedRecentJobs.length > 0 ? (
                   acceptedRecentJobs.map((job) => {
@@ -138,38 +143,72 @@ export default function TalentDashboardTab() {
                     return (
                       <div
                         key={job.jobID}
-                        className="flex items-center gap-4 p-3 border rounded-lg">
-                        <Briefcase className="h-10 w-10 text-primary" />
-                        <div className="flex-1">
-                          <h3 className="font-medium">{job.job_title}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {`${job.employer_name} • ${job.job_type}`}
+                        className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 border rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                        {/* Left Section */}
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className="p-3 rounded-lg bg-sky-50">
+                            <Briefcase className="h-8 w-8 text-sky-600" />
+                          </div>
+
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-gray-800 mb-1">
+                              {job.job_title}
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-1">
+                              {`${job.employer_name} • ${job.job_type}`}
+                            </p>
+                            <p className="text-sm text-gray-500 line-clamp-2 mb-2">
+                              {job.job_description}
+                            </p>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2">
+                              {job.tags?.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="text-xs bg-sky-100 text-sky-700 px-2 py-1 rounded-full font-medium">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Section */}
+                        <div className="flex flex-col items-end text-sm text-gray-600 gap-2">
+                          <div className="grid grid-cols-1 text-right">
+                            <span className="font-medium text-gray-800">
+                              {formatCurrency(job.salary)}
+                            </span>
+                            <span className="flex items-center justify-end text-gray-500">
+                              <MapPin className="h-4 w-4 mr-1 text-sky-500" />
+                              {job.job_location}
+                            </span>
+                          </div>
+
+                          {/* Deadline */}
+                          <p className="text-xs text-gray-400 italic">
+                            Apply before:{" "}
+                            {new Date(job.deadline).toLocaleDateString()}
                           </p>
-                        </div>
 
-                        <div className="text-sm text-muted-foreground grid grid-col-2 text-right">
-                          <span>{formatCurrency(job.salary)}</span>
-                          <span className="flex justify-end items-center">
-                            <MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
-                            {job.job_location}
-                          </span>
+                          {/* Button */}
+                          <Button
+                            className="text-sm flex items-center gap-2 mt-1"
+                            onClick={() => handleApply(job)}
+                            disabled={isLoading || isApplied}>
+                            {isLoading ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Applying...
+                              </>
+                            ) : isApplied ? (
+                              "Applied"
+                            ) : (
+                              "Apply"
+                            )}
+                          </Button>
                         </div>
-
-                        <Button
-                          className="text-sm flex items-center gap-2"
-                          onClick={() => handleApply(job)}
-                          disabled={isLoading || isApplied}>
-                          {isLoading ? (
-                            <>
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                              Applying...
-                            </>
-                          ) : isApplied ? (
-                            "Applied"
-                          ) : (
-                            "Apply"
-                          )}
-                        </Button>
                       </div>
                     );
                   })
@@ -202,38 +241,72 @@ export default function TalentDashboardTab() {
                     return (
                       <div
                         key={job.jobID}
-                        className="flex items-center gap-4 p-3 border rounded-lg">
-                        <Briefcase className="h-10 w-10 text-primary" />
-                        <div className="flex-1">
-                          <h3 className="font-medium">{job.job_title}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {`${job.employer_name} • ${job.job_type}`}
+                        className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 border rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                        {/* Left Section */}
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className="p-3 rounded-lg bg-sky-50">
+                            <Briefcase className="h-8 w-8 text-sky-600" />
+                          </div>
+
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-gray-800 mb-1">
+                              {job.job_title}
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-1">
+                              {`${job.employer_name} • ${job.job_type}`}
+                            </p>
+                            <p className="text-sm text-gray-500 line-clamp-2 mb-2">
+                              {job.job_description}
+                            </p>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2">
+                              {job.tags?.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="text-xs bg-sky-100 text-sky-700 px-2 py-1 rounded-full font-medium">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Section */}
+                        <div className="flex flex-col items-end text-sm text-gray-600 gap-2">
+                          <div className="grid grid-cols-1 text-right">
+                            <span className="font-medium text-gray-800">
+                              {formatCurrency(job.salary)}
+                            </span>
+                            <span className="flex items-center justify-end text-gray-500">
+                              <MapPin className="h-4 w-4 mr-1 text-sky-500" />
+                              {job.job_location}
+                            </span>
+                          </div>
+
+                          {/* Deadline */}
+                          <p className="text-xs text-gray-400 italic">
+                            Apply before:{" "}
+                            {new Date(job.deadline).toLocaleDateString()}
                           </p>
-                        </div>
 
-                        <div className="text-sm text-muted-foreground grid grid-col-2 text-right">
-                          <span>{formatCurrency(job.salary)}</span>
-                          <span className="flex justify-end items-center">
-                            <MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
-                            {job.job_location}
-                          </span>
+                          {/* Button */}
+                          <Button
+                            className="text-sm flex items-center gap-2 mt-1"
+                            onClick={() => handleApply(job)}
+                            disabled={isLoading || isApplied}>
+                            {isLoading ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Applying...
+                              </>
+                            ) : isApplied ? (
+                              "Applied"
+                            ) : (
+                              "Apply"
+                            )}
+                          </Button>
                         </div>
-
-                        <Button
-                          className="text-sm flex items-center gap-2"
-                          onClick={() => handleApply(job)}
-                          disabled={isLoading || isApplied}>
-                          {isLoading ? (
-                            <>
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                              Applying...
-                            </>
-                          ) : isApplied ? (
-                            "Applied"
-                          ) : (
-                            "Apply"
-                          )}
-                        </Button>
                       </div>
                     );
                   })

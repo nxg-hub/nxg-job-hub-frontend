@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,18 @@ const JobDetailsModal = ({ job, open, onClose }) => {
   const userType = useSelector(
     (state) => state.AllUserReducer.userData.userType
   );
+
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const myJob = useSelector((state) => state.TalentReducer.myJobs);
+  const myJobs = useSelector((state) => state.ServiceProviderJobReducer.myJobs);
+
+  useEffect(() => {
+    const jobIDs =
+      userType === "TECHTALENT"
+        ? new Set(myJob.map((job) => job.jobPosting.jobID))
+        : new Set(myJobs.map((job) => job.jobPosting.jobID));
+    setAppliedJobs(jobIDs);
+  }, [myJob, myJobs]);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -27,6 +39,7 @@ const JobDetailsModal = ({ job, open, onClose }) => {
   if (!job) return null;
 
   const handleApply = async () => {
+    if (appliedJobs.has(job.jobID)) return;
     try {
       setIsApplying(true);
       const response = await axios.post(
@@ -65,68 +78,117 @@ const JobDetailsModal = ({ job, open, onClose }) => {
       setIsApplying(false);
     }
   };
+  const isApplied = appliedJobs.has(job.jobID);
 
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="w-[90%] h-[600px] overflow-y-scroll md:max-w-2xl">
+        <DialogContent className="w-[90%] md:max-w-3xl max-h-[85vh] overflow-y-auto rounded-xl">
           <DialogHeader>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4 border-b pb-4">
               <img
-                src={job.employer_profile_pic}
-                alt={"logo"}
-                className="w-12 h-12 rounded-full object-cover border"
+                src={job.employer_profile_pic || "/placeholder-company.png"}
+                alt="Company logo"
+                className="w-14 h-14 rounded-full object-cover border"
               />
               <div>
-                <DialogTitle className="text-lg font-semibold">
+                <DialogTitle className="text-xl font-semibold text-gray-900">
                   {job.job_title}
                 </DialogTitle>
                 <p className="text-sm text-gray-600">{job.employer_name}</p>
+                <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
+                  <span className="px-2 py-1 rounded-md bg-sky-100 text-sky-600 font-medium">
+                    {job.job_type}
+                  </span>
+                  <span className="px-2 py-1 rounded-md bg-gray-100 text-gray-600 font-medium">
+                    {job.job_location}
+                  </span>
+                </div>
               </div>
             </div>
           </DialogHeader>
 
-          <div className="space-y-4 text-sm">
-            <p className="text-gray-600">{job.company_bio}</p>
+          <div className="space-y-6 mt-4 text-sm leading-relaxed text-gray-700">
+            {/* Company Overview */}
+            <section>
+              <h3 className="text-base font-semibold text-gray-900 mb-1">
+                About the Company
+              </h3>
+              <p className="text-gray-600 whitespace-pre-line">
+                {job.company_bio}
+              </p>
+            </section>
 
             <Separator />
 
-            <div>
-              <h3 className="font-semibold text-base mb-1">Job Description</h3>
-              <p>{job.job_description}</p>
-            </div>
+            {/* Job Description */}
+            <section>
+              <h3 className="text-base font-semibold text-gray-900 mb-1">
+                Job Description
+              </h3>
+              <p className="text-gray-700 whitespace-pre-line">
+                {job.job_description}
+              </p>
+            </section>
 
-            <div>
-              <h3 className="font-semibold text-base mb-1">Requirements</h3>
-              <p className="whitespace-pre-line">{job.requirements}</p>
-            </div>
+            {/* Requirements */}
+            <section>
+              <h3 className="text-base font-semibold text-gray-900 mb-1">
+                Requirements
+              </h3>
+              <ul className="list-disc list-inside space-y-1 text-gray-700">
+                {job.requirements
+                  ?.split("\n")
+                  .filter((line) => line.trim() !== "")
+                  .map((req, idx) => (
+                    <li key={idx}>{req.trim()}</li>
+                  ))}
+              </ul>
+            </section>
 
-            <div className="grid grid-cols-2 gap-3 mt-3 text-sm">
+            <Separator />
+
+            {/* Job Summary */}
+            <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 text-sm text-gray-700">
               <div>
-                <span className="font-semibold">Type:</span> {job.job_type}
+                <span className="font-semibold text-gray-900">Job Type:</span>{" "}
+                {job.job_type}
               </div>
               <div>
-                <span className="font-semibold">Salary:</span> ₦
+                <span className="font-semibold text-gray-900">Salary:</span> ₦
                 {Number(job.salary).toLocaleString()}
               </div>
               <div>
-                <span className="font-semibold">Location:</span>{" "}
+                <span className="font-semibold text-gray-900">Location:</span>{" "}
                 {job.job_location}
               </div>
               <div>
-                <span className="font-semibold">Deadline:</span>{" "}
+                <span className="font-semibold text-gray-900">Deadline:</span>{" "}
                 {new Date(job.deadline).toLocaleDateString("en-GB")}
               </div>
-            </div>
+
+              {job.tags?.length > 0 && (
+                <div className="col-span-2 flex flex-wrap gap-2 mt-2">
+                  {job.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-medium">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </section>
 
             <Separator />
 
+            {/* Apply Button */}
             <div className="flex justify-end">
               <Button
-                disabled={isApplying}
+                disabled={isApplying || isApplied}
                 onClick={handleApply}
-                className="bg-sky-600 hover:bg-sky-700 border-none text-white">
-                {isApplying ? "Applying..." : "Apply Now"}
+                className="bg-sky-600 hover:bg-sky-700 text-white font-medium px-6 py-2">
+                {isApplying ? "Applying..." : !isApplied ? "Apply" : "Applied"}
               </Button>
             </div>
           </div>

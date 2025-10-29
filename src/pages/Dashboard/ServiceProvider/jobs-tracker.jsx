@@ -318,6 +318,14 @@ export function JobTracker() {
   return (
     <div className="mx-auto px-6 py-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
+        <div className=" md:hidden">
+          <JobsFilter
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
+            clients={uniqueClients}
+            serviceTypes={serviceTypes}
+          />
+        </div>
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
@@ -435,8 +443,7 @@ export function JobTracker() {
             </TabsContent>
           </Tabs>
         </div>
-
-        <div>
+        <div className="hidden md:block md:fixed md:right-1">
           <JobsFilter
             activeFilters={activeFilters}
             setActiveFilters={setActiveFilters}

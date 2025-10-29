@@ -3,17 +3,10 @@ import {
   CalendarClock,
   Clock,
   MapPin,
-  Phone,
   PenToolIcon as Tool,
   User,
-  MoreHorizontal,
-  DollarSign,
-  CheckCircle,
-  XCircle,
-  MessageCircle,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,15 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { StarRating } from "@/components/star-rating";
+
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import JobDetailsModal from "./JobDetailsModal";
 import JobCardFooter from "@/pages/Dashboard/ServiceProvider/JobCardFooter";
