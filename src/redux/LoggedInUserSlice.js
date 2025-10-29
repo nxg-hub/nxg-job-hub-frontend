@@ -7,6 +7,7 @@ const initialState = {
   loggedInUser: [],
   loading: false,
   error: false,
+  success: false,
 };
 
 const token =
@@ -33,7 +34,11 @@ export const fetchLoggedInUser = createAsyncThunk(
 const loggedInUserSlice = createSlice({
   name: "loggedInUser",
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoggedInData: (state, action) => {
+      state.loggedInUser = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUser.pending, (state) => {
@@ -44,13 +49,15 @@ const loggedInUserSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.loggedInUser = action.payload;
+        state.success = true;
       })
       .addCase(fetchLoggedInUser.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
+        state.success = false;
       });
   },
 });
-export const {} = loggedInUserSlice.actions;
+export const { resetLoggedInData } = loggedInUserSlice.actions;
 
 export default loggedInUserSlice.reducer;

@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import StateDropdown from "@/pages/Dashboard/Talent/components/StateDropdown";
 
 export function JobsFilter({
   activeFilters,
@@ -43,7 +44,9 @@ export function JobsFilter({
       };
     });
   };
-
+  const handleFilterChange = (key, value) => {
+    setActiveFilters((prev) => ({ ...prev, [key]: value }));
+  };
   // Toggle service type filter
   const toggleServiceTypeFilter = (type) => {
     setActiveFilters((prev) => {
@@ -76,7 +79,7 @@ export function JobsFilter({
   const clearFilters = () => {
     setActiveFilters({
       priority: [],
-      serviceType: [],
+      state: [],
       client: [],
     });
   };
@@ -90,18 +93,14 @@ export function JobsFilter({
     <Card>
       <CardHeader className="brand-bg-light">
         <CardTitle>Filters</CardTitle>
-        <CardDescription>
-          Narrow down services by specific criteria
-        </CardDescription>
+        <CardDescription>Narrow down jobs by specific criteria</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <div className="font-medium text-[#0AACDC]">Priority</div>
+          <div className="font-medium text-[#0AACDC]">Job types</div>
           <div className="space-y-2">
-            {["high", "medium", "low"].map((priority) => (
-              <div
-                key={priority}
-                className="flex items-center space-x-2">
+            {["contract", "part-time", "full-time"].map((priority) => (
+              <div key={priority} className="flex items-center space-x-2">
                 <Checkbox
                   id={`priority-${priority}`}
                   checked={activeFilters.priority.includes(priority)}
@@ -120,13 +119,11 @@ export function JobsFilter({
 
         <Separator />
 
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <div className="font-medium text-[#0AACDC]">Service Type</div>
           <div className="space-y-2">
             {serviceTypes.map((type) => (
-              <div
-                key={type}
-                className="flex items-center space-x-2">
+              <div key={type} className="flex items-center space-x-2">
                 <Checkbox
                   id={`type-${type}`}
                   checked={activeFilters.serviceType.includes(type)}
@@ -141,11 +138,15 @@ export function JobsFilter({
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+        <StateDropdown
+          selectedState={activeFilters.state}
+          onSelect={(state) => handleFilterChange("state", state)}
+        />
 
         <Separator />
 
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <div className="font-medium text-[#0AACDC]">Client</div>
           <Popover>
             <PopoverTrigger asChild>
@@ -186,10 +187,10 @@ export function JobsFilter({
               </Command>
             </PopoverContent>
           </Popover>
-        </div>
+        </div> */}
 
         {(activeFilters.priority.length > 0 ||
-          activeFilters.serviceType.length > 0 ||
+          activeFilters.state.length > 0 ||
           activeFilters.client.length > 0) && (
           <>
             <Separator />

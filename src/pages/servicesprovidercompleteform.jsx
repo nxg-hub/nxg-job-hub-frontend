@@ -303,11 +303,17 @@ import ServiceProviderStepTwo from "../components/ServiceProvider/renderStepTwo"
 import ServiceProviderStepThree from "../components/ServiceProvider/renderStepThree";
 
 import { useServiceProviderProfileUpdate } from "../hooks/Service-provider/serviceProviderHook";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
 
 export function ServiceProviderProfileCompleteForm() {
+  const userData = useSelector((state) => state.UserDataReducer.data);
+  const dispatch = useDispatch();
+  // console.log(userData);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    mainSkill: "", // required
+    mainSkills: "", // required
     subSkills: [],
     education: {
       highestQualification: "",
@@ -318,23 +324,32 @@ export function ServiceProviderProfileCompleteForm() {
     },
     workExperiences: [],
     additionalInfo: "",
-    preferredContact: "",
+    preferredContactMethod: "",
     interests: [],
     address: "",
     city: "",
     state: "",
     zipCode: "",
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    email: userData.email,
+    verified: false,
   });
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formError, setFormError] = useState(false);
-  const [debugMode, setDebugMode] = useState(true); // Enable debug mode for testing
+  // const [debugMode, setDebugMode] = useState(true); // Enable debug mode for testing
 
   const { updateServiceProviderProfile, isLoading } =
     useServiceProviderProfileUpdate();
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   useEffect(() => {
-    const session = sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+    const session =
+      sessionStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+      localStorage.getItem("NXGJOBHUBLOGINKEYV1");
     if (!session) {
       toast({
         title: "Authentication Required",
@@ -346,7 +361,7 @@ export function ServiceProviderProfileCompleteForm() {
     try {
       const parsed = JSON.parse(session);
       const id = parsed.id;
-      const email = "";
+      const email = userData.email;
       if (!id) {
         toast({
           title: "Session Error",
@@ -369,7 +384,7 @@ export function ServiceProviderProfileCompleteForm() {
   const stepFields = {
     1: ["mainSkill", "subSkills"],
     2: [
-      "preferredContact",
+      "preferredContactMethod",
       "education.highestQualification",
       "education.schoolName",
       "education.schoolYear",
@@ -389,7 +404,7 @@ export function ServiceProviderProfileCompleteForm() {
 
   const isAllCurrentStepFieldFilled = () => {
     // In debug mode, skip validation for step navigation
-    if (debugMode) return true;
+    // if (debugMode) return true;
 
     const fields = stepFields[currentStep];
     return fields.every((field) => {
@@ -405,9 +420,9 @@ export function ServiceProviderProfileCompleteForm() {
 
   const validateAllSteps = () => {
     // In debug mode, skip validation for submission
-    if (debugMode) {
-      return { isValid: true };
-    }
+    // if (debugMode) {
+    //   return { isValid: true };
+    // }
 
     for (let step = 1; step <= 3; step++) {
       const fields = stepFields[step];
@@ -475,13 +490,14 @@ export function ServiceProviderProfileCompleteForm() {
 
     try {
       // Log the payload for debugging
-      console.log("Submitting payload:", JSON.stringify(formData, null, 2));
+      // console.log("Submitting payload:", JSON.stringify(formData, null, 2));
 
       await updateServiceProviderProfile(formData);
       toast({
         title: "Success",
         description: "Service Provider profile updated successfully!",
       });
+      dispatch(getUserData(token.authKey));
       setFormError(false);
       setTimeout(() => navigate("/services-provider"), 1500);
     } catch (error) {
@@ -535,7 +551,8 @@ export function ServiceProviderProfileCompleteForm() {
 
         {renderCurrentStep()}
 
-        {formError && !debugMode && (
+        {formError && (
+          //  !debugMode &&
           <p className="text-red-500 text-sm mt-2">
             Please fill in all required fields before proceeding.
           </p>
@@ -547,8 +564,7 @@ export function ServiceProviderProfileCompleteForm() {
           <Button
             variant="outline"
             onClick={prevStep}
-            className="w-full sm:w-auto"
-          >
+            className="w-full sm:w-auto">
             <ChevronLeft className="mr-2 h-4 w-4" /> Previous
           </Button>
         )}
@@ -563,16 +579,14 @@ export function ServiceProviderProfileCompleteForm() {
           <Button
             onClick={handleSubmit}
             disabled={isLoading || !formData.serviceProviderId}
-            className="w-full sm:w-auto"
-          >
+            className="w-full sm:w-auto">
             {isLoading ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="animate-spin w-4 h-4" /> Submitting...
               </span>
             ) : (
               <span className="flex items-center">
-                {debugMode ? "Test Submit" : "Submit"}{" "}
-                <Check className="ml-2 w-4 h-4" />
+                {"Submit"} <Check className="ml-2 w-4 h-4" />
               </span>
             )}
           </Button>

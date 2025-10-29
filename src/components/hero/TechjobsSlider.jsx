@@ -2,7 +2,6 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper/modules";
 import "swiper/css/bundle";
-import "./slide.scss";
 import Analysis from "../../../src/static/icons/data_analysis.png";
 import Machine from "../../../src/static/icons/icon_Computer_Process_.png";
 import Project from "../../../src/static/icons/icon-browser_.png";
@@ -34,12 +33,7 @@ const TechjobsSlider = () => {
       jobtitle: "Project Management",
       vacancies: "29 Vacancies",
     },
-    {
-      id: "4",
-      icon: UI,
-      jobtitle: "UI/UX Design",
-      vacancies: "101 Vacancies",
-    },
+    { id: "4", icon: UI, jobtitle: "UI/UX Design", vacancies: "101 Vacancies" },
     {
       id: "5",
       icon: Cyber,
@@ -64,12 +58,7 @@ const TechjobsSlider = () => {
       jobtitle: "Web Design",
       vacancies: "149 Vacancies",
     },
-    {
-      id: "9",
-      icon: DevOps,
-      jobtitle: "DevOps",
-      vacancies: "115 Vacancies",
-    },
+    { id: "9", icon: DevOps, jobtitle: "DevOps", vacancies: "115 Vacancies" },
     {
       id: "10",
       icon: Cloud,
@@ -77,55 +66,44 @@ const TechjobsSlider = () => {
       vacancies: "71 Vacancies",
     },
   ];
+
   return (
-    <div className="swipe-container">
+    <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white">
+      <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-10">
+        Explore Tech Job Fields
+      </h2>
+
       <Swiper
-        freeMode={true}
-        grabCursor={true}
+        freeMode
+        grabCursor
         modules={[FreeMode, Pagination]}
         pagination={{ clickable: true }}
-        className="mySwiper"
+        spaceBetween={40}
+        slidesPerView={4}
         breakpoints={{
-          480: {
-            slidesPerView: 1,
-            spaceBetween: 15,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-          1280: {
-            slidesPerView: 4,
-            spaceBetween: 60,
-          },
-          1440: {
-            slidesPerView: 5,
-            spaceBetween: 70,
-          },
+          0: { slidesPerView: 1.3, spaceBetween: 20 },
+          640: { slidesPerView: 2.3, spaceBetween: 30 },
+          1024: { slidesPerView: 3.5, spaceBetween: 40 },
+          1280: { slidesPerView: 4.5, spaceBetween: 50 },
         }}
-      >
-        {Jobsspaces.map((job) => {
-          return (
-            <SwiperSlide key={job.id} className="jobspace-main">
-              <div className="holder">
-                <div className="circle"></div>
-                <div className="jobspace-content">
-                  <div className="job-icon">
-                    <img src={job.icon} alt={job.jobtitle} />
-                  </div>
-                  <div className="space-details">
-                    <h3>{job.jobtitle}</h3>
-                    <p>{job.vacancies}</p>
-                  </div>
-                </div>
+        className="pb-10">
+        {Jobsspaces.map((job) => (
+          <SwiperSlide key={job.id}>
+            <div className="flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
+              <div className="w-20 h-20 mb-4 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-full flex items-center justify-center overflow-hidden">
+                <img
+                  src={job.icon}
+                  alt={job.jobtitle}
+                  className="w-10 h-10 object-contain"
+                />
               </div>
-            </SwiperSlide>
-          );
-        })}
+              <h3 className="text-lg font-semibold text-gray-800">
+                {job.jobtitle}
+              </h3>
+              <p className="text-sm text-gray-500 mt-1">{job.vacancies}</p>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,250 +15,59 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { JobsCard } from "@/components/jobs-card";
-
-// Sample service data for an artisan
-const initialServices = [
-  {
-    id: "1",
-    title: "Kitchen Cabinet Installation",
-    client: "James Wilson",
-    clientContact: "555-123-4567",
-    location: "123 Maple Street, Riverside",
-    deadline: "2025-05-15",
-    status: "new",
-    priority: "high",
-    serviceType: "carpentry",
-    materials: ["Oak wood panels", "Cabinet handles", "Hinges"],
-    estimatedCost: 1200,
-    description: "Install custom kitchen cabinets with oak finish",
-    createdAt: "2025-04-01",
-    messages: [
-      {
-        id: "m1",
-        sender: "client",
-        text: "Hi, I'm looking forward to the cabinet installation.",
-        timestamp: "2025-04-01T10:30:00",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Bathroom Plumbing Repair",
-    client: "Sarah Johnson",
-    clientContact: "555-987-6543",
-    location: "456 Oak Avenue, Downtown",
-    deadline: "2025-06-30",
-    status: "ongoing",
-    priority: "medium",
-    serviceType: "plumbing",
-    materials: ["PVC pipes", "Sink faucet", "Pipe sealant"],
-    estimatedCost: 450,
-    actualCost: 480,
-    description: "Fix leaking pipes and replace bathroom sink faucet",
-    createdAt: "2025-03-15",
-    messages: [
-      {
-        id: "m2",
-        sender: "client",
-        text: "When can you start the repair?",
-        timestamp: "2025-03-15T14:20:00",
-      },
-      {
-        id: "m3",
-        sender: "artisan",
-        text: "I can come by tomorrow morning around 9am.",
-        timestamp: "2025-03-15T15:45:00",
-      },
-      {
-        id: "m4",
-        sender: "client",
-        text: "That works for me. See you then!",
-        timestamp: "2025-03-15T16:10:00",
-      },
-    ],
-  },
-  {
-    id: "3",
-    title: "Living Room Painting",
-    client: "Michael Brown",
-    clientContact: "555-456-7890",
-    location: "789 Pine Road, Hillside",
-    deadline: "2025-04-20",
-    status: "ongoing",
-    priority: "low",
-    serviceType: "painting",
-    materials: ["Premium wall paint", "Primer", "Painting supplies"],
-    estimatedCost: 850,
-    actualCost: 800,
-    description: "Paint living room walls with client-selected colors",
-    createdAt: "2025-03-25",
-    messages: [
-      {
-        id: "m5",
-        sender: "artisan",
-        text: "I've picked up the paint samples you requested.",
-        timestamp: "2025-03-26T09:15:00",
-      },
-      {
-        id: "m6",
-        sender: "client",
-        text: "Great! Can you bring them by this afternoon?",
-        timestamp: "2025-03-26T10:30:00",
-      },
-    ],
-  },
-  {
-    id: "4",
-    title: "Electrical Wiring Installation",
-    client: "Emily Davis",
-    clientContact: "555-234-5678",
-    location: "101 Cedar Lane, Eastside",
-    deadline: "2025-04-10",
-    status: "completed",
-    priority: "high",
-    serviceType: "electrical",
-    materials: ["Electrical wires", "Outlets", "Circuit breakers"],
-    estimatedCost: 650,
-    actualCost: 700,
-    description: "Install new electrical outlets and fix wiring issues",
-    completedAt: "2025-04-08",
-    createdAt: "2025-03-01",
-    paymentStatus: "paid",
-    rating: 5,
-    feedback:
-      "Excellent work! Very professional and completed ahead of schedule.",
-    messages: [
-      {
-        id: "m7",
-        sender: "client",
-        text: "The new outlets are working perfectly. Thank you!",
-        timestamp: "2025-04-09T11:20:00",
-      },
-      {
-        id: "m8",
-        sender: "artisan",
-        text: "Glad to hear that! Don't hesitate to reach out if you need anything else.",
-        timestamp: "2025-04-09T13:45:00",
-      },
-    ],
-  },
-  {
-    id: "5",
-    title: "Deck Restoration",
-    client: "Robert Taylor",
-    clientContact: "555-876-5432",
-    location: "202 Birch Street, Westside",
-    deadline: "2025-05-01",
-    status: "new",
-    priority: "medium",
-    serviceType: "carpentry",
-    materials: ["Pressure-treated lumber", "Wood stain", "Deck screws"],
-    estimatedCost: 1500,
-    description: "Restore outdoor deck with new boards and staining",
-    createdAt: "2025-04-05",
-    messages: [
-      {
-        id: "m9",
-        sender: "client",
-        text: "Do you think we'll need to replace all the boards?",
-        timestamp: "2025-04-05T16:30:00",
-      },
-    ],
-  },
-  {
-    id: "6",
-    title: "Roof Repair",
-    client: "Jennifer Martinez",
-    clientContact: "555-345-6789",
-    location: "303 Elm Court, Northside",
-    deadline: "2025-04-25",
-    status: "completed",
-    priority: "medium",
-    serviceType: "roofing",
-    materials: ["Roof shingles", "Roofing nails", "Waterproof membrane"],
-    estimatedCost: 900,
-    actualCost: 950,
-    description: "Repair damaged roof sections and replace missing shingles",
-    completedAt: "2025-04-22",
-    createdAt: "2025-03-10",
-    paymentStatus: "pending",
-    rating: 4,
-    feedback:
-      "Good job overall. Fixed the issue but left some debris in the yard.",
-    messages: [
-      {
-        id: "m10",
-        sender: "artisan",
-        text: "I've completed the roof repair. Please let me know if you notice any issues.",
-        timestamp: "2025-04-22T15:10:00",
-      },
-      {
-        id: "m11",
-        sender: "client",
-        text: "Looks good, but there's some debris left in the yard.",
-        timestamp: "2025-04-23T09:25:00",
-      },
-      {
-        id: "m12",
-        sender: "artisan",
-        text: "I apologize for that. I'll come by tomorrow to clean it up.",
-        timestamp: "2025-04-23T10:15:00",
-      },
-    ],
-  },
-  {
-    id: "7",
-    title: "Bathroom Renovation",
-    client: "David Thompson",
-    clientContact: "555-789-1234",
-    location: "404 Spruce Avenue, Southside",
-    deadline: "2025-05-20",
-    status: "declined",
-    priority: "high",
-    serviceType: "plumbing",
-    materials: ["Tiles", "Bathroom fixtures", "Pipes"],
-    estimatedCost: 3500,
-    description:
-      "Complete bathroom renovation including new fixtures and tiling",
-    createdAt: "2025-04-02",
-    declinedAt: "2025-04-03",
-    declineReason:
-      "Schedule conflict with other projects during the requested timeframe.",
-    messages: [
-      {
-        id: "m13",
-        sender: "client",
-        text: "I'm looking for a complete bathroom renovation. Are you available?",
-        timestamp: "2025-04-02T11:30:00",
-      },
-      {
-        id: "m14",
-        sender: "artisan",
-        text: "Unfortunately, I'm fully booked during that timeframe.",
-        timestamp: "2025-04-03T09:45:00",
-      },
-    ],
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllJobs,
+  fetchMyJobs,
+  fetchSavedJobs,
+} from "@/redux/ServiceProviderJobSlice";
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
+import AppliedJobs from "./AppliedJobs";
 
 // Service types for an artisan
 const serviceTypes = [
-  "carpentry",
-  "plumbing",
-  "electrical",
-  "painting",
-  "roofing",
-  "masonry",
-  "flooring",
-  "landscaping",
+  // "carpentry",
+  // "plumbing",
+  // "electrical",
+  // "painting",
+  // "roofing",
+  // "masonry",
+  // "flooring",
+  // "landscaping",
 ];
 
 export function JobTracker() {
-  const [services, setServices] = useState(initialServices);
+  const dispatch = useDispatch();
+  const allJobs = useSelector(
+    (state) => state.ServiceProviderJobReducer.allJobs
+  );
+  const loading = useSelector(
+    (state) => state.ServiceProviderJobReducer.loading
+  );
+  const error = useSelector((state) => state.ServiceProviderJobReducer.error);
+  const savedJobs = useSelector(
+    (state) => state.ServiceProviderJobReducer.savedJobs
+  );
+  const savedLoading = useSelector(
+    (state) => state.ServiceProviderJobReducer.savedLoading
+  );
+
+  const savedError = useSelector(
+    (state) => state.ServiceProviderJobReducer.savedError
+  );
+  const myJobs = useSelector((state) => state.ServiceProviderJobReducer.myJobs);
+  const myLoading = useSelector(
+    (state) => state.ServiceProviderJobReducer.myLoading
+  );
+
+  const myError = useSelector(
+    (state) => state.ServiceProviderJobReducer.myError
+  );
+  const [services, setServices] = useState(allJobs);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({
     priority: [],
-    serviceType: [],
+    state: [],
     client: [],
   });
 
@@ -270,34 +79,82 @@ export function JobTracker() {
   const [chatDialogOpen, setChatDialogOpen] = useState(false);
   const [currentChatService, setCurrentChatService] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  useEffect(() => {
+    dispatch(fetchAllJobs({ token: token.authKey }));
+    dispatch(fetchSavedJobs({ token: token.authKey }));
+    dispatch(fetchMyJobs({ token: token.authKey }));
+  }, []);
+
+  const acceptedJobs = allJobs.filter((job) => {
+    return job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE";
+  });
 
   // Filter services based on search query and active filters
-  const filteredServices = services.filter((service) => {
+  const filteredServices = acceptedJobs.filter((service) => {
     // Search filter
     const matchesSearch =
-      service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.location.toLowerCase().includes(searchQuery.toLowerCase());
+      service.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.employer_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.job_description
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service.job_location.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Priority filter
     const matchesPriority =
       activeFilters.priority.length === 0 ||
-      activeFilters.priority.includes(service.priority);
+      activeFilters.priority.includes(service.job_type);
 
     // Service type filter
-    const matchesServiceType =
-      activeFilters.serviceType.length === 0 ||
-      activeFilters.serviceType.includes(service.serviceType);
+    const matchesState =
+      activeFilters.state.length === 0 ||
+      activeFilters.state.includes(service.job_location);
 
     // Client filter
-    const matchesClient =
-      activeFilters.client.length === 0 ||
-      activeFilters.client.includes(service.client);
+    // const matchesClient =
+    //   activeFilters.client.length === 0 ||
+    //   activeFilters.client.includes(service.client);
 
-    return (
-      matchesSearch && matchesPriority && matchesServiceType && matchesClient
-    );
+    return matchesSearch && matchesPriority && matchesState;
+    //  && matchesPriority  && matchesClient
+  });
+
+  const filteredSaved = savedJobs.filter((service) => {
+    // Search filter
+    const matchesSearch =
+      service.jobPosting.job_title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service.jobPosting.employer_name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service.jobPosting.job_description
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service.jobPosting.job_location
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+
+    // Priority filter
+    const matchesPriority =
+      activeFilters.priority.length === 0 ||
+      activeFilters.priority.includes(service.jobPosting.job_type);
+
+    // Service type filter
+    // const matchesServiceType =
+    //   activeFilters.serviceType.length === 0 ||
+    //   activeFilters.serviceType.includes(service.serviceType);
+
+    // Client filter
+    // const matchesClient =
+    //   activeFilters.client.length === 0 ||
+    //   activeFilters.client.includes(service.client);
+
+    return matchesSearch && matchesPriority;
+    //  && matchesPriority && matchesServiceType && matchesClient
   });
 
   const newServices = filteredServices.filter(
@@ -448,16 +305,34 @@ export function JobTracker() {
   // Get unique clients for filter
   const uniqueClients = [...new Set(services.map((service) => service.client))];
 
+  if (loading) {
+    return <JobCardSkeleton />;
+  }
+
+  if (!loading && error) {
+    return (
+      <p className="text-center text-red-500 mt-6">Failed to fetch jobs</p>
+    );
+  }
+
   return (
     <div className="mx-auto px-6 py-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
+        <div className=" md:hidden">
+          <JobsFilter
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
+            clients={uniqueClients}
+            serviceTypes={serviceTypes}
+          />
+        </div>
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search services, clients, or locations..."
+                placeholder="Search Jobs..."
                 className="pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -465,102 +340,70 @@ export function JobTracker() {
             </div>
           </div>
 
-          <Tabs
-            defaultValue="all"
-            className="w-full">
-            <TabsList className="grid grid-cols-5 w-full bg-[#E6F7FC]">
-              <TabsTrigger
-                value="all"
-                className="hover:bg-sky-600 border-none">
+          <Tabs defaultValue="all" className="w-full">
+            <TabsList className="grid grid-cols-3 w-full bg-[#E6F7FC]">
+              <TabsTrigger value="all" className="hover:bg-sky-600 border-none">
                 All ({filteredServices.length})
               </TabsTrigger>
               <TabsTrigger
-                value="new"
+                value="saved"
                 className="hover:bg-sky-600 border-none">
-                New ({newServices.length})
+                Saved ({filteredSaved.length})
               </TabsTrigger>
               <TabsTrigger
-                value="ongoing"
+                value="applied"
                 className="hover:bg-sky-600 border-none">
-                Ongoing ({ongoingServices.length})
-              </TabsTrigger>
-              <TabsTrigger
-                value="completed"
-                className="hover:bg-sky-600 border-none">
-                Completed ({completedServices.length})
-              </TabsTrigger>
-              <TabsTrigger
-                value="declined"
-                className="hover:bg-sky-600 border-none">
-                Declined ({declinedServices.length})
+                Applied ({myJobs.length})
               </TabsTrigger>
             </TabsList>
-            <TabsContent
-              value="all"
-              className="space-y-4 mt-6">
+            <TabsContent value="all" className="space-y-4 mt-6">
               {filteredServices.length > 0 ? (
-                filteredServices.map((service) => (
-                  <JobsCard
-                    key={service.id}
-                    service={service}
-                    onStatusChange={updateServiceStatus}
-                    onRatingChange={updateServiceRating}
-                    onOpenRatingDialog={openRatingDialog}
-                    onDeclineService={declineService}
-                    onMessageClient={handleMessageClient}
-                  />
-                ))
+                filteredServices
+                  .reverse()
+                  .map((service) => (
+                    <JobsCard
+                      key={service.id}
+                      service={service}
+                      onStatusChange={updateServiceStatus}
+                      onRatingChange={updateServiceRating}
+                      onOpenRatingDialog={openRatingDialog}
+                      onDeclineService={declineService}
+                      onMessageClient={handleMessageClient}
+                      tab={"all"}
+                    />
+                  ))
               ) : (
                 <div className="text-center py-10 text-muted-foreground">
                   No services found matching your criteria
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="new"
-              className="space-y-4 mt-6">
-              {newServices.length > 0 ? (
-                newServices.map((service) => (
-                  <JobsCard
-                    key={service.id}
-                    service={service}
-                    onStatusChange={updateServiceStatus}
-                    onRatingChange={updateServiceRating}
-                    onOpenRatingDialog={openRatingDialog}
-                    onDeclineService={declineService}
-                    onMessageClient={handleMessageClient}
-                  />
-                ))
+            <TabsContent value="saved" className="space-y-4 mt-6">
+              {filteredSaved.length > 0 ? (
+                filteredSaved
+                  .reverse()
+                  .map((service) => (
+                    <JobsCard
+                      key={service.id}
+                      service={service.jobPosting}
+                      onStatusChange={updateServiceStatus}
+                      onRatingChange={updateServiceRating}
+                      onOpenRatingDialog={openRatingDialog}
+                      onDeclineService={declineService}
+                      onMessageClient={handleMessageClient}
+                      tab={"saved"}
+                    />
+                  ))
               ) : (
                 <div className="text-center py-10 text-muted-foreground">
-                  No new service requests found
+                  No saved job found
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="ongoing"
-              className="space-y-4 mt-6">
-              {ongoingServices.length > 0 ? (
-                ongoingServices.map((service) => (
-                  <JobsCard
-                    key={service.id}
-                    service={service}
-                    onStatusChange={updateServiceStatus}
-                    onRatingChange={updateServiceRating}
-                    onOpenRatingDialog={openRatingDialog}
-                    onDeclineService={declineService}
-                    onMessageClient={handleMessageClient}
-                  />
-                ))
-              ) : (
-                <div className="text-center py-10 text-muted-foreground">
-                  No ongoing services found
-                </div>
-              )}
+            <TabsContent value="applied" className="space-y-4 mt-6">
+              <AppliedJobs applications={myJobs} />
             </TabsContent>
-            <TabsContent
-              value="completed"
-              className="space-y-4 mt-6">
+            <TabsContent value="completed" className="space-y-4 mt-6">
               {completedServices.length > 0 ? (
                 completedServices.map((service) => (
                   <JobsCard
@@ -579,9 +422,7 @@ export function JobTracker() {
                 </div>
               )}
             </TabsContent>
-            <TabsContent
-              value="declined"
-              className="space-y-4 mt-6">
+            <TabsContent value="declined" className="space-y-4 mt-6">
               {declinedServices.length > 0 ? (
                 declinedServices.map((service) => (
                   <JobsCard
@@ -602,8 +443,7 @@ export function JobTracker() {
             </TabsContent>
           </Tabs>
         </div>
-
-        <div>
+        <div className="hidden md:block md:fixed md:right-1">
           <JobsFilter
             activeFilters={activeFilters}
             setActiveFilters={setActiveFilters}
@@ -624,9 +464,7 @@ export function JobTracker() {
         />
       )}
 
-      <Dialog
-        open={declineDialogOpen}
-        onOpenChange={setDeclineDialogOpen}>
+      <Dialog open={declineDialogOpen} onOpenChange={setDeclineDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Decline Service</DialogTitle>
@@ -636,9 +474,7 @@ export function JobTracker() {
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label
-                htmlFor="decline-reason"
-                className="text-sm font-medium">
+              <label htmlFor="decline-reason" className="text-sm font-medium">
                 Reason
               </label>
               <Textarea
@@ -668,9 +504,7 @@ export function JobTracker() {
 
       {/* Chat Dialog */}
       {currentChatService && (
-        <Dialog
-          open={chatDialogOpen}
-          onOpenChange={setChatDialogOpen}>
+        <Dialog open={chatDialogOpen} onOpenChange={setChatDialogOpen}>
           <DialogContent className="sm:max-w-[500px] p-0 h-[550px] flex flex-col">
             <DialogHeader className="brand-gradient text-white p-4 rounded-t-lg">
               <DialogTitle>Chat with {currentChatService.client}</DialogTitle>
@@ -723,9 +557,7 @@ export function JobTracker() {
             </div>
 
             <div className="p-4 border-t mt-auto">
-              <form
-                onSubmit={sendMessage}
-                className="flex gap-2">
+              <form onSubmit={sendMessage} className="flex gap-2">
                 <Input
                   placeholder="Type your message..."
                   value={newMessage}
