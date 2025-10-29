@@ -62,6 +62,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUserData } from "@/store/employer/userDataStorage";
 import { useUserDataQuery } from "@/hooks/useAllUsers";
 import { Toaster } from "@/components/ui/toaster";
+import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
+import { useDispatch } from "react-redux";
 
 const sidebarItems = [
   {
@@ -230,6 +232,7 @@ function DashboardContent({ notifications = [] }) {
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
             scrollbar-hidden md:rounded-lg  !rounded-b-none"
         >
+                      scrollbar-hidden md:rounded-lg">
           <div>
             {isCollapsed ? (
               <img
@@ -277,8 +280,7 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5"
-                      >
+                        className="text-white hover:bg-white/10 hover:text-white p-5">
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
@@ -287,6 +289,18 @@ function DashboardContent({ notifications = [] }) {
                     </SidebarMenuItem>
                   );
                 })}
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip="Logout"
+                    className="hover:cursor-pointer border-transparent text-white hover:bg-white/10 hover:text-white p-5"
+                    onClick={() => setShowLogoutNotice(true)}>
+                    <div>
+                      <LogOut className="w-7 h-7" />
+                      <span>Logout</span>
+                    </div>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -393,20 +407,17 @@ function DashboardContent({ notifications = [] }) {
             </DropdownMenu>
             <DropdownMenu
               open={notificationDropdownOpen}
-              onOpenChange={setNotificationDropdownOpen}
-            >
+              onOpenChange={setNotificationDropdownOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative border-none "
-                >
+                  className="relative border-none ">
                   <Bell className="h-5 w-5" />
                   {unreadNotifications > 0 && (
                     <Badge
                       variant="destructive"
-                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
-                    >
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
                       {unreadNotifications}
                     </Badge>
                   )}
@@ -416,6 +427,23 @@ function DashboardContent({ notifications = [] }) {
             </DropdownMenu>
           </div>
         </header>
+        <div className=" pt-16 md:pt-0">
+          <>
+            <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
+              <img
+                src={verifiedImageMobile}
+                alt="Complete profile illustration"
+                className="object-contain w-10 h-10"
+              />
+              <div className="flex flex-col gap-1">
+                <span>Your account is not yet verified</span>
+                <NavLink
+                  className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                  to={"companyprofile"}>
+                  complete your profile
+                </NavLink>
+              </div>
+            </div>
 
         <div className=" pt-16 md:pt-0">
           {!agent?.agent?.verified && (
@@ -434,6 +462,20 @@ function DashboardContent({ notifications = [] }) {
                   >
                     complete your profile
                   </NavLink>
+                <div className="flex gap-3 items-center">
+                  <span className="bg-secondary p-1 rounded text-white">
+                    Action required:
+                  </span>
+                  <span>
+                    Get started by
+                    <NavLink
+                      className="underline text-secondary w-fit py-1 px-2 "
+                      to={"profile"}>
+                      completing your Profile
+                    </NavLink>
+                    , stand a better chance of being hired by completing your
+                    profile
+                  </span>
                 </div>
               </div>
 
@@ -478,9 +520,12 @@ function DashboardContent({ notifications = [] }) {
 }
 
 const ShowLogOutDialogue = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleCancelClick = () => {
     sessionStorage.clear();
+    localStorage.clear();
+    dispatch(resetUserData());
     navigate("/login");
   };
 
@@ -496,8 +541,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8"
-          >
+            className="flex flex-col items-center py-6 space-y-8">
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -512,8 +556,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleCancelClick}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
-          >
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

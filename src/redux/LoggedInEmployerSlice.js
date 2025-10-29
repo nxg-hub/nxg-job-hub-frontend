@@ -13,7 +13,7 @@ const token =
   JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
   JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 export const fetchLoggedInEmployer = createAsyncThunk(
-  "logedInUser/fetchUser",
+  "loggedInEmployer/fetchUser",
   async (url) => {
     return await fetch(`${API_HOST_URL}/api/employers/get-employer`, {
       method: "GET",
@@ -31,7 +31,7 @@ export const fetchLoggedInEmployer = createAsyncThunk(
   }
 );
 const loggedInEmployerSlice = createSlice({
-  name: "loggedInUser",
+  name: "loggedInEmployer",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -43,7 +43,7 @@ const loggedInEmployerSlice = createSlice({
       .addCase(fetchLoggedInEmployer.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.loggedInUser = action.payload;
+        state.loggedInEmployer = action.payload;
       })
       .addCase(fetchLoggedInEmployer.rejected, (state, action) => {
         state.loading = false;
