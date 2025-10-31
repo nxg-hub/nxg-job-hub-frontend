@@ -65,12 +65,36 @@ const TechjobsSlider = () => {
       jobtitle: "Cloud Computing",
       vacancies: "71 Vacancies",
     },
+    {
+      id: "11",
+      icon: Cloud,
+      jobtitle: "Plumber",
+      vacancies: "3 Vacancies",
+    },
+    {
+      id: "12",
+      icon: Cyber,
+      jobtitle: "Welder",
+      vacancies: "8 Vacancies",
+    },
+    {
+      id: "13",
+      icon: Web,
+      jobtitle: "Carpenter",
+      vacancies: "13 Vacancies",
+    },
+    {
+      id: "14",
+      icon: Machine,
+      jobtitle: "Interior Designer",
+      vacancies: "25 Vacancies",
+    },
   ];
 
   return (
     <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white">
       <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-10">
-        Explore Tech Job Fields
+        Explore Tech Job Categories
       </h2>
 
       <Swiper

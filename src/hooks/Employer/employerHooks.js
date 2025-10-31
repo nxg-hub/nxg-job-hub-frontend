@@ -5,7 +5,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useEmployerDataQuery = () => {
-  console.log("babababa");
   const setEmployerData = useEmployerData((state) => state.setEmployerData);
 
   const query = useQuery({
@@ -32,7 +31,6 @@ export const useEmployerDataQuery = () => {
     if (query.data) {
       setEmployerData(query.data);
     }
-    console.log(query.data);
   }, [query.data, setEmployerData]);
 
   return query;
