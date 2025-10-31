@@ -178,7 +178,7 @@ function Passwordsettings() {
                 <div className="text-sm text-start text-[#ee2a2a]">
                   <p>{passwordError}</p>
                 </div>
-              )}{" "}
+              )}
               {successMessage !== "" && (
                 <div className="change-successful">
                   <p>Password change was successful</p>

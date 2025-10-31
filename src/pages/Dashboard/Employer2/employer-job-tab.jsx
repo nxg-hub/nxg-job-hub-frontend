@@ -50,12 +50,16 @@ import {
 } from "@/hooks/useJobs";
 import { useEmployerData } from "@/store/employer/employerStore";
 import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { API_HOST_URL } from "@/utils/api/API_HOST";
+import ApplicantsList from "./ApplicantsList";
 
 export default function EmployerJobTab() {
   const [activeTab, setActiveTab] = useState("all");
 
   const employer = useEmployerData((state) => state.employerData);
   const { isLoading, isError, data } = useFetchJobs(employer?.id);
+  console.log(employer, "hhhhhhhh");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -167,8 +171,7 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("all")}
-          >
+            onClick={() => setActiveTab("all")}>
             All Jobs
             <Badge variant="secondary" className="ml-2 text-white">
               {data?.length || 0}
@@ -183,12 +186,11 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("active")}
-          >
+            onClick={() => setActiveTab("active")}>
             Active
-            {sampleJobs.length > 0 && (
+            {data?.length > 0 && (
               <Badge variant="destructive" className="ml-2">
-                {jobs.filter((job) => job.status === "active").length}
+                {data?.length || 0}
               </Badge>
             )}
           </Button>
@@ -201,8 +203,7 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("close")}
-          >
+            onClick={() => setActiveTab("close")}>
             Closed
             {filterClosed.length > 0 && (
               <Badge variant="destructive" className="ml-2">
@@ -223,7 +224,7 @@ export default function EmployerJobTab() {
               .map((job, index) => (
                 <Job key={index} job={job} />
               ))}
-            {sampleJobs.map((job) => (
+            {/* {sampleJobs.map((job) => (
               <JobCard
                 key={job.id}
                 job={job}
@@ -231,12 +232,23 @@ export default function EmployerJobTab() {
                 onDeleteJob={handleDeleteJob}
                 setJobs={setJobs}
               />
-            ))}
+            ))} */}
           </div>
         )}
         {activeTab === "active" && (
           <div className="space-y-8">
-            {filterActive.map((job) => (
+            {data
+              ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
+              .map((job, index) => (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  onCloseJob={handleCloseJob}
+                  onDeleteJob={handleDeleteJob}
+                  setJobs={setJobs}
+                />
+              ))}
+            {/* {filterActive.map((job) => (
               <JobCard
                 key={job.id}
                 job={job}
@@ -244,7 +256,7 @@ export default function EmployerJobTab() {
                 onDeleteJob={handleDeleteJob}
                 setJobs={setJobs}
               />
-            ))}
+            ))} */}
           </div>
         )}
         {activeTab === "close" && (
@@ -276,6 +288,35 @@ export default function EmployerJobTab() {
 const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
   const [isApplicantsDialogOpen, setIsApplicantsDialogOpen] = useState(false);
   const { toast } = useToast();
+  const jobID = job?.jobID;
+  const [applicants, setApplicants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+
+  const { mutate: deleteJob } = useDeletePostedJob();
+  const {
+    data: numberOfApplicants,
+    isLoading,
+    isError,
+    error,
+  } = useFetchJobApplicants({ jobID });
+
+  const handleViewApplicants = async () => {
+    setIsApplicantsDialogOpen(true);
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${API_HOST_URL}/api/employers/job-postings/${jobID}/get-all-applicants-for-a-job?page=0&size=1000&sort=string`
+      );
+
+      setApplicants(response.data);
+    } catch (err) {
+      console.log(err);
+      setErr(err.response.data);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleUpdateApplicantStatus = (applicantId, newStatus) => {
     // Update applicant status
@@ -314,28 +355,31 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
                   job.status === "active"
                     ? "bg-green-100 text-green-800"
                     : "bg-gray-100 text-gray-800"
-                }`}
-              >
-                {job.status === "active" ? "Active" : "Closed"}
+                }`}>
+                {job.jobStatus === "ACCEPTED"
+                  ? "Active"
+                  : job.jobStatus === "SUSPENDED"
+                  ? "Closed"
+                  : ""}
               </span>
             </div>
             <div className="flex flex-wrap gap-2 mt-2 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
-                <Briefcase className="h-4 w-4" /> {job.jobType}
+                <Briefcase className="h-4 w-4" /> {job.job_type}
               </span>
               <span>•</span>
-              <span>{job.location}</span>
+              <span>{job.job_location}</span>
               <span>•</span>
               <span>{job.salary}</span>
               <span>•</span>
-              <span>Posted {job.postedDate}</span>
+              <span>Posted {getDateAsTextLabel(job?.createdAt)}</span>
             </div>
-            <p className="mt-2 text-sm">{job.description}</p>
+            <p className="mt-2 text-sm">{job.job_description}</p>
           </div>
           <div className="flex flex-col gap-2 md:items-end">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">
-                {job.applicants.length} Applicants
+                {numberOfApplicants} Applicants
               </span>
             </div>
             <div className="flex gap-2">
@@ -346,8 +390,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => onCloseJob(job.id)}
-                >
+                  onClick={() => onCloseJob(job.id)}>
                   Close Job
                 </Button>
               ) : (
@@ -367,8 +410,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => onDeleteJob(job.id)}
-                  >
+                    onClick={() => onDeleteJob(job.id)}>
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -380,9 +422,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
         <div className="mt-4 pt-4 border-t">
           <Button
             className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={() => setIsApplicantsDialogOpen(true)}
-          >
-            View Applicants ({job.applicants.length})
+            onClick={handleViewApplicants}>
+            View Applicants ({numberOfApplicants})
           </Button>
         </div>
       </CardContent>
@@ -390,114 +431,32 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}
-        onOpenChange={setIsApplicantsDialogOpen}
-      >
+        onOpenChange={setIsApplicantsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Applicants for {job.title}</DialogTitle>
             <DialogDescription>
-              {job.applicants.length} applicants for this position
+              {numberOfApplicants} applicants for this position
             </DialogDescription>
           </DialogHeader>
 
           {/* Applicants List */}
           <div className="space-y-4">
-            {job.applicants.length === 0 ? (
+            {loading ? (
+              <p className="text-center text-gray-600">Loading applicants...</p>
+            ) : !loading && err ? (
+              <p className="text-center text-red-600">
+                Failed to load applicants
+              </p>
+            ) : applicants?.length === 0 ? (
               <p className="text-center text-muted-foreground py-4">
                 No applicants yet
               </p>
             ) : (
-              job.applicants.map((applicant) => (
-                <div
-                  key={applicant.id}
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-accent"
-                >
-                  <Avatar>
-                    <AvatarFallback>
-                      {applicant.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-medium">{applicant.name}</h3>
-                      <span
-                        className={`rounded-full px-2 py-1 text-xs ${
-                          applicant.status === "review"
-                            ? "bg-blue-100 text-blue-800"
-                            : applicant.status === "shortlisted"
-                            ? "bg-purple-100 text-purple-800"
-                            : applicant.status === "interview"
-                            ? "bg-green-100 text-green-800"
-                            : applicant.status === "rejected"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {applicant.status.charAt(0).toUpperCase() +
-                          applicant.status.slice(1)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {applicant.position} • {applicant.experience} experience
-                    </p>
-                    <div className="flex items-center gap-1 mt-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg
-                          key={star}
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill={
-                            star <= applicant.rating ? "currentColor" : "none"
-                          }
-                          stroke={
-                            star <= applicant.rating ? "none" : "currentColor"
-                          }
-                          className={`w-4 h-4 ${
-                            star <= applicant.rating
-                              ? "text-yellow-500"
-                              : "text-gray-300"
-                          }`}
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <Eye className="h-4 w-4 mr-2" />
-                      View
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        handleUpdateApplicantStatus(applicant.id, "interview")
-                      }
-                    >
-                      <Check className="h-4 w-4 mr-2" />
-                      Interview
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        handleUpdateApplicantStatus(applicant.id, "rejected")
-                      }
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Reject
-                    </Button>
-                  </div>
-                </div>
-              ))
+              <ApplicantsList
+                applicants={applicants}
+                handleViewApplicants={handleViewApplicants}
+              />
             )}
           </div>
         </DialogContent>
@@ -508,6 +467,9 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
 
 const Job = ({ job }) => {
   const queryClient = useQueryClient();
+  const [applicants, setApplicants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
   const jobID = job?.jobID;
   const {
     data: numberOfApplicants,
@@ -515,8 +477,24 @@ const Job = ({ job }) => {
     isError,
     error,
   } = useFetchJobApplicants({ jobID });
-  const { mutate: deleteJob } = useDeletePostedJob();
 
+  const { mutate: deleteJob } = useDeletePostedJob();
+  const handleViewApplicants = async () => {
+    setIsApplicantsDialogOpen(true);
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${API_HOST_URL}/api/employers/job-postings/${jobID}/get-all-applicants-for-a-job?page=0&size=1000&sort=string`
+      );
+
+      setApplicants(response.data);
+    } catch (err) {
+      console.log(err);
+      setErr(err.response.data);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleDeleteJob = (jobId) => {
     if (jobId) {
       deleteJob(jobId, {
@@ -579,8 +557,7 @@ const Job = ({ job }) => {
         return (
           <Badge
             variant="secondary"
-            className="bg-secondary text-white hover:bg-secondary"
-          >
+            className="bg-secondary text-white hover:bg-secondary">
             {status}
           </Badge>
         );
@@ -637,8 +614,7 @@ const Job = ({ job }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => handleDeleteJob(jobID)}
-                  >
+                    onClick={() => handleDeleteJob(jobID)}>
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -686,8 +662,7 @@ const Job = ({ job }) => {
         <div className="mt-4 pt-4 border-t">
           <Button
             className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={() => setIsApplicantsDialogOpen(true)}
-          >
+            onClick={handleViewApplicants}>
             View Applicants ({numberOfApplicants})
           </Button>
         </div>
@@ -696,8 +671,7 @@ const Job = ({ job }) => {
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}
-        onOpenChange={setIsApplicantsDialogOpen}
-      >
+        onOpenChange={setIsApplicantsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Applicants for {job.job_title}</DialogTitle>
@@ -708,103 +682,21 @@ const Job = ({ job }) => {
 
           {/* Applicants List */}
           <div className="space-y-4">
-            {numberOfApplicants === 0 ? (
+            {loading ? (
+              <p className="text-center text-gray-600">Loading applicants...</p>
+            ) : !loading && err ? (
+              <p className="text-center text-red-600">
+                Failed to load applicants
+              </p>
+            ) : applicants?.length === 0 ? (
               <p className="text-center text-muted-foreground py-4">
                 No applicants yet
               </p>
             ) : (
-              ""
-              // job.applicants.map((applicant) => (
-              //   <div
-              //     key={applicant.id}
-              //     className="flex items-center gap-4 p-3 rounded-lg hover:bg-accent"
-              //   >
-              //     <Avatar>
-              //       <AvatarFallback>
-              //         {applicant.name
-              //           .split(" ")
-              //           .map((n) => n[0])
-              //           .join("")}
-              //       </AvatarFallback>
-              //     </Avatar>
-              //     <div className="flex-1">
-              //       <div className="flex items-center justify-between">
-              //         <h3 className="font-medium">{applicant.name}</h3>
-              //         <span
-              //           className={`rounded-full px-2 py-1 text-xs ${
-              //             applicant.status === "review"
-              //               ? "bg-blue-100 text-blue-800"
-              //               : applicant.status === "shortlisted"
-              //               ? "bg-purple-100 text-purple-800"
-              //               : applicant.status === "interview"
-              //               ? "bg-green-100 text-green-800"
-              //               : applicant.status === "rejected"
-              //               ? "bg-red-100 text-red-800"
-              //               : "bg-gray-100 text-gray-800"
-              //           }`}
-              //         >
-              //           {applicant.status.charAt(0).toUpperCase() +
-              //             applicant.status.slice(1)}
-              //         </span>
-              //       </div>
-              //       <p className="text-sm text-muted-foreground">
-              //         {applicant.position} • {applicant.experience} experience
-              //       </p>
-              //       <div className="flex items-center gap-1 mt-1">
-              //         {[1, 2, 3, 4, 5].map((star) => (
-              //           <svg
-              //             key={star}
-              //             xmlns="http://www.w3.org/2000/svg"
-              //             viewBox="0 0 24 24"
-              //             fill={
-              //               star <= applicant.rating ? "currentColor" : "none"
-              //             }
-              //             stroke={
-              //               star <= applicant.rating ? "none" : "currentColor"
-              //             }
-              //             className={`w-4 h-4 ${
-              //               star <= applicant.rating
-              //                 ? "text-yellow-500"
-              //                 : "text-gray-300"
-              //             }`}
-              //           >
-              //             <path
-              //               fillRule="evenodd"
-              //               d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-              //               clipRule="evenodd"
-              //             />
-              //           </svg>
-              //         ))}
-              //       </div>
-              //     </div>
-              //     <div className="flex gap-2">
-              //       <Button variant="outline" size="sm">
-              //         <Eye className="h-4 w-4 mr-2" />
-              //         View
-              //       </Button>
-              //       <Button
-              //         variant="outline"
-              //         size="sm"
-              //         onClick={() =>
-              //           handleUpdateApplicantStatus(applicant.id, "interview")
-              //         }
-              //       >
-              //         <Check className="h-4 w-4 mr-2" />
-              //         Interview
-              //       </Button>
-              //       <Button
-              //         variant="outline"
-              //         size="sm"
-              //         onClick={() =>
-              //           handleUpdateApplicantStatus(applicant.id, "rejected")
-              //         }
-              //       >
-              //         <X className="h-4 w-4 mr-2" />
-              //         Reject
-              //       </Button>
-              //     </div>
-              //   </div>
-              // ))
+              <ApplicantsList
+                applicants={applicants}
+                handleViewApplicants={handleViewApplicants}
+              />
             )}
           </div>
         </DialogContent>

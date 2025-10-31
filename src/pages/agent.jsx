@@ -229,10 +229,8 @@ function DashboardContent({ notifications = [] }) {
       {/* Sidebar */}
       <Sidebar className="" collapsible="icons" variant="floating">
         <SidebarContent
-          className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-            scrollbar-hidden md:rounded-lg  !rounded-b-none"
-        >
-                      scrollbar-hidden md:rounded-lg">
+          className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible
+            scrollbar-hidden md:rounded-lg  !rounded-b-none">
           <div>
             {isCollapsed ? (
               <img
@@ -343,7 +341,7 @@ function DashboardContent({ notifications = [] }) {
                           latest and exclusive features
                         </p>
                       )}
-        
+
                       <NavLink
                         className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
                         to="/employer/subscription"
@@ -362,8 +360,7 @@ function DashboardContent({ notifications = [] }) {
               asChild
               tooltip="Logout"
               className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
-              onClick={() => setShowLogoutNotice(true)}
-            >
+              onClick={() => setShowLogoutNotice(true)}>
               <div>
                 <LogOut className="w-7 h-7" />
                 <span>Logout</span>
@@ -428,84 +425,82 @@ function DashboardContent({ notifications = [] }) {
           </div>
         </header>
         <div className=" pt-16 md:pt-0">
-          <>
-            <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
-              <img
-                src={verifiedImageMobile}
-                alt="Complete profile illustration"
-                className="object-contain w-10 h-10"
-              />
-              <div className="flex flex-col gap-1">
-                <span>Your account is not yet verified</span>
-                <NavLink
-                  className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                  to={"companyprofile"}>
-                  complete your profile
-                </NavLink>
-              </div>
+          <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
+            <img
+              src={verifiedImageMobile}
+              alt="Complete profile illustration"
+              className="object-contain w-10 h-10"
+            />
+            <div className="flex flex-col gap-1">
+              <span>Your account is not yet verified</span>
+              <NavLink
+                className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                to={"companyprofile"}>
+                complete your profile
+              </NavLink>
             </div>
-
-        <div className=" pt-16 md:pt-0">
-          {!agent?.agent?.verified && (
-            <>
-              <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
-                <img
-                  src={verifiedImageMobile}
-                  alt="Complete profile illustration"
-                  className="object-contain w-10 h-10"
-                />
-                <div className="flex flex-col gap-1">
-                  <span>Your account is not yet verified</span>
-                  <NavLink
-                    className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                    to={"companyprofile"}
-                  >
-                    complete your profile
-                  </NavLink>
-                <div className="flex gap-3 items-center">
-                  <span className="bg-secondary p-1 rounded text-white">
-                    Action required:
-                  </span>
-                  <span>
-                    Get started by
-                    <NavLink
-                      className="underline text-secondary w-fit py-1 px-2 "
-                      to={"profile"}>
-                      completing your Profile
-                    </NavLink>
-                    , stand a better chance of being hired by completing your
-                    profile
-                  </span>
-                </div>
-              </div>
-
-              <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-                <div className="flex items-center gap-8">
+          </div>
+          <div className=" pt-16 md:pt-0">
+            {!agent?.agent?.verified && (
+              <>
+                <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
                   <img
                     src={verifiedImageMobile}
                     alt="Complete profile illustration"
                     className="object-contain w-10 h-10"
                   />
-                  <div className="flex gap-3 items-center">
-                    <span className="bg-secondary p-1 rounded text-white">
-                      Action required:
-                    </span>
-                    <span>
-                      Get started by
-                      <NavLink
-                        className="underline text-secondary w-fit py-1 px-2 "
-                        to={"profile"}
-                      >
-                        completing your Profile
-                      </NavLink>
-                      , stand a better chance of being hired by completing your
-                      profile
-                    </span>
+                  <div className="flex flex-col gap-1">
+                    <span>Your account is not yet verified</span>
+                    <NavLink
+                      className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
+                      to={"companyprofile"}>
+                      complete your profile
+                    </NavLink>
+                    <div className="flex gap-3 items-center">
+                      <span className="bg-secondary p-1 rounded text-white">
+                        Action required:
+                      </span>
+                      <span>
+                        Get started by
+                        <NavLink
+                          className="underline text-secondary w-fit py-1 px-2 "
+                          to={"profile"}>
+                          completing your Profile
+                        </NavLink>
+                        , stand a better chance of being hired by completing
+                        your profile
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )}
+
+                <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
+                  <div className="flex items-center gap-8">
+                    <img
+                      src={verifiedImageMobile}
+                      alt="Complete profile illustration"
+                      className="object-contain w-10 h-10"
+                    />
+                    <div className="flex gap-3 items-center">
+                      <span className="bg-secondary p-1 rounded text-white">
+                        Action required:
+                      </span>
+                      <span>
+                        Get started by
+                        <NavLink
+                          className="underline text-secondary w-fit py-1 px-2 "
+                          to={"profile"}>
+                          completing your Profile
+                        </NavLink>
+                        , stand a better chance of being hired by completing
+                        your profile
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <div className="h-full">
           <Outlet />
