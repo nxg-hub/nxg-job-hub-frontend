@@ -17,7 +17,6 @@ import RecentPostedJobs from "@/components/Employer/Dashboard/recentPostedJobs";
 
 export default function EmployerDashboardTab() {
   const employer = useEmployerData((state) => state.employerData);
-  console.log(employer);
   const [candidates, setCandidates] = useState(matchesData);
   const [filteredCandidates, setFilteredCandidates] = useState(matchesData);
   const [searchTerm, setSearchTerm] = useState("");

@@ -63,6 +63,7 @@ import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch } from "react-redux";
 import { useEmployerDataQuery } from "@/hooks/Employer/employerHooks";
 import { useEmployerData } from "@/store/employer/employerStore";
+import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 
 const sidebarItems = [
   {
@@ -90,6 +91,7 @@ const sidebarItems = [
 ];
 
 export function EmployerDashboard() {
+  const notifications = useFetchNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -177,7 +179,7 @@ export function EmployerDashboard() {
     return (
       <TooltipProvider delayDuration={0}>
         <SidebarProvider>
-          <DashboardContent notifications={notificationsData} />
+          <DashboardContent notifications={notifications} />
         </SidebarProvider>
       </TooltipProvider>
     );
@@ -186,7 +188,7 @@ export function EmployerDashboard() {
   return (
     <TooltipProvider delayDuration={0}>
       <SidebarProvider>
-        <DashboardContent notifications={notificationsData} />
+        <DashboardContent notifications={notifications} />
       </SidebarProvider>
     </TooltipProvider>
   );
