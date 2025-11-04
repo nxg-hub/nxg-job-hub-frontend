@@ -52,7 +52,6 @@ import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercomp
 import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
-import { AgentDashboard } from "./pages/agent.jsx";
 import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
 import MatchesTab from "./pages/Dashboard/Agent/matches-tab.jsx";
 import JobsTab from "./pages/Dashboard/Agent/jobs-tab.jsx";
@@ -73,10 +72,8 @@ import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.js
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
-import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
-import AgentCompleteProfileForm from "./pages/agentCompleteProfile.jsx";
+import { EmployerProfileCompleteForm } from "./pages/CompleteYourProfile/employer/employerCompleteForm.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
-import AgentCompleteProfile from "./pages/agentCP.jsx";
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
@@ -84,6 +81,8 @@ import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
 import TechTalentSubscription from "./pages/Dashboard/subscriptions/techSubscription/TechTalentSubscription.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
+import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
+import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -98,7 +97,12 @@ function App() {
         <Route path="/post-job-form" element={<PostJobForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<SignupForm />} />
+        <Route
+          path="/register/success-signup"
+          element={<SuccessfulSignupPage />}
+        />
         <Route path="/create" element={<SelectAccountType />} />
+        <Route path="/createAccount" element={<CreateAccountType />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/post-job-form" element={<PostJobForm />} />
@@ -107,26 +111,6 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
-
-        {/* agent user routes */}
-        <Route path="/agent" element={<AgentDashboard />}>
-          <Route index element={<DashboardTab />} />
-          <Route path="profile" element={<ProfileTab />} />
-          <Route path="employers" element={<EmployerTab />} />
-          <Route path="candidates" element={<CandidatesTab />} />
-          <Route path="jobs" element={<JobsTab />} />
-          <Route path="chats" element={<MessagesTab />} />
-          <Route path="candidate-matches" element={<MatchesTab />} />
-        </Route>
-        <Route
-          path="/agent/complete-profile"
-          element={<AgentCompleteProfileForm />}
-        />
-        <Route
-          path="/agent/complete-profile-form"
-          element={<AgentCompleteProfile />}
-        />
-        {/* end agent user routes */}
 
         {/* service provider user routes */}
         <Route path="/services-provider" element={<ServiceProviderDashboard />}>
@@ -150,7 +134,8 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}>
+          element={<ServiceProviderDashboardX />}
+        >
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -222,7 +207,8 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }
+          ></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -235,7 +221,8 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
+            }
+          >
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />

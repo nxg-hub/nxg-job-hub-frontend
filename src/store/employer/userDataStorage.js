@@ -18,5 +18,5 @@ export const useUserData = create((set) => ({
       }
       return { userData: updatedData };
     }),
-  clearUserData: () => set({ userData: null }),
+  deleteUserData: () => set({ userData: null }),
 }));
