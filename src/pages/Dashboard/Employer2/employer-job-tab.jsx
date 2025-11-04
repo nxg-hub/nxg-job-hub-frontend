@@ -53,99 +53,54 @@ import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import ApplicantsList from "./ApplicantsList";
+import EditJobModal from "./EditJobModal";
 
 export default function EmployerJobTab() {
   const [activeTab, setActiveTab] = useState("all");
-
+  const [loading, setLoading] = useState(null);
   const employer = useEmployerData((state) => state.employerData);
   const { isLoading, isError, data } = useFetchJobs(employer?.id);
-  console.log(employer, "hhhhhhhh");
-
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    location: "",
-    jobType: "Full-time",
-    salaryMin: "",
-    salaryMax: "",
-    deadline: "",
-    skills: "",
-    experienceLevel: "Mid Level",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSelectChange = (name, value) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handlePublishJob = () => {
-    // Validate form
-    if (!formData.title || !formData.description || !formData.location) {
-      toast({
-        title: "Missing information",
-        description: "Please fill in all required fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Create new job object
-    const newJob = {
-      id: Date.now(),
-      title: formData.title,
-      description: formData.description,
-      location: formData.location,
-      jobType: formData.jobType,
-      salary: `$${formData.salaryMin} - $${formData.salaryMax}`,
-      deadline: formData.deadline,
-      skills: formData.skills.split(",").map((skill) => skill.trim()),
-      experienceLevel: formData.experienceLevel,
-      status: "active",
-      postedDate: new Date().toLocaleDateString(),
-      applicants: [],
-    };
-
-    // In a real app, you would save this to a database
-    // For this demo, we'll use localStorage to persist the job
-    const existingJobs = JSON.parse(localStorage.getItem("jobs") || "[]");
-    localStorage.setItem("jobs", JSON.stringify([...existingJobs, newJob]));
-
-    toast({
-      title: "Job Published",
-      description: "Your job has been successfully published",
-    });
-
-    // Navigate to job listings
-    setActiveMenu("jobs");
-  };
-
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
+  const queryClient = useQueryClient();
   const [jobs, setJobs] = useState(sampleJobs);
   const { toast } = useToast();
-
-  const filterActive = sampleJobs.filter((job) => job.status === "active");
   const filterClosed = sampleJobs.filter((job) => job.status === "closed");
 
-  const handleCloseJob = (jobId) => {
-    const updatedJobs = jobs.map((job) =>
-      job.id === jobId ? { ...job, status: "closed" } : job
-    );
-    setJobs(updatedJobs);
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-    toast({
-      title: "Job Closed",
-      description:
-        "The job has been closed and is no longer accepting applications",
-    });
+  const activeJobs = data.filter((job) => {
+    return job.jobStatus === "ACCEPTED";
+  });
+
+  const handleCloseJob = async (job) => {
+    setLoading(job.jobID);
+    try {
+      const response = await axios.put(
+        `${API_HOST_URL}/api/job-postings/update/${job.jobID}`,
+        job,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      );
+
+      toast({
+        title: "Job Updated",
+        description: "The job has been closed successfully.",
+      });
+      queryClient.invalidateQueries(["employerJobs", employer.id]);
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Error closing job",
+        description: "Failed to update job.",
+      });
+    } finally {
+      setLoading(null);
+    }
   };
 
   const handleDeleteJob = (jobId) => {
@@ -188,9 +143,9 @@ export default function EmployerJobTab() {
             )}
             onClick={() => setActiveTab("active")}>
             Active
-            {data?.length > 0 && (
-              <Badge variant="destructive" className="ml-2">
-                {data?.length || 0}
+            {activeJobs?.length > 0 && (
+              <Badge variant="success" className="ml-2">
+                {activeJobs?.length || 0}
               </Badge>
             )}
           </Button>
@@ -237,7 +192,7 @@ export default function EmployerJobTab() {
         )}
         {activeTab === "active" && (
           <div className="space-y-8">
-            {data
+            {activeJobs
               ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
               .map((job, index) => (
                 <JobCard
@@ -246,6 +201,7 @@ export default function EmployerJobTab() {
                   onCloseJob={handleCloseJob}
                   onDeleteJob={handleDeleteJob}
                   setJobs={setJobs}
+                  loader={loading}
                 />
               ))}
             {/* {filterActive.map((job) => (
@@ -285,14 +241,37 @@ export default function EmployerJobTab() {
   );
 }
 
-const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
+const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
+  const jobPostData = {
+    employerID: job.employerID,
+    jobID: job.jobID,
+    job_title: job.job_title,
+    job_description: job.job_description,
+    jobClassification: job.jobClassification,
+    company_bio: job.company_bio,
+    salary: job.salary,
+    job_type: job.job_type,
+    deadline: job.deadline,
+    requirements: job.requirements,
+    employer_name: job.employer_name,
+    // employer_profile_pic: job.employer_profile_pic,
+    job_location: job.job_location,
+    tags: job.tags || [],
+    jobStatus: "SUSPENDED",
+  };
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "NGN",
+    }).format(amount);
+  };
+
   const [isApplicantsDialogOpen, setIsApplicantsDialogOpen] = useState(false);
   const { toast } = useToast();
   const jobID = job?.jobID;
   const [applicants, setApplicants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-
   const { mutate: deleteJob } = useDeletePostedJob();
   const {
     data: numberOfApplicants,
@@ -317,42 +296,16 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
       setLoading(false);
     }
   };
-
-  const handleUpdateApplicantStatus = (applicantId, newStatus) => {
-    // Update applicant status
-    const updatedApplicants = job.applicants.map((applicant) =>
-      applicant.id === applicantId
-        ? { ...applicant, status: newStatus }
-        : applicant
-    );
-
-    // Update job with new applicants list
-    const updatedJob = { ...job, applicants: updatedApplicants };
-
-    // Update jobs in state and localStorage
-    const jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
-    const updatedJobs = jobs.map((j) => (j.id === job.id ? updatedJob : j));
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-
-    // Update the jobs state in the parent component
-    setJobs(updatedJobs);
-
-    toast({
-      title: "Status Updated",
-      description: `Applicant status changed to ${newStatus}`,
-    });
-  };
-
   return (
     <Card>
       <CardContent className="p-6">
         <div className="flex flex-col md:flex-row justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-semibold">{job.title}</h2>
+              <h2 className="text-xl font-semibold">{job.job_title}</h2>
               <span
                 className={`rounded-full px-2 py-1 text-xs ${
-                  job.status === "active"
+                  job.jobStatus === "ACCEPTED"
                     ? "bg-green-100 text-green-800"
                     : "bg-gray-100 text-gray-800"
                 }`}>
@@ -370,7 +323,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
               <span>•</span>
               <span>{job.job_location}</span>
               <span>•</span>
-              <span>{job.salary}</span>
+              <span>{formatCurrency(job.salary)}</span>
               <span>•</span>
               <span>Posted {getDateAsTextLabel(job?.createdAt)}</span>
             </div>
@@ -383,15 +336,22 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
               </span>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm">
+              {/* <Button
+                variant="outline"
+                size="sm"
+               >
                 Edit
-              </Button>
-              {job.status === "active" ? (
+              </Button> */}
+              {job.jobStatus === "ACCEPTED" ? (
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => onCloseJob(job.id)}>
-                  Close Job
+                  disabled={loader === job.jobID}
+                  onClick={() =>
+                    // onCloseJob(jobPostData)
+                    console.log("Clicked")
+                  }>
+                  {loader === job.jobID ? "Processing.." : " Close Job"}
                 </Button>
               ) : (
                 <Button variant="outline" size="sm">
@@ -434,7 +394,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
         onOpenChange={setIsApplicantsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Applicants for {job.title}</DialogTitle>
+            <DialogTitle>Applicants for {job.job_title}</DialogTitle>
             <DialogDescription>
               {numberOfApplicants} applicants for this position
             </DialogDescription>
@@ -466,6 +426,37 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, setJobs }) => {
 };
 
 const Job = ({ job }) => {
+  const jobPostData = {
+    employerID: job.employerID,
+    jobID: job.jobID,
+    job_title: job.job_title,
+    job_description: job.job_description,
+    jobClassification: job.jobClassification,
+    company_bio: job.company_bio,
+    salary: job.salary,
+    job_type: job.job_type,
+    deadline: job.deadline,
+    requirements: job.requirements,
+    employer_name: job.employer_name,
+    // employer_profile_pic: job.employer_profile_pic,
+    job_location: job.job_location,
+    tags: job.tags || [],
+    jobStatus: job.jobStatus,
+  };
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "NGN",
+    }).format(amount);
+  };
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const employer = useEmployerData((state) => state.employerData);
+  const [editLoader, setEditLoader] = useState(false);
+  const token =
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
   const queryClient = useQueryClient();
   const [applicants, setApplicants] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -477,8 +468,10 @@ const Job = ({ job }) => {
     isError,
     error,
   } = useFetchJobApplicants({ jobID });
-
   const { mutate: deleteJob } = useDeletePostedJob();
+  const [isApplicantsDialogOpen, setIsApplicantsDialogOpen] = useState(false);
+  const { toast } = useToast();
+
   const handleViewApplicants = async () => {
     setIsApplicantsDialogOpen(true);
     setLoading(true);
@@ -495,6 +488,7 @@ const Job = ({ job }) => {
       setLoading(false);
     }
   };
+
   const handleDeleteJob = (jobId) => {
     if (jobId) {
       deleteJob(jobId, {
@@ -517,32 +511,38 @@ const Job = ({ job }) => {
     }
   };
 
-  const [isApplicantsDialogOpen, setIsApplicantsDialogOpen] = useState(false);
-  const { toast } = useToast();
+  const handleEdit = async (updatedJob) => {
+    setEditLoader(true);
+    try {
+      const response = await axios.put(
+        `${API_HOST_URL}/api/job-postings/update/${job.jobID}`,
+        updatedJob,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token.authKey,
+          },
+        }
+      );
 
-  const handleUpdateApplicantStatus = (applicantId, newStatus) => {
-    // Update applicant status
-    const updatedApplicants = job.applicants.map((applicant) =>
-      applicant.id === applicantId
-        ? { ...applicant, status: newStatus }
-        : applicant
-    );
-
-    // Update job with new applicants list
-    const updatedJob = { ...job, applicants: updatedApplicants };
-
-    // Update jobs in state and localStorage
-    const jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
-    const updatedJobs = jobs.map((j) => (j.id === job.id ? updatedJob : j));
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-
-    // Update the jobs state in the parent component
-    setJobs(updatedJobs);
-
-    toast({
-      title: "Status Updated",
-      description: `Applicant status changed to ${newStatus}`,
-    });
+      toast({
+        title: "Job Updated",
+        description: "The job has been updated successfully.",
+      });
+      queryClient.invalidateQueries(["employerJobs", employer.id]);
+      setTimeout(() => {
+        setIsEditModalOpen(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Error updating job",
+        description: "Failed to update job.",
+      });
+    } finally {
+      setEditLoader(false);
+    }
   };
 
   const getStatusBadge = (status) => {
@@ -557,7 +557,7 @@ const Job = ({ job }) => {
         return (
           <Badge
             variant="secondary"
-            className="bg-secondary text-white hover:bg-secondary">
+            className="bg-yellow-300 text-white hover:bg-secondary">
             {status}
           </Badge>
         );
@@ -584,7 +584,7 @@ const Job = ({ job }) => {
               <span>•</span>
               <span>{job.job_location}</span>
               <span>•</span>
-              <span>{job.salary}</span>
+              <span>{formatCurrency(job.salary)}</span>
               <span>•</span>
               <span>Posted {getDateAsTextLabel(job?.createdAt)}</span>
             </div>
@@ -592,16 +592,22 @@ const Job = ({ job }) => {
           </div>
           <div className="flex flex-col gap-2 md:items-end">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">
+              <span className="text-sm flex gap-1 font-medium">
                 {isLoading && "..."}
                 {isError && "0"}
-                {numberOfApplicants} Applicants
+                {numberOfApplicants}
+                <p>Applicants</p>
               </span>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                Edit
-              </Button>
+              {job.jobStatus === "PENDING" && (
+                <Button
+                  onClick={() => setIsEditModalOpen(true)}
+                  variant="outline"
+                  size="sm">
+                  Edit
+                </Button>
+              )}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
@@ -610,7 +616,7 @@ const Job = ({ job }) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
-                  <DropdownMenuItem>Share</DropdownMenuItem>
+                  {/* <DropdownMenuItem>Share</DropdownMenuItem> */}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
@@ -668,6 +674,14 @@ const Job = ({ job }) => {
         </div>
       </CardContent>
 
+      {/* Edit modal */}
+      <EditJobModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        job={jobPostData}
+        onSave={handleEdit}
+        loader={editLoader}
+      />
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}

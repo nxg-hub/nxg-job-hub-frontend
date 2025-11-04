@@ -309,7 +309,7 @@ export function ServicesProviderHomePage() {
             job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE"
           );
         });
-        console.log(acceptedJobs);
+        // console.log(acceptedJobs);
         setNearbyJobs(acceptedJobs || []);
       } catch (error) {
         console.error("Error fetching nearby jobs:", error);

@@ -107,7 +107,7 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
           onChange={(e) => setFilterType(e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="ALL">All Applicants</option>
-          <option value="TECHTALENT">Tech Talents</option>
+          <option value="TECHTALENT"> Talents</option>
           <option value="SERVICE_PROVIDER">Service Providers</option>
         </select>
       </div>
