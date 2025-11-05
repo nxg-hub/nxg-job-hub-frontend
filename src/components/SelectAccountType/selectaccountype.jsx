@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Logo from "../../static/images/logo_colored.png";
+import Logo from "@/static/images/splash.png";
 import EmployerIconDark from "../../static/icons/SVG/employer-dark-bg.svg";
 import AgentIconDark from "../../static/icons/SVG/agent-dark-bg.svg";
 import TechTalentIconDark from "../../static/icons/SVG/tech-talent-dark-bg.svg";
@@ -133,12 +133,6 @@ const SelectAccountType = () => {
       icon: TechTalentIconDark,
     },
     {
-      label: "Agent",
-      value: "agent",
-      desc: "Link clients with great talent",
-      icon: AgentIconDark,
-    },
-    {
       label: "Employer",
       value: "employer",
       desc: "Post jobs and build your team",
@@ -267,7 +261,13 @@ const SelectAccountType = () => {
   return (
     <div className="space-y-10">
       <nav className="flex justify-between items-center w-full bg-sky-600 p-4">
-        <img className="w-20 sm:w-24" src={Logo} alt="" />
+        <div className="flex items-center gap-2">
+          <img className="w-20 sm:w-14" src={Logo} alt="" />
+          <div className="flex flex-col text-white -space-y-1.5">
+            <span className="font-bold text-3xl">NXG</span>
+            <span className="text-xs tracking-widest">JOB HUB</span>
+          </div>
+        </div>
       </nav>
       <div className="px-5 sm:mx-auto sm:w-2/5 sm:p-6 sm:px-16 sm:border sm:rounded-md space-y-5">
         <div className="mb-8">

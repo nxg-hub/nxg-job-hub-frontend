@@ -1,107 +1,142 @@
 import {
-  InputField,
-  PhoneNumberField,
-  SelectionField,
-  TextareaField,
-} from "@/components/formFields";
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { PhoneInput } from "@/components/ui/phone-input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { nigerianStates, countryOptions } from "@/lib/utils";
+import { useFormContext } from "react-hook-form";
 
-const nigerianStates = [
-  { value: "Abia", label: "Abia" },
-  { value: "Adamawa", label: "Adamawa" },
-  { value: "Akwa Ibom", label: "Akwa Ibom" },
-  { value: "Anambra", label: "Anambra" },
-  { value: "Bauchi", label: "Bauchi" },
-  { value: "Bayelsa", label: "Bayelsa" },
-  { value: "Benue", label: "Benue" },
-  { value: "Borno", label: "Borno" },
-  { value: "Cross River", label: "Cross River" },
-  { value: "Delta", label: "Delta" },
-  { value: "Ebonyi", label: "Ebonyi" },
-  { value: "Edo", label: "Edo" },
-  { value: "Ekiti", label: "Ekiti" },
-  { value: "Enugu", label: "Enugu" },
-  { value: "Gombe", label: "Gombe" },
-  { value: "Imo", label: "Imo" },
-  { value: "Jigawa", label: "Jigawa" },
-  { value: "Kaduna", label: "Kaduna" },
-  { value: "Kano", label: "Kano" },
-  { value: "Katsina", label: "Katsina" },
-  { value: "Kebbi", label: "Kebbi" },
-  { value: "Kogi", label: "Kogi" },
-  { value: "Kwara", label: "Kwara" },
-  { value: "Lagos", label: "Lagos" },
-  { value: "Nasarawa", label: "Nasarawa" },
-  { value: "Niger", label: "Niger" },
-  { value: "Ogun", label: "Ogun" },
-  { value: "Ondo", label: "Ondo" },
-  { value: "Osun", label: "Osun" },
-  { value: "Oyo", label: "Oyo" },
-  { value: "Plateau", label: "Plateau" },
-  { value: "Rivers", label: "Rivers" },
-  { value: "Sokoto", label: "Sokoto" },
-  { value: "Taraba", label: "Taraba" },
-  { value: "Yobe", label: "Yobe" },
-  { value: "Zamfara", label: "Zamfara" },
-  { value: "FCT", label: "Abuja" },
-];
-
-const countryOptions = [
-  { label: "Nigeria", value: "Nigeria" },
-  { label: "Others", value: "Others" },
-];
-
-export default function RenderStepTwo({ formData, setFormData }) {
-  const updateFormData = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+export default function RenderStepTwo({ form }) {
+  const { control } = useFormContext();
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-col gap-1">
+        <h1 className="font-semibold text-xl text-slate-800">
+          Location & Contact
+        </h1>
+        <p className="text-sm text-gray-600">
+          Physical and contact details for official communication.
+        </p>
+      </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <SelectionField
-          labelName="Country:"
+        <FormField
+          control={control}
           name="country"
-          value={formData.country}
-          onChange={updateFormData}
-          options={countryOptions}
-          placeholder="Select country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-600">Country</FormLabel>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger className="font-normal">
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {countryOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <SelectionField
-          labelName="State:"
+        <FormField
+          control={control}
           name="state"
-          value={formData.state}
-          onChange={updateFormData}
-          options={nigerianStates}
-          placeholder="Select state"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-600">State</FormLabel>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger className="font-normal">
+                    <SelectValue placeholder="Select company size" />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {nigerianStates.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </div>
-      <TextareaField
-        labelName="Company Address:"
+      <FormField
+        control={control}
         name="companyAddress"
-        value={formData.companyAddress}
-        onChange={updateFormData}
-        placeholder="company address"
-        className="min-h-[120px]"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-gray-600">
+              Company Full Address
+            </FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Street, City,"
+                className="resize-none"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <InputField
-          labelName="Company Zip Code:"
+        <FormField
+          control={control}
           name="companyZipCode"
-          value={formData.companyZipCode}
-          type="text"
-          onChange={updateFormData}
-          placeholder="12345"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-600">
+                Company Zip/Postal Code
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="12345" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <PhoneNumberField
+        <FormField
+          control={control}
           name="companyPhone"
-          value={formData.companyPhone}
-          labelName="Company Phone:"
-          defaultCountry="NG"
-          placeholder="+1 (555) 123-4567"
-          onChange={updateFormData}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-600">Company Phone</FormLabel>
+              <FormControl className="w-full">
+                <PhoneInput
+                  placeholder="+1 555 123 4567"
+                  {...field}
+                  defaultCountry="NG"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </div>
     </div>

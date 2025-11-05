@@ -9,7 +9,7 @@ import { useState } from "react";
 const cloudinary_preset = CLOUDINARY_UPLOAD_PRESET;
 const cloudinary_name = CLOUDINARY_CLOUD_NAME;
 
-export const useCloudinaryUpload = () => {
+export const useCloudinaryUpload = (options = {}) => {
   const [progress, setProgress] = useState(0);
 
   const uploadFileToCloudinary = async (file) => {
@@ -39,6 +39,7 @@ export const useCloudinaryUpload = () => {
 
   const mutation = useMutation({
     mutationFn: uploadFileToCloudinary,
+    ...options,
   });
 
   // Return the mutation states and data

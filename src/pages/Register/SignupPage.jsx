@@ -30,7 +30,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import { cn } from "@/lib/utils";
 import EmailVerificationNotice from "@/components/EmailVerificationNotice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 
@@ -91,10 +91,9 @@ const formSchema = z
   });
 
 export default function SignupForm() {
-  const [showEmailVerificationNotice, setShowEmailVerificationNotice] =
-    useState(false);
-
+  const navigate = useNavigate();
   const { toast } = useToast();
+  const [regEmail, setRegEmail] = useState("");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -108,10 +107,6 @@ export default function SignupForm() {
       re_password: "",
     },
   });
-
-  const closeModal = (e) => {
-    if (e.target === e.currentTarget) setShowEmailVerificationNotice(false);
-  };
 
   const mutation = useMutation({
     mutationFn: async (dataForm) => {
@@ -136,48 +131,57 @@ export default function SignupForm() {
         duration: 2500,
       });
       setTimeout(() => {
-        setShowEmailVerificationNotice(true);
+        window.sessionStorage.setItem("NXGJOBHUBREG", regEmail);
+        navigate("/register/success-signup", { replace: true });
         form.reset();
       }, 3000);
     },
     onError: (err) => {
-      if (err.response) {
-        if (err.response.status === 400) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
             ),
-            title: "Registration failed",
+            title: <span className="text-red-900">Failed:</span>,
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
-                <code className="text-white">{err.response.data}</code>
-              </pre>
+              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                {err.response.data}
+              </p>
+            ),
+          });
+        } else if (err.request) {
+          toast({
+            className: cn(
+              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+            ),
+            title: <span className="text-red-900">Network error:</span>,
+            description: (
+              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                Account creation failed, please check your internet connection.
+              </p>
+            ),
+            action: (
+              <ToastAction
+                onClick={form.handleSubmit(onSubmit)}
+                className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+                altText="Try again"
+              >
+                Try again
+              </ToastAction>
             ),
           });
         }
-      }
-      if (!err.response) {
+      } else {
         toast({
           className: cn(
-            "flex flex-col gap-5 bottom-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
           ),
-          title: <p className="text-red-700">Network error</p>,
+          title: <span className="text-red-900">Registration failed:</span>,
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
-              <code>
-                Failed to submit your form, please check <br />
-                your internet connection.
-              </code>
-            </pre>
-          ),
-          action: (
-            <ToastAction
-              onClick={form.handleSubmit(onSubmit)}
-              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again"
-            >
-              Try again
-            </ToastAction>
+            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+              {err.response.data}
+            </p>
           ),
         });
       }
@@ -185,6 +189,7 @@ export default function SignupForm() {
   });
 
   function onSubmit(values) {
+    setRegEmail(values.email);
     mutation.mutate({
       firstName: values.firstName,
       lastName: values.lastName,
@@ -465,12 +470,7 @@ export default function SignupForm() {
             </Button>
           </section>
         </div> */}
-        {showEmailVerificationNotice && (
-          <EmailVerificationNotice
-            isOpen={showEmailVerificationNotice}
-            onClose={closeModal}
-          />
-        )}
+
         <Toaster />
       </CardContent>
     </Card>
