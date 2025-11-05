@@ -52,20 +52,11 @@ import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercomp
 import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
-import { AgentDashboard } from "./pages/agent.jsx";
-import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
-import MatchesTab from "./pages/Dashboard/Agent/matches-tab.jsx";
-import JobsTab from "./pages/Dashboard/Agent/jobs-tab.jsx";
-import CandidatesTab from "./pages/Dashboard/Agent/candidates-tabs.jsx";
-import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
-import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
-import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 import { EmployerDashboard } from "./pages/employer.jsx";
 import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx";
 import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
 import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-company-profile-tab.jsx";
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
-
 import EmployerSettingTab from "./pages/Dashboard/Employer2/employer-setting-tab.jsx";
 import EmployerMessagesTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
 import { TalentDashboard } from "./pages/talent.jsx";
@@ -74,15 +65,12 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/employerCompleteForm.jsx";
-import AgentCompleteProfileForm from "./pages/agentCompleteProfile.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
-import AgentCompleteProfile from "./pages/agentCP.jsx";
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
-import TechTalentSubscription from "./pages/Dashboard/subscriptions/techSubscription/TechTalentSubscription.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 
 const queryClient = new QueryClient();
@@ -107,26 +95,6 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
-
-        {/* agent user routes */}
-        <Route path="/agent" element={<AgentDashboard />}>
-          <Route index element={<DashboardTab />} />
-          <Route path="profile" element={<ProfileTab />} />
-          <Route path="employers" element={<EmployerTab />} />
-          <Route path="candidates" element={<CandidatesTab />} />
-          <Route path="jobs" element={<JobsTab />} />
-          <Route path="chats" element={<MessagesTab />} />
-          <Route path="candidate-matches" element={<MatchesTab />} />
-        </Route>
-        <Route
-          path="/agent/complete-profile"
-          element={<AgentCompleteProfileForm />}
-        />
-        <Route
-          path="/agent/complete-profile-form"
-          element={<AgentCompleteProfile />}
-        />
-        {/* end agent user routes */}
 
         {/* service provider user routes */}
         <Route path="/services-provider" element={<ServiceProviderDashboard />}>

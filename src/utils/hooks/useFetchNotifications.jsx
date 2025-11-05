@@ -19,16 +19,7 @@ const useFetchNotifications = () => {
       const receivedNotifications = JSON.parse(data);
       if (receivedNotifications.length > 0) {
         setNotifications((notifications) => {
-          // let notifStore = [...notifications, ...receivedNotifications];
-          let merged = [...notifications, ...receivedNotifications];
-
-          // ✅ remove duplicates by ID
-          let uniq = merged.reduce((acc, curr) => {
-            acc[curr.id] = curr;
-            return acc;
-          }, {});
-
-          let notifStore = Object.values(uniq);
+          let notifStore = [...notifications, ...receivedNotifications];
 
           window.localStorage.setItem("NXGNOTIFS", JSON.stringify(notifStore));
           return notifStore;
@@ -40,8 +31,16 @@ const useFetchNotifications = () => {
   useEffect(() => {
     fetchNotifications();
   }, []);
-  console.log(notifications);
+  // console.log(notifications);
   return notifications;
 };
+// let merged = [...notifications, ...receivedNotifications];
 
+// // ✅ remove duplicates by ID
+// let uniq = merged.reduce((acc, curr) => {
+//   acc[curr.id] = curr;
+//   return acc;
+// }, {});
+
+// let notifStore = Object.values(uniq);
 export default useFetchNotifications;

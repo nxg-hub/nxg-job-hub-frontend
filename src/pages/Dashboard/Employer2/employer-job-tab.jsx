@@ -56,6 +56,9 @@ import ApplicantsList from "./ApplicantsList";
 import EditJobModal from "./EditJobModal";
 
 export default function EmployerJobTab() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const { mutate: deleteJob } = useDeletePostedJob();
   const [activeTab, setActiveTab] = useState("all");
   const [loading, setLoading] = useState(null);
   const employer = useEmployerData((state) => state.employerData);
@@ -63,12 +66,9 @@ export default function EmployerJobTab() {
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
-  const queryClient = useQueryClient();
-  const [jobs, setJobs] = useState(sampleJobs);
-  const { toast } = useToast();
-  const filterClosed = sampleJobs.filter((job) => job.status === "closed");
 
-  const activeJobs = data.filter((job) => {
+  const closedJobs = data?.filter((job) => job.jobStatus === "CLOSED");
+  const activeJobs = data?.filter((job) => {
     return job.jobStatus === "ACCEPTED";
   });
 
@@ -104,12 +104,25 @@ export default function EmployerJobTab() {
   };
 
   const handleDeleteJob = (jobId) => {
-    const updatedJobs = sampleJobs.filter((job) => job.id !== jobId);
-
-    toast({
-      title: "Job Deleted",
-      description: "The job has been permanently deleted",
-    });
+    if (jobId) {
+      deleteJob(jobId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
+          queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
+          toast({
+            className: cn(
+              "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+            ),
+            title: <p className="text-red-800">Job Deleted</p>,
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-red-200 p-4">
+                <p>The job has been permanently deleted</p>
+              </pre>
+            ),
+          });
+        },
+      });
+    }
   };
 
   return (
@@ -160,15 +173,15 @@ export default function EmployerJobTab() {
             )}
             onClick={() => setActiveTab("close")}>
             Closed
-            {filterClosed.length > 0 && (
+            {closedJobs?.length > 0 && (
               <Badge variant="destructive" className="ml-2">
-                {jobs.filter((job) => job.status === "closed").length}
+                {closedJobs?.length}
               </Badge>
             )}
           </Button>
         </div>
         <div className="flex gap-2 w-full md:w-auto">
-          {/* <CreateNewJob />  */}
+          {/* <CreateNewJob /> */}
         </div>
       </div>
       <div>
@@ -177,61 +190,53 @@ export default function EmployerJobTab() {
             {data
               ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
               .map((job, index) => (
-                <Job key={index} job={job} />
+                <Job
+                  key={job.id}
+                  job={job}
+                  onCloseJob={handleCloseJob}
+                  onDeleteJob={handleDeleteJob}
+                  loader={loading}
+                />
               ))}
-            {/* {sampleJobs.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                onCloseJob={handleCloseJob}
-                onDeleteJob={handleDeleteJob}
-                setJobs={setJobs}
-              />
-            ))} */}
           </div>
         )}
         {activeTab === "active" && (
           <div className="space-y-8">
-            {activeJobs
-              ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
-              .map((job, index) => (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  onCloseJob={handleCloseJob}
-                  onDeleteJob={handleDeleteJob}
-                  setJobs={setJobs}
-                  loader={loading}
-                />
-              ))}
-            {/* {filterActive.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                onCloseJob={handleCloseJob}
-                onDeleteJob={handleDeleteJob}
-                setJobs={setJobs}
-              />
-            ))} */}
+            {activeJobs.length > 0 ? (
+              activeJobs
+                ?.sort(
+                  (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+                )
+                .map((job, index) => (
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    onCloseJob={handleCloseJob}
+                    onDeleteJob={handleDeleteJob}
+                    loader={loading}
+                  />
+                ))
+            ) : (
+              <div className="text-center p-8 border rounded-lg">
+                <p className="text-muted-foreground">No jobs found.</p>
+              </div>
+            )}
           </div>
         )}
         {activeTab === "close" && (
           <div className="space-y-8">
-            {filterClosed.length > 0 ? (
-              filterClosed.map((job) => (
+            {closedJobs.length > 0 ? (
+              closedJobs.map((job) => (
                 <JobCard
                   key={job.id}
                   job={job}
                   onCloseJob={handleCloseJob}
                   onDeleteJob={handleDeleteJob}
-                  setJobs={setJobs}
                 />
               ))
             ) : (
               <div className="text-center p-8 border rounded-lg">
-                <p className="text-muted-foreground">
-                  No jobs found. Create your first job posting!
-                </p>
+                <p className="text-muted-foreground">No jobs found.</p>
               </div>
             )}
           </div>
@@ -257,7 +262,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
     // employer_profile_pic: job.employer_profile_pic,
     job_location: job.job_location,
     tags: job.tags || [],
-    jobStatus: "SUSPENDED",
+    jobStatus: "CLOSED",
   };
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("en-US", {
@@ -311,7 +316,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 }`}>
                 {job.jobStatus === "ACCEPTED"
                   ? "Active"
-                  : job.jobStatus === "SUSPENDED"
+                  : job.jobStatus === "CLOSED"
                   ? "Closed"
                   : ""}
               </span>
@@ -331,8 +336,9 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
           </div>
           <div className="flex flex-col gap-2 md:items-end">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">
-                {numberOfApplicants} Applicants
+              <span className=" flex gap-1 text-sm font-medium">
+                {numberOfApplicants}
+                <p>Applicants</p>
               </span>
             </div>
             <div className="flex gap-2">
@@ -347,16 +353,14 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   variant="outline"
                   size="sm"
                   disabled={loader === job.jobID}
-                  onClick={() =>
-                    // onCloseJob(jobPostData)
-                    console.log("Clicked")
-                  }>
+                  onClick={() => onCloseJob(jobPostData)}>
                   {loader === job.jobID ? "Processing.." : " Close Job"}
                 </Button>
               ) : (
-                <Button variant="outline" size="sm">
-                  Reopen Job
-                </Button>
+                // <Button variant="outline" size="sm">
+                //   Reopen Job
+                // </Button>
+                ""
               )}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -365,12 +369,12 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                  <DropdownMenuItem>Share</DropdownMenuItem>
+                  {/* <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                  <DropdownMenuItem>Share</DropdownMenuItem> */}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => onDeleteJob(job.id)}>
+                    onClick={() => onDeleteJob(job.jobID)}>
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -425,7 +429,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
   );
 };
 
-const Job = ({ job }) => {
+const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
   const jobPostData = {
     employerID: job.employerID,
     jobID: job.jobID,
@@ -489,28 +493,6 @@ const Job = ({ job }) => {
     }
   };
 
-  const handleDeleteJob = (jobId) => {
-    if (jobId) {
-      deleteJob(jobId, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
-          queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
-          toast({
-            className: cn(
-              "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-            ),
-            title: <p className="text-red-800">Job Deleted</p>,
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-red-200 p-4">
-                <p>The job has been permanently deleted</p>
-              </pre>
-            ),
-          });
-        },
-      });
-    }
-  };
-
   const handleEdit = async (updatedJob) => {
     setEditLoader(true);
     try {
@@ -562,6 +544,8 @@ const Job = ({ job }) => {
           </Badge>
         );
       case "REJECTED":
+        return <Badge variant="destructive">{status}</Badge>;
+      case "CLOSED":
         return <Badge variant="destructive">{status}</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
@@ -620,7 +604,7 @@ const Job = ({ job }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => handleDeleteJob(jobID)}>
+                    onClick={() => onDeleteJob(job.jobID)}>
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>

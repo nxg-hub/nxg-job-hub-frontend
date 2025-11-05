@@ -36,10 +36,10 @@ export const SubSuccess = ({ planType }) => {
             // Delay of 5 seconds before redirecting to the dashboard
             setTimeout(() => {
               // Redirect to the dashboard
-              window.location.href = "/dashboard";
+              window.location.href = "/employer";
 
               // Clear query parameters from the URL
-              window.history.replaceState({}, document.title, "/dashboard");
+              window.history.replaceState({}, document.title, "/employer");
             }, 5000); // 5000 milliseconds = 5 seconds
           } else {
             setSubMessage(
