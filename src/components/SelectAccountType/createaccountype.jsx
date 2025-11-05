@@ -27,6 +27,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { Separator } from "../ui/separator";
 import { useCreateUserType, useUserProfileUpdate } from "@/hooks/useAllUsers";
+import { motion } from "framer-motion";
 
 export default function CreateAccountType() {
   const navigate = useNavigate();
@@ -131,7 +132,15 @@ const AccountTypeSelection = () => {
   };
 
   return (
-    <div className="flex  flex-col gap-10 w-full px-10">
+    <motion.div
+    initial={{
+      y:5
+    }}
+      animate={{
+        y: 0,
+      }}
+      className="flex  flex-col gap-10 w-full px-10"
+    >
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-xl text-slate-800">
           Choose your account type
@@ -185,7 +194,7 @@ const AccountTypeSelection = () => {
       >
         <span>Continue</span>
       </Button>
-    </div>
+    </motion.div>
   );
 };
 
