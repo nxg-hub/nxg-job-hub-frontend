@@ -17,11 +17,15 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   Sidebar,
@@ -39,7 +43,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
-import { NotificationPanel } from "@/components/notification-panel";
+// import { NotificationPanel } from "@/components/notification-panel";
 import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
 import logonamemin from "@/static/images/logo_name_min.png";
@@ -60,6 +64,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { resetAllUserData } from "@/redux/AllUsersSlice";
 import { resetAllJobs } from "@/redux/ServiceProviderJobSlice";
+import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
+import NotificationDropdown from "@/components/agent/notification-dropdown";
 
 const sidebarItems = [
   {
@@ -81,6 +87,7 @@ const sidebarItems = [
 
 export function ServiceProviderDashboard() {
   const [isLoading, setIsLoading] = useState(true);
+  const notifications = useFetchNotifications();
 
   useEffect(() => {
     // Simulate loading delay
@@ -98,13 +105,13 @@ export function ServiceProviderDashboard() {
   return (
     <TooltipProvider delayDuration={0}>
       <SidebarProvider>
-        <DashboardContent />
+        <DashboardContent notifications={notifications} />
       </SidebarProvider>
     </TooltipProvider>
   );
 }
 
-function DashboardContent() {
+function DashboardContent({ notifications = [] }) {
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
@@ -115,7 +122,12 @@ function DashboardContent() {
   const closeModal = (e) => {
     if (e.target === e.currentTarget) setShowLogoutNotice(false);
   };
+  const [notificationDropdownOpen, setNotificationDropdownOpen] =
+    useState(false);
 
+  const unreadNotifications = notifications?.filter(
+    (notification) => !notification.seen
+  ).length;
   return (
     <div className="flex min-h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
       {/* Sidebar */}
@@ -211,7 +223,7 @@ function DashboardContent() {
             openMenuIcon={<Menu className="w-8 h-8" />}
             className="my-3 ml-2 border-transparent md:hidden "
           />
-          <Popover>
+          {/* <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="ghost"
@@ -219,13 +231,33 @@ function DashboardContent() {
                 className="relative border-none">
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                <span className="sr-only">Notifications</span>
+                <span className="sr-only">Notifications </span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0 w-[380px]" align="end">
               <NotificationPanel />
             </PopoverContent>
-          </Popover>
+          </Popover> */}
+          <DropdownMenu
+            open={notificationDropdownOpen}
+            onOpenChange={setNotificationDropdownOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative border-none ">
+                <Bell className="h-5 w-5" />
+                {unreadNotifications > 0 && (
+                  <Badge
+                    variant="destructive"
+                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
+                    {unreadNotifications}
+                  </Badge>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <NotificationDropdown notifications={notifications} />
+          </DropdownMenu>
         </header>
         <div className=" pt-16 md:pt-0">
           {!userData.verified && (

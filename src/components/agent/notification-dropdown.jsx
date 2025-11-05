@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +10,27 @@ import { UserPlus, Briefcase, CheckCircle2, Bell } from "lucide-react";
 
 export default function NotificationDropdown({ notifications = [] }) {
   const [notificationState, setNotificationState] = useState(notifications);
+
+  const [showOptions, setShowOptions] = useState(false); // State for options menu
+
+  const localNotifs = useMemo(() => {
+    return window.localStorage.getItem("NXGNOTIFS") || "[]";
+  }, []);
+  const getReceivedNotifs = useCallback(() => {
+    if (localNotifs) {
+      setNotificationState(JSON.parse(localNotifs));
+    }
+  }, [localNotifs]);
+
+  useEffect(() => {
+    getReceivedNotifs();
+  }, [getReceivedNotifs]);
+
+  const clearNotifications = () => {
+    setNotificationState([]);
+    window.localStorage.removeItem("NXGNOTIFS");
+    setShowOptions(false); // Hide the options menu after clearing
+  };
 
   const markAllAsRead = () => {
     setNotificationState(
@@ -39,17 +60,12 @@ export default function NotificationDropdown({ notifications = [] }) {
   };
 
   return (
-    <DropdownMenuContent
-      className="w-80"
-      align="end">
+    <DropdownMenuContent className="w-80" align="end">
       <div className="flex items-center justify-between p-4">
         <span className="text-sm font-medium">Notifications</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={markAllAsRead}>
+        {/* <Button variant="ghost" size="sm" onClick={markAllAsRead}>
           Mark all as read
-        </Button>
+        </Button> */}
       </div>
       <DropdownMenuSeparator />
 
@@ -63,17 +79,21 @@ export default function NotificationDropdown({ notifications = [] }) {
               }`}
               onClick={() => markAsRead(notification.id)}>
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
-                {getNotificationIcon(notification.type)}
+                {getNotificationIcon(notification.notificationType)}
               </div>
               <div className="flex-1 space-y-1">
                 <p className="text-sm font-medium leading-none">
                   {notification.title}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {notification.message}
+                  {`${
+                    notification.notificationType === "JOB_POST"
+                      ? "Job Post:"
+                      : ""
+                  }  ${notification.message}`}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(notification.timestamp), {
+                  {formatDistanceToNow(new Date(notification?.dateTime), {
                     addSuffix: true,
                   })}
                 </p>
@@ -95,10 +115,7 @@ export default function NotificationDropdown({ notifications = [] }) {
 
       <DropdownMenuSeparator />
       <DropdownMenuItem className="justify-center">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full">
+        <Button variant="ghost" size="sm" className="w-full">
           View all notifications
         </Button>
       </DropdownMenuItem>

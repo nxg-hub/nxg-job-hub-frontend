@@ -64,7 +64,6 @@ import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard
 import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
 import EmployerCompanyProfileTab from "./pages/Dashboard/Employer2/employer-company-profile-tab.jsx";
 import EmployerApplicantsTab from "./pages/Dashboard/Employer2/employer-applicants-tab.jsx";
-
 import EmployerSettingTab from "./pages/Dashboard/Employer2/employer-setting-tab.jsx";
 import EmployerMessagesTab from "./pages/Dashboard/Employer2/employer-message-tab.jsx";
 import { TalentDashboard } from "./pages/talent.jsx";
@@ -79,7 +78,6 @@ import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSu
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
-import TechTalentSubscription from "./pages/Dashboard/subscriptions/techSubscription/TechTalentSubscription.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
 import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";

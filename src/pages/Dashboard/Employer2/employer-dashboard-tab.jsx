@@ -129,8 +129,7 @@ export default function EmployerDashboardTab() {
       <div className="md:w-[200px]">
         <Button
           onClick={openCreateJobDialog}
-          className="border-transparent bg-primary hover:bg-secondary"
-        >
+          className="border-transparent bg-primary hover:bg-secondary">
           <FileText className="mr-1 h-4 w-4" />
           Create New Job
         </Button>
@@ -149,7 +148,7 @@ export default function EmployerDashboardTab() {
       </div>
       <div className="space-y-4">
         {/* recent posted jobs table here */}
-        <p className="text-sky-600 font-medium text-lg">Recent job Posts</p>
+        <p className="text-sky-600 font-medium text-lg">Recent job Posts </p>
         <RecentPostedJobs
           setOpenCreateJobDialog={openCreateJobDialog}
           employerID={employer?.id}
