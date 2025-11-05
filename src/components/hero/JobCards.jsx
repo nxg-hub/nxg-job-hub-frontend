@@ -25,7 +25,7 @@ const JobCards = () => {
       setError(null);
       try {
         const response = await fetch(
-          `${API_HOST_URL}/api/job-postings/recent-job-postings`
+          `${API_HOST_URL}/api/job-postings/recent-job-postings?page=0&size=5`
         );
         const data = await response.json();
         const acceptedRecentJobs = data.filter((job) => {

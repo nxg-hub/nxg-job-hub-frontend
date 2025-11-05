@@ -35,5 +35,5 @@ export const nigerianStates = [
   { value: "Taraba", label: "Taraba" },
   { value: "Yobe", label: "Yobe" },
   { value: "Zamfara", label: "Zamfara" },
-  { value: "FCT", label: "Abuja" },
+  { value: "Abuja", label: "Abuja" },
 ];

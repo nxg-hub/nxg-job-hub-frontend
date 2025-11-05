@@ -70,6 +70,7 @@ import {
   resetTalentData,
 } from "@/redux/TalentUserDataSlice";
 import { resetAllUserData } from "@/redux/AllUsersSlice";
+import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 
 const sidebarItems = [
   {
@@ -91,6 +92,7 @@ const sidebarItems = [
 ];
 
 export function TalentDashboard() {
+  const notifications = useFetchNotifications();
   const [isLoading, setIsLoading] = useState(true);
   const [pageTitle, setPageTitle] = useState("Dashboard");
   const token =
@@ -115,7 +117,7 @@ export function TalentDashboard() {
   return (
     <TooltipProvider delayDuration={0}>
       <SidebarProvider>
-        <DashboardContent notifications={notificationsData} />
+        <DashboardContent notifications={notifications} />
       </SidebarProvider>
     </TooltipProvider>
   );
@@ -141,7 +143,7 @@ function DashboardContent({ notifications = [] }) {
     useState(false);
 
   const unreadNotifications = notifications.filter(
-    (notification) => !notification.read
+    (notification) => !notification.seen
   ).length;
 
   return (

@@ -173,7 +173,8 @@ export default function CreateNewJob({
               title: <span className="text-red-900">Failed:</span>,
               description: (
                 <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                  Form unable to submit, failed to update your profile
+                  {err?.response?.data?.error ||
+                    "Form unable to submit, failed to update your profile"}
                 </p>
               ),
             });
@@ -211,8 +212,7 @@ export default function CreateNewJob({
   return (
     <Dialog
       open={isOpenDialog}
-      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}
-    >
+      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <Form {...form}>
           <form className="space-y-8 max-w-3xl py-10">
@@ -248,8 +248,7 @@ export default function CreateNewJob({
                       <FormLabel>Job Type</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}
-                      >
+                        onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select job type" />
@@ -276,8 +275,7 @@ export default function CreateNewJob({
                       <FormLabel>Location</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}
-                      >
+                        onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="e.g Lagos or Abuja" />
@@ -378,8 +376,7 @@ export default function CreateNewJob({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                onClick={() => requirementsArray.remove(index)}
-                              >
+                                onClick={() => requirementsArray.remove(index)}>
                                 <X className="h-4 w-4" />
                               </Button>
                             </div>
@@ -392,8 +389,7 @@ export default function CreateNewJob({
                       type="button"
                       variant="outline"
                       onClick={() => requirementsArray.append("")}
-                      className="w-full"
-                    >
+                      className="w-full">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Requirement
                     </Button>
@@ -432,8 +428,7 @@ export default function CreateNewJob({
             <DialogFooter className="flex justify-end gap-2">
               <Button
                 variant="outline"
-                onClick={form.handleSubmit(handlePreview)}
-              >
+                onClick={form.handleSubmit(handlePreview)}>
                 Preview
               </Button>
 
@@ -441,8 +436,7 @@ export default function CreateNewJob({
                 type="button"
                 className="border-none bg-sky-500 hover:bg-sky-600"
                 onClick={form.handleSubmit(handlePostJob)}
-                disabled={isLoading}
-              >
+                disabled={isLoading}>
                 {isLoading ? (
                   <div className="flex items-center space-x-1">
                     <Loader2 className="animate-spin" />
@@ -488,8 +482,7 @@ const TagsInput = ({ tags, onChange }) => {
         <Button
           className="border-transparent bg-secondary"
           type="button"
-          onClick={addTag}
-        >
+          onClick={addTag}>
           Add
         </Button>
       </div>
@@ -498,15 +491,13 @@ const TagsInput = ({ tags, onChange }) => {
         {tags.map((tag, index) => (
           <Badge
             key={index}
-            className="px-3 py-1 text-sm flex items-center gap-2"
-          >
+            className="px-3 py-1 text-sm flex items-center gap-2">
             {tag}
             <Button
               type="button"
               size="sm"
               className="border-transparent h-4 w-4 p-0 hover:bg-transparent"
-              onClick={() => removeTag(tag)}
-            >
+              onClick={() => removeTag(tag)}>
               <X className="h-3 w-3" />
             </Button>
           </Badge>
