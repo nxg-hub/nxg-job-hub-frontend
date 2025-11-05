@@ -393,15 +393,12 @@ export function EmployerProfileCompleteForm() {
     const payload = {
       companyName: values.companyName,
       companyDescription: values.companyDescription,
-
       companyAddress: values.companyAddress,
-      agencyName: values.companyName,
       companyPhone: values.companyPhone,
       companyWebsite: values.companyWebsite,
       country: values.country,
       companySize: values.companySize,
       industryType: values.industryType,
-
       state: values.state,
       companyZipCode: values.companyZipCode,
       vacancies: values.vacancies,
@@ -410,6 +407,7 @@ export function EmployerProfileCompleteForm() {
       CACCertificate: values.CACCertificate,
       companyMemorandum: values.companyMemorandum,
     };
+    console.log(payload);
 
     const storeValueObj =
       localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
@@ -418,9 +416,8 @@ export function EmployerProfileCompleteForm() {
     const userId = storeValueObj ? JSON.parse(storeValueObj).id : null;
 
     updateEmployerProfile({
-      url: `${API_HOST_URL}/api/employers`,
-      userId,
-      payload,
+      url: `${API_HOST_URL}/api/employers/${userId}`,
+      payload: payload,
     });
   };
 

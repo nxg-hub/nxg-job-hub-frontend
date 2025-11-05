@@ -37,8 +37,8 @@ export const useUserDataQuery = () => {
 };
 
 export const useUserProfileUpdate = (options = {}) => {
-  const updateUserProfile = async ({ url, userId, payload }) => {
-    const response = await axios.patch(`${url}/${userId}`, payload, {
+  const updateUserProfile = async ({ url, payload }) => {
+    const response = await axios.put(url, payload, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,36 +48,6 @@ export const useUserProfileUpdate = (options = {}) => {
 
   const mutation = useMutation({
     mutationFn: updateUserProfile,
-    ...options,
-  });
-
-  return {
-    mutate: mutation.mutate,
-    isPending: mutation.isPending,
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    error: mutation.error,
-    data: mutation.data,
-  };
-};
-
-export const useCreateUserType = (options = {}) => {
-  const createUserType = async ({ url, jwtToken }) => {
-    const response = await axios.post(
-      url,
-      {},
-      {
-        headers: {
-          authorization: jwtToken,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  };
-
-  const mutation = useMutation({
-    mutationFn: createUserType,
     ...options,
   });
 

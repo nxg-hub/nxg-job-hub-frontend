@@ -26,14 +26,10 @@ import {
 } from "@/components/ui/field";
 import { useMutation } from "@tanstack/react-query";
 import { Separator } from "../ui/separator";
-import { useCreateUserType, useUserProfileUpdate } from "@/hooks/useAllUsers";
 import { motion } from "framer-motion";
 
 export default function CreateAccountType() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { toast } = useToast();
-  const [accountChoice, setAccountChoice] = useState("");
 
   const { data, fetchStatus, isError, isSuccess, error, isFetched } =
     useAutoLogin();
@@ -44,18 +40,21 @@ export default function CreateAccountType() {
 
   const userType = searchParams.get("user-type");
 
-  const accountTypes = {
-    talent: "/createAccount?user-type=talent",
-    employer: "/createAccount?user-type=employer",
-  };
+  const authKey =
+    JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
+    JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
 
-  const handleChange = (value) => {
-    setAccountChoice(value);
-  };
-
-  const setAccountType = async () => {
-    navigate(accountTypes[accountChoice]);
-  };
+  const mutation = useMutation({
+    mutationFn: async ({ url, payload }) => {
+      const response = await axios.post(url, payload, {
+        headers: {
+          authorization: authKey,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    },
+  });
 
   return (
     <div className="space-y-10">
@@ -87,13 +86,12 @@ export default function CreateAccountType() {
           {!userType ? (
             <AccountTypeSelection />
           ) : userType === "talent" ? (
-            <TalentTypeSelection />
+            <TalentTypeSelection createUserAccount={mutation} />
           ) : (
-            <EmployerTypeSelection />
+            <EmployerTypeSelection createUserAccount={mutation} />
           )}
         </div>
       </div>
-
       <Toaster />
     </div>
   );
@@ -105,13 +103,13 @@ const AccountTypeSelection = () => {
 
   const accountTypeRadios = [
     {
-      label: "Talent",
+      label: "Need a Job?",
       value: "talent",
-      desc: "Looking to get job/project that match your skills",
+      desc: "Looking to get job or services that match your skills",
       icon: NeedJobIcon,
     },
     {
-      label: "Employer",
+      label: "Ready to Hire?",
       value: "employer",
       desc: "Looking to hire a great talent and build your team",
       icon: PostJobIcon,
@@ -133,11 +131,15 @@ const AccountTypeSelection = () => {
 
   return (
     <motion.div
-    initial={{
-      y:5
-    }}
+      initial={{
+        y: 7,
+      }}
       animate={{
         y: 0,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 120,
       }}
       className="flex  flex-col gap-10 w-full px-10"
     >
@@ -198,190 +200,94 @@ const AccountTypeSelection = () => {
   );
 };
 
-const EmployerTypeSelection = () => {
+const EmployerTypeSelection = ({ createUserAccount }) => {
   const [employerChoice, setEmployerChoice] = useState("");
   const navigate = useNavigate();
 
   const employerAccountRadios = [
     {
       label: "Employer",
-      value: "employer",
+      value: "EMPLOYER",
       desc: "Post jobs and get connect with qualified candidates.",
       icon: EmployerIcon,
     },
     {
       label: "Company HR",
-      value: "company_hr",
+      value: "COMPANY_HR",
       desc: "Manage recruitment, review applications and collaborate.",
       icon: CompanyHRIcon,
     },
 
     {
-      label: "Agent",
-      value: "agent",
+      label: "Agency",
+      value: "AGENCY",
       desc: "Represent candidates, match them with employers.",
       icon: AgentIcon,
     },
   ];
-
-  const { mutate: updateEmployerProfile } = useUserProfileUpdate({
-    onSuccess: (data) => {
-      console.log(data);
-      toast({
-        className: cn(
-          "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Profile setup completed",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-            <p className="text-white">
-              Your account type have successfully created
-            </p>
-          </pre>
-        ),
-        duration: 2500,
-      });
-
-      setTimeout(() => {
-        navigate("/employer/complete-profile");
-      }, 3000);
-    },
-    onError: (err) => {
-      console.error("User type creation error:", err);
-
-      if (axios.isAxiosError(err)) {
-        if (err.response) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Server error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                {err.response.data}
-              </p>
-            ),
-          });
-        } else if (err.request) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Network error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                Failed to setup your account type, please check your internet
-                connection.
-              </p>
-            ),
-          });
-        }
-      } else {
-        toast({
-          className: cn(
-            "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-          ),
-          title: <span className="text-red-900">Failed:</span>,
-          description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-              Failed to create your account type, please try again.
-            </p>
-          ),
-        });
-      }
-    },
-  });
-
-  const { mutate: createAccountType, isPending } = useCreateUserType({
-    onSuccess: (data) => {
-      console.log(data);
-
-      const storeValueObj =
-        localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-        sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
-
-      const userId = storeValueObj ? JSON.parse(storeValueObj).id : null;
-      if (employerChoice === "employer") {
-        updateEmployerProfile({
-          url: `${API_HOST_URL}/api/employers`,
-          userId,
-          payload: { employerType: "EMPLOYER" },
-        });
-      }
-      if (employerChoice === "company_hr") {
-        updateEmployerProfile({
-          url: `${API_HOST_URL}/api/employers`,
-          userId,
-          payload: { employerType: "COMPANY_HR" },
-        });
-      }
-      if (employerChoice === "agent") {
-        updateEmployerProfile({
-          url: `${API_HOST_URL}/api/employers`,
-          userId,
-          payload: { employerType: "AGENT" },
-        });
-      }
-    },
-    onError: (err) => {
-      console.error("Create account error:", err);
-      if (axios.isAxiosError(err)) {
-        if (err.response) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Server error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                {err.response.data}
-              </p>
-            ),
-          });
-        } else if (err.request) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Network error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                Failed to setup your account type, please check your internet
-                connection.
-              </p>
-            ),
-          });
-        }
-      } else {
-        toast({
-          className: cn(
-            "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-          ),
-          title: <span className="text-red-900">Failed:</span>,
-          description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-              Failed to create your account type, please try again.
-            </p>
-          ),
-        });
-      }
-    },
-  });
 
   const handleChange = (value) => {
     setEmployerChoice(value);
   };
 
   const setAccountType = async () => {
-    // navigate(accountTypes[employerChoice]);
-    const authKey =
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))
-        ?.authKey ||
-      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
-    createAccountType({
-      url: `${API_HOST_URL}/api/employers/createEmployer`,
-      jwtToken: authKey,
-    });
+    createUserAccount.mutate(
+      {
+        url: `${API_HOST_URL}/api/employers/createEmployer`,
+        payload: { employerType: employerChoice },
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          setTimeout(() => {
+            navigate("/employer/complete-profile");
+          }, 3000);
+        },
+        onError: (err) => {
+          console.error("Create account error:", err);
+          if (axios.isAxiosError(err)) {
+            if (err.response) {
+              toast({
+                className: cn(
+                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                ),
+                title: <span className="text-red-900">Failed:</span>,
+                description: (
+                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                    {err.response.data}
+                  </p>
+                ),
+              });
+            } else if (err.request) {
+              toast({
+                className: cn(
+                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                ),
+                title: <span className="text-red-900">Network error:</span>,
+                description: (
+                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                    Failed to setup your account type, please check your
+                    internet connection.
+                  </p>
+                ),
+              });
+            }
+          } else {
+            toast({
+              className: cn(
+                "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              ),
+              title: <span className="text-red-900">Failed:</span>,
+              description: (
+                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                  Failed to create your account type, please try again.
+                </p>
+              ),
+            });
+          }
+        },
+      }
+    );
   };
 
   return (
@@ -444,7 +350,7 @@ const EmployerTypeSelection = () => {
   );
 };
 
-const TalentTypeSelection = () => {
+const TalentTypeSelection = ({ createUserAccount }) => {
   const [talentChoice, setTalentChoice] = useState("");
   const navigate = useNavigate();
 
@@ -473,86 +379,69 @@ const TalentTypeSelection = () => {
   };
 
   const setAccountType = async () => {
-    const authKey =
-      JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))
-        ?.authKey ||
-      JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey;
-    createAccountType({
-      url: accountTypes[talentChoice],
-      jwtToken: authKey,
-    });
-  };
-
-  const { mutate: createAccountType, isPending } = useCreateUserType({
-    onSuccess: (data) => {
-      toast({
-        className: cn(
-          "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-        ),
-        title: "Profile setup completed",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-            <p className="text-white">
-              Your account type have successfully created
-            </p>
-          </pre>
-        ),
-        duration: 2500,
-      });
-
-      setTimeout(() => {
-        if (talentChoice === "techtalent") {
-          navigate("/techtalent/complete-profile");
-        }
-        if (talentChoice === "serviceprovider") {
-          navigate("/services-provider/complete-profile");
-        }
-      }, 3000);
-    },
-    onError: (err) => {
-      console.error("Create account error:", err);
-      if (axios.isAxiosError(err)) {
-        if (err.response) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Server error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                {err.response.data}
-              </p>
-            ),
-          });
-        } else if (err.request) {
-          toast({
-            className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-            ),
-            title: <span className="text-red-900">Network error:</span>,
-            description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                Failed to setup your account type, please check your internet
-                connection.
-              </p>
-            ),
-          });
-        }
-      } else {
-        toast({
-          className: cn(
-            "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
-          ),
-          title: <span className="text-red-900">Failed:</span>,
-          description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-              Failed to create your account type, please try again.
-            </p>
-          ),
-        });
+    createUserAccount.mutate(
+      {
+        url: accountTypes[talentChoice],
+        payload: {},
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          setTimeout(() => {
+            if (talentChoice === "techtalent") {
+              navigate("/techtalent/complete-profile");
+            }
+            if (talentChoice === "serviceprovider") {
+              navigate("/services-provider/complete-profile");
+            }
+          }, 3000);
+        },
+        onError: (err) => {
+          console.error("Create account error:", err);
+          if (axios.isAxiosError(err)) {
+            if (err.response) {
+              toast({
+                className: cn(
+                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                ),
+                title: <span className="text-red-900">Failed:</span>,
+                description: (
+                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                    {err.response.data}
+                  </p>
+                ),
+              });
+            } else if (err.request) {
+              toast({
+                className: cn(
+                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                ),
+                title: <span className="text-red-900">Network error:</span>,
+                description: (
+                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                    Failed to setup your account type, please check your
+                    internet connection.
+                  </p>
+                ),
+              });
+            }
+          } else {
+            toast({
+              className: cn(
+                "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              ),
+              title: <span className="text-red-900">Failed:</span>,
+              description: (
+                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                  Failed to create your account type, please try again.
+                </p>
+              ),
+            });
+          }
+        },
       }
-    },
-  });
+    );
+  };
 
   return (
     <div className="flex  flex-col gap-10 w-full px-10">
