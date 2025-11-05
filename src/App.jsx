@@ -72,7 +72,7 @@ import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
 import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/CompleteYourProfile/employer/employerCompleteForm.jsx";
-import { EmployerVerifiedDocuments } from "./pages/employerVerifiedDocument.jsx";
+
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
@@ -81,6 +81,7 @@ import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
 import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";
+import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
 
 const queryClient = new QueryClient();
 
