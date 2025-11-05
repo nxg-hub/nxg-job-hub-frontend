@@ -9,7 +9,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Check, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Check,
+  X,
+  File,
+  BriefcaseBusiness,
+  FileText,
+} from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -223,7 +231,7 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
                                 {techTalent.skills.map((skill) => (
                                   <span
                                     key={skill}
-                                    className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                                    className="px-3 py-1 text-xs bg-gray-200 text-secondary rounded-full">
                                     {skill}
                                   </span>
                                 ))}
@@ -236,24 +244,27 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
                               <a
                                 href={techTalent.resume}
                                 target="_blank"
-                                className="text-blue-600 hover:underline text-sm">
-                                📄 View Resume
+                                className="text-secondary hover:underline text-sm flex gap-1 items-center">
+                                <File className="w-4 h-4 text-gray-500 " />
+                                <span>View Resume</span>
                               </a>
                             )}
                             {techTalent?.coverletter && (
                               <a
                                 href={techTalent.coverletter}
                                 target="_blank"
-                                className="text-blue-600 hover:underline text-sm">
-                                📝 View Cover Letter
+                                className="text-secondary hover:underline flex gap-1 items-center text-sm">
+                                <FileText className="w-4 h-4 text-gray-500  " />
+                                <span>View Cover Letter</span>
                               </a>
                             )}
                             {techTalent?.portfolioLink && (
                               <a
                                 href={techTalent.portfolioLink}
                                 target="_blank"
-                                className="text-blue-600 hover:underline text-sm">
-                                💼 View Portfolio
+                                className="text-secondary hover:underline text-sm flex gap-1 items-center">
+                                <BriefcaseBusiness className="w-4 h-4 text-gray-500 " />{" "}
+                                <span>View Portfolio</span>
                               </a>
                             )}
                           </div>
@@ -315,20 +326,21 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
                     <CardFooter className="flex justify-end gap-3 border-t border-gray-100 pt-4">
                       <Button
                         size="sm"
-                        variant="destructive"
+                        className="bg-red-200 border-none hover:bg-red-300"
                         disabled={actionLoading === applicationId}
                         onClick={() => handleAction(applicationId, "reject")}>
                         {actionLoading === applicationId && act === "reject" ? (
                           "Processing..."
                         ) : (
                           <>
-                            <X className="w-4 h-4 mr-1" /> Reject
+                            <X className="w-4 h-4 mr-1 text-red-800" />
+                            <span className="text-red-800">Reject</span>
                           </>
                         )}
                       </Button>
                       <Button
                         size="sm"
-                        className="bg-green-600 hover:bg-green-700"
+                        className="bg-secondary hover:bg-primary border-none"
                         disabled={actionLoading === applicationId}
                         onClick={() => handleAction(applicationId, "accept")}>
                         {actionLoading === applicationId && act === "accept" ? (
@@ -364,7 +376,7 @@ function Section({ label, value }) {
 
 function GridInfo({ data }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3  gap-3">
       {Object.entries(data).map(
         ([label, value]) =>
           value && (
