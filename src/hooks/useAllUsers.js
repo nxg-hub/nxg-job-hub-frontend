@@ -36,9 +36,9 @@ export const useUserDataQuery = () => {
   return query;
 };
 
-export const useUserProfileUpdate = () => {
-  const updateUserProfile = async ({ url, userId, payload }) => {
-    const response = await axios.patch(`${url}/${userId}`, payload, {
+export const useUserProfileUpdate = (options = {}) => {
+  const updateUserProfile = async ({ url, payload }) => {
+    const response = await axios.put(url, payload, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,6 +48,7 @@ export const useUserProfileUpdate = () => {
 
   const mutation = useMutation({
     mutationFn: updateUserProfile,
+    ...options,
   });
 
   return {

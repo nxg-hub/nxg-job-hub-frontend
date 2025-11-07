@@ -7,14 +7,21 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 
-export const usePostJob = () => {
-  const postJob = async ({ payload, jwtToken }) => {
+export const usePostJob = (options = {}) => {
+  const postJob = async (payload) => {
+    const storeKey =
+      localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
+      sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+
+    if (!storeKey) throw new Error("No key stored");
+
+    const authKey = JSON.parse(storeKey)?.authKey;
     const response = await axios.post(
       `${API_HOST_URL}/api/job-postings/employer-post-job`,
       payload,
       {
         headers: {
-          authorization: jwtToken,
+          authorization: authKey,
         },
       }
     );
@@ -23,6 +30,7 @@ export const usePostJob = () => {
 
   const mutation = useMutation({
     mutationFn: postJob,
+    ...options,
   });
 
   return {

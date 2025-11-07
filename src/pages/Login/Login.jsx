@@ -56,10 +56,6 @@ export default function LoginForm() {
         //redirect user to their dashboard based on thier type
         if (data.userType === "EMPLOYER") {
           navigate("/employer", { replace: true });
-        } else if (data.userType === "AGENT") {
-          navigate("/agent", { replace: true });
-        } else if (data.userType === "TALENT") {
-          navigate("/talent", { replace: true });
         } else if (data.userType === "TECHTALENT") {
           navigate("/talent", { replace: true });
         } else if (data.userType === "SERVICE_PROVIDER") {
@@ -127,7 +123,8 @@ export default function LoginForm() {
       }
 
       if (!userRes.data.userType) {
-        navigate("/create");
+        // navigate("/create");
+        navigate("/createAccount");
       } else {
         toast({
           className: cn(
@@ -143,18 +140,11 @@ export default function LoginForm() {
         });
 
         setTimeout(() => {
-          //user is using new system, save their complete profile
-          localStorage.setItem("NXGJOBHUBComPro", JSON.stringify(true));
-
           //navigate to existing user dashboard
           navigate(
             userRes.data.userType === "EMPLOYER"
               ? "/employer"
-              : userRes.data.userType === "AGENT"
-              ? "/agent"
               : userRes.data.userType === "TECHTALENT"
-              ? "/talent"
-              : userRes.data.userType === "TALENT"
               ? "/talent"
               : userRes.data.userType === "SERVICE_PROVIDER"
               ? "/services-provider"
@@ -202,7 +192,8 @@ export default function LoginForm() {
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
               className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again">
+              altText="Try again"
+            >
               Try again
             </ToastAction>
           ),
@@ -233,7 +224,8 @@ export default function LoginForm() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-10">
+                className="space-y-8 max-w-3xl mx-auto py-10"
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -298,7 +290,8 @@ export default function LoginForm() {
                 <Button
                   disabled={loginLoading}
                   className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                  type="submit">
+                  type="submit"
+                >
                   {loginLoading ? (
                     <div className="flex items-center space-x-1">
                       <Loader2 className="animate-spin" />

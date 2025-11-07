@@ -56,6 +56,7 @@ const formSchema = z.object({
     }),
   requirements: z.array(z.string().min(1, "Job requirement cannot be empty")),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
+  job_classification: z.string().min(1, "Please select your job classification."),
 });
 
 export default function CreateNewJob({
@@ -72,7 +73,63 @@ export default function CreateNewJob({
 }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate: uploadJob, isLoading } = usePostJob();
+  const { mutate: uploadJob, isLoading } = usePostJob({
+    onSuccess: (data) => {
+      console.log(data);
+      toast({
+        className: cn(
+          "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: "Job Post",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
+            <p className="text-white">Your job have been posted successfully</p>
+          </pre>
+        ),
+      });
+      queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
+      queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
+      form.reset();
+      closeDialog();
+    },
+    onError: (err) => {
+      console.error("Job posting failed", err);
+      toast({
+        className: cn(
+          "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
+        ),
+        title: <span className="text-red-900">Failed:</span>,
+        description: (
+          <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+            {err?.response?.data?.error ||
+              "Form unable to submit, failed to update your profile"}
+          </p>
+        ),
+      });
+      //   if (!err.response) {
+      //   toast({
+      //     className: cn(
+      //       "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+      //     ),
+      //     title: <p className="text-red-900">Network error:</p>,
+      //     description: (
+      //       <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+      //         Failed to submit form, please check your internet connection.
+      //       </p>
+      //     ),
+      //     action: (
+      //       <ToastAction
+      //         // onClick={handlePostJob}
+      //         className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
+      //         altText="Try again"
+      //       >
+      //         Try again
+      //       </ToastAction>
+      //     ),
+      //   });
+      // }
+    },
+  });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -85,6 +142,7 @@ export default function CreateNewJob({
       deadline: new Date(),
       requirements: [""],
       tags: [],
+      job_classification: "",
     },
     mode: "onChange",
   });
@@ -102,6 +160,7 @@ export default function CreateNewJob({
   };
 
   const handlePreview = (formData) => {
+    console.log("Previewe the job");
     const preview = {
       companyName: companyName,
       country: country,
@@ -111,6 +170,7 @@ export default function CreateNewJob({
       salary: formData.salary,
       job_location: formData.location,
       job_type: formData.jobType,
+      job_classification: formData.job_classification,
       deadline: formData.deadline.toDateString(),
       requirements: formData.requirements,
       tags: formData.tags,
@@ -123,11 +183,11 @@ export default function CreateNewJob({
   };
 
   const handlePostJob = async (formData) => {
-    const storedJwtToken = getStoredKey();
     //Create new job object
     const payload = {
       job_title: formData.title,
       job_description: formData.description,
+      jobClassification: formData.job_classification,
       company_bio: companyBio,
       salary: formData.salary,
       job_location: formData.location,
@@ -139,80 +199,14 @@ export default function CreateNewJob({
       employer_name: companyName,
       employerID: employerID,
     };
-
-    if (storedJwtToken) {
-      uploadJob(
-        { payload, storedJwtToken },
-        {
-          onSuccess: (data) => {
-            console.log(data);
-            toast({
-              className: cn(
-                "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-              ),
-              title: "Job Post",
-              description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-green-700 p-4">
-                  <p className="text-white">
-                    Your job have been posted successfully
-                  </p>
-                </pre>
-              ),
-            });
-            queryClient.invalidateQueries({ queryKey: ["employerJobs"] });
-            queryClient.invalidateQueries({ queryKey: ["jobsEngagements"] });
-            form.reset();
-            closeDialog();
-          },
-          onError: (err) => {
-            console.error("Job posting failed", err);
-            toast({
-              className: cn(
-                "flex flex-col space-y-5 items-start top-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
-              ),
-              title: <span className="text-red-900">Failed:</span>,
-              description: (
-                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                  {err?.response?.data?.error ||
-                    "Form unable to submit, failed to update your profile"}
-                </p>
-              ),
-            });
-            //   if (!err.response) {
-            //   toast({
-            //     className: cn(
-            //       "flex flex-col gap-5 top-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
-            //     ),
-            //     title: <p className="text-red-900">Network error:</p>,
-            //     description: (
-            //       <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-            //         Failed to submit form, please check your internet connection.
-            //       </p>
-            //     ),
-            //     action: (
-            //       <ToastAction
-            //         // onClick={handlePostJob}
-            //         className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-            //         altText="Try again"
-            //       >
-            //         Try again
-            //       </ToastAction>
-            //     ),
-            //   });
-            // }
-          },
-        }
-      );
-    } else {
-      console.log("Login is required");
-      navigate("/login", { replace: true });
-    }
+    uploadJob(payload);
   };
 
   return (
     <Dialog
       open={isOpenDialog}
-      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}>
+      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}
+    >
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <Form {...form}>
           <form className="space-y-8 max-w-3xl py-10">
@@ -228,7 +222,7 @@ export default function CreateNewJob({
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Job Title</FormLabel>
+                      <FormLabel className="text-gray-600">Job Title</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="e.g. Senior Frontend Developer"
@@ -245,10 +239,11 @@ export default function CreateNewJob({
                   name="jobType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Job Type</FormLabel>
+                      <FormLabel className="text-gray-600">Job Type</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}>
+                        onValueChange={field.onChange}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select job type" />
@@ -266,16 +261,52 @@ export default function CreateNewJob({
                   )}
                 />
               </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="job_classification"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Job classification?
+                      </FormLabel>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="font-normal">
+                            <SelectValue placeholder="Select Status" />
+                          </SelectTrigger>
+                        </FormControl>
+
+                        <SelectContent>
+                          <SelectItem value="PROFESSIONAL">
+                            Professional, skilled or expert-level or formal
+                            education roles
+                          </SelectItem>
+                          <SelectItem value="SERVICE">
+                            Service, customer or operational support roles
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Location</FormLabel>
+                      <FormLabel className="text-gray-600">Location</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}>
+                        onValueChange={field.onChange}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="e.g Lagos or Abuja" />
@@ -298,7 +329,7 @@ export default function CreateNewJob({
                   name="salary"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Salary Range</FormLabel>
+                      <FormLabel className="text-gray-600">Salary Range</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="e.g. #200,000 - #820,000"
@@ -316,7 +347,7 @@ export default function CreateNewJob({
                 name="deadline"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Application Deadline</FormLabel>
+                    <FormLabel className="text-gray-600">Application Deadline</FormLabel>
                     <FormControl>
                       <DatePicker
                         date={field.value}
@@ -333,7 +364,7 @@ export default function CreateNewJob({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Description</FormLabel>
+                    <FormLabel className="text-gray-600">Job Description</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
@@ -348,7 +379,7 @@ export default function CreateNewJob({
               {/* Requirements */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Requirements</CardTitle>
+                  <CardTitle className="text-lg text-gray-600">Requirements</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
@@ -376,7 +407,8 @@ export default function CreateNewJob({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                onClick={() => requirementsArray.remove(index)}>
+                                onClick={() => requirementsArray.remove(index)}
+                              >
                                 <X className="h-4 w-4" />
                               </Button>
                             </div>
@@ -389,7 +421,8 @@ export default function CreateNewJob({
                       type="button"
                       variant="outline"
                       onClick={() => requirementsArray.append("")}
-                      className="w-full">
+                      className="w-full"
+                    >
                       <Plus className="h-4 w-4 mr-2" />
                       Add Requirement
                     </Button>
@@ -400,7 +433,7 @@ export default function CreateNewJob({
               {/* Tags */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Tags</CardTitle>
+                  <CardTitle className="text-lg text-gray-600">Tags</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {form.formState.errors.tags && (
@@ -428,7 +461,8 @@ export default function CreateNewJob({
             <DialogFooter className="flex justify-end gap-2">
               <Button
                 variant="outline"
-                onClick={form.handleSubmit(handlePreview)}>
+                onClick={form.handleSubmit(handlePreview)}
+              >
                 Preview
               </Button>
 
@@ -436,7 +470,8 @@ export default function CreateNewJob({
                 type="button"
                 className="border-none bg-sky-500 hover:bg-sky-600"
                 onClick={form.handleSubmit(handlePostJob)}
-                disabled={isLoading}>
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <div className="flex items-center space-x-1">
                     <Loader2 className="animate-spin" />
@@ -482,7 +517,8 @@ const TagsInput = ({ tags, onChange }) => {
         <Button
           className="border-transparent bg-secondary"
           type="button"
-          onClick={addTag}>
+          onClick={addTag}
+        >
           Add
         </Button>
       </div>
@@ -491,13 +527,15 @@ const TagsInput = ({ tags, onChange }) => {
         {tags.map((tag, index) => (
           <Badge
             key={index}
-            className="px-3 py-1 text-sm flex items-center gap-2">
+            className="px-3 py-1 text-sm flex items-center gap-2"
+          >
             {tag}
             <Button
               type="button"
               size="sm"
               className="border-transparent h-4 w-4 p-0 hover:bg-transparent"
-              onClick={() => removeTag(tag)}>
+              onClick={() => removeTag(tag)}
+            >
               <X className="h-3 w-3" />
             </Button>
           </Badge>
