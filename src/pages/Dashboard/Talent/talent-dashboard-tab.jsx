@@ -97,7 +97,8 @@ export default function TalentDashboardTab() {
       toast({
         variant: "destructive",
         title: "Application Failed",
-        description: error.response.data || "An error occurred while applying.",
+        description:
+          error?.response?.data || "An error occurred while applying.",
       });
     } finally {
       setLoadingJobId(null);

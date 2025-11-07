@@ -14,6 +14,7 @@ import { Toaster } from "./ui/toaster";
 import { useSelector } from "react-redux";
 import { fetchMyTalentJobs } from "@/redux/TalentJobSlice";
 import { fetchMyJobs } from "@/redux/ServiceProviderJobSlice";
+import { Briefcase } from "lucide-react";
 
 const JobDetailsModal = ({ job, open, onClose }) => {
   const [isApplying, setIsApplying] = useState(false);
@@ -86,11 +87,15 @@ const JobDetailsModal = ({ job, open, onClose }) => {
         <DialogContent className="w-[90%] md:max-w-3xl max-h-[85vh] overflow-y-auto rounded-xl">
           <DialogHeader>
             <div className="flex items-center gap-4 border-b pb-4">
-              <img
-                src={job.employer_profile_pic || "/placeholder-company.png"}
-                alt="Company logo"
-                className="w-14 h-14 rounded-full object-cover border"
-              />
+              {job?.companyLogo ? (
+                <img
+                  src={job?.companyLogo}
+                  alt={job?.companyName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Briefcase className="text-gray-400 h-6 w-6" />
+              )}
               <div>
                 <DialogTitle className="text-xl font-semibold text-gray-900">
                   {job.job_title}

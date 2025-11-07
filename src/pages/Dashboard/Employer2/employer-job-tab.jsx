@@ -26,21 +26,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
-import { useOutletContext } from "react-router-dom";
-import { sampleJobs } from "@/utils/data/employer-mock-data";
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import CreateNewJob from "@/components/Employer/createNewJob";
 import { cn, getDateAsTextLabel } from "@/lib/utils";
 import {
@@ -48,12 +35,13 @@ import {
   useFetchJobApplicants,
   useFetchJobs,
 } from "@/hooks/useJobs";
-import { useEmployerData } from "@/store/employer/employerStore";
 import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import ApplicantsList from "./ApplicantsList";
 import EditJobModal from "./EditJobModal";
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
+import { useUserData } from "@/store/employer/userDataStorage";
 
 export default function EmployerJobTab() {
   const { toast } = useToast();
@@ -61,7 +49,8 @@ export default function EmployerJobTab() {
   const { mutate: deleteJob } = useDeletePostedJob();
   const [activeTab, setActiveTab] = useState("all");
   const [loading, setLoading] = useState(null);
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
+  const [isCreateJobDialogOpen, setIsCreateJobDialogOpen] = useState(false);
   const { isLoading, isError, data } = useFetchJobs(employer?.id);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -71,7 +60,14 @@ export default function EmployerJobTab() {
   const activeJobs = data?.filter((job) => {
     return job.jobStatus === "ACCEPTED";
   });
-
+  //function to open the create job dialog
+  const openCreateJobDialog = () => {
+    setIsCreateJobDialogOpen(true);
+  };
+  //function to close the create job dialog
+  const closeCreateJobDialog = () => {
+    setIsCreateJobDialogOpen(false);
+  };
   const handleCloseJob = async (job) => {
     setLoading(job.jobID);
     try {
@@ -124,12 +120,13 @@ export default function EmployerJobTab() {
       });
     }
   };
-
+  if (isLoading) return <JobCardSkeleton />;
+  if (isError) return <p className="p-8">Error fetching data</p>;
   return (
     <div className="p-8 space-y-6">
       <div className="flex items-center justify-end"></div>
       <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-start md:items-center">
-        <div className="flex gap-2">
+        <div className=" grid-cols-2 grid md:grid-cols-4 gap-2">
           <Button
             className={cn(
               `${
@@ -155,7 +152,7 @@ export default function EmployerJobTab() {
               ""
             )}
             onClick={() => setActiveTab("active")}>
-            Active
+            Accepted
             {activeJobs?.length > 0 && (
               <Badge variant="success" className="ml-2">
                 {activeJobs?.length || 0}
@@ -179,9 +176,14 @@ export default function EmployerJobTab() {
               </Badge>
             )}
           </Button>
-        </div>
-        <div className="flex gap-2 w-full md:w-auto">
-          {/* <CreateNewJob /> */}
+          <div className="flex gap-2 w-full md:w-auto ">
+            <Button
+              onClick={openCreateJobDialog}
+              className="border-transparent bg-primary hover:bg-secondary">
+              <FileText className="mr-1 h-4 w-4" />
+              Create New Job
+            </Button>
+          </div>
         </div>
       </div>
       <div>
@@ -202,7 +204,7 @@ export default function EmployerJobTab() {
         )}
         {activeTab === "active" && (
           <div className="space-y-8">
-            {activeJobs.length > 0 ? (
+            {activeJobs?.length > 0 ? (
               activeJobs
                 ?.sort(
                   (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
@@ -225,8 +227,8 @@ export default function EmployerJobTab() {
         )}
         {activeTab === "close" && (
           <div className="space-y-8">
-            {closedJobs.length > 0 ? (
-              closedJobs.map((job) => (
+            {closedJobs?.length > 0 ? (
+              closedJobs?.map((job) => (
                 <JobCard
                   key={job.id}
                   job={job}
@@ -242,6 +244,18 @@ export default function EmployerJobTab() {
           </div>
         )}
       </div>
+      <CreateNewJob
+        companyBio={employer?.employer?.companyDescription}
+        companyName={employer?.employer?.companyName}
+        country={employer?.employer?.country}
+        industryType={employer?.employer?.industryType}
+        companySize={employer?.employer?.companySize}
+        employerID={employer?.employer?.employerID}
+        companyLogo={employer?.employer?.companyLogo}
+        isOpenDialog={isCreateJobDialogOpen}
+        openDialog={openCreateJobDialog}
+        closeDialog={closeCreateJobDialog}
+      />
     </div>
   );
 }
@@ -315,7 +329,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                     : "bg-gray-100 text-gray-800"
                 }`}>
                 {job.jobStatus === "ACCEPTED"
-                  ? "Active"
+                  ? "Accepted"
                   : job.jobStatus === "CLOSED"
                   ? "Closed"
                   : ""}
@@ -456,7 +470,7 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
   };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
   const [editLoader, setEditLoader] = useState(false);
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
@@ -610,42 +624,6 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/* <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                Edit
-              </Button>
-              {job.status === "active" ? (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onCloseJob(job.id)}
-                >
-                  Close Job
-                </Button>
-              ) : (
-                <Button variant="outline" size="sm">
-                  Reopen Job
-                </Button>
-              )}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                  <DropdownMenuItem>Share</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="text-destructive"
-                    onClick={() => onDeleteJob(job.id)}
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div> */}
           </div>
         </div>
 

@@ -169,3 +169,78 @@ export const useDeletePostedJob = () => {
     data: mutation.data,
   };
 };
+
+// export const useGetAllApplicants = (employerID, token) => {
+//   const fetchAllApplicants = async () => {
+//     const response = await axios.get(
+//       `${API_HOST_URL}/api/employers/employers/${employerID}/get-all-applicants?page=0&size=1000&sort=string`,
+//       {
+//         headers: {
+//           authorization: token,
+//         },
+//       }
+//     );
+//     return response.data;
+//   };
+
+//   return useQuery({
+//     queryKey: ["allApplicants", employerID],
+//     queryFn: fetchAllApplicants,
+//     staleTime: 1000 * 60 * 5,
+//     refetchOnWindowFocus: false,
+//     enabled: !!employerID,
+//   });
+// };
+
+export const useGetAllApplicants = (employerID, token) => {
+  const fetchAllApplicants = async () => {
+    try {
+      const response = await axios.get(
+        `${API_HOST_URL}/api/employers/employers/${employerID}/get-all-applicants?page=0&size=1000&sort=string`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      // ✅ Extract backend message
+      const message = err.response?.data;
+      ("Something went wrong");
+
+      // ✅ Throw custom error to React Query
+      throw new Error(message);
+    }
+  };
+
+  return useQuery({
+    queryKey: ["allApplicants", employerID],
+    queryFn: fetchAllApplicants,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: !!employerID,
+  });
+};
+
+export const useGetAllInterviewCandidates = (employerID, token) => {
+  const fetchInterviewCandidates = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/interviews/employer/${employerID}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  return useQuery({
+    queryKey: ["allInterviewCandidates", employerID],
+    queryFn: fetchInterviewCandidates,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: !!employerID,
+  });
+};
