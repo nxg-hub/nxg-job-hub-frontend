@@ -150,7 +150,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
   return (
     <Card className="">
       <CardHeader className="p-4 pb-0 flex flex-col justify-between items-start">
-        <img src={job.employer_profile_pic || driver} alt="" />
+        {/* <img src={job.employer_profile_pic || driver} alt="" /> */}
         <div className="flex justify-between w-full">
           <div>
             <h3 className="font-medium">{job.company}</h3>
@@ -159,7 +159,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
               {job.job_location}
             </div>
           </div>
-          <Button
+          {/* <Button
             variant="ghost"
             size="icon"
             className="h-8 w-8 border-none"
@@ -170,7 +170,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
                 isBookmarked ? "fill-[#0078B4] text-[#0078B4]" : "text-gray-400"
               )}
             />
-          </Button>
+          </Button> */}
         </div>
       </CardHeader>
       <CardContent className="p-4">
@@ -189,7 +189,7 @@ function JobCard({ job, isBookmarked, onBookmarkToggle }) {
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
         <div className="text-xs text-gray-500">
-          {job.reactions} views •{/* {job.applicants} applicants */}
+          {job.reactions} {/* {job.applicants} applicants */}
         </div>
         <Button
           onClick={() => handleApply(job)}

@@ -54,6 +54,7 @@ import axios from "axios";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import ApplicantsList from "./ApplicantsList";
 import EditJobModal from "./EditJobModal";
+import { JobCardSkeleton } from "@/components/job-card-skeleton";
 
 export default function EmployerJobTab() {
   const { toast } = useToast();
@@ -124,7 +125,8 @@ export default function EmployerJobTab() {
       });
     }
   };
-
+  if (isLoading) return <JobCardSkeleton />;
+  if (isError) return <p className="p-8">Error fetching data</p>;
   return (
     <div className="p-8 space-y-6">
       <div className="flex items-center justify-end"></div>
@@ -155,7 +157,7 @@ export default function EmployerJobTab() {
               ""
             )}
             onClick={() => setActiveTab("active")}>
-            Active
+            Accepted
             {activeJobs?.length > 0 && (
               <Badge variant="success" className="ml-2">
                 {activeJobs?.length || 0}
@@ -315,7 +317,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                     : "bg-gray-100 text-gray-800"
                 }`}>
                 {job.jobStatus === "ACCEPTED"
-                  ? "Active"
+                  ? "Accepted"
                   : job.jobStatus === "CLOSED"
                   ? "Closed"
                   : ""}

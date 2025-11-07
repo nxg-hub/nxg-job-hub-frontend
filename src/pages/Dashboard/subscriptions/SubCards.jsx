@@ -7,11 +7,13 @@ import "./subscription.scss";
 import { BsCheck } from "react-icons/bs";
 import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 const SubCards = ({ country, verifyTransaction, user }) => {
   const [loadingIndex, setLoadingIndex] = useState(null);
   const [error, setError] = useState("");
-
+  const { toast } = useToast();
   const [exchangeRate, setExchangeRate] = useState(null);
   // Function to fetch and convert prices to Naira
 
@@ -153,7 +155,11 @@ const SubCards = ({ country, verifyTransaction, user }) => {
       }
     } catch (error) {
       console.error("Error posting user data:", error.response.data);
-      setError("Subscription failed");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Subscription failed.",
+      });
     } finally {
       setLoadingIndex(null);
     }
@@ -261,12 +267,12 @@ const SubCards = ({ country, verifyTransaction, user }) => {
                   onClick={() => handlePayment(subscription, index)}>
                   {loadingIndex === index ? "Processing..." : "Subscribe"}
                 </button>
-                {error && <p className="text-red-500">{error}</p>}
               </div>
             )}
           </div>
         ))}
       </div>
+      <Toaster />
     </>
   );
 };
