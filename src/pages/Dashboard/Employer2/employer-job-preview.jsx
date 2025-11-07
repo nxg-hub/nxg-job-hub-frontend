@@ -33,6 +33,7 @@ export default function JobPreview() {
                     {data?.companyName}
                   </span>
                 </div>
+                |<div>{data?.job_classification}</div>
               </div>
             </div>
           </div>

@@ -51,34 +51,53 @@ export const getDaysBetween = (dateString) => {
 };
 
 export const getDateAsTextLabel = (dateString) => {
-  const jobDateInMs = getDaysBetween(dateString);
+  const timeDiffInMs = getDaysBetween(dateString);
 
-  const jobPostInSeconds = Math.floor(jobDateInMs / 1000);
-  const jobPostInMinutes = Math.floor(jobPostInSeconds / 60);
-  const jobPostInHours = Math.floor(jobPostInMinutes / 60);
-  const jobPostInDays = Math.floor(jobPostInHours / 24);
+  // Define constants for clearer math
+  const MS_PER_SECOND = 1000;
+  const SECONDS_PER_MINUTE = 60;
+  const MINUTES_PER_HOUR = 60;
+  const HOURS_PER_DAY = 24;
+  const DAYS_PER_WEEK = 7;
+  const DAYS_PER_MONTH = 30.437;
+  const DAYS_PER_YEAR = 365.25;
 
-  //return seconds , minutes , hours
-  if (jobPostInSeconds < 60) return "Just now";
-  if (jobPostInMinutes < 60)
-    return `${jobPostInMinutes} minutes${jobPostInMinutes > 1 ? "s" : ""} ago`;
-  if (jobPostInHours < 24)
-    return `${jobPostInHours} hours${jobPostInHours > 1 ? "s" : ""} ago`;
+  const jobPostInSeconds = Math.floor(timeDiffInMs / MS_PER_SECOND);
+  const jobPostInMinutes = Math.floor(jobPostInSeconds / SECONDS_PER_MINUTE);
+  const jobPostInHours = Math.floor(jobPostInMinutes / MINUTES_PER_HOUR);
+  const jobPostInDays = Math.floor(jobPostInHours / HOURS_PER_DAY);
 
-  //return days and beyond
-  if (jobPostInDays === 1) return "Yesterday";
-  if (jobPostInDays < 7)
+  if (jobPostInSeconds < SECONDS_PER_MINUTE) {
+    return "Just now";
+  }
+
+  if (jobPostInMinutes < MINUTES_PER_HOUR) {
+    return `${jobPostInMinutes} minute${jobPostInMinutes > 1 ? "s" : ""} ago`;
+  }
+
+  if (jobPostInHours < HOURS_PER_DAY) {
+    return `${jobPostInHours} hour${jobPostInHours > 1 ? "s" : ""} ago`;
+  }
+
+  if (jobPostInDays === 1) {
+    return "Yesterday";
+  }
+
+  if (jobPostInDays < DAYS_PER_WEEK) {
     return `${jobPostInDays} day${jobPostInDays > 1 ? "s" : ""} ago`;
+  }
 
-  const jobPostInWeeks = Math.floor(jobPostInDays / 7);
-  if (jobPostInWeeks < 4)
+  const jobPostInWeeks = Math.floor(jobPostInDays / DAYS_PER_WEEK);
+  if (jobPostInWeeks < 4) {
     return `${jobPostInWeeks} week${jobPostInWeeks > 1 ? "s" : ""} ago`;
+  }
 
-  const jobPostInMonths = Math.floor(jobPostInWeeks / 30);
-  if (jobPostInMonths < 12)
+  const jobPostInMonths = Math.floor(jobPostInDays / DAYS_PER_MONTH);
+  if (jobPostInMonths < 12) {
     return `${jobPostInMonths} month${jobPostInMonths > 1 ? "s" : ""} ago`;
+  }
 
-  const jobPostInYears = Math.floor(jobPostInMonths / 365);
+  const jobPostInYears = Math.floor(jobPostInDays / DAYS_PER_YEAR);
   return `${jobPostInYears} year${jobPostInYears > 1 ? "s" : ""} ago`;
 };
 
