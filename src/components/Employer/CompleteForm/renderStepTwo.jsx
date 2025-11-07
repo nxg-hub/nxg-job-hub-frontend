@@ -68,7 +68,7 @@ export default function RenderStepTwo({ form }) {
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="font-normal">
-                    <SelectValue placeholder="Select company size" />
+                    <SelectValue placeholder="Select state  " />
                   </SelectTrigger>
                 </FormControl>
 

@@ -27,9 +27,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import EmployerProfileMobileView from "@/components/Employer/Profile/employerProfileMobileView";
+import { useUserData } from "@/store/employer/userDataStorage";
 
 export default function EmployerCompanyProfileTab() {
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
 
   const handleSubmit = (e) => {};
 
