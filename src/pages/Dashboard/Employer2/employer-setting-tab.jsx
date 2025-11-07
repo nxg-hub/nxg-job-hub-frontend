@@ -38,13 +38,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import PasswordCard from "./PasswordCard";
+import { useSelector } from "react-redux";
+import { formatFullDate } from "@/lib/utils";
 
 export default function EmployerSettingTab() {
+  const sub = useSelector((state) => state.AllUserReducer.subData);
+  // console.log(sub);
   return (
     <div className="flex flex-col gap-6  ">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
-        <Button>Save Changes</Button>
+        {/* <Button>Save Changes</Button> */}
       </div>
 
       <Tabs defaultValue="security" className="space-y-4 border-none">
@@ -252,45 +256,112 @@ export default function EmployerSettingTab() {
                   <div>
                     <h3 className="font-medium">Current Plan</h3>
                     <p className="text-sm text-muted-foreground">
-                      Professional Plan
+                      {sub.planType}
                     </p>
                   </div>
-                  <Badge>Active</Badge>
+                  <Badge
+                    className={`${
+                      sub.subscriptionStatus === "ACTIVE"
+                        ? "bg-secondary"
+                        : "bg-gray-400"
+                    }`}>
+                    {sub.subscriptionStatus === "ACTIVE" ? "Active" : "Expired"}
+                  </Badge>
                 </div>
                 <Separator className="my-4" />
                 <div className="space-y-1">
                   <p className="text-sm">
-                    <span className="text-2xl font-bold">$49</span> / month
+                    <span className="text-2xl font-bold">
+                      {sub.planType === "PLATINUM"
+                        ? "₦90,000/Yearly"
+                        : sub.planType === "SILVER"
+                        ? "₦25,000/3months"
+                        : sub.planType === "GOLD"
+                        ? "₦70,000/6months"
+                        : sub.planType === "TEST"
+                        ? "100/day"
+                        : ""}
+                    </span>
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Renews on May 15, 2023
+                    Due on {formatFullDate(sub?.subscriptionDues)}
                   </p>
                 </div>
                 <Separator className="my-4" />
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium">Plan Features:</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-green-500" />
-                      Up to 10 active job postings
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-green-500" />
-                      Advanced analytics
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-green-500" />
-                      Custom application forms
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-green-500" />
-                      Team collaboration (up to 5 users)
-                    </li>
-                  </ul>
+                  {sub.planType === "PLATINUM" ? (
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        The Platinum plan caters to users seeking an even longer
+                        commitment with added features.
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        Access to unlimited vetted and featured tech talents
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        fast job application
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        Tech talent profile matching mechanism and NXG hub
+                        customer support
+                      </li>
+                    </ul>
+                  ) : sub.planType === "SILVER" ? (
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        The Silver plan is designed for tech agent organizations
+                        and employers to have access to all basic features on
+                        this personalized job platform and provide a solid
+                        foundation for limited posting
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        10 vetted job posting throughout the entire 3 months
+                        period.
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        fast job application
+                      </li>
+                    </ul>
+                  ) : sub.planType === "GOLD" ? (
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        The Gold plan offers extended benefits for users looking
+                        for more flexibiity and a longer commitment
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        Unlimited vetted job listing, posting and Tech talent
+                        search support
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        fast job application
+                      </li>
+                    </ul>
+                  ) : (
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        As a way to welcome new users and allow them to explore
+                        our platform, the first month of usage is completely
+                        free. During this period, users will have access to all
+                        basic features
+                      </li>
+                    </ul>
+                  )}
                 </div>
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <h3 className="text-lg font-medium">Payment Method</h3>
                 <div className="rounded-lg border p-4">
                   <div className="flex items-center gap-4">
@@ -309,12 +380,12 @@ export default function EmployerSettingTab() {
                   <Button variant="outline">Update Payment Method</Button>
                   <Button variant="outline">View Billing History</Button>
                 </div>
-              </div>
+              </div> */}
             </CardContent>
-            <CardFooter className="flex justify-between">
+            {/* <CardFooter className="flex justify-between">
               <Button variant="outline">Cancel Subscription</Button>
               <Button>Upgrade Plan</Button>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </TabsContent>
 

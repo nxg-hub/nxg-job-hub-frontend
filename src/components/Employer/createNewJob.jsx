@@ -56,7 +56,9 @@ const formSchema = z.object({
     }),
   requirements: z.array(z.string().min(1, "Job requirement cannot be empty")),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
-  job_classification: z.string().min(1, "Please select your job classification."),
+  job_classification: z
+    .string()
+    .min(1, "Please select your job classification."),
 });
 
 export default function CreateNewJob({
@@ -75,7 +77,6 @@ export default function CreateNewJob({
   const queryClient = useQueryClient();
   const { mutate: uploadJob, isLoading } = usePostJob({
     onSuccess: (data) => {
-      console.log(data);
       toast({
         className: cn(
           "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
@@ -205,8 +206,7 @@ export default function CreateNewJob({
   return (
     <Dialog
       open={isOpenDialog}
-      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}
-    >
+      onOpenChange={(isOpenDialog) => !isOpenDialog && closeDialog()}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <Form {...form}>
           <form className="space-y-8 max-w-3xl py-10">
@@ -242,8 +242,7 @@ export default function CreateNewJob({
                       <FormLabel className="text-gray-600">Job Type</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}
-                      >
+                        onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select job type" />
@@ -272,8 +271,7 @@ export default function CreateNewJob({
                       </FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}
-                      >
+                        onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger className="font-normal">
                             <SelectValue placeholder="Select Status" />
@@ -305,8 +303,7 @@ export default function CreateNewJob({
                       <FormLabel className="text-gray-600">Location</FormLabel>
                       <Select
                         defaultValue={field.value}
-                        onValueChange={field.onChange}
-                      >
+                        onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="e.g Lagos or Abuja" />
@@ -329,13 +326,9 @@ export default function CreateNewJob({
                   name="salary"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-600">Salary Range</FormLabel>
+                      <FormLabel className="text-gray-600">Salary</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="e.g. #200,000 - #820,000"
-                          type=""
-                          {...field}
-                        />
+                        <Input placeholder="e.g. #200,000" type="" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -347,7 +340,9 @@ export default function CreateNewJob({
                 name="deadline"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel className="text-gray-600">Application Deadline</FormLabel>
+                    <FormLabel className="text-gray-600">
+                      Application Deadline
+                    </FormLabel>
                     <FormControl>
                       <DatePicker
                         date={field.value}
@@ -364,7 +359,9 @@ export default function CreateNewJob({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-600">Job Description</FormLabel>
+                    <FormLabel className="text-gray-600">
+                      Job Description
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
@@ -379,7 +376,9 @@ export default function CreateNewJob({
               {/* Requirements */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg text-gray-600">Requirements</CardTitle>
+                  <CardTitle className="text-lg text-gray-600">
+                    Requirements
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
@@ -407,8 +406,7 @@ export default function CreateNewJob({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                onClick={() => requirementsArray.remove(index)}
-                              >
+                                onClick={() => requirementsArray.remove(index)}>
                                 <X className="h-4 w-4" />
                               </Button>
                             </div>
@@ -421,8 +419,7 @@ export default function CreateNewJob({
                       type="button"
                       variant="outline"
                       onClick={() => requirementsArray.append("")}
-                      className="w-full"
-                    >
+                      className="w-full">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Requirement
                     </Button>
@@ -461,8 +458,7 @@ export default function CreateNewJob({
             <DialogFooter className="flex justify-end gap-2">
               <Button
                 variant="outline"
-                onClick={form.handleSubmit(handlePreview)}
-              >
+                onClick={form.handleSubmit(handlePreview)}>
                 Preview
               </Button>
 
@@ -470,8 +466,7 @@ export default function CreateNewJob({
                 type="button"
                 className="border-none bg-sky-500 hover:bg-sky-600"
                 onClick={form.handleSubmit(handlePostJob)}
-                disabled={isLoading}
-              >
+                disabled={isLoading}>
                 {isLoading ? (
                   <div className="flex items-center space-x-1">
                     <Loader2 className="animate-spin" />
@@ -517,8 +512,7 @@ const TagsInput = ({ tags, onChange }) => {
         <Button
           className="border-transparent bg-secondary"
           type="button"
-          onClick={addTag}
-        >
+          onClick={addTag}>
           Add
         </Button>
       </div>
@@ -527,15 +521,13 @@ const TagsInput = ({ tags, onChange }) => {
         {tags.map((tag, index) => (
           <Badge
             key={index}
-            className="px-3 py-1 text-sm flex items-center gap-2"
-          >
+            className="px-3 py-1 text-sm flex items-center gap-2">
             {tag}
             <Button
               type="button"
               size="sm"
               className="border-transparent h-4 w-4 p-0 hover:bg-transparent"
-              onClick={() => removeTag(tag)}
-            >
+              onClick={() => removeTag(tag)}>
               <X className="h-3 w-3" />
             </Button>
           </Badge>

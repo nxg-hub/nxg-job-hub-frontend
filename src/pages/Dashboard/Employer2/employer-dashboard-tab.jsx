@@ -49,7 +49,6 @@ export default function EmployerDashboardTab() {
   const closeCreateJobDialog = () => {
     setIsCreateJobDialogOpen(false);
   };
-
   // Apply filters when search term or filters change
   useEffect(() => {
     let result = candidates;
@@ -130,8 +129,7 @@ export default function EmployerDashboardTab() {
       <div className="md:w-[200px]">
         <Button
           onClick={openCreateJobDialog}
-          className="border-transparent bg-primary hover:bg-secondary"
-        >
+          className="border-transparent bg-primary hover:bg-secondary">
           <FileText className="mr-1 h-4 w-4" />
           Create New Job
         </Button>

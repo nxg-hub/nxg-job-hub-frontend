@@ -51,9 +51,9 @@ const Home = () => {
       <div className="landing-main relative w-full bg-gradient-to-b from-sky-50 to-white">
         <Header />
 
-        <div className="max-w-7xl mx-auto px-4 pt-32 pb-20 md:pt-40 md:pb-32  flex flex-col md:flex-row items-center gap-10">
+        <div className="max-w-7xl mx-auto px-4 pt-32 pb-20 md:pt-40 md:pb-32 md:max-h-[700px] flex flex-col md:flex-row items-center gap-10">
           {/* LEFT CONTENT */}
-          <div className="w-full md:w-[60%] space-y-6 text-center md:text-left  !mt-[-50px]">
+          <div className="w-full md:w-[70%] space-y-6 text-center md:text-left  !mt-[-50px]">
             <h1 className="text-3xl md:text-6xl font-bold text-gray-300 leading-tight">
               {heroTitle.title1}{" "}
               <span className="text-sky-600">{heroTitle.span}</span>{" "}

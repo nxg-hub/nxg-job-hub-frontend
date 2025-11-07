@@ -169,8 +169,13 @@ export default function EditJobModal({ isOpen, onClose, job, onSave, loader }) {
                   handleChange("jobClassification", e.target.value)
                 }
                 className="mt-1 w-full border rounded px-3 py-2">
-                <option value="SERVICE">Service</option>
-                <option value="PROFESSIONAL">Professional</option>
+                <option value="SERVICE">
+                  Service, customer or operational support roles
+                </option>
+                <option value="PROFESSIONAL">
+                  Professional, skilled or expert-level or formal education
+                  roles
+                </option>
               </select>
               {errors.jobClassification && (
                 <p className="text-xs text-red-500">

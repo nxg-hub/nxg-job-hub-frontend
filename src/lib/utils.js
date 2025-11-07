@@ -101,6 +101,16 @@ export const getDateAsTextLabel = (dateString) => {
   return `${jobPostInYears} year${jobPostInYears > 1 ? "s" : ""} ago`;
 };
 
+export const formatFullDate = (dateString) => {
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString("en-US", {
+    day: "numeric", // 4
+    month: "long", // December
+    year: "numeric", // 2025
+  });
+};
+
 export const nigerianStates = [
   { value: "Abia", label: "Abia" },
   { value: "Adamawa", label: "Adamawa" },

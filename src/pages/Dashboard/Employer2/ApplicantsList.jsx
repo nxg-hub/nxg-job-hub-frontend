@@ -181,6 +181,8 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
         ? "bg-green-100 text-green-700"
         : application.applicationStatus === "PENDING"
         ? "bg-yellow-100 text-yellow-700"
+        : application.applicationStatus === "INTERVIEWED"
+        ? "bg-secondary text-white"
         : "bg-red-100 text-red-700"
     }
   `}>
@@ -323,35 +325,39 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
                     </CardContent>
 
                     {/* ✅ Accept / Reject Buttons */}
-                    <CardFooter className="flex justify-end gap-3 border-t border-gray-100 pt-4">
-                      <Button
-                        size="sm"
-                        className="bg-red-200 border-none hover:bg-red-300"
-                        disabled={actionLoading === applicationId}
-                        onClick={() => handleAction(applicationId, "reject")}>
-                        {actionLoading === applicationId && act === "reject" ? (
-                          "Processing..."
-                        ) : (
-                          <>
-                            <X className="w-4 h-4 mr-1 text-red-800" />
-                            <span className="text-red-800">Reject</span>
-                          </>
-                        )}
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="bg-secondary hover:bg-primary border-none"
-                        disabled={actionLoading === applicationId}
-                        onClick={() => handleAction(applicationId, "accept")}>
-                        {actionLoading === applicationId && act === "accept" ? (
-                          "Processing..."
-                        ) : (
-                          <>
-                            <Check className="w-4 h-4 mr-1" /> Accept
-                          </>
-                        )}
-                      </Button>
-                    </CardFooter>
+                    {application.applicationStatus === "PENDING" && (
+                      <CardFooter className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+                        <Button
+                          size="sm"
+                          className="bg-red-200 border-none hover:bg-red-300"
+                          disabled={actionLoading === applicationId}
+                          onClick={() => handleAction(applicationId, "reject")}>
+                          {actionLoading === applicationId &&
+                          act === "reject" ? (
+                            "Processing..."
+                          ) : (
+                            <>
+                              <X className="w-4 h-4 mr-1 text-red-800" />
+                              <span className="text-red-800">Reject</span>
+                            </>
+                          )}
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="bg-secondary hover:bg-primary border-none"
+                          disabled={actionLoading === applicationId}
+                          onClick={() => handleAction(applicationId, "accept")}>
+                          {actionLoading === applicationId &&
+                          act === "accept" ? (
+                            "Processing..."
+                          ) : (
+                            <>
+                              <Check className="w-4 h-4 mr-1" /> Accept
+                            </>
+                          )}
+                        </Button>
+                      </CardFooter>
+                    )}
                   </>
                 )}
               </Card>

@@ -23,7 +23,6 @@ import {
   useGetAllApplicants,
   useGetAllInterviewCandidates,
 } from "@/hooks/useJobs";
-import { useEmployerData } from "@/store/employer/employerStore";
 import { getStoredKey } from "@/lib/utils";
 import ProfileModal from "./ProfileModal";
 import ScheduleInterviewModal from "./ScheduleInterviewModal";
@@ -33,10 +32,11 @@ import { toast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserData } from "@/store/employer/userDataStorage";
 
 export default function EmployerApplicantsTab() {
   const storedJwtToken = getStoredKey();
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("allApplicants"); // Track active tab
@@ -50,6 +50,7 @@ export default function EmployerApplicantsTab() {
     data: applicants,
     isLoading,
     isError,
+    error,
   } = useGetAllApplicants(employer.id, storedJwtToken);
   // Fetch interview candidates
   const {
@@ -116,8 +117,7 @@ export default function EmployerApplicantsTab() {
 
   if (isLoading || interviewLoader) return <JobCardSkeleton />;
   if (isError || interviewError)
-    return <p className="p-8">Error fetching data</p>;
-
+    return <p className="p-8">{error?.message || "error fetching data"}</p>;
   return (
     <div className="p-8">
       {/* Tabs */}
@@ -131,7 +131,7 @@ export default function EmployerApplicantsTab() {
               setFilter("all");
             }}>
             All Applicants
-            <span>{applicants.length}</span>
+            <span>{applicants?.length}</span>
           </Button>
           <Button
             variant={activeTab === "PENDING" ? "default" : "outline"}
@@ -142,9 +142,9 @@ export default function EmployerApplicantsTab() {
             Pending
             <span>
               {
-                applicants.filter((app) => {
+                applicants?.filter((app) => {
                   return app.applicationStatus === "PENDING";
-                }).length
+                })?.length
               }
             </span>
           </Button>
@@ -157,9 +157,9 @@ export default function EmployerApplicantsTab() {
             Approved
             <span>
               {
-                applicants.filter((app) => {
+                applicants?.filter((app) => {
                   return app.applicationStatus === "APPROVED";
-                }).length
+                })?.length
               }
             </span>
           </Button>
@@ -172,9 +172,9 @@ export default function EmployerApplicantsTab() {
             Rejected
             <span>
               {
-                applicants.filter((app) => {
+                applicants?.filter((app) => {
                   return app.applicationStatus === "REJECTED";
-                }).length
+                })?.length
               }
             </span>
           </Button>
@@ -187,9 +187,9 @@ export default function EmployerApplicantsTab() {
             Interview
             <span>
               {
-                applicants.filter((app) => {
+                applicants?.filter((app) => {
                   return app.applicationStatus === "INTERVIEWED";
-                }).length
+                })?.length
               }
             </span>
           </Button>
@@ -201,7 +201,7 @@ export default function EmployerApplicantsTab() {
             }
             onClick={() => setActiveTab("interviewCandidates")}>
             Interview Details
-            <span>{interviews.length}</span>
+            <span>{interviews?.length}</span>
           </Button>
         </div>
       </div>
@@ -224,7 +224,7 @@ export default function EmployerApplicantsTab() {
             </TableHeader>
 
             <TableBody>
-              {displayedData.length > 0 ? (
+              {displayedData?.length > 0 ? (
                 displayedData?.map((item) => {
                   if (activeTab === "interviewCandidates") {
                     // Render interview candidate row
