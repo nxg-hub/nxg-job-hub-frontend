@@ -44,7 +44,8 @@ import {
 import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 // import { NotificationPanel } from "@/components/notification-panel";
-import logo from "@/static/images/logo_colored.png";
+// import logo from "@/static/images/logo_colored.png";
+import logo from "../static/images/splash.png";
 import logomin from "@/static/images/logo_min.png";
 import logonamemin from "@/static/images/logo_name_min.png";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
@@ -135,7 +136,7 @@ function DashboardContent({ notifications = [] }) {
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
                       scrollbar-hidden md:rounded-lg">
-          <div>
+          {/* <div>
             {isCollapsed ? (
               <img
                 // src={isCollapsed ? logomin : logo}
@@ -149,7 +150,7 @@ function DashboardContent({ notifications = [] }) {
             ) : (
               <div className="flex items-center">
                 <img
-                  src={logomin}
+                  src={logo}
                   alt="Next Gen Hub Logo"
                   className={cn(
                     "object-contain w-12 h-12 "
@@ -166,6 +167,16 @@ function DashboardContent({ notifications = [] }) {
                 />
               </div>
             )}
+          </div> */}
+          <div className="pt-5">
+            <img
+              src={isCollapsed ? logomin : logo}
+              alt="Next Gen Hub Logo"
+              className={cn(
+                "object-contain mx-auto w-24 h-24",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
+              )}
+            />
           </div>
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
