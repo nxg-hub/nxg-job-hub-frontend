@@ -57,12 +57,12 @@ const Home = () => {
         }}>
         <Header />
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[-10px]">
-          <h1 className="text-3xl md:text-6xl font-bold text-gray-300 leading-tight">
+          <h1 className="text-3xl md:text-6xl font-bold  leading-tight">
             {heroTitle.title1}
-            <span className="text-sky-600 px-2">{heroTitle.span}</span>
+            <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
             {heroTitle.title}
           </h1>
-          <p className="land-tex text-gray-200 text-lg md:text-3xl mt-4">
+          <p className="land-tex text-lg md:text-3xl mt-4 font-inter">
             Get access and connect with Professionals, Employers, Talents,
             Service Providers, Artisans and Agents — all in just a few clicks.
           </p>

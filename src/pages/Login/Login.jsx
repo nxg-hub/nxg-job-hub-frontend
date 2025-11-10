@@ -17,8 +17,8 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
-// import LoginBG from "../static/images/login-left-bg.png";
-import LoginBG from "../../static/images/splash.png";
+import LoginBG from "../../static/images/loginbg.png";
+import Logo from "../../static/images/splash.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
@@ -214,9 +214,16 @@ export default function LoginForm() {
     <div className="flex items-center justify-center min-h-screen sm:py-14">
       <Card className="border-transparent">
         <CardContent className="flex gap-10 items-center rounded-b-lg  p-0 sm:w-[1000px] ">
-          <section className="hidden sm:inline-block sm:w-1/2">
-            <img src={LoginBG} alt="" className="rounded-l-lg" />
+          <section
+            className="hidden sm:inline-block sm:w-1/2 bg-cover bg-center h-[600px] rounded-l-lg"
+            style={{ backgroundImage: `url(${LoginBG})` }}>
+            <img
+              src={Logo}
+              alt="login-logo"
+              className="rounded-l-lg h-[50px] w-[50px] ml-[5%] mt-[20px]"
+            />
           </section>
+
           <section className="md:border-[1px] rounded-r-lg px-10 sm:w-1/2 sm:px-10 sm:py-14">
             <div>
               <h1 className="text-3xl font-semibold">Login.</h1>
