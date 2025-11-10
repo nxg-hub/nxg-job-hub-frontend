@@ -2,12 +2,28 @@ import React from "react";
 
 const ObjectiveCard = ({ num, title, content }) => {
   return (
-    <div className="bg-[#D9D9D9] w-[100%] m-auto text-justify p-5 rounded-2xl  my-2 sm:w-[80%] md:w-[300px] md:h-[500px] lg:w-[100%] hover:scale-105 transition-all duration-500  xl:h-[420px] ">
-      <h1 className="text-[30px] sm:text-[40px] lg:text-[60px] text-[#006A90] font-extrabold">
+    <div
+      className="
+        bg-gray-200 w-full m-auto p-6 rounded-2xl my-4
+        text-left shadow-sm
+        hover:shadow-xl hover:-translate-y-1 
+        transition-all duration-300 
+        sm:w-[80%] md:w-[300px] lg:w-full
+      ">
+      {/* Number */}
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#006A90]">
         {num}
       </h1>
-      <h2 className="font-extrabold sm:text-xl lg:text-2xl mb-3">{title}</h2>
-      <p className="sm:text-xl lg:text-xl tracking-tight">{content}</p>
+
+      {/* Title */}
+      <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-800 leading-snug">
+        {title}
+      </h2>
+
+      {/* Content */}
+      <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed">
+        {content}
+      </p>
     </div>
   );
 };

@@ -31,7 +31,7 @@ const useFetchNotifications = () => {
   useEffect(() => {
     fetchNotifications();
   }, []);
-  // console.log(notifications);
+  console.log(notifications);
   return notifications;
 };
 // let merged = [...notifications, ...receivedNotifications];

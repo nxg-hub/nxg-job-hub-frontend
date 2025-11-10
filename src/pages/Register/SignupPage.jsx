@@ -23,6 +23,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Card, CardContent } from "@/components/ui/card";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
+import regbg from "../../static/images/regbg.png";
+import Logo from "../../static/images/splash.png";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import axios from "axios";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -165,8 +167,7 @@ export default function SignupForm() {
               <ToastAction
                 onClick={form.handleSubmit(onSubmit)}
                 className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-                altText="Try again"
-              >
+                altText="Try again">
                 Try again
               </ToastAction>
             ),
@@ -203,9 +204,14 @@ export default function SignupForm() {
 
   return (
     <Card
-      className="sm:bg-[url('/images/signup-bg.jpg')] sm:bg-cover sm:bg-center sm:bg-no-repeat 
-        sm:min-h-screen sm:w-full sm:grid sm:place-items-center"
-    >
+      style={{ backgroundImage: `url(${regbg})` }}
+      className=" sm:bg-cover sm:bg-center sm:bg-no-repeat 
+        sm:min-h-screen sm:w-full sm:grid sm:place-items-center">
+      <img
+        src={Logo}
+        alt="login-logo"
+        className="rounded-l-lg h-[70px] w-[70px] absolute left-[5%] top-5"
+      />
       <CardContent className="bg-white rounded-lg shadow-lg p-10 sm:w-[60%] sm:my-12 sm:px-20 sm:py-10">
         <div>
           <h1 className="text-3xl font-semibold">Let's get you started</h1>
@@ -216,8 +222,7 @@ export default function SignupForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10"
-          >
+            className="space-y-8 max-w-3xl mx-auto py-10">
             <div className="space-y-7 sm:flex sm:space-x-6 sm:space-y-0">
               <div className="sm:w-1/2">
                 <FormField
@@ -305,8 +310,7 @@ export default function SignupForm() {
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      className="flex space-x-10 "
-                    >
+                      className="flex space-x-10 ">
                       <FormItem className="flex space-x-2 space-y-0">
                         <FormControl>
                           <RadioGroupItem
@@ -384,8 +388,7 @@ export default function SignupForm() {
                     <Link
                       to={"/terms"}
                       target="_blank"
-                      className="text-primary hover:underline"
-                    >
+                      className="text-primary hover:underline">
                       {" "}
                       Terms of Service{" "}
                     </Link>
@@ -393,8 +396,7 @@ export default function SignupForm() {
                     <Link
                       to={"/privacy"}
                       target="_blank"
-                      className="text-primary hover:underline"
-                    >
+                      className="text-primary hover:underline">
                       {" "}
                       Privacy conditions
                     </Link>
@@ -406,8 +408,7 @@ export default function SignupForm() {
             <Button
               disabled={mutation.isPending}
               className="w-full bg-sky-600 border-none hover:bg-sky-700"
-              type="submit"
-            >
+              type="submit">
               {mutation.isPending ? (
                 <div className="flex items-center space-x-1">
                   <Loader2 className="animate-spin" />
@@ -426,8 +427,7 @@ export default function SignupForm() {
           </p>
           <Link
             to={"/"}
-            className="flex items-center space-x-2 text-gray-500 mt-5"
-          >
+            className="flex items-center space-x-2 text-gray-500 mt-5">
             <ArrowLeft />
             <span className="text-sm">Go back to</span>
             <span className="text-sky-600">Home</span>
