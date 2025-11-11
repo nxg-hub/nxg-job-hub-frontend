@@ -17,19 +17,7 @@ export default function EmployerProfileJobsTabCard({
   };
   return (
     <div className=" p-2 bg-white md:shadow md:rounded-md">
-      {/* <div className="flex flex-col gap-10 mb-10">
-        <p className="font-medium text-sky-600"> Job Information</p>
-        <Separator />
-      </div> */}
       <div className="space-y-6">
-        <VacancyField
-          labelName="Vacancies"
-          name="vacancies"
-          value={vacancies || ""}
-          onChange={handleInputChange}
-          placeholder="Enter available vacancy"
-        />
-
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <InputField
             labelName="Position:"
