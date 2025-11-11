@@ -8,8 +8,8 @@ const SuccessfulJobPost = () => {
       <div className="bg-black">
         <Header />
       </div>
-      <div className="mt-11 bg-primary ">
-        <article className="w-[80%] m-auto text-center border-2 border-secondary md:h-[500px] rounded-lg shadow-xl shadow-secondary pt-10 mb-4">
+      <div className="mt-11 b ">
+        <article className="w-[80%] m-auto text-center  border-2  md:h-[500px] rounded-lg shadow-xl shadow-gray pt-10 mb-4">
           <h2 className="capitalize md:text-lg text-secondary font-bold">
             Job Post Successful
           </h2>

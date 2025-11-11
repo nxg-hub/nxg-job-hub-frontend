@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import logo from "../static/images/nxg-logo.png";
+// import logo from "../static/images/nxg-logo.png";
+import logo from "../static/images/splash.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -9,6 +10,7 @@ import { companyIndusrty, employerJobType } from "../utils/data/employer";
 import PostJobModal from "../components/Modal/PostJobModal";
 import axios from "axios";
 import { API_HOST_URL } from "../utils/api/API_HOST";
+import { nigerianStates } from "@/lib/utils";
 
 const ProgressIndicator = ({ currentStep }) => {
   return (
@@ -106,6 +108,7 @@ const StepOneSchema = Yup.object().shape({
     .min(20, "job description must have at least 20 characters")
     .required("Required"),
   jobRequirement: Yup.string().required("Required"),
+  jobClassification: Yup.string().required("Required"),
   jobMode: Yup.string().required("Required"),
   jobType: Yup.string().required("Required"),
   jobLocation: Yup.string().required("Required"),
@@ -198,6 +201,15 @@ const PostJobForm = () => {
     setSubmitting(false);
   };
 
+  const handleBack = () => {
+    // Store the current step's data
+
+    if (step > 1) {
+      setStep(step - 1);
+      scrollToTop();
+    }
+  };
+
   const handleChange = async (e, setFieldValue, field) => {
     const { value } = e.target;
 
@@ -256,6 +268,7 @@ const PostJobForm = () => {
     jobRequirement: "",
     salary: "",
     jobLocation: "",
+    // jobClassification: "",
     tags: "",
     jobMode: "",
     jobType: "",
@@ -339,6 +352,36 @@ const PostJobForm = () => {
                         component="div"
                       />
                     </div>
+                    <div className="block w-[90%] md:w-[70%] m-auto mt-4   ">
+                      <label className="font-normal" htmlFor="jobLocation">
+                        Job Location:
+                      </label>
+
+                      {/* <Field
+                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
+                          type="text"
+                          name="jobLocation"
+                        /> */}
+
+                      <select
+                        className=" py-4 px-2 rounded-lg w-full "
+                        name="jobLocation"
+                        onChange={(e) =>
+                          handleChange(e, setFieldValue, "jobLocation", values)
+                        }
+                        value={values.jobLocation}>
+                        {nigerianStates.map(({ id, value }) => (
+                          <option key={id} className="block mt-2">
+                            {value}
+                          </option>
+                        ))}
+                      </select>
+                      <ErrorMessage
+                        className="text-red-500"
+                        name="jobLocation"
+                        component="div"
+                      />
+                    </div>
                     <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
                       <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
                         <label className="font-normal" htmlFor="jobType">
@@ -346,10 +389,11 @@ const PostJobForm = () => {
                         </label>
 
                         <select
-                          className="bg-primary py-4 px-2 rounded-lg"
+                          className="py-4 px-2 rounded-lg"
                           required
                           id="jobType"
                           name="jobType"
+                          value={values.jobType}
                           onChange={(e) =>
                             handleChange(e, setFieldValue, "jobType", values)
                           }>
@@ -371,14 +415,15 @@ const PostJobForm = () => {
                         </label>
 
                         <select
-                          className="bg-primary py-4 px-2 rounded-lg"
+                          className=" py-4 px-2 rounded-lg"
                           name="jobMode"
+                          value={values.jobMode}
                           onChange={(e) =>
                             handleChange(e, setFieldValue, "jobMode", values)
                           }>
-                          {jobLocations.map(({ id, value }) => (
+                          {jobLocations.map(({ id, title }) => (
                             <option key={id} className="block mt-2">
-                              {value}
+                              {title}
                             </option>
                           ))}
                         </select>
@@ -389,24 +434,43 @@ const PostJobForm = () => {
                         />
                       </div>
                     </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="jobLocation">
-                          Job Location:
+                    <div className="md:flex w-[90%] justify-between md:w-[70%] gap-2 m-auto">
+                      {/* <div className="block w-[90%] md:w-[50%] m-auto mt-4   ">
+                        <label
+                          className="font-normal"
+                          htmlFor="jobClassification">
+                          Job Classification:
                         </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="text"
-                          name="jobLocation"
-                        />
+
+                        <select
+                          className=" py-4 px-2 rounded-lg w-full"
+                          name="jobClassification"
+                          value={values.jobClassification}
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              setFieldValue,
+                              "jobClassification",
+                              values
+                            )
+                          }>
+                          <option value="">Select Job Classification</option>
+                          <option value="SERVICE">
+                            Service, customer or operational support roles
+                          </option>
+                          <option value="PROFESSIONAL">
+                            Professional, skilled or expert-level or formal
+                            education roles
+                          </option>
+                        </select>
                         <ErrorMessage
                           className="text-red-500"
-                          name="jobLocation"
+                          name="jobClassification"
                           component="div"
                         />
-                      </div>
+                      </div> */}
 
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
+                      <div className="block w-[90%] md:w-[50%] m-auto mt-4  ">
                         <label className="font-normal" htmlFor="salary">
                           Salary:
                         </label>
@@ -594,7 +658,8 @@ const PostJobForm = () => {
                         </label>
 
                         <select
-                          className="bg-primary py-4 px-2 rounded-lg"
+                          className=" py-4 px-2 rounded-lg"
+                          value={values.industry}
                           required
                           id="industry"
                           name="industry"
@@ -633,12 +698,12 @@ const PostJobForm = () => {
                   </div>
                 )}
                 {step === 3 && (
-                  <div className="border-2 border-black mt-8 rounded-2xl w-[90%] m-auto pb-5">
+                  <div className="border-2 border-black mt-8 rounded-2xl w-[90%] m-auto pb-5 ">
                     <h2 className="font-bold md:text-3xl text-center mt-5">
                       Payment
                     </h2>
-                    <div className=" w-[90%] md:w-[70%] m-auto mt-4 outline-none bg-primary rounded-lg py-4">
-                      <article className="md:w-[90%] m-auto">
+                    <div className=" w-[90%] md:w-[70%] m-auto mt-4 outline-none bg-primary rounded-lg p-10  py-4">
+                      <article className="md:w-[90%] m-auto text-white">
                         <p className="mb-5 font-bold">Choose Payment Mode</p>
 
                         <Link
@@ -674,11 +739,11 @@ const PostJobForm = () => {
                           FIDELITY BANK *
                         </p>
                       </article>
-                      <div className="w-[90%] md:w-[90%] m-auto mt-4">
+                      <div className="w-[90%] md:w-[90%] m-auto mt-4 text-white">
                         <label
                           className="font-normal block"
                           htmlFor="paymentReceipt">
-                          Upload Payment paymentReceipt:
+                          Upload Payment payment receipt:
                         </label>
                         <input
                           id="paymentReceipt"
@@ -698,7 +763,16 @@ const PostJobForm = () => {
                     </div>
                   </div>
                 )}
-                <div className="w-[40%] md:w-[30%] m-auto">
+                <div className="flex gap-1 w-[40%] md:w-[30%] m-auto">
+                  {step > 1 && (
+                    <button
+                      onClick={handleBack}
+                      type="button"
+                      disabled={isSubmitting}
+                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto bg-blue-600">
+                      {"Back"}
+                    </button>
+                  )}
                   <button
                     disabled={isSubmitting}
                     className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto bg-blue-600"

@@ -34,8 +34,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
-import logo from "@/static/images/logo_colored.png";
+// import logo from "@/static/images/logo_colored.png";
 import logomin from "@/static/images/logo_min.png";
+import logo from "../static/images/splash.png";
 import logonamemin from "@/static/images/logo_name_min.png";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -153,13 +154,13 @@ function DashboardContent({ notifications = [] }) {
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
                       scrollbar-hidden md:rounded-lg">
-          <div>
+          <div className="pt-5">
             <img
               src={isCollapsed ? logomin : logo}
               alt="Next Gen Hub Logo"
               className={cn(
-                "object-contain mx-auto w-32 h-32",
-                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-32 h-32"
+                "object-contain mx-auto w-24 h-24",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
               )}
             />
           </div>
