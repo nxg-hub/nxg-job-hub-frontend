@@ -65,6 +65,8 @@ import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
 import { setSubData } from "@/redux/AllUsersSlice";
+import { FcCustomerSupport } from "react-icons/fc";
+import CustomerSupport from "@/static/icons/support-services.png";
 
 const sidebarItems = [
   {
@@ -244,7 +246,8 @@ function DashboardContent({ notifications = [] }) {
       <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-            scrollbar-hidden md:rounded-lg  !rounded-b-none">
+            scrollbar-hidden md:rounded-lg  !rounded-b-none"
+        >
           <div>
             <img
               src={isCollapsed ? logomin : logo}
@@ -270,7 +273,8 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5">
+                        className="text-white hover:bg-white/10 hover:text-white p-5"
+                      >
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
@@ -307,7 +311,8 @@ function DashboardContent({ notifications = [] }) {
                 className={cn(
                   `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
                   "text-sm font-semibold"
-                )}>
+                )}
+              >
                 {sub?.planType}{" "}
                 <span className="text-gray-800">
                   expired on {formatFullDate(sub?.subscriptionDues)}
@@ -319,7 +324,8 @@ function DashboardContent({ notifications = [] }) {
 
               <NavLink
                 className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                to="/employer/subscription">
+                to="/employer/subscription"
+              >
                 <img
                   src={subscriptionIcon}
                   alt="subscription"
@@ -334,7 +340,8 @@ function DashboardContent({ notifications = [] }) {
               asChild
               tooltip="Logout"
               className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
-              onClick={() => setShowLogoutNotice(true)}>
+              onClick={() => setShowLogoutNotice(true)}
+            >
               <div>
                 <LogOut className="w-7 h-7" />
                 <span>Logout</span>
@@ -349,39 +356,49 @@ function DashboardContent({ notifications = [] }) {
         className={cn(
           "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
           isCollapsed ? "md:pl-40" : ""
-        )}>
+        )}
+      >
         {/* Header */}
-        <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-transparent md:static">
+        <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
           {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
           <div className="flex mr-auto">
             <SidebarTrigger
               openMenuIcon={<Menu className="w-8 h-8" />}
               className="my-3 ml-2 border-transparent md:hidden "
             />
-            <h1 className="font-medium text-3xl">
-              Welcome, {employer?.firstName}
-            </h1>
           </div>
-          <DropdownMenu
-            open={notificationDropdownOpen}
-            onOpenChange={setNotificationDropdownOpen}>
-            <DropdownMenuTrigger className="hidden md:block" asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative border-none bg-slate-200 hover:bg-slate-300">
-                <Bell className="h-5 w-5" />
-                {unreadNotifications > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
-                    {unreadNotifications}
-                  </Badge>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <NotificationDropdown notifications={notifications} />
-          </DropdownMenu>
+          <div className="hidden md:flex gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+            >
+              <img className="w-10" src={CustomerSupport} alt="chat-admin" />
+            </Button>
+            <DropdownMenu
+              open={notificationDropdownOpen}
+              onOpenChange={setNotificationDropdownOpen}
+            >
+              <DropdownMenuTrigger className="hidden md:block" asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+                >
+                  <Bell className="h-5 w-5" />
+                  {unreadNotifications > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                    >
+                      {unreadNotifications}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <NotificationDropdown notifications={notifications} />
+            </DropdownMenu>
+          </div>
         </div>
         <div className="px-2 pt-16 md:pt-0">
           {!employer?.employer?.verified && (
@@ -396,7 +413,8 @@ function DashboardContent({ notifications = [] }) {
                   <span>Your account is not yet verified</span>
                   <NavLink
                     className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                    to={"/employer/verified-document"}>
+                    to={"/employer/verified-document"}
+                  >
                     complete your profile
                   </NavLink>
                 </div>
@@ -417,7 +435,8 @@ function DashboardContent({ notifications = [] }) {
                       Your account is not yet verified,
                       <NavLink
                         className="underline text-secondary w-fit py-1 px-2 "
-                        to={"/employer/verified-document"}>
+                        to={"/employer/verified-document"}
+                      >
                         complete your profile
                       </NavLink>
                       to continue using all features
@@ -434,7 +453,8 @@ function DashboardContent({ notifications = [] }) {
                 className={cn(
                   `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
                   "text-sm font-semibold"
-                )}>
+                )}
+              >
                 Free trial
               </p>
               {NUMBEROFDAYFORFREESUB < 31 ? (
@@ -450,7 +470,8 @@ function DashboardContent({ notifications = [] }) {
 
               <NavLink
                 className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                to="/employer/subscription">
+                to="/employer/subscription"
+              >
                 <img
                   src={subscriptionIcon}
                   alt="subscription"
@@ -497,7 +518,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8">
+            className="flex flex-col items-center py-6 space-y-8"
+          >
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -512,7 +534,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleLogout}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
+          >
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

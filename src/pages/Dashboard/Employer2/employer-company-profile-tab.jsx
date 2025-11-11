@@ -28,9 +28,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import EmployerProfileMobileView from "@/components/Employer/Profile/employerProfileMobileView";
 import { useUserData } from "@/store/employer/userDataStorage";
+import { useMobile } from "@/hooks/use-mobile";
+import EmployerProfileOverview from "@/components/Employer/Profile/employerProfileOverview";
 
 export default function EmployerCompanyProfileTab() {
   const employer = useUserData((state) => state.userData);
+  const isMobile = useMobile();
 
   const handleSubmit = (e) => {};
 
@@ -41,97 +44,40 @@ export default function EmployerCompanyProfileTab() {
   );
 
   return (
-    <div className="w-full flex flex-col gap-5 ">
-      <h1 className="text-lg text-sky-600 font-medium">Company Profile</h1>
-      <div className="flex flex-col md:gap-10">
-        <EmployerProfilePhotoCard
+    <div className="w-full flex gap-20 ">
+      <div className="w-1/3">
+        <EmployerProfileOverview
           userId={employer?.employer?.employerID}
-          firstName={employer?.firstName}
-          lastName={employer?.lastName}
-          userType={employer?.userType}
-          country={employer?.employer?.country}
+          companyDescription={employer?.employer?.companyDescription}
           profilePicture={employer?.employer?.companyLogo}
           companyName={employer?.employer?.companyName}
+          companyAddress={employer?.employer.companyAddress}
+          country={employer?.employer?.country}
+          state={employer?.employer?.state}
+          companyZipCode={employer?.employer?.companyZipCode}
         />
-        <form className="hidden md:block" onSubmit={handleSubmit}>
-          <Tabs defaultValue="company" className="space-y-8 w-full">
-            <TabsList className="w-full h-14 bg-transparent overflow-x-auto overflow-y-hidden">
-              {/* <TabsTrigger value="profile" className={tabCssStyle}>
-                <User className="h-4 w-4" />
-                Personal
-              </TabsTrigger> */}
-              <TabsTrigger value="company" className={tabCssStyle}>
-                <Building2 className="h-4 w-4" />
-                Company Information
-              </TabsTrigger>
-              <TabsTrigger value="contact" className={tabCssStyle}>
-                <Phone className="h-4 w-4" />
-                Contact Information
-              </TabsTrigger>
-              <TabsTrigger value="Job" className={tabCssStyle}>
-                <Briefcase className="h-4 w-4" />
-                Job Information
-              </TabsTrigger>
-              <TabsTrigger value="documents" className={tabCssStyle}>
-                <FileText className="h-4 w-4" />
-                Legal & Compliance
-              </TabsTrigger>
-            </TabsList>
-
-            {/* <TabsContent value="profile" className="flex flex-col gap-8">
-              <EmployerProfilePersonInfoCard
-                firstName={employer?.firstName}
-                lastName={employer?.lastName}
-                role={employer?.userType}
-                email={employer?.email}
-                phoneNumber={employer?.phoneNumber}
-              />
-            </TabsContent> */}
-
-            <TabsContent value="company">
-              <EmployerCompanyInfoCard
-                companyName={employer?.employer?.companyName}
-                companyDescription={employer?.employer?.companyDescription}
-                country={employer?.employer?.country}
-                state={employer?.employer?.state}
-                companyZipCode={employer?.employer?.companyZipCode}
-                industryType={employer?.employer?.industryType}
-                companySize={employer?.employer?.companySize}
-              />
-            </TabsContent>
-
-            <TabsContent value="contact">
-              <EmployerContactInfoCard
-                companyAddress={employer?.employer.companyAddress}
-                companyPhone={employer?.phoneNumber}
-                companyWebsite={employer?.employer?.companyWebsite}
-              />
-            </TabsContent>
-
-            <TabsContent value="Job">
-              <EmployerProfileJobsTabCard
-                vacancies={employer?.employer?.vacancies}
-                position={employer?.employer?.position}
-                jobBoard={employer?.employer?.jobBoard}
-              />
-            </TabsContent>
-
-            {/*<TabsContent value="documents">
-              <EmployerLegalDocumentCard />
-            </TabsContent> */}
-          </Tabs>
-
-          <div className="mt-8 flex md:justify-end space-x-4">
-            <Button
+      </div>
+      <div className="w-3/5">
+        <EmployerCompanyInfoCard
+          industryType={employer?.employer?.industryType}
+          companySize={employer?.employer?.companySize}
+          vacancies={employer?.employer?.vacancies}
+          position={employer?.employer?.position}
+          jobBoard={employer?.employer?.jobBoard}
+          namesOfDirectors={employer?.employer?.namesOfDirectors}
+          companyPhone={employer?.phoneNumber}
+          companyWebsite={employer?.employer?.companyWebsite}
+          companyEmail={employer?.email}
+        />
+      </div>
+      <div className="mt-8 flex md:justify-end space-x-4">
+        {/* <Button
               className="w-full border-transparent bg-primary hover:bg-secondary md:w-fit"
               type="submit"
             >
               <Save className="w-24 h-24" />
               Save Profile
-            </Button>
-          </div>
-        </form>
-        <EmployerProfileMobileView employer={employer} />
+            </Button> */}
       </div>
     </div>
   );
