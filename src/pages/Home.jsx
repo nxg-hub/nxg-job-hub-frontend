@@ -66,21 +66,21 @@ const Home = () => {
             Get access and connect with Professionals, Employers, Talents,
             Service Providers, Artisans and Agents — all in just a few clicks.
           </p>
-          <div className="land-btns mt-5">
-            <Link to={"/register"} className="join-btn">
-              Join Us
+          <div className="flex max-w-[600px] gap-7 justify-between mt-[25px] py-3">
+            <Link
+              to={"/register"}
+              className="bg-[#2596BE] text-white  px-4 py-4 text-center rounded-md w-[280px] ">
+              Post Jobs
+            </Link>
+            <Link
+              to="/login"
+              className="bg-transparent text-whitepx-4 py-4 text-center rounded-md w-[280px] border border-[#2596BE]">
+              Find Jobs
             </Link>
           </div>
         </div>
       </div>
-      <div className="jobs-btns">
-        <Link to={"/register"} className="post-btn">
-          Post Jobs
-        </Link>
-        <Link to="/login" className="find-btn">
-          Find Jobs
-        </Link>
-      </div>
+
       <Explore />
       <div
         className="jobs-slider"

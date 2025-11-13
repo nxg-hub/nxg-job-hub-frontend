@@ -12,6 +12,7 @@ import Digital from "../../../src/static/icons/Digital.svg";
 import Design from "../../../src/static/icons/web-design.svg";
 import DevOps from "../../../src/static/icons/DevOps.svg";
 import Cloud from "../../../src/static/icons/cloud-computing.svg";
+import { useNavigate } from "react-router-dom";
 
 const TechjobsSlider = () => {
   const Jobsspaces = [
@@ -65,43 +66,21 @@ const TechjobsSlider = () => {
       jobtitle: "Cloud Computing",
       vacancies: "71 Vacancies",
     },
-    {
-      id: "11",
-      icon: Cloud,
-      jobtitle: "Plumber",
-      vacancies: "3 Vacancies",
-    },
-    {
-      id: "12",
-      icon: Cyber,
-      jobtitle: "Welder",
-      vacancies: "8 Vacancies",
-    },
-    {
-      id: "13",
-      icon: Web,
-      jobtitle: "Carpenter",
-      vacancies: "13 Vacancies",
-    },
-    {
-      id: "14",
-      icon: Machine,
-      jobtitle: "Interior Designer",
-      vacancies: "25 Vacancies",
-    },
   ];
-
+  const navigate = useNavigate();
   return (
     <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white">
       <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-10">
         Explore Job Categories
       </h2>
-
       <Swiper
         freeMode
         grabCursor
         modules={[FreeMode, Pagination]}
-        pagination={{ clickable: true }}
+        pagination={{
+          clickable: true,
+          el: ".swiper-pagination-custom",
+        }}
         spaceBetween={40}
         slidesPerView={4}
         breakpoints={{
@@ -110,10 +89,14 @@ const TechjobsSlider = () => {
           1024: { slidesPerView: 3.5, spaceBetween: 40 },
           1280: { slidesPerView: 4.5, spaceBetween: 50 },
         }}
-        className="pb-10">
+        className="pb-12">
         {Jobsspaces.map((job) => (
           <SwiperSlide key={job.id}>
-            <div className="flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
+            <div
+              onClick={() => {
+                navigate("/findjob");
+              }}
+              className="flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
               <div className="w-20 h-20 mb-4 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-full flex items-center justify-center overflow-hidden">
                 <img
                   src={job.icon}
@@ -129,6 +112,9 @@ const TechjobsSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* ✅ Pagination Dots Below */}
+      <div className="swiper-pagination-custom mt-8 flex justify-center"></div>
     </div>
   );
 };

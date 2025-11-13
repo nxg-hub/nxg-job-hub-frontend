@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { Heart } from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
@@ -23,8 +23,13 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const [savedJobs, setSavedJobs] = useState(new Set());
   const myJob = useSelector((state) => state.TalentReducer.myJobs);
   const myJobs = useSelector((state) => state.ServiceProviderJobReducer.myJobs);
+  const savedJobTalent = useSelector((state) => state.TalentReducer.savedJobs);
+  const savedJobService = useSelector(
+    (state) => state.ServiceProviderJobReducer.savedJobs
+  );
 
   useEffect(() => {
     const jobIDs =
@@ -32,7 +37,12 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
         ? new Set(myJob.map((job) => job.jobPosting.jobID))
         : new Set(myJobs.map((job) => job.jobPosting.jobID));
     setAppliedJobs(jobIDs);
-  }, [myJob, myJobs]);
+    const savedJobId =
+      userType === "TECHTALENT"
+        ? new Set(savedJobTalent.map((job) => job.jobPosting.jobID))
+        : new Set(savedJobService.map((job) => job.jobPosting.jobID));
+    setSavedJobs(savedJobId);
+  }, [myJob, myJobs, savedJobTalent, savedJobService]);
   // 🔹 Helper to update specific job's loading state
   const setJobLoading = (jobId, field, value) => {
     setLoadingStates((prev) => ({
@@ -82,6 +92,7 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
   };
 
   const handleSave = async (job) => {
+    if (savedJobs.has(job.jobID)) return;
     try {
       setJobLoading(job.jobID, "saving", true);
 
@@ -193,6 +204,7 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
   const isApplying = loadingStates[service.jobID]?.applying;
   const isSaving = loadingStates[service.jobID]?.saving;
   const isApplied = appliedJobs.has(service.jobID);
+  const isSaved = savedJobs.has(service.jobID);
 
   return (
     <div className="flex justify-between pt-2">
@@ -207,15 +219,19 @@ const JobCardFooter = ({ service, handleViewDetails, tab }) => {
 
         {/* Save/Unsave */}
         <Button
-          variant="secondary"
-          size="sm"
-          className="border-none gap-1 bg-sky-500 text-white hover:bg-sky-600"
+          size="icon"
+          className="border-none bg-transparent hover:bg-sky-100"
           onClick={() =>
-            tab === "all" ? handleSave(service) : handleUnSave(service)
+            !isSaved ? handleSave(service) : handleUnSave(service)
           }
           disabled={isSaving}>
-          <MessageCircle className="h-4 w-4" />
-          {isSaving ? "Processing..." : tab === "all" ? "Save" : "Unsave"}
+          <Heart
+            className={`h-5 w-5 transition-all duration-200 ${
+              isSaved
+                ? "fill-sky-500 text-sky-500" // filled blue when saved
+                : "fill-transparent text-sky-500" // outline only when not saved
+            }`}
+          />
         </Button>
 
         {/* Apply */}

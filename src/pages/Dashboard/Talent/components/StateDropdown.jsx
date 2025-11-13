@@ -42,7 +42,7 @@ const nigerianStates = [
 
 export default function StateDropdown({ selectedState, onSelect }) {
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 w-full">
       <label htmlFor="state" className="text-sm font-medium text-[#0AACDC]">
         Select State
       </label>
