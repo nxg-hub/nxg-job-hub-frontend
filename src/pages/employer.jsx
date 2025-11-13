@@ -212,7 +212,7 @@ function DashboardContent({ notifications = [] }) {
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
   const navigate = useNavigate();
-
+  const [isVisible, setIsVisible] = useState(true);
   const [notificationDropdownOpen, setNotificationDropdownOpen] =
     useState(false);
 
@@ -273,8 +273,7 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5"
-                      >
+                        className="text-white hover:bg-white/10 hover:text-white p-5">
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
@@ -304,35 +303,50 @@ function DashboardContent({ notifications = [] }) {
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem> */}
-          {!isCollapsed && sub?.subscriptionStatus === "INACTIVE" && (
-            <div className="m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
+          {!isCollapsed && isVisible && (
+            <div className="relative m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
+              {/* Close Button */}
+              {sub.subscriptionStatus === "ACTIVE" && (
+                <button
+                  onClick={() => setIsVisible(false)}
+                  className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
+                  aria-label="Close">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+
               <p className="text-sm text-muted-foreground">Current plan:</p>
               <p
-                className={cn(
-                  `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
-                  "text-sm font-semibold"
-                )}
-              >
-                {sub?.planType}{" "}
-                <span className="text-gray-800">
-                  expired on {formatFullDate(sub?.subscriptionDues)}
+                className={`${
+                  sub.subscriptionStatus === "ACTIVE"
+                    ? "text-green-600"
+                    : "text-red-800"
+                } text-sm font-semibold`}>
+                {sub?.planType}
+                <span className="text-gray-800 px-1">
+                  {sub.subscriptionStatus === "ACTIVE"
+                    ? `will expire on ${formatFullDate(sub?.subscriptionDues)}`
+                    : `expired on ${formatFullDate(sub?.subscriptionDues)}`}
                 </span>
               </p>
+
               <p className="mt-1 text-xs text-muted-foreground">
-                Upgrade to any of our latest and exclusive features
+                {sub.subscriptionStatus === "INACTIVE" &&
+                  "Upgrade to any of our latest and exclusive features"}
               </p>
 
-              <NavLink
-                className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                to="/employer/subscription"
-              >
-                <img
-                  src={subscriptionIcon}
-                  alt="subscription"
-                  className="object-contain w-6 h-6"
-                />
-                <span> Upgrade now</span>
-              </NavLink>
+              {sub.subscriptionStatus === "INACTIVE" && (
+                <NavLink
+                  className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
+                  to="/employer/subscription">
+                  <img
+                    src={subscriptionIcon}
+                    alt="subscription"
+                    className="object-contain w-6 h-6"
+                  />
+                  <span> Upgrade now</span>
+                </NavLink>
+              )}
             </div>
           )}
           <SidebarMenuItem>
@@ -340,8 +354,7 @@ function DashboardContent({ notifications = [] }) {
               asChild
               tooltip="Logout"
               className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
-              onClick={() => setShowLogoutNotice(true)}
-            >
+              onClick={() => setShowLogoutNotice(true)}>
               <div>
                 <LogOut className="w-7 h-7" />
                 <span>Logout</span>
@@ -356,8 +369,7 @@ function DashboardContent({ notifications = [] }) {
         className={cn(
           "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
           isCollapsed ? "md:pl-40" : ""
-        )}
-      >
+        )}>
         {/* Header */}
         <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
           {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
@@ -371,26 +383,22 @@ function DashboardContent({ notifications = [] }) {
             <Button
               variant="ghost"
               size="icon"
-              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
-            >
+              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary">
               <img className="w-10" src={CustomerSupport} alt="chat-admin" />
             </Button>
             <DropdownMenu
               open={notificationDropdownOpen}
-              onOpenChange={setNotificationDropdownOpen}
-            >
+              onOpenChange={setNotificationDropdownOpen}>
               <DropdownMenuTrigger className="hidden md:block" asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
-                >
+                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary">
                   <Bell className="h-5 w-5" />
                   {unreadNotifications > 0 && (
                     <Badge
                       variant="destructive"
-                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
-                    >
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
                       {unreadNotifications}
                     </Badge>
                   )}
@@ -413,8 +421,7 @@ function DashboardContent({ notifications = [] }) {
                   <span>Your account is not yet verified</span>
                   <NavLink
                     className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                    to={"/employer/verified-document"}
-                  >
+                    to={"/employer/verified-document"}>
                     complete your profile
                   </NavLink>
                 </div>
@@ -435,8 +442,7 @@ function DashboardContent({ notifications = [] }) {
                       Your account is not yet verified,
                       <NavLink
                         className="underline text-secondary w-fit py-1 px-2 "
-                        to={"/employer/verified-document"}
-                      >
+                        to={"/employer/verified-document"}>
                         complete your profile
                       </NavLink>
                       to continue using all features
@@ -453,8 +459,7 @@ function DashboardContent({ notifications = [] }) {
                 className={cn(
                   `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
                   "text-sm font-semibold"
-                )}
-              >
+                )}>
                 Free trial
               </p>
               {NUMBEROFDAYFORFREESUB < 31 ? (
@@ -470,8 +475,7 @@ function DashboardContent({ notifications = [] }) {
 
               <NavLink
                 className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                to="/employer/subscription"
-              >
+                to="/employer/subscription">
                 <img
                   src={subscriptionIcon}
                   alt="subscription"
@@ -518,8 +522,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8"
-          >
+            className="flex flex-col items-center py-6 space-y-8">
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -534,8 +537,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleLogout}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
-          >
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

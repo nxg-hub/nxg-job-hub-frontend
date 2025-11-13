@@ -9,6 +9,7 @@ import { API_HOST_URL } from "../../utils/api/API_HOST";
 
 const JobCards = () => {
   const [jobs, setJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -42,6 +43,28 @@ const JobCards = () => {
     fetchJobs();
   }, []);
 
+  useEffect(() => {
+    const fetchAllJobs = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(
+          `${API_HOST_URL}/api/job-postings/all?page=0&size=5&sort=string`
+        );
+        const data = await response.json();
+        const acceptedRecentJobs = data.filter((job) => {
+          return job.jobStatus === "ACCEPTED";
+        });
+        setAllJobs(acceptedRecentJobs);
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+        setError("Failed to load jobs. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAllJobs();
+  }, []);
   return (
     <div className="w-full flex flex-col items-center px-4 md:px-10 lg:px-20 py-10">
       {/* Job Section */}
@@ -55,7 +78,57 @@ const JobCards = () => {
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : jobs.length === 0 ? (
-          <p className="text-center text-gray-400">No jobs available.</p>
+          <Swiper
+            freeMode={true}
+            grabCursor={true}
+            modules={[FreeMode, Pagination]}
+            pagination={{ clickable: true }}
+            spaceBetween={40}
+            slidesPerView={3}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              640: { slidesPerView: 1.2 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="py-8">
+            {allJobs?.map((job) => (
+              <SwiperSlide key={job?.jobID || job?.job_title}>
+                <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden p-6 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex items-center text-sky-600 mb-4">
+                      <MdLocationPin className="w-6 h-6 mr-2" />
+                      <p className="text-lg font-semibold capitalize">
+                        {job.job_location}
+                      </p>
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-2 capitalize">
+                      {job.job_title}
+                    </h3>
+
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {job?.job_description
+                        ? job.job_description.slice(0, 180)
+                        : ""}
+                      ...
+                    </p>
+                  </div>
+
+                  <div className="mt-6 flex justify-between items-center">
+                    <span className="text-sky-700 font-semibold text-lg">
+                      {formatCurrency(job.salary) || "Negotiable"}
+                    </span>
+                    <Link
+                      to="/login"
+                      className="text-sky-600 text-sm font-medium hover:underline">
+                      Read More →
+                    </Link>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         ) : (
           <Swiper
             freeMode={true}
@@ -71,7 +144,7 @@ const JobCards = () => {
               1024: { slidesPerView: 3 },
             }}
             className="py-8">
-            {jobs.map((job) => (
+            {jobs?.map((job) => (
               <SwiperSlide key={job?.jobID || job?.job_title}>
                 <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden p-6 flex flex-col justify-between h-full">
                   <div>

@@ -94,6 +94,7 @@ const sidebarItems = [
 
 export function TalentDashboard() {
   const notifications = useFetchNotifications();
+
   const [isLoading, setIsLoading] = useState(true);
   const [pageTitle, setPageTitle] = useState("Dashboard");
   const token =
@@ -282,54 +283,6 @@ function DashboardContent({ notifications = [] }) {
                         to={"profile"}>
                         complete your profile
                       </NavLink>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-
-            {!isVerified && (
-              <>
-                {isProfileComplete ? (
-                  <div className=" md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-                    <div className="flex items-center gap-8">
-                      <img
-                        src={verifiedImageMobile}
-                        alt="Complete profile illustration"
-                        className="object-contain w-10 h-10"
-                      />
-                      <div className="flex gap-3 items-center">
-                        <span>
-                          🎉 Thank you for completing your profile! Your details
-                          are under review. You’ll get a notification once an
-                          admin verifies your account.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-                    <div className="flex items-center gap-8">
-                      <img
-                        src={verifiedImageMobile}
-                        alt="Complete profile illustration"
-                        className="object-contain w-10 h-10"
-                      />
-                      <div className="flex gap-3 items-center">
-                        <span className="bg-secondary p-1 rounded text-white">
-                          Action required:
-                        </span>
-                        <span>
-                          Get started by
-                          <NavLink
-                            className="underline text-secondary w-fit py-1 px-2 "
-                            to={"profile"}>
-                            completing your Profile
-                          </NavLink>
-                          , stand a better chance of getting verified being
-                          hired by completing your profile
-                        </span>
-                      </div>
                     </div>
                   </div>
                 )}

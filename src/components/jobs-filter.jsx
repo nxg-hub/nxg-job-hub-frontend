@@ -1,13 +1,220 @@
+// import { Check, ChevronsUpDown } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Card,
+//   CardContent,
+//   CardDescription,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import {
+//   Command,
+//   CommandEmpty,
+//   CommandGroup,
+//   CommandInput,
+//   CommandItem,
+//   CommandList,
+// } from "@/components/ui/command";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+// import { Separator } from "@/components/ui/separator";
+// import { cn } from "@/lib/utils";
+// import StateDropdown from "@/pages/Dashboard/Talent/components/StateDropdown";
+
+// export function JobsFilter({
+//   activeFilters,
+//   setActiveFilters,
+//   clients,
+//   serviceTypes,
+// }) {
+//   // Toggle priority filter
+//   const togglePriorityFilter = (priority) => {
+//     setActiveFilters((prev) => {
+//       const newPriorities = prev.priority.includes(priority)
+//         ? prev.priority.filter((p) => p !== priority)
+//         : [...prev.priority, priority];
+
+//       return {
+//         ...prev,
+//         priority: newPriorities,
+//       };
+//     });
+//   };
+//   const handleFilterChange = (key, value) => {
+//     setActiveFilters((prev) => ({ ...prev, [key]: value }));
+//   };
+//   // Toggle service type filter
+//   const toggleServiceTypeFilter = (type) => {
+//     setActiveFilters((prev) => {
+//       const newTypes = prev.serviceType.includes(type)
+//         ? prev.serviceType.filter((t) => t !== type)
+//         : [...prev.serviceType, type];
+
+//       return {
+//         ...prev,
+//         serviceType: newTypes,
+//       };
+//     });
+//   };
+
+//   // Toggle client filter
+//   const toggleClientFilter = (client) => {
+//     setActiveFilters((prev) => {
+//       const newClients = prev.client.includes(client)
+//         ? prev.client.filter((c) => c !== client)
+//         : [...prev.client, client];
+
+//       return {
+//         ...prev,
+//         client: newClients,
+//       };
+//     });
+//   };
+
+//   // Clear all filters
+//   const clearFilters = () => {
+//     setActiveFilters({
+//       priority: [],
+//       state: [],
+//       client: [],
+//     });
+//   };
+
+//   // Format service type for display
+//   const formatServiceType = (type) => {
+//     return type.charAt(0).toUpperCase() + type.slice(1);
+//   };
+
+//   return (
+//     <Card>
+//       <CardHeader className="brand-bg-light">
+//         <CardTitle>Filters</CardTitle>
+//         <CardDescription>Narrow down jobs by specific criteria</CardDescription>
+//       </CardHeader>
+//       <CardContent className="space-y-6">
+//         <div className="space-y-4">
+//           <div className="font-medium text-[#0AACDC]">Job types</div>
+//           <div className="space-y-2">
+//             {["contract", "part-time", "full-time"].map((priority) => (
+//               <div key={priority} className="flex items-center space-x-2">
+//                 <Checkbox
+//                   id={`priority-${priority}`}
+//                   checked={activeFilters.priority.includes(priority)}
+//                   onCheckedChange={() => togglePriorityFilter(priority)}
+//                   className="p-0"
+//                 />
+//                 <label
+//                   htmlFor={`priority-${priority}`}
+//                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+//                   {priority.charAt(0).toUpperCase() + priority.slice(1)}
+//                 </label>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+
+//         <Separator />
+
+//         {/* <div className="space-y-4">
+//           <div className="font-medium text-[#0AACDC]">Service Type</div>
+//           <div className="space-y-2">
+//             {serviceTypes.map((type) => (
+//               <div key={type} className="flex items-center space-x-2">
+//                 <Checkbox
+//                   id={`type-${type}`}
+//                   checked={activeFilters.serviceType.includes(type)}
+//                   onCheckedChange={() => toggleServiceTypeFilter(type)}
+//                   className="p-0"
+//                 />
+//                 <label
+//                   htmlFor={`type-${type}`}
+//                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+//                   {formatServiceType(type)}
+//                 </label>
+//               </div>
+//             ))}
+//           </div>
+//         </div> */}
+//         <StateDropdown
+//           selectedState={activeFilters.state}
+//           onSelect={(state) => handleFilterChange("state", state)}
+//         />
+
+//         <Separator />
+
+//         {/* <div className="space-y-4">
+//           <div className="font-medium text-[#0AACDC]">Client</div>
+//           <Popover>
+//             <PopoverTrigger asChild>
+//               <Button
+//                 variant="outline"
+//                 role="combobox"
+//                 className="w-full justify-between border-[#0AACDC]">
+//                 {activeFilters.client.length > 0
+//                   ? `${activeFilters.client.length} selected`
+//                   : "Select clients"}
+//                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+//               </Button>
+//             </PopoverTrigger>
+//             <PopoverContent className="w-[200px] p-0">
+//               <Command>
+//                 <CommandInput placeholder="Search client..." />
+//                 <CommandList>
+//                   <CommandEmpty>No clients found.</CommandEmpty>
+//                   <CommandGroup>
+//                     {clients.map((client) => (
+//                       <CommandItem
+//                         key={client}
+//                         value={client}
+//                         onSelect={() => toggleClientFilter(client)}>
+//                         <Check
+//                           className={cn(
+//                             "mr-2 h-4 w-4",
+//                             activeFilters.client.includes(client)
+//                               ? "opacity-100"
+//                               : "opacity-0"
+//                           )}
+//                         />
+//                         {client}
+//                       </CommandItem>
+//                     ))}
+//                   </CommandGroup>
+//                 </CommandList>
+//               </Command>
+//             </PopoverContent>
+//           </Popover>
+//         </div> */}
+
+//         {(activeFilters.priority.length > 0 ||
+//           activeFilters.state.length > 0 ||
+//           activeFilters.client.length > 0) && (
+//           <>
+//             <Separator />
+//             <Button
+//               variant="outline"
+//               className="w-full border-[#0AACDC] text-[#0AACDC]"
+//               onClick={clearFilters}>
+//               Clear All Filters
+//             </Button>
+//           </>
+//         )}
+//       </CardContent>
+//     </Card>
+//   );
+// }
+
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -16,66 +223,25 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import StateDropdown from "@/pages/Dashboard/Talent/components/StateDropdown";
 
-export function JobsFilter({
-  activeFilters,
-  setActiveFilters,
-  clients,
-  serviceTypes,
-}) {
-  // Toggle priority filter
+export function JobsFilter({ activeFilters, setActiveFilters }) {
   const togglePriorityFilter = (priority) => {
     setActiveFilters((prev) => {
       const newPriorities = prev.priority.includes(priority)
         ? prev.priority.filter((p) => p !== priority)
         : [...prev.priority, priority];
 
-      return {
-        ...prev,
-        priority: newPriorities,
-      };
+      return { ...prev, priority: newPriorities };
     });
   };
+
   const handleFilterChange = (key, value) => {
     setActiveFilters((prev) => ({ ...prev, [key]: value }));
   };
-  // Toggle service type filter
-  const toggleServiceTypeFilter = (type) => {
-    setActiveFilters((prev) => {
-      const newTypes = prev.serviceType.includes(type)
-        ? prev.serviceType.filter((t) => t !== type)
-        : [...prev.serviceType, type];
 
-      return {
-        ...prev,
-        serviceType: newTypes,
-      };
-    });
-  };
-
-  // Toggle client filter
-  const toggleClientFilter = (client) => {
-    setActiveFilters((prev) => {
-      const newClients = prev.client.includes(client)
-        ? prev.client.filter((c) => c !== client)
-        : [...prev.client, client];
-
-      return {
-        ...prev,
-        client: newClients,
-      };
-    });
-  };
-
-  // Clear all filters
   const clearFilters = () => {
     setActiveFilters({
       priority: [],
@@ -84,125 +250,102 @@ export function JobsFilter({
     });
   };
 
-  // Format service type for display
-  const formatServiceType = (type) => {
-    return type.charAt(0).toUpperCase() + type.slice(1);
+  const toggleClientFilter = (client) => {
+    setActiveFilters((prev) => {
+      const newClients = prev.client.includes(client)
+        ? prev.client.filter((c) => c !== client)
+        : [...prev.client, client];
+
+      return { ...prev, client: newClients };
+    });
   };
 
   return (
-    <Card>
-      <CardHeader className="brand-bg-light">
-        <CardTitle>Filters</CardTitle>
-        <CardDescription>Narrow down jobs by specific criteria</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
-          <div className="font-medium text-[#0AACDC]">Job types</div>
-          <div className="space-y-2">
-            {["contract", "part-time", "full-time"].map((priority) => (
-              <div key={priority} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`priority-${priority}`}
-                  checked={activeFilters.priority.includes(priority)}
-                  onCheckedChange={() => togglePriorityFilter(priority)}
-                  className="p-0"
-                />
-                <label
-                  htmlFor={`priority-${priority}`}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  {priority.charAt(0).toUpperCase() + priority.slice(1)}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="w-full sticky top-0 z-30  bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-wrap items-center justify-between gap-4">
+      {/* Job types */}
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="font-medium text-[#0AACDC]">Job Type:</span>
+        {["contract", "part-time", "full-time"].map((priority) => (
+          <label
+            key={priority}
+            className="flex items-center space-x-1 text-sm font-medium text-gray-600 cursor-pointer">
+            <Checkbox
+              className="relative top-[4px]"
+              checked={activeFilters.priority.includes(priority)}
+              onCheckedChange={() => togglePriorityFilter(priority)}
+            />
+            <span className="">
+              {priority.charAt(0).toUpperCase() + priority.slice(1)}
+            </span>
+          </label>
+        ))}
+      </div>
 
-        <Separator />
+      <Separator orientation="vertical" className="h-6 hidden md:block" />
 
-        {/* <div className="space-y-4">
-          <div className="font-medium text-[#0AACDC]">Service Type</div>
-          <div className="space-y-2">
-            {serviceTypes.map((type) => (
-              <div key={type} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`type-${type}`}
-                  checked={activeFilters.serviceType.includes(type)}
-                  onCheckedChange={() => toggleServiceTypeFilter(type)}
-                  className="p-0"
-                />
-                <label
-                  htmlFor={`type-${type}`}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  {formatServiceType(type)}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div> */}
+      {/* State Filter */}
+      <div className="flex items-center gap-2 w-[400px]">
+        {/* <span className="font-medium text-[#0AACDC]">State:</span> */}
         <StateDropdown
           selectedState={activeFilters.state}
           onSelect={(state) => handleFilterChange("state", state)}
         />
+      </div>
 
-        <Separator />
+      <Separator orientation="vertical" className="h-6 hidden md:block" />
 
-        {/* <div className="space-y-4">
-          <div className="font-medium text-[#0AACDC]">Client</div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                className="w-full justify-between border-[#0AACDC]">
-                {activeFilters.client.length > 0
-                  ? `${activeFilters.client.length} selected`
-                  : "Select clients"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder="Search client..." />
-                <CommandList>
-                  <CommandEmpty>No clients found.</CommandEmpty>
-                  <CommandGroup>
-                    {clients.map((client) => (
-                      <CommandItem
-                        key={client}
-                        value={client}
-                        onSelect={() => toggleClientFilter(client)}>
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            activeFilters.client.includes(client)
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {client}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div> */}
+      {/* Client Filter (Optional - can be shown on larger screens)
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="flex items-center border-[#0AACDC] text-[#0AACDC] hover:bg-[#0AACDC]/10">
+            {activeFilters.client.length > 0
+              ? `${activeFilters.client.length} Client(s)`
+              : "Select Clients"}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search client..." />
+            <CommandList>
+              <CommandEmpty>No clients found.</CommandEmpty>
+              <CommandGroup>
+                {clients.map((client) => (
+                  <CommandItem
+                    key={client}
+                    value={client}
+                    onSelect={() => toggleClientFilter(client)}>
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        activeFilters.client.includes(client)
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    {client}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover> */}
 
-        {(activeFilters.priority.length > 0 ||
-          activeFilters.state.length > 0 ||
-          activeFilters.client.length > 0) && (
-          <>
-            <Separator />
-            <Button
-              variant="outline"
-              className="w-full border-[#0AACDC] text-[#0AACDC]"
-              onClick={clearFilters}>
-              Clear All Filters
-            </Button>
-          </>
-        )}
-      </CardContent>
-    </Card>
+      {/* Clear Button */}
+      {(activeFilters.priority.length > 0 ||
+        activeFilters.state.length > 0 ||
+        activeFilters.client.length > 0) && (
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-[#0AACDC] text-[#0AACDC] hover:bg-[#0AACDC]/10"
+          onClick={clearFilters}>
+          Clear
+        </Button>
+      )}
+    </div>
   );
 }

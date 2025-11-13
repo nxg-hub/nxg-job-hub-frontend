@@ -8,17 +8,8 @@ const Explore = () => {
   return (
     <>
       <div style={{ textAlign: "center", margin: "3rem 0" }}>
-        <div style={{ margin: "2rem 0" }}>
-          {/* <h2 style={{ color: "#2596be", fontSize: "34px", fontWeight: "700" }}>
-            Explore Tech Jobs
-          </h2> */}
-        </div>
-        <div className="land-search">
-          {/* <h3>Popular Categories</h3> */}
-          {/* <div className="search">
-              <LandSearchBar placeholder="Search" jobData={jobsDetails} />
-            </div> */}
-        </div>
+        <div style={{ margin: "2rem 0" }}></div>
+        <div className="land-search"></div>
         <div className="slider">
           <TechjobsSlider />
         </div>

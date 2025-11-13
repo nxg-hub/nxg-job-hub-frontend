@@ -17,18 +17,6 @@ import {
 } from "@/redux/TalentJobSlice";
 import AppliedJobs from "../ServiceProvider/AppliedJobs";
 
-// Service types for an artisan
-const serviceTypes = [
-  //   "carpentry",
-  //   "plumbing",
-  //   "electrical",
-  //   "painting",
-  //   "roofing",
-  //   "masonry",
-  //   "flooring",
-  //   "landscaping",
-];
-
 export function TalentJobTracker() {
   const dispatch = useDispatch();
   const allJobs = useSelector((state) => state.TalentReducer.allJobs);
@@ -40,7 +28,6 @@ export function TalentJobTracker() {
   const myJob = useSelector((state) => state.TalentReducer.myJobs);
   // const myLoading = useSelector((state) => state.TalentReducer.myLoading);
   // const myError = useSelector((state) => state.TalentReducer.myError);
-  const [services, setServices] = useState(allJobs);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({
     priority: [],
@@ -115,61 +102,6 @@ export function TalentJobTracker() {
     //  && matchesPriority && matchesServiceType && matchesClient
   });
 
-  // Update service status
-  const updateServiceStatus = (serviceId, newStatus) => {
-    setServices(
-      services.map((service) =>
-        service.id === serviceId
-          ? {
-              ...service,
-              status: newStatus,
-              ...(newStatus === "completed"
-                ? { completedAt: new Date().toISOString().split("T")[0] }
-                : {}),
-            }
-          : service
-      )
-    );
-  };
-
-  // Add a function to update service rating
-  const updateServiceRating = (serviceId, rating) => {
-    setServices(
-      services.map((service) =>
-        service.id === serviceId
-          ? {
-              ...service,
-              rating,
-            }
-          : service
-      )
-    );
-  };
-
-  // Add this function to open the rating dialog
-  const openRatingDialog = (service) => {
-    setSelectedService(service);
-    setRatingDialogOpen(true);
-  };
-
-  // Function to decline a service
-  const declineService = (serviceId) => {
-    setSelectedServiceId(serviceId);
-    setDeclineDialogOpen(true);
-  };
-
-  // Function to handle messaging a client
-  const handleMessageClient = (serviceId) => {
-    const service = services.find((s) => s.id === serviceId);
-    if (service) {
-      setCurrentChatService(service);
-      setChatDialogOpen(true);
-    }
-  };
-
-  // Get unique clients for filter
-  const uniqueClients = [...new Set(services.map((service) => service.client))];
-
   if (loading) {
     return <JobCardSkeleton />;
   }
@@ -182,29 +114,24 @@ export function TalentJobTracker() {
 
   return (
     <div className="mx-auto px-6 py-6 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
-        <div className="md:hidden">
-          <JobsFilter
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-            clients={uniqueClients}
-            serviceTypes={serviceTypes}
+      <div className="flex flex-col gap-4 sticky top-0 z-30 bg-white">
+        <JobsFilter
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
+        />
+        <div className="relative flex-1">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search Jobs..."
+            className="pl-8"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-1  w-full gap-6">
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search Jobs..."
-                className="pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="grid grid-cols-3 w-full bg-[#E6F7FC]">
               <TabsTrigger value="all" className="hover:bg-sky-600 border-none">
@@ -221,62 +148,48 @@ export function TalentJobTracker() {
                 Applied ({myJob.length})
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="all" className="space-y-4 mt-6">
-              {filteredServices.length > 0 ? (
-                filteredServices
-                  .reverse()
-                  .map((service) => (
-                    <JobsCard
-                      key={service.id}
-                      service={service}
-                      onStatusChange={updateServiceStatus}
-                      onRatingChange={updateServiceRating}
-                      onOpenRatingDialog={openRatingDialog}
-                      onDeclineService={declineService}
-                      onMessageClient={handleMessageClient}
-                      tab={"all"}
-                    />
-                  ))
-              ) : (
-                <div className="text-center py-10 text-muted-foreground">
-                  No services found matching your criteria
-                </div>
-              )}
+            <TabsContent value="all" className="">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-2">
+                {filteredServices.length > 0 ? (
+                  filteredServices
+                    .reverse()
+                    .map((service) => (
+                      <JobsCard
+                        key={service.id}
+                        service={service}
+                        tab={"all"}
+                      />
+                    ))
+                ) : (
+                  <div className="text-center py-10 text-muted-foreground">
+                    No services found matching your criteria
+                  </div>
+                )}
+              </div>
             </TabsContent>
-            <TabsContent value="saved" className="space-y-4 mt-6">
-              {filteredSaved.length > 0 ? (
-                filteredSaved
-                  .reverse()
-                  .map((service) => (
-                    <JobsCard
-                      key={service.id}
-                      service={service.jobPosting}
-                      onStatusChange={updateServiceStatus}
-                      onRatingChange={updateServiceRating}
-                      onOpenRatingDialog={openRatingDialog}
-                      onDeclineService={declineService}
-                      onMessageClient={handleMessageClient}
-                      tab={"saved"}
-                    />
-                  ))
-              ) : (
-                <div className="text-center py-10 text-muted-foreground">
-                  No saved job found
-                </div>
-              )}
+            <TabsContent value="saved" className=" ">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-2">
+                {filteredSaved.length > 0 ? (
+                  filteredSaved
+                    .reverse()
+                    .map((service) => (
+                      <JobsCard
+                        key={service.id}
+                        service={service.jobPosting}
+                        tab={"saved"}
+                      />
+                    ))
+                ) : (
+                  <div className="text-center py-10 text-muted-foreground">
+                    No saved job found
+                  </div>
+                )}
+              </div>
             </TabsContent>
-            <TabsContent value="applied" className="space-y-4 mt-6">
+            <TabsContent value="applied">
               <AppliedJobs applications={myJob} />
             </TabsContent>
           </Tabs>
-        </div>
-        <div className="hidden md:block md:fixed md:right-1">
-          <JobsFilter
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-            clients={uniqueClients}
-            serviceTypes={serviceTypes}
-          />
         </div>
       </div>
     </div>

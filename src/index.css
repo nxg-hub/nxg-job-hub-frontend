@@ -21,8 +21,6 @@
   height: 100%;
   object-fit: contain;
 }
-.swiperr {
-}
 
 .swiperr .swiper-pagination {
   padding: 0 !important;
@@ -45,6 +43,30 @@
   background-color: #2596be !important;
   opacity: 1 !important;
 }
+
+/* Make Swiper pagination visible and nicely styled */
+.swiper-pagination-custom {
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #38bdf8; /* sky-400 */
+  opacity: 0.3;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #0284c7; /* sky-600 */
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+}
+
 /* Hide scrollbar by default */
 .sidebar::-webkit-scrollbar {
   width: 8px;

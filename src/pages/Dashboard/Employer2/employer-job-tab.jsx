@@ -431,10 +431,7 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 No applicants yet
               </p>
             ) : (
-              <ApplicantsList
-                applicants={applicants}
-                handleViewApplicants={handleViewApplicants}
-              />
+              <ApplicantsList applicants={applicants} />
             )}
           </div>
         </DialogContent>
@@ -669,10 +666,7 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 No applicants yet
               </p>
             ) : (
-              <ApplicantsList
-                applicants={applicants}
-                handleViewApplicants={handleViewApplicants}
-              />
+              <ApplicantsList applicants={applicants} />
             )}
           </div>
         </DialogContent>

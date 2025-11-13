@@ -317,15 +317,13 @@ export function JobTracker() {
 
   return (
     <div className="mx-auto px-6 py-6 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
-        <div className=" md:hidden">
-          <JobsFilter
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-            clients={uniqueClients}
-            serviceTypes={serviceTypes}
-          />
-        </div>
+      <JobsFilter
+        activeFilters={activeFilters}
+        setActiveFilters={setActiveFilters}
+        clients={uniqueClients}
+        serviceTypes={serviceTypes}
+      />
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
@@ -356,29 +354,24 @@ export function JobTracker() {
                 Applied ({myJobs.length})
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="all" className="space-y-4 mt-6">
+            <TabsContent
+              value="all"
+              className="space-y-4 mt-6 grid gap-6 sm:grid-cols-2  w-full">
               {filteredServices.length > 0 ? (
                 filteredServices
                   .reverse()
                   .map((service) => (
-                    <JobsCard
-                      key={service.id}
-                      service={service}
-                      onStatusChange={updateServiceStatus}
-                      onRatingChange={updateServiceRating}
-                      onOpenRatingDialog={openRatingDialog}
-                      onDeclineService={declineService}
-                      onMessageClient={handleMessageClient}
-                      tab={"all"}
-                    />
+                    <JobsCard key={service.id} service={service} tab={"all"} />
                   ))
               ) : (
                 <div className="text-center py-10 text-muted-foreground">
-                  No services found matching your criteria
+                  No Jobs found matching your criteria
                 </div>
               )}
             </TabsContent>
-            <TabsContent value="saved" className="space-y-4 mt-6">
+            <TabsContent
+              value="saved"
+              className="space-y-4 mt-6 grid gap-6 sm:grid-cols-2  w-full">
               {filteredSaved.length > 0 ? (
                 filteredSaved
                   .reverse()
@@ -386,11 +379,6 @@ export function JobTracker() {
                     <JobsCard
                       key={service.id}
                       service={service.jobPosting}
-                      onStatusChange={updateServiceStatus}
-                      onRatingChange={updateServiceRating}
-                      onOpenRatingDialog={openRatingDialog}
-                      onDeclineService={declineService}
-                      onMessageClient={handleMessageClient}
                       tab={"saved"}
                     />
                   ))
@@ -403,34 +391,7 @@ export function JobTracker() {
             <TabsContent value="applied" className="space-y-4 mt-6">
               <AppliedJobs applications={myJobs} />
             </TabsContent>
-            <TabsContent value="completed" className="space-y-4 mt-6">
-              {completedServices.length > 0 ? (
-                completedServices.map((service) => (
-                  <JobsCard
-                    key={service.id}
-                    service={service}
-                    onStatusChange={updateServiceStatus}
-                    onRatingChange={updateServiceRating}
-                    onOpenRatingDialog={openRatingDialog}
-                    onDeclineService={declineService}
-                    onMessageClient={handleMessageClient}
-                  />
-                ))
-              ) : (
-                <div className="text-center py-10 text-muted-foreground">
-                  No completed services found
-                </div>
-              )}
-            </TabsContent>
           </Tabs>
-        </div>
-        <div className="hidden md:block md:fixed md:right-1">
-          <JobsFilter
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-            clients={uniqueClients}
-            serviceTypes={serviceTypes}
-          />
         </div>
       </div>
 

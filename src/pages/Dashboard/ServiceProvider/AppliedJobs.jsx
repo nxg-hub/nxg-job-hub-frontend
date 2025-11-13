@@ -11,6 +11,7 @@ const statusColors = {
 };
 
 export default function AppliedJobs({ applications }) {
+  console.log(applications);
   if (!applications || applications.length === 0) {
     return (
       <div className="text-center py-10 text-sm text-muted-foreground">
@@ -20,8 +21,8 @@ export default function AppliedJobs({ applications }) {
   }
 
   return (
-    <div className="space-y-4">
-      {applications.map((app) => {
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-2">
+      {applications?.map((app) => {
         const job = app.jobPosting;
         const employer = job.employer;
 
@@ -49,7 +50,7 @@ export default function AppliedJobs({ applications }) {
                     {job.job_title}
                   </h3>
                   <p className="text-sm text-gray-600">
-                    {employer.companyName}
+                    {employer?.companyName}
                   </p>
 
                   <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">

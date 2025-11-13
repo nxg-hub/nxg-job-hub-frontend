@@ -15,13 +15,13 @@ import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEmployerData } from "@/store/employer/employerStore";
+import { useUserData } from "@/store/employer/userDataStorage";
 const ProfileModal = ({
   selectedApplicant,
   viewProfileOpen,
   setViewProfileOpen,
 }) => {
-  const employer = useEmployerData((state) => state.employerData);
+  const employer = useUserData((state) => state.userData);
   const queryClient = useQueryClient();
   const [act, setAct] = useState("");
   const [actionLoading, setActionLoading] = useState(null);
@@ -45,7 +45,6 @@ const ProfileModal = ({
         }
       );
 
-      if (response.status !== 200) throw new Error("Failed to update status");
       queryClient.invalidateQueries(["allApplicants", employer.id]);
       toast({
         title: `${action} Successful 🎉`,
