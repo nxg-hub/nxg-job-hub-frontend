@@ -2,8 +2,7 @@
 
 <!-- Adele Wisdom working on The Create account as Employer feature -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-Uses:
+This project uses:
 "react": "^18.2.0",
 "sass": "^1.67.0",
 "react-router-dom": "^6.16.0",
