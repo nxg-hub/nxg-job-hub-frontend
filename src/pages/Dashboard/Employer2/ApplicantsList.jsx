@@ -22,9 +22,12 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "@/hooks/use-toast";
-import { Toaster } from "@/components/ui/toaster";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUserData } from "@/store/employer/userDataStorage";
 
-export default function ApplicantsList({ applicants, handleViewApplicants }) {
+export default function ApplicantsList({ applicants }) {
+  const employer = useUserData((state) => state.userData);
+  const queryClient = useQueryClient();
   const [expanded, setExpanded] = useState(null);
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("ALL");
@@ -72,15 +75,13 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
         }
       );
 
-      if (response.status !== 200) throw new Error("Failed to update status");
-
       toast({
         title: `${action} Successful 🎉`,
         description: `Applicant ${
           action === "accept" ? "accepted" : "rejected"
         } successfully!`,
       });
-      handleViewApplicants();
+      queryClient.invalidateQueries(["allApplicants", employer.id]);
     } catch (err) {
       console.error(err);
       toast({
@@ -365,7 +366,6 @@ export default function ApplicantsList({ applicants, handleViewApplicants }) {
           })
         )}
       </div>
-      <Toaster />
     </div>
   );
 }

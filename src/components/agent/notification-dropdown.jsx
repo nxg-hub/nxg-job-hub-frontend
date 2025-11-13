@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserPlus, Briefcase, CheckCircle2, Bell } from "lucide-react";
 
-export default function NotificationDropdown({ notifications = [] }) {
+export default function NotificationDropdown({ notifications }) {
   const [notificationState, setNotificationState] = useState(notifications);
 
   const [showOptions, setShowOptions] = useState(false); // State for options menu
