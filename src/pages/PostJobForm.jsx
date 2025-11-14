@@ -11,6 +11,7 @@ import PostJobModal from "../components/Modal/PostJobModal";
 import axios from "axios";
 import { API_HOST_URL } from "../utils/api/API_HOST";
 import { nigerianStates } from "@/lib/utils";
+import Footer from "@/components/footer/Footer";
 
 const ProgressIndicator = ({ currentStep }) => {
   return (
@@ -20,7 +21,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 1
-              ? "bg-blue-600 text-white"
+              ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}>
           <span
@@ -32,7 +33,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 1 ? "text-blue-600" : "text-gray-500"
+            currentStep >= 1 ? "text-[#1e3a8a]" : "text-gray-500"
           }`}>
           Step 1
         </div>
@@ -41,7 +42,7 @@ const ProgressIndicator = ({ currentStep }) => {
       {/* Connector between steps */}
       <div
         className={`w-20 h-1 sm:w-[30%] sm:h-1 sm:absolute sm:left-[18%] sm:right-1/4 sm:top-[43%] sm:transform sm:-translate-y-1/2 ${
-          currentStep >= 2 ? "bg-blue-600" : "bg-gray-300"
+          currentStep >= 2 ? "bg-[#1e3a8a]" : "bg-gray-300"
         }`}
       />
 
@@ -50,7 +51,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 2
-              ? "bg-blue-600 text-white"
+              ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}>
           <span
@@ -62,7 +63,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 2 ? "text-blue-600" : "text-gray-500"
+            currentStep >= 2 ? "text-[#1e3a8a]" : "text-gray-500"
           }`}>
           Step 2
         </div>
@@ -71,7 +72,7 @@ const ProgressIndicator = ({ currentStep }) => {
       {/* Connector between steps */}
       <div
         className={`w-20 h-1 sm:w-[30%] sm:h-1 sm:absolute sm:left-[52%] sm:right-1/4 sm:top-[43%] sm:transform sm:-translate-y-1/2 ${
-          currentStep >= 3 ? "bg-blue-600" : "bg-gray-300"
+          currentStep >= 3 ? "bg-[#1e3a8a]" : "bg-gray-300"
         }`}
       />
 
@@ -80,7 +81,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 3
-              ? "bg-blue-600 text-white"
+              ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}>
           <span
@@ -92,7 +93,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 3 ? "text-blue-600" : "text-gray-500"
+            currentStep >= 3 ? "text-[#1e3a8a]" : "text-gray-500"
           }`}>
           Step 3
         </div>
@@ -285,7 +286,7 @@ const PostJobForm = () => {
   const validationSchemas = [StepOneSchema, StepTwoSchema, StepThreeSchema];
   return (
     <div>
-      <div className="bg-black">
+      <div className="bg-[#215E7D]">
         <Header />
       </div>
       <div className=" py-4 mb-4 w-[90%] md:w-[70%] m-auto mt-5 rounded-lg">
@@ -301,449 +302,472 @@ const PostJobForm = () => {
             {({ setFieldValue, isSubmitting, values }) => (
               <Form className="w-full">
                 {step === 1 && (
-                  <div className="border-2 border-black mt-3 rounded-2xl w-[90%] m-auto py-5 ">
-                    <h2 className="font-bold md:text-3xl text-center mt-5">
+                  <div className="w-[90%] md:w-[75%] mx-auto mt-6 rounded-2xl bg-white shadow-lg p-8">
+                    <h2 className="font-bold text-2xl md:text-3xl text-center mb-8">
                       Job Details
                     </h2>
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4 ">
-                      <label className="font-normal" htmlFor="jobTitle">
-                        Job Title:
-                      </label>
-                      <Field
-                        className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                        type="text"
-                        name="jobTitle"
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="jobTitle"
-                        component="div"
-                      />
-                    </div>
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                      <label className="font-normal" htmlFor="jobDescription">
-                        Job Description:
-                      </label>
-                      <Field
-                        as="textarea"
-                        className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                        type="text"
-                        name="jobDescription"
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="jobDescription"
-                        component="div"
-                      />
-                    </div>
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                      <label className="font-normal" htmlFor="jobRequirement">
-                        Job Requirement:
-                      </label>
-                      <Field
-                        as="textarea"
-                        className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                        type="text"
-                        name="jobRequirement"
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="jobRequirement"
-                        component="div"
-                      />
-                    </div>
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4   ">
-                      <label className="font-normal" htmlFor="jobLocation">
-                        Job Location:
-                      </label>
 
-                      {/* <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
+                    <div className="space-y-6">
+                      {/* Job Title */}
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="jobTitle" className="font-medium">
+                          Job Title
+                        </label>
+                        <Field
                           type="text"
+                          name="jobTitle"
+                          className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        />
+                        <ErrorMessage
+                          name="jobTitle"
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Job Description */}
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="jobDescription" className="font-medium">
+                          Job Description
+                        </label>
+                        <Field
+                          as="textarea"
+                          name="jobDescription"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        />
+                        <ErrorMessage
+                          name="jobDescription"
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Job Requirement */}
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="jobRequirement" className="font-medium">
+                          Job Requirement
+                        </label>
+                        <Field
+                          as="textarea"
+                          name="jobRequirement"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        />
+                        <ErrorMessage
+                          name="jobRequirement"
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Job Location */}
+                      <div className="flex flex-col gap-1">
+                        <label className="font-medium">Job Location</label>
+                        <select
                           name="jobLocation"
-                        /> */}
-
-                      <select
-                        className=" py-4 px-2 rounded-lg w-full "
-                        name="jobLocation"
-                        onChange={(e) =>
-                          handleChange(e, setFieldValue, "jobLocation", values)
-                        }
-                        value={values.jobLocation}>
-                        {nigerianStates.map(({ id, value }) => (
-                          <option key={id} className="block mt-2">
-                            {value}
-                          </option>
-                        ))}
-                      </select>
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="jobLocation"
-                        component="div"
-                      />
-                    </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
-                        <label className="font-normal" htmlFor="jobType">
-                          Job Type:
-                        </label>
-
-                        <select
-                          className="py-4 px-2 rounded-lg"
-                          required
-                          id="jobType"
-                          name="jobType"
-                          value={values.jobType}
-                          onChange={(e) =>
-                            handleChange(e, setFieldValue, "jobType", values)
-                          }>
-                          {employerJobType.map(({ id, title }) => (
-                            <option key={id} className="block mt-2">
-                              {title}
-                            </option>
-                          ))}
-                        </select>
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="jobType"
-                          component="div"
-                        />
-                      </div>
-                      <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
-                        <label className="font-normal" htmlFor="jobMode">
-                          Job Mode:
-                        </label>
-
-                        <select
-                          className=" py-4 px-2 rounded-lg"
-                          name="jobMode"
-                          value={values.jobMode}
-                          onChange={(e) =>
-                            handleChange(e, setFieldValue, "jobMode", values)
-                          }>
-                          {jobLocations.map(({ id, title }) => (
-                            <option key={id} className="block mt-2">
-                              {title}
-                            </option>
-                          ))}
-                        </select>
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="jobMode"
-                          component="div"
-                        />
-                      </div>
-                    </div>
-                    <div className="md:flex w-[90%] justify-between md:w-[70%] gap-2 m-auto">
-                      {/* <div className="block w-[90%] md:w-[50%] m-auto mt-4   ">
-                        <label
-                          className="font-normal"
-                          htmlFor="jobClassification">
-                          Job Classification:
-                        </label>
-
-                        <select
-                          className=" py-4 px-2 rounded-lg w-full"
-                          name="jobClassification"
-                          value={values.jobClassification}
+                          value={values.jobLocation}
                           onChange={(e) =>
                             handleChange(
                               e,
                               setFieldValue,
-                              "jobClassification",
+                              "jobLocation",
                               values
                             )
-                          }>
-                          <option value="">Select Job Classification</option>
-                          <option value="SERVICE">
-                            Service, customer or operational support roles
-                          </option>
-                          <option value="PROFESSIONAL">
-                            Professional, skilled or expert-level or formal
-                            education roles
-                          </option>
+                          }
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                          {nigerianStates.map(({ id, value }) => (
+                            <option key={id}>{value}</option>
+                          ))}
                         </select>
                         <ErrorMessage
-                          className="text-red-500"
-                          name="jobClassification"
+                          name="jobLocation"
                           component="div"
-                        />
-                      </div> */}
-
-                      <div className="block w-[90%] md:w-[50%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="salary">
-                          Salary:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="number"
-                          name="salary"
-                        />
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="salary"
-                          component="div"
-                        />
-                      </div>
-                    </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="tags">
-                          Tags:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="text"
-                          name="tags"
-                          placeholder="tags:frontend, product manager..."
-                        />
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="tags"
-                          component="div"
+                          className="text-red-500 text-sm"
                         />
                       </div>
 
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="deadline">
-                          Application Deadline:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="date"
-                          name="deadline"
-                        />
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="deadline"
-                          component="div"
-                        />
+                      {/* Job Type + Job Mode */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">Job Type</label>
+                          <select
+                            name="jobType"
+                            value={values.jobType}
+                            onChange={(e) =>
+                              handleChange(e, setFieldValue, "jobType", values)
+                            }
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            {employerJobType.map(({ id, title }) => (
+                              <option key={id}>{title}</option>
+                            ))}
+                          </select>
+                          <ErrorMessage
+                            name="jobType"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">Job Mode</label>
+                          <select
+                            name="jobMode"
+                            value={values.jobMode}
+                            onChange={(e) =>
+                              handleChange(e, setFieldValue, "jobMode", values)
+                            }
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            {jobLocations.map(({ id, title }) => (
+                              <option key={id}>{title}</option>
+                            ))}
+                          </select>
+                          <ErrorMessage
+                            name="jobMode"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Classification + Salary */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">
+                            Job Classification
+                          </label>
+                          <select
+                            name="jobClassification"
+                            value={values.jobClassification}
+                            onChange={(e) =>
+                              handleChange(
+                                e,
+                                setFieldValue,
+                                "jobClassification",
+                                values
+                              )
+                            }
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Select Job Classification</option>
+                            <option value="SERVICE">
+                              Service / Operational roles
+                            </option>
+                            <option value="PROFESSIONAL">
+                              Professional / Skilled roles
+                            </option>
+                          </select>
+                          <ErrorMessage
+                            name="jobClassification"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">Salary</label>
+                          <Field
+                            type="number"
+                            name="salary"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            name="salary"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Tags + Deadline */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">Tags</label>
+                          <Field
+                            name="tags"
+                            placeholder="react, design, plumber..."
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            name="tags"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium">
+                            Application Deadline
+                          </label>
+                          <Field
+                            type="date"
+                            name="deadline"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            name="deadline"
+                            component="div"
+                            className="text-red-500 text-sm"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {step === 2 && (
-                  <div className="border-2 border-black mt-8 rounded-2xl w-[90%] m-auto pb-5">
-                    <h2 className="font-bold md:text-3xl text-center mt-5">
+                  <div className="w-[90%] md:w-[75%] mx-auto mt-6 rounded-2xl bg-white shadow-lg p-8">
+                    <h2 className="font-bold text-2xl md:text-3xl text-center mb-8">
                       Company Details
                     </h2>
-                    <div className="w-[90%] md:w-[70%] m-auto mt-4">
-                      <label className="font-normal block" htmlFor="logo">
-                        Upload Company Logo:
-                      </label>
-                      <input
-                        id="companyLogo"
-                        name="companyLogo"
-                        type="file"
-                        onChange={(event) => {
-                          const file = event.currentTarget.files[0];
-                          setFieldValue("companyLogo", file);
-                        }}
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="companyLogo"
-                        component="div"
-                      />
-                    </div>
 
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                      <label className="font-normal" htmlFor="companyBio">
-                        Company Bio:
-                      </label>
-                      <Field
-                        as="textarea"
-                        className="h-[200px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                        type="text"
-                        name="companyBio"
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="companyBio"
-                        component="div"
-                      />
-                    </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="companyName">
-                          Company Name:
+                    <div className="space-y-6">
+                      {/* Upload Company Logo */}
+                      <div className="flex flex-col gap-1">
+                        <label className="font-medium" htmlFor="companyLogo">
+                          Upload Company Logo
                         </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="text"
-                          name="companyName"
+                        <input
+                          id="companyLogo"
+                          name="companyLogo"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files[0];
+                            setFieldValue("companyLogo", file);
+                          }}
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                         />
                         <ErrorMessage
-                          className="text-red-500"
-                          name="companyName"
+                          className="text-red-500 text-sm"
+                          name="companyLogo"
                           component="div"
                         />
                       </div>
 
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label
-                          className="font-normal"
-                          htmlFor="companyRegistrationNumber">
-                          CAC REG. NO:
+                      {/* Company Bio */}
+                      <div className="flex flex-col gap-1">
+                        <label className="font-medium" htmlFor="companyBio">
+                          Company Bio
                         </label>
                         <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="text"
-                          name="companyRegistrationNumber"
+                          as="textarea"
+                          name="companyBio"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                         />
                         <ErrorMessage
-                          className="text-red-500"
-                          name="companyRegistrationNumber"
+                          className="text-red-500 text-sm"
+                          name="companyBio"
                           component="div"
                         />
-                      </div>
-                    </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label
-                          className="font-normal"
-                          htmlFor="companyWebsiteLink">
-                          Website:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="text"
-                          name="companyWebsiteLink"
-                        />
-                        {/* <ErrorMessage
-                        className="text-red-500"
-                        name="companyWebsiteLink"
-                        component="div"
-                      /> */}
                       </div>
 
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label
-                          className="font-normal"
-                          htmlFor="companyPhoneNumber">
-                          Phone Contact:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="number"
-                          name="companyPhoneNumber"
-                        />
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="companyPhoneNumber"
-                          component="div"
-                        />
-                      </div>
-                    </div>
-                    <div className="md:flex w-[90%] md:w-[70%] gap-2 m-auto">
-                      <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                        <label className="font-normal" htmlFor="companyEmail">
-                          Email Contact:
-                        </label>
-                        <Field
-                          className="h-[50px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                          type="email"
-                          name="companyEmail"
-                        />
-                        <ErrorMessage
-                          className="text-red-500"
-                          name="companyEmail"
-                          component="div"
-                        />
-                      </div>
-                      <div className="flex flex-col w-[90%] md:w-[70%] m-auto mt-4">
-                        <label className="font-normal" htmlFor="industry">
-                          Company Industry:
-                        </label>
+                      {/* Company Name + CAC Reg */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium" htmlFor="companyName">
+                            Company Name
+                          </label>
+                          <Field
+                            type="text"
+                            name="companyName"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            className="text-red-500 text-sm"
+                            name="companyName"
+                            component="div"
+                          />
+                        </div>
 
-                        <select
-                          className=" py-4 px-2 rounded-lg"
-                          value={values.industry}
-                          required
-                          id="industry"
-                          name="industry"
-                          onChange={(e) =>
-                            handleChange(e, setFieldValue, "industry", values)
-                          }>
-                          {companyIndusrty.map(({ id, title }) => (
-                            <option key={id} className="block mt-2">
-                              {title}
-                            </option>
-                          ))}
-                        </select>
+                        <div className="flex flex-col gap-1">
+                          <label
+                            className="font-medium"
+                            htmlFor="companyRegistrationNumber">
+                            CAC Reg. No
+                          </label>
+                          <Field
+                            type="text"
+                            name="companyRegistrationNumber"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            className="text-red-500 text-sm"
+                            name="companyRegistrationNumber"
+                            component="div"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Website + Phone */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label
+                            className="font-medium"
+                            htmlFor="companyWebsiteLink">
+                            Website
+                          </label>
+                          <Field
+                            type="text"
+                            name="companyWebsiteLink"
+                            placeholder="https://example.com"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label
+                            className="font-medium"
+                            htmlFor="companyPhoneNumber">
+                            Phone Contact
+                          </label>
+                          <Field
+                            type="number"
+                            name="companyPhoneNumber"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            className="text-red-500 text-sm"
+                            name="companyPhoneNumber"
+                            component="div"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Email + Industry */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium" htmlFor="companyEmail">
+                            Email Contact
+                          </label>
+                          <Field
+                            type="email"
+                            name="companyEmail"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                          <ErrorMessage
+                            className="text-red-500 text-sm"
+                            name="companyEmail"
+                            component="div"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <label className="font-medium" htmlFor="industry">
+                            Company Industry
+                          </label>
+                          <select
+                            name="industry"
+                            id="industry"
+                            value={values.industry}
+                            onChange={(e) =>
+                              handleChange(e, setFieldValue, "industry", values)
+                            }
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <option value="">Select Industry</option>
+                            {companyIndusrty.map(({ id, title }) => (
+                              <option key={id} value={title}>
+                                {title}
+                              </option>
+                            ))}
+                          </select>
+                          <ErrorMessage
+                            className="text-red-500 text-sm"
+                            name="industry"
+                            component="div"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Company Address */}
+                      <div className="flex flex-col gap-1">
+                        <label className="font-medium" htmlFor="companyAddress">
+                          Company Address
+                        </label>
+                        <Field
+                          as="textarea"
+                          name="companyAddress"
+                          className="h-24 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        />
                         <ErrorMessage
-                          className="text-red-500"
-                          name="industry"
+                          className="text-red-500 text-sm"
+                          name="companyAddress"
                           component="div"
                         />
                       </div>
-                    </div>
-                    <div className="block w-[90%] md:w-[70%] m-auto mt-4  ">
-                      <label className="font-normal" htmlFor="companyAddress">
-                        Company Address:
-                      </label>
-                      <Field
-                        as="textarea"
-                        className="h-[150px] px-3 pt-3 w-[100%] m-auto rounded-lg border-none border-b-4 border-b-darkGray outline-none"
-                        type="text"
-                        name="companyAddress"
-                      />
-                      <ErrorMessage
-                        className="text-red-500"
-                        name="companyAddress"
-                        component="div"
-                      />
                     </div>
                   </div>
                 )}
+
                 {step === 3 && (
-                  <div className="border-2 border-black mt-8 rounded-2xl w-[90%] m-auto pb-5 ">
-                    <h2 className="font-bold md:text-3xl text-center mt-5">
+                  <div className="w-[90%] md:w-[75%] mx-auto mt-6 rounded-2xl bg-white shadow-lg p-8">
+                    <h2 className="font-bold text-2xl md:text-3xl text-center mb-8">
                       Payment
                     </h2>
-                    <div className=" w-[90%] md:w-[70%] m-auto mt-4 outline-none bg-primary rounded-lg p-10  py-4">
-                      <article className="md:w-[90%] m-auto text-white">
-                        <p className="mb-5 font-bold">Choose Payment Mode</p>
 
+                    <div className="space-y-6 bg-[#2B749A] rounded-lg p-6 md:p-10 text-white">
+                      {/* Payment Instructions */}
+                      <div className="space-y-4 md:w-[90%] mx-auto">
+                        <p className="font-bold text-lg">Choose Payment Mode</p>
                         <Link
                           to="https://paystack.com/pay/externaljobpost"
                           target="_blank"
-                          className="text-secondary underline md:text-md">
+                          className="text-green-400 underline">
                           Click Here To Pay With Card
                         </Link>
-                        <p className="mt-5 font-bold">
+
+                        <p className="mt-6 font-bold text-lg">
                           Or Make a Direct Deposit/Transfer to the Accounts
                           below:
                         </p>
-                        <p className="my-5">
-                          Account Details: Account Number: 1027147237 <br />
-                          Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD, Bank:
-                          UBA
-                        </p>
-                        <p className="my-5">
-                          DOM Account Details(USD): Account Number: 3004434567{" "}
-                          <br />
-                          Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD, Bank:
-                          UBA
-                        </p>
-                        <p className="my-5">
-                          DOM Account Details(GBP): Account Number: 3004434718{" "}
-                          <br />
-                          Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD, Bank:
-                          UBA
-                        </p>
-                        <p className="my-5">
-                          Account Details: Account Number: 5610096099 <br />
-                          Account Name: NXG-HUB DIGITAL TECHNOLOGIES LTD, Bank:
-                          FIDELITY BANK *
-                        </p>
-                      </article>
-                      <div className="w-[90%] md:w-[90%] m-auto mt-4 text-white">
-                        <label
-                          className="font-normal block"
-                          htmlFor="paymentReceipt">
-                          Upload Payment payment receipt:
+
+                        <div className="space-y-4 text-sm md:text-base">
+                          <p>
+                            <span className="font-semibold">
+                              Account Details:
+                            </span>{" "}
+                            <br />
+                            Account Number: 1027147237 <br />
+                            Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD{" "}
+                            <br />
+                            Bank: UBA
+                          </p>
+
+                          <p>
+                            <span className="font-semibold">
+                              DOM Account Details (USD):
+                            </span>{" "}
+                            <br />
+                            Account Number: 3004434567 <br />
+                            Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD{" "}
+                            <br />
+                            Bank: UBA
+                          </p>
+
+                          <p>
+                            <span className="font-semibold">
+                              DOM Account Details (GBP):
+                            </span>{" "}
+                            <br />
+                            Account Number: 3004434718 <br />
+                            Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD{" "}
+                            <br />
+                            Bank: UBA
+                          </p>
+
+                          <p>
+                            <span className="font-semibold">
+                              Account Details:
+                            </span>{" "}
+                            <br />
+                            Account Number: 5610096099 <br />
+                            Account Name: NXG HUB DIGITAL TECHNOLOGIES LTD{" "}
+                            <br />
+                            Bank: FIDELITY BANK
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Upload Payment Receipt */}
+                      <div className="flex flex-col gap-2 md:w-[90%] mx-auto mt-4">
+                        <label className="font-medium" htmlFor="paymentReceipt">
+                          Upload Payment Receipt
                         </label>
                         <input
                           id="paymentReceipt"
@@ -753,9 +777,10 @@ const PostJobForm = () => {
                             const file = event.currentTarget.files[0];
                             setFieldValue("paymentReceipt", file);
                           }}
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 text-black"
                         />
                         <ErrorMessage
-                          className="text-red-500"
+                          className="text-red-500 text-sm"
                           name="paymentReceipt"
                           component="div"
                         />
@@ -769,13 +794,13 @@ const PostJobForm = () => {
                       onClick={handleBack}
                       type="button"
                       disabled={isSubmitting}
-                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto bg-blue-600">
+                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto border-none bg-[#215E7D] hover:bg-[#2B749A]">
                       {"Back"}
                     </button>
                   )}
                   <button
                     disabled={isSubmitting}
-                    className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto bg-blue-600"
+                    className="w-[100%] bg-[#215E7D] hover:bg-[#2B749A] border-none rounded-full text-center py-2 my-10 text-white font-bold m-auto"
                     type="submit">
                     {loading ? "Submitting..." : step < 3 ? "Next" : "Submit"}
                   </button>
@@ -787,6 +812,7 @@ const PostJobForm = () => {
       </div>
       {/* modal */}
       <PostJobModal />
+      <Footer />
     </div>
   );
 };

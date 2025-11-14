@@ -19,10 +19,7 @@ export const fetchAllTalentJobs = createAsyncThunk(
   "TalentJobs/fetchAllTalentJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
-      return await fetchJSON(
-        `${API_HOST_URL}/api/job-postings/all?page=0&size=1&sort=string`,
-        token
-      );
+      return await fetchJSON(`${API_HOST_URL}/api/job-postings/all`, token);
     } catch (err) {
       return rejectWithValue(err.message);
     }

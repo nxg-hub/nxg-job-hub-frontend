@@ -306,7 +306,13 @@ export function JobTracker() {
   const uniqueClients = [...new Set(services.map((service) => service.client))];
 
   if (loading) {
-    return <JobCardSkeleton />;
+    return (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <JobCardSkeleton key={i} />
+        ))}
+      </div>
+    );
   }
 
   if (!loading && error) {

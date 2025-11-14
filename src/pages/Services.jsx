@@ -13,7 +13,7 @@ const Services = () => {
   return (
     <section className="w-full bg-white font-inter">
       {/* Header */}
-      <div className="bg-black">
+      <div className="bg-[#215E7D]">
         <Header />
       </div>
 

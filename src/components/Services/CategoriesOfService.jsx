@@ -15,7 +15,7 @@ const CategoriesOfService = () => {
     <section className="w-[80%] m-auto">
       <div className="w-[80%] m-auto mt-10 border-b-4 h-[50px] md:h-[100px] md:w-[40%] md:ml-[1%] mb-11">
         <h2 className="sm:text-xl md:text-3xl font-extrabold underline">
-          For Tech Talent
+          For Talent
         </h2>
       </div>
       <div className="md:flex justify-between">
@@ -46,33 +46,35 @@ const CategoriesOfService = () => {
       </div>
       <div className="w-[80%] m-auto mt-10 border-b-4 h-[50px] md:h-[100px] md:w-[40%] md:ml-[1%] mb-11">
         <h2 className="sm:text-xl md:text-3xl font-extrabold underline">
-          For Agent
+          For Service Provider
         </h2>
       </div>
       <div className="md:flex justify-between">
         <ServiceCard
           img={cm}
-          title="Candidate Management"
-          content="Efficiently manage your pool of candidates with tools that streamline tracking, updating, and presenting tech talent to potential employers."
-          extraContent1={`Talent Pool Management: Keep track of your candidates' profiles and job applications.`}
-          extraContent2={` Candidate Matching: Match candidates to suitable job openings with precision.`}
-          extraContent3={`Profile Updates: Update candidate profiles and status in real-time.`}
+          title="Service Management"
+          content="Manage your services efficiently, showcase your offerings, and keep track of client requests seamlessly."
+          extraContent1={`Service Listings: Clearly display all the services you provide, including pricing and availability.`}
+          extraContent2={`Booking Management: Accept and manage client bookings easily.`}
+          extraContent3={`Real-Time Updates: Update your service status, availability, and ongoing jobs in real-time.`}
         />
+
         <ServiceCard
           img={ec}
-          title="Employer Coordination"
-          content=" Facilitate interactions between candidates and employers, from initial introductions to final negotiations."
-          extraContent1={`Employer Engagement: Coordinate with employers to present the best candidates.`}
-          extraContent2={`Negotiation Support: Assist in salary and contract negotiations.`}
-          extraContent3={`Feedback Loop: Collect and relay feedback between candidates and employers.`}
+          title="Client Coordination"
+          content="Keep in touch with clients from service inquiries to completion, ensuring smooth and reliable service delivery."
+          extraContent1={`Request Handling: Respond promptly to client service requests.`}
+          extraContent2={`Scheduling Support: Arrange appointments and coordinate schedules efficiently.`}
+          extraContent3={`Feedback Collection: Collect reviews and feedback to improve your services.`}
         />
+
         <ServiceCard
           img={ai}
-          title="Analytics and Insights"
-          content="Access analytics to track candidate performance, job market trends, and success rates, helping you refine your strategies and make data-driven decisions."
-          extraContent1={`Performance Metrics: Analyse candidate success rates and job fit.    `}
-          extraContent2={`Market Trends: Stay informed about the latest trends in the tech job market.`}
-          extraContent3={`Insight Reports: Generate reports to guide your candidate placement strategies.`}
+          title="Payments & Transactions"
+          content="Easily manage payments, invoices, and service fees, ensuring transparency and convenience for both you and your clients."
+          extraContent1={`Multiple Payment Options: Accept payments online, via bank transfer, or in-person.`}
+          extraContent2={`Invoice Management: Generate invoices for every completed service.`}
+          extraContent3={`Transaction Tracking: Keep a record of all payments and pending dues.`}
         />
       </div>
       <div className="w-[80%] m-auto mt-10 border-b-4 h-[50px] md:h-[100px] md:w-[40%] md:ml-[1%] mb-11">

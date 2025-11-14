@@ -11,7 +11,7 @@ const About = () => {
   return (
     <section className="bg-white w-full font-inter">
       {/* Header */}
-      <div className="bg-black">
+      <div className="bg-[#215E7D]">
         <Header />
       </div>
 

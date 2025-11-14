@@ -10,10 +10,11 @@ import Logo from "../../static/images/splash.png";
 import Footer from "../../components/footer/Footer";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import ReactPaginate from "react-paginate";
+import JobsCardSkeleton from "@/components/ui/JobsCardSkeleton";
 
 const FindjobPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(5);
+  const [jobsPerPage] = useState(6);
   const [searchTerm, setSearchTerm] = useState("");
   const [jobsResult, setJobsResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,12 +25,9 @@ const FindjobPage = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          `${API_HOST_URL}/api/job-postings/all?page=0&size=20&sort=string`
-        );
+        const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.json();
-        console.log(data);
         const acceptedData = data.filter((job) => job.jobStatus === "ACCEPTED");
         setJobsResult(acceptedData);
       } catch (error) {
@@ -59,11 +57,11 @@ const FindjobPage = () => {
   const paginate = ({ selected }) => setCurrentPage(selected + 1);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-inter">
+    <div className="min-h-screen bg-gray-50 font-inter w-full">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[#006a90] shadow-sm flex items-center justify-between px-6 py-4">
+      <header className="sticky top-0 z-10 bg-[#006a90] shadow-sm flex items-center justify-between px-6 py-4 w-full">
         <Link to="/" className="w-36">
-          <img src={Logo} alt="Nxg Logo" className="w-[100px] h-[100px]" />
+          <img src={Logo} alt="Nxg Logo" className="w-[50px] h-[50px]" />
         </Link>
 
         <div className="relative w-80">
@@ -81,7 +79,11 @@ const FindjobPage = () => {
       {/* Main Content */}
       <main className="px-6 py-8">
         {isLoading ? (
-          <p className="text-center text-gray-500">Loading jobs...</p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <JobsCardSkeleton key={i} />
+            ))}
+          </div>
         ) : filteredJobs.length === 0 ? (
           <p className="text-center text-gray-500">
             No jobs found for
@@ -121,15 +123,15 @@ const FindjobPage = () => {
                     {/* Job Details */}
                     <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-4">
                       <span className="flex items-center gap-1">
-                        <HiOutlineLocationMarker className="text-sky-600" />
+                        <HiOutlineLocationMarker className="text-sky-700" />
                         {job.job_location || "Not specified"}
                       </span>
                       <span className="flex items-center gap-1">
-                        <MdWorkOutline className="text-sky-600" />
+                        <MdWorkOutline className="text-sky-700" />
                         {job.job_type || "Full-time"}
                       </span>
                       <span className="flex items-center gap-1">
-                        <LuClock className="text-sky-600" />
+                        <LuClock className="text-sky7600" />
                         {new Date(job.deadline).toLocaleDateString("en-GB")}
                       </span>
                     </div>
@@ -137,20 +139,15 @@ const FindjobPage = () => {
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                    <span className="text-sky-600 font-semibold text-lg">
+                    <span className="text-sky-700 font-semibold text-lg">
                       ₦{job.salary}
                     </span>
                     <div className="flex gap-3">
                       <Link
                         to="/login"
-                        className="bg-sky-600 hover:bg-sky-700 text-white text-sm px-4 py-2 rounded-md transition-all">
+                        className="bg-sky-700 text-white text-sm px-4 py-2 rounded-md transition-all">
                         Apply
                       </Link>
-                      {/* <Link
-                        to="/login"
-                        className="text-sky-600 text-sm hover:underline">
-                        Details
-                      </Link> */}
                     </div>
                   </div>
                 </div>
@@ -167,9 +164,9 @@ const FindjobPage = () => {
                 "flex justify-center gap-2 mt-8 text-sm font-medium"
               }
               pageLinkClassName={
-                "px-3 py-1 bg-gray-200 rounded-md hover:bg-sky-500 hover:text-white transition"
+                "px-3 py-1 bg-gray-200 rounded-md hover:bg-sky-600 hover:text-white transition"
               }
-              activeLinkClassName={"bg-sky-600 text-white"}
+              activeLinkClassName={"bg-sky-700 text-white"}
             />
           </>
         )}

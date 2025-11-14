@@ -5,7 +5,7 @@ import Logo from "../../static/images/splash.png";
 import { FiMenu } from "react-icons/fi";
 import { GrFormClose } from "react-icons/gr";
 import Navbar from "./Navbar";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   const [menu, setMenu] = useState(true);
@@ -15,7 +15,9 @@ const Header = () => {
   return (
     <header>
       <div className="h-logo" style={{ width: "160px", height: "65px" }}>
-        <img src={Logo} alt="Nxg Company Logo" className="logo" />
+        <Link to={"/"}>
+          <img src={Logo} alt="Nxg Company Logo" className="logo" />
+        </Link>
       </div>
       <div className="h-logo-mobile" style={{ width: "120px", height: "45px" }}>
         <img src={Logo} alt="Nxg Company Logo" className="logo" />

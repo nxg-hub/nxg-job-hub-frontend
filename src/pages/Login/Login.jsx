@@ -17,7 +17,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
-import LoginBG from "../../static/images/loginbg.png";
+import LoginBG from "../../static/images/loginbg.webp";
 import Logo from "../../static/images/splash.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -213,9 +213,9 @@ export default function LoginForm() {
   return (
     <div className="flex items-center justify-center min-h-screen sm:py-14">
       <Card className="border-transparent">
-        <CardContent className="flex gap-10 items-center rounded-b-lg  p-0 sm:w-[1000px] ">
+        <CardContent className="flex items-center rounded-b-lg  p-0 sm:w-[1000px] ">
           <section
-            className="hidden sm:inline-block sm:w-1/2 bg-cover bg-center h-[600px] rounded-l-lg"
+            className="hidden h-[615px] sm:inline-block sm:w-1/2 bg-cover bg-center  rounded-l-lg"
             style={{ backgroundImage: `url(${LoginBG})` }}>
             <img
               src={Logo}

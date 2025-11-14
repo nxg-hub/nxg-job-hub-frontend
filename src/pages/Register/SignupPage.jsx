@@ -23,7 +23,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Card, CardContent } from "@/components/ui/card";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
-import regbg from "../../static/images/regbg.png";
+import regbg from "../../static/images/regbg.webp";
 import Logo from "../../static/images/splash.png";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import axios from "axios";

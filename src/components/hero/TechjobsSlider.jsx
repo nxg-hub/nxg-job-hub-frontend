@@ -20,53 +20,59 @@ const TechjobsSlider = () => {
       id: "1",
       icon: Analysis,
       jobtitle: "Data Analysis",
-      vacancies: "187 Vacancies",
+      vacancies: "200+ Vacancies",
     },
     {
       id: "2",
       icon: Machine,
-      jobtitle: "Machine Learning/AI",
-      vacancies: "209 Vacancies",
+      jobtitle: "Machine Learning AI",
+      vacancies: "250+ Vacancies",
     },
     {
       id: "3",
       icon: Project,
       jobtitle: "Project Management",
-      vacancies: "29 Vacancies",
+      vacancies: "100+ Vacancies",
     },
-    { id: "4", icon: UI, jobtitle: "UI/UX Design", vacancies: "101 Vacancies" },
+    {
+      id: "4",
+      icon: UI,
+      jobtitle: "UI-UX Design",
+      vacancies: "100+ Vacancies",
+    },
     {
       id: "5",
       icon: Cyber,
       jobtitle: "Cybersecurity",
-      vacancies: "308 Vacancies",
+      vacancies: "200+ Vacancies",
     },
     {
       id: "6",
       icon: Web,
       jobtitle: "Web Development",
-      vacancies: "111 Vacancies",
+      vacancies: "400+ Vacancies",
     },
     {
       id: "7",
       icon: Digital,
       jobtitle: "Digital Marketing",
-      vacancies: "178 Vacancies",
+      vacancies: "300+ Vacancies",
     },
     {
       id: "8",
       icon: Design,
       jobtitle: "Web Design",
-      vacancies: "149 Vacancies",
+      vacancies: "400+ Vacancies",
     },
-    { id: "9", icon: DevOps, jobtitle: "DevOps", vacancies: "115 Vacancies" },
+    { id: "9", icon: DevOps, jobtitle: "DevOps", vacancies: "100+ Vacancies" },
     {
       id: "10",
       icon: Cloud,
       jobtitle: "Cloud Computing",
-      vacancies: "71 Vacancies",
+      vacancies: "200+ Vacancies",
     },
   ];
+
   const navigate = useNavigate();
   return (
     <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white">
@@ -93,9 +99,11 @@ const TechjobsSlider = () => {
         {Jobsspaces.map((job) => (
           <SwiperSlide key={job.id}>
             <div
-              onClick={() => {
-                navigate("/findjob");
-              }}
+              onClick={() =>
+                navigate(
+                  `/jobs/${job.jobtitle.replace(/\s+/g, "-").toLowerCase()}`
+                )
+              }
               className="flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
               <div className="w-20 h-20 mb-4 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-full flex items-center justify-center overflow-hidden">
                 <img
@@ -115,6 +123,15 @@ const TechjobsSlider = () => {
 
       {/* ✅ Pagination Dots Below */}
       <div className="swiper-pagination-custom mt-8 flex justify-center"></div>
+
+      {/* More Categories Button */}
+      <div className="text-center mt-6">
+        <button
+          onClick={() => navigate("/all-categories")}
+          className="px-6 py-2  text-white rounded-lg border-none bg-[#215E7D]   mb-2 md:mb-0 md:mr-2 hover:bg-[#2B749A] transition-colors">
+          More Categories
+        </button>
+      </div>
     </div>
   );
 };

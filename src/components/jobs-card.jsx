@@ -344,14 +344,14 @@ export function JobsCard({ service, tab }) {
         service.status === "declined" ? "opacity-70" : ""
       }`}>
       {/* Header */}
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-4">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-lg font-semibold text-gray-800">
+            <CardTitle className="text-lg md:text-xl font-semibold text-gray-800">
               {service.job_title}
             </CardTitle>
             <div className="flex items-center text-sm text-gray-500 mt-1">
-              <User className="h-3.5 w-3.5 mr-1" />
+              <User className="h-4 w-4 mr-2 text-gray-400" />
               {service.employer_name}
             </div>
           </div>
@@ -359,56 +359,60 @@ export function JobsCard({ service, tab }) {
       </CardHeader>
 
       {/* Body */}
-      <CardContent className="space-y-3 text-sm text-gray-600">
-        <p className="text-gray-600 line-clamp-2">{service.description}</p>
+      <CardContent className="space-y-4 text-gray-600 text-sm">
+        {/* Short description */}
+        <p className="line-clamp-2">{service.job_description}</p>
 
-        <div className="grid sm:grid-cols-2 gap-3">
+        {/* Location & Type */}
+        <div className="grid sm:grid-cols-2 gap-4">
           <div className="flex items-center">
-            <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+            <MapPin className="h-4 w-4 mr-2 text-gray-400" />
             <span className="capitalize">{service.job_location}</span>
           </div>
-          <div className="flex items-center capitalize">{service.job_type}</div>
+          <div className="flex items-center capitalize">
+            <span className="font-medium">{service.job_type}</span>
+          </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3">
+        {/* Deadline & Salary */}
+        <div className="grid sm:grid-cols-2 gap-4 items-center">
           <div className="flex items-center">
-            <CalendarClock className="h-4 w-4 mr-1 text-gray-400" />
+            <CalendarClock className="h-4 w-4 mr-2 text-gray-400" />
             <span>
-              Deadline:
+              Deadline:{" "}
               <span className="font-medium">
                 {formatDate(service.deadline)}
               </span>
             </span>
           </div>
-
-          <div className="flex items-center">
+          <div className="flex items-center justify-start sm:justify-end">
             <span className="font-medium text-gray-700">
-              {`Estimate: ${
-                typeof service.salary === "number"
-                  ? formatCurrency(service.salary)
-                  : formatCurrency(service.salary)
-              }`}
+              Estimate:{" "}
+              {typeof service.salary === "number"
+                ? formatCurrency(service.salary)
+                : formatCurrency(service.salary)}
             </span>
           </div>
-
-          {service.status !== "completed" && service.status !== "declined" && (
-            <div className="flex items-center text-sm">
-              <Clock className="h-4 w-4 mr-1 text-gray-400" />
-              {daysRemaining > 0 ? (
-                <span>
-                  <span className="font-semibold">{daysRemaining}</span> days
-                  remaining
-                </span>
-              ) : daysRemaining === 0 ? (
-                <span className="text-amber-600 font-medium">Due today</span>
-              ) : (
-                <span className="text-red-600 font-medium">
-                  {Math.abs(daysRemaining)} days overdue
-                </span>
-              )}
-            </div>
-          )}
         </div>
+
+        {/* Remaining days */}
+        {service.status !== "completed" && service.status !== "declined" && (
+          <div className="flex items-center text-sm mt-2">
+            <Clock className="h-4 w-4 mr-2 text-gray-400" />
+            {daysRemaining > 0 ? (
+              <span>
+                <span className="font-semibold">{daysRemaining}</span> days
+                remaining
+              </span>
+            ) : daysRemaining === 0 ? (
+              <span className="text-amber-600 font-medium">Due today</span>
+            ) : (
+              <span className="text-red-600 font-medium">
+                {Math.abs(daysRemaining)} days overdue
+              </span>
+            )}
+          </div>
+        )}
       </CardContent>
 
       {/* Footer */}
