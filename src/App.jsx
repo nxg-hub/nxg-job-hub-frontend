@@ -82,6 +82,8 @@ import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx"
 import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
 import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
+import JobCategoryPage from "./pages/JobCategoryPage.jsx";
+import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +96,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/post-job-form" element={<PostJobForm />} />
+        <Route path="/jobs/:category" element={<JobCategoryPage />} />
+        <Route path="/all-categories" element={<JobCategoriesPage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<SignupForm />} />
         <Route
@@ -133,8 +137,7 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}
-        >
+          element={<ServiceProviderDashboardX />}>
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -206,8 +209,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -220,8 +222,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />

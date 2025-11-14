@@ -97,7 +97,14 @@ export default function TalentDashboardTab() {
     return matchesSearch && matchesPriority;
     //  && matchesPriority && matchesServiceType && matchesClient
   });
-  if (loading) return <JobCardSkeleton />;
+  if (loading)
+    return (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <JobCardSkeleton key={i} />
+        ))}
+      </div>
+    );
 
   return (
     <div className="space-y-6 px-6">

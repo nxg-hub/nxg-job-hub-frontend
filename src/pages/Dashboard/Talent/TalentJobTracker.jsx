@@ -47,7 +47,6 @@ export function TalentJobTracker() {
   const acceptedJobs = allJobs.filter((job) => {
     return job.jobStatus === "ACCEPTED";
   });
-
   // Filter services based on search query and active filters
   const filteredServices = acceptedJobs.filter((service) => {
     // Search filter
@@ -103,7 +102,13 @@ export function TalentJobTracker() {
   });
 
   if (loading) {
-    return <JobCardSkeleton />;
+    return (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <JobCardSkeleton key={i} />
+        ))}
+      </div>
+    );
   }
 
   if (!loading && error) {

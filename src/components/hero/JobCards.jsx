@@ -6,6 +6,7 @@ import { chosen } from "./Datas";
 import { MdLocationPin } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
+import JobsCardSkeleton from "../ui/JobsCardSkeleton";
 
 const JobCards = () => {
   const [jobs, setJobs] = useState([]);
@@ -74,7 +75,11 @@ const JobCards = () => {
         </h2>
 
         {isLoading ? (
-          <p className="text-center text-gray-500">Loading jobs...</p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <JobsCardSkeleton key={i} />
+            ))}
+          </div>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : jobs.length === 0 ? (

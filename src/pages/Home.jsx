@@ -58,7 +58,10 @@ const Home = () => {
         <Header />
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[-10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight">
-            {heroTitle.title1}
+            <span
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
+              {heroTitle.title1}
+            </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
             {heroTitle.title}
           </h1>
@@ -66,15 +69,15 @@ const Home = () => {
             Get access and connect with Professionals, Employers, Talents,
             Service Providers, Artisans and Agents — all in just a few clicks.
           </p>
-          <div className="flex max-w-[600px] gap-7 justify-between mt-[25px] py-3">
+          <div className="flex max-w-[700px] mt-[25px] py-3">
             <Link
               to={"/register"}
-              className="bg-[#2596BE] text-white  px-4 py-4 text-center rounded-md w-[280px] ">
+              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] ">
               Post Jobs
             </Link>
             <Link
-              to="/login"
-              className="bg-transparent text-whitepx-4 py-4 text-center rounded-md w-[280px] border border-[#2596BE]">
+              to="/findjob"
+              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]">
               Find Jobs
             </Link>
           </div>
