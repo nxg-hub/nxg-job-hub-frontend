@@ -213,13 +213,15 @@ export default function EmployerApplicantsTab() {
             <TableHeader>
               <TableRow>
                 <TableHead>Applicant / Candidate</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Job</TableHead>
+                <TableHead>Job Title</TableHead>
                 <TableHead>Date</TableHead>
+                <TableHead>status</TableHead>
                 <TableHead>
                   {activeTab === "interviewCandidates" ? "Meeting" : "Score"}
                 </TableHead>
-                <TableHead>Time</TableHead>
+                <TableHead>
+                  {activeTab === "interviewCandidates" ? "Time" : "action"}
+                </TableHead>
               </TableRow>
             </TableHeader>
 

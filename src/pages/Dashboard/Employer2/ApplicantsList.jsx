@@ -25,7 +25,10 @@ import { toast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserData } from "@/store/employer/userDataStorage";
 
-export default function ApplicantsList({ applicants }) {
+export default function ApplicantsList({
+  applicants,
+  setIsApplicantsDialogOpen,
+}) {
   const employer = useUserData((state) => state.userData);
   const queryClient = useQueryClient();
   const [expanded, setExpanded] = useState(null);
@@ -82,7 +85,9 @@ export default function ApplicantsList({ applicants }) {
         } successfully!`,
       });
       queryClient.invalidateQueries(["allApplicants", employer.id]);
+      setIsApplicantsDialogOpen(false);
     } catch (err) {
+      setIsApplicantsDialogOpen(false);
       console.error(err);
       toast({
         variant: "destructive",

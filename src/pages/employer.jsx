@@ -83,11 +83,11 @@ const sidebarItems = [
 
   { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
   { icon: <Users />, label: "Applicants", path: "applicants" },
-  {
-    icon: <Link2 />,
-    label: "Matches",
-    path: "candidate-matches",
-  },
+  // {
+  //   icon: <Link2 />,
+  //   label: "Matches",
+  //   path: "candidate-matches",
+  // },
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
   // { icon: <BarChart />, label: "Analytics", path: "analytics" },
   { icon: <Settings />, label: "Setting", path: "setting" },
@@ -205,7 +205,6 @@ function DashboardContent({ notifications = [] }) {
   const dispatch = useDispatch();
   const employer = useSelector((state) => state.AllUserReducer.userData);
   const sub = useSelector((state) => state.AllUserReducer.subData);
-  // const employer = useEmployerData((state) => state.employerData);
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
   const isMobile = useMobile();
   const sidebar = useSidebar();
@@ -250,7 +249,7 @@ function DashboardContent({ notifications = [] }) {
             scrollbar-hidden md:rounded-lg  !rounded-b-none">
           <div className="pt-5">
             <img
-              src={isCollapsed ? logomin : logo}
+              src={logo}
               alt="Next Gen Hub Logo"
               className={cn(
                 "object-contain mx-auto w-24 h-24",
@@ -453,36 +452,49 @@ function DashboardContent({ notifications = [] }) {
             </>
           )}
           {isCollapsed && (
-            <div className="absolute z-50 bottom-10 -left-5 w-[280px] sm:max-w-[420px] m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
-              <p className="text-sm text-muted-foreground">Current plan:</p>
-              <p
-                className={cn(
-                  `${NUMBEROFDAYFORFREESUB < 31 ? "" : "text-red-800"}`,
-                  "text-sm font-semibold"
-                )}>
-                Free trial
-              </p>
-              {NUMBEROFDAYFORFREESUB < 31 ? (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Upgrade to any of our latest and exclusive features
-                </p>
-              ) : (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Your 1 Month free trial had expired,Upgrade to any of our
-                  latest and exclusive features
-                </p>
+            <div className="relative m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
+              {/* Close Button */}
+              {sub.subscriptionStatus === "ACTIVE" && (
+                <button
+                  onClick={() => setIsVisible(false)}
+                  className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
+                  aria-label="Close">
+                  <X className="w-4 h-4" />
+                </button>
               )}
 
-              <NavLink
-                className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                to="/employer/subscription">
-                <img
-                  src={subscriptionIcon}
-                  alt="subscription"
-                  className="object-contain w-6 h-6"
-                />
-                <span> Upgrade now</span>
-              </NavLink>
+              <p className="text-sm text-muted-foreground">Current plan:</p>
+              <p
+                className={`${
+                  sub.subscriptionStatus === "ACTIVE"
+                    ? "text-green-600"
+                    : "text-red-800"
+                } text-sm font-semibold`}>
+                {sub?.planType}
+                <span className="text-gray-800 px-1">
+                  {sub.subscriptionStatus === "ACTIVE"
+                    ? `will expire on ${formatFullDate(sub?.subscriptionDues)}`
+                    : `expired on ${formatFullDate(sub?.subscriptionDues)}`}
+                </span>
+              </p>
+
+              <p className="mt-1 text-xs text-muted-foreground">
+                {sub.subscriptionStatus === "INACTIVE" &&
+                  "Upgrade to any of our latest and exclusive features"}
+              </p>
+
+              {sub.subscriptionStatus === "INACTIVE" && (
+                <NavLink
+                  className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
+                  to="/employer/subscription">
+                  <img
+                    src={subscriptionIcon}
+                    alt="subscription"
+                    className="object-contain w-6 h-6"
+                  />
+                  <span> Upgrade now</span>
+                </NavLink>
+              )}
             </div>
           )}
           <div className="h-full">

@@ -105,8 +105,7 @@ export default function EmployerCompanyInfoCard({
               }`,
               ""
             )}
-            onClick={() => setActiveTab(1)}
-          >
+            onClick={() => setActiveTab(1)}>
             Company details
           </Button>
           <Button
@@ -118,8 +117,7 @@ export default function EmployerCompanyInfoCard({
               }`,
               ""
             )}
-            onClick={() => setActiveTab(2)}
-          >
+            onClick={() => setActiveTab(2)}>
             Vacancies
           </Button>
         </div>
@@ -174,7 +172,7 @@ export default function EmployerCompanyInfoCard({
             <div className="p-10 bg-white md:shadow md:rounded-md space-y-5">
               <div className="space-y-4">
                 <h2 className="font-bold">Industry type</h2>
-                <div className="grid grid-cols-4 place-content-center gap-4 px-8 ">
+                <div className="grid grid-cols-2 md:grid-cols-4 place-content-center gap-4 px-8 ">
                   {industryOptions.map((opt, index) => (
                     <Badge
                       key={index}
@@ -185,8 +183,7 @@ export default function EmployerCompanyInfoCard({
                             : "bg-transparent text-gray-400 border border-gray-300 hover:bg-transparent hover:text-gray-400"
                         }`,
                         "w-fit text-sm p-2 font-light "
-                      )}
-                    >
+                      )}>
                       {opt.label}
                     </Badge>
                   ))}
@@ -194,7 +191,7 @@ export default function EmployerCompanyInfoCard({
               </div>
               <div className="space-y-4">
                 <h2 className="font-bold">Company size</h2>
-                <div className="grid grid-cols-3 place-content-center gap-4 px-8 ">
+                <div className="grid grid-cols-2 md:grid-cols-3 place-content-center gap-4 px-8 ">
                   {companySizeOptions.map((opt, index) => (
                     <Badge
                       key={index}
@@ -205,8 +202,7 @@ export default function EmployerCompanyInfoCard({
                             : "bg-transparent text-gray-400 border border-gray-300 hover:bg-transparent hover:text-gray-400"
                         }`,
                         "w-fit p-2 font-light "
-                      )}
-                    >
+                      )}>
                       {opt.label}
                     </Badge>
                   ))}
@@ -528,8 +524,7 @@ const EditComapnyInfoCard = ({
                     </FormLabel>
                     <Select
                       defaultValue={field.value}
-                      onValueChange={field.onChange}
-                    >
+                      onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger className="font-normal">
                           <SelectValue placeholder="Choose Industry" />
@@ -606,8 +601,7 @@ const EditComapnyInfoCard = ({
                       variant="destructive"
                       size="icon"
                       onClick={() => removeVacancy(index)}
-                      disabled={vacancyFields.length === 1}
-                    >
+                      disabled={vacancyFields.length === 1}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -616,8 +610,7 @@ const EditComapnyInfoCard = ({
                   type="button"
                   variant="outline"
                   className="w-full"
-                  onClick={() => appendVacancy("")}
-                >
+                  onClick={() => appendVacancy("")}>
                   <Plus className="h-4 w-4 mr-2" /> Add Vacancy
                 </Button>
               </div>
@@ -650,8 +643,7 @@ const EditComapnyInfoCard = ({
                       variant="destructive"
                       size="icon"
                       onClick={() => removeDirector(index)}
-                      disabled={directorFields.length === 1}
-                    >
+                      disabled={directorFields.length === 1}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -660,8 +652,7 @@ const EditComapnyInfoCard = ({
                   type="button"
                   variant="outline"
                   className="w-full"
-                  onClick={() => appendDirector("")}
-                >
+                  onClick={() => appendDirector("")}>
                   <Plus className="h-4 w-4 mr-2" /> Add Director
                 </Button>
               </div>
@@ -672,8 +663,7 @@ const EditComapnyInfoCard = ({
                 type="button"
                 className="border-none bg-sky-500 hover:bg-sky-600"
                 onClick={form.handleSubmit(handleEditProfile)}
-                disabled={isPending}
-              >
+                disabled={isPending}>
                 {isPending ? (
                   <div className="flex items-center space-x-1">
                     <Loader2 className="animate-spin" />

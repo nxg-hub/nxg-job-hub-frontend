@@ -44,8 +44,8 @@ export default function EmployerCompanyProfileTab() {
   );
 
   return (
-    <div className="w-full flex gap-20 ">
-      <div className="w-1/3">
+    <div className="w-full flex flex-col md:flex-row gap-20 ">
+      <div className=" md:w-1/3">
         <EmployerProfileOverview
           userId={employer?.employer?.employerID}
           companyDescription={employer?.employer?.companyDescription}
@@ -57,7 +57,7 @@ export default function EmployerCompanyProfileTab() {
           companyZipCode={employer?.employer?.companyZipCode}
         />
       </div>
-      <div className="w-3/5">
+      <div className="md:w-3/5">
         <EmployerCompanyInfoCard
           industryType={employer?.employer?.industryType}
           companySize={employer?.employer?.companySize}
