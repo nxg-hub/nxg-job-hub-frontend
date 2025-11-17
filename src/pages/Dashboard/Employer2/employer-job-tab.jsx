@@ -666,7 +666,10 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 No applicants yet
               </p>
             ) : (
-              <ApplicantsList applicants={applicants} />
+              <ApplicantsList
+                applicants={applicants}
+                setIsApplicantsDialogOpen={setIsApplicantsDialogOpen}
+              />
             )}
           </div>
         </DialogContent>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../../static/images/logo_colored.png";
+// import Logo from "../../static/images/logo_colored.png";
+import Logo from "../../static/images/splash.png";
 import Inputs from "../../components/accounts/Inputs";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -13,25 +14,24 @@ const PasswordRecovery = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      const response = await axios.post(
-        `${API_HOST_URL}/api/v1/auth/reset-password-email/${email}`
-      );
-      const data = response.data;
-      if (response.status === 200) {
-        console.log(response);
-        setMessage({
-          type: "info",
-          content: data,
-        });
-        setTimeout(() => setMessage(null), 5000);
-      } else {
-        setMessage({
-          type: "warning",
-          content: "Could not send reset password email",
-        });
-        setTimeout(() => setMessage(null), 5000);
-      }
-
+    const response = await axios.post(
+      `${API_HOST_URL}/api/v1/auth/reset-password-email/${email}`
+    );
+    const data = response.data;
+    if (response.status === 200) {
+      console.log(response);
+      setMessage({
+        type: "info",
+        content: data,
+      });
+      setTimeout(() => setMessage(null), 5000);
+    } else {
+      setMessage({
+        type: "warning",
+        content: "Could not send reset password email",
+      });
+      setTimeout(() => setMessage(null), 5000);
+    }
   };
 
   return (
@@ -40,8 +40,7 @@ const PasswordRecovery = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-      }}
-    >
+      }}>
       <div className="forgot-container">
         <div style={{ width: "7rem", height: "5rem", margin: "auto" }}>
           <img src={Logo} alt="NXG-Logo" className="logo" />
@@ -54,8 +53,7 @@ const PasswordRecovery = () => {
               fontWeight: "600",
               lineHeight: "2.5rem",
               marginBottom: "1.3rem",
-            }}
-          >
+            }}>
             Forgot Password
           </h1>
           <p
@@ -64,8 +62,7 @@ const PasswordRecovery = () => {
               fontSize: ".8rem",
               fontWeight: "500",
               lineHeight: "1.4rem",
-            }}
-          >
+            }}>
             Enter the email address associated to your account and we will send
             you a link <br />
             to reset your password.
@@ -96,8 +93,7 @@ const PasswordRecovery = () => {
             fontWeight: "500",
             fontFamily: "Montserrat",
             marginTop: "-2.5rem",
-          }}
-        ></p>
+          }}></p>
         <p className="forgot-login">
           <Link to="/login">Back to Login</Link>
         </p>

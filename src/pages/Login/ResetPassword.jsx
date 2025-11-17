@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import TextField from "../../components/TextField";
 import { updateField } from "../../utils/functions/updateField";
-import logo from "../../static/images/nxg-logo.png"
+import logo from "../../static/images/splash.png";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import axios from "axios";
 import Notice from "../../components/Notice";
 const ResetPassword = () => {
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
   const [message, setMessage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const token = searchParams.get("token") || window.sessionStorage.getItem("token") || navigate("/login");
+  const token =
+    searchParams.get("token") ||
+    window.sessionStorage.getItem("token") ||
+    navigate("/login");
   window.sessionStorage.setItem("token", token);
   const handleReset = async (e) => {
     e.preventDefault();
@@ -35,18 +38,17 @@ const navigate = useNavigate()
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            
+              "Access-Control-Allow-Origin": "*",
             },
-            
           }
         );
-       res.status===200 && setMessage({
-          type: "warning",
-          content: "Could not send reset password email",
-        });
+        res.status === 200 &&
+          setMessage({
+            type: "warning",
+            content: "Could not send reset password email",
+          });
         setTimeout(() => setMessage(null), 5000);
-        navigate("/login")
+        navigate("/login");
         console.log(res);
       } catch (err) {
         setMessage({
@@ -54,28 +56,30 @@ const navigate = useNavigate()
           content: "Could not reset password ",
         });
         setTimeout(() => setMessage(null), 5000);
-        return
+        return;
       }
     }
     console.log("empty");
   };
   useEffect(() => {
-    setSearchParams("")
-  }, [setSearchParams])
+    setSearchParams("");
+  }, [setSearchParams]);
   return (
-    <div>
-      <Link to="/login" >
-      <img style={{ height:"70px", width: "auto", margin:"15px"}} src={logo} alt="" />
+    <div className="w-full">
+      <Link to="/login">
+        <img
+          style={{ height: "70px", width: "auto", margin: "15px" }}
+          src={logo}
+          alt=""
+        />
       </Link>
       <div
-        className="reset-main"
+        className="reset-main w-[80%] md:w-[30%]"
         style={{
-          width: "30%",
           padding: "1rem 2.4rem",
           border: "0.03rem solid #2596BE",
           borderRadius: "0.8rem",
-        }}
-      >
+        }}>
         <h2
           style={{
             fontFamily: "Inter",
@@ -83,8 +87,7 @@ const navigate = useNavigate()
             fontWeight: "600",
             lineHeight: "2.5rem",
             marginBottom: "1rem",
-          }}
-        >
+          }}>
           Reset Password
         </h2>
         <form className="reset-form" onSubmit={handleReset}>
@@ -113,13 +116,12 @@ const navigate = useNavigate()
               border: "none",
               borderRadius: ".4rem",
               margin: "1rem 0",
-            }}
-          >
+            }}>
             Reset Password
           </button>
         </form>
       </div>
-      
+
       {message && <Notice type={message.type} message={message.content} />}
     </div>
   );

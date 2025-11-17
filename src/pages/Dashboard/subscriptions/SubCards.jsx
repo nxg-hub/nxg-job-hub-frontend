@@ -90,17 +90,17 @@ const SubCards = ({ country, verifyTransaction, user }) => {
       planType: "Recommended",
     },
 
-    {
-      subId: 5,
-      subLogo: platinum,
-      subTitle: "TEST",
-      subPrice: "₦100/Yearly",
-      subBenefit: [
-        "The Platinum plan caters to users seeking an even longer commitment with added features.",
-        "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
-      ],
-      planType: "TEST",
-    },
+    // {
+    //   subId: 5,
+    //   subLogo: platinum,
+    //   subTitle: "TEST",
+    //   subPrice: "₦100/Yearly",
+    //   subBenefit: [
+    //     "The Platinum plan caters to users seeking an even longer commitment with added features.",
+    //     "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
+    //   ],
+    //   planType: "TEST",
+    // },
   ];
 
   const handlePayment = async (subscription, index) => {
