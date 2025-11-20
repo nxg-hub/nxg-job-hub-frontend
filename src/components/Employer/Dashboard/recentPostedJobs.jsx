@@ -120,7 +120,7 @@ export default function RecentPostedJobs({
     );
 
   return (
-    <div className="w-2/3  space-y-6">
+    <div className="w-full  space-y-6">
       <div className="bg-white border rounded-lg p-4">
         {data?.length > 0 ? (
           <Table>

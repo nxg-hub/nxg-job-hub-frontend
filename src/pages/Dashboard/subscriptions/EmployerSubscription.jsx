@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import "./subscription.scss";
-import logo from "../../../static/images/nxg-logo.png";
+import logo from "../../../static/images/splash.png";
 import SubCards from "./SubCards";
 // import { SubPayment } from './subpayments/SubPayment';
 import axios from "axios";

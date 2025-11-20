@@ -39,12 +39,12 @@ const PostJobModal = () => {
             </p>
             <div className="flex flex-col md:flex-row justify-center md:justify-between">
               <button
-                className="bg-[#215E7D] border-none text-white px-4 py-2 rounded mb-2 md:mb-0 md:mr-2 hover:bg-[#2B749A]"
+                className="bg-[#215E7D] border-none text-white px-4 py-2 md:h-[70px] rounded mb-2 md:mb-0 md:mr-2 hover:bg-[#2B749A]"
                 onClick={handleSignup}>
                 Sign Up Now
               </button>
               <button
-                className="bg-gray-300 border-none hover:bg-gray-300 hover:text-black text-black px-4 py-2 rounded"
+                className="bg-gray-300 border-none hover:bg-gray-300 md:h-[70px] hover:text-black text-black px-4 py-2 rounded"
                 onClick={handleOneOffPosting}>
                 Proceed with One-Off Posting
               </button>
