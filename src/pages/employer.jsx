@@ -305,7 +305,7 @@ function DashboardContent({ notifications = [] }) {
           {!isCollapsed && isVisible && (
             <div className="relative m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
               {/* Close Button */}
-              {sub.subscriptionStatus === "ACTIVE" && (
+              {sub?.subscriptionStatus === "ACTIVE" && (
                 <button
                   onClick={() => setIsVisible(false)}
                   className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
@@ -317,24 +317,24 @@ function DashboardContent({ notifications = [] }) {
               <p className="text-sm text-muted-foreground">Current plan:</p>
               <p
                 className={`${
-                  sub.subscriptionStatus === "ACTIVE"
+                  sub?.subscriptionStatus === "ACTIVE"
                     ? "text-green-600"
                     : "text-red-800"
                 } text-sm font-semibold`}>
                 {sub?.planType}
                 <span className="text-gray-800 px-1">
-                  {sub.subscriptionStatus === "ACTIVE"
+                  {sub?.subscriptionStatus === "ACTIVE"
                     ? `will expire on ${formatFullDate(sub?.subscriptionDues)}`
                     : `expired on ${formatFullDate(sub?.subscriptionDues)}`}
                 </span>
               </p>
 
               <p className="mt-1 text-xs text-muted-foreground">
-                {sub.subscriptionStatus === "INACTIVE" &&
+                {sub?.subscriptionStatus === "INACTIVE" &&
                   "Upgrade to any of our latest and exclusive features"}
               </p>
 
-              {sub.subscriptionStatus === "INACTIVE" && (
+              {sub?.subscriptionStatus === "INACTIVE" && (
                 <NavLink
                   className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
                   to="/employer/subscription">
@@ -454,7 +454,7 @@ function DashboardContent({ notifications = [] }) {
           {isCollapsed && (
             <div className="relative m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
               {/* Close Button */}
-              {sub.subscriptionStatus === "ACTIVE" && (
+              {sub?.subscriptionStatus === "ACTIVE" && (
                 <button
                   onClick={() => setIsVisible(false)}
                   className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
@@ -466,24 +466,24 @@ function DashboardContent({ notifications = [] }) {
               <p className="text-sm text-muted-foreground">Current plan:</p>
               <p
                 className={`${
-                  sub.subscriptionStatus === "ACTIVE"
+                  sub?.subscriptionStatus === "ACTIVE"
                     ? "text-green-600"
                     : "text-red-800"
                 } text-sm font-semibold`}>
                 {sub?.planType}
                 <span className="text-gray-800 px-1">
-                  {sub.subscriptionStatus === "ACTIVE"
+                  {sub?.subscriptionStatus === "ACTIVE"
                     ? `will expire on ${formatFullDate(sub?.subscriptionDues)}`
                     : `expired on ${formatFullDate(sub?.subscriptionDues)}`}
                 </span>
               </p>
 
               <p className="mt-1 text-xs text-muted-foreground">
-                {sub.subscriptionStatus === "INACTIVE" &&
+                {sub?.subscriptionStatus === "INACTIVE" &&
                   "Upgrade to any of our latest and exclusive features"}
               </p>
 
-              {sub.subscriptionStatus === "INACTIVE" && (
+              {sub?.subscriptionStatus === "INACTIVE" && (
                 <NavLink
                   className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
                   to="/employer/subscription">
