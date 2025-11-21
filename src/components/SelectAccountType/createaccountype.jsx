@@ -57,18 +57,20 @@ export default function CreateAccountType() {
   });
 
   return (
-    <div className="space-y-10">
+    <div className="min-h-screen md:space-y-10">
       <nav className="flex justify-between items-center w-full bg-sky-600 p-4">
         <div className="flex items-center gap-2">
-          <img className="w-20 sm:w-14" src={Logo} alt="" />
+          <img className="w-10 sm:w-14" src={Logo} alt="" />
           <div className="flex flex-col text-white -space-y-1.5">
-            <span className="font-bold text-3xl">NXG</span>
-            <span className="text-xs tracking-widest">JOB HUB</span>
+            <span className="font-bold text-2xl md:text-3xl">NXG</span>
+            <span className="text-xs md:text-xs md:tracking-widest">
+              JOB HUB
+            </span>
           </div>
         </div>
       </nav>
-      <div className="w-full flex items-center justify-center p-20 gap-10 px-52">
-        <div className="self-start w-2/6 pt-20">
+      <div className="w-full md:flex md:items-center md:justify-center md:p-20 md:gap-10 md:px-52">
+        <div className="hidden md:block self-start w-2/6 md:pt-20">
           <h1 className="font-bold text-2xl  ">
             Hey👋, <br />
             <span className="text-xl">Let help you with Jobs.</span>
@@ -80,9 +82,9 @@ export default function CreateAccountType() {
         </div>
         <Separator
           orientation="vertical"
-          className="w-[1px] h-[500px] my-auto"
+          className="hidden md:block w-[1px] h-[500px] my-auto"
         />
-        <div className="w-2/4">
+        <div className="w-full px-3 mt-10 md:w-2/4">
           {!userType ? (
             <AccountTypeSelection />
           ) : userType === "talent" ? (
@@ -141,13 +143,13 @@ const AccountTypeSelection = () => {
         type: "spring",
         stiffness: 120,
       }}
-      className="flex  flex-col gap-10 w-full px-10"
+      className="w-full flex flex-col gap-10  p-5 md:px-10 border rounded-md"
     >
       <div className="flex flex-col gap-1">
-        <h1 className="font-semibold text-xl text-slate-800">
+        <h1 className=" font-semibold text-xl md:text-2xl text-slate-800">
           Choose your account type
         </h1>
-        <p className="w-10/12 text-sm text-gray-600">
+        <p className="md:w-10/12 text-xs md:text-sm text-gray-600">
           Personalize your account by selecting accounty type, Get started and
           connect with professionals!
         </p>
@@ -169,8 +171,12 @@ const AccountTypeSelection = () => {
                 <div className="flex gap-3">
                   <img className="w-6 sm:w-10" src={radio.icon} alt="" />
                   <div>
-                    <FieldTitle>{radio.label}</FieldTitle>
-                    <FieldDescription>{radio.desc}</FieldDescription>
+                    <FieldTitle className="text-sm md:text-base">
+                      {radio.label}
+                    </FieldTitle>
+                    <FieldDescription className="text-xs md:text-sm">
+                      {radio.desc}
+                    </FieldDescription>
                   </div>
                 </div>
               </FieldContent>
@@ -186,8 +192,8 @@ const AccountTypeSelection = () => {
       <Button
         className={
           accountChoice === ""
-            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300"
-            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700"
+            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300 h-11"
+            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700 h-11"
         }
         type="button"
         onClick={setAccountType}
@@ -244,7 +250,6 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
           }, 3000);
         },
         onError: (err) => {
-          console.error("Create account error:", err);
           if (axios.isAxiosError(err)) {
             if (err.response) {
               toast({
@@ -261,13 +266,16 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
             } else if (err.request) {
               toast({
                 className: cn(
-                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                  "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
                 ),
-                title: <span className="text-red-900">Network error:</span>,
+                title: (
+                  <p className="text-red-700 text-xs sm:text-sm">
+                    Network error:
+                  </p>
+                ),
                 description: (
-                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                    Failed to setup your account type, please check your
-                    internet connection.
+                  <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
+                    Please check your internet connection.
                   </p>
                 ),
               });
@@ -275,11 +283,13 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
           } else {
             toast({
               className: cn(
-                "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
               ),
-              title: <span className="text-red-900">Failed:</span>,
+              title: (
+                <span className="text-red-700 text-xs sm:text-sm">Failed:</span>
+              ),
               description: (
-                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
                   Failed to create your account type, please try again.
                 </p>
               ),
@@ -291,12 +301,24 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
   };
 
   return (
-    <div className="flex  flex-col gap-10 w-full px-10">
+    <motion.div
+      initial={{
+        y: 7,
+      }}
+      animate={{
+        y: 0,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 120,
+      }}
+      className="flex  flex-col gap-10 w-full md:px-10 p-5 border rounded-md"
+    >
       <div className="flex flex-col gap-1">
-        <h1 className="font-semibold text-xl text-slate-800">
+        <h1 className="font-semibold text-xl md:text-2xl  text-slate-800">
           Account type selection
         </h1>
-        <p className="w-10/12 text-sm text-gray-600">
+        <p className="md:w-10/12 text-xs md:text-sm text-gray-600">
           Let help you with your jobs by connecting you to the right candidates.
         </p>
       </div>
@@ -319,8 +341,12 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
                 <div className="flex gap-3">
                   <img className="w-6 sm:w-10" src={radio.icon} alt="" />
                   <div>
-                    <FieldTitle>{radio.label}</FieldTitle>
-                    <FieldDescription>{radio.desc}</FieldDescription>
+                    <FieldTitle className="text-sm md:text-base">
+                      {radio.label}
+                    </FieldTitle>
+                    <FieldDescription className="text-xs md:text-sm">
+                      {radio.desc}
+                    </FieldDescription>
                   </div>
                 </div>
               </FieldContent>
@@ -336,8 +362,8 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
       <Button
         className={
           employerChoice === ""
-            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300"
-            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700"
+            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300 h-11"
+            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700 h-11"
         }
         type="button"
         onClick={setAccountType}
@@ -346,7 +372,7 @@ const EmployerTypeSelection = ({ createUserAccount }) => {
       >
         <span>Continue</span>
       </Button>
-    </div>
+    </motion.div>
   );
 };
 
@@ -397,7 +423,6 @@ const TalentTypeSelection = ({ createUserAccount }) => {
           }, 3000);
         },
         onError: (err) => {
-          console.error("Create account error:", err);
           if (axios.isAxiosError(err)) {
             if (err.response) {
               toast({
@@ -414,13 +439,16 @@ const TalentTypeSelection = ({ createUserAccount }) => {
             } else if (err.request) {
               toast({
                 className: cn(
-                  "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                  "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
                 ),
-                title: <span className="text-red-900">Network error:</span>,
+                title: (
+                  <p className="text-red-700 text-xs sm:text-sm">
+                    Network error:
+                  </p>
+                ),
                 description: (
-                  <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                    Failed to setup your account type, please check your
-                    internet connection.
+                  <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
+                    Please check your internet connection.
                   </p>
                 ),
               });
@@ -428,11 +456,13 @@ const TalentTypeSelection = ({ createUserAccount }) => {
           } else {
             toast({
               className: cn(
-                "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+                "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
               ),
-              title: <span className="text-red-900">Failed:</span>,
+              title: (
+                <span className="text-red-700 text-xs sm:text-sm">Failed:</span>
+              ),
               description: (
-                <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+                <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
                   Failed to create your account type, please try again.
                 </p>
               ),
@@ -444,12 +474,24 @@ const TalentTypeSelection = ({ createUserAccount }) => {
   };
 
   return (
-    <div className="flex  flex-col gap-10 w-full px-10">
+    <motion.div
+      initial={{
+        y: 7,
+      }}
+      animate={{
+        y: 0,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 120,
+      }}
+      className="flex  flex-col gap-10 w-full md:px-10 p-5 border rounded-md"
+    >
       <div className="flex flex-col gap-1">
-        <h1 className="font-semibold text-xl text-slate-800">
+        <h1 className="font-semibold text-xl md:text-2xl text-slate-800">
           Account type selection
         </h1>
-        <p className="w-10/12 text-sm text-gray-600">
+        <p className="w-10/12 text-xs md:text-sm text-gray-600">
           Get hired by our top best employers and land your next big
           opportunity.
         </p>
@@ -471,8 +513,12 @@ const TalentTypeSelection = ({ createUserAccount }) => {
                 <div className="flex gap-3">
                   <img className="w-6 sm:w-10" src={radio.icon} alt="" />
                   <div>
-                    <FieldTitle>{radio.label}</FieldTitle>
-                    <FieldDescription>{radio.desc}</FieldDescription>
+                    <FieldTitle className="text-sm md:text-base">
+                      {radio.label}
+                    </FieldTitle>
+                    <FieldDescription className="text-xs md:text-sm">
+                      {radio.desc}
+                    </FieldDescription>
                   </div>
                 </div>
               </FieldContent>
@@ -488,8 +534,8 @@ const TalentTypeSelection = ({ createUserAccount }) => {
       <Button
         className={
           talentChoice === ""
-            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300"
-            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700"
+            ? "w-full bg-gray-300 border-none text-white rounded py-3 mb-5 cursor-not-allowed hover:bg-gray-300 h-11"
+            : "w-full bg-sky-600 border-none text-white rounded py-3 mb-5 cursor-pointer hover:bg-sky-700 h-11"
         }
         type="button"
         onClick={setAccountType}
@@ -498,6 +544,6 @@ const TalentTypeSelection = ({ createUserAccount }) => {
       >
         <span>Continue</span>
       </Button>
-    </div>
+    </motion.div>
   );
 };

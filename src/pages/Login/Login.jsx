@@ -18,6 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
 import LoginBG from "../../static/images/loginbg.webp";
+import LoginImage from "../../static/images/login-left-bg.png";
 import Logo from "../../static/images/splash.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -129,11 +130,13 @@ export default function LoginForm() {
       } else {
         toast({
           className: cn(
-            "bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+            "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
           ),
-          title: <span className="text-green-800">Successful:</span>,
+          title: (
+            <p className="text-green-800  text-xs sm:text-sm">Successful:</p>
+          ),
           description: (
-            <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+            <p className="w-full  bg-green-100 text-green-700 p-2 px-3 text-xs">
               Logging in...
             </p>
           ),
@@ -158,12 +161,14 @@ export default function LoginForm() {
         if (error.response.status === 401 || error.response.status === 404) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
             ),
-            title: <span className="text-red-900">Failed to login:</span>,
+            title: (
+              <p className=" w-full text-gray-900 text-sm">Failed to login:</p>
+            ),
             description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                Wrong email or password combination
+              <p className="w-full  bg-red-200 text-red-800 p-2 px-3 text-xs">
+                Wrong email or password combination. Try again
               </p>
             ),
           });
@@ -177,23 +182,22 @@ export default function LoginForm() {
       if (!error.response) {
         toast({
           className: cn(
-            "flex flex-col gap-5 bottom-10 right-4 fixed max-w-[400px] md:max-w-[420px]"
+            " fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
           ),
-          title: <p className="text-red-700">Network error</p>,
+          title: (
+            <p className=" text-red-700 text-xs sm:text-sm">Network error</p>
+          ),
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-gray-100 p-4 text-red-700">
-              <code>
-                Failed to login, please check your
-                <br />
-                internet connection.
-              </code>
-            </pre>
+            <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
+              Please check your internet connection.
+            </p>
           ),
           action: (
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
-              className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again">
+              className="text-xs text-secondary p-0 self-end mt-7  sm:text-sm sm:px-2 sm:bg-secondary sm:text-white hover:bg-sky-700 hover:text-white border-transparent"
+              altText="Try again"
+            >
               Try again
             </ToastAction>
           ),
@@ -211,105 +215,129 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen sm:py-14">
-      <Card className="border-transparent">
-        <CardContent className="flex items-center rounded-b-lg  p-0 sm:w-[1000px] ">
-          <section
-            className="hidden h-[615px] sm:inline-block sm:w-1/2 bg-cover bg-center  rounded-l-lg"
-            style={{ backgroundImage: `url(${LoginBG})` }}>
-            <img
-              src={Logo}
-              alt="login-logo"
-              className="rounded-l-lg h-[50px] w-[50px] ml-[5%] mt-[20px]"
-            />
-          </section>
-
-          <section className="md:border-[1px] rounded-r-lg px-10 sm:w-1/2 sm:px-10 sm:py-14">
-            <div>
-              <h1 className="text-3xl font-semibold">Login.</h1>
-            </div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-10">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="example@gmail.com"
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+    <div className="min-h-screen">
+      <nav className="flex w-full bg-sky-600 p-2 fixed top-0 left-0 z-50 md:hidden">
+        <Link to="/" className="flex items-center gap-2">
+          <img className="w-10" src={Logo} alt="" />
+          <div className="flex flex-col text-white -space-y-1.5">
+            <span className="font-bold text-2xl">NXG</span>
+            <span className="text-xs ">JOB HUB</span>
+          </div>
+        </Link>
+      </nav>
+      <div className="pt-20 px-5">
+        <Card className="md:border-transparent">
+          <CardContent className="flex items-center justify-center  p-0">
+            <div className="flex max-w-4xl w-full rounded-xl overflow-hidden">
+              <div className="w-1/2 hidden md:block h-full">
+                <img
+                  src={LoginImage}
+                  alt="login-logo"
+                  className="w-full h-full object-cover"
                 />
-
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <PasswordInput
-                          placeholder="Enter your password."
-                          {...field}
-                        />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              </div>
+              <section className="w-full space-y-4 p-4 py-7 md:border-[1px] rounded-r-lg md:px-10 md:w-1/2 sm:py-14">
                 <div>
-                  <Link to="/forgotpassword" className="underline text-sm">
-                    Forget Passoword?
-                  </Link>
+                  <h1 className="text-2xl font-semibold">Login</h1>
+                  <p className="text-sm text-gray-500">
+                    Please enter your login details below
+                  </p>
                 </div>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6 md:max-w-3xl md:mx-auto"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-500 font-semibold">
+                            Email:
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="h-11 text-sm"
+                              placeholder="example@gmail.com"
+                              type="text"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <FormField
-                  control={form.control}
-                  name="keep_loggin"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
-                      <FormControl>
-                        <Checkbox
-                          className="p-0  border-black hover:border-transparent hover:bg-secondary"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Keep me logged In</FormLabel>
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-500 font-semibold">
+                            Password:
+                          </FormLabel>
+                          <FormControl>
+                            <PasswordInput
+                              className="h-11 text-sm"
+                              placeholder="Enter your password."
+                              {...field}
+                            />
+                          </FormControl>
 
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  disabled={loginLoading}
-                  className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                  type="submit">
-                  {loginLoading ? (
-                    <div className="flex items-center space-x-1">
-                      <Loader2 className="animate-spin" />
-                      <span>Please wait</span>
-                    </div>
-                  ) : (
-                    <span>Sign in</span>
-                  )}
-                </Button>
-              </form>
-            </Form>
-            {/* Logging using third party vendor  /> */}
-            {/* <div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <p className="text-sm space-x-1">
+                      <span className="text-gray-600">Forget Passoword?</span>
+                      <Link
+                        to="/forgotpassword"
+                        className="text-secondary underline"
+                      >
+                        Reset it
+                      </Link>
+                    </p>
+                    <div></div>
+
+                    <FormField
+                      control={form.control}
+                      name="keep_loggin"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
+                          <FormControl>
+                            <Checkbox
+                              className="p-0  border-black hover:border-transparent hover:bg-secondary"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Keep me logged In</FormLabel>
+
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      disabled={loginLoading}
+                      className="w-full bg-sky-600 border-none hover:bg-sky-700 h-11"
+                      type="submit"
+                    >
+                      {loginLoading ? (
+                        <div className="flex items-center space-x-1">
+                          <Loader2 className="animate-spin" />
+                          <span>Please wait</span>
+                        </div>
+                      ) : (
+                        <span>Sign in</span>
+                      )}
+                    </Button>
+                  </form>
+                </Form>
+                {/* Logging using third party vendor  /> */}
+                {/* <div>
               <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
                 <div class="flex-grow border-t border-gray-300"></div>
                 <span class="px-4">or</span>
@@ -344,18 +372,23 @@ export default function LoginForm() {
                 </Button>
               </section>
             </div> */}
-            <div className="text-center">
-              <p>
-                Don't have an account?{" "}
-                <Link to="/register" className="underline text-sm text-sky-600">
-                  Sign up
-                </Link>
-              </p>
+                <div className="text-center">
+                  <p>
+                    Don't have an account?{" "}
+                    <Link
+                      to="/register"
+                      className="underline text-sm text-sky-600"
+                    >
+                      Sign up
+                    </Link>
+                  </p>
+                </div>
+              </section>
             </div>
-          </section>
-          <Toaster />
-        </CardContent>
-      </Card>
+            <Toaster />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
