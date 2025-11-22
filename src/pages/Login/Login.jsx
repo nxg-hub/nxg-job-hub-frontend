@@ -33,10 +33,6 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "@/redux/AllUsersSlice";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-<<<<<<< HEAD
-import LoginImage from "../../static/images/login-left-bg.png";
-=======
->>>>>>> 2f49170388540e07db7e116acc13111a56ee072a
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -332,151 +328,7 @@ export default function LoginForm() {
                     </Button>
                   </form>
                 </Form>
-                {/* Logging using third party vendor  /> */}
-                {/* <div>
-<<<<<<< HEAD
-      <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
-        <div class="flex-grow border-t border-gray-300"></div>
-        <span class="px-4">or</span>
-        <div class="flex-grow border-t border-gray-300"></div>
-      </section>
-      <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
-        <Button
-          variant="outline"
-          className="w-full"
-          type="submit">
-          <img
-            className="w-5 h-5"
-            src={Googleicon}
-            alt=""
-          />
-          <span className="hidden sm:inline-block">
-            Sign In with Google
-          </span>
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full"
-          type="submit">
-          <img
-            className="w-5 h-5"
-            src={Linkedinicon}
-            alt=""
-          />
-          <span className="hidden sm:inline-block">
-            Sign In with LinkedIn
-          </span>
-        </Button>
-      </section>
-    </div> */}
-=======
-              <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
-                <div class="flex-grow border-t border-gray-300"></div>
-                <span class="px-4">or</span>
-                <div class="flex-grow border-t border-gray-300"></div>
-              </section>
-              <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  type="submit">
-                  <img
-                    className="w-5 h-5"
-                    src={Googleicon}
-                    alt=""
-    <>
-      <div className="bg-[#215E7D]">
-        <Header />
-      </div>
-      <div className="flex items-center justify-center min-h-screen sm:py-14">
-        <Card className="border-transparent">
-          <CardContent className="flex items-center rounded-b-lg  p-0 sm:w-[1000px] ">
-            <section
-              className="hidden h-[615px] sm:inline-block sm:w-1/2 bg-cover bg-center  rounded-l-lg"
-              style={{ backgroundImage: `url(${LoginBG})` }}>
-              <img
-                src={Logo}
-                alt="login-logo"
-                className="rounded-l-lg h-[50px] w-[50px] ml-[5%] mt-[20px]"
-              />
-            </section>
 
-            <section className="md:border-[1px] rounded-r-lg px-10 sm:w-1/2 sm:px-10 sm:py-14">
-              <div>
-                <h1 className="text-3xl font-semibold">Login.</h1>
-              </div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 max-w-3xl mx-auto py-10">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="example@gmail.com"
-                            type="text"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <PasswordInput
-                            placeholder="Enter your password."
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div>
-                    <Link to="/forgotpassword" className="underline text-sm">
-                      Forget Passoword?
-                    </Link>
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="keep_loggin"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
-                        <FormControl>
-                          <Checkbox
-                            className="p-0  border-black hover:border-transparent hover:bg-secondary"
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>Keep me logged In</FormLabel>
-
-                          <FormMessage />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                  <span className="hidden sm:inline-block">
-                    Sign In with LinkedIn
-                  </span>
-                </Button>
-              </section>
-            </div> */}
->>>>>>> 2f49170388540e07db7e116acc13111a56ee072a
                 <div className="text-center">
                   <p>
                     Don't have an account?{" "}
@@ -490,26 +342,8 @@ export default function LoginForm() {
                 </div>
               </section>
             </div>
-<<<<<<< HEAD
-
-=======
-                  <Button
-                    disabled={loginLoading}
-                    className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                    type="submit">
-                    {loginLoading ? (
-                      <div className="flex items-center space-x-1">
-                        <Loader2 className="animate-spin" />
-                        <span>Please wait</span>
-                      </div>
-                    ) : (
-                      <span>Sign in</span>
-                    )}
-                  </Button>
-                </form>
-              </Form>
-              {/* Logging using third party vendor  /> */}
-              {/* <div>
+            {/* Logging using third party vendor  /> */}
+            {/* <div>
       <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
         <div class="flex-grow border-t border-gray-300"></div>
         <span class="px-4">or</span>
@@ -544,24 +378,11 @@ export default function LoginForm() {
         </Button>
       </section>
     </div> */}
-              <div className="text-center">
-                <p>
-                  Don't have an account?{" "}
-                  <Link
-                    to="/register"
-                    className="underline text-sm text-sky-600">
-                    Sign up
-                  </Link>
-                </p>
-              </div>
-            </section>
->>>>>>> 2f49170388540e07db7e116acc13111a56ee072a
+
             <Toaster />
           </CardContent>
         </Card>
       </div>
     </div>
-      <Footer />
-    </>
   );
 }
