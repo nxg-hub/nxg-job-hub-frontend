@@ -44,12 +44,20 @@ export default function RenderStepOne() {
   const { control } = useFormContext();
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-1">
+    <div className="space-y-5 md:space-y-8">
+      <div className="hidden md:flex flex-col gap-1">
         <h1 className="font-semibold text-xl text-slate-800">
           Company Profile
         </h1>
         <p className="text-sm text-gray-600">
+          Basic information about your organization.
+        </p>
+      </div>
+      <div className="md:hidden">
+        <h1 className="text-sm font-semibold text-secondary">
+          Step 1 (Company Profile)
+        </h1>
+        <p className="text-xs text-gray-600">
           Basic information about your organization.
         </p>
       </div>
@@ -60,9 +68,13 @@ export default function RenderStepOne() {
           <FormItem>
             <FormLabel className="text-gray-600">Company Name</FormLabel>
             <FormControl>
-              <Input placeholder="e.g., Tech Solutions Inc." {...field} />
+              <Input
+                className="h-11 text-sm"
+                placeholder="e.g., Tech Solutions Inc."
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs md:text-sm" />
           </FormItem>
         )}
       />
@@ -75,11 +87,11 @@ export default function RenderStepOne() {
             <FormControl>
               <Textarea
                 placeholder="Briefly describe your company's mission and services (Min 50 chars)."
-                className="resize-none"
+                className="resize-none text-sm"
                 {...field}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs md:text-sm" />
           </FormItem>
         )}
       />
@@ -92,7 +104,7 @@ export default function RenderStepOne() {
               <FormLabel className="text-gray-600">Industry Type</FormLabel>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="font-normal">
+                  <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Choose Industry" />
                   </SelectTrigger>
                 </FormControl>
@@ -106,7 +118,7 @@ export default function RenderStepOne() {
                 </SelectContent>
               </Select>
 
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />
@@ -118,7 +130,7 @@ export default function RenderStepOne() {
               <FormLabel className="text-gray-600">Company Size</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="font-normal">
+                  <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Choose Size" />
                   </SelectTrigger>
                 </FormControl>
@@ -132,7 +144,7 @@ export default function RenderStepOne() {
                 </SelectContent>
               </Select>
 
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />
@@ -145,9 +157,13 @@ export default function RenderStepOne() {
             <FormItem>
               <FormLabel className="text-gray-600">Company Website</FormLabel>
               <FormControl>
-                <Input placeholder="https://yourcompany.com" {...field} />
+                <Input
+                  className="h-11 text-sm"
+                  placeholder="https://yourcompany.com"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />

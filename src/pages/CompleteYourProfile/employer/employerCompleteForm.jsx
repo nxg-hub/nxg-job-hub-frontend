@@ -422,24 +422,20 @@ export function EmployerProfileCompleteForm() {
   };
 
   return (
-    <div>
-      <nav className="flex justify-between items-center w-full bg-sky-600 p-4 fixed top-0 left-0 z-50 sm:static">
-        <span
-          onClick={handlePrevious}
-          className="inline-flex sm:hidden text-white cursor-pointer"
-        >
-          <ArrowLeft /> Back
-        </span>
+    <div className="min-h-screen">
+      <nav className="flex justify-between items-center w-full bg-sky-600 p-4 fixed top-0 left-0 z-50">
         <div className="flex items-center gap-2">
-          <img className="w-20 sm:w-14" src={Logo} alt="" />
+          <img className="w-10 sm:w-14" src={Logo} alt="" />
           <div className="flex flex-col text-white -space-y-1.5">
-            <span className="font-bold text-3xl">NXG</span>
-            <span className="text-xs tracking-widest">JOB HUB</span>
+            <span className="font-bold text-2xl md:text-3xl">NXG</span>
+            <span className="text-xs md:text-xs md:tracking-widest">
+              JOB HUB
+            </span>
           </div>
         </div>
       </nav>
-      <div className="w-full flex items-center justify-center p-20 gap-10">
-        <div className="w-2/6">
+      <div className="w-full md:flex md:items-center md:justify-center md:p-20 md:gap-10 md:px-52">
+        <div className="hidden md:block w-2/6">
           <h1 className="mb-4 text-2xl font-semibold text-slate-800">
             Getting Started
           </h1>
@@ -488,50 +484,68 @@ export function EmployerProfileCompleteForm() {
         </div>
         <Separator
           orientation="vertical"
-          className="w-[1px] h-[500px] my-auto"
+          className="hidden md:block w-[1px] h-[500px] my-auto"
         />
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/4 px-10">
-            <CurrentStepComponent />
-            <div className="flex mt-10">
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentStep === 0 || isPending}
-                >
-                  <ChevronLeft className="mr-2 h-4 w-4" /> Previous
-                </Button>
-                {currentStep < totalSteps - 1 && (
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full px-3 mt-28 md:mt-20 md:w-2/4 md:px-10  "
+          >
+            <div className="border rounded-md md:border-0 p-5 md:p-0 ">
+              <div className="md:hidden">
+                <h1 className="text-xl font-semibold text-slate-800">
+                  Getting Started
+                </h1>
+                <p className="text-gray-400 text-xs">
+                  Complete all steps to register your company and post job
+                  opportunities
+                </p>
+                <Progress
+                  value={((currentStep + 1) / totalSteps) * 100}
+                  className="bg-gray-200 h-2 mt-2"
+                />
+              </div>
+              <CurrentStepComponent />
+              <div className="flex mt-10">
+                <div className="flex gap-2">
                   <Button
-                    className="bg-sky-500 border-none hover:bg-sky-600"
                     type="button"
-                    onClick={handleNext}
+                    variant="outline"
+                    onClick={handlePrevious}
+                    disabled={currentStep === 0 || isPending}
                   >
-                    Next <ChevronRight className="ml-2 h-4 w-4" />
+                    <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                  </Button>
+                  {currentStep < totalSteps - 1 && (
+                    <Button
+                      className="bg-sky-500 border-none hover:bg-sky-600"
+                      type="button"
+                      onClick={handleNext}
+                    >
+                      Next <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+                {currentStep === totalSteps - 1 && (
+                  <Button
+                    className="border-transparent ml-auto"
+                    type="submit"
+                    disabled={isPending}
+                  >
+                    {isPending ? (
+                      <div className="flex items-center space-x-1">
+                        <Loader2 className="animate-spin" />
+                        <span>Please wait</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <span> Submit</span>
+                        <Check className="ml-2 h-4 w-4" />
+                      </div>
+                    )}
                   </Button>
                 )}
               </div>
-              {currentStep === totalSteps - 1 && (
-                <Button
-                  className="border-transparent ml-auto"
-                  type="submit"
-                  disabled={isPending}
-                >
-                  {isPending ? (
-                    <div className="flex items-center space-x-1">
-                      <Loader2 className="animate-spin" />
-                      <span>Please wait</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <span> Submit</span>
-                      <Check className="ml-2 h-4 w-4" />
-                    </div>
-                  )}
-                </Button>
-              )}
             </div>
           </form>
         </Form>

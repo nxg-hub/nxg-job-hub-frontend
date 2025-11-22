@@ -121,11 +121,15 @@ export default function SignupForm() {
     onSuccess: (data) => {
       toast({
         className: cn(
-          "bottom-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+          "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
         ),
-        title: <span className="text-green-800">Registration Successful:</span>,
+        title: (
+          <span className="text-green-800 text-xs sm:text-sm">
+            Registration Successful:
+          </span>
+        ),
         description: (
-          <p className="text-gray-800 rounded-md bg-green-100 p-4 font-mono w-full">
+          <p className="w-full  bg-gray-100 p-2 text-green-700 text-xs sm:text-sm">
             Your account have been successfully registered. Kindly proceed to
             verify your account!
           </p>
@@ -143,11 +147,11 @@ export default function SignupForm() {
         if (err.response) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
             ),
-            title: <span className="text-red-900">Failed:</span>,
+            title: <p className="text-red-700 text-xs sm:text-sm">Failed:</p>,
             description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+              <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
                 {err.response.data}
               </p>
             ),
@@ -155,19 +159,22 @@ export default function SignupForm() {
         } else if (err.request) {
           toast({
             className: cn(
-              "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+              "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
             ),
-            title: <span className="text-red-900">Network error:</span>,
+            title: (
+              <p className="text-red-700 text-xs sm:text-sm">Network error</p>
+            ),
             description: (
-              <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
-                Account creation failed, please check your internet connection.
+              <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
+                Please check your internet connection.
               </p>
             ),
             action: (
               <ToastAction
                 onClick={form.handleSubmit(onSubmit)}
-                className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-                altText="Try again">
+                className="text-xs text-secondary p-0 self-end mt-7  sm:text-sm sm:px-2 sm:bg-secondary sm:text-white hover:bg-sky-700 hover:text-white border-transparent"
+                altText="Try again"
+              >
                 Try again
               </ToastAction>
             ),
@@ -176,11 +183,15 @@ export default function SignupForm() {
       } else {
         toast({
           className: cn(
-            "flex flex-col space-y-5 items-start top-10 right-4 flex fixed w-[360px] sm:max-w-[420px]"
+            "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
           ),
-          title: <span className="text-red-900">Registration failed:</span>,
+          title: (
+            <p className="text-red-700 text-xs sm:text-sm">
+              Registration failed
+            </p>
+          ),
           description: (
-            <p className="text-gray-800 rounded-md bg-red-100 p-4 font-mono">
+            <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
               {err.response.data}
             </p>
           ),
@@ -203,239 +214,275 @@ export default function SignupForm() {
   }
 
   return (
-    <Card
-      style={{ backgroundImage: `url(${regbg})` }}
-      className=" sm:bg-cover sm:bg-center sm:bg-no-repeat 
-        sm:min-h-screen sm:w-full sm:grid sm:place-items-center">
-      <img
-        src={Logo}
-        alt="login-logo"
-        className="rounded-l-lg h-[70px] w-[70px] absolute left-[5%] top-5"
-      />
-      <CardContent className="bg-white rounded-lg shadow-lg p-10 sm:w-[60%] sm:my-12 sm:px-20 sm:py-10">
-        <div>
-          <h1 className="text-3xl font-semibold">Let's get you started</h1>
-          <p className="text-base">
-            Get started and connect to different professionals.
-          </p>
-        </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10">
-            <div className="space-y-7 sm:flex sm:space-x-6 sm:space-y-0">
-              <div className="sm:w-1/2">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your first name"
-                          type=""
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="sm:w-1/2">
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your last name"
-                          type=""
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem className="flex flex-col items-start">
-                  <FormLabel>Phone number</FormLabel>
-                  <FormControl className="w-full">
-                    <PhoneInput
-                      placeholder="Enter your phone number"
-                      {...field}
-                      defaultCountry="NG"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email address</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="example@gmail.com"
-                      type="email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="gender"
-              render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormLabel>Gender</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      className="flex space-x-10 ">
-                      <FormItem className="flex space-x-2 space-y-0">
+    <div className="min-h-screen">
+      <nav className="flex w-full bg-sky-600 p-2 fixed top-0 left-0 z-50 md:hidden">
+        <Link to="/" className="flex items-center gap-2">
+          <img className="w-10" src={Logo} alt="" />
+          <div className="flex flex-col text-white -space-y-1.5">
+            <span className="font-bold text-2xl">NXG</span>
+            <span className="text-xs ">JOB HUB</span>
+          </div>
+        </Link>
+      </nav>
+      <Card
+        style={{ backgroundImage: `url(${regbg})` }}
+        className="pt-20 pb-10 px-5 sm:bg-cover sm:bg-center sm:bg-no-repeat 
+        sm:min-h-screen sm:w-full sm:grid sm:place-items-center"
+      >
+        <img
+          src={Logo}
+          alt="login-logo"
+          className="hidden md:block rounded-l-lg h-[70px] w-[70px] absolute left-[5%] top-5"
+        />
+        <CardContent className="bg-white py-8 rounded-lg shadow-lg sm:w-[60%] sm:my-12 sm:px-20 sm:py-10">
+          <div>
+            <h1 className="text-2xl font-semibold">Create Your Account</h1>
+            <p className="text-sm text-gray-500">
+              Let get you startted by sign up your an account.
+            </p>
+          </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 max-w-3xl mx-auto py-10"
+            >
+              <div className="space-y-7 sm:flex sm:space-x-6 sm:space-y-0">
+                <div className="sm:w-1/2">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-500 font-semibold">
+                          First name
+                        </FormLabel>
                         <FormControl>
-                          <RadioGroupItem
-                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
-                            value="MALE"
+                          <Input
+                            className="text-sm h-11"
+                            placeholder="Enter your first name"
+                            type=""
+                            {...field}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">Male</FormLabel>
+                        <FormMessage />
                       </FormItem>
-                      <FormItem className="flex space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem
-                            className="p-0 border-black hover:border-transparent hover:bg-secondary"
-                            value="FEMALE"
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal">Female</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <PasswordInput
-                      placeholder="Enter your password."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="re_password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Retype password</FormLabel>
-                  <FormControl>
-                    <PasswordInput
-                      placeholder="Enter your password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="terms_condition"
-              render={({ field }) => (
-                <FormItem className="flex gap-3 items-center">
-                  <FormControl>
-                    <Checkbox
-                      className="p-0 border-black hover:border-transparent hover:bg-secondary"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <p className="text-xs sm:text-base">
-                    I agree to the
-                    <Link
-                      to={"/terms"}
-                      target="_blank"
-                      className="text-primary hover:underline">
-                      {" "}
-                      Terms of Service{" "}
-                    </Link>
-                    and
-                    <Link
-                      to={"/privacy"}
-                      target="_blank"
-                      className="text-primary hover:underline">
-                      {" "}
-                      Privacy conditions
-                    </Link>
-                  </p>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              disabled={mutation.isPending}
-              className="w-full bg-sky-600 border-none hover:bg-sky-700"
-              type="submit">
-              {mutation.isPending ? (
-                <div className="flex items-center space-x-1">
-                  <Loader2 className="animate-spin" />
-                  <span>Form submitting ....</span>
+                    )}
+                  />
                 </div>
-              ) : (
-                <span>Register</span>
-              )}
-            </Button>
-          </form>
-          <p className="text-sm text-center text-gray-500">
-            Already have an account?{" "}
-            <Link to="/login" className="text-sky-600">
-              Log in
-            </Link>
-          </p>
-          <Link
-            to={"/"}
-            className="flex items-center space-x-2 text-gray-500 mt-5">
-            <ArrowLeft />
-            <span className="text-sm">Go back to</span>
-            <span className="text-sky-600">Home</span>
-          </Link>
-        </Form>
 
-        {/* or signup using other methods */}
-        {/* <div>
+                <div className="sm:w-1/2">
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-500 font-semibold">
+                          Last name
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="text-sm h-11"
+                            placeholder="Enter your last name"
+                            type=""
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col items-start">
+                    <FormLabel className="text-gray-500 font-semibold">
+                      Phone number
+                    </FormLabel>
+                    <FormControl className="w-full">
+                      <PhoneInput
+                        placeholder="Enter your phone number"
+                        {...field}
+                        defaultCountry="NG"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-500 font-semibold">
+                      Email address
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="text-sm h-11"
+                        placeholder="example@gmail.com"
+                        type="email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel className="text-gray-500 font-semibold">
+                      Gender
+                    </FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        className="flex space-x-10 "
+                      >
+                        <FormItem className="flex space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem
+                              className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                              value="MALE"
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">Male</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem
+                              className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                              value="FEMALE"
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">Female</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-500 font-semibold">
+                      Password
+                    </FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        className="text-sm h-11"
+                        placeholder="Enter your password."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="re_password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-500 font-semibold">
+                      Retype password
+                    </FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        className="text-sm h-11"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="terms_condition"
+                render={({ field }) => (
+                  <FormItem className="flex gap-3 items-center">
+                    <FormControl>
+                      <Checkbox
+                        className="p-0 border-black hover:border-transparent hover:bg-secondary"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <p className="text-xs sm:text-base">
+                      I agree to the
+                      <Link
+                        to={"/terms"}
+                        target="_blank"
+                        className="text-primary hover:underline"
+                      >
+                        {" "}
+                        Terms of Service{" "}
+                      </Link>
+                      and
+                      <Link
+                        to={"/privacy"}
+                        target="_blank"
+                        className="text-primary hover:underline"
+                      >
+                        {" "}
+                        Privacy conditions
+                      </Link>
+                    </p>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                disabled={mutation.isPending}
+                className="w-full bg-sky-600 border-none hover:bg-sky-700 h-11"
+                type="submit"
+              >
+                {mutation.isPending ? (
+                  <div className="flex items-center space-x-1">
+                    <Loader2 className="animate-spin" />
+                    <span>Form submitting ....</span>
+                  </div>
+                ) : (
+                  <span>Register</span>
+                )}
+              </Button>
+            </form>
+            <p className="text-sm text-center text-gray-500">
+              Already have an account?{" "}
+              <Link to="/login" className="text-sky-600">
+                Log in
+              </Link>
+            </p>
+            <Link
+              to={"/"}
+              className="hidden md:flex items-center space-x-2 text-gray-500 mt-5"
+            >
+              <ArrowLeft />
+              <span className="text-sm">Go back to</span>
+              <span className="text-sky-600">Home</span>
+            </Link>
+          </Form>
+
+          {/* or signup using other methods */}
+          {/* <div>
           <section class="w-10/12 flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
             <div class="flex-grow border-t border-gray-300"></div>
             <span class="px-4">or</span>
@@ -471,8 +518,9 @@ export default function SignupForm() {
           </section>
         </div> */}
 
-        <Toaster />
-      </CardContent>
-    </Card>
+          <Toaster />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

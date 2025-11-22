@@ -23,12 +23,20 @@ export default function RenderStepTwo({ form }) {
   const { control } = useFormContext();
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-1">
+    <div className="space-y-5 md:space-y-8">
+      <div className="hidden md:flex flex-col gap-1">
         <h1 className="font-semibold text-xl text-slate-800">
           Location & Contact
         </h1>
         <p className="text-sm text-gray-600">
+          Physical and contact details for official communication.
+        </p>
+      </div>
+      <div className="md:hidden">
+        <h1 className="text-sm font-semibold text-secondary">
+          Step 2 (Location & Contact)
+        </h1>
+        <p className="text-xs text-gray-600">
           Physical and contact details for official communication.
         </p>
       </div>
@@ -41,7 +49,7 @@ export default function RenderStepTwo({ form }) {
               <FormLabel className="text-gray-600">Country</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="font-normal">
+                  <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                 </FormControl>
@@ -55,7 +63,7 @@ export default function RenderStepTwo({ form }) {
                 </SelectContent>
               </Select>
 
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />
@@ -67,7 +75,7 @@ export default function RenderStepTwo({ form }) {
               <FormLabel className="text-gray-600">State</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger className="font-normal">
+                  <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Select state  " />
                   </SelectTrigger>
                 </FormControl>
@@ -81,7 +89,7 @@ export default function RenderStepTwo({ form }) {
                 </SelectContent>
               </Select>
 
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />
@@ -97,11 +105,11 @@ export default function RenderStepTwo({ form }) {
             <FormControl>
               <Textarea
                 placeholder="Street, City,"
-                className="resize-none"
+                className="resize-none text-sm"
                 {...field}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs md:text-sm" />
           </FormItem>
         )}
       />
@@ -115,9 +123,13 @@ export default function RenderStepTwo({ form }) {
                 Company Zip/Postal Code
               </FormLabel>
               <FormControl>
-                <Input placeholder="12345" {...field} />
+                <Input
+                  className="h-11 text-sm"
+                  placeholder="12345"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />
@@ -134,7 +146,7 @@ export default function RenderStepTwo({ form }) {
                   defaultCountry="NG"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs md:text-sm" />
             </FormItem>
           )}
         />

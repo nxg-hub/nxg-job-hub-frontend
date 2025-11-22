@@ -195,7 +195,8 @@ export default function LoginForm() {
             <ToastAction
               onClick={form.handleSubmit(onSubmit)}
               className="bg-primary text-white   hover:bg-sky-700 hover:text-white self-start border-transparent"
-              altText="Try again">
+              altText="Try again"
+            >
               Try again
             </ToastAction>
           ),
@@ -222,7 +223,8 @@ export default function LoginForm() {
           <CardContent className="flex items-center rounded-b-lg  p-0 sm:w-[1000px] ">
             <section
               className="hidden h-[615px] sm:inline-block sm:w-1/2 bg-cover bg-center  rounded-l-lg"
-              style={{ backgroundImage: `url(${LoginBG})` }}>
+              style={{ backgroundImage: `url(${LoginBG})` }}
+            >
               <img
                 src={Logo}
                 alt="login-logo"
@@ -237,7 +239,8 @@ export default function LoginForm() {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 max-w-3xl mx-auto py-10">
+                  className="space-y-8 max-w-3xl mx-auto py-10"
+                >
                   <FormField
                     control={form.control}
                     name="email"
@@ -302,7 +305,8 @@ export default function LoginForm() {
                   <Button
                     disabled={loginLoading}
                     className="w-full bg-sky-600 border-none hover:bg-sky-700"
-                    type="submit">
+                    type="submit"
+                  >
                     {loginLoading ? (
                       <div className="flex items-center space-x-1">
                         <Loader2 className="animate-spin" />
@@ -355,7 +359,8 @@ export default function LoginForm() {
                   Don't have an account?{" "}
                   <Link
                     to="/register"
-                    className="underline text-sm text-sky-600">
+                    className="underline text-sm text-sky-600"
+                  >
                     Sign up
                   </Link>
                 </p>

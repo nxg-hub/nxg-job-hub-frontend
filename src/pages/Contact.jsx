@@ -20,10 +20,6 @@ const Contact = () => {
 
   return (
     <section className="w-full bg-white">
-      <div className="bg-[#215E7D]">
-        <Header />
-      </div>
-
       <div
         style={{
           position: "relative",
@@ -32,14 +28,16 @@ const Contact = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-        }}>
+        }}
+      >
         <div className="contact-main">
           <h2>SEND A MESSAGE</h2>
           <form
             onSubmit={sendMessage}
             name="contact"
             method="POST"
-            data-netlify="true">
+            data-netlify="true"
+          >
             <input type="hidden" name="form-name" value="contact" />
             <input
               type="text"
@@ -86,7 +84,8 @@ const Contact = () => {
                 background: "#ffffff",
                 border: "0.06rem solid #d9d9d9",
                 borderRadius: "20px",
-              }}>
+              }}
+            >
               <Dialog.Panel>
                 <Dialog.Title style={{ textAlign: "center" }}>
                   <div
@@ -97,7 +96,8 @@ const Contact = () => {
                       textAlign: "end",
                       marginTop: "-4rem",
                       cursor: "pointer",
-                    }}>
+                    }}
+                  >
                     <AiOutlineClose />
                   </div>
                   <div style={{ marginTop: "3rem" }}>
@@ -107,7 +107,8 @@ const Contact = () => {
                         fontSize: "26px",
                         fontWeight: "700",
                         color: "#006A90",
-                      }}>
+                      }}
+                    >
                       Message sent!
                     </p>
                   </div>
@@ -117,7 +118,6 @@ const Contact = () => {
           )}
         </div>
       </div>
-      <Footer />
     </section>
   );
 };

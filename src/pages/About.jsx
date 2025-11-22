@@ -10,11 +10,6 @@ const About = () => {
 
   return (
     <section className="bg-white w-full font-inter">
-      {/* Header */}
-      <div className="bg-[#215E7D]">
-        <Header />
-      </div>
-
       {/* Intro Section */}
       <div className="sm:w-[60%] w-[80%] mx-auto text-center my-12 md:my-20 space-y-5">
         <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
@@ -121,7 +116,8 @@ const About = () => {
             ].map((item, index) => (
               <p
                 key={index}
-                className="text-sm md:text-lg leading-relaxed md:text-right">
+                className="text-sm md:text-lg leading-relaxed md:text-right"
+              >
                 <span className="font-semibold">{item.split(":")[0]}:</span>{" "}
                 {item.split(":")[1]}
               </p>
@@ -129,8 +125,6 @@ const About = () => {
           </article>
         </div>
       </div>
-
-      <Footer />
     </section>
   );
 };
