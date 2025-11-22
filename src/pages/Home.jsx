@@ -54,12 +54,10 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-<<<<<<< HEAD
         }}
       >
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[-10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight">
-=======
         }}>
         <Header />
         {/* <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px]">
