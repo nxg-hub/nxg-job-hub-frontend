@@ -69,10 +69,8 @@ import EmployerMessagesTab from "./pages/Dashboard/Employer2/employer-message-ta
 import { TalentDashboard } from "./pages/talent.jsx";
 import TalentDashboardTab from "./pages/Dashboard/Talent/talent-dashboard-tab.jsx";
 import TalentProfileTab from "./pages/Dashboard/Talent/talent-profile-tab.jsx";
-import TalentJobsTab from "./pages/Dashboard/Talent/talent-jobs-tab.jsx";
 import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/CompleteYourProfile/employer/employerCompleteForm.jsx";
-
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";

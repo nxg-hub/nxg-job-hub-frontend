@@ -44,8 +44,8 @@ const ResetPassword = () => {
         );
         res.status === 200 &&
           setMessage({
-            type: "warning",
-            content: "Could not send reset password email",
+            type: "info",
+            content: "Password reset successful!.",
           });
         setTimeout(() => setMessage(null), 5000);
         navigate("/login");
