@@ -54,20 +54,13 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-<<<<<<< HEAD
         }}
       >
-        <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[-10px]">
-          <h1 className="text-3xl md:text-6xl font-bold  leading-tight">
-=======
-        }}>
-        <Header />
+        {/* <Header /> */}
         {/* <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight pt-[100px]">
->>>>>>> 2f49170388540e07db7e116acc13111a56ee072a
             <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}
-            >
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
               {heroTitle.title1}
             </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
@@ -80,14 +73,12 @@ const Home = () => {
           <div className="flex max-w-[700px] mt-[150px] py-3">
             <Link
               to={"/register"}
-              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] "
-            >
+              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] ">
               Post Jobs
             </Link>
             <Link
               to="/findjob"
-              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]"
-            >
+              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]">
               Find Jobs
             </Link>
           </div>
@@ -95,7 +86,8 @@ const Home = () => {
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px] relative">
           <h1 className="text-3xl md:text-6xl font-bold leading-tight md:pt-[100px]">
             <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}
+            >
               {heroTitle.title1}
             </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
@@ -117,7 +109,8 @@ const Home = () => {
                   : hovered === "post"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-[#2596BE] text-white"
-              } border-[#2596BE}`}>
+              } border-[#2596BE}`}
+            >
               Post Jobs{" "}
             </Link>
 
@@ -131,7 +124,8 @@ const Home = () => {
                   : hovered === "find"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-transparent text-[#2596BE]"
-              } border-[#2596BE}`}>
+              } border-[#2596BE}`}
+            >
               Find Jobs
             </Link>
           </div>
@@ -146,6 +140,7 @@ const Home = () => {
         <JobCards />
       </div>
       <Testimony />
+      {/* <Footer /> */}
     </div>
   );
 };

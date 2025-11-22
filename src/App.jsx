@@ -84,6 +84,7 @@ import JobCategoryPage from "./pages/JobCategoryPage.jsx";
 import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
+import LoginPage from "./pages/Login/LoginPage.jsx";
 
 const queryClient = new QueryClient();
 
@@ -109,7 +110,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="post-job-form" element={<PostJobForm />} />
-          <Route path="login" element={<LoginForm />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
         {/* <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
