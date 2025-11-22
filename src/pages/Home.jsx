@@ -54,12 +54,13 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-        }}>
-        <Header />
+        }}
+      >
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[-10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight">
             <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}
+            >
               {heroTitle.title1}
             </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
@@ -72,12 +73,14 @@ const Home = () => {
           <div className="flex max-w-[700px] mt-[25px] py-3">
             <Link
               to={"/register"}
-              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] ">
+              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] "
+            >
               Post Jobs
             </Link>
             <Link
               to="/findjob"
-              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]">
+              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]"
+            >
               Find Jobs
             </Link>
           </div>
@@ -87,11 +90,11 @@ const Home = () => {
       <Explore />
       <div
         className="jobs-slider"
-        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}>
+        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}
+      >
         <JobCards />
       </div>
       <Testimony />
-      <Footer />
     </div>
   );
 };

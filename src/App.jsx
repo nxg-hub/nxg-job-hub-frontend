@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home.jsx";
 import ProfileLanding from "./pages/ProfileLanding.jsx";
@@ -84,21 +84,43 @@ import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";
 import EmployerVerifiedDocuments from "./pages/employerVerifiedDocument.jsx";
 import JobCategoryPage from "./pages/JobCategoryPage.jsx";
 import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
+import Header from "./components/header/Header.jsx";
+import Footer from "./components/footer/Footer.jsx";
 
 const queryClient = new QueryClient();
+
+const AppLayout = () => {
+  return (
+    <div className="min-h-screen">
+      <Header />
+      <div>
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route path="services" element={<Services />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="post-job-form" element={<PostJobForm />} />
+          <Route path="login" element={<LoginForm />} />
+        </Route>
+        {/* <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/post-job-form" element={<PostJobForm />} />
+        <Route path="/post-job-form" element={<PostJobForm />} /> */}
         <Route path="/jobs/:category" element={<JobCategoryPage />} />
         <Route path="/all-categories" element={<JobCategoriesPage />} />
-        <Route path="/login" element={<LoginForm />} />
+        {/* <Route path="/login" element={<LoginForm />} /> */}
         <Route path="/register" element={<SignupForm />} />
         <Route
           path="/register/success-signup"
@@ -137,7 +159,8 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}>
+          element={<ServiceProviderDashboardX />}
+        >
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -209,7 +232,8 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }
+          ></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -222,7 +246,8 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
+            }
+          >
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />

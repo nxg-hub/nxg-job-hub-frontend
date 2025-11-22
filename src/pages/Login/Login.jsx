@@ -18,7 +18,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Googleicon from "../../static/images/icon_google.png";
 import Linkedinicon from "../../static/images/icon_linkedin.png";
 import LoginBG from "../../static/images/loginbg.webp";
-import LoginImage from "../../static/images/login-left-bg.png";
 import Logo from "../../static/images/splash.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -32,6 +31,9 @@ import { ToastAction } from "@/components/ui/toast";
 import { getLoggedInServiceProviderData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch } from "react-redux";
 import { setUserData } from "@/redux/AllUsersSlice";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
+import LoginImage from "../../static/images/login-left-bg.png";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -215,17 +217,8 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen">
-      <nav className="flex w-full bg-sky-600 p-2 fixed top-0 left-0 z-50 md:hidden">
-        <Link to="/" className="flex items-center gap-2">
-          <img className="w-10" src={Logo} alt="" />
-          <div className="flex flex-col text-white -space-y-1.5">
-            <span className="font-bold text-2xl">NXG</span>
-            <span className="text-xs ">JOB HUB</span>
-          </div>
-        </Link>
-      </nav>
-      <div className="pt-20 px-5">
+    <div className="w-full min-h-screen">
+      <div className="py-10 px-5">
         <Card className="md:border-transparent">
           <CardContent className="flex items-center justify-center  p-0">
             <div className="flex max-w-4xl w-full rounded-xl overflow-hidden">
@@ -338,40 +331,40 @@ export default function LoginForm() {
                 </Form>
                 {/* Logging using third party vendor  /> */}
                 {/* <div>
-              <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
-                <div class="flex-grow border-t border-gray-300"></div>
-                <span class="px-4">or</span>
-                <div class="flex-grow border-t border-gray-300"></div>
-              </section>
-              <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  type="submit">
-                  <img
-                    className="w-5 h-5"
-                    src={Googleicon}
-                    alt=""
-                  />
-                  <span className="hidden sm:inline-block">
-                    Sign In with Google
-                  </span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  type="submit">
-                  <img
-                    className="w-5 h-5"
-                    src={Linkedinicon}
-                    alt=""
-                  />
-                  <span className="hidden sm:inline-block">
-                    Sign In with LinkedIn
-                  </span>
-                </Button>
-              </section>
-            </div> */}
+      <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="px-4">or</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </section>
+      <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
+        <Button
+          variant="outline"
+          className="w-full"
+          type="submit">
+          <img
+            className="w-5 h-5"
+            src={Googleicon}
+            alt=""
+          />
+          <span className="hidden sm:inline-block">
+            Sign In with Google
+          </span>
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          type="submit">
+          <img
+            className="w-5 h-5"
+            src={Linkedinicon}
+            alt=""
+          />
+          <span className="hidden sm:inline-block">
+            Sign In with LinkedIn
+          </span>
+        </Button>
+      </section>
+    </div> */}
                 <div className="text-center">
                   <p>
                     Don't have an account?{" "}
@@ -385,6 +378,7 @@ export default function LoginForm() {
                 </div>
               </section>
             </div>
+
             <Toaster />
           </CardContent>
         </Card>
