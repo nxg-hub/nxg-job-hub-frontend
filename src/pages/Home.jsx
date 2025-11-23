@@ -54,8 +54,9 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-        }}>
-        <Header />
+        }}
+      >
+        {/* <Header /> */}
         {/* <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight pt-[100px]">
             <span
@@ -85,7 +86,8 @@ const Home = () => {
         <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px] relative">
           <h1 className="text-3xl md:text-6xl font-bold leading-tight md:pt-[100px]">
             <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}
+            >
               {heroTitle.title1}
             </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
@@ -107,7 +109,8 @@ const Home = () => {
                   : hovered === "post"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-[#2596BE] text-white"
-              } border-[#2596BE}`}>
+              } border-[#2596BE}`}
+            >
               Post Jobs{" "}
             </Link>
 
@@ -121,7 +124,8 @@ const Home = () => {
                   : hovered === "find"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-transparent text-[#2596BE]"
-              } border-[#2596BE}`}>
+              } border-[#2596BE}`}
+            >
               Find Jobs
             </Link>
           </div>
@@ -131,11 +135,12 @@ const Home = () => {
       <Explore />
       <div
         className="jobs-slider"
-        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}>
+        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}
+      >
         <JobCards />
       </div>
       <Testimony />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

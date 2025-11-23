@@ -34,8 +34,8 @@ export default function RenderStepThree() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-1">
+    <div className="space-y-5 md:space-y-8">
+      <div className="hidden md:flex flex-col gap-1">
         <h1 className="font-semibold text-xl text-slate-800">
           Personnel & Open Roles
         </h1>
@@ -43,90 +43,105 @@ export default function RenderStepThree() {
           Your role and the company's current job openings.
         </p>
       </div>
-      <h3 className="text-base font-medium border-t pb-1 pt-4">
-        Names of Directors
-      </h3>
-      <div className="space-y-3">
-        {directorFields.map((field, index) => (
-          <div key={field.id} className="flex space-x-2 items-start">
-            <FormField
-              control={control}
-              name={`namesOfDirectors.${index}`}
-              render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <FormControl>
-                    <Input
-                      placeholder={`Director Name ${index + 1}`}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              className="border-transparent"
-              type="button"
-              variant="destructive"
-              size="icon"
-              onClick={() => removeDirector(index)}
-              disabled={directorFields.length === 1}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={() => appendDirector("")}
-        >
-          <Plus className="h-4 w-4 mr-2" /> Add Director
-        </Button>
+      <div className="md:hidden">
+        <h1 className="text-sm font-semibold text-secondary">
+          Step 3 (Personnel & Open Roles)
+        </h1>
+        <p className="text-xs text-gray-600">
+          Your role and the company's current job openings.
+        </p>
       </div>
 
-      <h3 className="text-base font-medium border-t pb-1 pt-4">
-        Current Vacancies
-      </h3>
-      <div className="space-y-3">
-        {vacancyFields.map((field, index) => (
-          <div key={field.id} className="flex space-x-2 items-start">
-            <FormField
-              control={control}
-              name={`vacancies.${index}`}
-              render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <FormControl>
-                    <Input
-                      placeholder={`Vacancy Title ${index + 1}`}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              className="border-transparent"
-              type="button"
-              variant="destructive"
-              size="icon"
-              onClick={() => removeVacancy(index)}
-              disabled={vacancyFields.length === 1}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={() => appendVacancy("")}
-        >
-          <Plus className="h-4 w-4 mr-2" /> Add Vacancy
-        </Button>
+      <div>
+        <h3 className="text-sm md:text-base font-medium border-t pb-1 pt-4">
+          Names of Directors
+        </h3>
+        <div className="space-y-3">
+          {directorFields.map((field, index) => (
+            <div key={field.id} className="flex space-x-2 items-start">
+              <FormField
+                control={control}
+                name={`namesOfDirectors.${index}`}
+                render={({ field }) => (
+                  <FormItem className="flex-grow">
+                    <FormControl>
+                      <Input
+                        className="h-11 text-sm"
+                        placeholder={`Director Name ${index + 1}`}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="border-transparent"
+                type="button"
+                variant="destructive"
+                size="icon"
+                onClick={() => removeDirector(index)}
+                disabled={directorFields.length === 1}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full text-sm h-11"
+            onClick={() => appendDirector("")}
+          >
+            <Plus className="h-4 w-4 mr-2" /> Add Director
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-sm md:text-base font-medium border-t pb-1 pt-4">
+          Current Vacancies
+        </h3>
+        <div className="space-y-3">
+          {vacancyFields.map((field, index) => (
+            <div key={field.id} className="flex space-x-2 items-start">
+              <FormField
+                control={control}
+                name={`vacancies.${index}`}
+                render={({ field }) => (
+                  <FormItem className="flex-grow">
+                    <FormControl>
+                      <Input
+                        className="text-sm h-11"
+                        placeholder={`Vacancy Title ${index + 1}`}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="border-transparent"
+                type="button"
+                variant="destructive"
+                size="icon"
+                onClick={() => removeVacancy(index)}
+                disabled={vacancyFields.length === 1}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full text-sm h-11"
+            onClick={() => appendVacancy("")}
+          >
+            <Plus className="h-4 w-4 mr-2" /> Add Vacancy
+          </Button>
+        </div>
       </div>
 
       {(form.formState.errors.vacancies ||

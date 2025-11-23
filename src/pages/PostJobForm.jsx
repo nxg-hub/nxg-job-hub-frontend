@@ -23,18 +23,21 @@ const ProgressIndicator = ({ currentStep }) => {
             currentStep >= 1
               ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
-          } flex items-center justify-center`}>
+          } flex items-center justify-center`}
+        >
           <span
             className={`text-sm font-semibold ${
               currentStep >= 1 ? "text-white" : "text-gray-500"
-            }`}>
+            }`}
+          >
             1
           </span>
         </div>
         <div
           className={`mt-2 text-sm ${
             currentStep >= 1 ? "text-[#1e3a8a]" : "text-gray-500"
-          }`}>
+          }`}
+        >
           Step 1
         </div>
       </div>
@@ -53,18 +56,21 @@ const ProgressIndicator = ({ currentStep }) => {
             currentStep >= 2
               ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
-          } flex items-center justify-center`}>
+          } flex items-center justify-center`}
+        >
           <span
             className={`text-sm font-semibold ${
               currentStep >= 2 ? "text-white" : "text-gray-500"
-            }`}>
+            }`}
+          >
             2
           </span>
         </div>
         <div
           className={`mt-2 text-sm ${
             currentStep >= 2 ? "text-[#1e3a8a]" : "text-gray-500"
-          }`}>
+          }`}
+        >
           Step 2
         </div>
       </div>
@@ -83,18 +89,21 @@ const ProgressIndicator = ({ currentStep }) => {
             currentStep >= 3
               ? "bg-[#1e3a8a] text-white"
               : "bg-white border-gray-300"
-          } flex items-center justify-center`}>
+          } flex items-center justify-center`}
+        >
           <span
             className={`text-sm font-semibold ${
               currentStep >= 3 ? "text-white" : "text-gray-500"
-            }`}>
+            }`}
+          >
             3
           </span>
         </div>
         <div
           className={`mt-2 text-sm ${
             currentStep >= 3 ? "text-[#1e3a8a]" : "text-gray-500"
-          }`}>
+          }`}
+        >
           Step 3
         </div>
       </div>
@@ -286,9 +295,6 @@ const PostJobForm = () => {
   const validationSchemas = [StepOneSchema, StepTwoSchema, StepThreeSchema];
   return (
     <div>
-      <div className="bg-[#215E7D]">
-        <Header />
-      </div>
       <div className=" py-4 mb-4 w-[90%] md:w-[70%] m-auto mt-5 rounded-lg">
         <img className="h-[100px] m-auto" src={logo} alt="logo" />
       </div>
@@ -298,7 +304,8 @@ const PostJobForm = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchemas[step - 1]}
-            onSubmit={handleNext}>
+            onSubmit={handleNext}
+          >
             {({ setFieldValue, isSubmitting, values }) => (
               <Form className="w-full">
                 {step === 1 && (
@@ -373,7 +380,8 @@ const PostJobForm = () => {
                               values
                             )
                           }
-                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                        >
                           {nigerianStates.map(({ id, value }) => (
                             <option key={id}>{value}</option>
                           ))}
@@ -395,7 +403,8 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "jobType", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          >
                             {employerJobType.map(({ id, title }) => (
                               <option key={id}>{title}</option>
                             ))}
@@ -415,7 +424,8 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "jobMode", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          >
                             {jobLocations.map(({ id, title }) => (
                               <option key={id}>{title}</option>
                             ))}
@@ -445,7 +455,8 @@ const PostJobForm = () => {
                                 values
                               )
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          >
                             <option value="">Select Job Classification</option>
                             <option value="SERVICE">
                               Service / Operational roles
@@ -579,7 +590,8 @@ const PostJobForm = () => {
                         <div className="flex flex-col gap-1">
                           <label
                             className="font-medium"
-                            htmlFor="companyRegistrationNumber">
+                            htmlFor="companyRegistrationNumber"
+                          >
                             CAC Reg. No
                           </label>
                           <Field
@@ -600,7 +612,8 @@ const PostJobForm = () => {
                         <div className="flex flex-col gap-1">
                           <label
                             className="font-medium"
-                            htmlFor="companyWebsiteLink">
+                            htmlFor="companyWebsiteLink"
+                          >
                             Website
                           </label>
                           <Field
@@ -614,7 +627,8 @@ const PostJobForm = () => {
                         <div className="flex flex-col gap-1">
                           <label
                             className="font-medium"
-                            htmlFor="companyPhoneNumber">
+                            htmlFor="companyPhoneNumber"
+                          >
                             Phone Contact
                           </label>
                           <Field
@@ -659,7 +673,8 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "industry", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          >
                             <option value="">Select Industry</option>
                             {companyIndusrty.map(({ id, title }) => (
                               <option key={id} value={title}>
@@ -708,7 +723,8 @@ const PostJobForm = () => {
                         <Link
                           to="https://paystack.com/pay/externaljobpost"
                           target="_blank"
-                          className="text-green-400 underline">
+                          className="text-green-400 underline"
+                        >
                           Click Here To Pay With Card
                         </Link>
 
@@ -794,14 +810,16 @@ const PostJobForm = () => {
                       onClick={handleBack}
                       type="button"
                       disabled={isSubmitting}
-                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto border-none bg-[#215E7D] hover:bg-[#2B749A]">
+                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto border-none bg-[#215E7D] hover:bg-[#2B749A]"
+                    >
                       {"Back"}
                     </button>
                   )}
                   <button
                     disabled={isSubmitting}
                     className="w-[100%] bg-[#215E7D] hover:bg-[#2B749A] border-none rounded-full text-center py-2 my-10 text-white font-bold m-auto"
-                    type="submit">
+                    type="submit"
+                  >
                     {loading ? "Submitting..." : step < 3 ? "Next" : "Submit"}
                   </button>
                 </div>
@@ -812,7 +830,6 @@ const PostJobForm = () => {
       </div>
       {/* modal */}
       <PostJobModal />
-      <Footer />
     </div>
   );
 };
