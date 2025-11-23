@@ -163,12 +163,20 @@ export default function RenderStepFour() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-1">
+    <div className="space-y-5 md:space-y-8">
+      <div className="hidden md:flex flex-col gap-1">
         <h1 className="font-semibold text-xl text-slate-800">
           Legal & Documents
         </h1>
         <p className="text-sm text-gray-600">
+          Your organization/company legal documents for account verification.
+        </p>
+      </div>
+      <div className="md:hidden">
+        <h1 className="text-sm font-semibold text-secondary">
+          Step 4 (Legal & Documents)
+        </h1>
+        <p className="text-xs text-gray-600">
           Your organization/company legal documents for account verification.
         </p>
       </div>
@@ -178,19 +186,25 @@ export default function RenderStepFour() {
           name="tin"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tax Identification Number (TIN)</FormLabel>
+              <FormLabel className="text-gray-600">
+                Tax Identification Number (TIN)
+              </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  placeholder="Tatx ID Number"
+                  className="text-sm h-11"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="-space-y-3.5">
-          <h3 className="text-slate-800 text-base font-medium pb-3 pt-4">
+          <h3 className="text-slate-800 text-sm md:text-base font-medium pb-3 pt-4">
             Upload Documents
           </h3>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-xs md:text-sm">
             Select file type to upload your document
           </p>
         </div>
@@ -261,18 +275,21 @@ export default function RenderStepFour() {
               </div>
             </div>
           )}
-          <div className="w-full flex justify-center gap-3 bg-gray-50 rounded-b-lg p-4">
-            <div className="w-2/3 flex">
-              <div className="w-1/3 text-gray-600 flex items-center gap-1">
+          <div className="w-full flex justify-between md:justify-center  md:gap-3 gap-4 bg-gray-50 rounded-b-lg md:p-4 px-2">
+            <div className="md:w-2/3 flex space-x-3 md:space-x-0">
+              <div className="md:w-1/3 text-gray-600 flex items-center gap-1">
                 <FileText className="w-5 h-5" />
-                <p className="text-sm">File Type</p>
+                <p className="text-xs md:text-sm">File Type:</p>
               </div>
-              <div className="pt-3 w-2/3">
+              <div className="pt-3 md:w-2/3">
                 <Select
                   onValueChange={handleSelectionChange}
                   key={countFilesUploaded}
                 >
-                  <SelectTrigger id="file-type-select">
+                  <SelectTrigger
+                    className="text-xs h-11 md:text-sm"
+                    id="file-type-select"
+                  >
                     <SelectValue placeholder="Choose document type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -332,10 +349,10 @@ export default function RenderStepFour() {
         )}
       </div>
 
-      <div className="bg-yellow-50 border border-yellow-500 rounded-lg py-4 w-4/5 mx-auto">
+      <div className="bg-yellow-50 border border-yellow-500 rounded-lg py-4 md:w-4/5 px-2 mx-auto">
         <div className="flex gap-3 justify-center">
           <AlertCircle className="w-5 h-5 text-yellow-800 mt-0.5" />
-          <p className="text-sm font-medium text-yellow-800 mb-1">
+          <p className="md:text-sm text-xs font-medium text-yellow-800 mb-1">
             Only PDF file format are allowed, and file must be 10MB or less
           </p>
         </div>

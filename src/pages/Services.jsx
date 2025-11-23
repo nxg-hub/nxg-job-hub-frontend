@@ -12,11 +12,6 @@ const Services = () => {
   }, []);
   return (
     <section className="w-full bg-white font-inter">
-      {/* Header */}
-      <div className="bg-[#215E7D]">
-        <Header />
-      </div>
-
       {/* Intro Section */}
       <div className="sm:w-[60%] w-[80%] mx-auto text-center my-12 md:my-20 space-y-5">
         <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
@@ -33,7 +28,8 @@ const Services = () => {
       {/* Hero banner */}
       <div
         className="bg-ServicesBusiness bg-no-repeat bg-center bg-contain sm:bg-cover 
-      w-full h-[150px] sm:h-[300px] md:h-[580px]"></div>
+      w-full h-[150px] sm:h-[300px] md:h-[580px]"
+      ></div>
 
       {/* Categories */}
       <CategoriesOfService />
@@ -105,8 +101,6 @@ const Services = () => {
           smarter way to connect.
         </p>
       </div>
-
-      <Footer />
     </section>
   );
 };
