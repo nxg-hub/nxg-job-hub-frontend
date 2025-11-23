@@ -59,7 +59,8 @@ export default function ServiceProviderProfile() {
   const { updateServiceProviderProfile, isLoading } =
     useServiceProviderProfileUpdate();
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.UserDataReducer.serviceData);
+  const userData = useSelector((state) => state.UserDataReducer.data);
+  console.log(userData);
   const id = useSelector((state) => state.UserDataReducer.data.id);
   const isProfileComplete = userData.subSkills;
   const phone = useSelector((state) => state.UserDataReducer.data.phoneNumber);
@@ -1062,8 +1063,13 @@ export default function ServiceProviderProfile() {
             <CardHeader>
               <CardTitle className="flex justify-between items-center">
                 <span>
-                  Skills ({userData?.mainSkills[0] || "No Job Title"})
+                  Skills (
+                  {userData?.mainSkills?.length
+                    ? userData.mainSkills[0]
+                    : "No Job Title"}
+                  )
                 </span>
+
                 <Button
                   className="bg-sky-700 hover:bg-sky-800"
                   onClick={handleSaveSkills}>

@@ -305,7 +305,7 @@ function DashboardContent({ notifications = [] }) {
                           Get started by
                           <NavLink
                             className="underline text-secondary w-fit py-1 px-2 "
-                            to={"complete-profile"}>
+                            to={"profile"}>
                             completing your Profile
                           </NavLink>
                           , stand a better chance of being hired by completing
