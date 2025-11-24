@@ -1,22 +1,20 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // Async thunks to fetch transactions
 export const fetchAllJobs = createAsyncThunk(
   "serviceProviderjobs/fetchAllJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `${API_HOST_URL}/api/job-postings/all?page=0&size=1&sort=string`,
-        {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
-      );
+      const response = await fetch(`${API_HOST_URL}/api/job-postings/all`, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
 
       if (!response.ok) throw new Error("Failed to fetch riders");
       const data = await response.json();
@@ -59,7 +57,7 @@ export const fetchProviderRecentJobs = createAsyncThunk(
   async ({ token }, { rejectWithValue }) => {
     try {
       return await fetchJSON(
-        `${API_HOST_URL}/api/job-postings/recent-job-postings?page=0&size=10`,
+        `${API_HOST_URL}/api/job-postings/recent-job-postings?page=0&size=100`,
         token
       );
     } catch (err) {

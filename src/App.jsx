@@ -158,8 +158,7 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}
-        >
+          element={<ServiceProviderDashboardX />}>
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -173,7 +172,7 @@ function App() {
           path="/services-provider/complete-profile-x"
           element={<XServiceProviderFormCompletion />}
         />
-        {/* end service provider user routes (remove hwen done) */}
+        {/* end service provider user routes (remove when done) */}
 
         {/* talent user routes */}
         <Route path="/talent" element={<TalentDashboard />}>
@@ -231,8 +230,7 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -245,8 +243,7 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
