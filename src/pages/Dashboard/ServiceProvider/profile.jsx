@@ -1,46 +1,20 @@
-import {
-  Briefcase,
-  Calendar,
-  CircleUser,
-  GraduationCap,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { useServiceProviderProfileUpdate } from "@/hooks/Service-provider/serviceProviderHook";
 import { useEffect, useState } from "react";
-import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
+import { getLoggedInServiceProviderData } from "@/redux/ServiceProviderUserDataSlice";
 import { Toaster } from "@/components/ui/toaster";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import InstitutionAutocomplete from "@/components/ServiceProvider/InstitutionAutocomplete";
-import ProfilePhotoUploader from "@/components/ServiceProvider/ProfilePhotoUploader";
-const employmentTypes = [
-  "Full-time",
-  "Part-time",
-  "Contract",
-  "Freelance",
-  "Internship",
-  "Apprenticeship",
-  "Temporary",
-  "Self-employed",
-];
-
-const qualifications = [
-  "High School Diploma",
-  "Associate Degree",
-  "Bachelor's Degree",
-  "Master's Degree",
-  "PhD",
-  "Professional Certification",
-  // "Other",
-];
+import PersonalInfoTab from "./PersonalInfoTab";
+import ExperienceTab from "./ExperienceTab";
+import EducationTab from "./EducationTab";
+import Skills from "./Skills";
+import { Loader2 } from "lucide-react";
+import axios from "axios";
 
 const subSkillsOptions = {
   CARPENTRY: ["Furniture Making", "Cabinetry", "Framing", "Finishing"],
@@ -60,10 +34,13 @@ export default function ServiceProviderProfile() {
     useServiceProviderProfileUpdate();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.UserDataReducer.data);
-  console.log(userData);
+  // console.log(userData);
   const id = useSelector((state) => state.UserDataReducer.data.id);
-  const isProfileComplete = userData.subSkills;
+  const isProfileComplete = userData?.serviceProvider?.subSkills;
   const phone = useSelector((state) => state.UserDataReducer.data.phoneNumber);
+  const [workImages, setWorkImages] = useState([]);
+  const [workLoading, setWorkLoading] = useState(false);
+  const [workError, setWorkError] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -99,7 +76,7 @@ export default function ServiceProviderProfile() {
 
   const [availableSkills, setAvailableSkills] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState(
-    userData?.subSkills || []
+    userData?.serviceProvider?.subSkills || []
   );
   const [newSkill, setNewSkill] = useState("");
 
@@ -145,16 +122,21 @@ export default function ServiceProviderProfile() {
 
   //SKILL UPDATE LOGIC
   // ✅ Determine available skills based on job title
-  useEffect(
-    () => {
-      const title =
-        userData?.mainSkills && userData?.mainSkills[0]?.toUpperCase();
-      setAvailableSkills(subSkillsOptions[title] || subSkillsOptions.OTHERS);
-    },
-    [
-      // userData?.jobTitle
-    ]
-  );
+  // useEffect(
+  //   () => {
+  //     const title =
+  //       userData?.serviceProvider?.mainSkills &&
+  //       userData?.serviceProvider?.mainSkills[0]?.toUpperCase();
+  //     setAvailableSkills(subSkillsOptions[title] || subSkillsOptions.OTHERS);
+  //   },
+  //   [
+  //     // userData?.jobTitle
+  //   ]
+  // );
+  useEffect(() => {
+    const title = userData?.serviceProvider?.mainSkills?.[0]?.toUpperCase();
+    setAvailableSkills(subSkillsOptions[title] || subSkillsOptions.OTHERS);
+  }, [userData?.serviceProvider?.mainSkills]);
 
   // ✅ Toggle select/remove skill
   const toggleSkill = (skill) => {
@@ -188,12 +170,11 @@ export default function ServiceProviderProfile() {
     const payload = {
       subSkills: selectedSkills,
     };
+
     try {
       await updateServiceProviderProfile(payload); // your backend hook
       setShowEducationForm(false);
-      dispatch(
-        getUserData({ token: token.authKey, id: userData.serviceProviderId })
-      );
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
       toast({
         title: "Success",
         description: "Service Provider Skills Updated Successfully!",
@@ -227,9 +208,7 @@ export default function ServiceProviderProfile() {
     try {
       await updateServiceProviderProfile(payload); // your backend hook
       setShowEducationForm(false);
-      dispatch(
-        getUserData({ token: token.authKey, id: userData.serviceProviderId })
-      );
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
       toast({
         title: "Success",
         description: "Service Provider Education updated successfully!",
@@ -284,15 +263,21 @@ export default function ServiceProviderProfile() {
 
     if (editingExperience) {
       // Update existing
-      updatedList = userData.workExperiences.map((exp) =>
+      updatedList = userData.serviceProvider.workExperiences.map((exp) =>
         exp === editingExperience ? experienceForm : exp
       );
     } else {
       // Add new
-      updatedList = [...(userData.workExperiences || []), experienceForm];
+      updatedList = [
+        ...(userData.serviceProvider.workExperiences || []),
+        experienceForm,
+      ];
     }
 
-    const payload = { ...userData, workExperiences: updatedList };
+    const payload = {
+      ...userData.serviceProvider,
+      workExperiences: updatedList,
+    };
     if (!validateExperience()) {
       return;
     }
@@ -300,9 +285,7 @@ export default function ServiceProviderProfile() {
       await updateServiceProviderProfile(payload);
       setShowExperienceForm(false);
       setEditingExperience(null);
-      dispatch(
-        getUserData({ token: token.authKey, id: userData.serviceProviderId })
-      );
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
       toast({
         title: "Success",
         description: "Service Provider Experience updated successfully!",
@@ -321,8 +304,13 @@ export default function ServiceProviderProfile() {
   };
 
   const handleDeleteExperience = async (index) => {
-    const updatedList = userData.workExperiences.filter((_, i) => i !== index);
-    const payload = { ...userData, workExperiences: updatedList };
+    const updatedList = userData.serviceProvider.workExperiences.filter(
+      (_, i) => i !== index
+    );
+    const payload = {
+      ...userData.serviceProvider,
+      workExperiences: updatedList,
+    };
 
     try {
       await updateServiceProviderProfile(payload);
@@ -330,9 +318,7 @@ export default function ServiceProviderProfile() {
         title: "Success",
         description: "Service Provider profile updated successfully!",
       });
-      dispatch(
-        getUserData({ token: token.authKey, id: userData.serviceProviderId })
-      );
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
     } catch (err) {
       console.error(err);
       toast({
@@ -355,9 +341,9 @@ export default function ServiceProviderProfile() {
         lastName: userData?.lastName || "",
         email: userData?.email || "",
         phone: phone || "",
-        city: userData?.city || "",
-        state: userData?.state || "",
-        additionalInfo: userData?.additionalInfo || "",
+        city: userData?.serviceProvider?.city || "",
+        state: userData?.serviceProvider?.state || "",
+        additionalInfo: userData?.serviceProvider?.additionalInfo || "",
       });
     }
   }, [userData, phone]);
@@ -376,30 +362,124 @@ export default function ServiceProviderProfile() {
         title: "Success",
         description: "Service Provider profile updated successfully!",
       });
-      dispatch(
-        getUserData({ token: token.authKey, id: userData.serviceProviderId })
-      );
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
     } catch (error) {
       console.error("Error updating profile:", error);
       toast({
         title: "Update Failed",
         description:
-          err?.response?.data?.message ||
-          err?.message ||
+          error?.response?.data?.message ||
+          error?.message ||
           "Error updating profile. Please try again.",
         variant: "destructive",
       });
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+  useEffect(() => {
+    setWorkImages(userData?.serviceProvider?.picturesOfPreviousWorkDone || []);
+  }, [userData?.serviceProvider?.picturesOfPreviousWorkDone]);
+
+  // const uploadWorkImage = async (file) => {
+  //   if (!file) return null;
+
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("upload_preset", "tin4r1lt");
+
+  //   const res = await axios.post(
+  //     "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+  //     formData,
+  //     { headers: { "Content-Type": "multipart/form-data" } }
+  //   );
+
+  //   return res.data.secure_url; // return uploaded image URL
+  // };
+
+  const handleUploadWorkImages = async (event) => {
+    const files = Array.from(event.target.files);
+    if (!files.length) return;
+
+    setWorkLoading(true);
+    setWorkError(false);
+
+    try {
+      // 1️⃣ Upload each file to Cloudinary
+      const uploadedUrls = [];
+
+      for (let file of files) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "tin4r1lt");
+
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dildznazt/image/upload",
+          formData
+        );
+
+        uploadedUrls.push(res.data.secure_url);
+      }
+
+      // 2️⃣ Merge new + existing images already saved
+      const allImages = [...workImages, ...uploadedUrls];
+
+      // 3️⃣ Update backend using ONLY your hook
+      const body = {
+        picturesOfPreviousWorkDone: allImages,
+      };
+
+      await updateServiceProviderProfile(body);
+
+      // 4️⃣ Update UI
+      setWorkImages(allImages);
+
+      toast({
+        title: "Success",
+        description: "Work images uploaded successfully!",
+      });
+
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
+    } catch (err) {
+      console.error(err);
+      setWorkError(true);
+      toast({
+        variant: "destructive",
+        title: "Upload Failed",
+        description: "Could not upload work images.",
+      });
+    } finally {
+      setWorkLoading(false);
+    }
+  };
+
+  const handleRemoveWorkImage = async (imgUrl) => {
+    const filtered = workImages.filter((img) => img !== imgUrl);
+
+    try {
+      // 1️⃣ Update backend using ONLY your hook
+      const body = {
+        picturesOfPreviousWorkDone: filtered,
+      };
+
+      await updateServiceProviderProfile(body);
+
+      // 2️⃣ Update UI
+      setWorkImages(filtered);
+
+      toast({
+        title: "Success",
+        description: "Image removed.",
+      });
+
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Remove Failed",
+        description: "Could not remove work image.",
+      });
+    }
   };
 
   return (
@@ -407,11 +487,12 @@ export default function ServiceProviderProfile() {
       <h1 className="text-2xl font-bold mb-6">My Profile</h1>
 
       <Tabs defaultValue="personal" className="w-full">
-        <TabsList className="grid mb-10 md:mb-0 grid-cols-2 md:grid-cols-4 w-full bg-[#E6F7FC]">
+        <TabsList className="grid !mb-[100px] md:!mb-0 grid-cols-2 md:grid-cols-5 w-full bg-[#E6F7FC]">
           <TabsTrigger value="personal">Personal Information</TabsTrigger>
           <TabsTrigger value="experience">Experience</TabsTrigger>
           <TabsTrigger value="education">Education</TabsTrigger>
           <TabsTrigger value="skills">Skills</TabsTrigger>
+          <TabsTrigger value="works">Works</TabsTrigger>
         </TabsList>
 
         {/* PERSONAL INFORMATION */}
@@ -421,154 +502,15 @@ export default function ServiceProviderProfile() {
               <CardTitle>Personal Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col md:flex-row gap-8">
-                <ProfilePhotoUploader
-                  userId={userData.serviceProviderId}
-                  token={token}
-                  userData={userData}
-                />
-
-                <div className="flex-1 grid gap-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input
-                        readOnly
-                        id="firstName"
-                        className={"cursor-not-allowed"}
-                        value={formData.firstName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            firstName: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.firstName && (
-                        <p className="text-red-500 text-xs">
-                          {errors.firstName}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input
-                        id="lastName"
-                        className={"cursor-not-allowed"}
-                        readOnly
-                        value={formData.lastName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            lastName: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.lastName && (
-                        <p className="text-red-500 text-xs">
-                          {errors.lastName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <div className="flex">
-                      <Mail className="mr-2 h-4 w-4 opacity-70 mt-3" />
-                      <Input
-                        id="email"
-                        type="email"
-                        className={"cursor-not-allowed"}
-                        readOnly
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            email: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    {errors?.email && (
-                      <p className="text-red-500 text-xs">{errors.email}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <div className="flex">
-                      <Phone className="mr-2 h-4 w-4 opacity-70 mt-3" />
-                      <Input
-                        id="phone"
-                        type="tel"
-                        readOnly
-                        className={"cursor-not-allowed"}
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            phone: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.phone && (
-                        <p className="text-red-500 text-xs">{errors.phone}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="location">Location</Label>
-                    <div className="flex">
-                      <MapPin className="mr-2 h-4 w-4 opacity-70 mt-3" />
-                      <Input
-                        id="location"
-                        className={"cursor-not-allowed"}
-                        readOnly
-                        value={`${formData.city}, ${formData.state}`}
-                        onChange={(e) => {
-                          const [city, state] = e.target.value
-                            .split(",")
-                            .map((s) => s.trim());
-                          setFormData({ ...formData, city, state });
-                        }}
-                      />
-                      {errors?.city && (
-                        <p className="text-red-500 text-xs">{errors.city}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <textarea
-                      id="bio"
-                      className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm"
-                      value={formData.additionalInfo}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          additionalInfo: e.target.value,
-                        })
-                      }
-                    />
-                    {errors?.additionalInfo && (
-                      <p className="text-red-500 text-xs">
-                        {errors.additionalInfo}
-                      </p>
-                    )}
-                  </div>
-
-                  <Button
-                    className="w-fit bg-sky-500 hover:bg-sky-600 border-none"
-                    onClick={handleSaveChanges}
-                    disabled={isLoading}>
-                    {isLoading ? "Saving..." : "Save Changes"}
-                  </Button>
-                </div>
-              </div>
+              <PersonalInfoTab
+                isLoading={isLoading}
+                errors={errors}
+                formData={formData}
+                setFormData={setFormData}
+                handleSaveChanges={handleSaveChanges}
+                userData={userData}
+                token={token}
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -593,233 +535,19 @@ export default function ServiceProviderProfile() {
                 </Button>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {userData?.workExperiences?.length > 0 ? (
-                  userData.workExperiences.map((item, i) => (
-                    <div key={i} className="border-b pb-6 last:border-0">
-                      <div className="flex gap-4">
-                        <Briefcase className="h-10 w-10 text-sky-700" />
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">
-                            {item.jobTitle}
-                          </h3>
-                          <div className="text-sm text-gray-500 flex items-center gap-2">
-                            <span>{item.companyName}</span>
-                            <span>•</span>
-                            <span>{item.employmentType}</span>
-                          </div>
-                          <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{`${formatDate(item.startDate)} - ${
-                              item.endDate
-                                ? formatDate(item.endDate)
-                                : "Present"
-                            }`}</span>
-                            <span>•</span>
-                            <MapPin className="h-4 w-4" />
-                            <span>{item.location}</span>
-                          </div>
-                          <p className="mt-2">{item.description}</p>
-                        </div>
-                        <div className="flex-col md:flex gap-2 ">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              setEditingExperience(item);
-                              setShowExperienceForm(true);
-                            }}>
-                            Edit
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            disabled={isLoading}
-                            className="text-red-500 hover:text-red-700"
-                            onClick={() => handleDeleteExperience(i)}>
-                            {"Delete"}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-500 text-sm">
-                    No work experience added yet.
-                  </p>
-                )}
-              </div>
-
-              {/* Experience Form */}
-              {showExperienceForm && (
-                <div className="mt-6 p-4 border rounded-md bg-gray-50">
-                  <h3 className="text-md font-semibold mb-4">
-                    {editingExperience ? "Edit Experience" : "Add Experience"}
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label>Job Title</Label>
-                      <Input
-                        value={experienceForm.jobTitle}
-                        placeholder={`e.g., Senior ${
-                          userData.workExperiences
-                            ? userData.workExperiences[0]?.jobTitle
-                            : "Plumber"
-                        }`}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            jobTitle: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.jobTitle && (
-                        <p className="text-red-500 text-xs">
-                          {errors.jobTitle}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <Label>Company Name</Label>
-                      <Input
-                        placeholder="e.g., ABC Construction"
-                        value={experienceForm.companyName}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            companyName: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.companyName && (
-                        <p className="text-red-500 text-xs">
-                          {errors.companyName}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label>Employment Type</Label>
-                      <select
-                        className="w-full border rounded-md p-2 text-sm bg-background"
-                        value={experienceForm.employmentType}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            employmentType: e.target.value,
-                          })
-                        }>
-                        <option value="">Select Employment Type</option>
-                        {employmentTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
-                      {errors?.employmentType && (
-                        <p className="text-red-500 text-xs">
-                          {errors.employmentType}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <Label>Location</Label>
-                      <Input
-                        placeholder="e.g., Lagos, Nigeria"
-                        value={experienceForm.location}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            location: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.location && (
-                        <p className="text-red-500 text-xs">
-                          {errors.location}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <Label>Start Date</Label>
-                      <Input
-                        type="date"
-                        value={experienceForm.startDate}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            startDate: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.startDate && (
-                        <p className="text-red-500 text-xs">
-                          {errors.startDate}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <Label>End Date</Label>
-                      <Input
-                        type="date"
-                        value={experienceForm.endDate}
-                        onChange={(e) =>
-                          setExperienceForm({
-                            ...experienceForm,
-                            endDate: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.endDate && (
-                        <p className="text-red-500 text-xs">{errors.endDate}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <Label>Description</Label>
-                    <textarea
-                      className="w-full min-h-[80px] border rounded-md p-2 text-sm"
-                      value={experienceForm.description}
-                      onChange={(e) =>
-                        setExperienceForm({
-                          ...experienceForm,
-                          description: e.target.value,
-                        })
-                      }
-                    />
-                    {errors?.description && (
-                      <p className="text-red-500 text-xs">
-                        {errors.description}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex justify-end gap-3 mt-4">
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setShowExperienceForm(false);
-                        setEditingExperience(null);
-                      }}>
-                      Cancel
-                    </Button>
-                    <Button
-                      disabled={isLoading}
-                      className="bg-sky-600 hover:bg-sky-700 text-white"
-                      onClick={handleSaveExperience}>
-                      {!isLoading && editingExperience
-                        ? "Update"
-                        : !isLoading && !editingExperience
-                        ? "Save"
-                        : "Processing..."}
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
+            <ExperienceTab
+              userData={userData}
+              setEditingExperience={setEditingExperience}
+              setShowExperienceForm={setShowExperienceForm}
+              handleDeleteExperience={handleDeleteExperience}
+              showExperienceForm={showExperienceForm}
+              editingExperience={editingExperience}
+              setExperienceForm={setExperienceForm}
+              experienceForm={experienceForm}
+              isLoading={isLoading}
+              handleSaveExperience={handleSaveExperience}
+              errors={errors}
+            />
           </Card>
         </TabsContent>
 
@@ -829,7 +557,7 @@ export default function ServiceProviderProfile() {
             <CardHeader>
               <CardTitle className="flex justify-between items-center">
                 <span>Education</span>
-                <Button
+                {/* <Button
                   className="bg-sky-700 hover:bg-sky-800"
                   onClick={() => {
                     if (!isProfileComplete) {
@@ -847,302 +575,105 @@ export default function ServiceProviderProfile() {
                     });
                   }}>
                   Add Education
-                </Button>
+                </Button> */}
               </CardTitle>
             </CardHeader>
 
-            <CardContent>
-              {/* Existing Education Display */}
-              {userData?.education ? (
-                <div className="border-b pb-6 last:border-0">
-                  <div className="flex gap-4">
-                    <GraduationCap className="h-10 w-10 text-sky-700" />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">
-                        {userData.education.highestQualification}
-                      </h3>
-                      <div className="text-sm text-gray-500">
-                        {userData.education.schoolName}
-                      </div>
-                      <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>Graduated {userData.education.schoolYear}</span>
-                      </div>
-                      <div className="text-sm text-gray-500 mt-1">
-                        📍 {userData.education.schoolLocation}
-                      </div>
-                      <p className="mt-2">
-                        {userData.education.schoolDescription}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setEditingEducation(true);
-                          setShowEducationForm(true);
-                          setEducationForm(userData.education);
-                        }}>
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDeleteEducation()}>
-                        Delete
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-gray-500">No education record found.</p>
-              )}
-
-              {/* Add/Edit Education Form */}
-              {showEducationForm && (
-                <div className="mt-6 p-4 border rounded-md bg-gray-50">
-                  <h3 className="font-semibold mb-4">
-                    {editingEducation ? "Edit Education" : "Add Education"}
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label>Highest Qualification</Label>
-                      <select
-                        className="w-full border rounded-md p-2 text-sm bg-white"
-                        value={educationForm.highestQualification}
-                        onChange={(e) =>
-                          setEducationForm({
-                            ...educationForm,
-                            highestQualification: e.target.value,
-                          })
-                        }>
-                        <option value="">Select Qualification</option>
-                        {qualifications.map((q, index) => (
-                          <option key={index} value={q}>
-                            {q}
-                          </option>
-                        ))}
-                      </select>
-                      {errors?.highestQualification && (
-                        <p className="text-red-500 text-xs">
-                          {errors.highestQualification}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label>School Name</Label>
-                      <InstitutionAutocomplete
-                        value={educationForm.schoolName}
-                        onChange={(value) =>
-                          setEducationForm({
-                            ...educationForm,
-                            schoolName: value,
-                          })
-                        }
-                      />
-                      {errors?.schoolName && (
-                        <p className="text-red-500 text-xs">
-                          {errors.schoolName}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label>Graduation Year</Label>
-                      <Input
-                        type="text"
-                        value={educationForm.schoolYear}
-                        onChange={(e) =>
-                          setEducationForm({
-                            ...educationForm,
-                            schoolYear: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.schoolYear && (
-                        <p className="text-red-500 text-xs">
-                          {errors.schoolYear}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label>School Location</Label>
-                      <Input
-                        placeholder="Enter school location (City, State/Country)"
-                        value={educationForm.schoolLocation}
-                        onChange={(e) =>
-                          setEducationForm({
-                            ...educationForm,
-                            schoolLocation: e.target.value,
-                          })
-                        }
-                      />
-                      {errors?.schoolLocation && (
-                        <p className="text-red-500 text-xs">
-                          {errors.schoolLocation}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <Label>Description</Label>
-                    <textarea
-                      placeholder="Briefly describe your studies, achievements, or relevant coursework"
-                      className="w-full min-h-[80px] border rounded-md p-2 text-sm"
-                      value={educationForm.schoolDescription}
-                      onChange={(e) =>
-                        setEducationForm({
-                          ...educationForm,
-                          schoolDescription: e.target.value,
-                        })
-                      }
-                    />
-                    {errors?.schoolDescription && (
-                      <p className="text-red-500 text-xs">
-                        {errors.schoolDescription}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex justify-end gap-2 mt-4">
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowEducationForm(false)}>
-                      Cancel
-                    </Button>
-                    <Button
-                      className="bg-sky-700 hover:bg-sky-800 text-white"
-                      onClick={() => handleSaveEducation()}>
-                      {/* {editingEducation ? "Update" : "Save"} */}
-                      {!isLoading && editingEducation
-                        ? "Update"
-                        : !isLoading && !editingEducation
-                        ? "Save"
-                        : "Processing..."}
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
+            <EducationTab
+              userData={userData}
+              setEditingEducation={setEditingEducation}
+              setShowEducationForm={setShowEducationForm}
+              setEducationForm={setEducationForm}
+              handleDeleteEducation={handleDeleteEducation}
+              errors={errors}
+              showEducationForm={showEducationForm}
+              editingEducation={editingEducation}
+              handleSaveEducation={handleSaveEducation}
+              educationForm={educationForm}
+              isLoading={isLoading}
+            />
           </Card>
         </TabsContent>
 
         {/* SKILLS */}
         <TabsContent value="skills">
-          {/* <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between">
-                <span>Skills</span>
-                <Button className="bg-sky-700 hover:bg-sky-800">
-                  Add Skill
-                </Button>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {userData?.subSkills?.map((skill, i) => (
-                  <div
-                    key={i}
-                    className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                    {skill}
-                    <button className="text-gray-500 hover:text-gray-700">
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card> */}
           <Card>
             <CardHeader>
               <CardTitle className="flex justify-between items-center">
                 <span>
                   Skills (
-                  {userData?.mainSkills?.length
-                    ? userData.mainSkills[0]
+                  {userData?.serviceProvider?.mainSkills?.length
+                    ? userData?.serviceProvider?.mainSkills[0]
                     : "No Job Title"}
                   )
                 </span>
 
                 <Button
+                  disabled={isLoading}
                   className="bg-sky-700 hover:bg-sky-800"
                   onClick={handleSaveSkills}>
-                  Save Skills
+                  {isLoading ? "Processing..." : "Save Skills"}
                 </Button>
               </CardTitle>
             </CardHeader>
 
+            <Skills
+              availableSkills={availableSkills}
+              setNewSkill={setNewSkill}
+              newSkill={newSkill}
+              handleAddCustomSkill={handleAddCustomSkill}
+              toggleSkill={toggleSkill}
+              selectedSkills={selectedSkills}
+              handleKeyDown={handleKeyDown}
+            />
+          </Card>
+        </TabsContent>
+        <TabsContent value="works">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex flex-col md:flex-row gap-2 justify-between items-center">
+                <span className="text-2xl md:text-3xl">
+                  Works (Photos of completed projects)
+                </span>
+
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleUploadWorkImages}
+                  className="w-48 border p-1 cursor-pointer"
+                />
+              </CardTitle>
+            </CardHeader>
+
             <CardContent>
-              {/* Predefined Skills */}
-              {availableSkills.length > 0 ? (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {availableSkills.map((skill, i) => {
-                    const isSelected = selectedSkills.includes(skill);
-                    return (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => toggleSkill(skill)}
-                        className={`px-3 py-1 rounded-full border text-sm transition ${
-                          isSelected
-                            ? "bg-sky-600 text-white border-sky-600"
-                            : "bg-gray-100 border-gray-300 hover:bg-gray-200"
-                        }`}>
-                        {skill}
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="text-sm text-gray-500 mb-3">
-                  No predefined skills for this job title. Add custom skills
-                  below.
-                </p>
+              {workLoading && <p className="text-blue-500">Uploading...</p>}
+              {workError && (
+                <p className="text-red-500">Upload failed. Try again later.</p>
               )}
 
-              {/* Custom Skill Input */}
-              <div className="flex items-center gap-2 mb-4">
-                <Input
-                  placeholder="Add a custom skill..."
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="flex-1"
-                />
-                <Button
-                  onClick={handleAddCustomSkill}
-                  className="bg-sky-500 hover:bg-sky-600 text-white">
-                  Add
-                </Button>
+              {/* GALLERY */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {workImages.map((img, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={img}
+                      className="w-full h-32 object-cover rounded-lg border"
+                    />
+                    <button
+                      onClick={() => handleRemoveWorkImage(img)}
+                      className="absolute top-2 right-2 bg-primary border-none text-white text-xs px-2 py-1 rounded">
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
 
-              {/* Selected Skills Display */}
-              <div className="flex flex-wrap gap-2">
-                {selectedSkills.length > 0 ? (
-                  selectedSkills.map((skill, i) => (
-                    <div
-                      key={i}
-                      className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                      {skill}
-                      <button
-                        onClick={() => toggleSkill(skill)}
-                        className="text-gray-500 hover:text-gray-700">
-                        ×
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-500">
-                    No skills selected yet.
-                  </p>
-                )}
-              </div>
+              {!workImages.length && (
+                <p className="text-gray-500 mt-4">
+                  No work images uploaded yet.
+                </p>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

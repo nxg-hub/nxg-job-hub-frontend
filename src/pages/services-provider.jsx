@@ -116,8 +116,7 @@ function DashboardContent({ notifications = [] }) {
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
-  const userData = useSelector((state) => state.UserDataReducer.serviceData);
-
+  const userData = useSelector((state) => state.UserDataReducer.data);
   const [showLogoutNotice, setShowLogoutNotice] = useState(false);
 
   const closeModal = (e) => {
@@ -227,7 +226,9 @@ function DashboardContent({ notifications = [] }) {
           <div className="w-full ">
             <h1 className="text-2xl">
               Welcome! 👋
-              <span className="capitalize font-bold">{userData.firstName}</span>
+              <span className="capitalize font-bold">
+                {userData?.serviceProvider?.firstName}
+              </span>
             </h1>
           </div>
           <SidebarTrigger
@@ -271,9 +272,9 @@ function DashboardContent({ notifications = [] }) {
           </DropdownMenu>
         </header>
         <div className=" pt-16 md:pt-0">
-          {!userData.verified && (
+          {!userData?.serviceProvider?.verified && (
             <>
-              {!userData.subSkills ? (
+              {!userData?.serviceProvider?.subSkills ? (
                 <>
                   {/* <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
                     <img
