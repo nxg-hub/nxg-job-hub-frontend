@@ -1,5 +1,4 @@
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,10 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Briefcase, MapPin, Loader2, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import {
   fetchMyTalentJobs,
   fetchTalentNearByJobs,

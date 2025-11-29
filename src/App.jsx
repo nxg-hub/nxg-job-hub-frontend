@@ -85,6 +85,8 @@ import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import LoginPage from "./pages/Login/LoginPage.jsx";
+import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
+import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
 
 const queryClient = new QueryClient();
 
@@ -182,6 +184,8 @@ function App() {
           <Route path="jobs" element={<TalentJobTracker />} />
           <Route path="messages" element={<TalentMessageTab />} />
           {/* <Route path="subscriptions" element={<TechTalentSubscription />} /> */}
+          <Route path="service-providers" element={<TalentServiceProvider />} />
+          <Route path="payment-callback" element={<PaymentCallback />} />
         </Route>
         <Route
           path="/techtalent/complete-profile"
