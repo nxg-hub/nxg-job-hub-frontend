@@ -90,17 +90,17 @@ const SubCards = ({ country, verifyTransaction, user }) => {
       planType: "Recommended",
     },
 
-    {
-      subId: 5,
-      subLogo: platinum,
-      subTitle: "TEST",
-      subPrice: "₦100/Yearly",
-      subBenefit: [
-        "The Platinum plan caters to users seeking an even longer commitment with added features.",
-        "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
-      ],
-      planType: "TEST",
-    },
+    // {
+    //   subId: 5,
+    //   subLogo: platinum,
+    //   subTitle: "TEST",
+    //   subPrice: "₦100/Yearly",
+    //   subBenefit: [
+    //     "The Platinum plan caters to users seeking an even longer commitment with added features.",
+    //     "Access to unlimited vetted and featured tech talents, fast job application, Tech talent profile matching mechanism and NXG hub customer support.",
+    //   ],
+    //   planType: "TEST",
+    // },
   ];
 
   const handlePayment = async (subscription, index) => {
@@ -144,8 +144,8 @@ const SubCards = ({ country, verifyTransaction, user }) => {
           subscribeResponse.data.data.authorization_url
         ) {
           // Redirect user to the authorization_url
-          // window.location.href = subscribeResponse.data.data.authorization_url;
-          window.open(subscribeResponse.data.data.authorization_url, "_blank");
+          window.location.href = subscribeResponse.data.data.authorization_url;
+          // window.open(subscribeResponse.data.data.authorization_url, "_blank");
         } else {
           console.error("Authorization URL is missing.");
           // Handle the scenario where authorization_url is missing
