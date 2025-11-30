@@ -85,10 +85,10 @@ import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import LoginPage from "./pages/Login/LoginPage.jsx";
-import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
-import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
 import FeaturedTalentPagesTab from "./pages/Dashboard/Employer2/featured-talent-page.jsx";
 import EmployerHelpCenterTab from "./pages/Dashboard/Employer2/employerHelpCenterTab.jsx";
+import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
+import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
 
 const queryClient = new QueryClient();
 
