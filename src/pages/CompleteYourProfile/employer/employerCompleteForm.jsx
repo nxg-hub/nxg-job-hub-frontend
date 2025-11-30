@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useUserProfileUpdate } from "@/hooks/useAllUsers";
+import { useUserDataQuery, useUserProfileUpdate } from "@/hooks/useAllUsers";
 import { Separator } from "@/components/ui/separator";
 import RenderStepOne from "@/components/Employer/CompleteForm/renderStepOne";
 import RenderStepTwo from "@/components/Employer/CompleteForm/renderStepTwo";
@@ -36,6 +36,8 @@ import {
   isValidPhoneNumber,
   parsePhoneNumberWithError,
 } from "libphonenumber-js";
+import { useUserData } from "@/store/userDataStorage";
+import { useQueryClient } from "@tanstack/react-query";
 
 const vacancySchema = z.string().min(2, "Vacancy title is too short.");
 const directorNameSchema = z.string().min(2, "Director name is too short.");
@@ -104,8 +106,10 @@ const formSchema = z.object({
 
 export function EmployerProfileCompleteForm() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [currentStep, setCurrentStep] = useState(0);
-  const isMobile = useMobile();
+  const { data } = useUserDataQuery();
+  const employer = useUserData((state) => state.userData);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -115,7 +119,7 @@ export function EmployerProfileCompleteForm() {
       industryType: "",
       companySize: "",
       companyWebsite: "",
-      country: "",
+      country: employer?.nationality || "",
       state: "",
       companyAddress: "",
       companyZipCode: "",
@@ -126,7 +130,6 @@ export function EmployerProfileCompleteForm() {
       companyMemorandum: "",
       companyLogo: "",
       position: "",
-      nationality: "",
       address: "",
       zipCode: "",
       vacancies: [],
@@ -168,7 +171,7 @@ export function EmployerProfileCompleteForm() {
 
   const { mutate: updateEmployerProfile, isPending } = useUserProfileUpdate({
     onSuccess: (data) => {
-      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["userData"] });
       toast({
         className: cn(
           "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"
