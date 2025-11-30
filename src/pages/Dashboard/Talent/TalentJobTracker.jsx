@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { JobsFilter } from "@/components/jobs-filter";
-import { Plus, Search } from "lucide-react";
-import { RatingDialog } from "@/components/rating-dialog";
-import { Textarea } from "@/components/ui/textarea";
-
+import { Search } from "lucide-react";
 import { JobsCard } from "@/components/jobs-card";
 import { useDispatch, useSelector } from "react-redux";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";

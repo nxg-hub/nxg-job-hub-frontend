@@ -85,6 +85,8 @@ import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import LoginPage from "./pages/Login/LoginPage.jsx";
+import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
+import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
 import FeaturedTalentPagesTab from "./pages/Dashboard/Employer2/featured-talent-page.jsx";
 import EmployerHelpCenterTab from "./pages/Dashboard/Employer2/employerHelpCenterTab.jsx";
 
@@ -176,7 +178,7 @@ function App() {
           path="/services-provider/complete-profile-x"
           element={<XServiceProviderFormCompletion />}
         />
-        {/* end service provider user routes (remove hwen done) */}
+        {/* end service provider user routes (remove when done) */}
 
         {/* talent user routes */}
         <Route path="/talent" element={<TalentDashboard />}>
@@ -186,6 +188,8 @@ function App() {
           <Route path="jobs" element={<TalentJobTracker />} />
           <Route path="messages" element={<TalentMessageTab />} />
           {/* <Route path="subscriptions" element={<TechTalentSubscription />} /> */}
+          <Route path="service-providers" element={<TalentServiceProvider />} />
+          <Route path="payment-callback" element={<PaymentCallback />} />
         </Route>
         <Route
           path="/techtalent/complete-profile"

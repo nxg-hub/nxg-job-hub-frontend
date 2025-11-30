@@ -14,6 +14,7 @@ import {
   Briefcase,
   Menu,
   OctagonAlert,
+  Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -88,7 +89,11 @@ const sidebarItems = [
   { icon: <Briefcase />, label: "Jobs", path: "jobs" },
 
   { icon: <MessageSquare />, label: "Messages", path: "messages" },
-
+  {
+    icon: <Wrench />,
+    label: "Service Providers",
+    path: "service-providers",
+  },
   { icon: <Settings />, label: "Setting", path: "setting" },
 ];
 

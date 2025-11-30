@@ -15,12 +15,13 @@ import TalentReducer from "./TalentJobSlice";
 import TalentUserReducer from "./TalentUserDataSlice";
 import ServiceProviderJobReducer from "./ServiceProviderJobSlice";
 import AllUserReducer from "./AllUsersSlice";
+import TalentServiceProvider from "./TalentServiceProviderSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["AllUserReducer"],
+  whitelist: ["AllUserReducer", "UserDataReducer"],
 };
 
 const reducer = combineReducers({
@@ -37,6 +38,7 @@ const reducer = combineReducers({
   TalentReducer,
   TalentUserReducer,
   AllUserReducer,
+  TalentServiceProvider,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

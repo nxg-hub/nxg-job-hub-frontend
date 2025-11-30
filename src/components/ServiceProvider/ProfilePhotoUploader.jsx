@@ -6,8 +6,7 @@ import { CircleUser } from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
 import { useDispatch } from "react-redux";
-import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
+import { getLoggedInServiceProviderData } from "@/redux/ServiceProviderUserDataSlice";
 import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 export default function ProfilePhotoUploader({ userId, token, userData }) {
@@ -74,7 +73,7 @@ export default function ProfilePhotoUploader({ userId, token, userData }) {
       });
       userData.techId
         ? dispatch(fetchTalentData({ token: token.authKey }))
-        : dispatch(getUserData({ token: token.authKey, id: userId }));
+        : dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
     } catch (error) {
       console.error("❌ Backend update failed:", error.message);
       toast({
@@ -92,7 +91,7 @@ export default function ProfilePhotoUploader({ userId, token, userData }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <Avatar className="h-32 w-32 mb-2 border-none">
-        <AvatarImage src={userData.profilePicture} alt="Profile" />
+        <AvatarImage src={userData?.profilePicture} alt="Profile" />
         <AvatarFallback>
           <CircleUser className="h-12 w-12 border-none" />
         </AvatarFallback>

@@ -304,7 +304,10 @@ import ServiceProviderStepThree from "../components/ServiceProvider/renderStepTh
 
 import { useServiceProviderProfileUpdate } from "../hooks/Service-provider/serviceProviderHook";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "@/redux/ServiceProviderUserDataSlice";
+import {
+  getLoggedInServiceProviderData,
+  getUserData,
+} from "@/redux/ServiceProviderUserDataSlice";
 
 export function ServiceProviderProfileCompleteForm() {
   const userData = useSelector((state) => state.UserDataReducer.data);
@@ -497,7 +500,7 @@ export function ServiceProviderProfileCompleteForm() {
         title: "Success",
         description: "Service Provider profile updated successfully!",
       });
-      dispatch(getUserData(token.authKey));
+      dispatch(getLoggedInServiceProviderData({ token: token.authKey }));
       setFormError(false);
       setTimeout(() => navigate("/services-provider"), 1500);
     } catch (error) {
