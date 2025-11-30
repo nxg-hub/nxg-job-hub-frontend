@@ -23,7 +23,7 @@ import axios from "axios";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 
 export default function ApplicantsList({
   applicants,
@@ -119,7 +119,8 @@ export default function ApplicantsList({
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           <option value="ALL">All Applicants</option>
           <option value="TECHTALENT"> Talents</option>
           <option value="SERVICE_PROVIDER">Service Providers</option>
@@ -148,7 +149,8 @@ export default function ApplicantsList({
             return (
               <Card
                 key={applicationId}
-                className="shadow-sm border border-gray-200 transition hover:shadow-md">
+                className="shadow-sm border border-gray-200 transition hover:shadow-md"
+              >
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div className="flex items-center gap-4">
                     <Avatar>
@@ -191,14 +193,16 @@ export default function ApplicantsList({
         ? "bg-secondary text-white"
         : "bg-red-100 text-red-700"
     }
-  `}>
+  `}
+                  >
                     {application.applicationStatus}
                   </span>
 
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => toggleExpand(applicationId)}>
+                    onClick={() => toggleExpand(applicationId)}
+                  >
                     {expanded === applicationId ? (
                       <>
                         Hide <ChevronUp className="ml-1 w-4 h-4" />
@@ -239,7 +243,8 @@ export default function ApplicantsList({
                                 {techTalent.skills.map((skill) => (
                                   <span
                                     key={skill}
-                                    className="px-3 py-1 text-xs bg-gray-200 text-secondary rounded-full">
+                                    className="px-3 py-1 text-xs bg-gray-200 text-secondary rounded-full"
+                                  >
                                     {skill}
                                   </span>
                                 ))}
@@ -252,7 +257,8 @@ export default function ApplicantsList({
                               <a
                                 href={techTalent.resume}
                                 target="_blank"
-                                className="text-secondary hover:underline text-sm flex gap-1 items-center">
+                                className="text-secondary hover:underline text-sm flex gap-1 items-center"
+                              >
                                 <File className="w-4 h-4 text-gray-500 " />
                                 <span>View Resume</span>
                               </a>
@@ -261,7 +267,8 @@ export default function ApplicantsList({
                               <a
                                 href={techTalent.coverletter}
                                 target="_blank"
-                                className="text-secondary hover:underline flex gap-1 items-center text-sm">
+                                className="text-secondary hover:underline flex gap-1 items-center text-sm"
+                              >
                                 <FileText className="w-4 h-4 text-gray-500  " />
                                 <span>View Cover Letter</span>
                               </a>
@@ -270,7 +277,8 @@ export default function ApplicantsList({
                               <a
                                 href={techTalent.portfolioLink}
                                 target="_blank"
-                                className="text-secondary hover:underline text-sm flex gap-1 items-center">
+                                className="text-secondary hover:underline text-sm flex gap-1 items-center"
+                              >
                                 <BriefcaseBusiness className="w-4 h-4 text-gray-500 " />{" "}
                                 <span>View Portfolio</span>
                               </a>
@@ -308,7 +316,8 @@ export default function ApplicantsList({
                                 (work, i) => (
                                   <div
                                     key={i}
-                                    className="border rounded-lg p-2 text-sm bg-gray-50 mt-1">
+                                    className="border rounded-lg p-2 text-sm bg-gray-50 mt-1"
+                                  >
                                     <p className="font-medium">
                                       {work.jobTitle}
                                     </p>
@@ -337,7 +346,8 @@ export default function ApplicantsList({
                           size="sm"
                           className="bg-red-200 border-none hover:bg-red-300"
                           disabled={actionLoading === applicationId}
-                          onClick={() => handleAction(applicationId, "reject")}>
+                          onClick={() => handleAction(applicationId, "reject")}
+                        >
                           {actionLoading === applicationId &&
                           act === "reject" ? (
                             "Processing..."
@@ -352,7 +362,8 @@ export default function ApplicantsList({
                           size="sm"
                           className="bg-secondary hover:bg-primary border-none"
                           disabled={actionLoading === applicationId}
-                          onClick={() => handleAction(applicationId, "accept")}>
+                          onClick={() => handleAction(applicationId, "accept")}
+                        >
                           {actionLoading === applicationId &&
                           act === "accept" ? (
                             "Processing..."

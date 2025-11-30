@@ -15,7 +15,7 @@ import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 const ProfileModal = ({
   selectedApplicant,
   viewProfileOpen,

@@ -112,7 +112,6 @@ export const formatFullDate = (dateString) => {
 };
 
 export const nigerianStates = [
-  { value: "", label: "" },
   { value: "Abia", label: "Abia" },
   { value: "Adamawa", label: "Adamawa" },
   { value: "Akwa Ibom", label: "Akwa Ibom" },

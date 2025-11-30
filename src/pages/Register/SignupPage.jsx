@@ -35,6 +35,14 @@ import EmailVerificationNotice from "@/components/EmailVerificationNotice";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
+import { Country } from "country-state-city";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+} from "@/components/ui/select";
 
 const formSchema = z
   .object({
@@ -49,6 +57,11 @@ const formSchema = z
       .min(3, "Name cannot be less than 3 characters")
       .nonempty()
       .regex(/^[A-Za-z-]+$/, "Name can only contain letter"),
+
+    nationality: z
+      .string()
+      .min(1, "Country/Nationality must be selected")
+      .nonempty(),
 
     phoneNumber: z
       .string()
@@ -96,12 +109,14 @@ export default function SignupForm() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [regEmail, setRegEmail] = useState("");
+  const [countries, setCountries] = useState(Country.getAllCountries());
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
+      nationality: "",
       phoneNumber: "",
       email: "",
       gender: "",
@@ -207,6 +222,7 @@ export default function SignupForm() {
       lastName: values.lastName,
       email: values.email,
       phoneNumber: values.phoneNumber,
+      nationality: values.nationality,
       gender: values.gender,
       password: values.password,
       deviceType: "WEB",
@@ -215,15 +231,6 @@ export default function SignupForm() {
 
   return (
     <div className="min-h-screen">
-      <nav className="flex w-full bg-sky-600 p-2 fixed top-0 left-0 z-50 md:hidden">
-        <Link to="/" className="flex items-center gap-2">
-          <img className="w-10" src={Logo} alt="" />
-          <div className="flex flex-col text-white -space-y-1.5">
-            <span className="font-bold text-2xl">NXG</span>
-            <span className="text-xs ">JOB HUB</span>
-          </div>
-        </Link>
-      </nav>
       <Card
         style={{ backgroundImage: `url(${regbg})` }}
         className="pt-20 pb-10 px-5 sm:bg-cover sm:bg-center sm:bg-no-repeat 
@@ -246,52 +253,47 @@ export default function SignupForm() {
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-8 max-w-3xl mx-auto py-10"
             >
-              <div className="space-y-7 sm:flex sm:space-x-6 sm:space-y-0">
-                <div className="sm:w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-500 font-semibold">
-                          First name
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            className="text-sm h-11"
-                            placeholder="Enter your first name"
-                            type=""
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="sm:w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-500 font-semibold">
-                          Last name
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            className="text-sm h-11"
-                            placeholder="Enter your last name"
-                            type=""
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-500 font-semibold">
+                        First name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="text-sm h-11"
+                          placeholder="Enter your first name"
+                          type=""
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-500 font-semibold">
+                        Last name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="text-sm h-11"
+                          placeholder="Enter your last name"
+                          type=""
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <FormField
@@ -331,6 +333,35 @@ export default function SignupForm() {
                       />
                     </FormControl>
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="nationality"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 font-semibold">
+                      Country/Nationality
+                    </FormLabel>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger className="font-normal h-11 text-sm">
+                          <SelectValue placeholder="Select your country/nationality" />
+                        </SelectTrigger>
+                      </FormControl>
+
+                      <SelectContent>
+                        {countries.map((c) => (
+                          <SelectItem key={c.isoCode} value={c.name}>
+                            {c.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage className="text-xs md:text-sm" />
                   </FormItem>
                 )}
               />

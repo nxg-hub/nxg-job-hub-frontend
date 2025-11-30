@@ -10,7 +10,7 @@ import {
 } from "@/hooks/useJobs";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn, getStoredKey } from "@/lib/utils";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 import { useState } from "react";
 import { useUserDataQuery } from "@/hooks/useAllUsers";
 
@@ -32,7 +32,8 @@ export default function KPIBoard({ employerID }) {
       <div className="flex flex-col gap-4 overflow-x-auto pb-2">
         {/* Total jobs posted card */}
         <Card
-          className={cn("transition-all hover:shadow-md animate-fade-in-up")}>
+          className={cn("transition-all hover:shadow-md animate-fade-in-up")}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -53,7 +54,8 @@ export default function KPIBoard({ employerID }) {
         </Card>
         {/* Total applicants card */}
         <Card
-          className={cn("transition-all hover:shadow-md animate-fade-in-up")}>
+          className={cn("transition-all hover:shadow-md animate-fade-in-up")}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -74,7 +76,8 @@ export default function KPIBoard({ employerID }) {
         </Card>
         {/* accepted applicant card */}
         <Card
-          className={cn("transition-all hover:shadow-md animate-fade-in-up")}>
+          className={cn("transition-all hover:shadow-md animate-fade-in-up")}
+        >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -179,7 +182,8 @@ const Interviews = () => {
               activeTab === tab
                 ? "bg-secondary text-white shadow-md"
                 : "text-gray-700 hover:bg-blue-100 hover:text-black"
-            }`}>
+            }`}
+          >
             {tab === "new" ? "New" : tab === "delayed" ? "Today" : "Completed"}
           </button>
         ))}
@@ -200,7 +204,8 @@ const Interviews = () => {
           filteredInterviews?.map((task) => (
             <div
               key={task.id}
-              className="bg-white rounded-xl shadow-md p-4 mb-3 border-l-4 border-blue-500 hover:shadow-lg transition-shadow">
+              className="bg-white rounded-xl shadow-md p-4 mb-3 border-l-4 border-blue-500 hover:shadow-lg transition-shadow"
+            >
               <p className="font-bold text-blue-700 text-lg">
                 {task.talentName}
               </p>
@@ -220,7 +225,8 @@ const Interviews = () => {
                   <a
                     href={task.meetingLink}
                     target="_blank"
-                    className="underline hover:text-green-800">
+                    className="underline hover:text-green-800"
+                  >
                     {task.meetingLink}
                   </a>
                 </p>

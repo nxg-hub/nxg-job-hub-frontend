@@ -12,6 +12,7 @@ import {
   Users,
   OctagonAlert,
   Menu,
+  ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -45,6 +46,7 @@ import NotificationDropdown from "@/components/agent/notification-dropdown";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
 import subscriptionIcon from "@/static/icons/diamond.png";
+import helpCenterIcon from "@/static/icons/SVG/customer-care.svg";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,40 +60,93 @@ import {
 import { useAutoLogin } from "@/hooks/useAutoLogin";
 import { useMobile } from "@/hooks/use-mobile";
 import { Toaster } from "@/components/ui/toaster";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 import { useUserDataQuery } from "@/hooks/useAllUsers";
 import { resetUserData } from "@/redux/ServiceProviderUserDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { setSubData } from "@/redux/AllUsersSlice";
 import { FcCustomerSupport } from "react-icons/fc";
-import CustomerSupport from "@/static/icons/support-services.png";
+import { CustomerCareIcon, GoldCoinIcon } from "@/icons/nxg-icons";
+
+const BounceCoinIcon = () => {
+  return (
+    <motion.div
+      animate={{
+        y: [0, -6, 0],
+      }}
+      transition={{
+        duration: 0.6,
+        repeat: Infinity,
+        repeatDelay: 1.4,
+        ease: "easeInOut",
+      }}
+      className="absolute top-2"
+    >
+      <GoldCoinIcon className="w-5 h-5" />
+    </motion.div>
+  );
+};
 
 const sidebarItems = [
   {
-    icon: <LayoutDashboard />,
+    icon: <LayoutDashboard className="w-5 h-5" />,
     label: "Dashboard",
     path: "/employer",
+    iconR: "",
   },
   {
-    icon: <Building />,
+    icon: <Building className="w-5 h-5" />,
     label: "Company Profile",
     path: "companyprofile",
+    iconR: "",
   },
 
-  { icon: <LayoutDashboard />, label: "Jobs", path: "jobs" },
-  { icon: <Users />, label: "Applicants", path: "applicants" },
+  {
+    icon: <LayoutDashboard className="w-5 h-5" />,
+    label: "Jobs",
+    path: "jobs",
+    iconR: "",
+  },
+  {
+    icon: <ShieldCheck className="w-5 h-5" />,
+    label: "Feature Talents",
+    path: "featuredTalent",
+    iconR: <BounceCoinIcon />,
+  },
+  {
+    icon: <Users className="w-5 h-5" />,
+    label: "Applicants",
+    path: "applicants",
+    iconR: "",
+  },
   // {
   //   icon: <Link2 />,
   //   label: "Matches",
   //   path: "candidate-matches",
   // },
-  { icon: <MessageSquare />, label: "Messages", path: "messages" },
+  {
+    icon: <MessageSquare className="w-5 h-5" />,
+    label: "Messages",
+    path: "messages",
+    iconR: "",
+  },
   // { icon: <BarChart />, label: "Analytics", path: "analytics" },
-  { icon: <Settings />, label: "Setting", path: "setting" },
-  { icon: <CircleHelp />, label: "Help", path: "/help" },
+  {
+    icon: <Settings className="w-5 h-5" />,
+    label: "Setting",
+    path: "setting",
+    iconR: "",
+  },
+  {
+    icon: <CircleHelp className="w-5 h-5" />,
+    label: "Help Center",
+    path: "help-center",
+    iconR: <CustomerCareIcon className="w-6 h-6" />,
+  },
 ];
 
 export function EmployerDashboard() {
@@ -246,8 +301,25 @@ function DashboardContent({ notifications = [] }) {
       <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-            scrollbar-hidden md:rounded-lg  !rounded-b-none">
-          <div className="pt-5">
+            scrollbar-hidden md:rounded-lg  !rounded-b-none"
+        >
+          <div className="px-5 pt-3 flex items-center gap-2">
+            <img
+              className={cn(
+                "object-contain",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-10"
+              )}
+              src={logo}
+              alt=""
+            />
+            <div className="flex flex-col text-white -space-y-1.5">
+              <span className="font-bold text-2xl md:text-3xl">NXG</span>
+              <span className="text-xs md:text-xs md:tracking-widest">
+                JOB HUB
+              </span>
+            </div>
+          </div>
+          {/* <div className="pt-5">
             <img
               src={logo}
               alt="Next Gen Hub Logo"
@@ -256,10 +328,10 @@ function DashboardContent({ notifications = [] }) {
                 isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
               )}
             />
-          </div>
+          </div> */}
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
-              <SidebarMenu className="gap-4">
+              <SidebarMenu className="gap-3">
                 {sidebarItems.map((item) => {
                   const isActive =
                     location.pathname === item.path ||
@@ -272,10 +344,12 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5">
+                        className="text-white hover:bg-white/10 hover:text-white p-5"
+                      >
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
+                          <span>{item.iconR}</span>
                         </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -309,7 +383,8 @@ function DashboardContent({ notifications = [] }) {
                 <button
                   onClick={() => setIsVisible(false)}
                   className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
-                  aria-label="Close">
+                  aria-label="Close"
+                >
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -320,7 +395,8 @@ function DashboardContent({ notifications = [] }) {
                   sub?.subscriptionStatus === "ACTIVE"
                     ? "text-green-600"
                     : "text-red-800"
-                } text-sm font-semibold`}>
+                } text-sm font-semibold`}
+              >
                 {sub?.planType}
                 <span className="text-gray-800 px-1">
                   {sub?.subscriptionStatus === "ACTIVE"
@@ -337,7 +413,8 @@ function DashboardContent({ notifications = [] }) {
               {sub?.subscriptionStatus === "INACTIVE" && (
                 <NavLink
                   className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                  to="/employer/subscription">
+                  to="/employer/subscription"
+                >
                   <img
                     src={subscriptionIcon}
                     alt="subscription"
@@ -353,7 +430,8 @@ function DashboardContent({ notifications = [] }) {
               asChild
               tooltip="Logout"
               className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
-              onClick={() => setShowLogoutNotice(true)}>
+              onClick={() => setShowLogoutNotice(true)}
+            >
               <div>
                 <LogOut className="w-7 h-7" />
                 <span>Logout</span>
@@ -368,7 +446,8 @@ function DashboardContent({ notifications = [] }) {
         className={cn(
           "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
           isCollapsed ? "md:pl-40" : ""
-        )}>
+        )}
+      >
         {/* Header */}
         <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
           {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
@@ -382,22 +461,26 @@ function DashboardContent({ notifications = [] }) {
             <Button
               variant="ghost"
               size="icon"
-              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary">
-              <img className="w-10" src={CustomerSupport} alt="chat-admin" />
+              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+            >
+              <img className="w-10" src={helpCenterIcon} alt="chat-admin" />
             </Button>
             <DropdownMenu
               open={notificationDropdownOpen}
-              onOpenChange={setNotificationDropdownOpen}>
+              onOpenChange={setNotificationDropdownOpen}
+            >
               <DropdownMenuTrigger className="hidden md:block" asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary">
+                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+                >
                   <Bell className="h-5 w-5" />
                   {unreadNotifications > 0 && (
                     <Badge
                       variant="destructive"
-                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                    >
                       {unreadNotifications}
                     </Badge>
                   )}
@@ -420,7 +503,8 @@ function DashboardContent({ notifications = [] }) {
                   <span>Your account is not yet verified</span>
                   <NavLink
                     className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                    to={"/employer/verified-document"}>
+                    to={"/employer/verified-document"}
+                  >
                     complete your profile
                   </NavLink>
                 </div>
@@ -441,7 +525,8 @@ function DashboardContent({ notifications = [] }) {
                       Your account is not yet verified,
                       <NavLink
                         className="underline text-secondary w-fit py-1 px-2 "
-                        to={"/employer/verified-document"}>
+                        to={"/employer/verified-document"}
+                      >
                         complete your profile
                       </NavLink>
                       to continue using all features
@@ -458,7 +543,8 @@ function DashboardContent({ notifications = [] }) {
                 <button
                   onClick={() => setIsVisible(false)}
                   className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
-                  aria-label="Close">
+                  aria-label="Close"
+                >
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -469,7 +555,8 @@ function DashboardContent({ notifications = [] }) {
                   sub?.subscriptionStatus === "ACTIVE"
                     ? "text-green-600"
                     : "text-red-800"
-                } text-sm font-semibold`}>
+                } text-sm font-semibold`}
+              >
                 {sub?.planType}
                 <span className="text-gray-800 px-1">
                   {sub?.subscriptionStatus === "ACTIVE"
@@ -486,7 +573,8 @@ function DashboardContent({ notifications = [] }) {
               {sub?.subscriptionStatus === "INACTIVE" && (
                 <NavLink
                   className="border-transparent mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-secondary"
-                  to="/employer/subscription">
+                  to="/employer/subscription"
+                >
                   <img
                     src={subscriptionIcon}
                     alt="subscription"
@@ -534,7 +622,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8">
+            className="flex flex-col items-center py-6 space-y-8"
+          >
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -549,7 +638,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleLogout}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
+          >
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

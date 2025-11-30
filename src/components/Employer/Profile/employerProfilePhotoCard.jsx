@@ -12,7 +12,8 @@ import {
   CLOUDINARY_UPLOAD_PRESET,
 } from "@/lib/CLOUDINARY_API";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
+import { useUserProfileUpdate } from "@/hooks/useAllUsers";
+// import { useUserProfileUpdate } from "@/hooks/Employer/employerHooks";
 
 export default function EmployerProfilePhotoCard({
   userId,

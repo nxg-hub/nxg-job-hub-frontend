@@ -27,21 +27,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import EmployerProfileMobileView from "@/components/Employer/Profile/employerProfileMobileView";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 import { useMobile } from "@/hooks/use-mobile";
 import EmployerProfileOverview from "@/components/Employer/Profile/employerProfileOverview";
 
 export default function EmployerCompanyProfileTab() {
   const employer = useUserData((state) => state.userData);
-  const isMobile = useMobile();
-
-  const handleSubmit = (e) => {};
-
-  const tabCssStyle = cn(
-    "h-12 gap-2 rounded-none text-gray-500 font-medium",
-    "data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-sky-600 ",
-    "data-[state=active]:!border-b-4 data-[state=active]:!border-b-sky-600  transition"
-  );
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-20 ">

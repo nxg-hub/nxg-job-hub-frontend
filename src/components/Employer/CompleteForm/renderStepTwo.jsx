@@ -16,11 +16,48 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { nigerianStates, countryOptions } from "@/lib/utils";
-import { useFormContext } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
+import { Country, State } from "country-state-city";
 
 export default function RenderStepTwo({ form }) {
-  const { control } = useFormContext();
+  const [states, setStates] = useState([]);
+  const { control, getValues, setValue } = useFormContext();
+
+  const countries = useMemo(() => {
+    return Country.getAllCountries();
+  }, []);
+
+  const selectedCountry = useWatch({
+    control,
+    name: "country",
+  });
+
+  useEffect(() => {
+    if (selectedCountry) {
+      const countryInfo = countries.find((c) => c.name === selectedCountry);
+      if (countryInfo && countryInfo.name === "Nigeria") {
+        const countryState = State.getStatesOfCountry(countryInfo.isoCode);
+        setStates(countryState);
+
+        const currentStateValue = getValues("state");
+        const isCurrentStateValid = countryState.some(
+          (s) => s.name === currentStateValue
+        );
+
+        //reset state value only if current country value changes
+        if (!isCurrentStateValid) {
+          setValue("state", "", { shouldValidate: false });
+        }
+      } else {
+        setValue("state", countryInfo.name, { shouldValidate: true });
+      }
+    } else {
+      // if no country selected clear state value list
+      setStates([]);
+      setValue("state", "", { shouldValidate: true });
+    }
+  }, [selectedCountry, setValue, getValues]);
 
   return (
     <div className="space-y-5 md:space-y-8">
@@ -47,7 +84,7 @@ export default function RenderStepTwo({ form }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-gray-600">Country</FormLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Select your country" />
@@ -55,9 +92,9 @@ export default function RenderStepTwo({ form }) {
                 </FormControl>
 
                 <SelectContent>
-                  {countryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {countries.map((country) => (
+                    <SelectItem key={country.isoCode} value={country.name}>
+                      {country.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -73,7 +110,11 @@ export default function RenderStepTwo({ form }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-gray-600">State</FormLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select
+                defaultValue={field.value}
+                onValueChange={field.onChange}
+                disabled={!selectedCountry || states.length === 0}
+              >
                 <FormControl>
                   <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Select state  " />
@@ -81,9 +122,9 @@ export default function RenderStepTwo({ form }) {
                 </FormControl>
 
                 <SelectContent>
-                  {nigerianStates.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {states.map((state) => (
+                    <SelectItem key={state.isoCode} value={state.name}>
+                      {state.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
