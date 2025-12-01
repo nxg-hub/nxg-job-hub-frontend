@@ -5,15 +5,7 @@ import { Button } from "@/components/ui/button";
 import { JobsFilter } from "@/components/jobs-filter";
 import { Plus, Search } from "lucide-react";
 import { RatingDialog } from "@/components/rating-dialog";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
 import { JobsCard } from "@/components/jobs-card";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -72,13 +64,8 @@ export function JobTracker() {
   });
 
   const [ratingDialogOpen, setRatingDialogOpen] = useState(false);
-  const [declineDialogOpen, setDeclineDialogOpen] = useState(false);
-  const [declineReason, setDeclineReason] = useState("");
   const [selectedService, setSelectedService] = useState(null);
-  const [selectedServiceId, setSelectedServiceId] = useState(null);
-  const [chatDialogOpen, setChatDialogOpen] = useState(false);
-  const [currentChatService, setCurrentChatService] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
+
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
@@ -156,151 +143,6 @@ export function JobTracker() {
     return matchesSearch && matchesPriority;
     //  && matchesPriority && matchesServiceType && matchesClient
   });
-
-  const newServices = filteredServices.filter(
-    (service) => service.status === "new"
-  );
-  const ongoingServices = filteredServices.filter(
-    (service) => service.status === "ongoing"
-  );
-  const completedServices = filteredServices.filter(
-    (service) => service.status === "completed"
-  );
-  const declinedServices = filteredServices.filter(
-    (service) => service.status === "declined"
-  );
-
-  // Update service status
-  const updateServiceStatus = (serviceId, newStatus) => {
-    setServices(
-      services.map((service) =>
-        service.id === serviceId
-          ? {
-              ...service,
-              status: newStatus,
-              ...(newStatus === "completed"
-                ? { completedAt: new Date().toISOString().split("T")[0] }
-                : {}),
-            }
-          : service
-      )
-    );
-  };
-
-  // Add a function to update service rating
-  const updateServiceRating = (serviceId, rating) => {
-    setServices(
-      services.map((service) =>
-        service.id === serviceId
-          ? {
-              ...service,
-              rating,
-            }
-          : service
-      )
-    );
-  };
-
-  const handleRatingSubmit = (rating, feedback) => {
-    if (selectedService) {
-      setServices(
-        services.map((service) =>
-          service.id === selectedService.id
-            ? {
-                ...service,
-                rating,
-                feedback,
-              }
-            : service
-        )
-      );
-    }
-  };
-
-  // Add this function to open the rating dialog
-  const openRatingDialog = (service) => {
-    setSelectedService(service);
-    setRatingDialogOpen(true);
-  };
-
-  // Function to decline a service
-  const declineService = (serviceId) => {
-    setSelectedServiceId(serviceId);
-    setDeclineDialogOpen(true);
-  };
-
-  // Function to confirm declining a service with a reason
-  const confirmDeclineService = () => {
-    setServices(
-      services.map((service) =>
-        service.id === selectedServiceId
-          ? {
-              ...service,
-              status: "declined",
-              declinedAt: new Date().toISOString().split("T")[0],
-              declineReason: declineReason,
-            }
-          : service
-      )
-    );
-    setDeclineDialogOpen(false);
-    setDeclineReason("");
-  };
-
-  // Function to handle messaging a client
-  const handleMessageClient = (serviceId) => {
-    const service = services.find((s) => s.id === serviceId);
-    if (service) {
-      setCurrentChatService(service);
-      setChatDialogOpen(true);
-    }
-  };
-
-  // Function to send a message
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (!newMessage.trim() || !currentChatService) return;
-
-    const newMsg = {
-      id: `m${Date.now()}`,
-      sender: "artisan",
-      text: newMessage,
-      timestamp: new Date().toISOString(),
-    };
-
-    // Update the service with the new message
-    setServices(
-      services.map((service) =>
-        service.id === currentChatService.id
-          ? {
-              ...service,
-              messages: [...(service.messages || []), newMsg],
-            }
-          : service
-      )
-    );
-
-    // Update the current chat service
-    setCurrentChatService({
-      ...currentChatService,
-      messages: [...(currentChatService.messages || []), newMsg],
-    });
-
-    // Reset the message input
-    setNewMessage("");
-  };
-
-  // Format message timestamp
-  const formatMessageTime = (timestamp) => {
-    const date = new Date(timestamp);
-    return date.toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
 
   // Get unique clients for filter
   const uniqueClients = [...new Set(services.map((service) => service.client))];

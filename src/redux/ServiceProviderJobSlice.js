@@ -7,14 +7,17 @@ export const fetchAllJobs = createAsyncThunk(
   "serviceProviderjobs/fetchAllJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_HOST_URL}/api/job-postings/all`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      });
+      const response = await fetch(
+        `${API_HOST_URL}/api/job-postings/all?page=0&size=100000`,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to fetch riders");
       const data = await response.json();

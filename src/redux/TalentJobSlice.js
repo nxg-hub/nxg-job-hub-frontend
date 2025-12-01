@@ -19,7 +19,10 @@ export const fetchAllTalentJobs = createAsyncThunk(
   "TalentJobs/fetchAllTalentJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
-      return await fetchJSON(`${API_HOST_URL}/api/job-postings/all`, token);
+      return await fetchJSON(
+        `${API_HOST_URL}/api/job-postings/all?page=0&size=100000`,
+        token
+      );
     } catch (err) {
       return rejectWithValue(err.message);
     }
@@ -31,7 +34,7 @@ export const fetchTalentSavedJobs = createAsyncThunk(
   async ({ token }, { rejectWithValue }) => {
     try {
       const data = await fetchJSON(
-        `${API_HOST_URL}/api/v1/tech-talent/my-jobs?page=0&size=100&sort=string`,
+        `${API_HOST_URL}/api/v1/tech-talent/my-jobs?page=0&size=1000&sort=string`,
         token
       );
       return data.content;
