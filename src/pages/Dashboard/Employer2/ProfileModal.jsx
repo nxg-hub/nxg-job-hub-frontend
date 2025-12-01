@@ -15,7 +15,7 @@ import axios from "axios";
 import { Toaster } from "@/components/ui/toaster";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 const ProfileModal = ({
   selectedApplicant,
   viewProfileOpen,
@@ -181,7 +181,8 @@ const ProfileModal = ({
                             (skill, idx) => (
                               <span
                                 key={idx}
-                                className="bg-gray-200 text-secondary px-3 py-1 rounded-full text-sm font-medium">
+                                className="bg-gray-200 text-secondary px-3 py-1 rounded-full text-sm font-medium"
+                              >
                                 {skill}
                               </span>
                             )
@@ -193,7 +194,8 @@ const ProfileModal = ({
                             <a
                               href={selectedApplicant.techTalent.resume}
                               target="_blank"
-                              className="text-secondary hover:underline">
+                              className="text-secondary hover:underline"
+                            >
                               View
                             </a>
                           ) : (
@@ -206,7 +208,8 @@ const ProfileModal = ({
                             <a
                               href={selectedApplicant.techTalent.coverletter}
                               target="_blank"
-                              className="text-secondary hover:underline">
+                              className="text-secondary hover:underline"
+                            >
                               View
                             </a>
                           ) : (
@@ -219,7 +222,8 @@ const ProfileModal = ({
                             <a
                               href={selectedApplicant.techTalent.portfolioLink}
                               target="_blank"
-                              className="text-secondary hover:underline">
+                              className="text-secondary hover:underline"
+                            >
                               Visit
                             </a>
                           ) : (
@@ -232,7 +236,8 @@ const ProfileModal = ({
                             <a
                               href={selectedApplicant.techTalent.linkedInUrl}
                               target="_blank"
-                              className="text-secondary hover:underline">
+                              className="text-secondary hover:underline"
+                            >
                               Visit
                             </a>
                           ) : (
@@ -273,7 +278,8 @@ const ProfileModal = ({
                             (skill, idx) => (
                               <span
                                 key={idx}
-                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium">
+                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium"
+                              >
                                 {skill}
                               </span>
                             )
@@ -282,7 +288,8 @@ const ProfileModal = ({
                             (sub, idx) => (
                               <span
                                 key={idx}
-                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium">
+                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium"
+                              >
                                 {sub}
                               </span>
                             )
@@ -291,7 +298,8 @@ const ProfileModal = ({
                             (interest, idx) => (
                               <span
                                 key={idx}
-                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium">
+                                className="bg-gray-300 text-secondary px-3 py-1 rounded-full text-sm font-medium"
+                              >
                                 {interest}
                               </span>
                             )
@@ -414,7 +422,8 @@ const ProfileModal = ({
                 disabled={actionLoading}
                 onClick={() =>
                   handleAction(selectedApplicant?.applicationId, "reject")
-                }>
+                }
+              >
                 {actionLoading === selectedApplicant?.applicationId &&
                 act === "reject" ? (
                   "Processing..."
@@ -430,7 +439,8 @@ const ProfileModal = ({
                 className="bg-secondary hover:bg-primary border-none"
                 onClick={() =>
                   handleAction(selectedApplicant?.applicationId, "accept")
-                }>
+                }
+              >
                 {actionLoading === selectedApplicant?.applicationId &&
                 act === "accept" ? (
                   "Processing..."

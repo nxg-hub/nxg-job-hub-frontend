@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 import { set } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";

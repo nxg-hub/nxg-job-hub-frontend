@@ -32,7 +32,7 @@ import { toast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 
 export default function EmployerApplicantsTab() {
   const storedJwtToken = getStoredKey();
@@ -129,7 +129,8 @@ export default function EmployerApplicantsTab() {
             onClick={() => {
               setActiveTab("allApplicants");
               setFilter("all");
-            }}>
+            }}
+          >
             All Applicants
             <span>{applicants?.length}</span>
           </Button>
@@ -138,7 +139,8 @@ export default function EmployerApplicantsTab() {
             onClick={() => {
               setActiveTab("PENDING");
               setFilter("PENDING");
-            }}>
+            }}
+          >
             Pending
             <span>
               {
@@ -153,7 +155,8 @@ export default function EmployerApplicantsTab() {
             onClick={() => {
               setActiveTab("APPROVED");
               setFilter("APPROVED");
-            }}>
+            }}
+          >
             Approved
             <span>
               {
@@ -168,7 +171,8 @@ export default function EmployerApplicantsTab() {
             onClick={() => {
               setActiveTab("REJECTED");
               setFilter("REJECTED");
-            }}>
+            }}
+          >
             Rejected
             <span>
               {
@@ -183,7 +187,8 @@ export default function EmployerApplicantsTab() {
             onClick={() => {
               setActiveTab("INTERVIEWED");
               setFilter("INTERVIEWED");
-            }}>
+            }}
+          >
             Interview
             <span>
               {
@@ -199,7 +204,8 @@ export default function EmployerApplicantsTab() {
             variant={
               activeTab === "interviewCandidates" ? "default" : "outline"
             }
-            onClick={() => setActiveTab("interviewCandidates")}>
+            onClick={() => setActiveTab("interviewCandidates")}
+          >
             Interview Details
             <span>{interviews?.length}</span>
           </Button>
@@ -305,7 +311,8 @@ export default function EmployerApplicantsTab() {
                                 onClick={() => {
                                   setSelectedApplicant(item);
                                   setViewProfileOpen(true);
-                                }}>
+                                }}
+                              >
                                 View Profile
                               </DropdownMenuItem>
 
@@ -314,7 +321,8 @@ export default function EmployerApplicantsTab() {
                                   onClick={() => {
                                     setSelectedApplicant(item);
                                     setScheduleInterviewOpen(true);
-                                  }}>
+                                  }}
+                                >
                                   Schedule Interview
                                 </DropdownMenuItem>
                               )}

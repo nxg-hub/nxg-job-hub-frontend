@@ -342,7 +342,6 @@ const EditComapnyOverviwe = ({
 
   const { mutate: updateEmployerProfile, isPending } = useUserProfileUpdate({
     onSuccess: (data) => {
-      console.log(data);
       toast({
         className: cn(
           "bottom-10 right-4 flex fixed max-w-[400px] md:max-w-[420px]"

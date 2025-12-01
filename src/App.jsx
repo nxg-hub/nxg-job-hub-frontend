@@ -85,6 +85,8 @@ import JobCategoriesPage from "./pages/JobCategoriesPage.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import LoginPage from "./pages/Login/LoginPage.jsx";
+import FeaturedTalentPagesTab from "./pages/Dashboard/Employer2/featured-talent-page.jsx";
+import EmployerHelpCenterTab from "./pages/Dashboard/Employer2/employerHelpCenterTab.jsx";
 import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
 import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
 
@@ -113,6 +115,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="post-job-form" element={<PostJobForm />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<SignupForm />} />
         </Route>
         {/* <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -122,7 +125,7 @@ function App() {
         <Route path="/jobs/:category" element={<JobCategoryPage />} />
         <Route path="/all-categories" element={<JobCategoriesPage />} />
         {/* <Route path="/login" element={<LoginForm />} /> */}
-        <Route path="/register" element={<SignupForm />} />
+        {/* <Route path="/register" element={<SignupForm />} /> */}
         <Route
           path="/register/success-signup"
           element={<SuccessfulSignupPage />}
@@ -160,7 +163,8 @@ function App() {
         {/* service provider user routes (remove hwen done) */}
         <Route
           path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}>
+          element={<ServiceProviderDashboardX />}
+        >
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
@@ -201,8 +205,10 @@ function App() {
             path="companyprofile"
             element={<EmployerCompanyProfileTab />}
           />
+          <Route path="featuredTalent" element={<FeaturedTalentPagesTab />} />
           <Route path="applicants" element={<EmployerApplicantsTab />} />
           <Route path="messages" element={<EmployerMessagesTab />} />
+          <Route path="help-center" element={<EmployerHelpCenterTab />} />
           <Route path="setting" element={<EmployerSettingTab />} />
           <Route path="subscription" element={<EmployerSubscription />} />
         </Route>
@@ -234,7 +240,8 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }
+          ></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
@@ -247,7 +254,8 @@ function App() {
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }>
+            }
+          >
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />

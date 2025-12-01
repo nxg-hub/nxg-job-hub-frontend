@@ -41,7 +41,7 @@ import { API_HOST_URL } from "@/utils/api/API_HOST";
 import ApplicantsList from "./ApplicantsList";
 import EditJobModal from "./EditJobModal";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 
 export default function EmployerJobTab() {
   const { toast } = useToast();
@@ -136,7 +136,8 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("all")}>
+            onClick={() => setActiveTab("all")}
+          >
             All Jobs
             <Badge variant="secondary" className="ml-2 text-white">
               {data?.length || 0}
@@ -151,7 +152,8 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("active")}>
+            onClick={() => setActiveTab("active")}
+          >
             Accepted
             {activeJobs?.length > 0 && (
               <Badge variant="success" className="ml-2">
@@ -168,7 +170,8 @@ export default function EmployerJobTab() {
               }`,
               ""
             )}
-            onClick={() => setActiveTab("close")}>
+            onClick={() => setActiveTab("close")}
+          >
             Closed
             {closedJobs?.length > 0 && (
               <Badge variant="destructive" className="ml-2">
@@ -179,7 +182,8 @@ export default function EmployerJobTab() {
           <div className="flex gap-2 w-full md:w-auto ">
             <Button
               onClick={openCreateJobDialog}
-              className="border-transparent bg-primary hover:bg-secondary">
+              className="border-transparent bg-primary hover:bg-secondary"
+            >
               <FileText className="mr-1 h-4 w-4" />
               Create New Job
             </Button>
@@ -327,7 +331,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   job.jobStatus === "ACCEPTED"
                     ? "bg-green-100 text-green-800"
                     : "bg-gray-100 text-gray-800"
-                }`}>
+                }`}
+              >
                 {job.jobStatus === "ACCEPTED"
                   ? "Accepted"
                   : job.jobStatus === "CLOSED"
@@ -367,7 +372,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   variant="outline"
                   size="sm"
                   disabled={loader === job.jobID}
-                  onClick={() => onCloseJob(jobPostData)}>
+                  onClick={() => onCloseJob(jobPostData)}
+                >
                   {loader === job.jobID ? "Processing.." : " Close Job"}
                 </Button>
               ) : (
@@ -388,7 +394,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => onDeleteJob(job.jobID)}>
+                    onClick={() => onDeleteJob(job.jobID)}
+                  >
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -400,7 +407,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
         <div className="mt-4 pt-4 border-t">
           <Button
             className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={handleViewApplicants}>
+            onClick={handleViewApplicants}
+          >
             View Applicants ({numberOfApplicants})
           </Button>
         </div>
@@ -409,7 +417,8 @@ const JobCard = ({ job, onCloseJob, onDeleteJob, loader }) => {
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}
-        onOpenChange={setIsApplicantsDialogOpen}>
+        onOpenChange={setIsApplicantsDialogOpen}
+      >
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Applicants for {job.job_title}</DialogTitle>
@@ -550,7 +559,8 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
         return (
           <Badge
             variant="secondary"
-            className="bg-yellow-300 text-white hover:bg-secondary">
+            className="bg-yellow-300 text-white hover:bg-secondary"
+          >
             {status}
           </Badge>
         );
@@ -599,7 +609,8 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
                 <Button
                   onClick={() => setIsEditModalOpen(true)}
                   variant="outline"
-                  size="sm">
+                  size="sm"
+                >
                   Edit
                 </Button>
               )}
@@ -615,7 +626,8 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
-                    onClick={() => onDeleteJob(job.jobID)}>
+                    onClick={() => onDeleteJob(job.jobID)}
+                  >
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -627,7 +639,8 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
         <div className="mt-4 pt-4 border-t">
           <Button
             className="border-none bg-sky-500 hover:bg-sky-600"
-            onClick={handleViewApplicants}>
+            onClick={handleViewApplicants}
+          >
             View Applicants ({numberOfApplicants})
           </Button>
         </div>
@@ -644,7 +657,8 @@ const Job = ({ job, onCloseJob, onDeleteJob, loader }) => {
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}
-        onOpenChange={setIsApplicantsDialogOpen}>
+        onOpenChange={setIsApplicantsDialogOpen}
+      >
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Applicants for {job.job_title}</DialogTitle>

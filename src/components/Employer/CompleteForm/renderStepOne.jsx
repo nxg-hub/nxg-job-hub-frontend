@@ -128,7 +128,7 @@ export default function RenderStepOne() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-gray-600">Company Size</FormLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="font-normal h-11 text-sm">
                     <SelectValue placeholder="Choose Size" />

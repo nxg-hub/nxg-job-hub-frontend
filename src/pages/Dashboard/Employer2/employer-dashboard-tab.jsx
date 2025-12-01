@@ -14,7 +14,7 @@ import UserGuard from "@/components/Employer/employerUserGuard";
 import KPIBoard from "@/components/Employer/Dashboard/kpisBoard";
 import { useEmployerData } from "@/store/employer/employerStore";
 import RecentPostedJobs from "@/components/Employer/Dashboard/recentPostedJobs";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 
 export default function EmployerDashboardTab() {
   const employer = useUserData((state) => state.userData);
@@ -129,7 +129,8 @@ export default function EmployerDashboardTab() {
       <div className="md:w-[200px]">
         <Button
           onClick={openCreateJobDialog}
-          className="border-transparent bg-primary hover:bg-secondary">
+          className="border-transparent bg-primary hover:bg-secondary"
+        >
           <FileText className="mr-1 h-4 w-4" />
           Create New Job
         </Button>

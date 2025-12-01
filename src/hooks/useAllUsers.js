@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useUserData } from "@/store/employer/userDataStorage";
+import { useUserData } from "@/store/userDataStorage";
 
 export const useUserDataQuery = () => {
   const setUserData = useUserData((state) => state.setUserData);
