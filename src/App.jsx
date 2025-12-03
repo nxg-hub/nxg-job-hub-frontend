@@ -8,10 +8,10 @@ import Contact from "./pages/Contact.jsx";
 import Explore from "./components/hero/Explore.jsx";
 import Dashboard from "./pages/Dashboard/index.jsx";
 import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/index.jsx";
-import Passwordsettings from "./pages/Dashboard/TechTalent/setting/Passwordsettings.jsx";
-import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
+import Passwordsettings from "./pages/Dashboard/Talent/setting/Passwordsettings.jsx";
+// import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 // import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
-import JobListings from "./pages/Dashboard/job-listings";
+// import JobListings from "./pages/Dashboard/job-listings";
 import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
@@ -22,25 +22,25 @@ import NotificationTab from "./components/NotificationTab/index.jsx";
 import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 // import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
 import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
-import ProfileController from "./utils/routers/ProfileController.jsx";
-import Overview from "./utils/routers/Overview.jsx";
+// import ProfileController from "./utils/routers/ProfileController.jsx";
+// import Overview from "./utils/routers/Overview.jsx";
 import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
 import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
-import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
+// import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
 import Findjob from "./pages/FindJob/FindjobPage.jsx";
 import Faq from "./pages/Faq/Faq.jsx";
 import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 import Help from "./pages/Dashboard/Help/Help.jsx";
-import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
+// import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
 import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
 import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
 import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
 import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
-import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
-import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
+// import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
+// import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
 import LoginForm from "./pages/Login/Login.jsx";
@@ -52,13 +52,6 @@ import { ServiceProviderProfileCompleteForm } from "./pages/servicesprovidercomp
 import { XServiceProviderFormCompletion } from "./pages/xservicesprovidercompleteform.jsx";
 import { JobTracker } from "./pages/Dashboard/ServiceProvider/jobs-tracker.jsx";
 import MessagesPage from "./pages/Dashboard/messages.jsx";
-import DashboardTab from "./pages/Dashboard/Agent/dashboard-tab.jsx";
-import MatchesTab from "./pages/Dashboard/Agent/matches-tab.jsx";
-import JobsTab from "./pages/Dashboard/Agent/jobs-tab.jsx";
-import CandidatesTab from "./pages/Dashboard/Agent/candidates-tabs.jsx";
-import MessagesTab from "./pages/Dashboard/Agent/messages-tab.jsx";
-import ProfileTab from "./pages/Dashboard/Agent/profile-tab.jsx";
-import EmployerTab from "./pages/Dashboard/Agent/employers-tab.jsx";
 import { EmployerDashboard } from "./pages/employer.jsx";
 import EmployerDashboardTab from "./pages/Dashboard/Employer2/employer-dashboard-tab.jsx";
 import EmployerJobTab from "./pages/Dashboard/Employer2/employer-job-tab.jsx";
@@ -75,7 +68,6 @@ import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
 import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
-import { ServiceProviderDashboardX } from "./pages/services-providerx.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
 import SuccessfulSignupPage from "./pages/Register/successfulSignUpPage.jsx";
@@ -117,15 +109,8 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<SignupForm />} />
         </Route>
-        {/* <Route exact path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/post-job-form" element={<PostJobForm />} /> */}
         <Route path="/jobs/:category" element={<JobCategoryPage />} />
         <Route path="/all-categories" element={<JobCategoriesPage />} />
-        {/* <Route path="/login" element={<LoginForm />} /> */}
-        {/* <Route path="/register" element={<SignupForm />} /> */}
         <Route
           path="/register/success-signup"
           element={<SuccessfulSignupPage />}
@@ -159,26 +144,6 @@ function App() {
         />
 
         {/* end service provider user routes */}
-
-        {/* service provider user routes (remove hwen done) */}
-        <Route
-          path="/services-provider-x"
-          element={<ServiceProviderDashboardX />}
-        >
-          <Route index element={<ServicesProviderHomePage />} />
-          <Route path="profile" element={<ServiceProviderProfile />} />
-          <Route path="job-tracker" element={<JobTracker />} />
-          <Route path="messages" element={<MessagesPage />} />
-        </Route>
-        <Route
-          path="/services-provider/complete-profile"
-          element={<ServiceProviderProfileCompleteForm />}
-        />
-        <Route
-          path="/services-provider/complete-profile-x"
-          element={<XServiceProviderFormCompletion />}
-        />
-        {/* end service provider user routes (remove when done) */}
 
         {/* talent user routes */}
         <Route path="/talent" element={<TalentDashboard />}>
@@ -240,34 +205,32 @@ function App() {
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }
-          ></Route>
+            }></Route>
 
           <Route path="/profilelanding" element={<ProfileLanding />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/techprofileform" element={<DashboardProfileForm />} />
+          {/* <Route path="/techprofileform" element={<DashboardProfileForm />} /> */}
           <Route path="/employerprofile" element={<EmployerProfileForm />} />
 
-          <Route
+          {/* <Route
             path="/dashboard"
             element={
               <VerificationProvider>
                 <Dashboard />
               </VerificationProvider>
-            }
-          >
+            }>
             <Route path="" element={<Overview />} />
             <Route path="notifications" element={<NotificationTab />} />
             <Route path="profile" element={<ProfileController />} />
             <Route path="featuredTalent" element={<FeaturedTalent />} />
-            {/* <Route path="profile" element={<VerificationProvider>
+            <Route path="profile" element={<VerificationProvider>
               <ProfileController />
-            </VerificationProvider>} /> */}
+            </VerificationProvider>} />
             <Route path="posts">
               <Route path="" element={<JobPosts />} />
               <Route path="create" element={<PostJobs />} />
             </Route>
-            {/* <Route path="applicants" element={<JobApplicants />} /> */}
+            <Route path="applicants" element={<JobApplicants />} />
             <Route
               path="posts/review-applicants/:id"
               element={<ReviewApplicants />}
@@ -277,7 +240,7 @@ function App() {
             <Route path="services" element={<CompanyServices />} />
             <Route path="applications" element={<Applications />} />
             <Route path="saved" element={<SavedJobs />} />
-            {/* <Route path="wallet" element={<Wallet />} />W */}
+            <Route path="wallet" element={<Wallet />} />W
             <Route path="job-listings" element={<JobListings />} />
             <Route path="analytics" element={<h2>Analytics </h2>} />
             <Route path="subscription" element={<SubscriptionController />} />
@@ -286,7 +249,7 @@ function App() {
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsAndCondition />} />
             <Route path="help" element={<Help />} />
-          </Route>
+          </Route>  */}
 
           <Route path="/sub-success" element={<SubSuccess />}>
             <Route path=":reference" element={<SubSuccess />} />
@@ -298,8 +261,8 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
-        <Route path="/iso" element={<SavedJobCard />} />
-        {<Route path="job-listings" element={<JobListings />} />}
+        {/* <Route path="/iso" element={<SavedJobCard />} /> */}
+        {/* {<Route path="job-listings" element={<JobListings />} />} */}
       </Routes>
     </QueryClientProvider>
   );
