@@ -67,6 +67,7 @@ import { resetAllUserData } from "@/redux/AllUsersSlice";
 import { resetAllJobs } from "@/redux/ServiceProviderJobSlice";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
+import { clearNearbyJobs } from "@/redux/JobSlice";
 
 const sidebarItems = [
   {
@@ -358,6 +359,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     dispatch(resetUserData());
     dispatch(resetAllUserData());
     dispatch(resetAllJobs());
+    dispatch(clearNearbyJobs());
     navigate("/login");
   };
 

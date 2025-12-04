@@ -3,28 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Async thunks to fetch transactions
-export const fetchAllJobs = createAsyncThunk(
-  "serviceProviderjobs/fetchAllJobs",
-  async ({ token }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_HOST_URL}/api/job-postings/all`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch riders");
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
 
 export const fetchSavedJobs = createAsyncThunk(
   "serviceProviderSavedjobs/fetchSavedJobs",
@@ -115,7 +93,6 @@ export const fetchMyJobs = createAsyncThunk(
 const ServiceProviderJobSlice = createSlice({
   name: "serviceProviderjobs",
   initialState: {
-    allJobs: [],
     savedJobs: [],
     myJobs: [],
     loading: false,
@@ -130,7 +107,6 @@ const ServiceProviderJobSlice = createSlice({
   },
   reducers: {
     resetAllJobs(state) {
-      state.allJobs = [];
       state.savedJobs = [];
       state.myJobs = [];
       state.recentJobs = [];
@@ -139,17 +115,6 @@ const ServiceProviderJobSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllJobs.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchAllJobs.fulfilled, (state, action) => {
-        state.loading = false;
-        state.allJobs = action.payload;
-      })
-      .addCase(fetchAllJobs.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
       .addCase(fetchSavedJobs.pending, (state) => {
         state.savedLoading = true;
       })

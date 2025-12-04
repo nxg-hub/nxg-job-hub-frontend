@@ -73,6 +73,7 @@ import {
 } from "@/redux/TalentUserDataSlice";
 import { resetAllUserData } from "@/redux/AllUsersSlice";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
+import { clearNearbyJobs } from "@/redux/JobSlice";
 
 const sidebarItems = [
   {
@@ -317,6 +318,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     dispatch(resetTalentJobs());
     dispatch(resetTalentData());
     dispatch(resetAllUserData());
+    dispatch(clearNearbyJobs());
     navigate("/login");
   };
 

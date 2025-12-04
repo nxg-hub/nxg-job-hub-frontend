@@ -207,22 +207,8 @@
 //   );
 // }
 
-import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import StateDropdown from "@/pages/Dashboard/Talent/components/StateDropdown";
@@ -247,16 +233,6 @@ export function JobsFilter({ activeFilters, setActiveFilters }) {
       priority: [],
       state: [],
       client: [],
-    });
-  };
-
-  const toggleClientFilter = (client) => {
-    setActiveFilters((prev) => {
-      const newClients = prev.client.includes(client)
-        ? prev.client.filter((c) => c !== client)
-        : [...prev.client, client];
-
-      return { ...prev, client: newClients };
     });
   };
 
@@ -293,46 +269,6 @@ export function JobsFilter({ activeFilters, setActiveFilters }) {
       </div>
 
       <Separator orientation="vertical" className="h-6 hidden md:block" />
-
-      {/* Client Filter (Optional - can be shown on larger screens)
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="flex items-center border-[#0AACDC] text-[#0AACDC] hover:bg-[#0AACDC]/10">
-            {activeFilters.client.length > 0
-              ? `${activeFilters.client.length} Client(s)`
-              : "Select Clients"}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
-          <Command>
-            <CommandInput placeholder="Search client..." />
-            <CommandList>
-              <CommandEmpty>No clients found.</CommandEmpty>
-              <CommandGroup>
-                {clients.map((client) => (
-                  <CommandItem
-                    key={client}
-                    value={client}
-                    onSelect={() => toggleClientFilter(client)}>
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        activeFilters.client.includes(client)
-                          ? "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
-                    {client}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover> */}
 
       {/* Clear Button */}
       {(activeFilters.priority.length > 0 ||

@@ -15,23 +15,12 @@ const fetchJSON = async (url, token) => {
   return response.json();
 };
 
-export const fetchAllTalentJobs = createAsyncThunk(
-  "TalentJobs/fetchAllTalentJobs",
-  async ({ token }, { rejectWithValue }) => {
-    try {
-      return await fetchJSON(`${API_HOST_URL}/api/job-postings/all`, token);
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
-
 export const fetchTalentSavedJobs = createAsyncThunk(
   "TalentJobs/fetchTalentSavedJobs",
   async ({ token }, { rejectWithValue }) => {
     try {
       const data = await fetchJSON(
-        `${API_HOST_URL}/api/v1/tech-talent/my-jobs?page=0&size=100&sort=string`,
+        `${API_HOST_URL}/api/v1/tech-talent/my-jobs?page=0&size=1000&sort=string`,
         token
       );
       return data.content;
@@ -46,7 +35,7 @@ export const fetchMyTalentJobs = createAsyncThunk(
   async ({ token }, { rejectWithValue }) => {
     try {
       const data = await fetchJSON(
-        `${API_HOST_URL}/api/v1/tech-talent/my-applications?page=0&size=100000000&sort=string`,
+        `${API_HOST_URL}/api/v1/tech-talent/my-applications?page=0&size=10000000&sort=string`,
         token
       );
       return data.content;
@@ -94,7 +83,6 @@ export const fetchTalentNearByJobs = createAsyncThunk(
 const TalentJobSlice = createSlice({
   name: "TalentJobs",
   initialState: {
-    allJobs: [],
     savedJobs: [],
     myJobs: [],
     recentJobs: [],
@@ -109,7 +97,6 @@ const TalentJobSlice = createSlice({
   },
   reducers: {
     resetTalentJobs: (state) => {
-      state.allJobs = [];
       state.savedJobs = [];
       state.error = null;
       state.savedError = null;
@@ -119,19 +106,6 @@ const TalentJobSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // ALL JOBS
-      .addCase(fetchAllTalentJobs.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchAllTalentJobs.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.allJobs = action.payload;
-      })
-      .addCase(fetchAllTalentJobs.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
 
       // SAVED JOBS
       .addCase(fetchTalentSavedJobs.pending, (state) => {
