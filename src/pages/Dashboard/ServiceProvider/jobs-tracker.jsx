@@ -101,7 +101,7 @@ export function JobTracker() {
     setPage(0);
     setHasMore(true);
     loadJobs(0, true);
-  }, [activeFilters]);
+  }, [activeFilters.state]);
 
   // Determine which jobs to display
   const displayedJobs =
