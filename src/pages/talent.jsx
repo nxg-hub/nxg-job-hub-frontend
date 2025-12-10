@@ -4,13 +4,8 @@ import {
   LayoutDashboard,
   LogOut,
   CircleHelp,
-  Link2,
-  MessageSquare,
-  User,
   Building,
   Settings,
-  BarChart,
-  Users,
   Briefcase,
   Menu,
   OctagonAlert,
@@ -35,13 +30,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
-// import logo from "@/static/images/logo_colored.png";
-import logomin from "@/static/images/logo_min.png";
 import logo from "../static/images/splash.png";
-import logonamemin from "@/static/images/logo_name_min.png";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { notificationsData } from "@/utils/data/agent-mock-data";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,7 +41,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
 import {
   AlertDialog,
@@ -73,28 +63,52 @@ import {
 } from "@/redux/TalentUserDataSlice";
 import { resetAllUserData } from "@/redux/AllUsersSlice";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
+import { CustomerCareIcon } from "@/icons/nxg-icons";
+import { useUserDataQuery } from "@/hooks/useAllUsers";
+import helpCenterIcon from "@/static/icons/SVG/customer-care.svg";
+import { RiLayoutFill, RiServiceFill, RiSettings4Fill } from "react-icons/ri";
+import { FaBriefcase, FaUserCircle } from "react-icons/fa";
+import { TbHelpSquareFilled } from "react-icons/tb";
 
 const sidebarItems = [
   {
-    icon: <LayoutDashboard />,
+    icon: <RiLayoutFill className="w-5 h-5" />,
+    iconR: "",
     label: "Dashboard",
     path: "/talent",
   },
   {
-    icon: <Building />,
+    icon: <FaUserCircle className="w-5 h-5" />,
+    iconR: "",
     label: "Profile",
     path: "profile",
   },
 
-  { icon: <Briefcase />, label: "Jobs", path: "jobs" },
-
-  { icon: <MessageSquare />, label: "Messages", path: "messages" },
   {
-    icon: <Wrench />,
+    icon: <FaBriefcase className="w-5 h-5" />,
+    iconR: "",
+    label: "Jobs",
+    path: "jobs",
+  },
+
+  {
+    icon: <TbHelpSquareFilled className="w-5 h-5" />,
+    label: "Help Center",
+    path: "help-center",
+    iconR: <CustomerCareIcon className="w-6 h-6" />,
+  },
+  {
+    icon: <RiServiceFill className="w-5 h-5" />,
+    iconR: "",
     label: "Service Providers",
     path: "service-providers",
   },
-  { icon: <Settings />, label: "Setting", path: "setting" },
+  {
+    icon: <RiSettings4Fill className="w-5 h-5" />,
+    iconR: "",
+    label: "Setting",
+    path: "setting",
+  },
 ];
 
 export function TalentDashboard() {
@@ -131,6 +145,7 @@ export function TalentDashboard() {
 }
 
 function DashboardContent({ notifications = [] }) {
+  const { data } = useUserDataQuery();
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
@@ -159,20 +174,27 @@ function DashboardContent({ notifications = [] }) {
       <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-                      scrollbar-hidden md:rounded-lg">
-          <div className="pt-5">
+            scrollbar-hidden md:rounded-lg  !rounded-b-none"
+        >
+          <div className="px-5 pt-3 flex items-center gap-2">
             <img
-              src={isCollapsed ? logomin : logo}
-              alt="Next Gen Hub Logo"
               className={cn(
-                "object-contain mx-auto w-24 h-24",
-                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
+                "object-contain",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-10"
               )}
+              src={logo}
+              alt=""
             />
+            <div className="flex flex-col text-white -space-y-1.5">
+              <span className="font-bold text-2xl md:text-3xl">NXG</span>
+              <span className="text-xs md:text-xs md:tracking-widest">
+                JOB HUB
+              </span>
+            </div>
           </div>
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
-              <SidebarMenu className="gap-4">
+              <SidebarMenu className="gap-3">
                 {sidebarItems.map((item) => {
                   const isActive =
                     location.pathname === item.path ||
@@ -185,31 +207,36 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5">
+                        className="text-white hover:bg-white/10 hover:text-white p-5"
+                      >
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
+                          <span>{item.iconR}</span>
                         </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );
                 })}
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip="Logout"
-                    className="hover:cursor-pointer border-transparent text-white hover:bg-white/10 hover:text-white p-5"
-                    onClick={() => setShowLogoutNotice(true)}>
-                    <div>
-                      <LogOut className="w-7 h-7" />
-                      <span>Logout</span>
-                    </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter className="bg-sky-700 rounded-b-md">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Logout"
+              className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
+              onClick={() => setShowLogoutNotice(true)}
+            >
+              <div>
+                <LogOut className="w-7 h-7" />
+                <span>Logout</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarFooter>
       </Sidebar>
 
       {/* Main Content */}
@@ -217,42 +244,57 @@ function DashboardContent({ notifications = [] }) {
         className={cn(
           "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
           isCollapsed ? "md:pl-40" : ""
-        )}>
+        )}
+      >
         {/* Header */}
-        <header className="bg-white p-4 flex border-b md:justify-end md:rounded-md">
-          <div className="flex justify-start w-full">
+        <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
+          <div className="flex mr-auto">
+            <SidebarTrigger
+              openMenuIcon={<Menu className="w-8 h-8" />}
+              className="my-3 ml-2 border-transparent md:hidden "
+            />
+          </div>
+          <div className="w-full ">
             <h1 className="text-2xl">
               Welcome! 👋
               <span className="capitalize font-bold">
-                {userData?.firstName || ""}
+                {userData?.serviceProvider?.firstName}
               </span>
             </h1>
           </div>
-          <SidebarTrigger
-            openMenuIcon={<Menu className="w-8 h-8" />}
-            className="my-3 ml-2 border-transparent md:hidden "
-          />
-          <DropdownMenu
-            open={notificationDropdownOpen}
-            onOpenChange={setNotificationDropdownOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative border-none ">
-                <Bell className="h-5 w-5" />
-                {unreadNotifications > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
-                    {unreadNotifications}
-                  </Badge>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <NotificationDropdown notifications={notifications} />
-          </DropdownMenu>
-        </header>
+          <div className="hidden md:flex gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+            >
+              <img className="w-10" src={helpCenterIcon} alt="chat-admin" />
+            </Button>
+            <DropdownMenu
+              open={notificationDropdownOpen}
+              onOpenChange={setNotificationDropdownOpen}
+            >
+              <DropdownMenuTrigger className="hidden md:block" asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+                >
+                  <Bell className="h-5 w-5" />
+                  {unreadNotifications > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                    >
+                      {unreadNotifications}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <NotificationDropdown notifications={notifications} />
+            </DropdownMenu>
+          </div>
+        </div>
         <div className=" pt-16 md:pt-0">
           <>
             {!isVerified && (
@@ -285,7 +327,8 @@ function DashboardContent({ notifications = [] }) {
                       <span>Your account is not yet verified</span>
                       <NavLink
                         className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                        to={"profile"}>
+                        to={"profile"}
+                      >
                         complete your profile
                       </NavLink>
                     </div>
@@ -332,7 +375,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8">
+            className="flex flex-col items-center py-6 space-y-8"
+          >
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -347,7 +391,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleCancelClick}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
+          >
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

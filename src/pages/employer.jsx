@@ -4,8 +4,6 @@ import {
   LayoutDashboard,
   LogOut,
   CircleHelp,
-  Link2,
-  MessageSquare,
   X,
   Building,
   Settings,
@@ -71,6 +69,9 @@ import { motion } from "framer-motion";
 import { setSubData } from "@/redux/AllUsersSlice";
 import { FcCustomerSupport } from "react-icons/fc";
 import { CustomerCareIcon, GoldCoinIcon } from "@/icons/nxg-icons";
+import { RiLayoutFill, RiSendPlaneFill, RiSettings4Fill } from "react-icons/ri";
+import { FaBriefcase, FaUserShield, FaUserTie } from "react-icons/fa";
+import { TbHelpSquareFilled } from "react-icons/tb";
 
 const BounceCoinIcon = () => {
   return (
@@ -93,32 +94,32 @@ const BounceCoinIcon = () => {
 
 const sidebarItems = [
   {
-    icon: <LayoutDashboard className="w-5 h-5" />,
+    icon: <RiLayoutFill className="w-5 h-5" />,
     label: "Dashboard",
     path: "/employer",
     iconR: "",
   },
   {
-    icon: <Building className="w-5 h-5" />,
+    icon: <FaBriefcase className="w-5 h-5" />,
     label: "Company Profile",
     path: "companyprofile",
     iconR: "",
   },
 
   {
-    icon: <LayoutDashboard className="w-5 h-5" />,
+    icon: <RiSendPlaneFill className="w-5 h-5" />,
     label: "Jobs",
     path: "jobs",
     iconR: "",
   },
   {
-    icon: <ShieldCheck className="w-5 h-5" />,
+    icon: <FaUserShield className="w-5 h-5" />,
     label: "Feature Talents",
     path: "featuredTalent",
     iconR: <BounceCoinIcon />,
   },
   {
-    icon: <Users className="w-5 h-5" />,
+    icon: <FaUserTie className="w-5 h-5" />,
     label: "Applicants",
     path: "applicants",
     iconR: "",
@@ -128,21 +129,21 @@ const sidebarItems = [
   //   label: "Matches",
   //   path: "candidate-matches",
   // },
-  {
-    icon: <MessageSquare className="w-5 h-5" />,
-    label: "Messages",
-    path: "messages",
-    iconR: "",
-  },
+  // {
+  //   icon: <MessageSquare className="w-5 h-5" />,
+  //   label: "Messages",
+  //   path: "messages",
+  //   iconR: "",
+  // },
   // { icon: <BarChart />, label: "Analytics", path: "analytics" },
   {
-    icon: <Settings className="w-5 h-5" />,
+    icon: <RiSettings4Fill className="w-5 h-5" />,
     label: "Setting",
     path: "setting",
     iconR: "",
   },
   {
-    icon: <CircleHelp className="w-5 h-5" />,
+    icon: <TbHelpSquareFilled className="w-5 h-5" />,
     label: "Help Center",
     path: "help-center",
     iconR: <CustomerCareIcon className="w-6 h-6" />,
@@ -278,10 +279,6 @@ function DashboardContent({ notifications = [] }) {
     if (e.target === e.currentTarget) setShowLogoutNotice(false);
   };
 
-  const NUMBEROFDAYFORFREESUB =
-    getDaysBetween(employer?.employer?.accountCreationDate) /
-    (1000 * 60 * 60 * 24);
-
   const getSubStatus = async () => {
     try {
       const res = await axios.get(
@@ -292,11 +289,12 @@ function DashboardContent({ notifications = [] }) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getSubStatus();
   }, []);
   return (
-    <div className="flex h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
+    <div className="flex min-h-screen w-full bg-slate-100 md:pt-3 md:px-5 md:pr-8">
       {/* Sidebar */}
       <Sidebar className="" collapsible="icon" variant="floating">
         <SidebarContent
@@ -319,16 +317,6 @@ function DashboardContent({ notifications = [] }) {
               </span>
             </div>
           </div>
-          {/* <div className="pt-5">
-            <img
-              src={logo}
-              alt="Next Gen Hub Logo"
-              className={cn(
-                "object-contain mx-auto w-24 h-24",
-                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
-              )}
-            />
-          </div> */}
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
               <SidebarMenu className="gap-3">
@@ -450,7 +438,6 @@ function DashboardContent({ notifications = [] }) {
       >
         {/* Header */}
         <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
-          {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
           <div className="flex mr-auto">
             <SidebarTrigger
               openMenuIcon={<Menu className="w-8 h-8" />}

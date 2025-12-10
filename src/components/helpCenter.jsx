@@ -37,16 +37,34 @@ export default function HelpCenter({
   const handleSendMessage = () => {
     if (!input.trim()) return;
 
-    const userMessage = {
-      receiverId: receiverId,
-      subject: "",
-      userType: userType,
-      profilePicture: profilePicture,
-      senderName: senderName,
-      body: input,
-    };
+    if (!messages?.length > 0) {
+      const userMessage = {
+        receiverId: receiverId,
+        subject: "",
+        userType: userType,
+        profilePicture: profilePicture,
+        senderName: senderName,
+        body: input,
+      };
 
-    mutate({ payload: userMessage });
+      mutate({ payload: userMessage });
+    }
+
+    if (messages?.length > 0) {
+      const messageId = messages?.[0]?.threadId;
+
+      const userMessage = {
+        receiverId: receiverId,
+        subject: "",
+        userType: userType,
+        profilePicture: profilePicture,
+        senderName: senderName,
+        body: input,
+        threadId: messageId,
+      };
+
+      mutate({ payload: userMessage });
+    }
     setInput("");
   };
 

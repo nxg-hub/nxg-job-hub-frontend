@@ -97,9 +97,7 @@ export default function KPIBoard({ employerID }) {
           </CardContent>
         </Card>
       </div>
-      <div className="w-full md:!mt-[-30px]">
-        <Interviews />
-      </div>
+      <div className="w-full md:!mt-[-30px]">{/* <Interviews /> */}</div>
     </div>
   );
 }

@@ -113,7 +113,7 @@ export function ServicesProviderHomePage() {
     );
 
   return (
-    <div className="space-y-6 px-6">
+    <div className="space-y-6">
       <div className="flex flex-col gap-4 sticky top-0 z-30 bg-white">
         <JobsFilter
           activeFilters={activeFilters}
@@ -134,12 +134,14 @@ export function ServicesProviderHomePage() {
         <TabsList className="grid w-full grid-cols-2 border-none">
           <TabsTrigger
             value="matches"
-            className="border-none hover:bg-white hover:text-black">
+            className="border-none hover:bg-white hover:text-black"
+          >
             Job Matches
           </TabsTrigger>
           <TabsTrigger
             value="near"
-            className="border-none hover:bg-white hover:text-black">
+            className="border-none hover:bg-white hover:text-black"
+          >
             Nearby Jobs
           </TabsTrigger>
         </TabsList>

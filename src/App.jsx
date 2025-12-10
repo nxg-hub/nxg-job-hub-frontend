@@ -116,6 +116,7 @@ function App() {
           <Route path="post-job-form" element={<PostJobForm />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<SignupForm />} />
+          <Route path="forgotpassword" element={<PasswordRecovery />} />
         </Route>
         {/* <Route exact path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -146,7 +147,7 @@ function App() {
           <Route index element={<ServicesProviderHomePage />} />
           <Route path="profile" element={<ServiceProviderProfile />} />
           <Route path="job-tracker" element={<JobTracker />} />
-          <Route path="messages" element={<MessagesPage />} />
+          <Route path="help-center" element={<MessagesPage />} />
           <Route path="setting" element={<Passwordsettings />} />
         </Route>
         <Route
@@ -186,7 +187,7 @@ function App() {
           <Route path="profile" element={<TalentProfileTab />} />
           <Route path="setting" element={<Passwordsettings />} />
           <Route path="jobs" element={<TalentJobTracker />} />
-          <Route path="messages" element={<TalentMessageTab />} />
+          <Route path="help-center" element={<TalentMessageTab />} />
           {/* <Route path="subscriptions" element={<TechTalentSubscription />} /> */}
           <Route path="service-providers" element={<TalentServiceProvider />} />
           <Route path="payment-callback" element={<PaymentCallback />} />
@@ -294,7 +295,7 @@ function App() {
         </Route>
 
         {/* Modals */}
-        <Route path="/forgotpassword" element={<PasswordRecovery />} />
+        {/* <Route path="/forgotpassword" element={<PasswordRecovery />} /> */}
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otp" element={<Otp />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
