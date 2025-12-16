@@ -28,7 +28,9 @@ const FindjobPage = () => {
         const response = await fetch(`${API_HOST_URL}/api/job-postings/all`);
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.json();
-        const acceptedData = data.filter((job) => job.jobStatus === "ACCEPTED");
+        const acceptedData = data?.content?.filter(
+          (job) => job.jobStatus === "ACCEPTED"
+        );
         setJobsResult(acceptedData);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -59,7 +61,7 @@ const FindjobPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-inter w-full">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[#006a90] shadow-sm flex items-center justify-between px-6 py-4 w-full">
+      <header className="sticky top-0 z-10 bg-secondary shadow-sm flex items-center justify-between px-6 py-4 w-full">
         <Link to="/" className="w-36">
           <img src={Logo} alt="Nxg Logo" className="w-[50px] h-[50px]" />
         </Link>
@@ -140,7 +142,7 @@ const FindjobPage = () => {
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                     <span className="text-sky-700 font-semibold text-lg">
-                      ₦{job.salary}
+                      ₦{Number(job.salary).toLocaleString()}
                     </span>
                     <div className="flex gap-3">
                       <Link

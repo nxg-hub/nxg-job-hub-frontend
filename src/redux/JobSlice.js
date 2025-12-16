@@ -1,118 +1,146 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// ===========================================
-// FETCH NEARBY JOBS
-// ===========================================
+/* ======================================
+   FETCH NEARBY JOBS (INFINITE SCROLL)
+====================================== */
 export const fetchNearbyJobs = createAsyncThunk(
-  "nearByJobs/fetchNearbyJobs",
-  async ({ token, userCity, jobType, jobLocation }, { rejectWithValue }) => {
+  "jobs/fetchNearbyJobs",
+  async (
+    { token, userCity, jobType, jobLocation, page = 0, size = 20 },
+    { rejectWithValue }
+  ) => {
     try {
       let url = `${API_HOST_URL}/api/job-postings/search-nearby-jobs?userCity=${encodeURIComponent(
         userCity
-      )}`;
+      )}&page=${page}&size=${size}`;
 
       if (jobType) url += `&jobType=${encodeURIComponent(jobType)}`;
       if (jobLocation) url += `&jobLocation=${encodeURIComponent(jobLocation)}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const res = await fetch(url, {
         headers: {
           accept: "application/json",
-          "Content-Type": "application/json",
           Authorization: token,
         },
       });
 
-      if (!response.ok) throw new Error("Failed to fetch nearby jobs");
+      if (!res.ok) throw new Error("Failed to fetch nearby jobs");
 
-      const data = await response.json();
-      return { data };
-    } catch (error) {
-      return rejectWithValue(error.message);
+      const data = await res.json();
+      return { data, page };
+    } catch (err) {
+      return rejectWithValue(err.message);
     }
   }
 );
 
+/* ======================================
+   FETCH ALL JOBS (INFINITE SCROLL)
+====================================== */
 export const fetchAllJobs = createAsyncThunk(
-  "alljobs/fetchAllJobs",
+  "jobs/fetchAllJobs",
   async (
-    { token, page = 0, size = 5, city, search, jobType },
+    { token, page = 0, size = 20, city, search, jobType },
     { rejectWithValue }
   ) => {
     try {
       let url = `${API_HOST_URL}/api/job-postings/all?page=${page}&size=${size}`;
-      if (city) url += `&city=${city}`;
+
+      if (city) url += `&city=${encodeURIComponent(city)}`;
       if (search) url += `&search=${encodeURIComponent(search)}`;
       if (jobType) url += `&jobType=${encodeURIComponent(jobType)}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const res = await fetch(url, {
         headers: {
           accept: "application/json",
-          "Content-Type": "application/json",
           Authorization: token,
         },
       });
 
-      if (!response.ok) throw new Error("Failed to fetch jobs");
+      if (!res.ok) throw new Error("Failed to fetch jobs");
 
-      const data = await response.json();
+      const data = await res.json();
       return { data, page };
-    } catch (error) {
-      return rejectWithValue(error.message);
+    } catch (err) {
+      return rejectWithValue(err.message);
     }
   }
 );
-// ===========================================
-// NEARBY JOBS SLICE
-// ===========================================
+
+/* ======================================
+   SLICE
+====================================== */
 const JobsSlice = createSlice({
-  name: "Jobs",
+  name: "jobs",
   initialState: {
-    jobs: [],
+    nearbyJobs: [],
+    allJobs: [],
+
+    nearbyPage: 0,
+    allJobsPage: 0,
+
+    nearbyHasMore: true,
+    allJobsHasMore: true,
+
     loading: false,
     error: null,
-    allJobs: [],
-    page: 0,
   },
   reducers: {
     clearNearbyJobs: (state) => {
-      state.jobs = [];
-      state.loading = false;
-      state.error = null;
-      state.page = 0;
+      state.nearbyJobs = [];
+      state.nearbyPage = 0;
+      state.nearbyHasMore = true;
     },
-    setPage: (action) => {
-      state.page = action.payload;
+    resetAllJobs: (state) => {
+      state.allJobs = [];
+      state.allJobsPage = 0;
+      state.allJobsHasMore = true;
     },
   },
   extraReducers: (builder) => {
     builder
+
+      /* -------- NEARBY JOBS -------- */
       .addCase(fetchNearbyJobs.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(fetchNearbyJobs.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs = action.payload.data;
+
+        const { content, last } = action.payload.data;
+
+        if (action.payload.page === 0) {
+          state.nearbyJobs = content;
+        } else {
+          state.nearbyJobs.push(...content);
+        }
+
+        state.nearbyPage = action.payload.page;
+        state.nearbyHasMore = !last;
       })
       .addCase(fetchNearbyJobs.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Something went wrong";
+        state.error = action.payload;
       })
+
+      /* -------- ALL JOBS -------- */
       .addCase(fetchAllJobs.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchAllJobs.fulfilled, (state, action) => {
         state.loading = false;
 
-        // Append to existing list instead of replacing
+        const { content, last } = action.payload.data;
+
         if (action.payload.page === 0) {
-          state.allJobs = action.payload.data;
+          state.allJobs = content;
         } else {
-          state.allJobs = [...state.allJobs, ...action.payload.data];
+          state.allJobs.push(...content);
         }
+
+        state.allJobsPage = action.payload.page;
+        state.allJobsHasMore = !last;
       })
       .addCase(fetchAllJobs.rejected, (state, action) => {
         state.loading = false;
@@ -121,6 +149,6 @@ const JobsSlice = createSlice({
   },
 });
 
-export const { clearNearbyJobs, setPage } = JobsSlice.actions;
+export const { clearNearbyJobs, resetAllJobs } = JobsSlice.actions;
 
 export default JobsSlice.reducer;

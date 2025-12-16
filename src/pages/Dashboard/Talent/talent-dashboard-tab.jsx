@@ -15,6 +15,7 @@ import {
   fetchTalentNearByJobs,
   fetchTalentRecentJobs,
 } from "@/redux/TalentJobSlice";
+import { fetchAllJobs } from "@/redux/JobSlice";
 import { Toaster } from "@/components/ui/toaster";
 import { Link } from "react-router-dom";
 import { JobsCard } from "@/components/jobs-card";
@@ -28,6 +29,7 @@ export default function TalentDashboardTab() {
     state: [],
     client: [],
   });
+  const { allJobs } = useSelector((state) => state.JobsReducer);
   const loading = useSelector((state) => state.TalentReducer.loading);
   const nearError = useSelector((state) => state.TalentReducer.nearError);
   const recentJobs = useSelector((state) => state.TalentReducer.recentJobs);
@@ -35,6 +37,12 @@ export default function TalentDashboardTab() {
   const acceptedRecentJobs = recentJobs.filter((job) => {
     return job.jobStatus === "ACCEPTED";
   });
+  const acceptedJobs = allJobs.filter((job) => {
+    return job.jobStatus === "ACCEPTED";
+  });
+
+  const dispayed =
+    acceptedRecentJobs.length > 0 ? acceptedRecentJobs : acceptedJobs;
   const acceptedNearJobs = nearByJobs.filter((job) => {
     return job.jobStatus === "ACCEPTED";
   });
@@ -47,32 +55,38 @@ export default function TalentDashboardTab() {
     dispatch(fetchTalentRecentJobs({ token: token.authKey }));
     dispatch(fetchTalentNearByJobs({ token: token.authKey }));
     dispatch(fetchMyTalentJobs({ token: token.authKey }));
+    dispatch(
+      fetchAllJobs({
+        token: token.authKey,
+        page: 0,
+        size: 10, // limit recent jobs to 10
+        jobType: activeFilters.priority,
+        search: searchQuery,
+      })
+    );
   }, []);
   // Filter services based on search query and active filters
-  const filteredRecent = acceptedRecentJobs.filter((service) => {
+  const filteredRecent = dispayed.filter((service) => {
     // Search filter
     const matchesSearch =
-      service.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.employer_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      service.job_description
+      service?.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service?.employer_name
         .toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
-      service.job_location.toLowerCase().includes(searchQuery.toLowerCase());
+      service?.job_description
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      service?.job_location.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Priority filter
     const matchesPriority =
       activeFilters.priority.length === 0 ||
-      activeFilters.priority.includes(service.job_type);
+      activeFilters.priority.includes(service?.job_type);
 
     // State type filter
     const matchesState =
       activeFilters.state.length === 0 ||
-      activeFilters.state.includes(service.job_location);
-
-    // Client filter
-    // const matchesClient =
-    //   activeFilters.client.length === 0 ||
-    //   activeFilters.client.includes(service.client);
+      activeFilters.state.includes(service?.job_location);
 
     return matchesSearch && matchesPriority && matchesState;
     //  && matchesPriority  && matchesClient

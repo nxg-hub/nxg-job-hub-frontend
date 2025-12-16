@@ -104,6 +104,7 @@ function Passwordsettings() {
           <form className="pass-update" onSubmit={handlePasswordChange}>
             <div className="current-pass relative">
               <Inputs
+                className="w-full"
                 type={showPassword ? "text" : "password"}
                 title="Current Password"
                 value={currentPassword}
@@ -130,6 +131,7 @@ function Passwordsettings() {
             <div className="current-pass relative">
               <Inputs
                 type={showPassword ? "text" : "password"}
+                className="w-full"
                 title="New Password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -153,6 +155,7 @@ function Passwordsettings() {
             </div>
             <div className="current-pass relative">
               <Inputs
+                className="w-full"
                 type={showPassword ? "text" : "password"}
                 title="Confirm Password"
                 value={confirmPassword}

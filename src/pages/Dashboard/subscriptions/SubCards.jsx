@@ -36,7 +36,7 @@ const SubCards = ({ country, verifyTransaction, user }) => {
 
   const convertToDollar = (price) => {
     if (exchangeRate) {
-      const priceInNGN = parseFloat(price.replace("₦", "")) * 1000;
+      const priceInNGN = parseFloat(price?.replace("₦", "")) * 1000;
       const priceInDollar = priceInNGN / exchangeRate;
       return " $" + priceInDollar.toFixed(2);
     } else {
@@ -166,6 +166,8 @@ const SubCards = ({ country, verifyTransaction, user }) => {
     }
     // onSubscribe(true);
   };
+  // console.log(country.toLowerCase() !== "nigeria" || country !== "");
+
   return (
     <>
       <div className="sub-tabs">
@@ -213,16 +215,16 @@ const SubCards = ({ country, verifyTransaction, user }) => {
                 <h3>{subscription.subTitle}</h3>
               </div>
               {/* Convert price to NGN if user is Nigerian */}
-              {/*<p className="sub-price">*/}
-              {/*  {country === "nigeria"*/}
-              {/*    ? subscription.subPrice*/}
-              {/*    : convertToDollar(subscription.subPrice)}*/}
-              {/*</p>*/}
+              {/* <p className="sub-price">
+                {country.toLowerCase() === "nigeria" || country === ""
+                  ? subscription.subPrice
+                  : convertToDollar(subscription.subPrice)}
+              </p> */}
               <p
                 className="sub-price"
                 style={{
                   float: "right",
-                  background: "rgba(102, 182, 209, 1)",
+                  background: " rgba(102, 182, 209, 1)",
                   color: "#fff",
                   width: "160px",
                   border: "none",
@@ -232,7 +234,7 @@ const SubCards = ({ country, verifyTransaction, user }) => {
                   fontWeight: "500",
                   margin: ".4rem",
                 }}>
-                {country.toLowerCase() === "nigeria"
+                {country.toLowerCase() === "nigeria" || country === ""
                   ? subscription.subPrice
                   : convertToDollar(subscription.subPrice)}
               </p>
@@ -261,8 +263,8 @@ const SubCards = ({ country, verifyTransaction, user }) => {
                 <button
                   className={
                     subscription.planType === "Recommended"
-                      ? "!bg-[#006A90] !text-white hover:!bg-white hover:!text-black"
-                      : "hover:!bg-[#006A90] hover:!text-white"
+                      ? "!bg-secondary !text-white hover:!bg-white hover:!text-black border-none"
+                      : "hover:!bg-secondary hover:!text-white border-none"
                   }
                   // onClick={() => {handlePayment(subscription);}}>
                   onClick={() => handlePayment(subscription, index)}>

@@ -30,7 +30,8 @@ const JobCards = () => {
           `${API_HOST_URL}/api/job-postings/recent-job-postings?page=0&size=5`
         );
         const data = await response.json();
-        const acceptedRecentJobs = data.filter((job) => {
+
+        const acceptedRecentJobs = data?.filter((job) => {
           return job.jobStatus === "ACCEPTED";
         });
         setJobs(acceptedRecentJobs);
@@ -50,10 +51,10 @@ const JobCards = () => {
       setError(null);
       try {
         const response = await fetch(
-          `${API_HOST_URL}/api/job-postings/all?page=0&size=5&sort=string`
+          `${API_HOST_URL}/api/job-postings/all?page=0&size=6&sort=string`
         );
         const data = await response.json();
-        const acceptedRecentJobs = data.filter((job) => {
+        const acceptedRecentJobs = data?.content?.filter((job) => {
           return job.jobStatus === "ACCEPTED";
         });
         setAllJobs(acceptedRecentJobs);

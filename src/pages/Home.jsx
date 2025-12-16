@@ -54,8 +54,7 @@ const Home = () => {
           height: "auto",
           width: "100%",
           padding: "2rem 1rem 3rem 1rem",
-        }}
-      >
+        }}>
         {/* <Header /> */}
         {/* <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px]">
           <h1 className="text-3xl md:text-6xl font-bold  leading-tight pt-[100px]">
@@ -83,11 +82,10 @@ const Home = () => {
             </Link>
           </div>
         </div> */}
-        <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px] relative">
+        <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:bottom-[100px] relative">
           <h1 className="text-3xl md:text-6xl font-bold leading-tight md:pt-[100px]">
             <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}
-            >
+              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
               {heroTitle.title1}
             </span>
             <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
@@ -98,7 +96,7 @@ const Home = () => {
             Get access and connect with Professionals, Employers, Talents,
             Service Providers, Artisans and Agents — all in just a few clicks.
           </p>
-          <div className="flex max-w-[800px] absolute bottom-[-70px] md:bottom-[-130px] left-0 w-full mt-[150px] py-3">
+          <div className="flex max-w-[800px] absolute bottom-[-70px] md:bottom-[-100px] left-0 w-full mt-[150px] py-3">
             <Link
               to="/register"
               onMouseEnter={() => setHovered("post")}
@@ -109,8 +107,7 @@ const Home = () => {
                   : hovered === "post"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-[#2596BE] text-white"
-              } border-[#2596BE}`}
-            >
+              } border-[#2596BE}`}>
               Post Jobs{" "}
             </Link>
 
@@ -124,8 +121,7 @@ const Home = () => {
                   : hovered === "find"
                   ? "bg-transparent text-[#2596BE]"
                   : "bg-transparent text-[#2596BE]"
-              } border-[#2596BE}`}
-            >
+              } border-[#2596BE}`}>
               Find Jobs
             </Link>
           </div>
@@ -135,8 +131,7 @@ const Home = () => {
       <Explore />
       <div
         className="jobs-slider"
-        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}
-      >
+        style={{ margin: "3rem 0", padding: ".6rem 2rem" }}>
         <JobCards />
       </div>
       <Testimony />
