@@ -20,13 +20,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { toast } from "@/hooks/use-toast";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
 import { useDispatch } from "react-redux";
 import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 const SkillsExperienceTab = ({ userData, token }) => {
   const dispatch = useDispatch();
-  // 🔹 Option Lists
+
   const qualifications = [
     "High School Diploma",
     "Associate Degree",
@@ -57,7 +56,6 @@ const SkillsExperienceTab = ({ userData, token }) => {
 
   const workModeOptions = ["Remote", "On-site", "Hybrid"];
 
-  // 🔹 State management
   const [skills, setSkills] = useState(userData?.skills || []);
   const [newSkill, setNewSkill] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -71,7 +69,6 @@ const SkillsExperienceTab = ({ userData, token }) => {
     workMode: userData?.workMode || "",
   });
 
-  // 🔹 Helpers
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -93,7 +90,6 @@ const SkillsExperienceTab = ({ userData, token }) => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
 
-  // 🔹 Update backend
   const handleUpdate = async () => {
     setUpdating(true);
     try {
@@ -110,16 +106,14 @@ const SkillsExperienceTab = ({ userData, token }) => {
       };
 
       await axios.put(
-        `   ${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
+        `${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
         payload,
         {
           headers: { Authorization: `${token.authKey}` },
         }
       );
-      toast({
-        title: "Success",
-        description: "  Profile updated successfully!",
-      });
+
+      toast({ title: "Success", description: "Profile updated successfully!" });
       dispatch(fetchTalentData({ token: token.authKey }));
       setIsEditing(false);
     } catch (error) {
@@ -139,59 +133,64 @@ const SkillsExperienceTab = ({ userData, token }) => {
 
   return (
     <TabsContent value="skills">
-      <Card className="shadow-sm rounded-2xl">
-        <CardHeader className="flex justify-between items-center">
+      <Card className="shadow-lg rounded-2xl border border-gray-100">
+        <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <CardTitle className="text-lg">Skills & Experience</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-xl font-semibold text-gray-800">
+              Skills & Experience
+            </CardTitle>
+            <CardDescription className="text-gray-500 mt-1">
               Your technical and work experience
             </CardDescription>
           </div>
 
-          {!isEditing ? (
-            <Button
-              onClick={() => setIsEditing(true)}
-              className="bg-[#0659a6] hover:bg-[#054884] text-white">
-              Edit
-            </Button>
-          ) : (
-            <div className="flex gap-2">
+          <div className="flex gap-2">
+            {!isEditing ? (
               <Button
-                onClick={handleUpdate}
-                disabled={updating}
-                className="bg-green-600 hover:bg-green-700 text-white">
-                {updating ? "Saving..." : "Save"}
+                onClick={() => setIsEditing(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white">
+                Edit
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setIsEditing(false);
-                  setSkills(userData?.skills || []);
-                  setFormData({
-                    highestQualification: userData?.highestQualification || "",
-                    currentJob: userData?.currentJob || "",
-                    jobType: userData?.jobType || "",
-                    yearsOfExperience: userData?.yearsOfExperience || "",
-                    experienceLevel: userData?.experienceLevel || "",
-                    workMode: userData?.workMode || "",
-                  });
-                }}>
-                Cancel
-              </Button>
-            </div>
-          )}
+            ) : (
+              <>
+                <Button
+                  onClick={handleUpdate}
+                  disabled={updating}
+                  className="bg-green-600 hover:bg-green-700 text-white">
+                  {updating ? "Saving..." : "Save"}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditing(false);
+                    setSkills(userData?.skills || []);
+                    setFormData({
+                      highestQualification:
+                        userData?.highestQualification || "",
+                      currentJob: userData?.currentJob || "",
+                      jobType: userData?.jobType || "",
+                      yearsOfExperience: userData?.yearsOfExperience || "",
+                      experienceLevel: userData?.experienceLevel || "",
+                      workMode: userData?.workMode || "",
+                    });
+                  }}>
+                  Cancel
+                </Button>
+              </>
+            )}
+          </div>
         </CardHeader>
 
         <CardContent className="space-y-6">
-          {/* 🟩 Skills Section */}
+          {/* Skills Section */}
           <div>
-            <Label>Skills</Label>
+            <Label className="font-medium">Skills</Label>
             <div className="flex flex-wrap gap-2 mt-2">
               {skills.length > 0 ? (
                 skills.map((skill, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center gap-2 bg-primary/10 text-primary font-medium text-sm px-3 py-1 rounded-full">
+                    className="flex items-center gap-2 bg-blue-100 text-blue-800 font-medium text-sm px-3 py-1 rounded-full">
                     <span>{skill}</span>
                     {isEditing && (
                       <button
@@ -204,7 +203,7 @@ const SkillsExperienceTab = ({ userData, token }) => {
                   </div>
                 ))
               ) : (
-                <span className="text-muted-foreground">No skills listed</span>
+                <span className="text-gray-400">No skills listed</span>
               )}
             </div>
 
@@ -219,18 +218,17 @@ const SkillsExperienceTab = ({ userData, token }) => {
                 />
                 <Button
                   onClick={handleAddSkill}
-                  className="bg-[#0659a6] hover:bg-[#054884] text-white">
+                  className="bg-blue-600 hover:bg-blue-700 text-white">
                   Add
                 </Button>
               </div>
             )}
           </div>
 
-          {/* 🟩 Experience Section */}
+          {/* Experience Section */}
           <div className="grid md:grid-cols-2 gap-4">
-            {/* Qualification dropdown */}
             <div>
-              <Label>Highest Qualification</Label>
+              <Label className="font-medium">Highest Qualification</Label>
               {isEditing ? (
                 <Select
                   value={formData.highestQualification}
@@ -254,18 +252,18 @@ const SkillsExperienceTab = ({ userData, token }) => {
             </div>
 
             <div>
-              <Label>Current Job</Label>
+              <Label className="font-medium">Current Job</Label>
               <Input
                 id="currentJob"
                 value={formData.currentJob}
                 onChange={handleChange}
                 readOnly={!isEditing}
+                placeholder="Current job title"
               />
             </div>
 
-            {/* Job Type dropdown */}
             <div>
-              <Label>Job Type</Label>
+              <Label className="font-medium">Job Type</Label>
               {isEditing ? (
                 <Select
                   value={formData.jobType}
@@ -288,20 +286,8 @@ const SkillsExperienceTab = ({ userData, token }) => {
               )}
             </div>
 
-            {/* <div>
-              <Label>Years of Experience</Label>
-              <Input
-                id="yearsOfExperience"
-                type="number"
-                value={formData.yearsOfExperience}
-                onChange={handleChange}
-                readOnly={!isEditing}
-              />
-            </div> */}
-
-            {/* Experience level dropdown */}
             <div>
-              <Label>Experience Level</Label>
+              <Label className="font-medium">Experience Level</Label>
               {isEditing ? (
                 <Select
                   value={formData.experienceLevel}
@@ -309,7 +295,7 @@ const SkillsExperienceTab = ({ userData, token }) => {
                     handleSelectChange("experienceLevel", value)
                   }>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select level" />
+                    <SelectValue placeholder="Select experience level" />
                   </SelectTrigger>
                   <SelectContent>
                     {experienceLevels.map((lvl) => (
@@ -324,9 +310,8 @@ const SkillsExperienceTab = ({ userData, token }) => {
               )}
             </div>
 
-            {/* Work mode dropdown */}
             <div>
-              <Label>Work Mode</Label>
+              <Label className="font-medium">Work Mode</Label>
               {isEditing ? (
                 <Select
                   value={formData.workMode}
@@ -334,7 +319,7 @@ const SkillsExperienceTab = ({ userData, token }) => {
                     handleSelectChange("workMode", value)
                   }>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select mode" />
+                    <SelectValue placeholder="Select work mode" />
                   </SelectTrigger>
                   <SelectContent>
                     {workModeOptions.map((mode) => (

@@ -11,13 +11,17 @@
 // import { Input } from "@/components/ui/input";
 // import { Label } from "@/components/ui/label";
 // import { Button } from "@/components/ui/button";
-// import { Upload, FileText, CheckCircle2, Loader2 } from "lucide-react";
+// import { Upload, FileText, Loader2, ExternalLink } from "lucide-react";
 // import { API_HOST_URL } from "@/utils/api/API_HOST";
+// import { useDispatch } from "react-redux";
+// import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
+// import { toast } from "@/hooks/use-toast";
+// import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 // const PortfolioTab = ({ userData, token }) => {
+//   const dispatch = useDispatch();
 //   const [isEditing, setIsEditing] = useState(false);
-//   const [uploading, setUploading] = useState(false);
-
+//   const [loading, setLoading] = useState(false);
 //   const [formData, setFormData] = useState({
 //     portfolioLink: userData?.portfolioLink || "",
 //     professionalCert: userData?.professionalCert || "",
@@ -25,53 +29,56 @@
 //     coverletter: userData?.coverletter || "",
 //   });
 
-//   // 🔹 Handle text change
+//   // 🟩 Handle input change
 //   const handleChange = (e) => {
 //     const { id, value } = e.target;
 //     setFormData((prev) => ({ ...prev, [id]: value }));
 //   };
 
-//   // 🔹 Upload file handler
-//   const handleFileUpload = async (e, field) => {
-//     const file = e.target.files[0];
+//   // 🟦 Upload file to Cloudinary
+//   const uploadFile = async (file, field) => {
 //     if (!file) return;
+//     setLoading(true);
 
-//     setUploading(true);
 //     const formDataToSend = new FormData();
 //     formDataToSend.append("file", file);
+//     formDataToSend.append("upload_preset", "tin4r1lt"); // your Cloudinary preset
 
 //     try {
 //       const res = await axios.post(
-//         `${BASE_URL}api/v1/tech/upload-file`,
+//         "https://api.cloudinary.com/v1_1/dildznazt/auto/upload",
 //         formDataToSend,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             "Content-Type": "multipart/form-data",
-//           },
-//         }
+//         { headers: { "Content-Type": "multipart/form-data" } }
 //       );
 
-//       // assuming backend returns URL or file path
-//       const uploadedUrl = res.data?.url || file.name;
+//       const fileUrl = res.data.secure_url;
 
 //       setFormData((prev) => ({
 //         ...prev,
-//         [field]: uploadedUrl,
+//         [field]: fileUrl,
 //       }));
-//     } catch (error) {
-//       console.error("File upload failed:", error);
-//       alert("Failed to upload file.");
+
+//       toast({
+//         title: "Upload successful ✅",
+//         description: `${file.name} uploaded successfully.`,
+//       });
+//     } catch (err) {
+//       console.error("❌ Upload failed:", err.message);
+//       toast({
+//         variant: "destructive",
+//         title: "Upload Failed",
+//         description: "Please try again later.",
+//       });
 //     } finally {
-//       setUploading(false);
+//       setLoading(false);
 //     }
 //   };
 
-//   // 🔹 Save to backend
+//   // 🟦 Save portfolio info to backend
 //   const handleSave = async () => {
 //     try {
 //       await axios.put(
-//         `${API_HOST_URL}api/v1/tech/update-portfolio`,
+//         `   ${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
 //         {
 //           techId: userData.techId,
 //           portfolioLink: formData.portfolioLink,
@@ -80,14 +87,22 @@
 //           coverletter: formData.coverletter,
 //         },
 //         {
-//           headers: { Authorization: `Bearer ${token}` },
+//           headers: { Authorization: ` ${token.authKey}` },
 //         }
 //       );
-//       alert("Portfolio updated successfully!");
+//       toast({
+//         title: "Profile Updated",
+//         description: "Portfolio and certifications updated successfully.",
+//       });
+//       dispatch(fetchTalentData({ token: token.authKey }));
 //       setIsEditing(false);
 //     } catch (error) {
 //       console.error("Update failed:", error);
-//       alert("Failed to update portfolio.");
+//       toast({
+//         variant: "destructive",
+//         title: "Update Failed",
+//         description: "Could not save portfolio info. Please try again.",
+//       });
 //     }
 //   };
 
@@ -114,9 +129,9 @@
 //             <div className="flex gap-2">
 //               <Button
 //                 onClick={handleSave}
-//                 disabled={uploading}
+//                 disabled={loading}
 //                 className="bg-green-600 hover:bg-green-700 text-white">
-//                 {uploading ? (
+//                 {loading ? (
 //                   <Loader2 className="animate-spin w-4 h-4" />
 //                 ) : (
 //                   "Save"
@@ -140,7 +155,7 @@
 //         </CardHeader>
 
 //         <CardContent className="grid gap-6 md:grid-cols-2">
-//           {/* 🟩 Portfolio Link */}
+//           {/* Portfolio Link */}
 //           <div>
 //             <Label>Portfolio Link</Label>
 //             <Input
@@ -150,102 +165,127 @@
 //               placeholder="https://yourportfolio.com"
 //               readOnly={!isEditing}
 //             />
+//             {formData.portfolioLink && (
+//               <a
+//                 href={formData.portfolioLink}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="text-blue-600 text-sm flex items-center gap-1 mt-1 hover:underline">
+//                 <ExternalLink size={14} /> View Portfolio
+//               </a>
+//             )}
 //           </div>
 
-//           {/* 🟩 Certification Upload */}
+//           {/* Professional Certification */}
 //           <div>
 //             <Label>Professional Certification</Label>
 //             {!isEditing ? (
-//               <div className="flex items-center gap-2 mt-1">
-//                 <FileText className="text-gray-400" size={18} />
-//                 <span className="truncate text-sm text-gray-700">
-//                   {formData.professionalCert || "No file uploaded"}
-//                 </span>
-//               </div>
+//               formData.professionalCert &&
+//               formData.professionalCert !== "None" ? (
+//                 <a
+//                   href={formData.professionalCert}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
+//                   <FileText size={16} /> View Certification
+//                 </a>
+//               ) : (
+//                 <span className="text-gray-500 text-sm">No file uploaded</span>
+//               )
 //             ) : (
-//               <div className="flex items-center gap-3 mt-2">
+//               <div className="mt-2 flex items-center gap-3">
 //                 <input
 //                   id="cert-upload"
 //                   type="file"
-//                   accept=".pdf,.doc,.docx"
-//                   onChange={(e) => handleFileUpload(e, "professionalCert")}
+//                   accept=".pdf,.doc,.docx,.png,.jpg"
+//                   onChange={(e) =>
+//                     uploadFile(e.target.files[0], "professionalCert")
+//                   }
 //                   className="hidden"
 //                 />
 //                 <label
 //                   htmlFor="cert-upload"
-//                   className="flex items-center gap-2 cursor-pointer text-sm bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2">
+//                   className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
 //                   <Upload size={16} /> Upload File
 //                 </label>
-//                 {formData.professionalCert && (
-//                   <div className="flex items-center gap-1 text-green-600 text-xs">
-//                     <CheckCircle2 size={14} /> Uploaded
-//                   </div>
+//                 {loading && (
+//                   <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
 //                 )}
 //               </div>
 //             )}
 //           </div>
 
-//           {/* 🟩 Resume Upload */}
+//           {/* Resume */}
 //           <div>
 //             <Label>Resume</Label>
 //             {!isEditing ? (
-//               <div className="flex items-center gap-2 mt-1">
-//                 <FileText className="text-gray-400" size={18} />
-//                 <span className="truncate text-sm text-gray-700">
-//                   {formData.resume || "No resume uploaded"}
+//               formData.resume ? (
+//                 <a
+//                   href={formData.resume}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
+//                   <FileText size={16} /> View Resume
+//                 </a>
+//               ) : (
+//                 <span className="text-gray-500 text-sm">
+//                   No resume uploaded
 //                 </span>
-//               </div>
+//               )
 //             ) : (
-//               <div className="flex items-center gap-3 mt-2">
+//               <div className="mt-2 flex items-center gap-3">
 //                 <input
 //                   id="resume-upload"
 //                   type="file"
 //                   accept=".pdf,.doc,.docx"
-//                   onChange={(e) => handleFileUpload(e, "resume")}
+//                   onChange={(e) => uploadFile(e.target.files[0], "resume")}
 //                   className="hidden"
 //                 />
 //                 <label
 //                   htmlFor="resume-upload"
-//                   className="flex items-center gap-2 cursor-pointer text-sm bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2">
+//                   className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
 //                   <Upload size={16} /> Upload Resume
 //                 </label>
-//                 {formData.resume && (
-//                   <div className="flex items-center gap-1 text-green-600 text-xs">
-//                     <CheckCircle2 size={14} /> Uploaded
-//                   </div>
+//                 {loading && (
+//                   <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
 //                 )}
 //               </div>
 //             )}
 //           </div>
 
-//           {/* 🟩 Cover Letter Upload */}
+//           {/* Cover Letter */}
 //           <div>
 //             <Label>Cover Letter</Label>
 //             {!isEditing ? (
-//               <div className="flex items-center gap-2 mt-1">
-//                 <FileText className="text-gray-400" size={18} />
-//                 <span className="truncate text-sm text-gray-700">
-//                   {formData.coverletter || "No cover letter uploaded"}
+//               formData.coverletter ? (
+//                 <a
+//                   href={formData.coverletter}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
+//                   <FileText size={16} /> View Cover Letter
+//                 </a>
+//               ) : (
+//                 <span className="text-gray-500 text-sm">
+//                   No cover letter uploaded
 //                 </span>
-//               </div>
+//               )
 //             ) : (
-//               <div className="flex items-center gap-3 mt-2">
+//               <div className="mt-2 flex items-center gap-3">
 //                 <input
 //                   id="cover-upload"
 //                   type="file"
 //                   accept=".pdf,.doc,.docx"
-//                   onChange={(e) => handleFileUpload(e, "coverletter")}
+//                   onChange={(e) => uploadFile(e.target.files[0], "coverletter")}
 //                   className="hidden"
 //                 />
 //                 <label
 //                   htmlFor="cover-upload"
-//                   className="flex items-center gap-2 cursor-pointer text-sm bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2">
+//                   className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
 //                   <Upload size={16} /> Upload Cover Letter
 //                 </label>
-//                 {formData.coverletter && (
-//                   <div className="flex items-center gap-1 text-green-600 text-xs">
-//                     <CheckCircle2 size={14} /> Uploaded
-//                   </div>
+//                 {loading && (
+//                   <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
 //                 )}
 //               </div>
 //             )}
@@ -257,6 +297,7 @@
 // };
 
 // export default PortfolioTab;
+
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -273,14 +314,18 @@ import { Button } from "@/components/ui/button";
 import { Upload, FileText, Loader2, ExternalLink } from "lucide-react";
 import { API_HOST_URL } from "@/utils/api/API_HOST";
 import { useDispatch } from "react-redux";
-import { fetchLoggedInUser } from "@/redux/LoggedInUserSlice";
 import { toast } from "@/hooks/use-toast";
 import { fetchTalentData } from "@/redux/TalentUserDataSlice";
 
 const PortfolioTab = ({ userData, token }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loadingFiles, setLoadingFiles] = useState({
+    professionalCert: false,
+    resume: false,
+    coverletter: false,
+  });
+
   const [formData, setFormData] = useState({
     portfolioLink: userData?.portfolioLink || "",
     professionalCert: userData?.professionalCert || "",
@@ -288,20 +333,19 @@ const PortfolioTab = ({ userData, token }) => {
     coverletter: userData?.coverletter || "",
   });
 
-  // 🟩 Handle input change
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // 🟦 Upload file to Cloudinary
   const uploadFile = async (file, field) => {
     if (!file) return;
-    setLoading(true);
+
+    setLoadingFiles((prev) => ({ ...prev, [field]: true }));
 
     const formDataToSend = new FormData();
     formDataToSend.append("file", file);
-    formDataToSend.append("upload_preset", "tin4r1lt"); // your Cloudinary preset
+    formDataToSend.append("upload_preset", "tin4r1lt");
 
     try {
       const res = await axios.post(
@@ -310,34 +354,28 @@ const PortfolioTab = ({ userData, token }) => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
-      const fileUrl = res.data.secure_url;
-
-      setFormData((prev) => ({
-        ...prev,
-        [field]: fileUrl,
-      }));
+      setFormData((prev) => ({ ...prev, [field]: res.data.secure_url }));
 
       toast({
-        title: "Upload successful ✅",
+        title: "Upload Successful ✅",
         description: `${file.name} uploaded successfully.`,
       });
     } catch (err) {
-      console.error("❌ Upload failed:", err.message);
+      console.error("Upload failed:", err);
       toast({
         variant: "destructive",
         title: "Upload Failed",
         description: "Please try again later.",
       });
     } finally {
-      setLoading(false);
+      setLoadingFiles((prev) => ({ ...prev, [field]: false }));
     }
   };
 
-  // 🟦 Save portfolio info to backend
   const handleSave = async () => {
     try {
       await axios.put(
-        `   ${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
+        `${API_HOST_URL}/api/v1/tech-talent/${userData.techId}`,
         {
           techId: userData.techId,
           portfolioLink: formData.portfolioLink,
@@ -346,17 +384,19 @@ const PortfolioTab = ({ userData, token }) => {
           coverletter: formData.coverletter,
         },
         {
-          headers: { Authorization: ` ${token.authKey}` },
+          headers: { Authorization: `${token.authKey}` },
         }
       );
+
       toast({
         title: "Profile Updated",
         description: "Portfolio and certifications updated successfully.",
       });
+
       dispatch(fetchTalentData({ token: token.authKey }));
       setIsEditing(false);
-    } catch (error) {
-      console.error("Update failed:", error);
+    } catch (err) {
+      console.error("Update failed:", err);
       toast({
         variant: "destructive",
         title: "Update Failed",
@@ -365,58 +405,97 @@ const PortfolioTab = ({ userData, token }) => {
     }
   };
 
+  const renderFileUpload = (label, field, accept) => (
+    <div>
+      <Label className="font-medium">{label}</Label>
+      {!isEditing ? (
+        formData[field] ? (
+          <a
+            href={formData[field]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-blue-600 text-sm hover:underline mt-1">
+            <FileText size={16} /> View {label}
+          </a>
+        ) : (
+          <span className="text-gray-500 text-sm mt-1">No file uploaded</span>
+        )
+      ) : (
+        <div className="mt-2 flex items-center gap-3">
+          <input
+            id={`${field}-upload`}
+            type="file"
+            accept={accept}
+            onChange={(e) => uploadFile(e.target.files[0], field)}
+            className="hidden"
+          />
+          <label
+            htmlFor={`${field}-upload`}
+            className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm transition">
+            <Upload size={16} /> Upload {label}
+          </label>
+          {loadingFiles[field] && (
+            <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
+          )}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <TabsContent value="portfolio">
-      <Card className="shadow-sm rounded-2xl">
-        <CardHeader className="flex justify-between items-center">
+      <Card className="shadow-lg rounded-2xl border border-gray-100">
+        <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <CardTitle className="text-lg">
+            <CardTitle className="text-xl font-semibold text-gray-800">
               Portfolio & Certifications
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-500 mt-1">
               Showcase your work and credentials
             </CardDescription>
           </div>
 
-          {!isEditing ? (
-            <Button
-              onClick={() => setIsEditing(true)}
-              className="bg-[#0659a6] hover:bg-[#054884] text-white">
-              Edit
-            </Button>
-          ) : (
-            <div className="flex gap-2">
+          <div className="flex gap-2">
+            {!isEditing ? (
               <Button
-                onClick={handleSave}
-                disabled={loading}
-                className="bg-green-600 hover:bg-green-700 text-white">
-                {loading ? (
-                  <Loader2 className="animate-spin w-4 h-4" />
-                ) : (
-                  "Save"
-                )}
+                onClick={() => setIsEditing(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white">
+                Edit
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setIsEditing(false);
-                  setFormData({
-                    portfolioLink: userData?.portfolioLink || "",
-                    professionalCert: userData?.professionalCert || "",
-                    resume: userData?.resume || "",
-                    coverletter: userData?.coverletter || "",
-                  });
-                }}>
-                Cancel
-              </Button>
-            </div>
-          )}
+            ) : (
+              <>
+                <Button
+                  onClick={handleSave}
+                  disabled={Object.values(loadingFiles).some(Boolean)}
+                  className="bg-green-600 hover:bg-green-700 text-white">
+                  {Object.values(loadingFiles).some(Boolean) ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditing(false);
+                    setFormData({
+                      portfolioLink: userData?.portfolioLink || "",
+                      professionalCert: userData?.professionalCert || "",
+                      resume: userData?.resume || "",
+                      coverletter: userData?.coverletter || "",
+                    });
+                  }}>
+                  Cancel
+                </Button>
+              </>
+            )}
+          </div>
         </CardHeader>
 
         <CardContent className="grid gap-6 md:grid-cols-2">
           {/* Portfolio Link */}
           <div>
-            <Label>Portfolio Link</Label>
+            <Label className="font-medium">Portfolio Link</Label>
             <Input
               id="portfolioLink"
               value={formData.portfolioLink}
@@ -435,120 +514,14 @@ const PortfolioTab = ({ userData, token }) => {
             )}
           </div>
 
-          {/* Professional Certification */}
-          <div>
-            <Label>Professional Certification</Label>
-            {!isEditing ? (
-              formData.professionalCert &&
-              formData.professionalCert !== "None" ? (
-                <a
-                  href={formData.professionalCert}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
-                  <FileText size={16} /> View Certification
-                </a>
-              ) : (
-                <span className="text-gray-500 text-sm">No file uploaded</span>
-              )
-            ) : (
-              <div className="mt-2 flex items-center gap-3">
-                <input
-                  id="cert-upload"
-                  type="file"
-                  accept=".pdf,.doc,.docx,.png,.jpg"
-                  onChange={(e) =>
-                    uploadFile(e.target.files[0], "professionalCert")
-                  }
-                  className="hidden"
-                />
-                <label
-                  htmlFor="cert-upload"
-                  className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
-                  <Upload size={16} /> Upload File
-                </label>
-                {loading && (
-                  <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Resume */}
-          <div>
-            <Label>Resume</Label>
-            {!isEditing ? (
-              formData.resume ? (
-                <a
-                  href={formData.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
-                  <FileText size={16} /> View Resume
-                </a>
-              ) : (
-                <span className="text-gray-500 text-sm">
-                  No resume uploaded
-                </span>
-              )
-            ) : (
-              <div className="mt-2 flex items-center gap-3">
-                <input
-                  id="resume-upload"
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => uploadFile(e.target.files[0], "resume")}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="resume-upload"
-                  className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
-                  <Upload size={16} /> Upload Resume
-                </label>
-                {loading && (
-                  <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Cover Letter */}
-          <div>
-            <Label>Cover Letter</Label>
-            {!isEditing ? (
-              formData.coverletter ? (
-                <a
-                  href={formData.coverletter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-blue-600 text-sm hover:underline">
-                  <FileText size={16} /> View Cover Letter
-                </a>
-              ) : (
-                <span className="text-gray-500 text-sm">
-                  No cover letter uploaded
-                </span>
-              )
-            ) : (
-              <div className="mt-2 flex items-center gap-3">
-                <input
-                  id="cover-upload"
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => uploadFile(e.target.files[0], "coverletter")}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="cover-upload"
-                  className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-3 py-2 text-sm">
-                  <Upload size={16} /> Upload Cover Letter
-                </label>
-                {loading && (
-                  <Loader2 className="animate-spin w-4 h-4 text-gray-600" />
-                )}
-              </div>
-            )}
-          </div>
+          {/* File Uploads */}
+          {renderFileUpload(
+            "Professional Certification",
+            "professionalCert",
+            ".pdf,.doc,.docx,.png,.jpg"
+          )}
+          {renderFileUpload("Resume", "resume", ".pdf,.doc,.docx")}
+          {renderFileUpload("Cover Letter", "coverletter", ".pdf,.doc,.docx")}
         </CardContent>
       </Card>
     </TabsContent>

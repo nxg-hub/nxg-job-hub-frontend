@@ -13,7 +13,11 @@ import PersonalInfoTab from "./PersonalInfoTab";
 import ExperienceTab from "./ExperienceTab";
 import EducationTab from "./EducationTab";
 import Skills from "./Skills";
-import { Loader2 } from "lucide-react";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css/bundle";
+
 import axios from "axios";
 
 const subSkillsOptions = {
@@ -653,20 +657,35 @@ export default function ServiceProviderProfile() {
               )}
 
               {/* GALLERY */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                {workImages.map((img, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={img}
-                      className="w-full h-32 object-cover rounded-lg border"
-                    />
-                    <button
-                      onClick={() => handleRemoveWorkImage(img)}
-                      className="absolute top-2 right-2 bg-primary border-none text-white text-xs px-2 py-1 rounded">
-                      X
-                    </button>
-                  </div>
-                ))}
+
+              <div className="mt-4">
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  spaceBetween={16}
+                  slidesPerView={1}
+                  navigation
+                  pagination={{ clickable: true }}
+                  breakpoints={{
+                    640: { slidesPerView: 2 },
+                    768: { slidesPerView: 3 },
+                  }}>
+                  {workImages.map((img, index) => (
+                    <SwiperSlide key={index}>
+                      <div className="relative">
+                        <img
+                          src={img}
+                          alt={`work-${index}`}
+                          className="w-full h-48 object-cover rounded-lg border"
+                        />
+                        <button
+                          onClick={() => handleRemoveWorkImage(img)}
+                          className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded hover:bg-red-700">
+                          X
+                        </button>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </div>
 
               {!workImages.length && (

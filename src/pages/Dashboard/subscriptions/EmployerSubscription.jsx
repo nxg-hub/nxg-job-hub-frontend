@@ -7,6 +7,7 @@ import SubCards from "./SubCards";
 import axios from "axios";
 import { API_HOST_URL } from "../../../utils/api/API_HOST";
 import { JobCardSkeleton } from "@/components/job-card-skeleton";
+// import { useSelector } from "react-redux";
 
 export const EmployerSubscription = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -45,9 +46,10 @@ export const EmployerSubscription = () => {
       );
 
       const employerData = response.data; // Assuming the response is an object with employer data
+      // console.log(employerData);
       setUser(employerData.user);
       // Update state with fetched data
-      setCountry(employerData.country || "");
+      setCountry(employerData?.user?.nationality || "");
     } catch (error) {
       console.error("Error fetching employer data:", error.message);
       setError(true);

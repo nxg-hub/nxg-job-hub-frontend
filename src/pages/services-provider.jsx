@@ -80,7 +80,7 @@ const sidebarItems = [
     label: "Profile",
     path: "profile",
   },
-  { icon: <BriefcaseBusiness />, label: "Job Tracker", path: "job-tracker" },
+  { icon: <BriefcaseBusiness />, label: "Jobs", path: "job-tracker" },
   { icon: <CircleHelp />, label: "Help", path: "messages" },
 
   // { icon:  <MessageSquare />, label: "Help", path: "/help" },

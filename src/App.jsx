@@ -6,26 +6,26 @@ import Services from "./pages/Services.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Explore from "./components/hero/Explore.jsx";
-import Dashboard from "./pages/Dashboard/index.jsx";
-import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/index.jsx";
+// import Dashboard from "./pages/Dashboard/index.jsx";
+// import EmployerProfileForm from "./pages/Dashboard/Employer/EmployerProfile/index.jsx";
 import Passwordsettings from "./pages/Dashboard/Talent/setting/Passwordsettings.jsx";
 // import DashboardProfileForm from "./pages/Dashboard/TechTalent/DashboardProfileForm/index.jsx";
 // import Wallet from "./pages/Dashboard/wallet/Wallet.jsx";
 // import JobListings from "./pages/Dashboard/job-listings";
-import Login from "./pages/Login/index.jsx";
+// import Login from "./pages/Login/index.jsx";
 import PasswordRecovery from "./pages/Login/PasswordRecovery.jsx";
 import ResetPassword from "./pages/Login/ResetPassword.jsx";
 import { Otp } from "./pages/Login/Otp.jsx";
 import SelectAccountType from "./components/SelectAccountType/selectaccountype.jsx";
-import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
-import NotificationTab from "./components/NotificationTab/index.jsx";
-import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
+// import PostJobs from "./pages/Dashboard/Employer/routes/PostJobs/index.jsx";
+// import NotificationTab from "./components/NotificationTab/index.jsx";
+// import JobPosts from "./pages/Dashboard/Employer/routes/JobPosts/index.jsx";
 // import JobApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/index.jsx";
-import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
+// import EmployerVerificationForm from "./pages/Dashboard/Employer/routes/EmployerDashProfile/EmployerVerificationForm.jsx";
 // import ProfileController from "./utils/routers/ProfileController.jsx";
 // import Overview from "./utils/routers/Overview.jsx";
-import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
-import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
+// import SubscriptionController from "./utils/routers/SubscriptionController.jsx";
+// import { VerificationProvider } from "./pages/Dashboard/Employer/routes/EmployerDashProfile/VerificationContext.jsx";
 import ProtectedRoute from "./utils/routers/ProtectedRoute.jsx";
 // import SavedJobCard from "./pages/Dashboard/TechTalent/SavedJobs/SavedJobCard/index.jsx";
 import { SubSuccess } from "./pages/Dashboard/subscriptions/SubSuccess.jsx";
@@ -35,15 +35,15 @@ import PrivacyPolicy from "./pages/Privacy/Privacy.jsx";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsAndCondition.jsx";
 import Help from "./pages/Dashboard/Help/Help.jsx";
 // import SavedJobs from "./pages/Dashboard/TechTalent/SavedJobs/index.jsx";
-import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
-import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
-import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
-import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
+// import Interview from "./pages/Dashboard/Employer/routes/Interview/Interview.jsx";
+// import CompanyServices from "./pages/Dashboard/Employer/routes/Mycompanyservices/CompanyServices.jsx";
+// import ReviewApplicants from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/ReviewApplicants.jsx";
+// import FullReview from "./pages/Dashboard/Employer/routes/JobApplicants/reviewApplicant/FullReview.jsx";
 // import Applications from "./pages/Dashboard/TechTalent/ApplicationCard/index.jsx";
 // import FeaturedTalent from "./pages/Dashboard/FeaturedTalent/index.jsx";
 import PostJobForm from "./pages/PostJobForm.jsx";
 import SuccessfulJobPost from "./components/ExternalJobPost/SuccessfulJobPost.jsx";
-import LoginForm from "./pages/Login/Login.jsx";
+// import LoginForm from "./pages/Login/Login.jsx";
 import SignupForm from "./pages/Register/SignupPage.jsx";
 import { ServiceProviderDashboard } from "./pages/services-provider.jsx";
 import { ServicesProviderHomePage } from "./pages/Dashboard/ServiceProvider/dashboardhome.jsx";
@@ -66,7 +66,7 @@ import TalentMessageTab from "./pages/Dashboard/Talent/talent-message-tab.jsx";
 import { EmployerProfileCompleteForm } from "./pages/CompleteYourProfile/employer/employerCompleteForm.jsx";
 import JobPreview from "./pages/Dashboard/Employer2/employer-job-preview.jsx";
 import { EmployerSubscription } from "./pages/Dashboard/subscriptions/EmployerSubscription.jsx";
-import { SubscriptionPage } from "./pages/subscribePage.jsx";
+// import { SubscriptionPage } from "./pages/subscribePage.jsx";
 import { TechTalentProfileCompleteForm } from "./pages/talentCompleteForm.jsx";
 import { TalentJobTracker } from "./pages/Dashboard/Talent/TalentJobTracker.jsx";
 import CreateAccountType from "./components/SelectAccountType/createaccountype.jsx";
@@ -199,18 +199,18 @@ function App() {
           {/* <Route element={<VerificationProvider/>}>
             <Route path="/verifiedForm" element={<EmployerVerificationForm/>} />
           </Route> */}
-          <Route
+          {/* <Route
             path="/verifiedForm"
             element={
               <VerificationProvider>
                 <EmployerVerificationForm />
               </VerificationProvider>
-            }></Route>
+            }></Route> */}
 
-          <Route path="/profilelanding" element={<ProfileLanding />} />
-          <Route path="/explore" element={<Explore />} />
+          {/* <Route path="/profilelanding" element={<ProfileLanding />} />
+          <Route path="/explore" element={<Explore />} /> */}
           {/* <Route path="/techprofileform" element={<DashboardProfileForm />} /> */}
-          <Route path="/employerprofile" element={<EmployerProfileForm />} />
+          {/* <Route path="/employerprofile" element={<EmployerProfileForm />} /> */}
 
           {/* <Route
             path="/dashboard"
