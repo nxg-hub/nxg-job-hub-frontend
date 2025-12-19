@@ -188,13 +188,13 @@ const TalentServiceProvider = () => {
             {/* Previous Work / Portfolio Images */}
             {provider.picturesOfPreviousWorkDone?.length > 0 && (
               <div className="space-y-2">
-                <p className="font-semibold text-sm">Previous Work:</p>
+                <p className="font-semibold text-sm">Previous Works:</p>
                 <button
                   onClick={() =>
                     openImage(provider.picturesOfPreviousWorkDone, 0)
                   }
                   className="px-4 py-2 bg-primary rounded-lg text-white font-medium hover:bg-secondary transition">
-                  View Work ({provider.picturesOfPreviousWorkDone.length})
+                  View Works ({provider.picturesOfPreviousWorkDone.length})
                 </button>
               </div>
             )}
@@ -207,16 +207,15 @@ const TalentServiceProvider = () => {
         ))}
       </div>
       {/* Image Preview Dialog */}
-      <Dialog open={openPreview} onOpenChange={setOpenPreview}>
-        <DialogContent className="w-full h-full  top-10 p-0 bg-black flex items-center justify-center relative">
+      {/* <Dialog open={openPreview} onOpenChange={setOpenPreview}>
+        <DialogContent className="w-full h-full top-80  lg:top-10 p-0 bg-black flex items-center justify-center relative">
           {currentProviderImages.length > 0 && selectedImageIndex !== null && (
             <>
               <img
                 src={currentProviderImages[selectedImageIndex]}
                 alt="preview"
-                className="w-full h-[80vh]  object-cover"
+                className="w-full md:h-[80vh]  object-cover"
               />
-              {/* Navigation Arrows */}
               <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
                 <Button
                   onClick={showPrevImage}
@@ -232,6 +231,65 @@ const TalentServiceProvider = () => {
                 </Button>
               </div>
             </>
+          )}
+        </DialogContent>
+      </Dialog> */}
+
+      <Dialog open={openPreview} onOpenChange={setOpenPreview}>
+        <DialogContent
+          className="
+      max-w-none
+      w-screen
+      h-screen
+      p-0
+      bg-transparent
+      border-none
+      shadow-none
+      flex
+      items-center
+      justify-center
+    "
+          // clicking the empty area closes modal
+          onClick={() => setOpenPreview(false)}>
+          {currentProviderImages.length > 0 && selectedImageIndex !== null && (
+            <div
+              className="relative w-full h-full flex items-center justify-center"
+              // prevent inside clicks from closing modal
+              onClick={(e) => e.stopPropagation()}>
+              {/* Image */}
+              <img
+                src={currentProviderImages[selectedImageIndex]}
+                alt="preview"
+                className="
+            max-w-[95vw]
+            max-h-[85vh]
+            lg:max-w-[85vw]
+            lg:max-h-[90vh]
+            object-contain
+          "
+              />
+
+              {/* Close button */}
+              <button
+                onClick={() => setOpenPreview(false)}
+                className="absolute top-6 right-6 bg-black/50 hover:bg-black/70 p-2 rounded-full">
+                <span className="text-white text-xl leading-none">✕</span>
+              </button>
+
+              {/* Left Arrow */}
+              <button
+                onClick={showPrevImage}
+                className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full">
+                <ArrowLeft className="w-7 h-7 text-white" />
+              </button>
+
+              {/* Right Arrow */}
+              <button
+                onClick={showNextImage}
+                className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full">
+                <ArrowRight className="w-7 h-7 text-white" />
+              </button>
+            </div>
           )}
         </DialogContent>
       </Dialog>
