@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/header/Header";
 import SplashScreen from "../components/SplashScreen";
 import Explore from "../components/hero/Explore";
 import JobCards from "../components/hero/JobCards";
 import Testimony from "../components/hero/Testimony";
-import Footer from "../components/footer/Footer";
+import bg from "../static/images/Team-working-together.webp";
 
 const titles = [
   {
@@ -49,81 +48,59 @@ const Home = () => {
   ) : (
     <div>
       <div
-        className="landing-main"
+        className="relative min-h-[90vh] w-full bg-cover bg-center flex items-center font-inter"
         style={{
-          height: "auto",
-          width: "100%",
-          padding: "2rem 1rem 3rem 1rem",
+          backgroundImage: `url(${bg})`,
         }}>
-        {/* <Header /> */}
-        {/* <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:mt-[10px]">
-          <h1 className="text-3xl md:text-6xl font-bold  leading-tight pt-[100px]">
-            <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
-              {heroTitle.title1}
-            </span>
-            <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
-            {heroTitle.title}
-          </h1>
-          <p className="land-tex text-lg md:text-3xl mt-4 font-inter">
-            Get access and connect with Professionals, Employers, Talents,
-            Service Providers, Artisans and Agents — all in just a few clicks.
-          </p>
-          <div className="flex max-w-[700px] mt-[150px] py-3">
-            <Link
-              to={"/register"}
-              className="bg-[#2596BE] text-white  px-4 py-4 text-center  w-[50%] ">
-              Post Jobs
-            </Link>
-            <Link
-              to="/findjob"
-              className="bg-transparent text-whitepx-4 py-4 text-center w-[50%] border border-[#2596BE]">
-              Find Jobs
-            </Link>
-          </div>
-        </div> */}
-        <div className="landing-content !w-auto md:!w-[60%] !pt-36 md:!p-4 md:bottom-[100px] relative">
-          <h1 className="text-3xl md:text-6xl font-bold leading-tight md:pt-[100px]">
-            <span
-              className={`${heroTitle.title1 ? "" : "ml-[-2%] md:ml-[-1%]"}`}>
-              {heroTitle.title1}
-            </span>
-            <span className="text-[#2596BE] px-2">{heroTitle.span}</span>
-            {heroTitle.title}
-          </h1>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/50" />
 
-          <p className="land-tex text-lg md:text-3xl mt-4 font-inter">
-            Get access and connect with Professionals, Employers, Talents,
-            Service Providers, Artisans and Agents — all in just a few clicks.
-          </p>
-          <div className="flex max-w-[800px] absolute bottom-[-70px] md:bottom-[-100px] left-0 w-full mt-[150px] py-3">
-            <Link
-              to="/register"
-              onMouseEnter={() => setHovered("post")}
-              onMouseLeave={() => setHovered(null)}
-              className={`w-[50%] px-4 py-4 text-center border transition-colors duration-300 ${
-                hovered === "find"
-                  ? "bg-[#2596BE] text-white"
-                  : hovered === "post"
-                  ? "bg-transparent text-[#2596BE]"
-                  : "bg-[#2596BE] text-white"
-              } border-[#2596BE}`}>
-              Post Jobs{" "}
-            </Link>
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
+          <div className="max-w-3xl">
+            {/* Headline */}
+            <h1 className="text-white text-4xl md:text-6xl font-extrabold leading-tight">
+              {heroTitle.title1 && <span>{heroTitle.title1} </span>}
+              <span className="text-[#2596BE]">{heroTitle.span} </span>
+              <span>{heroTitle.title}</span>
+            </h1>
 
-            <Link
-              to="/findjob"
-              onMouseEnter={() => setHovered("find")}
-              onMouseLeave={() => setHovered(null)}
-              className={`w-[50%] px-4 py-4 text-center border transition-colors duration-300 ${
-                hovered === "post"
-                  ? "bg-[#2596BE] text-white"
-                  : hovered === "find"
-                  ? "bg-transparent text-[#2596BE]"
-                  : "bg-transparent text-[#2596BE]"
-              } border-[#2596BE}`}>
-              Find Jobs
-            </Link>
+            {/* Subtitle */}
+            <p className="mt-6 text-lg md:text-xl text-gray-200 font-medium leading-relaxed">
+              Get access and connect with Professionals, Employers, Talents,
+              Service Providers, Artisans and Agents — all in just a few clicks.
+            </p>
+
+            {/* Buttons */}
+            <div className="mt-10 flex w-full max-w-md ">
+              <Link
+                to="/register"
+                onMouseEnter={() => setHovered("post")}
+                onMouseLeave={() => setHovered(null)}
+                className={`w-1/2 py-4 text-center font-semibold transition-all rounded-l-md duration-300 ${
+                  hovered === "post"
+                    ? "bg-[#2596BE] text-white"
+                    : hovered === "find"
+                    ? "bg-transparent text-[#2596BE]"
+                    : "bg-[#2596BE] text-white"
+                } border border-[#2596BE]`}>
+                Post Jobs
+              </Link>
+
+              <Link
+                to="/findjob"
+                onMouseEnter={() => setHovered("find")}
+                onMouseLeave={() => setHovered(null)}
+                className={`w-1/2 py-4 text-center font-semibold transition-all duration-300 rounded-r-md ${
+                  hovered === "find"
+                    ? "bg-[#2596BE] text-white"
+                    : hovered === "post"
+                    ? "bg-transparent text-[#2596BE]"
+                    : "bg-transparent text-[#2596BE]"
+                } border border-l-0 border-[#2596BE]`}>
+                Find Jobs
+              </Link>
+            </div>
           </div>
         </div>
       </div>

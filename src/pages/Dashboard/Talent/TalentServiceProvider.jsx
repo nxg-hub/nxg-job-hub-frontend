@@ -185,7 +185,6 @@ const TalentServiceProvider = () => {
               ))}
             </div>
             {/* Previous Work / Portfolio Images */}
-            {/* Previous Work / Portfolio Images */}
             {provider.picturesOfPreviousWorkDone?.length > 0 && (
               <div className="space-y-2">
                 <p className="font-semibold text-sm">Previous Works:</p>
