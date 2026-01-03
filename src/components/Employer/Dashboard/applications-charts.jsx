@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -28,16 +28,23 @@ const generateDailyChartData = (data, year, month) => {
   return data
     .filter((item) => {
       const date = new Date(item.date);
-      return date.getFullYear() === year && date.getMonth() === month;
+      return (
+        date.getUTCFullYear() === Number(year) &&
+        date.getUTCMonth() === Number(month)
+      );
     })
-    .map((item) => ({
-      displayDate: new Date(item.date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      applications: item.applications,
-      rawDate: item.date,
-    }))
+    .map((item) => {
+      const date = new Date(item.date);
+      return {
+        displayDate: date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          timeZone: "UTC",
+        }),
+        applications: item.applications,
+        rawDate: item.date,
+      };
+    })
     .sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
 };
 
@@ -58,6 +65,21 @@ export function ApplicationsChart({ employerID, setOpenCreateJobDialog }) {
     return chartData.reduce((sum, item) => sum + item.applications, 0);
   }, [chartData]);
 
+  useEffect(() => {
+    if (applicationOverTime && applicationOverTime.length > 0) {
+      // Get the most recent date from the data
+      const lastEntry = [...applicationOverTime].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      )[0];
+
+      const latestDate = new Date(lastEntry.date);
+
+      // Only set these if they haven't been manually changed yet
+      setYear(latestDate.getFullYear());
+      setMonth(latestDate.getMonth());
+    }
+  }, [applicationOverTime]);
+
   const months = [
     "January",
     "February",
@@ -73,13 +95,19 @@ export function ApplicationsChart({ employerID, setOpenCreateJobDialog }) {
     "December",
   ];
 
-  const years = applicationOverTime
-    ? [
-        ...new Set(
-          applicationOverTime.map((item) => new Date(item.date).getFullYear())
-        ),
-      ].sort((a, b) => a - b)
-    : [];
+  const years = useMemo(() => {
+    if (!applicationOverTime) return [];
+    const extractedYears = [
+      ...new Set(
+        applicationOverTime.map((item) => new Date(item.date).getFullYear())
+      ),
+    ];
+
+    if (year && !extractedYears.includes(year)) {
+      extractedYears.push(year);
+    }
+    return extractedYears.sort((a, b) => b - a); // Sort descending (newest first)
+  }, [applicationOverTime, year]);
 
   if (isLoading) {
     return <ApplicationsChartSkeleton />;
