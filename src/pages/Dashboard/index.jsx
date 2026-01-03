@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 // import TechTalent from "./TechTalent";
-import Employer from "./Employer";
+// import Employer from "./Employer";
 import Notice from "../../components/Notice";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 
@@ -41,11 +41,11 @@ const Dashboard = () => {
     //     <TechTalent authKey={authKey} />
     //   </UserContext.Provider>
     // ),
-    EMPLOYER: (
-      <UserContext.Provider value={user}>
-        <Employer />
-      </UserContext.Provider>
-    ),
+    // EMPLOYER: (
+    //   <UserContext.Provider value={user}>
+    //     <Employer />
+    //   </UserContext.Provider>
+    // ),
     AGENT: (
       <UserContext.Provider value={user}>
         <h2>Agent Dashboard</h2>

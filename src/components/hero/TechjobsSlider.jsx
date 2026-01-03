@@ -75,7 +75,7 @@ const TechjobsSlider = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white">
+    <div className="w-full px-6 md:px-10 lg:px-20 py-10 bg-gradient-to-b from-white via-sky-50 to-white font-inter">
       <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-10">
         Explore Job Categories
       </h2>

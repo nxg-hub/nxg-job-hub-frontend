@@ -17,6 +17,7 @@ import { JobsFilter } from "@/components/jobs-filter";
 import { Input } from "@/components/ui/input";
 import {
   fetchProviderNearByJobs,
+  fetchProviderRecentJobs,
   fetchSavedJobs,
 } from "@/redux/ServiceProviderJobSlice";
 import { fetchAllJobs } from "@/redux/JobSlice";
@@ -28,6 +29,7 @@ export function ServicesProviderHomePage() {
     state: [],
     client: [],
   });
+  const { allJobs } = useSelector((state) => state.JobsReducer);
   const loading = useSelector(
     (state) => state.ServiceProviderJobReducer.loading
   );
@@ -40,24 +42,42 @@ export function ServicesProviderHomePage() {
   const nearByJobs = useSelector(
     (state) => state.ServiceProviderJobReducer.nearByJobs
   );
+
+  const acceptedJobs = allJobs.filter((job) => {
+    return job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE";
+  });
   const acceptedRecentJobs = recentJobs.filter((job) => {
     return job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE";
   });
+
   const acceptedNearJobs = nearByJobs.filter((job) => {
     return job.jobStatus === "ACCEPTED" && job.jobClassification === "SERVICE";
   });
+
+  const dispayed =
+    acceptedRecentJobs.length > 0 ? acceptedRecentJobs : acceptedJobs;
+
   const token =
     JSON.parse(window.localStorage.getItem("NXGJOBHUBLOGINKEYV1")) ||
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"));
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllJobs({ token: token.authKey }));
+    dispatch(fetchProviderRecentJobs({ token: token.authKey }));
     dispatch(fetchProviderNearByJobs({ token: token.authKey }));
     dispatch(fetchSavedJobs({ token: token.authKey }));
+    dispatch(
+      fetchAllJobs({
+        token: token.authKey,
+        page: 0,
+        size: 10, // limit recent jobs to 10
+        jobType: activeFilters.priority,
+        search: searchQuery,
+      })
+    );
   }, []);
   // Filter services based on search query and active filters
-  const filteredRecent = acceptedRecentJobs.filter((service) => {
+  const filteredRecent = dispayed.filter((service) => {
     // Search filter
     const matchesSearch =
       service.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -76,11 +96,6 @@ export function ServicesProviderHomePage() {
     const matchesState =
       activeFilters.state.length === 0 ||
       activeFilters.state.includes(service.job_location);
-
-    // Client filter
-    // const matchesClient =
-    //   activeFilters.client.length === 0 ||
-    //   activeFilters.client.includes(service.client);
 
     return matchesSearch && matchesPriority && matchesState;
     //  && matchesPriority  && matchesClient

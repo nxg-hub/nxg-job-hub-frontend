@@ -187,29 +187,17 @@ const TalentServiceProvider = () => {
             {/* Previous Work / Portfolio Images */}
             {provider.picturesOfPreviousWorkDone?.length > 0 && (
               <div className="space-y-2">
-                <p className="font-semibold text-sm">Previous Work:</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {provider.picturesOfPreviousWorkDone
-                    .slice(0, 3)
-                    .map((img, i) => (
-                      <img
-                        key={i}
-                        src={img}
-                        onClick={() =>
-                          openImage(provider.picturesOfPreviousWorkDone, i)
-                        }
-                        alt="work preview"
-                        className="h-20 w-full object-cover rounded-lg border cursor-pointer hover:opacity-80 transition"
-                      />
-                    ))}
-                  {provider.picturesOfPreviousWorkDone.length > 3 && (
-                    <div className="flex items-center justify-center bg-gray-200 rounded-lg text-gray-700 text-sm font-medium cursor-pointer">
-                      +{provider.picturesOfPreviousWorkDone.length - 3} more
-                    </div>
-                  )}
-                </div>
+                <p className="font-semibold text-sm">Previous Works:</p>
+                <button
+                  onClick={() =>
+                    openImage(provider.picturesOfPreviousWorkDone, 0)
+                  }
+                  className="px-4 py-2 bg-primary rounded-lg text-white font-medium hover:bg-secondary transition">
+                  View Works ({provider.picturesOfPreviousWorkDone.length})
+                </button>
               </div>
             )}
+
             {/* Request Button */}
             <TalentServiceProviderRequestButton
               providerId={provider.serviceProviderId}
@@ -218,24 +206,89 @@ const TalentServiceProvider = () => {
         ))}
       </div>
       {/* Image Preview Dialog */}
-      <Dialog open={openPreview} onOpenChange={setOpenPreview}>
-        <DialogContent className="max-w-lg p-4 bg-black flex flex-col items-center justify-center gap-4">
+      {/* <Dialog open={openPreview} onOpenChange={setOpenPreview}>
+        <DialogContent className="w-full h-full top-80  lg:top-10 p-0 bg-black flex items-center justify-center relative">
           {currentProviderImages.length > 0 && selectedImageIndex !== null && (
             <>
               <img
                 src={currentProviderImages[selectedImageIndex]}
                 alt="preview"
-                className="max-h-[80vh] max-w-full object-contain"
+                className="w-full md:h-[80vh]  object-cover"
               />
-              <div className="flex gap-4 mt-2">
-                <Button onClick={showPrevImage}>
-                  <ArrowLeft className="w-6 h-6" />
+              <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
+                <Button
+                  onClick={showPrevImage}
+                  className="bg-black bg-opacity-50 hover:bg-opacity-70 p-2 rounded-full">
+                  <ArrowLeft className="w-6 h-6 text-white" />
                 </Button>
-                <Button onClick={showNextImage}>
-                  <ArrowRight className="w-6 h-6" />
+              </div>
+              <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
+                <Button
+                  onClick={showNextImage}
+                  className="bg-black bg-opacity-50 hover:bg-opacity-70 p-2 rounded-full">
+                  <ArrowRight className="w-6 h-6 text-white" />
                 </Button>
               </div>
             </>
+          )}
+        </DialogContent>
+      </Dialog> */}
+
+      <Dialog open={openPreview} onOpenChange={setOpenPreview}>
+        <DialogContent
+          className="
+      max-w-none
+      w-screen
+      h-screen
+      p-0
+      bg-transparent
+      border-none
+      shadow-none
+      flex
+      items-center
+      justify-center
+    "
+          // clicking the empty area closes modal
+          onClick={() => setOpenPreview(false)}>
+          {currentProviderImages.length > 0 && selectedImageIndex !== null && (
+            <div
+              className="relative w-full h-full flex items-center justify-center"
+              // prevent inside clicks from closing modal
+              onClick={(e) => e.stopPropagation()}>
+              {/* Image */}
+              <img
+                src={currentProviderImages[selectedImageIndex]}
+                alt="preview"
+                className="
+            max-w-[95vw]
+            max-h-[85vh]
+            lg:max-w-[85vw]
+            lg:max-h-[90vh]
+            object-contain
+          "
+              />
+
+              {/* Close button */}
+              <button
+                onClick={() => setOpenPreview(false)}
+                className="absolute top-6 right-6 bg-black/50 hover:bg-black/70 p-2 rounded-full">
+                <span className="text-white text-xl leading-none">✕</span>
+              </button>
+
+              {/* Left Arrow */}
+              <button
+                onClick={showPrevImage}
+                className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full">
+                <ArrowLeft className="w-7 h-7 text-white" />
+              </button>
+
+              {/* Right Arrow */}
+              <button
+                onClick={showNextImage}
+                className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full">
+                <ArrowRight className="w-7 h-7 text-white" />
+              </button>
+            </div>
           )}
         </DialogContent>
       </Dialog>

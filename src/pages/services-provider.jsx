@@ -73,6 +73,7 @@ const sidebarItems = [
     label: "Profile",
     path: "profile",
   },
+<<<<<<< HEAD
   {
     icon: <FaBriefcase className="w-5 h-5" />,
     iconR: "",
@@ -91,6 +92,13 @@ const sidebarItems = [
     label: "Settings",
     path: "/services-provider/setting",
   },
+=======
+  { icon: <BriefcaseBusiness />, label: "Jobs", path: "job-tracker" },
+  { icon: <CircleHelp />, label: "Help", path: "messages" },
+
+  // { icon:  <MessageSquare />, label: "Help", path: "/help" },
+  { icon: <Settings />, label: "Settings", path: "/services-provider/setting" },
+>>>>>>> 371a1e1febc473b4a14fb529d09ab5356c7d2662
 ];
 
 export function ServiceProviderDashboard() {

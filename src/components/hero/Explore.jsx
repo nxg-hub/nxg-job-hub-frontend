@@ -14,7 +14,7 @@ const Explore = () => {
           <TechjobsSlider />
         </div>
       </div>
-      <section className="job-posting-container">
+      <section className="job-posting-container font-inter">
         <div className="job-posting" style={{ margin: "2rem" }}>
           <h3
             className="text-center"
