@@ -11,7 +11,6 @@ const statusColors = {
 };
 
 export default function AppliedJobs({ applications }) {
-  console.log(applications);
   if (!applications || applications.length === 0) {
     return (
       <div className="text-center py-10 text-sm text-muted-foreground">

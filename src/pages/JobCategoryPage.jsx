@@ -160,7 +160,7 @@ const JobCategoryPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-inter w-full">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[#006a90] shadow-sm flex items-center justify-between px-6 py-4 w-full">
+      <header className="sticky top-0 z-10 bg-secondary shadow-sm flex items-center justify-between px-6 py-4 w-full">
         <Link to="/" className="w-36">
           <img src={Logo} alt="Logo" className="w-[50px] h-[50px]" />
         </Link>

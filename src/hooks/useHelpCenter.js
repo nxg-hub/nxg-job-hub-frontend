@@ -1,53 +1,62 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import axios from "axios";
 
-export const useFetchMessages = () => {
+const STORAGE_KEY = "NXGJOBHUBLOGINKEYV1";
+const getAuthHeader = () => {
   const storeKey =
-    localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-    sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+    localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY);
+  return storeKey ? JSON.parse(storeKey)?.authKey : null;
+};
 
-  if (!storeKey) throw new Error("No key stored");
-
-  const authKey = JSON.parse(storeKey)?.authKey;
-
-  const fetchInbox = async () => {
-    const response = await axios.get(`${API_HOST_URL}/api/inbox/get-inbox`, {
-      headers: {
-        authorization: authKey,
-      },
-    });
-    return response.data;
-  };
-
-  const fetchThreadMessages = async (threadId) => {
-    const response = await axios.get(
-      `${API_HOST_URL}/api/inbox/thread/${threadId}`
-    );
-    return response.data;
-  };
-
+export const useFetchMessages = ({ page, size }) => {
   const { data: inboxData } = useQuery({
     queryKey: ["inboxMessages"],
-    queryFn: fetchInbox,
+    queryFn: async () => {
+      const authKey = getAuthHeader();
+      const { data } = await axios.get(`${API_HOST_URL}/api/inbox/get-inbox`, {
+        headers: { authorization: authKey },
+      });
+      return data;
+    },
   });
 
-  const messageId = inboxData?.content?.[0]?.threadId;
+  const threadId = inboxData?.content?.[0]?.threadId;
 
-  const {
-    data: threadData,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["historyMessages", messageId],
-    queryFn: () => fetchThreadMessages(messageId),
-    enabled: !!messageId,
-    staleTime: 1000 * 60 * 0.5,
+  const query = useInfiniteQuery({
+    queryKey: ["historyMessages", threadId],
+    enabled: !!threadId,
+    initialPageParam: 0,
+
+    queryFn: async ({ pageParam = 0 }) => {
+      const authKey = getAuthHeader();
+      const { data } = await axios.get(
+        `${API_HOST_URL}/api/inbox/thread/${threadId}`,
+        {
+          params: { page: pageParam, size },
+          headers: { authorization: authKey },
+        }
+      );
+      return data;
+    },
+
+    getNextPageParam: (lastPage) => {
+      return lastPage.last ? undefined : lastPage.number + 1;
+    },
+    staleTime: 1000 * 60 * 5,
   });
+
+  const allMessages = query.data?.pages.flatMap((page) => page.content) ?? [];
+
   return {
-    messages: threadData || [],
-    isLoading,
-    isSuccess,
+    ...query,
+    messages: allMessages,
+    threadId,
   };
 };
 

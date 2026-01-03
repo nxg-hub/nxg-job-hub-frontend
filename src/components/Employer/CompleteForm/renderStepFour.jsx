@@ -46,7 +46,7 @@ const fileUploadingStatus = Object.freeze({
 
 export default function RenderStepFour() {
   // Use the custom hook for Cloudinary upload
-  const { control, setValue, getValues, formState } = useFormContext();
+  const { control, setValue, formState } = useFormContext();
 
   const [countFilesUploaded, setCountFilesUploaded] = useState(1);
   const [selectedFileOption, setSelectedFileOption] = useState(null);
@@ -65,7 +65,6 @@ export default function RenderStepFour() {
     data: cloudinaryResponse,
   } = useCloudinaryUpload({
     onSuccess: (cloudinaryData) => {
-      console.log(cloudinaryData?.secure_url);
       setCountFilesUploaded((prev) => prev + 1);
       setValue(selectedFileOption.value, cloudinaryData?.secure_url, {
         shouldValidate: true,

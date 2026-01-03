@@ -164,10 +164,12 @@ export default function SignupForm() {
             className: cn(
               "fixed bottom-4 left-1/2 -translate-x-1/2 p-0 w-11/12 px-4 py-2 sm:p-4 sm:w-fit sm:left-auto sm:right-4 sm:translate-x-0"
             ),
-            title: <p className="text-red-700 text-xs sm:text-sm">Failed:</p>,
+            title: (
+              <p className="text-red-700 text-xs sm:text-sm">Server error:</p>
+            ),
             description: (
               <p className="w-full  bg-gray-100 p-2 text-red-700 text-xs sm:text-sm">
-                {err.response.data}
+                Registration failed
               </p>
             ),
           });

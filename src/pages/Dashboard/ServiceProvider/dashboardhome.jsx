@@ -16,10 +16,10 @@ import { JobsCard } from "@/components/jobs-card";
 import { JobsFilter } from "@/components/jobs-filter";
 import { Input } from "@/components/ui/input";
 import {
-  fetchAllJobs,
   fetchProviderNearByJobs,
   fetchSavedJobs,
 } from "@/redux/ServiceProviderJobSlice";
+import { fetchAllJobs } from "@/redux/JobSlice";
 
 export function ServicesProviderHomePage() {
   const [searchQuery, setSearchQuery] = useState("");

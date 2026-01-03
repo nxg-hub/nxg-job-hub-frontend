@@ -3,7 +3,6 @@ import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { matchesData } from "@/utils/data/agent-mock-data";
 import CreateNewJob from "@/components/Employer/createNewJob";
-import KPIBoard from "@/components/Employer/Dashboard/kpisBoard";
 import RecentPostedJobs from "@/components/Employer/Dashboard/recentPostedJobs";
 import { useUserData } from "@/store/userDataStorage";
 import { ApplicationsChart } from "@/components/Employer/Dashboard/applications-charts";
@@ -68,12 +67,7 @@ export default function EmployerDashboardTab() {
     <div className="max-w-full flex flex-col gap-8">
       <div className="flex flex-col gap-10 md:flex-row md:gap-6">
         <div className="flex flex-col gap-">
-          <KPIsBoard
-            jobPost={958}
-            totalApplication={"65k"}
-            shortListed={765}
-            totalInterview={540}
-          />
+          <KPIsBoard employerID={employer?.id} />
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <p className="text-sky-600 font-medium text-lg">
@@ -111,10 +105,16 @@ export default function EmployerDashboardTab() {
 
         <ScheduledInterview />
       </div>
-      <div className="flex flex-col gap-7 md:flex-row">
-        <ApplicationsChart /> <JobStatisticsChart />
+      <div className="flex flex-col gap-7 md:flex-row mb-10">
+        <ApplicationsChart
+          employerID={employer?.id}
+          setOpenCreateJobDialog={openCreateJobDialog}
+        />{" "}
+        <JobStatisticsChart
+          employerID={employer?.id}
+          setOpenCreateJobDialog={openCreateJobDialog}
+        />
       </div>
-      {/* <KPIBoard employerID={employer?.id} /> */}
     </div>
   );
 }

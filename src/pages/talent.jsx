@@ -1,16 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Bell,
-  LayoutDashboard,
-  LogOut,
-  CircleHelp,
-  Building,
-  Settings,
-  Briefcase,
-  Menu,
-  OctagonAlert,
-  Wrench,
-} from "lucide-react";
+import { Menu, OctagonAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
@@ -65,10 +54,11 @@ import { resetAllUserData } from "@/redux/AllUsersSlice";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 import { CustomerCareIcon } from "@/icons/nxg-icons";
 import { useUserDataQuery } from "@/hooks/useAllUsers";
-import helpCenterIcon from "@/static/icons/SVG/customer-care.svg";
 import { RiLayoutFill, RiServiceFill, RiSettings4Fill } from "react-icons/ri";
-import { FaBriefcase, FaUserCircle } from "react-icons/fa";
+import { FaBriefcase, FaUserCircle, FaBell } from "react-icons/fa";
 import { TbHelpSquareFilled } from "react-icons/tb";
+import { IoIosLogOut } from "react-icons/io";
+import { clearNearbyJobs } from "@/redux/JobSlice";
 
 const sidebarItems = [
   {
@@ -231,7 +221,7 @@ function DashboardContent({ notifications = [] }) {
               onClick={() => setShowLogoutNotice(true)}
             >
               <div>
-                <LogOut className="w-7 h-7" />
+                <IoIosLogOut className="w-7 h-7" />
                 <span>Logout</span>
               </div>
             </SidebarMenuButton>
@@ -263,13 +253,6 @@ function DashboardContent({ notifications = [] }) {
             </h1>
           </div>
           <div className="hidden md:flex gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
-            >
-              <img className="w-10" src={helpCenterIcon} alt="chat-admin" />
-            </Button>
             <DropdownMenu
               open={notificationDropdownOpen}
               onOpenChange={setNotificationDropdownOpen}
@@ -277,10 +260,9 @@ function DashboardContent({ notifications = [] }) {
               <DropdownMenuTrigger className="hidden md:block" asChild>
                 <Button
                   variant="ghost"
-                  size="icon"
                   className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
                 >
-                  <Bell className="h-5 w-5" />
+                  <FaBell className="h-6 w-6" />
                   {unreadNotifications > 0 && (
                     <Badge
                       variant="destructive"
@@ -360,6 +342,7 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
     dispatch(resetTalentJobs());
     dispatch(resetTalentData());
     dispatch(resetAllUserData());
+    dispatch(clearNearbyJobs());
     navigate("/login");
   };
 

@@ -58,7 +58,7 @@ export default function TodayScheduleInterview({ todayInterviews }) {
 
             {/* Avatars Row */}
             <div className="flex items-center ml-0">
-              {todayInterviews.slice(0, 4).map((interview, index) => (
+              {todayInterviews?.slice(0, 4).map((interview, index) => (
                 <Avatar
                   key={index}
                   className="h-10 w-10 -ml-4 border-2 border-cyan-500 first:ml-0"
@@ -69,7 +69,7 @@ export default function TodayScheduleInterview({ todayInterviews }) {
                   </AvatarFallback>
                 </Avatar>
               ))}
-              {todayInterviews.length > 4 && (
+              {todayInterviews?.length > 4 && (
                 <span className="text-white font-semibold text-base ml-2">
                   + {todayInterviews.length - 4}
                 </span>

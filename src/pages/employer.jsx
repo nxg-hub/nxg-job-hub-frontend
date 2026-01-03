@@ -1,17 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Bell,
-  LayoutDashboard,
-  LogOut,
-  CircleHelp,
-  X,
-  Building,
-  Settings,
-  Users,
-  OctagonAlert,
-  Menu,
-  ShieldCheck,
-} from "lucide-react";
+import { LogOut, X, OctagonAlert, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
@@ -44,7 +32,6 @@ import NotificationDropdown from "@/components/agent/notification-dropdown";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
 import subscriptionIcon from "@/static/icons/diamond.png";
-import helpCenterIcon from "@/static/icons/SVG/customer-care.svg";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -70,8 +57,9 @@ import { setSubData } from "@/redux/AllUsersSlice";
 import { FcCustomerSupport } from "react-icons/fc";
 import { CustomerCareIcon, GoldCoinIcon } from "@/icons/nxg-icons";
 import { RiLayoutFill, RiSendPlaneFill, RiSettings4Fill } from "react-icons/ri";
-import { FaBriefcase, FaUserShield, FaUserTie } from "react-icons/fa";
+import { FaBriefcase, FaUserShield, FaUserTie, FaBell } from "react-icons/fa";
 import { TbHelpSquareFilled } from "react-icons/tb";
+import EmployerVerificationCard from "@/components/Employer/Dashboard/verification-card";
 
 const BounceCoinIcon = () => {
   return (
@@ -114,7 +102,7 @@ const sidebarItems = [
   },
   {
     icon: <FaUserShield className="w-5 h-5" />,
-    label: "Feature Talents",
+    label: "Featured Talents",
     path: "featuredTalent",
     iconR: <BounceCoinIcon />,
   },
@@ -124,18 +112,6 @@ const sidebarItems = [
     path: "applicants",
     iconR: "",
   },
-  // {
-  //   icon: <Link2 />,
-  //   label: "Matches",
-  //   path: "candidate-matches",
-  // },
-  // {
-  //   icon: <MessageSquare className="w-5 h-5" />,
-  //   label: "Messages",
-  //   path: "messages",
-  //   iconR: "",
-  // },
-  // { icon: <BarChart />, label: "Analytics", path: "analytics" },
   {
     icon: <RiSettings4Fill className="w-5 h-5" />,
     label: "Setting",
@@ -445,13 +421,6 @@ function DashboardContent({ notifications = [] }) {
             />
           </div>
           <div className="hidden md:flex gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
-            >
-              <img className="w-10" src={helpCenterIcon} alt="chat-admin" />
-            </Button>
             <DropdownMenu
               open={notificationDropdownOpen}
               onOpenChange={setNotificationDropdownOpen}
@@ -459,10 +428,9 @@ function DashboardContent({ notifications = [] }) {
               <DropdownMenuTrigger className="hidden md:block" asChild>
                 <Button
                   variant="ghost"
-                  size="icon"
                   className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
                 >
-                  <Bell className="h-5 w-5" />
+                  <FaBell className="h-6 w-6" />
                   {unreadNotifications > 0 && (
                     <Badge
                       variant="destructive"
@@ -478,51 +446,12 @@ function DashboardContent({ notifications = [] }) {
           </div>
         </div>
         <div className="px-2 pt-16 md:pt-0">
-          {!employer?.employer?.verified && (
-            <>
-              <div className="flex bg-sky-100 rounded-xl p-3 text-base gap-2 item-center mb-3 mt-2 md:hidden">
-                <img
-                  src={verifiedImageMobile}
-                  alt="Complete profile illustration"
-                  className="object-contain w-10 h-10"
-                />
-                <div className="flex flex-col gap-1">
-                  <span>Your account is not yet verified</span>
-                  <NavLink
-                    className="bg-primary text-sky-100 w-fit py-1 px-2 rounded text-sm "
-                    to={"/employer/verified-document"}
-                  >
-                    complete your profile
-                  </NavLink>
-                </div>
-              </div>
-
-              <div className="hidden md:flex w-full bg-sky-100 p-3 px-10 rounded italic font-medium mb-5">
-                <div className="flex items-center gap-8">
-                  <img
-                    src={verifiedImageMobile}
-                    alt="Complete profile illustration"
-                    className="object-contain w-10 h-10"
-                  />
-                  <div className="flex gap-3 items-center">
-                    <span className="bg-secondary p-1 rounded text-white">
-                      Action required:
-                    </span>
-                    <span>
-                      Your account is not yet verified,
-                      <NavLink
-                        className="underline text-secondary w-fit py-1 px-2 "
-                        to={"/employer/verified-document"}
-                      >
-                        complete your profile
-                      </NavLink>
-                      to continue using all features
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
+          <EmployerVerificationCard
+            taxCertificate={employer?.employer?.taxClearanceCertificate}
+            companyMemorandum={employer?.employer?.companyMemorandum}
+            cacCertificate={employer?.employer?.caccertificate}
+            verified={employer?.employer?.verified}
+          />
           {isCollapsed && (
             <div className="relative m-3 rounded-lg border bg-gradient-to-b from-white to-slate-50 p-4 shadow-sm">
               {/* Close Button */}

@@ -16,6 +16,7 @@ import TalentUserReducer from "./TalentUserDataSlice";
 import ServiceProviderJobReducer from "./ServiceProviderJobSlice";
 import AllUserReducer from "./AllUsersSlice";
 import TalentServiceProvider from "./TalentServiceProviderSlice";
+import JobsReducer from "./JobSlice";
 
 const persistConfig = {
   key: "root",
@@ -39,6 +40,7 @@ const reducer = combineReducers({
   TalentUserReducer,
   AllUserReducer,
   TalentServiceProvider,
+  JobsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

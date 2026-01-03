@@ -36,7 +36,7 @@ export default function NextScheduledInterview({ nextInterviews }) {
             </div>
 
             <div className="space-y-0">
-              {nextInterviews.map((interview, index) => (
+              {nextInterviews?.map((interview, index) => (
                 <div key={index} className="flex gap-4 pb-6">
                   <div className="flex flex-col items-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center mb-2 bg-gray-100 text-gray-600">
@@ -44,7 +44,7 @@ export default function NextScheduledInterview({ nextInterviews }) {
                     </div>
 
                     {/* Vertical Line */}
-                    {index < nextInterviews.length - 1 && (
+                    {index < nextInterviews?.length - 1 && (
                       <div className="w-0.5 h-12 bg-gray-200"></div>
                     )}
                   </div>
