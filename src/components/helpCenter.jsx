@@ -40,6 +40,7 @@ export default function HelpCenter({ ...props }) {
     if (!input.trim()) return;
 
     const payload = {
+      //send message funtion
       receiverId: props.receiverId,
       userType: props.userType,
       profilePicture: props.profilePicture,
