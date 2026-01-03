@@ -1,18 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Loader2 } from "lucide-react";
 import { useFetchMessages, useSendMessage } from "@/hooks/useHelpCenter";
 import { cn, getDateAsTextLabel } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function HelpCenter({
-  senderId,
-  receiverId,
-  userType,
-  profilePicture,
-  senderName,
-}) {
+export default function HelpCenter({ ...props }) {
+  const queryClient = useQueryClient();
   const [input, setInput] = useState("");
 
   // Infinite Scroll Trigger
@@ -23,12 +19,15 @@ export default function HelpCenter({
     threadId,
     fetchNextPage,
     hasNextPage,
+    isSuccess,
     isFetchingNextPage,
     isLoading,
-    isSuccess,
+    isError,
+    error,
+    refetch,
   } = useFetchMessages({ size: 10 });
 
-  const { mutate: sendMessage } = useSendMessage();
+  const { mutate } = useSendMessage();
 
   // Load more when user scrolls to the "top" (which is the loadMoreRef)
   useEffect(() => {
@@ -41,21 +40,20 @@ export default function HelpCenter({
     if (!input.trim()) return;
 
     const payload = {
-      receiverId,
-      subject: "",
-      userType,
-      profilePicture,
-      senderName,
+      receiverId: props.receiverId,
+      userType: props.userType,
+      profilePicture: props.profilePicture,
+      senderName: props.senderName,
       body: input,
-      ...(threadId && { threadId }), // Include threadId if it exists
+      subject: "",
+      ...(threadId && { threadId }),
     };
 
-    sendMessage(
+    mutate(
       { payload },
       {
         onSuccess: () => {
           setInput("");
-          // Typically you'd invalidate the query here to see your new message
         },
       }
     );
@@ -68,9 +66,28 @@ export default function HelpCenter({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Loading conversation...</span>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center p-6 text-center">
+        <p className="text-destructive mb-4">
+          Failed to load messages: {error?.message}
+        </p>
+        <Button onClick={() => refetch()}>Try Again</Button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen flex-col bg-background">
-      {/* Header */}
       <header className="border-b border-border bg-card px-6 py-4 shadow-sm shrink-0">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
@@ -101,12 +118,12 @@ export default function HelpCenter({
             <div
               key={msg.id}
               className={`flex flex-col ${
-                msg.senderId === senderId ? "items-end" : "items-start"
+                msg.senderId === props.senderId ? "items-end" : "items-start"
               }`}
             >
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                  msg.senderId === senderId
+                  msg.senderId === props.senderId
                     ? "bg-primary text-primary-foreground rounded-tr-none"
                     : "bg-muted text-foreground border border-border rounded-tl-none"
                 }`}

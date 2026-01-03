@@ -15,7 +15,7 @@ const getAuthHeader = () => {
 };
 
 export const useFetchMessages = ({ page, size }) => {
-  const { data: inboxData } = useQuery({
+  const { data: inboxData, isLoading: isLoadingInbox } = useQuery({
     queryKey: ["inboxMessages"],
     queryFn: async () => {
       const authKey = getAuthHeader();
@@ -54,42 +54,74 @@ export const useFetchMessages = ({ page, size }) => {
   const allMessages = query.data?.pages.flatMap((page) => page.content) ?? [];
 
   return {
-    ...query,
     messages: allMessages,
     threadId,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: query.hasNextPage,
+    isSuccess: query.isSuccess,
+    isFetchingNextPage: query.isFetchingNextPage,
+    isLoading: query.isLoading || isLoadingInbox,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
   };
 };
 
 export const useSendMessage = () => {
   const queryClient = useQueryClient();
-  const storeKey =
-    localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-    sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
 
-  if (!storeKey) throw new Error("No key stored");
-
-  const authKey = JSON.parse(storeKey)?.authKey;
-
-  const sendMessage = async ({ payload }) => {
+  const sendMessageFn = async ({ payload }) => {
+    const authKey = getAuthHeader();
     const response = await axios.post(
       `${API_HOST_URL}/api/inbox/send-inbox-message`,
       payload,
       {
-        headers: {
-          authorization: authKey,
-        },
+        headers: { authorization: authKey },
       }
     );
     return response.data;
   };
 
   return useMutation({
-    mutationFn: sendMessage,
-    onError: (err, variables, context) => {
-      queryClient.setQueryData(["inboxMessages"], context.previousData);
+    mutationFn: sendMessageFn,
+
+    // Fires before the mutation function runs
+    onMutate: async (variables) => {
+      const threadId = variables.payload.threadId;
+
+      // 1. Cancel any outgoing refetches so they don't overwrite our optimistic update
+      await queryClient.cancelQueries({
+        queryKey: ["historyMessages", threadId],
+      });
+      await queryClient.cancelQueries({ queryKey: ["inboxMessages"] });
+
+      // 2. Snapshot the previous value for rollback if needed
+      const previousHistory = queryClient.getQueryData([
+        "historyMessages",
+        threadId,
+      ]);
+
+      return { previousHistory, threadId };
     },
-    onSuccess: (saveMessage, newMessage) => {
+
+    onError: (err, variables, context) => {
+      // Roll back to the previous history if the message fails
+      if (context?.threadId) {
+        queryClient.setQueryData(
+          ["historyMessages", context.threadId],
+          context.previousHistory
+        );
+      }
+    },
+
+    onSuccess: (data, variables) => {
+      const threadId = variables.payload.threadId;
       queryClient.invalidateQueries({ queryKey: ["inboxMessages"] });
+      if (threadId) {
+        queryClient.invalidateQueries({
+          queryKey: ["historyMessages", threadId],
+        });
+      }
     },
   });
 };
