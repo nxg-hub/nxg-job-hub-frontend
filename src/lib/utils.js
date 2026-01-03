@@ -111,6 +111,17 @@ export const formatFullDate = (dateString) => {
   });
 };
 
+export const formatStatNumber = (value) => {
+  if (value < 1000) return value.toString();
+
+  const exact = value % 1000 === 0;
+  const rounded = Math.floor((value / 1000) * 10) / 10;
+
+  const formatted = rounded.toString().replace(".0", "");
+
+  return exact ? `${formatted}K` : `${formatted}K+`;
+};
+
 export const nigerianStates = [
   { value: "Abia", label: "Abia" },
   { value: "Adamawa", label: "Adamawa" },

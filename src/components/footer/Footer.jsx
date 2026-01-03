@@ -318,7 +318,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#006a90] text-white pt-12 pb-8">
+    <footer className="bg-secondary text-white pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Company Links */}
         <div>
@@ -328,7 +328,8 @@ const Footer = () => {
               <li key={link.title}>
                 <NavLink
                   to={link.href}
-                  className="hover:text-sky-500 transition-colors duration-200">
+                  className="hover:text-sky-500 transition-colors duration-200"
+                >
                   {link.title}
                 </NavLink>
               </li>
@@ -344,7 +345,8 @@ const Footer = () => {
               <li key={link.title}>
                 <NavLink
                   to={link.href}
-                  className="hover:text-sky-500 transition-colors duration-200">
+                  className="hover:text-sky-500 transition-colors duration-200"
+                >
                   {link.title}
                 </NavLink>
               </li>
@@ -360,7 +362,8 @@ const Footer = () => {
               <li key={link.title}>
                 <NavLink
                   to={link.href}
-                  className="hover:text-sky-500 transition-colors duration-200">
+                  className="hover:text-sky-500 transition-colors duration-200"
+                >
                   {link.title}
                 </NavLink>
               </li>
@@ -378,7 +381,8 @@ const Footer = () => {
           </p>
           <form
             className="flex flex-col sm:flex-row gap-2"
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+          >
             <div className="flex-1">
               <input
                 type="email"
@@ -399,7 +403,8 @@ const Footer = () => {
             </div>
             <button
               type="submit"
-              className="bg-[#2B749A] border-none text-white hover:bg-sky-600 px-4 py-2 rounded-lg transition-colors duration-200">
+              className="bg-primary border-none text-white hover:bg-white hover:text-primary px-4 py-2 rounded-lg transition-colors duration-200"
+            >
               Submit
             </button>
           </form>
@@ -416,29 +421,34 @@ const Footer = () => {
             href="https://www.facebook.com/nxgjobhub"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-sky-500 transition-colors duration-200">
+            className="hover:text-sky-500 transition-colors duration-200"
+          >
             <BiLogoFacebook size={24} />
           </a>
           <a
             href="#"
-            className="hover:text-sky-500 transition-colors duration-200">
+            className="hover:text-sky-500 transition-colors duration-200"
+          >
             <BiLogoGoogle size={24} />
           </a>
           <a
             href="https://www.linkedin.com/showcase/nxg-job-hub"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-sky-500 transition-colors duration-200">
+            className="hover:text-sky-500 transition-colors duration-200"
+          >
             <BiLogoLinkedin size={24} />
           </a>
           <a
             href="#"
-            className="hover:text-sky-500 transition-colors duration-200">
+            className="hover:text-sky-500 transition-colors duration-200"
+          >
             <RiTwitterXFill size={24} />
           </a>
           <a
             href="#"
-            className="hover:text-sky-500 transition-colors duration-200">
+            className="hover:text-sky-500 transition-colors duration-200"
+          >
             <SiInstapaper size={24} />
           </a>
         </div>
@@ -448,7 +458,8 @@ const Footer = () => {
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      >
         <Dialog.Panel className="bg-white rounded-xl max-w-md w-full p-8 text-center">
           <Dialog.Title className="text-2xl font-bold text-sky-500 mb-4">
             Thank You!
@@ -459,7 +470,8 @@ const Footer = () => {
           </p>
           <Link
             to="/login"
-            className="inline-block bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-lg transition-colors duration-200">
+            className="inline-block bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+          >
             Login to your account
           </Link>
         </Dialog.Panel>

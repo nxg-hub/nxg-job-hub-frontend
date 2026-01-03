@@ -1,7 +1,6 @@
 import { Eye, MoreHorizontal, RefreshCw, Users } from "lucide-react";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
-import emptySuggestedImage from "@/static/images/empty-suggest.svg";
 import emptyRecentPostImage from "@/static/images/empty-employer-table.svg";
 import {
   Dialog,
@@ -64,7 +63,8 @@ const getJobTypeBadge = (status) => {
       return (
         <Badge
           variant="secondary"
-          className="bg-cyan-500 text-white hover:bg-cyan-500">
+          className="bg-cyan-500 text-white hover:bg-cyan-500"
+        >
           Hybrid
         </Badge>
       );
@@ -85,7 +85,8 @@ const getStatusBadge = (status) => {
       return (
         <Badge
           variant="secondary"
-          className="bg-secondary text-white hover:bg-secondary">
+          className="bg-secondary text-white hover:bg-secondary"
+        >
           {status}
         </Badge>
       );
@@ -112,7 +113,8 @@ export default function RecentPostedJobs({
         </p>
         <Button
           size="sm"
-          className="border-none bg-sky-500 text-white hover:bg-sky-600">
+          className="border-none bg-sky-500 text-white hover:bg-sky-600"
+        >
           Refresh
           <RefreshCw className="w-4 h-4" />
         </Button>
@@ -146,7 +148,8 @@ export default function RecentPostedJobs({
               <TableRow>
                 <TableCell
                   colSpan={6}
-                  className="bg-white text-secondary text-center">
+                  className="bg-white text-secondary text-center"
+                >
                   <NavLink to="/employer/jobs">view all</NavLink>
                 </TableCell>
               </TableRow>
@@ -165,7 +168,8 @@ export default function RecentPostedJobs({
                 Start{" "}
                 <span
                   onClick={setOpenCreateJobDialog}
-                  className="text-primary underline hover:cursor-pointer">
+                  className="text-primary underline hover:cursor-pointer"
+                >
                   posting jobs
                 </span>{" "}
                 to see them appear here
@@ -240,7 +244,8 @@ const JobRow = ({ job }) => {
 
             <Badge
               variant="secondary"
-              className="text-white font-medium absolute right-1 -top-1 h-5 w-5 rounded-full p-2 flex items-center justify-center text-[10px]">
+              className="text-white font-medium absolute right-1 -top-1 h-5 w-5 rounded-full p-2 flex items-center justify-center text-[10px]"
+            >
               {isLoading && "..."}
               {isError && "0"}
               {data}
@@ -253,7 +258,8 @@ const JobRow = ({ job }) => {
               <Button
                 className="border-transparent"
                 variant="ghost"
-                size="icon">
+                size="icon"
+              >
                 <MoreHorizontal className="w-4 h-4" />
                 <span className="sr-only">Open menu</span>
               </Button>
@@ -270,7 +276,8 @@ const JobRow = ({ job }) => {
               {/* <DropdownMenuItem>Tag agent</DropdownMenuItem> */}
               <DropdownMenuItem
                 className="text-red-600"
-                onClick={() => handleDeleteJob(jobID)}>
+                onClick={() => handleDeleteJob(jobID)}
+              >
                 Delete Job
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -280,7 +287,8 @@ const JobRow = ({ job }) => {
       {/* Applicants Dialog */}
       <Dialog
         open={isApplicantsDialogOpen}
-        onOpenChange={setIsApplicantsDialogOpen}>
+        onOpenChange={setIsApplicantsDialogOpen}
+      >
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Applicants for {job.job_title}</DialogTitle>

@@ -63,6 +63,7 @@
     "react-hook-form": "^7.54.2",
     "react-icons": "^4.11.0",
     "react-international-phone": "^3.1.2",
+    "react-intersection-observer": "^10.0.0",
     "react-paginate": "^8.2.0",
     "react-pdf": "^9.1.0",
     "react-phone-number-input": "^3.4.12",

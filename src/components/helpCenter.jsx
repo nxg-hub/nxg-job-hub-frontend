@@ -1,53 +1,63 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Loader2 } from "lucide-react";
 import { useFetchMessages, useSendMessage } from "@/hooks/useHelpCenter";
 import { cn, getDateAsTextLabel } from "@/lib/utils";
+import { useInView } from "react-intersection-observer";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function HelpCenter({
-  senderId,
-  receiverId,
-  userType,
-  profilePicture,
-  senderName,
-}) {
-  const { messages, isLoading, isSuccess } = useFetchMessages();
-  const [hasGreeted, setHasGreeted] = useState(false);
-  const greetingRef = useRef(null);
-
-  const shouldShowGreeting = isSuccess && messages.length > 0 && !hasGreeted;
-
+export default function HelpCenter({ ...props }) {
+  const queryClient = useQueryClient();
   const [input, setInput] = useState("");
-  const { mutate } = useSendMessage({});
 
+  // Infinite Scroll Trigger
+  const { ref: loadMoreRef, inView } = useInView();
+
+  const {
+    messages,
+    threadId,
+    fetchNextPage,
+    hasNextPage,
+    isSuccess,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useFetchMessages({ size: 10 });
+
+  const { mutate } = useSendMessage();
+
+  // Load more when user scrolls to the "top" (which is the loadMoreRef)
   useEffect(() => {
-    if (shouldShowGreeting) {
-      setHasGreeted(true);
-
-      if (greetingRef.current) {
-        greetingRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-        });
-      }
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [shouldShowGreeting]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleSendMessage = () => {
     if (!input.trim()) return;
 
-    const userMessage = {
-      receiverId: receiverId,
-      subject: "",
-      userType: userType,
-      profilePicture: profilePicture,
-      senderName: senderName,
+    const payload = {
+      //send message funtion
+      receiverId: props.receiverId,
+      userType: props.userType,
+      profilePicture: props.profilePicture,
+      senderName: props.senderName,
       body: input,
+      subject: "",
+      ...(threadId && { threadId }),
     };
 
-    mutate({ payload: userMessage });
-    setInput("");
+    mutate(
+      { payload },
+      {
+        onSuccess: () => {
+          setInput("");
+        },
+      }
+    );
   };
 
   const handleKeyPress = (e) => {
@@ -57,114 +67,114 @@ export default function HelpCenter({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Loading conversation...</span>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center p-6 text-center">
+        <p className="text-destructive mb-4">
+          Failed to load messages: {error?.message}
+        </p>
+        <Button onClick={() => refetch()}>Try Again</Button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen flex-col bg-background">
-      {/* Header */}
-      <div className="border-b border-border bg-card px-6 py-4 shadow-sm">
+      <header className="border-b border-border bg-card px-6 py-4 shadow-sm shrink-0">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
             <MessageCircle className="h-6 w-6 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-lg md:text-xl font-semibold text-foreground">
+            <h1 className="text-lg font-semibold text-foreground">
               Help Center
             </h1>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              Chat with our support team
-            </p>
+            <p className="text-xs text-muted-foreground">Support is online</p>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="mx-auto max-w-2xl space-y-4">
-          {isSuccess &&
-            messages?.map((message) => (
+      {/* flex-col-reverse makes index 0 appear at the bottom */}
+      <div className="flex-1 overflow-y-auto p-6 flex flex-col-reverse">
+        <div className="mx-auto w-full max-w-2xl flex flex-col-reverse gap-4">
+          {/* 1. Bottom: Greeting (If it's a new conversation) */}
+          {isSuccess && messages.length === 0 && (
+            <div className="bg-muted p-4 rounded-lg self-start border border-border">
+              <p className="text-sm">Welcome! 👋 How can we help you today?</p>
+            </div>
+          )}
+
+          {/* 2. Middle: The Messages */}
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex flex-col ${
+                msg.senderId === props.senderId ? "items-end" : "items-start"
+              }`}
+            >
               <div
-                key={message?.id}
-                className={`flex flex-col ${
-                  message?.senderId === senderId ? "items-end" : "items-start"
+                className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                  msg.senderId === props.senderId
+                    ? "bg-primary text-primary-foreground rounded-tr-none"
+                    : "bg-muted text-foreground border border-border rounded-tl-none"
                 }`}
               >
-                <div
-                  className={`max-w-xs rounded-lg px-4 py-2 ${
-                    message?.senderId === senderId
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground border border-border"
-                  }`}
-                >
-                  <p className="text-xs md:text-sm">{message?.body}</p>
-                </div>
-                <p
-                  className={`mt-1 text-xs ${
-                    message?.senderId === senderId
-                      ? "text-muted-foreground"
-                      : "text-primary"
-                  }`}
-                >
-                  {getDateAsTextLabel(message?.timestamp)}
-                </p>
+                <p className="text-sm">{msg.body}</p>
               </div>
-            ))}
-          {shouldShowGreeting && (
-            <div ref={greetingRef} className="flex flex-col justify-start">
-              <div className="max-w-xs rounded-lg px-4 py-2 bg-muted text-muted-foreground border border-border">
-                <p className="text-xs md:text-sm">
-                  Welcome to our Help Center! 👋 How can we assist you today?
-                </p>
-              </div>
-              <p className="mt-1 text-xs text-primary">
-                {" "}
-                {getDateAsTextLabel(new Date())}
-              </p>
+              <span className="mt-1 text-[10px] opacity-70">
+                {new Date(msg.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
             </div>
-          )}
+          ))}
 
-          {isLoading && (
-            <div className="flex justify-center item-center">
-              <div className="rounded-lg bg-muted px-4 py-2 text-muted-foreground border border-border">
-                <div className="flex gap-2">
-                  <div className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce" />
-                  <div className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce delay-100" />
-                  <div className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce delay-200" />
-                </div>
-              </div>
-            </div>
-          )}
+          {/* 3. Top: Infinite Scroll Loading Indicator */}
+          <div ref={loadMoreRef} className="py-4 flex justify-center">
+            {isFetchingNextPage ? (
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+            ) : hasNextPage ? (
+              <span className="text-xs text-muted-foreground">
+                Scroll up to load more
+              </span>
+            ) : null}
+          </div>
 
-          {/* <div ref={messagesEndRef} /> */}
+          {isLoading && <p className="text-center text-sm">Loading chat...</p>}
         </div>
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-border bg-card p-6">
-        <div className="mx-auto max-w-2xl">
-          <div className="flex gap-3">
-            <Input
-              type="text"
-              placeholder="Type your message..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={isLoading}
-              onKeyPress={handleKeyPress}
-              className="flex-1"
-            />
-            <Button
-              onClick={handleSendMessage}
-              disabled={isLoading || !input.trim()}
-              className="gap-2"
-            >
-              <Send className="h-4 w-4" />
-              Send
-            </Button>
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">
-            Our team is available 24/7 to help. We'll respond to your message
-            shortly.
-          </p>
+      <footer className="border-t border-border bg-card p-4 shrink-0">
+        <div className="mx-auto max-w-2xl flex gap-3">
+          <input
+            className="flex-1 bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="Type your message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+          />
+          <button
+            onClick={handleSendMessage}
+            disabled={!input.trim()}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+          >
+            <Send className="h-4 w-4 mr-2" />
+            Send
+          </button>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }

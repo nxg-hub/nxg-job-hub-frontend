@@ -26,31 +26,43 @@ const filterOptions = [
 ];
 
 export default function FeaturedTalentPagesTab() {
-  const { data: featuredTalents, isFetching, isError } = useFeaturedTalent();
+  const [page, setPage] = useState(0);
   const [filter, setFilter] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
-  //filter featured talent
+  
+  const {
+    talents: featuredTalents,
+    pagination,
+    isLoading,
+    isFetching,
+    isError,
+    refetch, // Added for the refresh button
+  } = useFeaturedTalent({
+    page: page,
+    size: itemsPerPage,
+  });
+
+  
   const filteredFeaturedTalent =
     filter === "all"
       ? featuredTalents
       : featuredTalents.filter((talent) => talent.talentTechStack === filter);
 
-  //Paginate talent
-  const totalPages = Math.ceil(filteredFeaturedTalent?.length / itemsPerPage);
-  const displayedFeaturedTalents = filteredFeaturedTalent?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  //rest page when filter changes
   const handleFilterChange = (val) => {
     setFilter(val);
-    setCurrentPage(1);
+    setPage(0); // Reset to first page when filter changes
   };
 
-  if (isFetching)
+  const handlePrev = () => {
+    if (!pagination.isFirst) setPage((prev) => prev - 1);
+  };
+
+  const handleNext = () => {
+    if (!pagination.isLast) setPage((prev) => prev + 1);
+  };
+
+  if (isLoading)
     return (
       <div className="flex gap-4 ">
         {Array.from({ length: 4 }).map((_, index) => (
@@ -106,14 +118,14 @@ export default function FeaturedTalentPagesTab() {
 
         {/* Results Count */}
         <p className="text-sm text-muted-foreground mb-4">
-          Showing {displayedFeaturedTalents?.length * currentPage} of{" "}
-          {featuredTalents?.length} featured talents
+          Showing {pagination.page + 1} of {pagination.totalPages} featured
+          talents
         </p>
 
         {/* Featured Talents Grid */}
-        {displayedFeaturedTalents?.length > 0 ? (
+        {featuredTalents?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {displayedFeaturedTalents?.map((applicant) => (
+            {featuredTalents?.map((applicant) => (
               <FeaturedTalentCard
                 key={applicant.id}
                 featuredTalent={applicant}
@@ -128,48 +140,41 @@ export default function FeaturedTalentPagesTab() {
           </Card>
         )}
 
-        {/* Pagination */}
-        {displayedFeaturedTalents?.length > 0 && (
-          <div className="flex items-center justify-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
-            </Button>
+        {/* Pagination Controls */}
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePrev}
+            disabled={pagination.isFirst || isFetching}
+          >
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Previous
+          </Button>
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="sm"
-                onClick={() => setCurrentPage(page)}
-                className={
-                  currentPage === page
-                    ? "bg-primary hover:bg-secondary text-white border-transparent"
-                    : ""
-                }
-              >
-                {page}
-              </Button>
-            ))}
-
+          {/* Generate page buttons based on totalPages from API */}
+          {Array.from({ length: pagination.totalPages || 0 }, (_, i) => (
             <Button
-              variant="outline"
+              key={i}
+              variant={page === i ? "default" : "outline"}
               size="sm"
-              onClick={() =>
-                setCurrentPage(Math.min(totalPages, currentPage + 1))
-              }
-              disabled={currentPage === totalPages}
+              onClick={() => setPage(i)}
+              className={page === i ? "bg-primary text-white" : ""}
             >
-              Next
-              <ChevronRight className="w-4 h-4 ml-1" />
+              {i + 1}
             </Button>
-          </div>
-        )}
+          ))}
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleNext}
+            disabled={pagination.isLast || isFetching}
+          >
+            Next
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
       </div>
     </div>
   );

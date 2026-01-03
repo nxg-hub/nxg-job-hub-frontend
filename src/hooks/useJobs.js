@@ -94,58 +94,21 @@ export const useJobsEngagements = (employerID) => {
   });
 };
 
-export const useEmployerJobsKpis = (employerID) => {
-  const queries = useQueries({
-    queries: [
-      {
-        queryKey: ["totalJobsPost", employerID],
-        queryFn: async () => {
-          const response = await axios.get(
-            `${API_HOST_URL}/api/employers/postings/${employerID}`
-          );
-          return response.data;
-        },
-      },
-      {
-        queryKey: ["jobsEngagements", employerID],
-        queryFn: async () => {
-          const response = await axios.get(
-            `${API_HOST_URL}/api/employers/engagements/${employerID}`
-          );
-          return response.data;
-        },
-      },
-    ],
-  });
-
-  //request states
-  const isLoading = queries.some((q) => q.isLoading);
-  const isError = queries.some((q) => q.isError);
-  const error = queries.find((q) => q.error)?.error || null;
-
-  const jobs = queries[0]?.data || [];
-  const engagements = queries[1]?.data || {};
-
-  const acceptedJobs = jobs.filter(
-    (job) => job.jobStatus?.toLowerCase() === "accepted"
-  );
-  const rejectedJobs = jobs.filter(
-    (job) => job.jobStatus?.toLowerCase() === "rejected"
-  );
-
-  const totalJobsPost = jobs.length;
-  const totalJobsAccepted = acceptedJobs.length;
-  const totalJobsRejected = rejectedJobs.length;
-
-  //return data
-  const data = {
-    totalJobsPost,
-    totalJobsAccepted,
-    totalJobsRejected,
-    engagements,
+export const useApplicationOverTime = (employerID) => {
+  const fetchApplicationOverTime = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/job-postings/applications/daily-count/${employerID}`
+    );
+    return response.data;
   };
 
-  return { isLoading, isError, error, data };
+  return useQuery({
+    queryKey: ["applicationOverTime", employerID],
+    queryFn: fetchApplicationOverTime,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: !!employerID,
+  });
 };
 
 export const useDeletePostedJob = () => {
@@ -223,10 +186,115 @@ export const useGetAllApplicants = (employerID, token) => {
   });
 };
 
-export const useGetAllInterviewCandidates = (employerID, token) => {
+export const useGetInterviewCandidates = (employerID, token) => {
+  //fetch all interviews
+  const fetchAllInterviews = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/interviews/employer/${employerID}?filter=ALL`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  //fetch past interviews
+  const fetchPastInterviews = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/interviews/employer/${employerID}?filter=PAST`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  //fetch today interviews
+  const fetchTodayInterview = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/interviews/employer/${employerID}?filter=TODAY`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  //fetch upcoming interviews
+  const fetchUpcomingInterview = async () => {
+    const response = await axios.get(
+      `${API_HOST_URL}/api/interviews/employer/${employerID}?filter=UPCOMING`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["allInterviews"],
+        queryFn: fetchAllInterviews,
+      },
+      {
+        queryKey: ["pastInterviews"],
+        queryFn: fetchPastInterviews,
+      },
+      {
+        queryKey: ["upcomingInterviews"],
+        queryFn: fetchUpcomingInterview,
+      },
+      {
+        queryKey: ["todayInterviews"],
+        queryFn: fetchTodayInterview,
+      },
+    ],
+  });
+
+  const [
+    allInterviewsQuery,
+    pastInterviewsQuery,
+    todayInterviewsQuery,
+    upcomingInterviewsQuery,
+  ] = results;
+
+  return {
+    allInterviews: allInterviewsQuery.data?.content ?? [],
+    pastInterviews: pastInterviewsQuery.data?.content ?? [],
+    todayInterviews: todayInterviewsQuery.data?.content ?? [],
+    upcomingInterviews: upcomingInterviewsQuery.data?.content ?? [],
+
+    isLoading:
+      allInterviewsQuery.isLoading ||
+      pastInterviewsQuery.isLoading ||
+      todayInterviewsQuery.isLoading ||
+      upcomingInterviewsQuery.isLoading,
+
+    isError:
+      allInterviewsQuery.isError ||
+      pastInterviewsQuery.isError ||
+      todayInterviewsQuery.isError ||
+      upcomingInterviewsQuery.isError,
+  };
+};
+
+export const useGetInterviewCandidatesByFilter = (
+  employerID,
+  token,
+  filterOption
+) => {
   const fetchInterviewCandidates = async () => {
     const response = await axios.get(
-      `${API_HOST_URL}/api/interviews/employer/${employerID}`,
+      `${API_HOST_URL}/api/interviews/employer/${employerID}?filter=${filterOption}`,
       {
         headers: {
           authorization: token,
@@ -237,10 +305,64 @@ export const useGetAllInterviewCandidates = (employerID, token) => {
   };
 
   return useQuery({
-    queryKey: ["allInterviewCandidates", employerID],
+    queryKey: ["interviewCandidates", employerID],
     queryFn: fetchInterviewCandidates,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     enabled: !!employerID,
   });
+};
+
+export const useEmployerDashboardJobsKpis = (employerID) => {
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ["totalJobsPost", employerID],
+        queryFn: async () => {
+          const response = await axios.get(
+            `${API_HOST_URL}/api/employers/postings/${employerID}`
+          );
+          return response.data;
+        },
+      },
+      {
+        queryKey: ["shortlistedAndInterviewed", employerID],
+        queryFn: async () => {
+          const response = await axios.get(
+            `${API_HOST_URL}/api/employers/counts/get-application/employer/${employerID}`
+          );
+          return response.data;
+        },
+      },
+    ],
+  });
+
+  //request states
+  const isLoading = queries.some((q) => q.isLoading);
+  const isError = queries.some((q) => q.isError);
+  const error = queries.find((q) => q.error)?.error || null;
+
+  const jobs = queries[0]?.data || [];
+  const engagements = queries[1]?.data || {};
+
+  const acceptedJobs = jobs.filter(
+    (job) => job.jobStatus?.toLowerCase() === "accepted"
+  );
+  const rejectedJobs = jobs.filter(
+    (job) => job.jobStatus?.toLowerCase() === "rejected"
+  );
+
+  const totalJobsPost = jobs.length;
+  const totalJobsAccepted = acceptedJobs.length;
+  const totalJobsRejected = rejectedJobs.length;
+
+  //return data
+  const data = {
+    totalJobsPost,
+    totalJobsAccepted,
+    totalJobsRejected,
+    engagements,
+  };
+
+  return { isLoading, isError, error, data };
 };

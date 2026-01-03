@@ -21,7 +21,7 @@ import {
 
 import {
   useGetAllApplicants,
-  useGetAllInterviewCandidates,
+  useGetInterviewCandidatesByFilter,
 } from "@/hooks/useJobs";
 import { getStoredKey } from "@/lib/utils";
 import ProfileModal from "./ProfileModal";
@@ -57,7 +57,7 @@ export default function EmployerApplicantsTab() {
     data: interviews,
     isLoading: interviewLoader,
     isError: interviewError,
-  } = useGetAllInterviewCandidates(employer.id, storedJwtToken);
+  } = useGetInterviewCandidatesByFilter(employer.id, storedJwtToken, "ALL");
 
   // Filter applicants based on status
   const filteredApplicants =

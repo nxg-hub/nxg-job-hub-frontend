@@ -1,20 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Bell,
-  Bookmark,
-  CircleUser,
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  CircleHelp,
-  ChartLine,
-  Wallet,
-  Send,
-  BriefcaseBusiness,
-  MessageSquare,
-  OctagonAlert,
-  Menu,
-} from "lucide-react";
+import { Bell, OctagonAlert, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -46,8 +31,6 @@ import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 // import { NotificationPanel } from "@/components/notification-panel";
 // import logo from "@/static/images/logo_colored.png";
 import logo from "../static/images/splash.png";
-import logomin from "@/static/images/logo_min.png";
-import logonamemin from "@/static/images/logo_name_min.png";
 import verifiedImageMobile from "@/static/images/verified-mobile.png";
 
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -67,24 +50,47 @@ import { resetAllUserData } from "@/redux/AllUsersSlice";
 import { resetAllJobs } from "@/redux/ServiceProviderJobSlice";
 import useFetchNotifications from "@/utils/hooks/useFetchNotifications";
 import NotificationDropdown from "@/components/agent/notification-dropdown";
+import { CustomerCareIcon } from "@/icons/nxg-icons";
+// import helpCenterIcon from "@/static/icons/SVG/customer-care.svg";
+import { useUserDataQuery } from "@/hooks/useAllUsers";
+import { Badge } from "@/components/ui/badge";
 import { clearNearbyJobs } from "@/redux/JobSlice";
+import { RiLayoutFill, RiServiceFill, RiSettings4Fill } from "react-icons/ri";
+import { FaBriefcase, FaUserCircle, FaBell } from "react-icons/fa";
+import { TbHelpSquareFilled } from "react-icons/tb";
+import { IoIosLogOut } from "react-icons/io";
 
 const sidebarItems = [
   {
-    icon: <LayoutDashboard />,
+    icon: <RiLayoutFill className="w-5 h-5" />,
+    iconR: "",
     label: "Dashboard",
     path: "/services-provider",
   },
   {
-    icon: <CircleUser />,
+    icon: <FaUserCircle className="w-5 h-5" />,
+    iconR: "",
     label: "Profile",
     path: "profile",
   },
-  { icon: <BriefcaseBusiness />, label: "Jobs", path: "job-tracker" },
-  { icon: <CircleHelp />, label: "Help", path: "messages" },
-
-  // { icon:  <MessageSquare />, label: "Help", path: "/help" },
-  { icon: <Settings />, label: "Settings", path: "/services-provider/setting" },
+  {
+    icon: <FaBriefcase className="w-5 h-5" />,
+    iconR: "",
+    label: "Job",
+    path: "job-tracker",
+  },
+  {
+    icon: <TbHelpSquareFilled className="w-5 h-5" />,
+    label: "Help Center",
+    path: "help-center",
+    iconR: <CustomerCareIcon className="w-6 h-6" />,
+  },
+  {
+    icon: <RiSettings4Fill className="w-5 h-5" />,
+    iconR: "",
+    label: "Settings",
+    path: "/services-provider/setting",
+  },
 ];
 
 export function ServiceProviderDashboard() {
@@ -114,6 +120,7 @@ export function ServiceProviderDashboard() {
 }
 
 function DashboardContent({ notifications = [] }) {
+  const { data } = useUserDataQuery();
   const sidebar = useSidebar();
   const isCollapsed = sidebar.state === "collapsed";
   const location = useLocation();
@@ -135,52 +142,27 @@ function DashboardContent({ notifications = [] }) {
       <Sidebar className="" collapsible="icons" variant="floating">
         <SidebarContent
           className="bg-sky-700 sidebar overflow-y-auto hover:scrollbar-visible 
-                      scrollbar-hidden md:rounded-lg">
-          {/* <div>
-            {isCollapsed ? (
-              <img
-                // src={isCollapsed ? logomin : logo}
-                src={logo}
-                alt="Next Gen Hub Logo"
-                className={cn(
-                  "object-contain mx-auto w-32 h-32"
-                  // isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-10" : "w-32 h-32"
-                )}
-              />
-            ) : (
-              <div className="flex items-center">
-                <img
-                  src={logo}
-                  alt="Next Gen Hub Logo"
-                  className={cn(
-                    "object-contain w-12 h-12 "
-                    // isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-10"
-                  )}
-                />
-                <img
-                  src={logonamemin}
-                  alt="Next Gen Hub Logo"
-                  className={cn(
-                    "object-contain w-32 h-32 "
-                    // isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-10"
-                  )}
-                />
-              </div>
-            )}
-          </div> */}
-          <div className="pt-5">
+            scrollbar-hidden md:rounded-lg  !rounded-b-none"
+        >
+          <div className="px-5 pt-3 flex items-center gap-2">
             <img
-              src={isCollapsed ? logomin : logo}
-              alt="Next Gen Hub Logo"
               className={cn(
-                "object-contain mx-auto w-24 h-24",
-                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-24 h-24"
+                "object-contain",
+                isCollapsed ? "w-12 h-12 mr-5 mt-8 mb-7" : "w-10"
               )}
+              src={logo}
+              alt=""
             />
+            <div className="flex flex-col text-white -space-y-1.5">
+              <span className="font-bold text-2xl md:text-3xl">NXG</span>
+              <span className="text-xs md:text-xs md:tracking-widest">
+                JOB HUB
+              </span>
+            </div>
           </div>
           <SidebarGroup className="p-5 pt-8">
             <SidebarGroupContent>
-              <SidebarMenu className="gap-4">
+              <SidebarMenu className="gap-3">
                 {sidebarItems.map((item) => {
                   const isActive =
                     location.pathname === item.path ||
@@ -193,37 +175,53 @@ function DashboardContent({ notifications = [] }) {
                         asChild
                         isActive={isActive}
                         tooltip={item.label}
-                        className="text-white hover:bg-white/10 hover:text-white p-5">
+                        className="text-white hover:bg-white/10 hover:text-white p-5"
+                      >
                         <NavLink to={item.path}>
                           <span>{item.icon}</span>
                           <span>{item.label}</span>
+                          <span>{item.iconR}</span>
                         </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );
                 })}
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip="Logout"
-                    className="hover:cursor-pointer border-transparent text-white hover:bg-white/10 hover:text-white p-5"
-                    onClick={() => setShowLogoutNotice(true)}>
-                    <div>
-                      <LogOut className="w-7 h-7" />
-                      <span>Logout</span>
-                    </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter className="bg-sky-700 rounded-b-md">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Logout"
+              className="hover:cursor-pointer border-transparent text-red-700 hover:bg-red-700 hover:text-white p-5 bg-red-200"
+              onClick={() => setShowLogoutNotice(true)}
+            >
+              <div>
+                <IoIosLogOut className="w-7 h-7" />
+                <span>Logout</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarFooter>
       </Sidebar>
 
       {/* Main Content */}
-      <SidebarInset className="bg-transparent w-full md:rounded-md space-y-5 overflow-hidden ">
+      <SidebarInset
+        className={cn(
+          "flex flex-col w-full gap-5 md:rounded-md md:bg-slate-100",
+          isCollapsed ? "md:pl-40" : ""
+        )}
+      >
         {/* Header */}
-        <header className="bg-white p-4 flex border-b md:justify-end md:rounded-md">
+        <div className="bg-secondary w-full flex fixed top-0 z-50 md:justify-end md:rounded-lg md:bg-white md:static md:p-2">
+          <div className="flex mr-auto">
+            <SidebarTrigger
+              openMenuIcon={<Menu className="w-8 h-8" />}
+              className="my-3 ml-2 border-transparent md:hidden "
+            />
+          </div>
           <div className="w-full ">
             <h1 className="text-2xl">
               Welcome! 👋
@@ -232,46 +230,31 @@ function DashboardContent({ notifications = [] }) {
               </span>
             </h1>
           </div>
-          <SidebarTrigger
-            openMenuIcon={<Menu className="w-8 h-8" />}
-            className="my-3 ml-2 border-transparent md:hidden "
-          />
-          {/* <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative border-none">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                <span className="sr-only">Notifications </span>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="p-0 w-[380px]" align="end">
-              <NotificationPanel />
-            </PopoverContent>
-          </Popover> */}
-          <DropdownMenu
-            open={notificationDropdownOpen}
-            onOpenChange={setNotificationDropdownOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative border-none ">
-                <Bell className="h-5 w-5" />
-                {unreadNotifications > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
-                    {unreadNotifications}
-                  </Badge>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <NotificationDropdown notifications={notifications} />
-          </DropdownMenu>
-        </header>
+          <div className="hidden md:flex gap-2">
+            <DropdownMenu
+              open={notificationDropdownOpen}
+              onOpenChange={setNotificationDropdownOpen}
+            >
+              <DropdownMenuTrigger className="hidden md:block" asChild>
+                <Button
+                  variant="ghost"
+                  className="relative border-none font-bold bg-gray-100 hover:bg-gray-200 text-secondary hover:text-primary"
+                >
+                  <FaBell className="h-6 w-6" />
+                  {unreadNotifications > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                    >
+                      {unreadNotifications}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <NotificationDropdown notifications={notifications} />
+            </DropdownMenu>
+          </div>
+        </div>
         <div className=" pt-16 md:pt-0">
           {!userData?.serviceProvider?.verified && (
             <>
@@ -307,7 +290,8 @@ function DashboardContent({ notifications = [] }) {
                           Get started by
                           <NavLink
                             className="underline text-secondary w-fit py-1 px-2 "
-                            to={"profile"}>
+                            to={"profile"}
+                          >
                             completing your Profile
                           </NavLink>
                           , stand a better chance of being hired by completing
@@ -375,7 +359,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogTitle>
           <AlertDialogDescription
             asChild
-            className="flex flex-col items-center py-6 space-y-8">
+            className="flex flex-col items-center py-6 space-y-8"
+          >
             <div>
               <p className="text-center text-sm px-5">
                 You'll need to log in again to access your account. Make sure
@@ -390,7 +375,8 @@ const ShowLogOutDialogue = ({ isOpen, onClose }) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleCancelClick}
-            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700">
+            className="sm:w-1/2 bg-sky-600 border-0 hover:bg-sky-700"
+          >
             Logout
           </AlertDialogAction>
         </AlertDialogFooter>

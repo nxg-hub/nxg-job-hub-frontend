@@ -1,86 +1,127 @@
 import { API_HOST_URL } from "@/utils/api/API_HOST";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import axios from "axios";
 
-export const useFetchMessages = () => {
+const STORAGE_KEY = "NXGJOBHUBLOGINKEYV1";
+const getAuthHeader = () => {
   const storeKey =
-    localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-    sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
+    localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY);
+  return storeKey ? JSON.parse(storeKey)?.authKey : null;
+};
 
-  if (!storeKey) throw new Error("No key stored");
-
-  const authKey = JSON.parse(storeKey)?.authKey;
-
-  const fetchInbox = async () => {
-    const response = await axios.get(`${API_HOST_URL}/api/inbox/get-inbox`, {
-      headers: {
-        authorization: authKey,
-      },
-    });
-    return response.data;
-  };
-
-  const fetchThreadMessages = async (threadId) => {
-    const response = await axios.get(
-      `${API_HOST_URL}/api/inbox/thread/${threadId}`
-    );
-    return response.data;
-  };
-
-  const { data: inboxData } = useQuery({
+export const useFetchMessages = ({ page, size }) => {
+  const { data: inboxData, isLoading: isLoadingInbox } = useQuery({
     queryKey: ["inboxMessages"],
-    queryFn: fetchInbox,
+    queryFn: async () => {
+      const authKey = getAuthHeader();
+      const { data } = await axios.get(`${API_HOST_URL}/api/inbox/get-inbox`, {
+        headers: { authorization: authKey },
+      });
+      return data;
+    },
   });
 
-  const messageId = inboxData?.content?.[0]?.threadId;
+  const threadId = inboxData?.content?.[0]?.threadId;
 
-  const {
-    data: threadData,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["historyMessages", messageId],
-    queryFn: () => fetchThreadMessages(messageId),
-    enabled: !!messageId,
-    staleTime: 1000 * 60 * 0.5,
+  const query = useInfiniteQuery({
+    queryKey: ["historyMessages", threadId],
+    enabled: !!threadId,
+    initialPageParam: 0,
+
+    queryFn: async ({ pageParam = 0 }) => {
+      const authKey = getAuthHeader();
+      const { data } = await axios.get(
+        `${API_HOST_URL}/api/inbox/thread/${threadId}`,
+        {
+          params: { page: pageParam, size },
+          headers: { authorization: authKey },
+        }
+      );
+      return data;
+    },
+
+    getNextPageParam: (lastPage) => {
+      return lastPage.last ? undefined : lastPage.number + 1;
+    },
+    staleTime: 1000 * 60 * 5,
   });
+
+  const allMessages = query.data?.pages.flatMap((page) => page.content) ?? [];
+
   return {
-    messages: threadData || [],
-    isLoading,
-    isSuccess,
+    messages: allMessages,
+    threadId,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: query.hasNextPage,
+    isSuccess: query.isSuccess,
+    isFetchingNextPage: query.isFetchingNextPage,
+    isLoading: query.isLoading || isLoadingInbox,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
   };
 };
 
 export const useSendMessage = () => {
   const queryClient = useQueryClient();
-  const storeKey =
-    localStorage.getItem("NXGJOBHUBLOGINKEYV1") ||
-    sessionStorage.getItem("NXGJOBHUBLOGINKEYV1");
 
-  if (!storeKey) throw new Error("No key stored");
-
-  const authKey = JSON.parse(storeKey)?.authKey;
-
-  const sendMessage = async ({ payload }) => {
+  const sendMessageFn = async ({ payload }) => {
+    const authKey = getAuthHeader();
     const response = await axios.post(
       `${API_HOST_URL}/api/inbox/send-inbox-message`,
       payload,
       {
-        headers: {
-          authorization: authKey,
-        },
+        headers: { authorization: authKey },
       }
     );
     return response.data;
   };
 
   return useMutation({
-    mutationFn: sendMessage,
-    onError: (err, variables, context) => {
-      queryClient.setQueryData(["inboxMessages"], context.previousData);
+    mutationFn: sendMessageFn,
+
+    // Fires before the mutation function runs
+    onMutate: async (variables) => {
+      const threadId = variables.payload.threadId;
+
+      // 1. Cancel any outgoing refetches so they don't overwrite our optimistic update
+      await queryClient.cancelQueries({
+        queryKey: ["historyMessages", threadId],
+      });
+      await queryClient.cancelQueries({ queryKey: ["inboxMessages"] });
+
+      // 2. Snapshot the previous value for rollback if needed
+      const previousHistory = queryClient.getQueryData([
+        "historyMessages",
+        threadId,
+      ]);
+
+      return { previousHistory, threadId };
     },
-    onSuccess: (saveMessage, newMessage) => {
+
+    onError: (err, variables, context) => {
+      // Roll back to the previous history if the message fails
+      if (context?.threadId) {
+        queryClient.setQueryData(
+          ["historyMessages", context.threadId],
+          context.previousHistory
+        );
+      }
+    },
+
+    onSuccess: (data, variables) => {
+      const threadId = variables.payload.threadId;
       queryClient.invalidateQueries({ queryKey: ["inboxMessages"] });
+      if (threadId) {
+        queryClient.invalidateQueries({
+          queryKey: ["historyMessages", threadId],
+        });
+      }
     },
   });
 };
