@@ -117,7 +117,7 @@ export default function SuccessfulSignupPage() {
             Registration successful
           </p>
           <h1 className="text-gray-900 text-lg md:text-2xl font-bold">
-            Welcome to NXG JUBHUB
+            Welcome to NXG JOB HUB
           </h1>
           <p className="w-full text-justify leading-relaxed px-5 text-gray-800 text-sm md:text-base md:px-10">
             We've sent an activation link to your email address. Please check
