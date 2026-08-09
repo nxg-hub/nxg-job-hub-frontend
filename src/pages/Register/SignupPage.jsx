@@ -91,7 +91,11 @@ const formSchema = z
       .string()
       .min(8, "Password must contain at least 8 character(s)")
       .regex(/[A-Za-z]/, "Must contain at least a letter ")
-      .regex(/\d/, "Must contain at least a number "),
+      .regex(/\d/, "Must contain at least a number ")
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Must contain at least a special character (e.g. !@#$%)"
+      ),
     re_password: z.string(),
     terms_condition: z.boolean(),
   })
