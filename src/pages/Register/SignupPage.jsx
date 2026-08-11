@@ -90,7 +90,8 @@ const formSchema = z
     password: z
       .string()
       .min(8, "Password must contain at least 8 character(s)")
-      .regex(/[A-Za-z]/, "Must contain at least a letter ")
+      .regex(/[A-Z]/, "Must contain at least an uppercase letter")
+      .regex(/[a-z]/, "Must contain at least a lowercase letter")
       .regex(/\d/, "Must contain at least a number ")
       .regex(
         /[^A-Za-z0-9]/,
@@ -426,6 +427,11 @@ export default function SignupForm() {
                         {...field}
                       />
                     </FormControl>
+                    <p className="text-xs text-gray-500">
+                      Password must be 8 or more than 8 characters but must
+                      include uppercase, lowercase, numbers and special
+                      character.
+                    </p>
                     <FormMessage />
                   </FormItem>
                 )}
