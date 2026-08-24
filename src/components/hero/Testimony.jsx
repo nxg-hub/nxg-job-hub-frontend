@@ -42,10 +42,15 @@ const Testimony = () => {
       </h2>
 
       <Swiper
+        loop
         freeMode
         grabCursor
-        centeredSlides
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        speed={6000}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          reverseDirection: true,
+        }}
         modules={[FreeMode, Autoplay]}
         spaceBetween={40}
         slidesPerView={1.2}
@@ -53,9 +58,9 @@ const Testimony = () => {
           768: { slidesPerView: 2 },
           1280: { slidesPerView: 3 },
         }}
-        className="pb-10">
-        {Testimonies.map((testimony) => (
-          <SwiperSlide key={testimony.id}>
+        className="testimonial-marquee pb-10">
+        {[...Testimonies, ...Testimonies].map((testimony, index) => (
+          <SwiperSlide key={`${testimony.id}-${index}`}>
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-2 p-6 md:p-8 h-full flex flex-col justify-between">
               <div className="flex flex-col items-center text-center">
                 <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-sky-100 shadow-sm mb-4">

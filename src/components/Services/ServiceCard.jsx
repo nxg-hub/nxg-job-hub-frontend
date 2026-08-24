@@ -1,4 +1,15 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FiCheck, FiChevronDown } from "react-icons/fi";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
 
 const ServiceCard = ({
   img,
@@ -9,60 +20,60 @@ const ServiceCard = ({
   extraContent3,
 }) => {
   const [visible, setVisible] = useState(false);
+  const features = [extraContent1, extraContent2, extraContent3].filter(
+    Boolean
+  );
 
   return (
-    <div
-      className="
-      w-full md:w-[40%] bg-white rounded-xl shadow-lg p-6 
-      hover:shadow-2xl hover:-translate-y-1 
-      transition-all duration-300 border border-gray-100
-    ">
-      {/* Image */}
-      <div className="flex justify-center">
+    <motion.div
+      variants={itemVariants}
+      className="group w-full h-full bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 p-6 flex flex-col">
+      {/* Icon */}
+      <div className="w-16 h-16 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-5 group-hover:bg-sky-100 transition-colors">
         <img
-          className="w-24 h-24 md:w-32 md:h-32 object-contain"
+          className="w-10 h-10 object-contain"
           src={img}
-          alt="service icon"
+          alt={`${title} icon`}
         />
       </div>
 
-      {/* Text Area */}
-      <article className="text-center mt-5 space-y-3">
-        <h2 className="text-lg md:text-xl font-bold text-gray-800">{title}</h2>
+      {/* Text */}
+      <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
+      <p className="text-gray-600 text-sm leading-relaxed">{content}</p>
 
-        <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-          {content}
-        </p>
-
-        {/* Expandable Content */}
-        <div
-          className={`
-            overflow-hidden transition-all duration-300 
-            ${visible ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0"}
-          `}>
-          <ul className="mt-4 text-left space-y-3 text-gray-600 text-sm md:text-base">
-            {[extraContent1, extraContent2, extraContent3].map(
-              (item, i) =>
-                item && (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="text-blue-600 text-lg">&#8226;</span>
-                    <span>{item}</span>
-                  </li>
-                )
-            )}
-          </ul>
-        </div>
-      </article>
-
-      {/* Button */}
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={() => setVisible(!visible)}
-          className="text-blue-700 font-medium text-sm ">
-          {visible ? "See Less" : "See More"}
-        </button>
+      {/* Feature checklist - expandable */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ${
+          visible
+            ? "max-h-[400px] opacity-100 mt-5 pt-5 border-t border-gray-100"
+            : "max-h-0 opacity-0"
+        }`}>
+        <ul className="space-y-3">
+          {features.map((item, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2.5 text-sm text-gray-600">
+              <span className="w-5 h-5 rounded-full bg-sky-50 flex items-center justify-center shrink-0 mt-px">
+                <FiCheck className="w-3 h-3 text-sky-600" />
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+
+      {/* See More toggle */}
+      <button
+        onClick={() => setVisible(!visible)}
+        className="mt-auto pt-5 self-start inline-flex items-center gap-1.5 text-sky-600 hover:text-[#1d7a9c] font-semibold text-sm transition-colors">
+        {visible ? "See Less" : "See More"}
+        <FiChevronDown
+          className={`w-4 h-4 transition-transform duration-300 ${
+            visible ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+    </motion.div>
   );
 };
 

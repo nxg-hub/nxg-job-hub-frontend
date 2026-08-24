@@ -1,6 +1,7 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination } from "swiper/modules";
+import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import "swiper/css/bundle";
 import Analysis from "../../../src/static/icons/data_analysis.png";
 import Machine from "../../../src/static/icons/icon_Computer_Process_.png";
@@ -80,9 +81,17 @@ const TechjobsSlider = () => {
         Explore Job Categories
       </h2>
       <Swiper
+        loop
         freeMode
         grabCursor
-        modules={[FreeMode, Pagination]}
+        speed={4000}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+          reverseDirection: true,
+        }}
+        modules={[Autoplay, FreeMode, Pagination]}
         pagination={{
           clickable: true,
           el: ".swiper-pagination-custom",
@@ -95,28 +104,36 @@ const TechjobsSlider = () => {
           1024: { slidesPerView: 3.5, spaceBetween: 40 },
           1280: { slidesPerView: 4.5, spaceBetween: 50 },
         }}
-        className="pb-12">
-        {Jobsspaces.map((job) => (
+        className="marquee-swiper pb-12">
+        {Jobsspaces.map((job, index) => (
           <SwiperSlide key={job.id}>
-            <div
+            <motion.div
               onClick={() =>
                 navigate(
                   `/jobs/${job.jobtitle.replace(/\s+/g, "-").toLowerCase()}`
                 )
               }
-              className="flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: (index % 4) * 0.08,
+              }}
+              className="group flex flex-col items-center text-center bg-white shadow-md hover:shadow-lg transition-all hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 cursor-pointer h-60 justify-center">
               <div className="w-20 h-20 mb-4 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-full flex items-center justify-center overflow-hidden">
                 <img
                   src={job.icon}
                   alt={job.jobtitle}
-                  className="w-10 h-10 object-contain"
+                  className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <h3 className="text-lg font-semibold text-gray-800">
                 {job.jobtitle}
               </h3>
               <p className="text-sm text-gray-500 mt-1">{job.vacancies}</p>
-            </div>
+            </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>

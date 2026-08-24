@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import SplashScreen from "../components/SplashScreen";
 import Explore from "../components/hero/Explore";
 import JobCards from "../components/hero/JobCards";
@@ -25,23 +26,22 @@ const titles = [
 ];
 const Home = () => {
   const [Loaded, setLoaded] = useState(false);
-  const [heroTitle, setHeroTitle] = useState(0);
+  const [titleIndex, setTitleIndex] = useState(0);
   const [hovered, setHovered] = useState(null);
   useEffect(() => {
     setTimeout(() => setLoaded(true), 2000);
   }, []);
 
-  const selectRandomTitle = useCallback(() => {
-    const titleIndex = Math.floor(Math.random() * titles.length);
-    setHeroTitle(titles[titleIndex]);
-  }, []);
+  const heroTitle = titles[titleIndex];
 
   useEffect(() => {
-    const intervalTitle = setInterval(selectRandomTitle, 2000);
+    const intervalTitle = setInterval(() => {
+      setTitleIndex((prev) => (prev + 1) % titles.length);
+    }, 4000);
     return () => {
       clearInterval(intervalTitle); // Clear the interval on unmount
     };
-  }, [selectRandomTitle]);
+  }, []);
 
   return !Loaded ? (
     <SplashScreen />
@@ -59,20 +59,36 @@ const Home = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
           <div className="max-w-3xl">
             {/* Headline */}
-            <h1 className="text-white text-4xl md:text-6xl font-extrabold leading-tight">
-              {heroTitle.title1 && <span>{heroTitle.title1} </span>}
-              <span className="text-[#2596BE]">{heroTitle.span} </span>
-              <span>{heroTitle.title}</span>
-            </h1>
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={titleIndex}
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -40, opacity: 0 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                className="text-white text-4xl md:text-6xl font-extrabold leading-tight">
+                {heroTitle.title1 && <span>{heroTitle.title1} </span>}
+                <span className="text-[#2596BE]">{heroTitle.span} </span>
+                <span>{heroTitle.title}</span>
+              </motion.h1>
+            </AnimatePresence>
 
             {/* Subtitle */}
-            <p className="mt-6 text-lg md:text-xl text-gray-200 font-medium leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
+              className="mt-6 text-lg md:text-xl text-gray-200 font-medium leading-relaxed">
               Get access and connect with Professionals, Employers, Talents,
               Service Providers, Artisans and Agents — all in just a few clicks.
-            </p>
+            </motion.p>
 
             {/* Buttons */}
-            <div className="mt-10 flex w-full max-w-md ">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
+              className="mt-10 flex w-full max-w-md ">
               <Link
                 to="/register"
                 onMouseEnter={() => setHovered("post")}
@@ -100,7 +116,7 @@ const Home = () => {
                 } border border-l-0 border-[#2596BE]`}>
                 Find Jobs
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
