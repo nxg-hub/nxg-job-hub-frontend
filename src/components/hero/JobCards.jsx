@@ -8,18 +8,55 @@ import { Link } from "react-router-dom";
 import { API_HOST_URL } from "../../utils/api/API_HOST";
 import JobsCardSkeleton from "../ui/JobsCardSkeleton";
 
+const formatCurrency = (amount) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "NGN",
+  }).format(amount);
+};
+
+const JobCard = ({ job }) => (
+  <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden h-full flex flex-col">
+    <div className="p-5 sm:p-6 flex-1 flex flex-col">
+      <span className="inline-flex items-center gap-1 self-start bg-sky-50 text-sky-600 text-xs sm:text-sm font-semibold capitalize px-2.5 py-1 rounded-full mb-3">
+        <MdLocationPin className="w-4 h-4" />
+        {job.job_location}
+      </span>
+
+      <h3 className="text-lg sm:text-xl font-bold mb-2 capitalize line-clamp-2">
+        {job.job_title}
+      </h3>
+
+      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+        {job?.job_description || ""}
+      </p>
+    </div>
+
+    <div className="mt-auto px-5 sm:px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/60">
+      <span className="text-sky-700 font-semibold text-base sm:text-lg truncate mr-3">
+        {formatCurrency(job.salary) || "Negotiable"}
+      </span>
+      <Link
+        to="/login"
+        className="text-sky-600 text-sm font-medium whitespace-nowrap hover:underline shrink-0">
+        Read More →
+      </Link>
+    </div>
+  </div>
+);
+
+const swiperBreakpoints = {
+  0: { slidesPerView: 1.05, spaceBetween: 16 },
+  480: { slidesPerView: 1.2, spaceBetween: 20 },
+  640: { slidesPerView: 2, spaceBetween: 24 },
+  1024: { slidesPerView: 3, spaceBetween: 40 },
+};
+
 const JobCards = () => {
   const [jobs, setJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "NGN",
-    }).format(amount);
-  };
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -32,7 +69,10 @@ const JobCards = () => {
         const data = await response.json();
 
         const acceptedRecentJobs = data?.filter((job) => {
-          return job.jobStatus === "ACCEPTED";
+          return (
+            job.jobStatus === "ACCEPTED" &&
+            job.job_location?.toLowerCase() !== "abuja"
+          );
         });
         setJobs(acceptedRecentJobs);
       } catch (err) {
@@ -55,7 +95,10 @@ const JobCards = () => {
         );
         const data = await response.json();
         const acceptedRecentJobs = data?.content?.filter((job) => {
-          return job.jobStatus === "ACCEPTED";
+          return (
+            job.jobStatus === "ACCEPTED" &&
+            job.job_location?.toLowerCase() !== "abuja"
+          );
         });
         setAllJobs(acceptedRecentJobs);
       } catch (err) {
@@ -76,7 +119,7 @@ const JobCards = () => {
         </h2>
 
         {isLoading ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
               <JobsCardSkeleton key={i} />
             ))}
@@ -88,50 +131,15 @@ const JobCards = () => {
             freeMode={true}
             grabCursor={true}
             modules={[FreeMode, Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={40}
+            pagination={{ clickable: true, dynamicBullets: true }}
             slidesPerView={3}
-            breakpoints={{
-              0: { slidesPerView: 1 },
-              640: { slidesPerView: 1.2 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="py-8">
+            breakpoints={swiperBreakpoints}
+            className="!py-8">
             {allJobs?.map((job) => (
-              <SwiperSlide key={job?.jobID || job?.job_title}>
-                <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden p-6 flex flex-col justify-between h-full">
-                  <div>
-                    <div className="flex items-center text-sky-600 mb-4">
-                      <MdLocationPin className="w-6 h-6 mr-2" />
-                      <p className="text-lg font-semibold capitalize">
-                        {job.job_location}
-                      </p>
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-2 capitalize">
-                      {job.job_title}
-                    </h3>
-
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {job?.job_description
-                        ? job.job_description.slice(0, 180)
-                        : ""}
-                      ...
-                    </p>
-                  </div>
-
-                  <div className="mt-6 flex justify-between items-center">
-                    <span className="text-sky-700 font-semibold text-lg">
-                      {formatCurrency(job.salary) || "Negotiable"}
-                    </span>
-                    <Link
-                      to="/login"
-                      className="text-sky-600 text-sm font-medium hover:underline">
-                      Read More →
-                    </Link>
-                  </div>
-                </div>
+              <SwiperSlide
+                key={job?.jobID || job?.job_title}
+                className="h-auto">
+                <JobCard job={job} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -140,50 +148,15 @@ const JobCards = () => {
             freeMode={true}
             grabCursor={true}
             modules={[FreeMode, Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={40}
+            pagination={{ clickable: true, dynamicBullets: true }}
             slidesPerView={3}
-            breakpoints={{
-              0: { slidesPerView: 1 },
-              640: { slidesPerView: 1.2 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="py-8">
+            breakpoints={swiperBreakpoints}
+            className="!py-8">
             {jobs?.map((job) => (
-              <SwiperSlide key={job?.jobID || job?.job_title}>
-                <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden p-6 flex flex-col justify-between h-full">
-                  <div>
-                    <div className="flex items-center text-sky-600 mb-4">
-                      <MdLocationPin className="w-6 h-6 mr-2" />
-                      <p className="text-lg font-semibold capitalize">
-                        {job.job_location}
-                      </p>
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-2 capitalize">
-                      {job.job_title}
-                    </h3>
-
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {job?.job_description
-                        ? job.job_description.slice(0, 180)
-                        : ""}
-                      ...
-                    </p>
-                  </div>
-
-                  <div className="mt-6 flex justify-between items-center">
-                    <span className="text-sky-700 font-semibold text-lg">
-                      {formatCurrency(job.salary) || "Negotiable"}
-                    </span>
-                    <Link
-                      to="/login"
-                      className="text-sky-600 text-sm font-medium hover:underline">
-                      Read More →
-                    </Link>
-                  </div>
-                </div>
+              <SwiperSlide
+                key={job?.jobID || job?.job_title}
+                className="h-auto">
+                <JobCard job={job} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -22,6 +22,11 @@
   object-fit: contain;
 }
 
+.testimonial-marquee .swiper-wrapper,
+.marquee-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
 .swiperr .swiper-pagination {
   padding: 0 !important;
   margin: 0 !important;

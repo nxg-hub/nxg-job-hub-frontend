@@ -10,7 +10,6 @@ module.exports = {
       backgroundImage: {
         AboutGroup: "url('/src/static/images/AboutGroup.png')",
         AboutCoWorkers: "url('/src/static/images/AboutBgCoworkers.png')",
-        ServicesBusiness: "url('/src/static/images/ServicesBusiness.webp')",
       },
       borderRadius: {
         lg: "var(--radius)",

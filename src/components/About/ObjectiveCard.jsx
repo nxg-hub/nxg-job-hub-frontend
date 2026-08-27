@@ -1,30 +1,34 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const ObjectiveCard = ({ num, title, content }) => {
+const ObjectiveCard = ({ num, title, content, icon: Icon }) => {
   return (
-    <div
-      className="
-        bg-gray-200 w-full m-auto p-6 rounded-2xl my-4
-        text-left shadow-sm
-        hover:shadow-xl hover:-translate-y-1 
-        transition-all duration-300 
-        sm:w-[80%] md:w-[300px] lg:w-full
-      ">
-      {/* Number */}
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#006A90]">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="group relative w-full bg-white p-6 md:p-7 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-sky-200 transition-all duration-300 overflow-hidden">
+      {/* Number watermark */}
+      <span className="absolute -top-3 right-4 text-6xl font-extrabold text-sky-50 group-hover:text-sky-100 select-none transition-colors">
         {num}
-      </h1>
+      </span>
 
-      {/* Title */}
-      <h2 className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-800 leading-snug">
+      {/* Icon */}
+      {Icon && (
+        <span className="relative inline-flex w-12 h-12 rounded-xl bg-gradient-to-tr from-[#215E7D] to-[#2B749A] text-white items-center justify-center shadow-md shadow-sky-500/20 mb-5">
+          <Icon className="w-5 h-5" />
+        </span>
+      )}
+
+      <h3 className="relative text-lg md:text-xl font-bold text-gray-800 leading-snug mb-3">
         {title}
-      </h2>
+      </h3>
 
-      {/* Content */}
-      <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed">
+      <p className="relative text-sm text-gray-600 leading-relaxed">
         {content}
       </p>
-    </div>
+    </motion.div>
   );
 };
 
