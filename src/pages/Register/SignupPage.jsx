@@ -525,41 +525,32 @@ export default function SignupForm() {
           </Form>
 
           {/* or signup using other methods */}
-          {/* <div>
-          <section class="w-10/12 flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <span class="px-4">or</span>
-            <div class="flex-grow border-t border-gray-300"></div>
-          </section>
-          <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
-            <Button
-              variant="outline"
-              className="w-full"
-              type="submit">
-              <img
-                className="w-5 h-5"
-                src={Googleicon}
-                alt=""
-              />
-              <span className="hidden sm:inline-block">
-                Sign In with Google
-              </span>
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full"
-              type="submit">
-              <img
-                className="w-5 h-5"
-                src={Linkedinicon}
-                alt=""
-              />
-              <span className="hidden sm:inline-block">
-                Sign In with LinkedIn
-              </span>
-            </Button>
-          </section>
-        </div> */}
+          <div>
+            <section className="w-10/12 flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="px-4">or</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </section>
+            <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
+              <Button
+                variant="outline"
+                className="w-full"
+                type="button"
+                onClick={() => {
+                  window.location.href =
+                    "https://job-hub-91sr.onrender.com/oauth2/authorization/google";
+                }}>
+                <img
+                  className="w-5 h-5"
+                  src={Googleicon}
+                  alt=""
+                />
+                <span className="hidden sm:inline-block">
+                  Sign up with Google
+                </span>
+              </Button>
+            </section>
+          </div>
 
           <Toaster />
         </CardContent>

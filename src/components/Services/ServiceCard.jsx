@@ -29,7 +29,7 @@ const ServiceCard = ({
       variants={itemVariants}
       className="group w-full h-full bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 p-6 flex flex-col">
       {/* Icon */}
-      <div className="w-16 h-16 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-5 group-hover:bg-sky-100 transition-colors">
+      <div className="w-16 h-16 rounded-xl bg-[#f0f9ff] border-[#e0f2fe] flex items-center justify-center mb-5 group-hover:bg-[#e0f2fe] transition-colors">
         <img
           className="w-10 h-10 object-contain"
           src={img}
@@ -53,8 +53,8 @@ const ServiceCard = ({
             <li
               key={i}
               className="flex items-start gap-2.5 text-sm text-gray-600">
-              <span className="w-5 h-5 rounded-full bg-sky-50 flex items-center justify-center shrink-0 mt-px">
-                <FiCheck className="w-3 h-3 text-sky-600" />
+              <span className="w-5 h-5 rounded-full bg-[#f0f9ff] flex items-center justify-center shrink-0 mt-px">
+                <FiCheck className="w-3 h-3 text-[#0284c7]" />
               </span>
               <span>{item}</span>
             </li>
@@ -65,7 +65,7 @@ const ServiceCard = ({
       {/* See More toggle */}
       <button
         onClick={() => setVisible(!visible)}
-        className="mt-auto pt-5 self-start inline-flex items-center gap-1.5 text-sky-600 hover:text-[#1d7a9c] font-semibold text-sm transition-colors">
+        className="mt-auto pt-5 self-start inline-flex items-center gap-1.5 text-[#0284c7] hover:text-[#1d7a9c] font-semibold text-sm transition-colors">
         {visible ? "See Less" : "See More"}
         <FiChevronDown
           className={`w-4 h-4 transition-transform duration-300 ${

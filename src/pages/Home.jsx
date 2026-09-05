@@ -68,7 +68,7 @@ const Home = () => {
                 transition={{ duration: 0.45, ease: "easeOut" }}
                 className="text-white text-4xl md:text-6xl font-extrabold leading-tight">
                 {heroTitle.title1 && <span>{heroTitle.title1} </span>}
-                <span className="text-[#2596BE]">{heroTitle.span} </span>
+                <span className="text-[#0284c7]">{heroTitle.span} </span>
                 <span>{heroTitle.title}</span>
               </motion.h1>
             </AnimatePresence>
@@ -95,11 +95,11 @@ const Home = () => {
                 onMouseLeave={() => setHovered(null)}
                 className={`w-1/2 py-4 text-center font-semibold transition-all rounded-l-md duration-300 ${
                   hovered === "post"
-                    ? "bg-[#2596BE] text-white"
+                    ? "bg-[#0284c7] text-white"
                     : hovered === "find"
-                    ? "bg-transparent text-[#2596BE]"
-                    : "bg-[#2596BE] text-white"
-                } border border-[#2596BE]`}>
+                    ? "bg-transparent text-[#0284c7]"
+                    : "bg-[#0284c7] text-white"
+                } border border-[#0284c7]`}>
                 Post Jobs
               </Link>
 
@@ -109,11 +109,11 @@ const Home = () => {
                 onMouseLeave={() => setHovered(null)}
                 className={`w-1/2 py-4 text-center font-semibold transition-all duration-300 rounded-r-md ${
                   hovered === "find"
-                    ? "bg-[#2596BE] text-white"
+                    ? "bg-[#0284c7] text-white"
                     : hovered === "post"
-                    ? "bg-transparent text-[#2596BE]"
-                    : "bg-transparent text-[#2596BE]"
-                } border border-l-0 border-[#2596BE]`}>
+                    ? "bg-transparent text-[#0284c7]"
+                    : "bg-transparent text-[#0284c7]"
+                } border border-l-0 border-[#0284c7]`}>
                 Find Jobs
               </Link>
             </motion.div>

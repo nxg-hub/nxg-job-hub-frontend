@@ -163,7 +163,7 @@
 //                           fontSize: "2rem",
 //                           fontWeight: "700",
 //                           lineHeight: "2.5rem",
-//                           color: "#2596BE",
+//                           color: "#0284c7",
 //                           marginBottom: "1.5rem",
 //                         }}>
 //                         Thank You !
@@ -182,7 +182,7 @@
 //                     <div style={{ marginTop: "3rem" }}>
 //                       <Link
 //                         style={{
-//                           background: "#2596BE",
+//                           background: "#0284c7",
 //                           padding: "10px",
 //                           display: "block",
 //                           color: "#ffffff",
@@ -209,7 +209,7 @@
 //                     style={{
 //                       width: "1.1rem",
 //                       height: "1.1rem",
-//                       color: "#2596be",
+//                       color: "#0284c7",
 //                       marginTop: ".3rem",
 //                     }}
 //                   />
@@ -221,7 +221,7 @@
 //                     style={{
 //                       width: "1.1rem",
 //                       height: "1.1rem",
-//                       color: "#2596be",
+//                       color: "#0284c7",
 //                       marginTop: ".3rem",
 //                     }}
 //                   />
@@ -235,7 +235,7 @@
 //                     style={{
 //                       width: "1.1rem",
 //                       height: "1.1rem",
-//                       color: "#2596be",
+//                       color: "#0284c7",
 //                       marginTop: ".2rem",
 //                     }}
 //                   />
@@ -247,7 +247,7 @@
 //                     style={{
 //                       width: "1.1rem",
 //                       height: "1.1rem",
-//                       color: "#2596be",
+//                       color: "#0284c7",
 //                       marginTop: ".3rem",
 //                     }}
 //                   />
@@ -259,7 +259,7 @@
 //                     style={{
 //                       width: "1.1rem",
 //                       height: "1.1rem",
-//                       color: "#2596be",
+//                       color: "#0284c7",
 //                       marginTop: ".3rem",
 //                     }}
 //                   />
