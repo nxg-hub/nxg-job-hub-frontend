@@ -18,7 +18,7 @@ const formatCurrency = (amount) => {
 const JobCard = ({ job }) => (
   <div className="bg-white shadow-lg hover:shadow-xl transition-all rounded-2xl overflow-hidden h-full flex flex-col">
     <div className="p-5 sm:p-6 flex-1 flex flex-col">
-      <span className="inline-flex items-center gap-1 self-start bg-sky-50 text-sky-600 text-xs sm:text-sm font-semibold capitalize px-2.5 py-1 rounded-full mb-3">
+      <span className="inline-flex items-center gap-1 self-start bg-[#e0f2fe] text-[#0284c7] text-xs sm:text-sm font-semibold capitalize px-2.5 py-1 rounded-full mb-3">
         <MdLocationPin className="w-4 h-4" />
         {job.job_location}
       </span>
@@ -33,12 +33,12 @@ const JobCard = ({ job }) => (
     </div>
 
     <div className="mt-auto px-5 sm:px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/60">
-      <span className="text-sky-700 font-semibold text-base sm:text-lg truncate mr-3">
+      <span className="text-[#0284c7] font-semibold text-base sm:text-lg truncate mr-3">
         {formatCurrency(job.salary) || "Negotiable"}
       </span>
       <Link
         to="/login"
-        className="text-sky-600 text-sm font-medium whitespace-nowrap hover:underline shrink-0">
+        className="text-[#0284c7] text-sm font-medium whitespace-nowrap hover:underline shrink-0">
         Read More →
       </Link>
     </div>
@@ -114,7 +114,7 @@ const JobCards = () => {
     <div className="w-full flex flex-col items-center px-4 md:px-10 lg:px-20 py-10">
       {/* Job Section */}
       <section className="w-full mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0284c7] mb-8">
           Latest Job Openings
         </h2>
 
@@ -165,7 +165,7 @@ const JobCards = () => {
 
       {/* Why Choose Us Section */}
       <section className="w-full !mt-[100px]">
-        <h3 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-10">
+        <h3 className="text-3xl md:text-4xl font-bold text-center text-[#0284c7] mb-10">
           Why Choose Us?
         </h3>
 
@@ -175,10 +175,10 @@ const JobCards = () => {
               key={data.group}
               className="bg-white rounded-2xl shadow-md hover:shadow-lg p-6 transition-all flex flex-col justify-between">
               <div className="flex-1">
-                <h4 className="text-xl font-semibold mb-2 text-sky-700">
+                <h4 className="text-xl font-semibold mb-2 text-[#0284c7]">
                   {data.title}
                 </h4>
-                <div className="w-12 h-1 bg-sky-500 rounded mb-4"></div>
+                <div className="w-12 h-1 bg-[#0284c7] rounded mb-4"></div>
                 <p className="text-gray-600 leading-relaxed">
                   {data.chosentext}
                 </p>

@@ -77,7 +77,7 @@ const ResetPassword = () => {
         className="reset-main w-[80%] md:w-[30%]"
         style={{
           padding: "1rem 2.4rem",
-          border: "0.03rem solid #2596BE",
+          border: "0.03rem solid #0284c7",
           borderRadius: "0.8rem",
         }}>
         <h2
@@ -109,7 +109,7 @@ const ResetPassword = () => {
           />
           <button
             style={{
-              background: "#2596BE",
+              background: "#0284c7",
               color: "#fff",
               padding: ".6rem",
               width: "100%",

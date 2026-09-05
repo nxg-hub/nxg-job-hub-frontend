@@ -43,7 +43,7 @@ const Contact = () => {
               placeholder="Your name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#006A90]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
             />
           </div>
 
@@ -58,7 +58,7 @@ const Contact = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#006A90]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
             />
           </div>
 
@@ -73,14 +73,14 @@ const Contact = () => {
               placeholder="Write your message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#006A90]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
             />
           </div>
 
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-[#006A90] hover:bg-[#005474] text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-md">
+            className="w-full bg-[#0284c7] hover:bg-[#1d7a9c] text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-md">
             Send Message
           </button>
         </form>
@@ -101,7 +101,7 @@ const Contact = () => {
           </button>
 
           <Dialog.Title className="text-center">
-            <p className="text-2xl font-bold text-[#006A90] mt-4">
+            <p className="text-2xl font-bold text-[#0284c7] mt-4">
               Message Sent!
             </p>
             <p className="text-sm text-gray-600 mt-2">

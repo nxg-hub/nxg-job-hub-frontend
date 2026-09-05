@@ -117,7 +117,7 @@ const Login = () => {
   });
   return (
     <div>
-      <div className="bg-[#215E7D]">
+      <div className="bg-[#0284c7]">
         <Header />
       </div>
       <div className="login-main-container">
@@ -184,15 +184,15 @@ const Login = () => {
                 </div>
               </div>
               <div className="btn">
-                <button style={{ background: "#2596BE" }}>Sign In</button>
+                <button style={{ background: "#0284c7" }}>Sign In</button>
               </div>
             </div>
-            {/* <AuthOptions login={true} /> */}
+            <AuthOptions login={true} />
             <p className="signup">
               Don't have an account?{" "}
               <Link
                 to="/register"
-                style={{ color: "#2596BE", textDecoration: "underline" }}>
+                style={{ color: "#0284c7", textDecoration: "underline" }}>
                 Sign Up
               </Link>
             </p>

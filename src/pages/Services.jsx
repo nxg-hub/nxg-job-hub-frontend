@@ -21,9 +21,9 @@ const Services = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full bg-gradient-to-r from-[#215E7D] via-[#2B749A] to-[#215E7D] text-white">
+        className="w-full bg-gradient-to-r from-[#0284c7] via-[#0270a8] to-[#0284c7] text-white">
         <div className="sm:w-[70%] w-[85%] mx-auto py-12 md:py-16 text-center space-y-5">
-          <p className="text-xs md:text-sm font-semibold uppercase tracking-widest text-sky-200">
+          <p className="text-xs md:text-sm font-semibold uppercase tracking-widest text-[#b3e0f2]">
             Our Services
           </p>
           <h2 className="text-2xl md:text-4xl font-bold">
@@ -36,7 +36,7 @@ const Services = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               to="/findjob"
-              className="px-6 py-2.5 rounded-lg bg-white text-[#215E7D] font-semibold hover:bg-sky-50 transition-colors w-full sm:w-auto">
+              className="px-6 py-2.5 rounded-lg bg-white text-[#0284c7] font-semibold hover:bg-[#f0f9ff] transition-colors w-full sm:w-auto">
               Find Jobs
             </Link>
             <Link
@@ -65,7 +65,7 @@ const Services = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-            <div className="bg-gradient-to-r from-[#215E7D] to-[#2B749A] px-6 py-4 flex items-center gap-3">
+            <div className="bg-gradient-to-r from-[#0284c7] to-[#0270a8] px-6 py-4 flex items-center gap-3">
               <FiBarChart2 className="w-5 h-5 text-white shrink-0" />
               <h3 className="text-lg md:text-xl font-semibold text-white">
                 Data-driven Insights
@@ -92,8 +92,8 @@ const Services = () => {
                   <li
                     key={item}
                     className="flex items-start gap-2.5 text-sm text-gray-600">
-                    <span className="w-5 h-5 rounded-full bg-sky-50 flex items-center justify-center shrink-0 mt-px">
-                      <FiCheck className="w-3 h-3 text-sky-600" />
+                    <span className="w-5 h-5 rounded-full bg-[#f0f9ff] flex items-center justify-center shrink-0 mt-px">
+                      <FiCheck className="w-3 h-3 text-[#0284c7]" />
                     </span>
                     <span>{item}</span>
                   </li>
@@ -109,7 +109,7 @@ const Services = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
             className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-            <div className="bg-gradient-to-r from-[#1E6B52] to-[#2E8B67] px-6 py-4 flex items-center gap-3">
+            <div className="bg-gradient-to-r from-[#0284c7] to-[#0270a8] px-6 py-4 flex items-center gap-3">
               <FiShield className="w-5 h-5 text-white shrink-0" />
               <h3 className="text-lg md:text-xl font-semibold text-white">
                 Security and Privacy
@@ -136,8 +136,8 @@ const Services = () => {
                   <li
                     key={item}
                     className="flex items-start gap-2.5 text-sm text-gray-600">
-                    <span className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center shrink-0 mt-px">
-                      <FiCheck className="w-3 h-3 text-emerald-600" />
+                    <span className="w-5 h-5 rounded-full bg-[#f0f9ff] flex items-center justify-center shrink-0 mt-px">
+                      <FiCheck className="w-3 h-3 text-[#0284c7]" />
                     </span>
                     <span>{item}</span>
                   </li>
@@ -156,9 +156,9 @@ const Services = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="relative overflow-hidden w-[90%] md:w-[85%] mx-auto my-24">
         <div className="absolute -top-16 -left-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -right-12 w-72 h-72 bg-sky-300/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -right-12 w-72 h-72 bg-[#0284c7]/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative bg-gradient-to-r from-[#215E7D] via-[#2B749A] to-[#215E7D] text-white text-center rounded-3xl px-6 py-12 md:py-16 space-y-5">
+        <div className="relative bg-gradient-to-r from-[#0284c7] via-[#0270a8] to-[#0284c7] text-white text-center rounded-3xl px-6 py-12 md:py-16 space-y-5">
           <h2 className="text-2xl md:text-4xl font-bold">
             Get Started with NXG Job Hub
           </h2>
@@ -170,7 +170,7 @@ const Services = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               to="/register"
-              className="group inline-flex items-center gap-2 w-full sm:w-auto px-8 py-3 rounded-full bg-white text-[#215E7D] font-semibold hover:bg-sky-50 transition-all hover:-translate-y-0.5 shadow-lg">
+              className="group inline-flex items-center gap-2 w-full sm:w-auto px-8 py-3 rounded-full bg-white text-[#0284c7] font-semibold hover:bg-[#f0f9ff] transition-all hover:-translate-y-0.5 shadow-lg">
               Create Free Account
             </Link>
             <Link

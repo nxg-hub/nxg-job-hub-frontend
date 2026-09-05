@@ -14,7 +14,7 @@ export function AgentOverview() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total Employers</CardTitle>
-          <Briefcase className="h-4 w-4 text-[#2596be]" />
+          <Briefcase className="h-4 w-4 text-[#0284c7]" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">142</div>
@@ -32,7 +32,7 @@ export function AgentOverview() {
           <CardTitle className="text-sm font-medium">
             Service Providers
           </CardTitle>
-          <Users className="h-4 w-4 text-[#2596be]" />
+          <Users className="h-4 w-4 text-[#0284c7]" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">387</div>
@@ -50,7 +50,7 @@ export function AgentOverview() {
           <CardTitle className="text-sm font-medium">
             Successful Matches
           </CardTitle>
-          <HandshakeIcon className="h-4 w-4 text-[#2596be]" />
+          <HandshakeIcon className="h-4 w-4 text-[#0284c7]" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">89</div>
@@ -66,7 +66,7 @@ export function AgentOverview() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Pending Matches</CardTitle>
-          <Clock className="h-4 w-4 text-[#2596be]" />
+          <Clock className="h-4 w-4 text-[#0284c7]" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">24</div>

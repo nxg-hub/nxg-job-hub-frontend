@@ -21,13 +21,13 @@ const containerVariants = {
 
 const AudienceHeading = ({ icon: Icon, children }) => (
   <div className="flex items-center gap-4 mb-8">
-    <span className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#215E7D] to-[#2B749A] text-white flex items-center justify-center shadow-md shadow-sky-500/20 shrink-0">
+    <span className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#0284c7] to-[#0270a8] text-white flex items-center justify-center shadow-md shadow-[#0284c7]/20 shrink-0">
       <Icon className="w-5 h-5" />
     </span>
     <h2 className="text-2xl md:text-3xl font-bold text-gray-900 whitespace-nowrap">
       {children}
     </h2>
-    <span className="hidden sm:block h-px flex-1 bg-gradient-to-r from-sky-200 to-transparent" />
+    <span className="hidden sm:block h-px flex-1 bg-gradient-to-r from-[#b3e0f2] to-transparent" />
   </div>
 );
 
