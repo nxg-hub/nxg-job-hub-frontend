@@ -45,7 +45,7 @@
 }
 .swiperr .swiper-pagination-bullet-active {
   color: white !important;
-  background-color: #2596be !important;
+  background-color: #0284c7 !important;
   opacity: 1 !important;
 }
 
@@ -118,10 +118,10 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 197.7 87% 48.4%;
+    --primary: 200 98% 39.6%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 200.9 98% 39.4%;
-    --secondary-foreground: 200.9 98% 39.4%;
+    --secondary: 200 98% 39.6%;
+    --secondary-foreground: 200 98% 39.6%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;

@@ -145,7 +145,7 @@ const TechjobsSlider = () => {
       <div className="text-center mt-6">
         <button
           onClick={() => navigate("/all-categories")}
-          className="px-6 py-2  text-white rounded-lg border-none bg-[#215E7D]   mb-2 md:mb-0 md:mr-2 hover:bg-[#2B749A] transition-colors">
+          className="px-6 py-2  text-white rounded-lg border-none bg-[#0284c7]   mb-2 md:mb-0 md:mr-2 hover:bg-[#1d7a9c] transition-colors">
           More Categories
         </button>
       </div>

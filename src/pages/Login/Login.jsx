@@ -215,7 +215,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="bg-[#215E7D]">
+      <div className="bg-[#0284c7]">
         <Header />
       </div>
       <div className="flex items-center justify-center min-h-screen sm:py-14">
@@ -304,7 +304,7 @@ export default function LoginForm() {
                   />
                   <Button
                     disabled={loginLoading}
-                    className="w-full bg-sky-600 border-none hover:bg-sky-700"
+                    className="w-full bg-[#0284c7] border-none hover:bg-[#1d7a9c]"
                     type="submit"
                   >
                     {loginLoading ? (
@@ -318,48 +318,36 @@ export default function LoginForm() {
                   </Button>
                 </form>
               </Form>
-              {/* Logging using third party vendor  /> */}
-              {/* <div>
-      <section class="flex items-center text-gray-600 mx-auto mb-10 sm:text-sm sm:w-2/3">
-        <div class="flex-grow border-t border-gray-300"></div>
-        <span class="px-4">or</span>
-        <div class="flex-grow border-t border-gray-300"></div>
-      </section>
-      <section className="flex space-x-3 sm:flex-col sm:space-y-3 sm:space-x-0">
-        <Button
-          variant="outline"
-          className="w-full"
-          type="submit">
-          <img
-            className="w-5 h-5"
-            src={Googleicon}
-            alt=""
-          />
-          <span className="hidden sm:inline-block">
-            Sign In with Google
-          </span>
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full"
-          type="submit">
-          <img
-            className="w-5 h-5"
-            src={Linkedinicon}
-            alt=""
-          />
-          <span className="hidden sm:inline-block">
-            Sign In with LinkedIn
-          </span>
-        </Button>
-      </section>
-    </div> */}
+              <div className="mt-4">
+                <section className="flex items-center text-gray-600 mx-auto mb-4 sm:text-sm sm:w-2/3">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="px-4">or</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </section>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  type="button"
+                  onClick={() => {
+                    window.location.href =
+                      "https://job-hub-91sr.onrender.com/oauth2/authorization/google";
+                  }}>
+                  <img
+                    className="w-5 h-5"
+                    src={Googleicon}
+                    alt=""
+                  />
+                  <span className="hidden sm:inline-block">
+                    Sign in with Google
+                  </span>
+                </Button>
+              </div>
               <div className="text-center">
                 <p>
                   Don't have an account?{" "}
                   <Link
                     to="/register"
-                    className="underline text-sm text-sky-600"
+                    className="underline text-sm text-[#0284c7]"
                   >
                     Sign up
                   </Link>

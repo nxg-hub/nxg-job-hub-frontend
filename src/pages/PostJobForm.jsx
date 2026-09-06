@@ -21,7 +21,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 1
-              ? "bg-[#1e3a8a] text-white"
+              ? "bg-[#0284c7] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}
         >
@@ -35,7 +35,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 1 ? "text-[#1e3a8a]" : "text-gray-500"
+            currentStep >= 1 ? "text-[#0284c7]" : "text-gray-500"
           }`}
         >
           Step 1
@@ -45,7 +45,7 @@ const ProgressIndicator = ({ currentStep }) => {
       {/* Connector between steps */}
       <div
         className={`w-20 h-1 sm:w-[30%] sm:h-1 sm:absolute sm:left-[18%] sm:right-1/4 sm:top-[43%] sm:transform sm:-translate-y-1/2 ${
-          currentStep >= 2 ? "bg-[#1e3a8a]" : "bg-gray-300"
+          currentStep >= 2 ? "bg-[#0284c7]" : "bg-gray-300"
         }`}
       />
 
@@ -54,7 +54,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 2
-              ? "bg-[#1e3a8a] text-white"
+              ? "bg-[#0284c7] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}
         >
@@ -68,7 +68,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 2 ? "text-[#1e3a8a]" : "text-gray-500"
+            currentStep >= 2 ? "text-[#0284c7]" : "text-gray-500"
           }`}
         >
           Step 2
@@ -78,7 +78,7 @@ const ProgressIndicator = ({ currentStep }) => {
       {/* Connector between steps */}
       <div
         className={`w-20 h-1 sm:w-[30%] sm:h-1 sm:absolute sm:left-[52%] sm:right-1/4 sm:top-[43%] sm:transform sm:-translate-y-1/2 ${
-          currentStep >= 3 ? "bg-[#1e3a8a]" : "bg-gray-300"
+          currentStep >= 3 ? "bg-[#0284c7]" : "bg-gray-300"
         }`}
       />
 
@@ -87,7 +87,7 @@ const ProgressIndicator = ({ currentStep }) => {
         <div
           className={`w-8 h-8 mx-auto rounded-full border-2 ${
             currentStep >= 3
-              ? "bg-[#1e3a8a] text-white"
+              ? "bg-[#0284c7] text-white"
               : "bg-white border-gray-300"
           } flex items-center justify-center`}
         >
@@ -101,7 +101,7 @@ const ProgressIndicator = ({ currentStep }) => {
         </div>
         <div
           className={`mt-2 text-sm ${
-            currentStep >= 3 ? "text-[#1e3a8a]" : "text-gray-500"
+            currentStep >= 3 ? "text-[#0284c7]" : "text-gray-500"
           }`}
         >
           Step 3
@@ -323,7 +323,7 @@ const PostJobForm = () => {
                         <Field
                           type="text"
                           name="jobTitle"
-                          className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           name="jobTitle"
@@ -340,7 +340,7 @@ const PostJobForm = () => {
                         <Field
                           as="textarea"
                           name="jobDescription"
-                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           name="jobDescription"
@@ -357,7 +357,7 @@ const PostJobForm = () => {
                         <Field
                           as="textarea"
                           name="jobRequirement"
-                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           name="jobRequirement"
@@ -380,7 +380,7 @@ const PostJobForm = () => {
                               values
                             )
                           }
-                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         >
                           {nigerianStates.map(({ id, value }) => (
                             <option key={id}>{value}</option>
@@ -403,7 +403,7 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "jobType", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           >
                             {employerJobType.map(({ id, title }) => (
                               <option key={id}>{title}</option>
@@ -424,7 +424,7 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "jobMode", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           >
                             {jobLocations.map(({ id, title }) => (
                               <option key={id}>{title}</option>
@@ -455,7 +455,7 @@ const PostJobForm = () => {
                                 values
                               )
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           >
                             <option value="">Select Job Classification</option>
                             <option value="SERVICE">
@@ -477,7 +477,7 @@ const PostJobForm = () => {
                           <Field
                             type="number"
                             name="salary"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             name="salary"
@@ -494,7 +494,7 @@ const PostJobForm = () => {
                           <Field
                             name="tags"
                             placeholder="react, design, plumber..."
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             name="tags"
@@ -510,7 +510,7 @@ const PostJobForm = () => {
                           <Field
                             type="date"
                             name="deadline"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             name="deadline"
@@ -543,7 +543,7 @@ const PostJobForm = () => {
                             const file = event.currentTarget.files[0];
                             setFieldValue("companyLogo", file);
                           }}
-                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           className="text-red-500 text-sm"
@@ -560,7 +560,7 @@ const PostJobForm = () => {
                         <Field
                           as="textarea"
                           name="companyBio"
-                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-32 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           className="text-red-500 text-sm"
@@ -578,7 +578,7 @@ const PostJobForm = () => {
                           <Field
                             type="text"
                             name="companyName"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             className="text-red-500 text-sm"
@@ -597,7 +597,7 @@ const PostJobForm = () => {
                           <Field
                             type="text"
                             name="companyRegistrationNumber"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             className="text-red-500 text-sm"
@@ -620,7 +620,7 @@ const PostJobForm = () => {
                             type="text"
                             name="companyWebsiteLink"
                             placeholder="https://example.com"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                         </div>
 
@@ -634,7 +634,7 @@ const PostJobForm = () => {
                           <Field
                             type="number"
                             name="companyPhoneNumber"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             className="text-red-500 text-sm"
@@ -653,7 +653,7 @@ const PostJobForm = () => {
                           <Field
                             type="email"
                             name="companyEmail"
-                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           />
                           <ErrorMessage
                             className="text-red-500 text-sm"
@@ -673,7 +673,7 @@ const PostJobForm = () => {
                             onChange={(e) =>
                               handleChange(e, setFieldValue, "industry", values)
                             }
-                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                           >
                             <option value="">Select Industry</option>
                             {companyIndusrty.map(({ id, title }) => (
@@ -698,7 +698,7 @@ const PostJobForm = () => {
                         <Field
                           as="textarea"
                           name="companyAddress"
-                          className="h-24 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="h-24 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
                         />
                         <ErrorMessage
                           className="text-red-500 text-sm"
@@ -716,14 +716,14 @@ const PostJobForm = () => {
                       Payment
                     </h2>
 
-                    <div className="space-y-6 bg-[#2B749A] rounded-lg p-6 md:p-10 text-white">
+                    <div className="space-y-6 bg-[#0284c7] rounded-lg p-6 md:p-10 text-white">
                       {/* Payment Instructions */}
                       <div className="space-y-4 md:w-[90%] mx-auto">
                         <p className="font-bold text-lg">Choose Payment Mode</p>
                         <Link
                           to="https://paystack.com/pay/externaljobpost"
                           target="_blank"
-                          className="text-green-400 underline"
+                          className="text-[#0284c7] underline"
                         >
                           Click Here To Pay With Card
                         </Link>
@@ -793,7 +793,7 @@ const PostJobForm = () => {
                             const file = event.currentTarget.files[0];
                             setFieldValue("paymentReceipt", file);
                           }}
-                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 text-black"
+                          className="h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7] text-black"
                         />
                         <ErrorMessage
                           className="text-red-500 text-sm"
@@ -810,14 +810,14 @@ const PostJobForm = () => {
                       onClick={handleBack}
                       type="button"
                       disabled={isSubmitting}
-                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto border-none bg-[#215E7D] hover:bg-[#2B749A]"
+                      className="w-[100%] rounded-full text-center py-2 my-10 text-white font-bold m-auto border-none bg-[#0284c7] hover:bg-[#1d7a9c]"
                     >
                       {"Back"}
                     </button>
                   )}
                   <button
                     disabled={isSubmitting}
-                    className="w-[100%] bg-[#215E7D] hover:bg-[#2B749A] border-none rounded-full text-center py-2 my-10 text-white font-bold m-auto"
+                    className="w-[100%] bg-[#0284c7] hover:bg-[#1d7a9c] border-none rounded-full text-center py-2 my-10 text-white font-bold m-auto"
                     type="submit"
                   >
                     {loading ? "Submitting..." : step < 3 ? "Next" : "Submit"}

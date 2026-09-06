@@ -94,9 +94,9 @@ const About = () => {
   return (
     <section className="bg-white w-full font-inter">
       {/* Hero */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#215E7D] via-[#2B749A] to-[#215E7D] text-white">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#0284c7] via-[#0270a8] to-[#0284c7] text-white">
         <div className="absolute -top-20 -left-16 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-16 w-80 h-80 bg-sky-300/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-16 w-80 h-80 bg-[#0284c7]/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* Dot texture */}
         <div
@@ -116,13 +116,13 @@ const About = () => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
             Connecting Talent,
             <br />
-            <span className="text-sky-300">Empowering Hiring.</span>
+            <span className="text-[#7dd3fc]">Empowering Hiring.</span>
           </h1>
 
           <div className="flex items-center justify-center gap-3 mt-6 mb-6">
-            <span className="h-px w-10 bg-sky-300/60" />
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-300" />
-            <span className="h-px w-10 bg-sky-300/60" />
+            <span className="h-px w-10 bg-[#7dd3fc]/60" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#7dd3fc]" />
+            <span className="h-px w-10 bg-[#7dd3fc]/60" />
           </div>
 
           <p className="text-sm md:text-lg text-gray-100/90 leading-relaxed max-w-2xl mx-auto">
@@ -141,8 +141,8 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative bg-gradient-to-b from-sky-50 to-white rounded-3xl border border-sky-100 text-center px-6 md:px-12 py-12">
-          <span className="absolute -top-5 left-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-[#215E7D] text-white flex items-center justify-center text-xl font-bold shadow-lg">
+          className="relative bg-gradient-to-b from-[#f0f9ff] to-white rounded-3xl border border-[#e0f2fe] text-center px-6 md:px-12 py-12">
+          <span className="absolute -top-5 left-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-[#0284c7] text-white flex items-center justify-center text-xl font-bold shadow-lg">
             &rdquo;
           </span>
 
@@ -204,9 +204,9 @@ const About = () => {
                   ease: "easeOut",
                   delay: i * 0.08,
                 }}
-                className="flex items-start gap-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300 p-4 md:p-5">
-                <span className="w-8 h-8 rounded-full bg-sky-50 flex items-center justify-center shrink-0">
-                  <FiCheck className="w-4 h-4 text-sky-600" />
+                className="flex items-start gap-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-[#bae6fd] transition-all duration-300 p-4 md:p-5">
+                <span className="w-8 h-8 rounded-full bg-[#f0f9ff] flex items-center justify-center shrink-0">
+                  <FiCheck className="w-4 h-4 text-[#0284c7]" />
                 </span>
                 <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   <span className="font-semibold text-gray-800 block">
@@ -225,7 +225,7 @@ const About = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative order-1 lg:order-2">
-            <div className="absolute -inset-3 bg-gradient-to-tr from-sky-100 to-blue-50 rounded-3xl rotate-2 pointer-events-none" />
+            <div className="absolute -inset-3 bg-gradient-to-tr from-[#e0f2fe] to-[#eff6ff] rounded-3xl rotate-2 pointer-events-none" />
             <img
               src={groupImg}
               alt="Professionals working together"
@@ -243,7 +243,7 @@ const About = () => {
           className="mt-20 text-center space-y-6">
           <Link
             to="/register"
-            className="group inline-flex items-center gap-2 bg-[#2596BE] hover:bg-[#1d7a9c] text-white font-semibold px-8 py-3.5 rounded-full shadow-lg shadow-sky-500/25 transition-all hover:-translate-y-0.5">
+            className="group inline-flex items-center gap-2 bg-[#0284c7] hover:bg-[#1d7a9c] text-white font-semibold px-8 py-3.5 rounded-full shadow-lg shadow-[#0284c7]/25 transition-all hover:-translate-y-0.5">
             Create Free Account
             <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>

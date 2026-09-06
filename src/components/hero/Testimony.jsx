@@ -36,8 +36,8 @@ const Testimony = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-white via-sky-50 to-white py-16 px-6 md:px-10 lg:px-20">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-12">
+    <section className="bg-gradient-to-b from-white via-[#f0f9ff] to-white py-16 px-6 md:px-10 lg:px-20">
+      <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0284c7] mb-12">
         What Job Seekers Say About Us
       </h2>
 
@@ -63,7 +63,7 @@ const Testimony = () => {
           <SwiperSlide key={`${testimony.id}-${index}`}>
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-2 p-6 md:p-8 h-full flex flex-col justify-between">
               <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-sky-100 shadow-sm mb-4">
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-[#e0f2fe] shadow-sm mb-4">
                   {/* <img
                     src={testimony.img}
                     alt={testimony.name}
@@ -74,9 +74,9 @@ const Testimony = () => {
                   {testimony.name}
                 </h4>
                 <p className="text-gray-600 text-sm leading-relaxed relative">
-                  <RiDoubleQuotesR className="inline-block text-sky-400 w-5 h-5 transform -scale-x-100 mr-1 align-text-top" />
+                  <RiDoubleQuotesR className="inline-block text-[#0284c7] w-5 h-5 transform -scale-x-100 mr-1 align-text-top" />
                   {testimony.text}
-                  <RiDoubleQuotesR className="inline-block text-sky-400 w-5 h-5 ml-1 align-text-top" />
+                  <RiDoubleQuotesR className="inline-block text-[#0284c7] w-5 h-5 ml-1 align-text-top" />
                 </p>
               </div>
             </div>
