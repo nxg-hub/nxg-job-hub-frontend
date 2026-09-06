@@ -339,7 +339,7 @@ export default function LoginPage() {
                     type="button"
                     onClick={() => {
                       window.location.href =
-                        "https://job-hub-91sr.onrender.com/oauth2/authorization/google";
+                        "https://nxg-job-hub-backend.onrender.com/oauth2/authorization/google";
                     }}>
                     <img
                       className="w-5 h-5"

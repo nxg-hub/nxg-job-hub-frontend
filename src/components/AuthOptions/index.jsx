@@ -4,7 +4,7 @@ import GoogleIcon from "../../static/icons/flat-color-icons_google.svg?react";
 const AuthOptions = ({ login, register }) => {
   const googleOAuth = async () => {
     window.location.href =
-      "https://job-hub-91sr.onrender.com/oauth2/authorization/google";
+      "https://nxg-job-hub-backend.onrender.com/oauth2/authorization/google";
   };
   return (
     <div className={s.AuthOptions}>
