@@ -81,6 +81,7 @@ import FeaturedTalentPagesTab from "./pages/Dashboard/Employer2/featured-talent-
 import EmployerHelpCenterTab from "./pages/Dashboard/Employer2/employerHelpCenterTab.jsx";
 import TalentServiceProvider from "./pages/Dashboard/Talent/TalentServiceProvider.jsx";
 import PaymentCallback from "./pages/Dashboard/Talent/components/PaymentCallback.jsx";
+import OAuthCallback from "./pages/OAuthCallback.jsx";
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndCondition />} />
         <Route path="/successfulJobPost" element={<SuccessfulJobPost />} />
+        <Route path="/auth/callback" element={<OAuthCallback />} />
 
         {/* service provider user routes */}
         <Route path="/services-provider" element={<ServiceProviderDashboard />}>
