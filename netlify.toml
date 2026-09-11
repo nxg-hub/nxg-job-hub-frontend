@@ -41,6 +41,12 @@
 [build.processing.js]
   minify = true
 
+# Allow React Router routes, including the OAuth callback, to load directly.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 ##############################################
 # ✅ Optional headers (security + performance)
 ##############################################

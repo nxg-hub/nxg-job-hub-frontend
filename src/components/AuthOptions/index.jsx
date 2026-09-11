@@ -1,10 +1,10 @@
 import s from "./index.module.scss";
 import GoogleIcon from "../../static/icons/flat-color-icons_google.svg?react";
+import { GOOGLE_OAUTH_REDIRECT_URL } from "../../utils/api/API_HOST";
 
 const AuthOptions = ({ login, register }) => {
   const googleOAuth = async () => {
-    window.location.href =
-      "https://nxg-job-hub-backend.onrender.com/oauth2/authorization/google";
+    window.location.href = GOOGLE_OAUTH_REDIRECT_URL;
   };
   return (
     <div className={s.AuthOptions}>

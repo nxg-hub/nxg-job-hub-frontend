@@ -4,6 +4,8 @@
 
 export const API_HOST_URL = "https://nxg-job-hub-backend.onrender.com";
 
+export const GOOGLE_OAUTH_REDIRECT_URL = `${API_HOST_URL}/oauth2/authorization/google`;
+
 // export const API_HOST_URL = "https://nxg-job-hub-backend.onrender.com";
 
 //export const API_HOST_URL = "https://nxg-job-hub-backend-hv38.onrender.com";

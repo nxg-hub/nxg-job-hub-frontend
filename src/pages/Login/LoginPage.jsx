@@ -26,7 +26,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import axios from "axios";
-import { API_HOST_URL } from "../../utils/api/API_HOST";
+import { API_HOST_URL, GOOGLE_OAUTH_REDIRECT_URL } from "../../utils/api/API_HOST";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { getLoggedInServiceProviderData } from "@/redux/ServiceProviderUserDataSlice";
@@ -338,8 +338,7 @@ export default function LoginPage() {
                     className="w-full h-11"
                     type="button"
                     onClick={() => {
-                      window.location.href =
-                        "https://nxg-job-hub-backend.onrender.com/oauth2/authorization/google";
+                      window.location.href = GOOGLE_OAUTH_REDIRECT_URL;
                     }}>
                     <img
                       className="w-5 h-5"

@@ -29,7 +29,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import axios from "axios";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
-import { API_HOST_URL } from "../../utils/api/API_HOST";
+import { API_HOST_URL, GOOGLE_OAUTH_REDIRECT_URL } from "../../utils/api/API_HOST";
 import { cn } from "@/lib/utils";
 import EmailVerificationNotice from "@/components/EmailVerificationNotice";
 import { Link, useNavigate } from "react-router-dom";
@@ -537,8 +537,7 @@ export default function SignupForm() {
                 className="w-full"
                 type="button"
                 onClick={() => {
-                  window.location.href =
-                    "https://nxg-job-hub-backend.onrender.com/oauth2/authorization/google";
+                  window.location.href = GOOGLE_OAUTH_REDIRECT_URL;
                 }}>
                 <img
                   className="w-5 h-5"

@@ -29,7 +29,10 @@ import { Separator } from "../ui/separator";
 import { motion } from "framer-motion";
 
 export default function CreateAccountType() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [oauthLoading, setOauthLoading] = useState(false);
+  const [oauthError, setOauthError] = useState("");
 
   const { data, fetchStatus, isError, isSuccess, error, isFetched } =
     useAutoLogin();
@@ -39,6 +42,48 @@ export default function CreateAccountType() {
   // }, [setSearchParams]);
 
   const userType = searchParams.get("user-type");
+  const oauthAuthKey = searchParams.get("authKey");
+
+  useEffect(() => {
+    if (!oauthAuthKey) return;
+
+    const authKey = /^Bearer\s/i.test(oauthAuthKey)
+      ? oauthAuthKey
+      : `Bearer ${oauthAuthKey}`;
+
+    setOauthLoading(true);
+    setOauthError("");
+    window.localStorage.setItem(
+      "NXGJOBHUBLOGINKEYV1",
+      JSON.stringify({ authKey })
+    );
+
+    axios
+      .get(`${API_HOST_URL}/api/v1/auth/get-user`, {
+        headers: { authorization: authKey },
+      })
+      .then(({ data: user }) => {
+        window.localStorage.setItem(
+          "NXGJOBHUBLOGINKEYV1",
+          JSON.stringify({ authKey, email: user.email, id: user.id })
+        );
+
+        if (user.userType === "EMPLOYER") {
+          navigate("/employer", { replace: true });
+        } else if (user.userType === "TECHTALENT") {
+          navigate("/talent", { replace: true });
+        } else if (user.userType === "SERVICE_PROVIDER") {
+          navigate("/services-provider", { replace: true });
+        }
+        // New Google users have no userType yet and remain on this page to
+        // choose their account type.
+      })
+      .catch((error) => {
+        console.error("Google OAuth profile lookup failed:", error);
+        setOauthError("Google login could not be completed. Please try again.");
+      })
+      .finally(() => setOauthLoading(false));
+  }, [oauthAuthKey, navigate]);
 
   const authKey =
     JSON.parse(window.sessionStorage.getItem("NXGJOBHUBLOGINKEYV1"))?.authKey ||
@@ -55,6 +100,22 @@ export default function CreateAccountType() {
       return response.data;
     },
   });
+
+  if (oauthLoading) {
+    return (
+      <div className="min-h-screen grid place-items-center">
+        <p>Signing you in with Google...</p>
+      </div>
+    );
+  }
+
+  if (oauthError) {
+    return (
+      <div className="min-h-screen grid place-items-center text-red-600">
+        <p>{oauthError}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen md:space-y-10">
